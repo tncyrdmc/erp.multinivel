@@ -3,9 +3,9 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> Logistico
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>>
+								<a href="/bo/configuracion/">Configuracion</a> > Premios
 							</span>
 						</h1>
 					</div>
@@ -36,23 +36,21 @@
 											</div>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
-													<a href="/bo/logistico2/pedidos">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Pedidos / Embarque</h1>
-														</div>
-													</a>
+												<a href="/bo/premios/nuevo_premio">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+														<i class="fa fa-edit fa-3x"></i>
+														<h1>Alta</h1>
+													</div>
+												</a>
 												</div>
-											
 												<div class="col-sm-4 link">
-													<a href="/bo/premios/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-trophy fa-3x"></i>
-															<h1>Premios / Entrega</h1>
-														</div>
-													</a>
+												<a href="/bo/premios/listar">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-list-alt fa-3x"></i>
+														<h1>Listar</h1>
+													</div>
+												</a>
 												</div>
-												
 											</div>
 										 </div>
 									</div>

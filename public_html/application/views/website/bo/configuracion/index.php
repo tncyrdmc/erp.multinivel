@@ -37,7 +37,7 @@
 													<a href="/bo/configuracion/tipoRed">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-list fa-3x"></i>
-															<h1>Tipo Red</h1>
+															<h1>Redes</h1>
 														</div>
 													</a>
 												</div>
@@ -82,10 +82,10 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="categorias">
+													<a href="premios">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-th fa-3x"></i>
-															<h1>Categorias Productos, Servicios </h1>
+															<i class="fa fa-gift fa-3x"></i>
+															<h1>Premios </h1><br><br><br>
 														</div>
 													</a>
 												</div>
@@ -108,7 +108,7 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="/bo/capacidadRed/capacidad_de_la_red">
+													<a href="/bo/capacidadRed/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-sort-numeric-asc fa-3x"></i>
 															<h1>Frontalidad /Profundidad <br><br></h1>

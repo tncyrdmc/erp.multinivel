@@ -27,19 +27,19 @@ class Model_tipo_red extends CI_Model{
 
 	function listarTodos()
 	{
-		$q=$this->db->query('select id, nombre, descripcion from tipo_red group by id');
+		$q=$this->db->query('select * from tipo_red group by id');
 		return $q->result();
 	}
 	
 	function RedesUsuario($id)
 	{
-		$q=$this->db->query('select tr.id, tr.nombre, tr.descripcion from tipo_red tr, afiliar a where tr.id = a.id_red and a.id_afiliado = '.$id." group by tr.id");
+		$q=$this->db->query('select tr.id, tr.nombre, tr.descripcion, tr.profundidad from tipo_red tr, afiliar a where tr.id = a.id_red and a.id_afiliado = '.$id." group by tr.id");
 		return $q->result();
 	}
 	
 	function traerRed($idRed)
 	{
-		$q=$this->db->query('select nombre, descripcion from tipo_red where id = '.$idRed);
+		$q=$this->db->query('select * from tipo_red where id = '.$idRed);
 		return $q->result();
 	}
 	
@@ -54,6 +54,12 @@ class Model_tipo_red extends CI_Model{
 		$q=$this->db->query('select frontal from tipo_red where id=1');
 		return $q->result();
 	}
+	
+	function ObtenerFrontalesRed($id)
+	{
+		$q=$this->db->query('select frontal from tipo_red where id='.$id);
+		return $q->result();
+	}
 				
 	function traerCapacidadRed()
 	{
@@ -61,12 +67,20 @@ class Model_tipo_red extends CI_Model{
 		
 		return $q->result();
 	}
-	function actualizarCapacidadRed($frontal, $profundidad){
+	
+	function getCapacidadRed($id)
+	{
+		$q = $this->db->query('select frontal,profundidad from tipo_red where id = '.$id);
+	
+		return $q->result();
+	}
+	function actualizarCapacidadRed($id_red, $frontal, $profundidad){
 		$datos = array(	'frontal' => $frontal,
 						'profundidad' => $profundidad);
 		
-		$this->db->update('tipo_red', $datos);
+		$this->db->update('tipo_red', $datos, array('id' => $id_red));
 	}
+	
 	function actualizar($id, $nombre, $descripcion, $profundidad, $frontal){
 		$datos = array(
 				'nombre' => $nombre,

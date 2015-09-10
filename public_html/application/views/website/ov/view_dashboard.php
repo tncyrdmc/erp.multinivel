@@ -8,7 +8,35 @@
 				<br /><br /><br />
 				</div>
 				<!-- end row -->
-
+<?php
+	   	if($hayPremios==true){
+	   	?>
+	   				<script type="text/javascript">
+	   				window.onload = function() {
+	   					$.ajax({
+	   						type: "POST",
+	   						url: "/ov/dashboard/ConsultarPremio",
+	   						data: {}
+	   					}).done(function( msg )
+	   							{
+	   						bootbox.dialog({
+	   							message: msg,
+	   							title: "Felicitaciones",
+	   							buttons: {
+	   								success: {
+	   								label: "Cerrar!",
+	   								className: "btn btn-danger",
+	   								callback: function() {
+	   									//location.href="";
+	   									}
+	   								}
+	   							}
+	   						});
+	   					});
+	   				}
+	   				</script>
+	   			<?php 
+	   	}?>
       <div class="row">
 					<div class="col-sm-12">
 							<div class="well well-sm">

@@ -33,7 +33,7 @@
                   <div class="contenidoBotones">
 										<div class="row">
 											<div class="col-sm-12 link">
-											<div class="col-sm-1 link">
+											<div class="col-sm-5 link">
 											</div>
 											<!--  	<div class="col-sm-3 link">
 													<a href="/bo/usuarios">
@@ -51,30 +51,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-2 link">
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-gift fa-3x"></i>
-															<h1>Promocion / Publicidad</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-2 link">	
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-inbox fa-3x"></i>
-															<h1>Requisicion de compra</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-2 link">	
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-shopping-cart  fa-3x"></i>
-															<h1>Pedido/venta<br>&nbsp</h1>
-														</div>
-													</a>
-												</div>	
+												
 											</div>
 										 </div>
 									</div>

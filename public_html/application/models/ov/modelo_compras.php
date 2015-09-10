@@ -29,6 +29,14 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		return $q->result();
 	}
 	
+	function traer_afiliados_red($id, $id_red)
+	{
+		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
+from afiliar A, user_profiles UP, users U
+where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id and A.id_red = '.$id_red.' group by(U.id)');
+		return $q->result();
+	}
+	
 	function traer_afiliados_estadisticas($id)
 	{
 		$q=$this->db->query('select UP.id_sexo, 
@@ -100,12 +108,20 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		and b.estatus like "ACT" order by d.descripcion');
 		return $q->result();
 	}
-	function get_productos_red($idRed, $pais)
+	function get_productos_red($idRed, $pais, $id_usuario)
 	{
 		$q=$this->db->query('Select a.nombre, a.descripcion, b.id , b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red 
 from producto a, mercancia b, cat_grupo_producto d
 where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.estatus like "ACT" and b.pais = "'.$pais.'" and a.id_grupo='.$idRed.' order by d.descripcion');
-		return $q->result();
+		$produc =  $q->result();
+		
+		$productos = array();
+		foreach ($produc as $producto){
+			if(!$this->ComprovarCompraMercancia($id_usuario, $producto->id)){
+				array_push($productos, $producto);
+			}
+		}
+		return $produc;
 	}
 	function get_grupo_prod()
 	{
@@ -156,12 +172,19 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		return $q->result();
 	}
 	
-	function get_servicios_red($idRed,$idPais)
+	function get_servicios_red($idRed,$idPais, $id_usuario)
 	{
 		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red 
 		from servicio a, mercancia b
 		where a.id=b.sku and b.id_tipo_mercancia= 2 and b.estatus like "ACT" and a.id_red= '.$idRed.' and b.pais = "'.$idPais.'"');
-		return $q->result();
+		$servicios_bd =  $q->result();
+		$servicios = array();
+		foreach ($servicios_bd as $servico){
+			if(!$this->ComprovarCompraMercancia($id_usuario, $servico->id)){
+				array_push($servicios, $servico);
+			}
+		}
+		return $servicios_bd;
 	}
 	function get_servicio_espec($busqueda)
 	{
@@ -177,11 +200,18 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3');
 		return $q->result();
 	}
-	function get_combinados_red($idRed, $pais)
+	function get_combinados_red($idRed, $pais, $id_usuario)
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.' and d.pais = "'.$pais.'" group by (d.id)');
-		return $q->result();
+		$combinados_bd =  $q->result();
+		$combinados = array();
+		foreach ($combinados_bd as $combinado){
+			if(!$this->ComprovarCompraMercancia($id_usuario, $combinado->id)){
+				array_push($combinados, $combinado);
+			}
+		}
+		return $combinados_bd;
 	}
 	function get_combinado_espec($busqueda)
 	{
@@ -982,6 +1012,12 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		
 		$this->db->update('cross_comprador_venta', $datos, array( 'id_venta ' => $id_venta) );
 	}
+	function ConsultarIdCategoriaMercancia($id_red){
+		$q = $this->db->query("select id_grupo from cat_grupo_producto where id_red = ".$id_red);
+		$red = $q->result();
+		return $red[0]->id_grupo;
+	}
+	
 	function ConsultarIdRedMercancia($id_categoria_mercancia){
 		$q = $this->db->query("select id_red from cat_grupo_producto where id_grupo = ".$id_categoria_mercancia);
 		$red = $q->result();
@@ -989,10 +1025,85 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	}
 	
 	function consultarMercancia($id_venta){
-		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CCV.id_comprador, CVM.cantidad
-from cross_venta_mercancia CVM, mercancia M, cross_comprador_venta CCV where CVM.id_venta = ".$id_venta." 
-and CVM.id_mercancia=M.id and CCV.id_venta=CVM.id_venta;");
+		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad
+							from cross_venta_mercancia CVM, mercancia M 
+							where CVM.id_venta = ".$id_venta."  and CVM.id_mercancia=M.id;");
 		$mercancia = $q->result();
 		return $mercancia;
+	}
+	
+	function ComprovarCompraProducto($id_usuario, $id_red, $frecuencia){
+		if ($frecuencia=='Mensual'){
+		$mes = date("m");
+		$consulta = "and MONTH(v.fecha) = ".$mes;	
+		}
+		
+		else if ($frecuencia=='Anual'){
+			$ano = date("Y");
+			$consulta = "and YEAR(v.fecha) = ".$ano;
+		}
+		
+		$q = $this->db->query("select count(*) as cantidad from venta v, cross_venta_mercancia cvm, servicio s, mercancia m , cat_grupo_producto cgp 
+		where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.sku = s.id and m.id_tipo_mercancia = 2 and s.id_red = cgp.id_grupo and cgp.id_red = ".$id_red." and v.id_user = ".$id_usuario." and v.id_estatus=2 ".$consulta);
+		$servicio = $q->result();
+		
+		if($servicio[0]->cantidad > 0){
+			return true;
+		}
+		
+		$q = $this->db->query("select count(*) as cantidad from venta v, cross_venta_mercancia cvm, producto s, mercancia m, cat_grupo_producto cgp 
+		where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.sku = s.id and m.id_tipo_mercancia = 1 and s.id_grupo = cgp.id_grupo and cgp.id_red = ".$id_red." and v.id_user = ".$id_usuario." and v.id_estatus=2 ".$consulta);
+		$producto = $q->result();
+		if($producto[0]->cantidad > 0){
+			return true;
+		}
+		
+		$q = $this->db->query("select count(*) as cantidad from venta v, cross_venta_mercancia cvm, combinado s, mercancia m, cat_grupo_producto cgp 
+		where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.sku = s.id and m.id_tipo_mercancia = 3 and s.id_red = cgp.id_grupo and cgp.id_red = ".$id_red." and v.id_user = ".$id_usuario." and v.id_estatus=2 ".$consulta);
+		$producto = $q->result();
+		if($producto[0]->cantidad > 0){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function ComprovarCompraMercancia($id_usuario, $id_mercancia){
+		$mes = date("m");
+		$q = $this->db->query("select count(*) as cantidad 
+			from venta v, cross_venta_mercancia cvm, mercancia m
+			where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.id = ".$id_mercancia."  and v.id_user = ".$id_usuario." and month(v.fecha)= ".$mes);
+		$mercancia = $q->result();
+		if($mercancia[0]->cantidad > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function ComprovarCompraProductoRed($id_usuario, $id_categoria){
+		$mes = date("m");
+		$q = $this->db->query("select count(*) as cantidad from venta v, cross_venta_mercancia cvm, servicio s, mercancia m
+		where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.sku = s.id and m.id_tipo_mercancia = 2 and s.id_red = ".$id_categoria." and v.id_user = ".$id_usuario." and v.id_estatus=2");
+		$servicio = $q->result();
+		if($servicio[0]->cantidad > 0){
+			return true;
+		}
+	
+		$q = $this->db->query("select count(*) as cantidad from venta v, cross_venta_mercancia cvm, producto s, mercancia m
+		where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.sku = s.id and m.id_tipo_mercancia = 1 and s.id_grupo = ".$id_categoria." and v.id_user = ".$id_usuario." and v.id_estatus=2");
+		$producto = $q->result();
+		if($producto[0]->cantidad > 0){
+			return true;
+		}
+	
+		$q = $this->db->query("select count(*) as cantidad from venta v, cross_venta_mercancia cvm, combinado s, mercancia m
+		where v.id_venta = cvm.id_venta and cvm.id_mercancia = m.id and m.sku = s.id and m.id_tipo_mercancia = 3 and s.id_red = ".$id_categoria." and v.id_user = ".$id_usuario." and v.id_estatus=2");
+		$producto = $q->result();
+		if($producto[0]->cantidad > 0){
+			return true;
+		}
+	
+		return false;
 	}
 }

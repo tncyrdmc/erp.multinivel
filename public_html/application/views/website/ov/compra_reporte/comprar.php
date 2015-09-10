@@ -271,7 +271,8 @@
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
 																				  <input type="submit" value="Pago PayuLatam"  class="btn btn-block btn-success" >
-																				  <br><a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
+																				  <br>
+																				  <a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
 																			</form>	
 												                         </td>
 												                      </tr>
@@ -1100,7 +1101,7 @@
 									label: "Aceptar",
 									className: "hide",
 									callback: function() {
-										 window.location="/ov/compras/carrito?tipo=1";
+										 //window.location="/ov/compras/carrito?tipo=1";
 										}
 									}
 								}
