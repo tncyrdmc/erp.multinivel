@@ -940,6 +940,29 @@ function detalles(id)
 		});
 	});
 }
+function InformarPremio(premio){
+	$.ajax({
+		type: "POST",
+		url: "ConsultarPremio",
+		data: {id: premio},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+			message: msg,
+			title: "Felicitaciones",
+			buttons: {
+				success: {
+				label: "Cerrar!",
+				className: "btn btn-danger",
+				callback: function() {
+					//location.href="";
+					}
+				}
+			}
+		});
+	});
+}
 </script>
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -983,7 +1006,7 @@ function detalles(id)
 					</header>
 
 					<!-- widget div-->
-					<div>
+					<div style="height: 35rem; overflow: auto;">
 						
 						<!-- widget edit box -->
 						<div class="jarviswidget-editbox">
@@ -1001,7 +1024,7 @@ function detalles(id)
 										We will create a family tree1 using just CSS(3)
 										The markup will be simple nested lists
 										-->
-										<div class="tree1">
+										<div class="tree1" style="width: 10000rem;">
 											<ul>
 												<li>
 													<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
