@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 //$db['default']['hostname'] = '192.168.1.110';
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'toor';
+$db['default']['hostname'] = '68.178.143.40';
+$db['default']['username'] = 'erpMultinivel';
+$db['default']['password'] = 'NetSoft12345@';
 $db['default']['database'] = 'erpMultinivel';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
