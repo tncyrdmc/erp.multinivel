@@ -282,9 +282,20 @@ function eliminar(id, file) {
 							data: {id: id, file:file}
 						})
 						.done(function( msg )
-						{
-									location.href="/bo/premios/listar";
-									
+						{	
+							bootbox.dialog({
+								message: msg,
+								title: 'Atencion',
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "btn-success",
+									callback: function() {
+											location.href="/bo/premios/listar";	
+										}
+									}
+								}
+							})
 						});//Fin callback bootbox
 
 					}

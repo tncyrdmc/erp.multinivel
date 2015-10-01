@@ -443,14 +443,22 @@ class premios extends CI_Controller
 	}
 	
 	function eliminar(){
-		$this->modelo_premios->eliminar($_POST['id']);
-		
-		if(unlink($_SERVER['DOCUMENT_ROOT'].$_POST['file'])){
-			
+		$seeliminoelpremio = $this->modelo_premios->eliminar($_POST['id']);
+		$mensaje = '';
+		if($seeliminoelpremio){
+			if(unlink($_SERVER['DOCUMENT_ROOT'].$_POST['file'])){
+					
+			}
+			$mensaje = "El premio ha sido eliminado satisfactoriamente.";
+			//$this->session->set_flashdata('success', $success);
+		}else{
+			$mensaje = "El premio no ha sido eliminado debido a que hay usuarios que lo han obtenido <br>
+					Desactive el premio para que no este disponible.";
+			//$this->session->set_flashdata('error', $error);
 		}
-		$success = "El premio ha sido eliminado satisfactoriamente.";
-		$this->session->set_flashdata('success', $success);
-		redirect("/bo/premios/listar");
+		echo $mensaje;
+		//redirect("/bo/premios/listar");
+		
 	}
 	
 	function cambiar_estatus(){

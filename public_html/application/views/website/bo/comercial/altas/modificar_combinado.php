@@ -224,24 +224,6 @@
 												<input placeholder="En días" type="text" name="entrega" id="entrega" value='<? echo $mercancia[0]->entrega?>'>
 											</label>
 										</section>
-
-										<section class="col col-12" style="width: 50%;">Proveedor
-											<label class="select">
-												<select name="proveedor">
-													<?foreach ($proveedores as $key)
-														{ if ($mercancia[0]->id_proveedor == $key->user_id){?>
-															<option selected value="<?=$key->user_id?>">
-																<?=$key->nombre." ".$key->apellido?>
-															</option>	
-														<?}	else{?>
-															<option value="<?=$key->user_id?>">
-																<?=$key->nombre." ".$key->apellido?>
-															</option>
-														<?}?>
-													<?}?>
-												</select>
-											</label>
-										</section>
 													
 										<section class="col col-12" style="width: 50%;">País de la mercancía
 											<label class="select">

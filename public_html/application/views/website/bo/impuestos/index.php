@@ -256,8 +256,8 @@ function eliminar(id) {
 						.done(function( msg )
 						{
 							bootbox.dialog({
-							message: "Se ha eliminado el impuesto.",
-							title: 'Felicitaciones',
+							message: msg,
+							title: 'Atención',
 							buttons: {
 								success: {
 								label: "Aceptar",
