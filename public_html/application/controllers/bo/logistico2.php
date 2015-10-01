@@ -87,20 +87,24 @@ class logistico2 extends CI_Controller
 		
 		$surtido_movimiento =$this->modelo_logistico->get_surtidos();
 		$surtidos = array();
+		
 		foreach ($surtido_movimiento as $movimiento){
+			
 			$mercancia = $this->modelo_logistico->ObtenerMercancia($movimiento->id_mercancia);
-			$surtidos[] = array(
-					'id_surtido' => $movimiento->id_surtido,
-					'id_venta' => $movimiento->id_venta,
-					'keyword' => $movimiento->keyword,
-					'mercancia' => $mercancia[0]->nombre,
-					'cantidad'  => $movimiento->cantidad,
-					'origen' => $movimiento->origen,
-					'usuario' => $movimiento->destino,
-					'email'	=> $movimiento->correo,
-					'fecha' => $movimiento->fecha,
-					'estatus' => $movimiento->estatus_e
-			);
+			if(isset($mercancia[0]->nombre)){
+				$surtidos[] = array(
+						'id_surtido' => $movimiento->id_surtido,
+						'id_venta' => $movimiento->id_venta,
+						'keyword' => $movimiento->keyword,
+						'mercancia' => $mercancia[0]->nombre,
+						'cantidad'  => $movimiento->cantidad,
+						'origen' => $movimiento->origen,
+						'usuario' => $movimiento->destino,
+						'email'	=> $movimiento->correo,
+						'fecha' => $movimiento->fecha,
+						'estatus' => $movimiento->estatus_e
+				);
+			}
 		}
 		
 		
@@ -140,17 +144,20 @@ class logistico2 extends CI_Controller
 		
 		foreach ($por_embarcar as $movimiento){
 			$mercancia = $this->modelo_logistico->ObtenerMercancia($movimiento->id_mercancia);
-			$surtidos[] = array(
-					'id_embarque' => $movimiento->id_embarque,
-					'keyword' => $movimiento->keyword,
-					'mercancia' => $mercancia[0]->nombre,
-					'cantidad'  => $movimiento->cantidad,
-					'origen' => $movimiento->origen,
-					'usuario' => $movimiento->destino,
-					'email'	=> $movimiento->correo,
-					'fecha' => $movimiento->fecha_entrega,
-					'estatus' => $movimiento->estado_e
-			);
+			
+			if(isset($mercancia[0]->nombre)){
+				$surtidos[] = array(
+						'id_embarque' => $movimiento->id_embarque,
+						'keyword' => $movimiento->keyword,
+						'mercancia' => $mercancia[0]->nombre,
+						'cantidad'  => $movimiento->cantidad,
+						'origen' => $movimiento->origen,
+						'usuario' => $movimiento->destino,
+						'email'	=> $movimiento->correo,
+						'fecha' => $movimiento->fecha_entrega,
+						'estatus' => $movimiento->estado_e
+				);	
+			}
 		}
 	
 	
@@ -196,17 +203,20 @@ class logistico2 extends CI_Controller
 		foreach ($embarcados as $movimiento){
 			
 			$mercancia = $this->modelo_logistico->ObtenerMercancia($movimiento->id_mercancia);
-			$surtidos[] = array(
-					'id_embarque' => $movimiento->id_embarque,
-					'keyword' => $movimiento->keyword,
-					'mercancia' => $mercancia[0]->nombre,
-					'cantidad'  => $movimiento->cantidad,
-					'origen' => $movimiento->origen,
-					'usuario' => $movimiento->destino,
-					'email'	=> $movimiento->correo,
-					'fecha' => $movimiento->fecha_entrega,
-					'estatus' => $movimiento->estado_e
-			);
+			if(isset($mercancia[0]->nombre)){
+				
+				$surtidos[] = array(
+						'id_embarque' => $movimiento->id_embarque,
+						'keyword' => $movimiento->keyword,
+						'mercancia' => $mercancia[0]->nombre,
+						'cantidad'  => $movimiento->cantidad,
+						'origen' => $movimiento->origen,
+						'usuario' => $movimiento->destino,
+						'email'	=> $movimiento->correo,
+						'fecha' => $movimiento->fecha_entrega,
+						'estatus' => $movimiento->estado_e
+				);
+			}
 		}
 		
 		$this->template->set("style",$style);
