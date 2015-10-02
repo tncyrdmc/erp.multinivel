@@ -539,6 +539,7 @@ order by (U.id);");
 	}
 	function img_user($id,$data)
 	{
+		
 		$q = $this->db->query("select ci.id_img from cat_img ci, cross_img_user ciu where ci.id_img = ciu.id_img and ciu.id_user = ".$id);
 		$id_img = $q->result();
 		

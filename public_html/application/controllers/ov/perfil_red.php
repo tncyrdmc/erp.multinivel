@@ -1059,7 +1059,7 @@ class perfil_red extends CI_Controller
 	{
 		$id = $_POST['id'];
 		$id_red = $_POST['red'];
-
+		
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $id);
 		if($afiliados)
 		{

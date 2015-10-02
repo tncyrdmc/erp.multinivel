@@ -43,9 +43,11 @@
                   <div class="contenidoBotones" style="padding-left: 50px; padding-right: 50px;">
 										<div class="row col-xs-12 col-md-6 col-sm-12 col-lg-5">
 											<div class="row">
+												<?php if(isset($grupos[0]->id)){ ?>
+		
 												<form class="smart-form" id="reporte-form" method="post" action="sube_noticia" enctype="multipart/form-data">
 												<label class="select" style="">
-															<select name="grupo_frm">
+															<select name="grupo_frm" required>
 																	<?php for($o=0;$o<sizeof($grupos);$o++)
 																	{
 																		echo '<option value="'.$grupos[$o]->id.'">'.$grupos[$o]->descripcion.'</option>';
@@ -90,6 +92,33 @@
 														</section>
 													</div>
 												</form>
+												<?php }else{ ?>
+													<script type="text/javascript">
+													$.ajax({
+														type: "POST",
+														url: "/auth/show_dialog",
+														data: {message: 'No existe grupos para esta categoria, crea el grupo primero'},
+													})
+													.done(function( msg )
+													{
+														bootbox.dialog({
+															message: "No existe grupos para esta categoria, crea el grupo primero",
+															title: 'Atención',
+															buttons: {
+																success: {
+																label: "Aceptar",
+																className: "btn-success",
+																callback: function() {
+																		location.href="/bo/grupos/alta";		
+																		}
+																	},
+															}
+														})//fin done ajax
+														//location.href="/bo/noticias/listar";
+													});
+												 												
+													</script>
+												<?php }?>
 											</div>
 										 </div>
 									</div>

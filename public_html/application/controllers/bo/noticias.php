@@ -48,7 +48,7 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 	
-	$id=$this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
 		
 		if(!$this->general->isAValidUser($id,"oficina"))
 		{
@@ -58,6 +58,7 @@ class noticias extends CI_Controller
 		$style=$this->modelo_dashboard->get_style(1);
 		
 		$grupos=$this->modelo_comercial->get_groups("NOT");
+		
 		$this->template->set("grupos",$grupos);
 	
 		$this->template->set("style",$style);
@@ -156,14 +157,17 @@ class noticias extends CI_Controller
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
 		
-		
-		if ($_POST['nombre_frm']==""){
-			$error = "Debe escribir un nombre para la presentacion.";
+		if ($_POST['grupo_frm']==""){
+			$error = "Debe selecionar un grupo para la noticia.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/noticias/alta');
+		}else if ($_POST['nombre_frm']==""){
+			$error = "Debe escribir un nombre para la noticia.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/noticias/alta');
 		}
 		else if ($_POST['desc_frm']==""){
-			$error = "Debe escribir una descripcion para la presentacion.";
+			$error = "Debe escribir una descripcion para la noticia.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/noticias/alta');
 		}
@@ -257,13 +261,18 @@ class noticias extends CI_Controller
 			redirect('/auth/logout');
 		}
 		
+		if ($_POST['grupo_frm']==""){
+			$error = "Debe selecionar un grupo para la noticia.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/noticias/listar');
+		}
 		if ($_POST['nombre_frm']==""){
-			$error = "Debe escribir un nombre para la presentacion.";
+			$error = "Debe escribir un nombre para la noticia.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/noticias/listar');
 		}
 		else if ($_POST['desc_frm']==""){
-			$error = "Debe escribir una descripcion para la presentacion.";
+			$error = "Debe escribir una descripcion para la noticia.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/noticias/listar');
 		}

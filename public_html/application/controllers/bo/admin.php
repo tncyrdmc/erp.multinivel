@@ -145,7 +145,6 @@ class admin extends CI_Controller
 	
 	function dato_pais_multiple()
 	{
-		
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
 			redirect('/auth');
@@ -203,13 +202,13 @@ class admin extends CI_Controller
 				{
 					echo '<label class="toggle">
 					<input type="checkbox" checked="checked" name="estado_moneda">
-					<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.utf8_decode($dato_pais[0]->moneda).'</label>';
+					<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.$dato_pais[0]->moneda.'</label>';
 				}
 				else
 				{
 					echo '<label class="toggle">
 					<input type="checkbox" name="estado_moneda">
-					<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.utf8_decode($dato_pais[0]->moneda).'</label>';
+					<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.$dato_pais[0]->moneda.'</label>';
 				}
 				echo '</section></div></form>';
 				echo "<hr />";
@@ -1145,19 +1144,21 @@ class admin extends CI_Controller
 		<input name="pais" type="hidden" value="'.$_POST['pais'].'">
 		<section class="col col-6">
 			<label class="label">Idioma</label>';
-		
+		if(!isset($dato_pais[0]->estado_pais)){
+			return 0;
+		}
 		foreach ($dato_pais as $idioma)
 		{
 			echo '<label class="checkbox">';
 			if($idioma->estatus=='ACT')
 			{
 				echo '<input type="checkbox" value="'.$idioma->Language.'" checked="checked" name="idioma[]">
-				<i></i>'.utf8_decode($idioma->Language).'</label></li>';
+				<i></i>'.$idioma->Language.'</label></li>';
 			}
 			else
 			{
 				echo '<input value="'.$idioma->Language.'" type="checkbox" name="idioma[]">
-				<i></i>'.utf8_decode($idioma->Language).'</label></li>';
+				<i></i>'.$idioma->Language.'</label></li>';
 			}
 		}
 		echo '</section><section class="col col-6">';
@@ -1178,13 +1179,13 @@ class admin extends CI_Controller
 		{
 			echo '<label class="toggle">
 			<input type="checkbox" checked="checked" name="estado_moneda">
-			<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.utf8_decode($dato_pais[0]->moneda).'</label>';
+			<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.$dato_pais[0]->moneda.'</label>';
 		}
 		else
 		{
 			echo '<label class="toggle">
 			<input type="checkbox" name="estado_moneda">
-			<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.utf8_decode($dato_pais[0]->moneda).'</label>';
+			<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.$dato_pais[0]->moneda.'</label>';
 		}
 		echo '</section></div></form>';
 
