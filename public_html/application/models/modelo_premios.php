@@ -148,6 +148,21 @@ where p.id = cpu.id_premio and cpu.id_afiliado = u.id and u.id = up.user_id and 
 	}
 	
 	function eliminar($id){
-		$this->db->query('delete from premios where id = '.$id);
+		if(!$this->elPremioSeGano($id)){
+			$this->db->query('delete from premios where id = '.$id);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function elPremioSeGano($id_premio) {
+		$q = $this->db->query('select cpu.id from premios p, cross_premio_usuario cpu where p.id = cpu.id_premio  and p.id = '.$id_premio);
+		$premios =  $q->result();
+		if(isset($premios[0]->id)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

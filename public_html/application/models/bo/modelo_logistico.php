@@ -159,15 +159,18 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 	function ObtenerMercancia($id_mercancia){
 		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
 		$mercancia = $q->result();
-		if($mercancia[0]->id_tipo_mercancia == 1){
+		
+		if(!isset($mercancia[0]->id_tipo_mercancia)){
+			return 0;
+		}elseif($mercancia[0]->id_tipo_mercancia == 1){
 			$q = $this->db->query("SELECT * FROM producto where id =".$mercancia[0]->sku);
 		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
 			$q = $this->db->query("SELECT * FROM servicio where id=".$mercancia[0]->sku);
 		}else{
 			$q = $this->db->query("SELECT * FROM combinado where id=".$mercancia[0]->sku);
 		}
-		$mercancia = $q->result();
-		return $mercancia;
+		$mercancia2 = $q->result();
+		return $mercancia2;
 	}
 	
 	function surtir()

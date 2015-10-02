@@ -25,7 +25,7 @@
 								</label>
 								<br>
 								<label class="input"> Nombre
-								<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $grupo[0]->descripcion; ?>" required>
+								<input type="text" id="descripcion" name="descripcion" placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $grupo[0]->descripcion; ?>" required>
 								<br>
 							</fieldset>
 							<footer>
@@ -40,6 +40,10 @@
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
 function enviar() {
+	if($("#descripcion").val() == ''){
+		alert("El Nombre es un campo obligatorio");
+		return 0;
+	}
 	
 	 $.ajax({
 							type: "POST",

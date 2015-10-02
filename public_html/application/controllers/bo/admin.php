@@ -1336,7 +1336,13 @@ class admin extends CI_Controller
 	
 	function kill_impuesto()
 	{
-		$this->model_admin->kill_impuesto();
+		$siseelimino = $this->model_admin->kill_impuesto();
+		
+		if($siseelimino){
+			echo "Se ha eliminado el impuesto.";
+		}else{
+			echo "No se ha logrado eliminar el impuesto debido a que hay productos con este impuesto asignado.";
+		}
 	}
 	
 	function kill_retencion()

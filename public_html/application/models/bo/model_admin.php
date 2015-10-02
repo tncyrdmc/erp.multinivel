@@ -606,7 +606,6 @@ where(a.id_pais=b.Code)");
 			//////////////////////////////////////////////////////////////////////////////////////////////
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
-					"id_proveedor"      	=> $_POST['proveedor'],
 					"real"              	=> $_POST['real'],
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
@@ -920,8 +919,24 @@ where(a.id_pais=b.Code)");
 	}
 	
 	function kill_impuesto()
-	{
-		$this->db->query("delete from cat_impuesto where id_impuesto=".$_POST["id"]);
+	{	
+		if(!$this->ProductosConImpuesto($_POST["id"])){
+			$this->db->query("delete from cat_impuesto where id_impuesto=".$_POST["id"]);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function ProductosConImpuesto($id_impuesto){
+		$q=$this->db->query("select count(i.id_impuesto) as merc from cat_impuesto i, cross_merc_impuesto cmi 
+				where i.id_impuesto = cmi.id_impuesto and i.id_impuesto = ".$id_impuesto);
+		$numero_mercancia = $q->result();
+		if($numero_mercancia[0]->merc > 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	function kill_retencion()

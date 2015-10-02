@@ -283,9 +283,6 @@ class mercancia extends CI_Controller
 		}
 		$style=$this->modelo_dashboard->get_style(1);
 		
-		if(!isset($_POST['proveedor']))
-			$_POST['proveedor']='Ninguno';
-	
 		$id = $this->tank_auth->get_user_id();
 		
 		if(!$this->validarMercancia($_POST)){

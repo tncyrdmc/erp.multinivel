@@ -151,16 +151,7 @@
 												</label>
 												<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 											</section>
-											<section class="col col-3">Proveedor
-											<label class="select">
-											<select name="proveedor">
-											<?foreach ($proveedores as $key){?>
-											<option value="<?=$key->user_id?>">
-											<?=$key->nombre." ".$key->apellido?>
-											<?}?>
-											</select>
-											</label>
-											</section>
+											
 											
 											<section class="col col-3">
 											<label class="input">
