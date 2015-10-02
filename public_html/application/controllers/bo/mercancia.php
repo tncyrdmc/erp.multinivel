@@ -32,8 +32,9 @@ class mercancia extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 
@@ -60,8 +61,9 @@ class mercancia extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 
@@ -166,8 +168,9 @@ class mercancia extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
@@ -220,8 +223,9 @@ class mercancia extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
@@ -272,8 +276,9 @@ class mercancia extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	    if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);

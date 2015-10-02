@@ -325,7 +325,7 @@ function borrar(id,link)
 {
 	$.ajax({
 		type: "POST",
-		url: "/ov/cabecera/del_file",
+		url: "/ov/cabecera/del_file_compartir",
 		data: {id_archivero: id, url: link}
 		})
 		.done(function( msg ) {

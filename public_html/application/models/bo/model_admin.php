@@ -89,6 +89,15 @@ class model_admin extends CI_Model
 		return $q->result();
 	}
 	
+	function get_all_proveedor()
+	{
+		$q=$this->db->query("select p.id_proveedor,p.nombre,p.apellido,
+                             p.pais,p.email,pv.estatus,p.telefono
+                             from proveedor_datos p,proveedor pv
+				             where p.id_proveedor=pv.id_proveedor");
+		return $q->result();
+	}
+	
 	function ver_si_merc_ha_sido_vendida($id)
 	{
 		$datos = $this->db->query('select * from cross_venta_mercancia where id_mercancia = '.$id);

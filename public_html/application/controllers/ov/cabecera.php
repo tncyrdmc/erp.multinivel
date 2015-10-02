@@ -79,7 +79,7 @@ class cabecera extends CI_Controller
 		$ruta="/media/".$id."/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'hqx|cpt|csv|bin|dms|lha|lzh|exe|class|psd|so|sea|dll|oda|pdf|ai|eps|ps|smi|smil|mif|xls|ppt|pptx|wbxml|wmlc|dcr|dir|dxr|dvi|gtar|gz|php|php4|php3|phtml|phps|js|swf|sit|tar|tgz|xhtml|xht|zip|mid|midi|mpga|mp2|mp3|mp4|aif|aiff|aifc|ram|rm|rpm|ra|rv|wav|bmp|gif|jpeg|jpg|jpe|png|tiff|tif|css|html|htm|shtml|txt|text|log|rtx|rtf|xml|xsl|mpeg|mpg|mpe|qt|mov|avi|movie|doc|docx|xlsx|word|xl|eml|json';
+		$config['allowed_types'] 	= '*';
 
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
@@ -117,6 +117,17 @@ class cabecera extends CI_Controller
 			echo "Su archivo fue borrado con exito";
 	}
 
+	function del_file_compartir()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$this->model_cabecera->del_file_compartir();
+		if(unlink(getcwd().$_POST['url']))
+			echo "Su archivo fue borrado con exito";
+	}
+	
 	function email()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

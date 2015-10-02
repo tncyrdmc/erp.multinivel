@@ -1938,7 +1938,36 @@ class comercial extends CI_Controller
 	{
 		$this->db->query("insert into cat_grupo (descripcion) values ('".$_POST['grupo']."')");
 	}
+	
+	
+   function actionProveedor(){
+   	if (!$this->tank_auth->is_logged_in())
+   	{																		// logged in
+   	redirect('/auth');
+   	}
+   	
+   	$id=$this->tank_auth->get_user_id();
+   	
+   	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+   	{
+   	}else{
+   		redirect('/auth/logout');
+   	}
 
+   	$usuario=$this->general->get_username($id);
+   	
+   	$style=$this->modelo_dashboard->get_style(1);
+   	
+   	$this->template->set("usuario",$usuario);
+   	$this->template->set("style",$style);
+   	$this->template->set_theme('desktop');
+   	$this->template->set_layout('website/main');
+   	$this->template->set_partial('header', 'website/bo/header');
+   	$this->template->set_partial('footer', 'website/bo/footer');
+   	$this->template->build('website/bo/comercial/altas/proveedor');
+   }
+   
+   
 	function nuevo_proveedor(){
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
@@ -1947,8 +1976,9 @@ class comercial extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 
@@ -2017,9 +2047,55 @@ class comercial extends CI_Controller
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/comercial/altas/proveedor');		
+		$this->template->build('website/bo/comercial/altas/newproveedor');		
 	}
-
+  function listarProveedor(){
+  	if (!$this->tank_auth->is_logged_in())
+  	{																		// logged in
+  	redirect('/auth');
+  	}
+  	
+  	$id=$this->tank_auth->get_user_id();
+  	
+  	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+  	{
+  	}else{
+  		redirect('/auth/logout');
+  	}
+  	
+  	$usuario=$this->general->get_username($id);
+  	
+  	$style=$this->modelo_dashboard->get_style(1);
+  	
+  	$proveedor=$this->model_admin->get_all_proveedor();
+  	$this->template->set("proveedor",$proveedor);
+  	
+  	$this->template->set("usuario",$usuario);
+  	$this->template->set("style",$style);
+  	$this->template->set_theme('desktop');
+  	$this->template->set_layout('website/main');
+  	$this->template->set_partial('header', 'website/bo/header');
+  	$this->template->set_partial('footer', 'website/bo/footer');
+  	$this->template->build('website/bo/comercial/altas/listarProveedor');
+  }
+  
+  function kill_proveedor()
+  {
+  	$this->db->query("delete from proveedor_datos where id_proveedor=".$_POST["id"]);
+  	$this->db->query("delete from proveedor where id_proveedor=".$_POST["id"]);
+  }
+  
+  function cambiar_estado_proveedor(){
+  	$this->db->query("update proveedor set estatus = '".$_POST['estado']."' where id_proveedor=".$_POST["id"]);
+  
+  }
+  
+  function editarProveedor(){
+  	$id              = $this->tank_auth->get_user_id();
+  	$style           = $this->general->get_style(1);
+ 
+  	$this->template->build('website/bo/comercial/altas/usuarios/editar');
+  }
 	function nueva_mercancia(){
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
@@ -2096,12 +2172,13 @@ class comercial extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 	
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 
-		$style         = $this->general->get_style(1);
+		$style = $this->general->get_style(1);
 	
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
@@ -2121,8 +2198,9 @@ class comercial extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	    if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 

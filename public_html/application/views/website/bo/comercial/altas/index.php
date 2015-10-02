@@ -44,7 +44,7 @@
 													</a>
 												</div> -->
 												<div class="col-sm-2 link">
-													<a href="/bo/comercial/nuevo_proveedor">
+													<a href="/bo/comercial/actionProveedor">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-truck fa-3x"></i>
 															<h1>Proveedor<br>&nbsp</h1>

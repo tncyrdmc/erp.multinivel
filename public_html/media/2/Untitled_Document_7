@@ -1,0 +1,56 @@
+CREATE TABLE seeker_ad_inbox (
+id int(11) NOT NULL AUTO_INCREMENT,
+id_user_origin int(11) DEFAULT NULL,
+id_user_destination int(11) DEFAULT NULL,
+subject_inbox text,messaje_inbox text,
+state varchar(45) DEFAULT NULL,
+date_created datetime DEFAULT NULL,
+id_ads int(10) unsigned NOT NULL,
+PRIMARY KEY (id), 
+KEY id_ads (id_ads),
+KEY user1 (id_user_origin),  
+KEY user2 (id_user_destination),  
+CONSTRAINT seeker_ad_inbox_ibfk_1 
+FOREIGN KEY (id_ads) REFERENCES seeker_adsmanager_ads (id),
+CONSTRAINT seeker_ad_inbox_ibfk_2 FOREIGN KEY (id_user_origin) REFERENCES seeker_users (id),
+CONSTRAINT seeker_ad_inbox_ibfk_3 FOREIGN KEY (id_user_destination) REFERENCES seeker_users (id)) 
+ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=latin1
+
+
+
+CREATE TABLE seeker_ad_inbox (
+  id int(11) AUTO_INCREMENT primary key ,
+  id_user_origin int(11) ,
+  id_user_destination int(11) ,
+  subject_inbox text,
+  messaje_inbox text,
+  state varchar(45) ,
+  date_created datetime ,
+  id_ads int(10) unsigned ,
+foreign key (id_user_origin) references seeker_users(id),
+foreign key (id_user_destination) references seeker_users(id),
+foreign key ( id_ads) references seeker_adsmanager_ads(id)
+)
+
+
+CREATE TABLE `seeker_ad_inbox` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user_origin` int(11) DEFAULT NULL,
+  `id_user_destination` int(11) DEFAULT NULL,
+  `subject_inbox` text,
+  `messaje_inbox` text,
+  `state`  varchar(45) DEFAULT NULL,
+  `state2` varchar(45) DEFAULT NULL,
+  `see1`   varchar(45) DEFAULT NULL,
+  `see2`   varchar(45) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `id_ads` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_ads` (`id_ads`),
+  KEY `user1` (`id_user_origin`),
+  KEY `user2` (`id_user_destination`),
+  CONSTRAINT `seeker_ad_inbox_ibfk_1` FOREIGN KEY (`id_ads`) REFERENCES `seeker_adsmanager_ads` (`id`),
+  CONSTRAINT `seeker_ad_inbox_ibfk_2` FOREIGN KEY (`id_user_origin`) REFERENCES `seeker_users` (`id`),
+  CONSTRAINT `seeker_ad_inbox_ibfk_3` FOREIGN KEY (`id_user_destination`) REFERENCES `seeker_users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+

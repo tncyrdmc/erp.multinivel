@@ -254,7 +254,18 @@ class admin extends CI_Controller
 	function del_merc()
 	{
 		$id = $_POST['id'];
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+			
+		$idu=$this->tank_auth->get_user_id();
 		
+		if($this->general->isAValidUser($idu,"comercial")||$this->general->isAValidUser($idu,"logistica"))
+		{
+		}else{
+			redirect('/auth/logout');
+		}
 		
 		$esta = $this->model_admin->ver_si_merc_ha_sido_vendida($id);
 		
@@ -291,8 +302,9 @@ class admin extends CI_Controller
 			
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+	 if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style = $this->modelo_dashboard->get_style(1);

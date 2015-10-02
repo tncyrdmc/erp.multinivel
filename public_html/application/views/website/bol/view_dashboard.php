@@ -45,11 +45,29 @@ $ci->load->model("model_permissions");?>
 								  	<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
 										<fieldset>
 											<legend><b>Sistema Integral de Operaciones Soporte Logistico</b></legend>
-<div class="col-sm-4 link">
+                                   <div class="col-sm-4 link">
 													<a href="/bo/logistico2/pedidos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
 															<i class="fa fa-edit fa-3x"></i>
 															<h1>Pedidos / Embarque</h1>
+														</div>
+													</a>
+												</div>
+												
+												
+												<div class="col-sm-4 link">
+													<a href="/bo/comercial/carrito_de_compras">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
+															<i class="fa fa-edit fa-3x"></i>
+															<h1>Mercancia<br>&nbsp</h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-4 link">
+													<a href="/bo/comercial/actionProveedor">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-truck fa-3x"></i>
+															<h1>Proveedor<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>

@@ -41,10 +41,11 @@ class model_cabecera extends CI_Model
 	function del_file()
 	{
 		$this->db->query('delete from archivero where id_archivero='.$_POST["id_archivero"]);
+		$this->db->query('delete from compartir where id_archivero='.$_POST["id_archivero"]);
 	}
 	function del_file_compartir()
 	{
-		$this->db->query('delete from archivero where id_archivero='.$_POST["id_archivero"]);
+		
 		$this->db->query('delete from compartir where id_archivero='.$_POST["id_archivero"]);
 	}
 	function compartir($id)
