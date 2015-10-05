@@ -228,4 +228,30 @@ class logistico2 extends CI_Controller
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/embarque/pedidos_embarcados');
 	}
+	
+	function alta(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"logistica"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/logistico2/alta');
+	}
 }

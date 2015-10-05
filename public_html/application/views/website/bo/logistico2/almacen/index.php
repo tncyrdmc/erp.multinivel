@@ -5,7 +5,9 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
-								> Logistico
+								> <a href="/bo/logistico2/"> Logistico</a> 
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> Almacen
 							</span>
 						</h1>
 					</div>
@@ -32,38 +34,25 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											
-											<div class="col-sm-10 link">
-												<div class="col-sm-1 link">
-												
+											<div class="col-sm-3 link">
+											</div>
+											<div class="col-sm-6 link">
+												<div class="col-sm-4 link">
+												<a href="/bo/almacen/alta">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+														<i class="fa fa-edit fa-3x"></i>
+														<h1>Alta</h1>
+													</div>
+												</a>
 												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/logistico2/alta">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1><br/> Alta </h1>
-														</div>
-													</a>
+												<div class="col-sm-4 link">
+												<a href="/bo/almacen/listar">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-list-alt fa-3x"></i>
+														<h1>Listar</h1>
+													</div>
+												</a>
 												</div>
-												
-												<div class="col-sm-3 link">
-													<a href="/bo/logistico2/pedidos">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Pedidos / Embarque</h1>
-														</div>
-													</a>
-												</div>
-											
-												<div class="col-sm-3 link">
-													<a href="/bo/premios/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-trophy fa-3x"></i>
-															<h1>Premios / <br />Entrega</h1>
-														</div>
-													</a>
-												</div>
-												
 											</div>
 										 </div>
 									</div>
