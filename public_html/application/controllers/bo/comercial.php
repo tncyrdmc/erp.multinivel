@@ -2093,8 +2093,30 @@ class comercial extends CI_Controller
   function editarProveedor(){
   	$id              = $this->tank_auth->get_user_id();
   	$style           = $this->general->get_style(1);
- 
-  	$this->template->build('website/bo/comercial/altas/usuarios/editar');
+  	
+  	$datosProveedor  = $this->model_admin->get_datosProveedor();
+  	$zona	         = $this->model_admin->get_zona();
+  	$regimen	     = $this->model_admin->get_regimen();
+  	$impuesto		 = $this->model_admin->get_impuesto();
+  	$pais            = $this->model_admin->get_pais_activo();
+  	$empresa	     = $this->model_admin->get_empresa();
+  	$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
+  	$cuentaBanco	 = $this->model_admin->get_cuentaBanco();
+  	$bancoProveedor	 = $this->model_admin->get_BancoProveedor($cuentaBanco[0]->banco);
+  	$bancos          = $this->model_mercancia->Bancos();
+  	
+  	$this->template->set("tipo_proveedor",  $tipo_proveedor);
+  	$this->template->set("empresa",$empresa);
+  	$this->template->set("pais",$pais);
+  	$this->template->set("bancoProveedor",$bancoProveedor);
+    $this->template->set("bancos",$bancos);
+    $this->template->set("cuentaBanco",$cuentaBanco);
+  	$this->template->set("impuesto",$impuesto);
+  	$this->template->set("regimen",$regimen);
+  	$this->template->set("zona",$zona);
+  	$this->template->set("datosProveedor",$datosProveedor);
+  	
+  	$this->template->build('website/bo/comercial/altas/editarProveedor');
   }
 	function nueva_mercancia(){
 		if (!$this->tank_auth->is_logged_in()) 
@@ -2162,7 +2184,70 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/altas/mercancia');		
 	}
-	
+	function actualizar_proveedor(){
+		
+		$telefonos = "";	
+		if ($_POST ["telefono"]) {
+			foreach ( $_POST ["telefono"] as $fijo ) {
+				$telefonos = $telefonos." - ".$fijo;
+			}
+		}else{
+			$telefonos=$telefonos."-";
+		}
+
+		$datos = array(
+				'nombre' => $_POST['nombre'],
+				'apellido' => $_POST['apellido'],
+				'pais' => $_POST['pais'],
+				'telefono' => $telefonos,
+				'provincia' => $_POST['provincia'],
+				'ciudad' => $_POST['ciudad'],
+				'comision' => $_POST['comision'],
+				'direccion' => $_POST['direccion'],
+				'email' => $_POST['email'],
+				'codigo_postal' => $_POST['codigo_postal'],
+		);
+		$this->db->update("proveedor_datos",$datos,"id_proveedor = ".$_POST['id']);
+		$datos2 = array(
+				'razon_social' => $_POST['razonsocial'],
+				'curp' => $_POST['CURP'],
+				'rfc' => $_POST['RFC'],
+				'id_regimen' => $_POST['regimen'],
+				'id_impuesto' => $_POST['impuesto'],
+				'mercancia' => $_POST['tipo_proveedor'],
+				'condicion_pago' => $_POST['condicionesdepago'],
+				'promedio_entrega' => $_POST['tiempoprimediodeentrega'],
+				'promedio_entrega_documentacion' => $_POST['tiempodeentregadedocumentos'],
+				'plazo_pago' => $_POST['plazodepago'],
+				'plazo_suspencion' => $_POST['plazodesuspencion'],
+				'plazo_suspencion_firma' => $_POST['palzodesuspenciondefirma'],
+				'interes_moratorio' => $_POST['interesmoratorio'],
+				'dia_corte' => $_POST['diadecorte'],
+				'id_zona' => $_POST['zona'],
+				'dia_pago' => $_POST['diadepago'],
+				'id_empresa' => $_POST['empresa'],
+				'credito_autorizado' => $_POST['credito_autorizado'],
+				'credito_suspendido' => $_POST['credito_suspendido'],
+		);
+		$this->db->update("proveedor",$datos2,"id_proveedor = ".$_POST['id']);
+		
+		
+		$cuentas = $_POST ['cuenta'];
+		$bancos = $_POST ['banco'];
+		$id_cuenta = $_POST ['id_cuenta'];
+		for ($i = 0 ; $i < count($cuentas) ; $i++){
+		$datos3 = array(
+				'cuenta' => $cuentas[$i],
+				'banco' =>$bancos[$i] ,
+				
+		);
+		$this->db->update("cat_cuenta",$datos3,"id = ".$id_cuenta[$i]);
+		
+		}
+		
+		
+		echo "Proveedoor actualizado con exito";
+	}
 	function carrito_de_compras()
 	{
 		if (!$this->tank_auth->is_logged_in())
