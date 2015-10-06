@@ -28,7 +28,6 @@ class modelo_almacen extends CI_Model
 	}
 	
 	function actualizar_almacen($alamacen, $id){
-		$this->db->where('id_almacen', $id);
-		$this->db->update('archivo', $alamacen);
+		$this->db->update('almacen', $alamacen, array('id_almacen' => $id));
 	}
 }

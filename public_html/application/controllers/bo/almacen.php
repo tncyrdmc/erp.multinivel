@@ -206,7 +206,7 @@ class almacen extends CI_Controller
 		if($this->validar_almacen($almacen)){
 				
 			$this->modelo_almacen->actualizar_almacen($almacen,$_POST['id']);
-			var_dump($almacen); exit;
+			
 		}
 		redirect('/bo/almacen/listar');
 	}
