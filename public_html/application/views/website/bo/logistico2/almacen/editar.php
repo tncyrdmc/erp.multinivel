@@ -8,10 +8,9 @@
 			</div>'; 
 	}
 ?>	
-	
-						
-						<form id="actualizar" class="smart-form" method="POST" action="/bo/almacen/actualizar_almacen">
-							<fieldset>
+<div class="row">
+	<form id="actualizar" class="smart-form" method="POST" action="/bo/almacen/actualizar_almacen">
+							<fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<label class="input">Nombre
 									<input style="width: 25rem;" type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" value="<?php echo $almacen[0]->nombre; ?>" required>
 								</label>
@@ -20,9 +19,7 @@
 									<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" >
 										<label class="label">Descripcion</label>
 										<label class="textarea">								
-											<textarea required rows="3" class="custom-scroll" name="descripcion" id="descripcion">
-												<?php echo $almacen[0]->descripcion; ?>
-											</textarea>
+											<textarea required rows="3" class="custom-scroll" name="descripcion" id="descripcion"><?php echo $almacen[0]->descripcion; ?></textarea>
 										</label>
 									</section>
 								</div>
@@ -39,10 +36,12 @@
 									<input style="width: 25rem;" type="number" name="telefono" id="telefono" placeholder="Telefono" class="form-control" value="<?php echo $almacen[0]->telefono; ?>" required>
 								</label>
 								
-								<label class="radio">
-									<input style="width: 25rem;" type="radio" name="web" id="web" class="form-control" value="<?php echo $almacen[0]->web; ?>">
-									<i></i>Almacen Web
-								</label>
+								<section class="col col-lg-6">
+									<label class="toggle">
+										<input name="web" checked="checked"  type="checkbox" value="<?php echo $almacen[0]->web; ?>">
+										<i data-swchon-text="SI" data-swchoff-text="NO"></i>Almacen Web
+									</label>
+								</section>
 								
 								<input type="text" id="id" name="id" value="<?php echo $almacen[0]->id_almacen; ?>" class="hide">
 								<div class="row">
@@ -56,4 +55,7 @@
 							</fieldset>
 							
 						</form>
+</div>
+						
+						
 						

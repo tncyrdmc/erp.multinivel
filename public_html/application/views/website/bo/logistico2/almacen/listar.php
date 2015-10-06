@@ -384,7 +384,7 @@ function estado_almacen(estatus, id)
 		var ciudad = $("#ciudad").val();
 		var direccion = $("#direccion").val();
 		var telefono = $("#telefono").val();
-		alert("s");
+		
 		if(ValidarVacio(nombre, direccion, ciudad, telefono)){
 			$.ajax({
 				 data: $('#actualizar').serialize(),
