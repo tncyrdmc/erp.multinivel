@@ -5,7 +5,10 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/administracion">Administración </a> > Usuarios
+								<a href="/bo/administracion">Administración </a>
+							</span>
+							<span>>
+								<a href="/bo/usuarios">Usuarios </a> > Acceso
 							</span>
 						</h1>
 					</div>
@@ -36,18 +39,18 @@
 											</div>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/altaUsuarioAcceso">
+												<a href="/bo/usuarios/altaTipoDeUsuarioAcceso">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-user fa-3x"></i>
-														<h1>Usuarios de  Acceso</h1>
+														<i class="fa fa-edit fa-3x"></i>
+														<h1>Alta</h1>
 													</div>
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/menuAltaUsuarioCedi">
+												<a href="/bo/usuarios/listarTipoDeUsuarioAcceso">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-home fa-3x"></i>
-														<h1>Usuarios CEDI</h1>
+														<i class="fa fa-list-alt fa-3x"></i>
+														<h1>Listar</h1>
 													</div>
 												</a>
 												</div>

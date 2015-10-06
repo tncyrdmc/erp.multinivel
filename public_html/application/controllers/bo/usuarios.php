@@ -17,6 +17,8 @@ class usuarios extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_tipo_usuario');
 		$this->load->model('bo/modelo_dashboard');
+		$this->load->model('model_cedi');
+		$this->load->model('bo/model_admin');
 	}
 	
 	function index(){
@@ -180,7 +182,8 @@ class usuarios extends CI_Controller
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/bo/comercial/red/AfiliarExistente');
 	}
-	function altaTipoDeUsuario(){
+	
+	function altaTipoDeUsuarioAcceso(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 		redirect('/auth');
@@ -269,7 +272,105 @@ class usuarios extends CI_Controller
 
 	}
 	
-	function listarTipoDeUsuario(){
+	function altaUsuarioAcceso(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			$this->template->build('website/bo/comercial/altas/usuarios/altaUsuarioAcceso');
+	}
+	
+	function menuAltaUsuarioCedi(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			$this->template->build('website/bo/comercial/altas/usuarios/menuAltaUsuarioCedi');
+	}
+	
+	function altaCedi(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$cedis = $this->model_cedi->listarTodos();
+		
+		$this->template->set("cedis",$cedis);
+		
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
+		
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			$this->template->build('website/bo/comercial/altas/usuarios/altaCedi');
+	}
+	
+	function guardarCedi(){
+		if($this->model_cedi->insertar($_POST['id_cedi'], $_POST['dni'], $_POST['username'], $_POST['nombres'], $_POST['apellido1'], $_POST['apellido2'],
+		$_POST['telefono_fijo'], $_POST['telefono_movil'], $_POST['email'], $_POST['ocupacion'], $_POST['id_pais'], 
+		$_POST['idioma'], $_POST['fecha_alta'])){
+				
+		}
+		
+		redirect('/bo/usuarios/menuAltaUsuarioCedi');
+	}
+	
+	function listarTipoDeUsuarioAcceso(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -289,7 +390,7 @@ class usuarios extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("users",$users);
-	
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
