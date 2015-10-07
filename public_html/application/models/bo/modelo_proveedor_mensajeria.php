@@ -4,18 +4,31 @@
 class modelo_proveedor_mensajeria extends CI_Model
 {
 	function obtenerProveedores(){
-		$q = $this->db->query('select * from proveedor_mensajeria');
+		$q = $this->db->query('select pm.id, pm.nombre_empresa, pm.razon_social, c.Name as pais, pm.direccion, pm.direccion_web, pm.estatus
+				from proveedor_mensajeria pm, Country c where pm.id_pais = c.Code');
 		$almacenes = $q->result();
 		return $almacenes;
 	}
 	
-	function crear_proveedor($proveedor){
+	function crear_proveedor_mensajeria($proveedor){
 		$this->db->insert('proveedor_mensajeria',$proveedor);
+		return mysql_insert_id();
+	}
+	
+	function crear_contacto_mensajeria($contacto){
+		$this->db->insert('proveedor_contacto',$contacto);
+		
+	}
+	
+	function crear_tarifa_mensajeria($tarifa){
+		$this->db->insert('proveedor_tarifas',$tarifa);
 		return mysql_insert_id();
 	}
 	
 	function eliminar_proveedor_mensajeria($id){
 		$this->db->query("delete from proveedor_mensajeria where id = ".$id);
+		$this->db->query("delete from proveedor_contacto where id = ".$id);
+		$this->db->query("delete from proveedor_tarifas where id = ".$id);
 	}
 	
 	function cambiar_estado_proveedor_mensajeria($id,$estado) {

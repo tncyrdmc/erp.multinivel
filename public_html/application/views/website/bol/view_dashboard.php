@@ -55,19 +55,20 @@ $ci->load->model("model_permissions");?>
 												</div>
 												
 												
+											
 												<div class="col-sm-4 link">
-													<a href="/bo/comercial/carrito_de_compras">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
+													<a href="/bo/logistico2/alta">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-edit fa-3x"></i>
-															<h1>Mercancia<br>&nbsp</h1>
+															<h1><br/> Alta </h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-4 link">
-													<a href="/bo/comercial/actionProveedor">
+											<div class="col-sm-4 link">
+													<a href="/bo/premios/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-truck fa-3x"></i>
-															<h1>Proveedor<br>&nbsp</h1>
+															<i class="fa fa-trophy fa-3x"></i>
+															<h1>Premios / <br />Entrega</h1>
 														</div>
 													</a>
 												</div>

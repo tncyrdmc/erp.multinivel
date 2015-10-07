@@ -25,8 +25,9 @@ class almacen extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		
@@ -34,6 +35,7 @@ class almacen extends CI_Controller
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -60,6 +62,7 @@ class almacen extends CI_Controller
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -148,7 +151,7 @@ class almacen extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("almacenes",$almacenes);
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');

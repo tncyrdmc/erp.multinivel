@@ -27,11 +27,11 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
-
 		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
@@ -53,14 +53,15 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
@@ -76,9 +77,10 @@ class logistico2 extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
@@ -128,8 +130,9 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
@@ -137,7 +140,7 @@ class logistico2 extends CI_Controller
 		
 	
 		$this->template->set("usuario",$usuario);
-	
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$por_embarcar = $this->modelo_logistico->get_embarque();
 		
 		$surtidos = array();
@@ -186,13 +189,14 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("usuario",$usuario);
 		
 		
@@ -238,8 +242,9 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		
@@ -247,6 +252,7 @@ class logistico2 extends CI_Controller
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

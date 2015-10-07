@@ -86,7 +86,7 @@ class proveedor_mensajeria extends CI_Controller
 		}
 		
 		$proveedor = array(
-				'numero_empresa' => $_POST['numero'],
+				'numero_proveedor' => $_POST['numero'],
 				'razon_social' => $_POST['razon_social'],
 				'nombre_empresa' => $_POST['nombre'],
 				'idioma' => $_POST['idioma'],
@@ -96,24 +96,81 @@ class proveedor_mensajeria extends CI_Controller
 				'municipio' => $_POST['municipio'],
 				'estado' => $_POST['estado'],
 				'codigo_postal' => $_POST['codigo_postal'],
+				'direccion_web' => $_POST['web'],
 				'estatus' => 'ACT',
 		);
 		
+		$id_proveedor = 0;
 		if($this->validarProveedor($proveedor)){
-			$this->modelo_proveedor_mensajeria->crear_proveedor_mensajeria($proveedor);
+			$id_proveedor = $this->modelo_proveedor_mensajeria->crear_proveedor_mensajeria($proveedor);
 		}
-		$contactos = array(
-				
+		
+		$contacto1 = array(
+				'id_proveedor' => $id_proveedor,
+				'nombre' => $_POST['nommbre_contacto1'],
+				'apellido' => $_POST['apellido_contacto1'],
+				'telefono_movil' => $this->ConcaternarTelefonos($_POST['telefonomovil1']),
+				'telefono_fijo' => $this->ConcaternarTelefonos($_POST['telefonomovil1']),
+				'mail' => $_POST['email_contacto1'],
+				'puesto' => $_POST['puesto_contacto1'],
 		);
 		
-		$tarifas = $_POST['tarifas'];
+		$contacto2 = array(
+				'id_proveedor' => $id_proveedor,
+				'nombre' => $_POST['nommbre_contacto2'],
+				'apellido' => $_POST['apellido_contacto2'],
+				'telefono_movil' => $this->ConcaternarTelefonos($_POST['telefonomovil2']),
+				'telefono_fijo' => $this->ConcaternarTelefonos($_POST['telefonomovil2']),
+				'mail' => $_POST['email_contacto2'],
+				'puesto' => $_POST['puesto_contacto2'],
+		);
 		
+		$ciudades = $_POST['ciudad_tarifa'];
+		$valores = $_POST['valor_tarifa'];
+		
+		$tarifas = $this->CrearTarifas($ciudades, $valores, $id_proveedor);
+		
+		if($this->validarContacto($contacto1)){
+			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto1);
+			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto2);
+			foreach ($tarifas as $tarifa){
+				$this->modelo_proveedor_mensajeria->crear_tarifa_mensajeria($tarifa);
+			}
+		}
+		
+		redirect('/bo/proveedor_mensajeria/listar');
+	}
+	
+	private function CrearTarifas($ciudades, $valores, $id_proveedor){
+		$tarifas = array();
+		$i = 0;
+		foreach ($ciudades as $ciudad){
+			if($valores[$i] != ''){
+				$tarifa = array(
+						'id_proveedor' => $id_proveedor,
+						'ciudad' => $ciudad,
+						'tarifa' => $valores[$i],
+				);
+				array_push($tarifas, $tarifa);
+				$i = $i + 1;
+			}
+		}
+		return $tarifas;
+	}
+	
+	private function ConcaternarTelefonos($telefonos){
+		$telefonos_concatenados = "";
+		
+		foreach ( $telefonos as $telefono ) {
+			$telefonos_concatenados = $telefonos_concatenados." - ".$telefono;
+		}
+		return $telefonos_concatenados;
 	}
 	
 	private function validarProveedor($proveedor){
 		
 		$error = '';
-		if($proveedor['nombre'] == ''){
+		if($proveedor['nombre_empresa'] == ''){
 			$error = "El nombre de la empresa proveedora es obligatorio";
 		}elseif ($proveedor['razon_social'] == ''){
 			$error = "La Razon Social de la empresa proveedora es obligatoria";
@@ -128,8 +185,72 @@ class proveedor_mensajeria extends CI_Controller
 		if($error == ''){
 			return true;
 		}else{
-			echo $error;
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/proveedor_mensajeria/alta');
 			return false;
 		}
+	}
+	
+	private function validarContacto($contacto){
+		$error = '';
+		if($contacto['nombre'] == ''){
+			$error = "El nombre del contacto es obligatorio";
+		}elseif ($contacto['apellido'] == ''){
+			$error = "El apellido del contacto es obligatoria";
+		}elseif ($contacto['telefono_movil'] == ''){
+			$error = "Debe tener minimo un telefono de contacto";
+		}elseif ($contacto['telefono_fijo'] == ''){
+			$error = "Debe tener minimo un telefono fijo de contacto";
+		}elseif ($contacto['mail'] == ''){
+			$error = "El email de contacto es obligatoria";
+		}
+		
+		if($error == ''){
+			return true;
+		}else{
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/proveedor_mensajeria/alta');
+			return false;
+		}
+	}
+	
+	function listar(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"logistica"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		$proveedores = $this->modelo_proveedor_mensajeria->obtenerProveedores();
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("proveedores",$proveedores);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/logistico2/mensajeria/listar');
+	}
+	
+	function cambiar_estado(){
+		if (!$this->tank_auth->is_logged_in()){																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $_POST['id'];
+		$estado = $_POST['estado'];
+	
+		$this->modelo_proveedor_mensajeria->cambiar_estado_proveedor_mensajeria($id,$estado);
+	
 	}
 }

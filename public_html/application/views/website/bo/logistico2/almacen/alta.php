@@ -2,16 +2,34 @@
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
+		
+			
+			
+				<?php  if($type=='5'){?>
+					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bo/logistico2/"> Logistico </a>
+				<span>
 				> <a href="/bo/logistico2/alta"> Alta </a>
 				> <a href="/bo/almacen/"> Almacen </a>
 				>	Alta
 				</span>
-			</h1>
-		</div>
+				</h1>
+				</div>
+				 <?php }else{?>
+				 	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<h1 class="page-title txt-color-blueDark">
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>> <a href="/bol/dashboard/"> Logistico </a>
+				> <a href="/bo/logistico2/alta"> Alta </a>
+				> <a href="/bo/almacen/"> Almacen </a>
+				>	Alta
+				</span>
+				</h1>
+				</div>
+					<?php }?>
+			
+		
 	</div>
 	<?php if($this->session->flashdata('error')) {
 		echo '<div class="alert alert-danger fade in">

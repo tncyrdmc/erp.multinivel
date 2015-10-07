@@ -4,8 +4,8 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-					<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bo/logistico2/"> Logistico </a>
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>> <a href="/bol/"> Logistico </a>
 				> <a href="/bo/logistico2/alta"> Alta </a>
 				> <a href="/bo/proveedor_software/"> Proveedor de Mensajeria </a>
 				>	Alta
@@ -121,13 +121,19 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Codigo Postal
-											<input type="text" class="form-control" name="codigo_postal" placeholder="Municipio"class="form-control" required />
+											<input type="text" class="form-control" name="codigo_postal" placeholder="Codigo Postal" class="form-control" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Estado
 											<input type="text" class="form-control" name="estado" placeholder="Estado"class="form-control" required />
+										</label>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
+										<label for="" class="input">Direccion Web
+											<input type="text" class="form-control" name="web" placeholder="URL del sitio web" class="form-control" required />
 										</label>
 									</div>
 								</div>
@@ -144,14 +150,14 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto1" placeholder="Apellido de persona de contacto"class="form-control" required />
+											<input type="text" class="form-control" name="apellido_contacto1" placeholder="Apellido de persona de contacto" class="form-control" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil1[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel">
+											<input name="telefonomovil1[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel" required>
 										</label>
 									</div>
 									
@@ -172,7 +178,7 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo1[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel">
+											<input name="telefonofijo1[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel" required>
 										</label>
 									</div>
 									
@@ -197,6 +203,11 @@
 											<input type="email" class="form-control" name="email_contacto1" placeholder="Email de la persona de contacto"class="form-control" required />
 										</label>
 									</div>
+									<div class="col col-xs-12 col-sm-6 col-lg-3">
+											<label for="" class="input">Puesto
+											<input type="text" class="form-control" name="puesto_contacto1" placeholder="Puesto de la persona de contacto"class="form-control" />
+										</label>
+									</div>
 								</div>
 								
 								<div class="row">
@@ -204,13 +215,13 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre
-											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" required />
+											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" required />
+											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" />
 										</label>
 									</div>
 									
@@ -258,7 +269,14 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Email<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
-											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto"class="form-control" required />
+											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto"class="form-control" />
+										</label>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-3">
+										Puesto<label for="" class="input">
+											<i class="icon-prepend fa fa-envelope-o"></i>
+											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" />
 										</label>
 									</div>
 								</div>
@@ -302,7 +320,7 @@
 							<div class="row">
 								<section  id="div_subir" style="width: 25rem;">
 									<div style="width: 25rem;">
-										<input type="submit" class="btn btn-success" style="margin-left: 66% ! important; width: 40%;" id="boton_subir" value="Agregar" onclick="enviar()">
+										<input type="submit" class="btn btn-success" style="margin-left: 66% ! important; width: 40%;" id="boton_subir" value="Agregar">
 									</div>
 								</section>
 							</div>

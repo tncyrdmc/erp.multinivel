@@ -3,28 +3,14 @@
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-		
 			<h1 class="page-title txt-color-blueDark">
-				
-					<?php  if($type=='5'){?>
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
 					<span>
-					
+						> <a href="/bol/"> Logistico</a>
 						> <a href="/bo/logistico2/alta"> Alta </a>
-						> <a href="/bo/almacen/index"> Almacen </a>
+						> <a href="/bo/proveedore_mensajeria/index"> Proveedor Mensajeria </a>
 						> listar
 					</span>
-					 <?php }else{?>
-					 	<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
-					<span>
-						> <a href="/bol/dashboard/"> Logistico</a>
-						> <a href="/bo/logistico2/alta"> Alta </a>
-						> <a href="/bo/almacen/index"> Almacen </a>
-						> listar
-					</span>
-					 
-					 <?php }?>
-					
 			</h1>
 		</div>
 	</div>
@@ -102,40 +88,31 @@
 									<tr>
 										<th data-hide="phone">ID</th>
 										<th data-class="expand">Nombre</th>
-										<th data-hide="phone">Descripcion</th>
-										<th data-hide="phone, tablet">Ciudad</th>
-										<th data-hide="phone, tablet">Dirección</th>
-										<th data-hide="phone, tablet">Telefono</th>
-										<th data-hide="phone, tablet">WEB</th>
+										<th data-hide="phone">Razon social</th>
+										<th data-hide="phone, tablet">Pais</th>
+										<th data-hide="phone, tablet">Direccion</th>
+										<th data-hide="phone, tablet">Sitio Web</th>
 										<th>Acciones</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($almacenes as $almacen) {?>
+									<?php foreach ($proveedores as $proveedor) {?>
 									<tr>
-										<td><?php echo $almacen->id_almacen; ?></td>
-										<td><?php echo $almacen->nombre; ?></td>
-										<td><?php echo $almacen->descripcion; ?></td>
-										<td><?php echo $almacen->ciudad; ?></td>
-										<td><?php echo $almacen->direccion; ?></td>
-										<td><?php echo $almacen->telefono; ?></td>
-										<td>
-										<?php 
-											if($almacen->web){
-												echo "SI";
-											}else{
-												echo "NO";							
-											}
-										?>
-										</td>
+										<td><?php echo $proveedor->id; ?></td>
+										<td><?php echo $proveedor->nombre_empresa; ?></td>
+										<td><?php echo $proveedor->razon_social; ?></td>
+										<td><?php echo $proveedor->pais; ?></td>
+										<td><?php echo $proveedor->direccion; ?></td>
+										<td><?php echo $proveedor->direccion_web; ?></td>
+										
 										<td class='text-center'>
-											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_almacen("<?php echo $almacen->id_almacen; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
-											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_almacen(<?php echo $almacen->id_almacen; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
-											<?php if ($almacen->estatus == 'ACT') {?>
-												<a title="Desactivar" style='cursor: pointer;' onclick="estado_almacen('DES','<?php echo $almacen->id_almacen; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_proveedor("<?php echo $proveedor->id; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
+											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_proveedor(<?php echo $proveedor->id; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
+											<?php if ($proveedor->estatus == 'ACT') {?>
+												<a title="Desactivar" style='cursor: pointer;' onclick="estado_proveedor('DES','<?php echo $proveedor->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>
-												<a title="Activar" style='cursor: pointer;' onclick="estado_almacen('ACT','<?php echo $almacen->id_almacen; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+												<a title="Activar" style='cursor: pointer;' onclick="estado_proveedor('ACT','<?php echo $proveedor->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<?php } ?>
 										</td>
 									</tr>
@@ -252,16 +229,16 @@ $(document).ready(function() {
 
 })
 	
-function estado_almacen(estatus, id)
+function estado_proveedor(estatus, id)
 {
-	var msg = "¿Desea desactivar el almacen?";
+	var msg = "¿Desea desactivar el Proveedor de mensajeria?";
 	var titulo;
 	if(estatus == "DES"){
-		msg = "¿Desea desactivar el almacen?";
-		titulo = "Desactivar almacen";
+		msg = "¿Desea desactivar el Proveedor de mensajeria?";
+		titulo = "Desactivar Proveedor de Mensajeria";
 	}else{
-		msg = "¿Desea activar el almacen?";
-		titulo = "Activar almacen";
+		msg = "¿Desea activar el Proveedor de mensajeria?";
+		titulo = "Activar Proveedor de Mensajeria";
 	}
 		
 	bootbox.dialog({
@@ -275,7 +252,7 @@ function estado_almacen(estatus, id)
 				
 				$.ajax({
 					type: "POST",
-					url: "cambiar_estado_almacen",
+					url: "cambiar_estado",
 					data: {
 						id:id, 
 						estado: estatus
