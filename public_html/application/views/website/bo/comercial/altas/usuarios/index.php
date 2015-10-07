@@ -36,18 +36,18 @@
 											</div>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/altaTipoDeUsuario">
+												<a href="/bo/usuarios/altaUsuarioAcceso">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-edit fa-3x"></i>
-														<h1>Alta</h1>
+														<i class="fa fa-user fa-3x"></i>
+														<h1>Usuarios de  Acceso</h1>
 													</div>
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/listarTipoDeUsuario">
+												<a href="/bo/usuarios/menuAltaUsuarioCedi">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-list-alt fa-3x"></i>
-														<h1>Listar</h1>
+														<i class="fa fa-home fa-3x"></i>
+														<h1>Usuarios CEDI</h1>
 													</div>
 												</a>
 												</div>

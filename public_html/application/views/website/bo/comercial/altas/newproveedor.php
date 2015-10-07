@@ -204,7 +204,7 @@
 											<label class="select"> 
 											<select class="custom-scroll" name="banco[]" id="banco" required>
 												<?foreach ($bancos as $key){?>
-												<option value="<?=$key->clave ?>">
+												<option value="<?=$key->id_banco ?>">
 													<?=$key->descripcion?></option>
 												<?}?>
 											</select>
@@ -301,8 +301,8 @@
 									<section class="col col-3">
 										Credito suspendido
 										<div class="inline-group">
-											<label class="radio">
-												<input type="radio" value="1" name="credito_suspendido">Si
+											<label class="radio"> <input type="radio" value="1"
+												name="credito_suspendido" > <i></i>Si
 											</label>
 											<label class="radio">
 												<input type="radio" value="0" name="credito_suspendido" checked> <i></i>No
@@ -547,7 +547,7 @@ function agregar_cuenta()
 			+'<label class="select"> '
 			+'<select class="custom-scroll" name="banco[]" id="banco" required>'
 				+'<?foreach ($bancos as $key){?>'
-				+'<option value="<?=$key->clave ?>">'
+				+'<option value="<?=$key->id_banco ?>">'
 					+'<?=$key->descripcion?></option>'
 				+'<?}?>'
 			+'</select>'
