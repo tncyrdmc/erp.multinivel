@@ -27,8 +27,8 @@ class modelo_proveedor_mensajeria extends CI_Model
 	
 	function eliminar_proveedor_mensajeria($id){
 		$this->db->query("delete from proveedor_mensajeria where id = ".$id);
-		$this->db->query("delete from proveedor_contacto where id = ".$id);
-		$this->db->query("delete from proveedor_tarifas where id = ".$id);
+		$this->db->query("delete from proveedor_contacto where id_proveedor = ".$id);
+		$this->db->query("delete from proveedor_tarifas where id_proveedor = ".$id);
 	}
 	
 	function cambiar_estado_proveedor_mensajeria($id,$estado) {

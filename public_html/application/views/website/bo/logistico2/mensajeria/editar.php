@@ -1,74 +1,9 @@
-
-<!-- MAIN CONTENT -->
-<div id="content">
-	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bol/"> Logistico </a>
-				> <a href="/bo/logistico2/alta"> Alta </a>
-				> <a href="/bo/proveedor_software/"> Proveedor de Mensajeria </a>
-				>	Alta
-				</span>
-			</h1>
-		</div>
-	</div>
-	<?php if($this->session->flashdata('error')) {
-		echo '<div class="alert alert-danger fade in">
-								<button class="close" data-dismiss="alert">
-									×
-								</button>
-								<i class="fa-fw fa fa-check"></i>
-								<strong>Alerta </strong> '.$this->session->flashdata('error').'
-			</div>'; 
-	}
-?>	
-	
-	<section id="widget-grid" class="">
-		<!-- START ROW -->
-		<div class="row">
-			<!-- NEW COL START -->
-			<article class="col-sm-12 col-md-12 col-lg-12">
-				
-			<div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-custombutton="false">
-				<!-- widget options:
-					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-					
-					data-widget-colorbutton="false"	
-					data-widget-editbutton="false"
-					data-widget-togglebutton="false"
-					data-widget-deletebutton="false"
-					data-widget-fullscreenbutton="false"
-					data-widget-custombutton="false"
-					data-widget-collapsed="true" 
-					data-widget-sortable="false"
-					
-				-->
-				<header>
-					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Nuevo Proveedor de Mensajeria</h2>				
-					
-				</header>
-
-				<!-- widget div-->
-				<div>
-					
-					<!-- widget edit box -->
-					<div class="jarviswidget-editbox">
-						<!-- This area used as dropdown edit box -->
-						
-					</div>
-					<!-- end widget edit box -->
-					
-					<!-- widget content -->
-					<div class="widget-body no-padding">
-						
-						<form class="smart-form" method="POST" action="/bo/proveedor_mensajeria/crear_proveedor">
+<form class="smart-form" method="POST" action="/bo/proveedor_mensajeria/crear_proveedor">
 							<fieldset>
 								<div class="row">
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Numero de empresa
-											<input type="text" class="form-control" name="numero" placeholder="Numero de empresa"class="form-control" required />
+											<input type="text" class="form-control" name="numero" placeholder="Numero de empresa"class="form-control" value="<?php echo $proveedor[0]->numero_proveedor; ?>" required />
 										</label>
 									</div>
 									
@@ -154,56 +89,56 @@
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonomovil1[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel" required>
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonomovil1[]" placeholder="Telefono movil 2" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonomovil1[]" placeholder="Telefono movil 3" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonofijo1[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel" required>
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonofijo1[]" placeholder="Telefono fijo 2" data-mask="(999) 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonofijo1[]" placeholder="Telefono Fijo 3" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Email
 										<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
 											<input type="email" class="form-control" name="email_contacto1" placeholder="Email de la persona de contacto"class="form-control" required />
 										</label>
 									</div>
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 											<label for="" class="input">Puesto
 											<input type="text" class="form-control" name="puesto_contacto1" placeholder="Puesto de la persona de contacto"class="form-control" />
 										</label>
@@ -225,55 +160,55 @@
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonomovil2[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonomovil2[]" placeholder="Telefono movil 2" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonomovil2[]" placeholder="Telefono movil 3" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonofijo2[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonofijo2[]" placeholder="Telefono fijo 2" data-mask="(999) 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
 											<input name="telefonofijo2[]" placeholder="Telefono Fijo 3" data-mask="999 999-9999" type="tel">
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Email<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
 											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto"class="form-control" />
 										</label>
 									</div>
 									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Puesto<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
 											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" />
@@ -283,25 +218,23 @@
 								
 								<div class="row" id="tarifa">
 									<header>Tarifas</header>
+									<div class="col col-lg-3 col-xs-3">
+									</div>
 									<div class="row">
-										<div class="col col-lg-3 col-xs-2">
-										</div>
-										<div class="col col-lg-2 col-xs-2">
+										<div class="col col-lg-6 col-xs-6">
 											<a style="cursor: pointer;" onclick="add_tarifa()">Agregar Tarifa <i class="fa fa-plus"></i></a>
 										</div>
 										
 									</div>
 									<div class="row">
-										<div class="col col-lg-2">
-										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3">
+										<div class="col col-xs-12 col-sm-6 col-lg-6">
 											Ciudad<label for="" class="input">
 												<i class="icon-prepend fa fa-bank"></i>
 												<input type="text" class="form-control" name="ciudad_tarifa[]" placeholder=""class="form-control" required />
 											</label>
 										</div>
 										
-										<div class="col col-xs-12 col-sm-5 col-lg-3">
+										<div class="col col-xs-12 col-sm-6 col-lg-6">
 											Tarifa<label for="" class="input">
 												<i class="icon-prepend fa fa-dollar"></i>
 												<input type="number" class="form-control" name="valor_tarifa[]" placeholder=""class="form-control" required />
@@ -325,31 +258,6 @@
 								</section>
 							</div>
 						</form>
-
-					</div>
-					<!-- end widget content -->
-					
-				</div>
-				<!-- end widget div -->
-				
-			</div>
-			<!-- end widget -->	
-		</div>
-		<div class="row">         
-	        <!-- a blank row to get started -->
-	        <div class="col-sm-12">
-	            <br />
-	            
-	            <br />
-	        </div>
-        </div>            
-		<!-- END ROW -->
-	</section>
-	<!-- end widget grid -->
-</div>
-<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
-<script src="/template/js/validacion.js"></script>
-<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
 var i=0;
 function enviar() {
@@ -368,15 +276,13 @@ function enviar() {
 function add_tarifa()
 {
 	var code=	'<div id="'+i+'" class="row">'
-	+'<div class="col col-lg-2">'
-	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-6">'
 		+'Ciudad<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-bank"></i>'
 			+'<input type="text" class="form-control" name="ciudad_tarifa[]" placeholder=""class="form-control" required />'
 		+'</label>'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
+	+'<div class="col col-xs-12 col-sm-5 col-lg-6">'
 		+'Tarifa<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-dollar"></i>'
 			+'<input type="number" class="form-control" name="valor_tarifa[]" placeholder=""class="form-control" required />'

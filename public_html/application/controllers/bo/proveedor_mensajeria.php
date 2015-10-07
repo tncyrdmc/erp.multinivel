@@ -253,4 +253,32 @@ class proveedor_mensajeria extends CI_Controller
 		$this->modelo_proveedor_mensajeria->cambiar_estado_proveedor_mensajeria($id,$estado);
 	
 	}
+	
+	function eliminar_proveedor(){
+		if (!$this->tank_auth->is_logged_in()){																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $_POST['id'];
+	
+		$this->modelo_proveedor_mensajeria->eliminar_proveedor_mensajeria($id);
+		echo  'El proveedor de mensajeria a sido eliminado corectamente';
+	}
+	
+	function editar_proveedor(){
+		if (!$this->tank_auth->is_logged_in()){																		// logged in
+			redirect('/auth');
+		}
+		//$almacen = $this->modelo_almacen->consultar_almacen($_POST['id']);
+	
+		//$this->template->set("almacen",$almacen);
+		
+		$pais = $this->model_admin->get_pais_activo();
+		$proveedor = $this->modelo_proveedor_mensajeria->consultar_proveedor_mensajeria($_POST['id']);
+		
+		$this->template->set("paises",$pais);
+		$this->template->set("proveedor",$proveedor);
+		
+		$this->template->build('website/bo/logistico2/mensajeria/editar');
+	}
 }

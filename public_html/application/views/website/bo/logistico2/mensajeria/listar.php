@@ -278,10 +278,10 @@ function estado_proveedor(estatus, id)
 	
 	}
 
-	function editar_almacen(id){
+	function editar_proveedor(id){
 		$.ajax({
 			type: "POST",
-			url: "/bo/almacen/editar_almacen",
+			url: "editar_proveedor",
 			data: {
 				id: id
 				}
@@ -290,23 +290,23 @@ function estado_proveedor(estatus, id)
 		.done(function( msg ) {
 			bootbox.dialog({
 				message: msg,
-				title: 'Modificar E-Book',
+				title: 'Modificar Proveedor de Mensajeria',
 					});
 		});//fin Done ajax
 	}
 
-	function eliminar_almacen(id) {
+	function eliminar_proveedor(id) {
 
 		$.ajax({
 			type: "POST",
 			url: "/auth/show_dialog",
-			data: {message: '¿ Esta seguro que desea Eliminar el almacen ?'},
+			data: {message: '¿ Esta seguro que desea Eliminar el Proveedor de mensajeria ?'},
 		})
 		.done(function( msg )
 		{
 			bootbox.dialog({
 			message: msg,
-			title: 'Eliminar almacen',
+			title: 'Eliminar Proveedor de Mensajeria',
 			buttons: {
 				success: {
 				label: "Aceptar",
@@ -315,7 +315,7 @@ function estado_proveedor(estatus, id)
 					
 						$.ajax({
 							type: "POST",
-							url: "eliminar_almacen",
+							url: "eliminar_proveedor",
 							data: {id: id}
 						}).done(function( msg )
 						{

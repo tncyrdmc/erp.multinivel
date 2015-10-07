@@ -40,25 +40,11 @@
 						<div class="widget-body no-padding smart-form">
                 <fieldset>
                   <div class="contenidoBotones">
-										<div class="row">
-												<div class="col-sm-1 link">
-												</div>
-											<div class="col-sm-3 link">
+						<div class="row">
+							<div class="col-sm-1"></div>						
+							<div class="col-sm-9">
+								<div class="col-sm-3 link">
 													<a href="/bo/almacen/index">
-<<<<<<< HEAD
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-dropbox fa-3x"></i>
-															<h1><br />Almacen</h1>
-														</div>
-													</a>
-												</div>
-												
-												<div class="col-sm-3 link">
-													<a href="/bo/proveedor_mensajeria/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-send fa-3x"></i>
-															<h1>Proveedor Mensajeria</h1>
-=======
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
 															<i class="fa fa-edit fa-3x"></i>
 															<h1>Almacen<br>&nbsp</h1>
@@ -74,22 +60,28 @@
 														</div>
 													</a>
 												</div>
-														<div class="col-sm-3 link">
+												<div class="col-sm-3 link">
 													<a href="/bo/comercial/actionProveedor">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-truck fa-3x"></i>
 															<h1>Proveedor<br>&nbsp</h1>
->>>>>>> 90f94407650019c9dab772a975356169df2b1c40
+
 														</div>
 													</a>
 												</div>
-											
 												
+												<div class="col-sm-3 link">
+													<a href="/bo/proveedor_mensajeria/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-send fa-3x"></i>
+															<h1>Proveedor Mensajeria</h1>
+														</div>
+													</a>
+												</div>
 																								
 											</div>
-											
-											
-										 </div>
+							</div>
+						 </div>
 									</div>
 								</fieldset>
 						</div>
