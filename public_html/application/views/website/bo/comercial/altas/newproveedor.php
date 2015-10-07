@@ -4,12 +4,24 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
+			
+			<?php  if($type=='5'){?>
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>&gt;
-							
-								 Proveedor
+							<span>>
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Altas
 							</span>
-						</h1>
+						<?php }else{?>			
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>>
+							<a href="/bol/dashboard">Logistica </a>>
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Altas
+							</span>
+							
+						<?php }?>	
+						
+							</h1>
 		</div>
 	</div>
 	<section id="widget-grid" class="">

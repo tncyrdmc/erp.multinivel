@@ -1955,7 +1955,7 @@ class comercial extends CI_Controller
    	}
 
    	$usuario=$this->general->get_username($id);
-   	
+   	$this->template->set("type",$usuario[0]->id_tipo_usuario);
    	$style=$this->modelo_dashboard->get_style(1);
    	
    	$this->template->set("usuario",$usuario);
@@ -1983,7 +1983,7 @@ class comercial extends CI_Controller
 		}
 
 		$usuario=$this->general->get_username($id);
-
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
@@ -2064,7 +2064,7 @@ class comercial extends CI_Controller
   	}
   	
   	$usuario=$this->general->get_username($id);
-  	
+  	$this->template->set("type",$usuario[0]->id_tipo_usuario);
   	$style=$this->modelo_dashboard->get_style(1);
   	
   	$proveedor=$this->model_admin->get_all_proveedor();
@@ -2256,7 +2256,7 @@ class comercial extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
-	
+		$usuario=$this->general->get_username($id);
 		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
 		}else{
@@ -2267,7 +2267,7 @@ class comercial extends CI_Controller
 	
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
-	
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
@@ -2290,7 +2290,7 @@ class comercial extends CI_Controller
 		}
 
 		$usuario=$this->general->get_username($id);
-
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);

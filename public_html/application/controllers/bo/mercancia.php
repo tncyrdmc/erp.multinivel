@@ -45,7 +45,7 @@ class mercancia extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("tipos",$tipos);
-
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/bo/header');
@@ -73,6 +73,8 @@ class mercancia extends CI_Controller
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$proveedores = array();

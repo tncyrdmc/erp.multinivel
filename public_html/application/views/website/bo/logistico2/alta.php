@@ -3,11 +3,19 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-						> <a href="/bo/logistico2/index"> Logistico</a>
-							<span>
-								> Alta
+						<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						>
+						 	<span>
+								 Alta
 							</span>
+						 <?php }else{?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						>
+						 	<span>
+								 Alta
+							</span>
+							<?php }?>
 						</h1>
 					</div>
 				</div>
@@ -33,22 +41,39 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-1 link">
-											
-											</div>
-											<div class="col-sm-10 link">
-												
-												<div class="col-sm-3 link">
+												<div class="col-sm-1 link">
+												</div>
+											<div class="col-sm-3 link">
 													<a href="/bo/almacen/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
 															<i class="fa fa-edit fa-3x"></i>
-															<h1>Almacen</h1>
+															<h1>Almacen<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>
+																								
+												<div class="col-sm-3 link">
+													<a href="/bo/comercial/carrito_de_compras">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
+															<i class="fa fa-edit fa-3x"></i>
+															<h1>Mercancia<br>&nbsp</h1>
+														</div>
+													</a>
+												</div>
+														<div class="col-sm-3 link">
+													<a href="/bo/comercial/actionProveedor">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-truck fa-3x"></i>
+															<h1>Proveedor<br>&nbsp</h1>
+														</div>
+													</a>
+												</div>
+											
 												
 																								
 											</div>
+											
+											
 										 </div>
 									</div>
 								</fieldset>
