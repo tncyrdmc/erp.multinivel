@@ -26,23 +26,31 @@
 	   </div>
 	   </div>
 		<br>
-
+<div class="row">
+   <div id="tel1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		
 		<?php 
 		$tel=explode("-",$datosProveedor[0]->telefono);
 				
 		for($i = 1;$i < sizeof($tel);$i++)
-		{	?>
-				
-		 <label class="input"> Telefono
+		{	
+		if($tel[$i]!=''){?>
+				<section class="col col-6">Telefono
+		 <label class="input"> <i class='icon-prepend fa fa-phone'></i>
 		 <input name="telefono[]" value="<?php echo $tel[$i]; ?> " 
 		        id="telefono"  type="text">
 		 </label>
+		 </section>
 	   <?php 
-		}
+		}}
 	   ?>
-		
-	
+	</div>
+		<section class="col col-3">
+					<button type="button" onclick="agregartel()"
+					class="btn btn-primary">
+					&nbsp;Agregar <i class="fa fa-mobile"></i>&nbsp;
+		</section>									
+	</div>
 		<br>
 		<h4>Direccion de proveedor</h4>
 			<div class="row">
@@ -186,13 +194,14 @@
 							</div>
 							</div>	
 					
-						
-							<?php 
-		
 				
-		for($i = 0;$i < sizeof($cuentaBanco);$i++)
-		{	?>
 			<div class="row">
+				
+						<div id="cuenta" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<?php 
+			for($i = 0;$i < sizeof($cuentaBanco);$i++)
+		{	?>
+		
 							<div class="col col-8">
 							<input type="text" class="hide" value="<?php echo $cuentaBanco[$i]->id ?>" name="id_cuenta[]">
 								<label class="select">Bancos 
@@ -207,16 +216,25 @@
 											</select>
 							</label>
 											
-						
-							</div>							
+						</div>	
+													
 		              <div class="col col-4">
 			             <label class="input"> Cuenta
 				         <input name="cuenta[]" value="<?php echo $cuentaBanco[$i]->cuenta?>" id="condicion_pago" maxlength="60" size="30" required="" type="text">
 			        </label>
+			        </div>	
+			        	<?php }?>
+			        </div>	
+			        	<br>
+			        <section class="col col-3">
+										<button type="button" onclick="agregar_cuenta()"
+											class="btn btn-primary">&nbsp;Agregar cuenta &nbsp;</button>
+									</section>
+									
 		</div>
-	</div>					
+					
 							
-		<?php }?>	
+	    
 						
 						 <label class="select"> Zona
 						<select class="custom-scroll"
@@ -420,6 +438,33 @@ function enviar() {
 						});//fin Done ajax
 		
 }
+
+function agregar_cuenta()
+{
+	
+	$("#cuenta").append('<section class="col col-8">Banco'
+			+'<input type="text" class="hide" value="0" name="id_cuenta[]">'
+			+'<label class="select"> '
+			+'<select class="custom-scroll" name="banco[]" id="banco" required>'
+				+'<?foreach ($bancos as $key){?>'
+				+'<option value="<?=$key->id_banco ?>">'
+					+'<?=$key->descripcion?></option>'
+				+'<?}?>'
+			+'</select>'
+			+'</label>'
+		+'</section>'
+		+'<section class="col col-4">'
+			+'<label class="input">Cuenta <input id="cuenta" required name="cuenta[]" placeholder="02112312345678901" type="text">'
+			+'</label>'
+		+'</section>');
+}
+
+function agregartel()
+{
+		$("#tel1").append("<section class='col col-6'>Telefono<label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='telefono[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+	
+}
+
 
 function ImpuestosPais(){
 	var pa = $("#pais").val();

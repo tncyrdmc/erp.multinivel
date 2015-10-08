@@ -2186,67 +2186,10 @@ class comercial extends CI_Controller
 	}
 	function actualizar_proveedor(){
 		
-		$telefonos = "";	
-		if ($_POST ["telefono"]) {
-			foreach ( $_POST ["telefono"] as $fijo ) {
-				$telefonos = $telefonos." - ".$fijo;
-			}
-		}else{
-			$telefonos=$telefonos."-";
-		}
-
-		$datos = array(
-				'nombre' => $_POST['nombre'],
-				'apellido' => $_POST['apellido'],
-				'pais' => $_POST['pais'],
-				'telefono' => $telefonos,
-				'provincia' => $_POST['provincia'],
-				'ciudad' => $_POST['ciudad'],
-				'comision' => $_POST['comision'],
-				'direccion' => $_POST['direccion'],
-				'email' => $_POST['email'],
-				'codigo_postal' => $_POST['codigo_postal'],
-		);
-		$this->db->update("proveedor_datos",$datos,"id_proveedor = ".$_POST['id']);
-		$datos2 = array(
-				'razon_social' => $_POST['razonsocial'],
-				'curp' => $_POST['CURP'],
-				'rfc' => $_POST['RFC'],
-				'id_regimen' => $_POST['regimen'],
-				'id_impuesto' => $_POST['impuesto'],
-				'mercancia' => $_POST['tipo_proveedor'],
-				'condicion_pago' => $_POST['condicionesdepago'],
-				'promedio_entrega' => $_POST['tiempoprimediodeentrega'],
-				'promedio_entrega_documentacion' => $_POST['tiempodeentregadedocumentos'],
-				'plazo_pago' => $_POST['plazodepago'],
-				'plazo_suspencion' => $_POST['plazodesuspencion'],
-				'plazo_suspencion_firma' => $_POST['palzodesuspenciondefirma'],
-				'interes_moratorio' => $_POST['interesmoratorio'],
-				'dia_corte' => $_POST['diadecorte'],
-				'id_zona' => $_POST['zona'],
-				'dia_pago' => $_POST['diadepago'],
-				'id_empresa' => $_POST['empresa'],
-				'credito_autorizado' => $_POST['credito_autorizado'],
-				'credito_suspendido' => $_POST['credito_suspendido'],
-		);
-		$this->db->update("proveedor",$datos2,"id_proveedor = ".$_POST['id']);
+		$id=$this->tank_auth->get_user_id();
+		$this->model_mercancia->actualizarProveedor();
 		
 		
-		$cuentas = $_POST ['cuenta'];
-		$bancos = $_POST ['banco'];
-		$id_cuenta = $_POST ['id_cuenta'];
-		for ($i = 0 ; $i < count($cuentas) ; $i++){
-		$datos3 = array(
-				'cuenta' => $cuentas[$i],
-				'banco' =>$bancos[$i] ,
-				
-		);
-		$this->db->update("cat_cuenta",$datos3,"id = ".$id_cuenta[$i]);
-		
-		}
-		
-		
-		echo "Proveedoor actualizado con exito";
 	}
 	function carrito_de_compras()
 	{

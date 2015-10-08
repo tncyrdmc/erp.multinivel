@@ -11,7 +11,7 @@
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>
 				> <a href="/bo/logistico2/alta"> Alta </a>
-				> <a href="/bo/almacen/"> Almacen </a>
+				> <a href="/bo/cedis/"> Cedis </a>
 				>	Alta
 				</span>
 				</h1>
@@ -22,7 +22,7 @@
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> <a href="/bol/dashboard/"> Logistico </a>
 				> <a href="/bo/logistico2/alta"> Alta </a>
-				> <a href="/bo/almacen/"> Almacen </a>
+				> <a href="/bo/cedis/"> Cedis </a>
 				>	Alta
 				</span>
 				</h1>
@@ -64,7 +64,7 @@
 				-->
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Nuevo Almacen</h2>				
+					<h2>Nuevo CEDI</h2>				
 					
 				</header>
 
@@ -81,7 +81,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 						
-						<form id="nueva" class="smart-form" method="POST" action="/bo/almacen/crear_almacen" enctype="multipart/form-data">
+						<form id="nueva" class="smart-form" method="POST" action="/bo/cedis/crear_cedis" enctype="multipart/form-data">
 							<fieldset>
 								<label class="input">Nombre
 									<input style="width: 25rem;" type="text" name="nombre" placeholder="Nombre"class="form-control" required>
@@ -97,8 +97,27 @@
 									</section>
 								</div>
 								
-								<label class="input">Ciudad
-									<input style="width: 25rem;" type="text" name="ciudad" placeholder="Ciudad" class="form-control" required>
+							 <label class="select"> 	
+							 País <select id="pais" required  style="width: 25rem;
+									name="pais" onChange="CiudadPais()"> 
+										   <? foreach ( $pais as $key ) { ?>
+										   <option value="<?=$key->Code?>">
+										   <?=$key->Name?>
+										   </option>
+											<?}?>
+											</select>
+									</label>
+									
+							</label>
+		
+								
+								<label class="select" style="width: 25rem">Ciudad 
+										<select name="ciudad" id="ciudad">
+									<?foreach ($ciudad as $key){?>
+									<option value="<?=$key->ID ?>"><?=$key->Name ?></option>
+									<?}?>
+								</select>
+								<a href="" onclick="new_ciudad()">Nueva Ciudad</a>
 								</label>
 								
 								<label class="input">Dirección
@@ -106,8 +125,9 @@
 								</label>
 								
 								<label class="input">Telefono
-									<input style="width: 25rem;" type="number" name="telefono" placeholder="Telefono" class="form-control" required>
+									<input style="width: 25rem;" type="text" name="telefono" placeholder="Telefono" class="form-control" required>
 								</label>
+								<br>
 								<div class="row">
 									<section  id="div_subir" style="width: 25rem;">
 										<div style="width: 25rem;">
@@ -143,3 +163,38 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
+function new_ciudad(){
+	bootbox.dialog({
+		message: '<form id="form_ciudad" method="post" class="smart-form">'
+					+'<fieldset>'
+						+'<legend>Datos Ciudad</legend>'
+							+'<div  class="row">'
+								+'<section class="col col-6">'
+									+'País'
+									+'<label class="select">'
+										+'<select id="pais2" required name="pais2">'
+										+'<?foreach ($pais as $key){?>'
+											+'<option value="<?=$key->Code?>">'
+												+'<?=$key->Name?>'
+											+'</option>'
+										+'<?}?>'
+										+'</select>'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Ciudad'
+										+'<input required  type="text" id="ciudad2" name="ciudad2" placeholder="Ciudad">'
+									+'</label>'
+								+'</section>'
+								
+							+'</div>'
+						+'</fieldset>'
+				+'</form>',
+		
+	})
+	
+}
+
+</script>

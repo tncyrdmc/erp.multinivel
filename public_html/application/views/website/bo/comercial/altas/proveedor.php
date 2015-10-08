@@ -6,14 +6,17 @@
 						
 						<?php  if($type=='5'){?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
 							<span>>
+								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>>
 								Proveedor 
 							</span>
 						<?php }else{?>		
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
 							<a href="/bol/dashboard">Logistica </a>>
-								Proveedor 
+								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
+								 >Proveedor 
 							</span>
 						
 						<?php }?>		
