@@ -86,7 +86,7 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label class="select">Pais
-											<select id="pais" required name="pais">
+											<select id="pais" required name="pais" onChange="CiudadesPais()">
 												<option value="-" selected>-- Seleciona un pais --</option>
 												<?foreach ($paises as $key){?>
 													<option value="<?=$key->Code?>"><?=$key->Name?></option>
@@ -275,7 +275,6 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Puesto<label for="" class="input">
-											<i class="icon-prepend fa fa-envelope-o"></i>
 											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" />
 										</label>
 									</div>
@@ -294,10 +293,10 @@
 									<div class="row">
 										<div class="col col-lg-2">
 										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3">
-											Ciudad<label for="" class="input">
-												<i class="icon-prepend fa fa-bank"></i>
-												<input type="text" class="form-control" name="ciudad_tarifa[]" placeholder=""class="form-control" required />
+										<div class="col col-xs-12 col-sm-6 col-lg-3" id="ciudad">
+											<label class="select">Ciudad
+												<select name="ciudad_tarifa[]" >
+												</select>
 											</label>
 										</div>
 										
@@ -392,5 +391,33 @@ function delete_tarifa(id)
 {	
 	$("#"+id+"").remove();
 	
+}
+
+function CiudadesPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ciudad option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#ciudad');
+		      $('#ciudad select').each(function() {
+				  $(this).append('<option value="'+datos[i]['ID']+'">'+datos[i]['Name']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 </script>

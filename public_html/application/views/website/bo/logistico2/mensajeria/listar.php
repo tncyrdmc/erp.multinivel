@@ -8,7 +8,7 @@
 					<span>
 						> <a href="/bol/"> Logistico</a>
 						> <a href="/bo/logistico2/alta"> Alta </a>
-						> <a href="/bo/proveedore_mensajeria/index"> Proveedor Mensajeria </a>
+						> <a href="/bo/proveedor_mensajeria/index"> Proveedor Mensajeria </a>
 						> listar
 					</span>
 			</h1>
