@@ -18,7 +18,7 @@ class modelo_proveedor_mensajeria extends CI_Model
 	}
 	
 	function obtenerProveedores(){
-		$q = $this->db->query('select pm.id, pm.nombre_empresa, pm.razon_social, c.Name as pais, pm.direccion, pm.direccion_web, pm.estatus
+		$q = $this->db->query('select pm.id, pm.nombre_empresa, pm.razon_social, c.Name as pais, pm.id_pais ,pm.direccion, pm.direccion_web, pm.estatus
 				from proveedor_mensajeria pm, Country c where pm.id_pais = c.Code');
 		$proveedor = $q->result();
 		return $proveedor;
@@ -62,7 +62,9 @@ class modelo_proveedor_mensajeria extends CI_Model
 	}
 	
 	function consultar_tarifas_mensajeria($id){
-		$q = $this->db->query('select * from proveedor_tarifas where id_proveedor ='.$id);
+		$q = $this->db->query('select pt.id, pt.id_proveedor, pt.ciudad, pt.tarifa 
+				from proveedor_tarifas pt, City c 
+			 	where pt.ciudad = c.ID and pt.id_proveedor ='.$id);
 		$tarifas = $q->result();
 		return $tarifas;
 	}

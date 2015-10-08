@@ -1,3 +1,4 @@
+
 <form class="smart-form" method="POST" action="/bo/proveedor_mensajeria/actualizar_proveedor">
 							<fieldset>
 							<input type="text" name="id" class="hide" value="<?php echo $proveedor[0]->id; ?>"/>
@@ -22,7 +23,7 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label class="select">Pais
-											<select id="pais" required name="pais">
+											<select id="pais" required name="pais" onChange="CiudadesPais()">
 												<option value="-" selected>-- Seleciona un pais --</option>
 												<?foreach ($paises as $key){
 													if($proveedor[0]->id_pais == $key->Code){ ?>
@@ -93,7 +94,7 @@
 										</label>
 									</div>
 									
-									<?php $telefono_movil = explode("-",$contactos[0]->telefono_movil); 
+									<?php $telefono_movil = explode("/",$contactos[0]->telefono_movil); 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -103,7 +104,7 @@
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("-",$contactos[0]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",$contactos[0]->telefono_fijo); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -143,7 +144,7 @@
 											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo $contactos[1]->apellido; ?>" />
 										</label>
 									</div>
-									<?php $telefono_movil = explode("-",$contactos[1]->telefono_movil); 
+									<?php $telefono_movil = explode("/",$contactos[1]->telefono_movil); 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -153,7 +154,7 @@
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("-",$contactos[1]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",$contactos[1]->telefono_fijo); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -188,13 +189,21 @@
 										</div>
 										
 									</div>
-									<?php $i= 0; 
+									<?php $i= 0;
 									foreach ($tarifas as $tarifa){ ?>
 									<div class="row" id="<?php echo $i; ?>">
-										<div class="col col-xs-12 col-sm-6 col-lg-6">
-											Ciudad<label for="" class="input">
-												<i class="icon-prepend fa fa-bank"></i>
-												<input type="text" class="form-control" name="ciudad_tarifa[]" placeholder=""class="form-control" value="<?php echo $tarifa->ciudad; ?>" required />
+										<div class="col col-xs-12 col-sm-6 col-lg-6"  id="ciudad2">
+											<label class="select">Ciudad
+												<select name="ciudad_tarifa[]">
+												<?php foreach ($ciudades as $ciudad){
+													if($ciudad['ID'] == $tarifa->ciudad){ ?>
+													<option value="<?php echo $ciudad['ID']; ?>" selected><?php echo $ciudad['Name']; ?></option>
+													<?php }else {?>
+													<option value="<?php echo $ciudad['ID']; ?>"><?php echo $ciudad['Name']; ?></option>
+													<?php }
+												}?>
+												
+												</select>
 											</label>
 										</div>
 										
@@ -203,9 +212,8 @@
 												<i class="icon-prepend fa fa-dollar"></i>
 												<input type="number" class="form-control" name="valor_tarifa[]" placeholder=""class="form-control" value="<?php echo $tarifa->tarifa; ?>" required />
 											</label>
-											<?php if($i == 0 ){ ?>
-												<a style="cursor: pointer;" onclick="delete_tarifa('<?php echo $i; ?>')">Eliminar Tarifa <i class="fa fa-minus"></i></a>
-											<?php $i++;	}?>		
+											<a style="cursor: pointer;" onclick="delete_tarifa('<?php echo $i; ?>')">Eliminar Tarifa <i class="fa fa-minus"></i></a>
+											<?php $i++; ?>		
 										</div>
 									</div>
 									<?php }?>
@@ -243,11 +251,12 @@ function enviar() {
 function add_tarifa()
 {
 	var code=	'<div id="'+i+'" class="row">'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-6">'
-		+'Ciudad<label for="" class="input">'
-			+'<i class="icon-prepend fa fa-bank"></i>'
-			+'<input type="text" class="form-control" name="ciudad_tarifa[]" placeholder=""class="form-control" required />'
-		+'</label>'
+	
+	+'<div class="col col-xs-12 col-sm-6 col-lg-6" id="ciudad">'
+		+'<label class="select">Ciudad'
+		+'<select name="ciudad_tarifa[]" >'
+		+'</select>'
+	+'</label>'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-5 col-lg-6">'
 		+'Tarifa<label for="" class="input">'
@@ -259,11 +268,38 @@ function add_tarifa()
 	+'</div>';
 	$("#tarifa").append(code);
 	i = i + 1
+	CiudadesPais();
 }
 
 function delete_tarifa(id)
 {	
 	$("#"+id+"").remove();
 	
+}
+
+function CiudadesPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ciudad option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#ciudad');
+		      $('#ciudad select').each(function() {
+				  $(this).append('<option value="'+datos[i]['ID']+'">'+datos[i]['Name']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 </script>

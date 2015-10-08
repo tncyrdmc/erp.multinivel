@@ -369,11 +369,11 @@ function add_tarifa()
 	var code=	'<div id="'+i+'" class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
-		+'Ciudad<label for="" class="input">'
-			+'<i class="icon-prepend fa fa-bank"></i>'
-			+'<input type="text" class="form-control" name="ciudad_tarifa[]" placeholder=""class="form-control" required />'
-		+'</label>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-3" id="ciudad">'
+		+'<label class="select">Ciudad'
+		+'<select name="ciudad_tarifa[]" >'
+		+'</select>'
+	+'</label>'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
 		+'Tarifa<label for="" class="input">'
@@ -385,6 +385,7 @@ function add_tarifa()
 	+'</div>';
 	$("#tarifa").append(code);
 	i = i + 1
+	CiudadesPais();
 }
 
 function delete_tarifa(id)

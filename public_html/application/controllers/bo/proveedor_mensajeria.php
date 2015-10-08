@@ -165,7 +165,7 @@ class proveedor_mensajeria extends CI_Controller
 			if($telefonos_concatenados == ''){
 				$telefonos_concatenados = $telefono;
 			}else{
-				$telefonos_concatenados = $telefonos_concatenados." - ".$telefono;
+				$telefonos_concatenados = $telefonos_concatenados."/".$telefono;
 			}
 		}
 		return $telefonos_concatenados;
@@ -276,16 +276,17 @@ class proveedor_mensajeria extends CI_Controller
 		//$almacen = $this->modelo_almacen->consultar_almacen($_POST['id']);
 	
 		//$this->template->set("almacen",$almacen);
-		
 		$pais = $this->model_admin->get_pais_activo();
 		$proveedor = $this->modelo_proveedor_mensajeria->consultar_proveedor_mensajeria($_POST['id']);
 		$contactos = $this->modelo_proveedor_mensajeria->consultar_contactos_mensajeria($_POST['id']);
 		$tarifas = $this->modelo_proveedor_mensajeria->consultar_tarifas_mensajeria($_POST['id']);
+		$ciudades = $this->modelo_proveedor_mensajeria->ObtenerCiudadesPais($proveedor[0]->id_pais);
 		
 		$this->template->set("paises",$pais);
 		$this->template->set("proveedor",$proveedor);
 		$this->template->set("contactos",$contactos);
 		$this->template->set("tarifas",$tarifas);
+		$this->template->set("ciudades",$ciudades);
 		
 		$this->template->build('website/bo/logistico2/mensajeria/editar');
 	}
