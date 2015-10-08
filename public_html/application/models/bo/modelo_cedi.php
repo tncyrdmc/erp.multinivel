@@ -6,14 +6,15 @@ class modelo_cedi extends CI_Model
 		$this->db->insert('cedi',$cedi);
 		return mysql_insert_id();
 	}
-	function buscarCiudad($id){
-		$q = $this->db->query('select * from City where CountryCode='.$id);
-		$ciudades = $q->result();
-		return $ciudades;
-	}
+	
 	
 	function nuevaCiudad(){
-		
+		$ciudad = array (
+				"Name" => $_POST ['ciudad'],
+				"CountryCode" => $_POST ['pais'],
+				"District" => $_POST ['departamento']
+		);
+		$this->db->insert ( "City", $ciudad );
 	}
 	
 }

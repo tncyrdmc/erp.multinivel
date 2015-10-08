@@ -97,28 +97,26 @@
 									</section>
 								</div>
 								
-							 <label class="select"> 	
-							 País <select id="pais" required  style="width: 25rem;
-									name="pais" onChange="CiudadPais()"> 
-										   <? foreach ( $pais as $key ) { ?>
-										   <option value="<?=$key->Code?>">
-										   <?=$key->Name?>
-										   </option>
-											<?}?>
+							<label class="select" style="width: 25rem">Pais
+											<select id="pais" required name="pais" onChange="CiudadesPais()">
+												<option value="-" selected>-- Seleciona un pais --</option>
+												<?foreach ($pais as $key){?>
+													<option value="<?=$key->Code?>"><?=$key->Name?></option>
+												<?}?>
 											</select>
-									</label>
-									
 							</label>
 		
 								
-								<label class="select" style="width: 25rem">Ciudad 
-										<select name="ciudad" id="ciudad">
-									<?foreach ($ciudad as $key){?>
-									<option value="<?=$key->ID ?>"><?=$key->Name ?></option>
-									<?}?>
-								</select>
-								<a href="" onclick="new_ciudad()">Nueva Ciudad</a>
-								</label>
+							<div  style="width: 25rem" id="ciudad">
+									<label class="select">Ciudad
+												<select name="ciudad" >
+												</select>
+									</label> <a href="#" onclick="new_ciudad()">Agregar Ciudad <i
+										class="fa fa-plus"></i></a>
+									</label>
+							</div>
+						
+							
 								
 								<label class="input">Dirección
 									<input style="width: 25rem;" type="text" name="direccion" placeholder="Direeccion" class="form-control" required>
@@ -173,7 +171,7 @@ function new_ciudad(){
 								+'<section class="col col-6">'
 									+'País'
 									+'<label class="select">'
-										+'<select id="pais2" required name="pais2">'
+										+'<select id="pais" required name="pais">'
 										+'<?foreach ($pais as $key){?>'
 											+'<option value="<?=$key->Code?>">'
 												+'<?=$key->Name?>'
@@ -185,16 +183,93 @@ function new_ciudad(){
 								+'<section class="col col-6">'
 									+'<label class="input">'
 										+'Ciudad'
-										+'<input required  type="text" id="ciudad2" name="ciudad2" placeholder="Ciudad">'
+										+'<input required  type="text" id="ciudad" name="ciudad" placeholder="Ciudad">'
 									+'</label>'
 								+'</section>'
-								
+								+'<section class="col col-6">'
+								+'<label class="input">'
+									+'Departamento'
+									+'<input required  type="text" id="departamento" name="departamento" placeholder="Departamento">'
+								+'</label>'
+							+'</section>'
 							+'</div>'
 						+'</fieldset>'
 				+'</form>',
-		
-	})
-	
+				title: "Nueva Ciudad",
+				buttons: {
+					submit: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+
+							$.ajax({
+								type: "POST",
+								url: "/bo/cedis/nuevaCiudad",
+								data: $("#form_ciudad").serialize()
+							})
+							.done(function( msg )
+							{
+								CiudadesPais();
+								//$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
+								//$("#empresa").val(empresa['id']);
+								bootbox.dialog({
+								message: "Se agrego la ciudad correctamente",
+								title: 'Ciudades',
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "btn-success",
+									callback: function() {
+											}
+										}
+									}
+								})//fin done ajax
+
+							});//Fin callback bootbox
+
+						}
+					},
+						danger: {
+						label: "Cancelar!",
+						className: "btn-danger",
+						callback: function() {
+
+							}
+					}
+				}
+			})
+
+
+			
 }
 
+</script>
+<script>
+function CiudadesPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ciudad option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#ciudad');
+		      $('#ciudad select').each(function() {
+				  $(this).append('<option value="'+datos[i]['ID']+'">'+datos[i]['Name']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+}
 </script>

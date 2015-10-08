@@ -79,13 +79,6 @@
 														</div>
 													</a>
 												</div>
-																								
-											</div>
-<<<<<<< HEAD
-											
-											<div class="row">
-											<div class="col-sm-1 link">
-												</div>
 												<div class="col-sm-3 link">
 													<a href="/bo/cedis/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
@@ -93,13 +86,15 @@
 															<h1>Cedis<br>&nbsp</h1>
 														</div>
 													</a>
-												</div>
+												</div>												
+											</div>
+
 											
-										 </div>
-=======
+										
+	 </div>
 							</div>
 						 </div>
->>>>>>> aa0243c9d21ad51cdcc4490c39e060beee6a8a96
+
 									</div>
 								</fieldset>
 						</div>

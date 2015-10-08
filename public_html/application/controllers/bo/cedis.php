@@ -155,12 +155,11 @@ class cedis extends CI_Controller
 			redirect('/bo/cedis/altaCedis');
 		}
 	}
-	function ciudadCedi(){
-		$this->modelo_cedi->buscarCiudad($_POST['pais']);
-	}
+
 	
 	function nuevaCiudad(){
 		$this->modelo_cedi->nuevaCiudad();
+		
 	}
 	
 }
