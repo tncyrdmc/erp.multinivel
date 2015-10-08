@@ -3,8 +3,8 @@
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+			<h1 class="page-title txt-color-blueDark">
 				<span>> <a href="/bol/"> Logistico </a>
 				> <a href="/bo/logistico2/alta"> Alta </a>
 				> <a href="/bo/proveedor_software/"> Proveedor de Mensajeria </a>
@@ -286,7 +286,10 @@
 										<div class="col col-lg-3 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_tarifa()">Agregar Tarifa <i class="fa fa-plus"></i></a>
+											<a style="cursor: pointer;" onclick="add_tarifa()"> Agregar Tarifa <i class="fa fa-plus"></i></a>
+										</div>
+										<div class="col col-lg-2 col-xs-2">
+											<a style="cursor: pointer;" onclick="new_ciudad()"> Nueva Ciudad <i class="fa fa-plus"></i></a>
 										</div>
 										
 									</div>
@@ -420,5 +423,83 @@ function CiudadesPais(){
 	        
 	      }
 	});
+}
+
+function new_ciudad(){
+	bootbox.dialog({
+		message: '<form id="form_ciudad" method="post" class="smart-form">'
+					+'<fieldset>'
+						+'<legend>Datos Ciudad</legend>'
+							+'<div  class="row">'
+								+'<section class="col col-6">'
+									+'País'
+									+'<label class="select">'
+										+'<select id="pais" required name="pais">'
+										+'<?foreach ($paises as $key){?>'
+											+'<option value="<?=$key->Code?>">'
+												+'<?=$key->Name?>'
+											+'</option>'
+										+'<?}?>'
+										+'</select>'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Ciudad'
+										+'<input required  type="text" id="ciudad" name="ciudad" placeholder="Ciudad">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+								+'<label class="input">'
+									+'Departamento'
+									+'<input required  type="text" id="departamento" name="departamento" placeholder="Departamento">'
+								+'</label>'
+							+'</section>'
+							+'</div>'
+						+'</fieldset>'
+				+'</form>',
+				title: "Nueva Ciudad",
+				buttons: {
+					submit: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+
+							$.ajax({
+								type: "POST",
+								url: "/bo/cedis/nuevaCiudad",
+								data: $("#form_ciudad").serialize()
+							})
+							.done(function( msg )
+							{
+								CiudadesPais();
+								//$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
+								//$("#empresa").val(empresa['id']);
+								bootbox.dialog({
+								message: "Se agrego la ciudad correctamente",
+								title: 'Ciudades',
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "btn-success",
+									callback: function() {
+											}
+										}
+									}
+								})//fin done ajax
+
+							});//Fin callback bootbox
+
+						}
+					},
+						danger: {
+						label: "Cancelar!",
+						className: "btn-danger",
+						callback: function() {
+
+							}
+					}
+				}
+			})	
 }
 </script>
