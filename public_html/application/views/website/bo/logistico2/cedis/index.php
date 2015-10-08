@@ -3,23 +3,23 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
+							<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						<span>
+								
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> Cedis
+						</span>
+							 <?php }else{?>
 						
-						<?php  if($type=='5'){?>
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+								> <a href="/bol/dashboard/"> Logistico</a> 
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> Cedis
+							</span>
 							
-							<span>>
-								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>>
-								Proveedor 
-							</span>
-						<?php }else{?>		
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-							<a href="/bol/dashboard">Logistica </a>>
-								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
-								 >Proveedor 
-							</span>
-						
-						<?php }?>		
+							<?php }?>
 						</h1>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
 											</div>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
-												<a href="/bo/comercial/nuevo_proveedor">
+												<a href="/bo/cedis/altaCedis">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-edit fa-3x"></i>
 														<h1>Alta</h1>
@@ -57,7 +57,7 @@
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="/bo/comercial/listarProveedor">
+												<a href="/bo/cedis/listarCedis">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 														<i class="fa fa-list-alt fa-3x"></i>
 														<h1>Listar</h1>

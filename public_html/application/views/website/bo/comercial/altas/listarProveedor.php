@@ -73,7 +73,7 @@
 													<th data-class="expand">Nombre</th>
 													<th data-hide="phone">Apellido</th>
 													<th data-hide="phone">Pais</th>
-													<th data-hide="phone">Provincia</th>
+													<th data-hide="phone">Email</th>
 													<th></th>
 												</tr>
 											</thead>
