@@ -84,13 +84,13 @@
 										<section class="col col-3">
 											<label class="input"> <i class="icon-prepend fa fa-phone"></i>
 												<input required name="fijo[]" placeholder="(99) 99-99-99-99"
-												type="tel">
+												type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido">
 											</label>
 										</section>
 										<section class="col col-3">
 											<label class="input"> <i class="icon-prepend fa fa-mobile"></i>
 												<input required name="movil[]"
-												placeholder="(999) 99-99-99-99-99" type="tel">
+												placeholder="(999) 99-99-99-99-99" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido">
 											</label>
 										</section>
 									</div>
@@ -544,11 +544,11 @@ function agregar1(tipo)
 {
 	if(tipo==1)
 	{
-		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' pattern='[0-9]{7,50}' title='Por favor digite un numero de telefono valido' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 	else
 	{
-		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' pattern='[0-9]{7,50}' title='Por favor digite un numero de telefono valido' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 }
 

@@ -143,6 +143,10 @@
 	<!-- end widget grid -->
 </div>
 <!-- END MAIN CONTENT -->
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
 <script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
 <script src="/template/js/plugin/markdown/markdown.min.js"></script>
 <script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
@@ -358,7 +362,7 @@ function estado_proveedor(estatus, id)
 		}else if(ciudad == ''){
 			alert('El cambo ciudad del almacen es requerido');
 			return false;
-		}else if(telefono == ''){
+		}else if(telefono.length <= 7){
 			alert('El cambo telefono del almacen es requerido');
 			return false;
 		}else{
