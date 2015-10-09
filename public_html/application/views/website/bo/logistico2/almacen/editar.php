@@ -33,7 +33,7 @@
 								</label>
 								
 								<label class="input">Telefono
-									<input style="width: 25rem;" type="number" name="telefono" id="telefono" placeholder="Telefono" class="form-control" value="<?php echo $almacen[0]->telefono; ?>" required>
+									<input style="width: 25rem;" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" name="telefono" id="telefono" placeholder="Telefono" class="form-control" value="<?php echo $almacen[0]->telefono; ?>" required>
 								</label>
 								
 								<section class="col col-lg-6">
@@ -47,7 +47,7 @@
 								<div class="row">
 									<section  id="div_subir" style="width: 25rem;">
 										<div style="width: 25rem;">
-											<input type="submit" class="btn btn-success" style="margin-left: 66% ! important; width: 40%;" id="boton_subir" value="Actualizar" onclick="actualizar_almacen()">
+											<input type="submit" class="btn btn-success" style="margin-left: 66% ! important; width: 40%;" id="boton_subir" value="Actualizar" >
 										</div>
 									</section>
 								</div>	

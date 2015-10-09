@@ -38,7 +38,7 @@
 				<section class="col col-6">Telefono
 		 <label class="input"> <i class='icon-prepend fa fa-phone'></i>
 		 <input name="telefono[]" value="<?php echo $tel[$i]; ?> " 
-		        id="telefono"  type="text">
+		        id="telefono"  type="tel" pattern='[0-9]{7,50}' title='Por favor digite un numero de telefono valido'>
 		 </label>
 		 </section>
 	   <?php 
