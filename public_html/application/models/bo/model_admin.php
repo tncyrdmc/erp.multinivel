@@ -1630,4 +1630,10 @@ WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
 		
 	}
 	
+	function get_pais_impuesto($var){
+	
+		$q=$this->db->query("SELECT *  FROM cat_impuesto ");
+		return $q->result();
+	}
+	
 }

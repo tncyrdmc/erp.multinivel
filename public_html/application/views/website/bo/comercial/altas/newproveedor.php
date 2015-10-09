@@ -160,6 +160,7 @@
 									<section class="col col-2">
 										País <label class="select"> <select id="pais" required
 											name="pais" onChange="ImpuestosPais()"> 
+												<option value="-" selected>-- Seleciona un pais --</option>
 													<? foreach ( $pais as $key ) { ?>
 													<option value="<?=$key->Code?>">
 														<?=$key->Name?>
@@ -294,7 +295,7 @@
 									<section class="col col-3">
 										<label class="select">Impuesto 
 										<select name="impuesto" id="impuesto">
-									<?foreach ($impuesto as $key){?>
+									<?foreach ($paisImpuesto as $key){?>
 									<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>
 									<?}?>
 								</select>

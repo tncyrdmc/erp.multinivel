@@ -290,18 +290,51 @@ function eliminar(id) {
 function estado(estatus, id)
 {
 		
-	$.ajax({
-		type: "POST",
-		url: "/bo/comercial/cambiar_estado_proveedor",
-		data: {
-			id:id, 
-			estado: estatus
-		},
-		}).done(function( msg )
-				{
-					location.href = "/bo/comercial/listarProveedor";
+
+
+	var msg = "¿Desea desactivar el Proveedor?";
+	var titulo;
+	if(estatus == "DES"){
+		msg = "¿Desea desactivar el Proveedor?";
+		titulo = "Desactivar Proveedor";
+	}else{
+		msg = "¿Desea activar el Proveedor?";
+		titulo = "Activar Proveedor";
+	}
+		
+	bootbox.dialog({
+		message: msg,
+		title: titulo,
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
 				
-			})
+				$.ajax({
+					type: "POST",
+					url: "/bo/comercial/cambiar_estado_proveedor",
+					data: {
+						id:id, 
+						estado: estatus
+					},
+					}).done(function( msg )
+							{
+							
+								location.href = "/bo/comercial/listarProveedor";
+						})
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
 	}
 </script>			
 <style>

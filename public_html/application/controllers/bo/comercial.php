@@ -2015,7 +2015,7 @@ class comercial extends CI_Controller
 		$zona	         = $this->model_admin->get_zona();
 		$inscripcion	 = $this->model_admin->get_paquete();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
-
+		
 		$this->template->set("productos",$productos);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -2105,6 +2105,10 @@ class comercial extends CI_Controller
   	$bancoProveedor	 = $this->model_admin->get_BancoProveedor($cuentaBanco[0]->banco);
   	$bancos          = $this->model_mercancia->Bancos();
   	
+  	
+
+
+ 
   	$this->template->set("tipo_proveedor",  $tipo_proveedor);
   	$this->template->set("empresa",$empresa);
   	$this->template->set("pais",$pais);
@@ -2112,6 +2116,10 @@ class comercial extends CI_Controller
     $this->template->set("bancos",$bancos);
     $this->template->set("cuentaBanco",$cuentaBanco);
   	$this->template->set("impuesto",$impuesto);
+  	
+  	
+  	
+  	
   	$this->template->set("regimen",$regimen);
   	$this->template->set("zona",$zona);
   	$this->template->set("datosProveedor",$datosProveedor);
