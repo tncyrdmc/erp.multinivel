@@ -86,7 +86,6 @@ class proveedor_mensajeria extends CI_Controller
 		}
 		
 		$proveedor = array(
-				'numero_proveedor' => $_POST['numero'],
 				'razon_social' => $_POST['razon_social'],
 				'nombre_empresa' => $_POST['nombre'],
 				'idioma' => $_POST['idioma'],
@@ -305,7 +304,6 @@ class proveedor_mensajeria extends CI_Controller
 		}
 	
 		$proveedor = array(
-				'numero_proveedor' => $_POST['numero'],
 				'razon_social' => $_POST['razon_social'],
 				'nombre_empresa' => $_POST['nombre'],
 				'idioma' => $_POST['idioma'],

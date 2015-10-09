@@ -67,12 +67,6 @@
 							<fieldset>
 								<div class="row">
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Numero de empresa
-											<input type="text" class="form-control" name="numero" placeholder="Numero de empresa"class="form-control" required />
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre de empresa
 											<input type="text" class="form-control" name="nombre" placeholder="Nombre de empresa"class="form-control" required />
 										</label>
@@ -121,7 +115,7 @@
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Codigo Postal
-											<input type="text" class="form-control" name="codigo_postal" placeholder="Codigo Postal" class="form-control" required />
+											<input type="number" class="form-control" name="codigo_postal" placeholder="Codigo Postal" class="form-control" required />
 										</label>
 									</div>
 									
@@ -157,42 +151,42 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil1[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel" required>
+											<input name="telefonomovil1[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido"  required>
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil1[]" placeholder="Telefono movil 2" data-mask="999 999-9999" type="tel">
+											<input name="telefonomovil1[]" placeholder="Telefono movil 2" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil1[]" placeholder="Telefono movil 3" data-mask="999 999-9999" type="tel">
+											<input name="telefonomovil1[]" placeholder="Telefono movil 3" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo1[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel" required>
+											<input name="telefonofijo1[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido"  required>
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo1[]" placeholder="Telefono fijo 2" data-mask="(999) 999-9999" type="tel">
+											<input name="telefonofijo1[]" placeholder="Telefono fijo 2" data-mask="(999) 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo1[]" placeholder="Telefono Fijo 3" data-mask="999 999-9999" type="tel">
+											<input name="telefonofijo1[]" placeholder="Telefono Fijo 3" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
@@ -228,41 +222,41 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil2[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel">
+											<input name="telefonomovil2[]" placeholder="Telefono Movil 1" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil2[]" placeholder="Telefono movil 2" data-mask="999 999-9999" type="tel">
+											<input name="telefonomovil2[]" placeholder="Telefono movil 2" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Movil<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonomovil2[]" placeholder="Telefono movil 3" data-mask="999 999-9999" type="tel">
+											<input name="telefonomovil2[]" placeholder="Telefono movil 3" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo2[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel">
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-3">
-										Telefono Fijo<label for="" class="input">
-											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo2[]" placeholder="Telefono fijo 2" data-mask="(999) 999-9999" type="tel">
+											<input name="telefonofijo2[]" placeholder="Telefono Fijo 1" data-mask=" (999) 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-3">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo2[]" placeholder="Telefono Fijo 3" data-mask="999 999-9999" type="tel">
+											<input name="telefonofijo2[]" placeholder="Telefono fijo 2" data-mask="(999) 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
+										</label>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-3">
+										Telefono Fijo<label for="" class="input">
+											<i class="icon-prepend fa fa-phone"></i>
+											<input name="telefonofijo2[]" placeholder="Telefono Fijo 3" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" >
 										</label>
 									</div>
 									

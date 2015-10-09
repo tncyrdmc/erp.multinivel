@@ -4,12 +4,6 @@
 							<input type="text" name="id" class="hide" value="<?php echo $proveedor[0]->id; ?>"/>
 								<div class="row">
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Numero de empresa
-											<input type="text" class="form-control" name="numero" placeholder="Numero de empresa"class="form-control" value="<?php echo $proveedor[0]->numero_proveedor; ?>" required />
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre de empresa
 											<input type="text" class="form-control" name="nombre" placeholder="Nombre de empresa"class="form-control" value="<?php echo $proveedor[0]->nombre_empresa; ?>" required />
 										</label>
@@ -100,7 +94,7 @@
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
 											Telefono Movil<label for="" class="input">
 												<i class="icon-prepend fa fa-phone"></i>
-												<input name="telefonomovil1[]" placeholder="Telefono Movil" data-mask="999 999-9999" type="tel" value="<?php echo $telefono; ?>">
+												<input name="telefonomovil1[]" placeholder="Telefono Movil" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" value="<?php echo $telefono; ?>">
 											</label>
 										</div>
 									<?php } ?>
@@ -110,7 +104,7 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo1[]" placeholder="Telefono Fijo" data-mask=" (999) 999-9999" type="tel" value="<?php echo $telefono; ?>">
+											<input name="telefonofijo1[]" placeholder="Telefono Fijo" data-mask=" (999) 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" value="<?php echo $telefono; ?>">
 										</label>
 									</div>
 									<?php } ?>
@@ -150,7 +144,7 @@
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
 											Telefono Movil<label for="" class="input">
 												<i class="icon-prepend fa fa-phone"></i>
-												<input name="telefonomovil2[]" placeholder="Telefono Movil" data-mask="999 999-9999" type="tel" value="<?php echo $telefono; ?>">
+												<input name="telefonomovil2[]" placeholder="Telefono Movil" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" value="<?php echo $telefono; ?>">
 											</label>
 										</div>
 									<?php } ?>
@@ -160,7 +154,7 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo2[]" placeholder="Telefono Fijo" data-mask=" (999) 999-9999" type="tel" value="<?php echo $telefono; ?>">
+											<input name="telefonofijo2[]" placeholder="Telefono Fijo" data-mask=" (999) 999-9999" type="tel" pattern="[0-9]{7,50}" value="<?php echo $telefono; ?>">
 										</label>
 									</div>
 									<?php } ?>
