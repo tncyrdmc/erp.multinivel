@@ -55,8 +55,7 @@
 
 					<!-- widget div-->
 					<div>
-						<form method="POST"
-							id="proveedor" class="smart-form" novalidate="novalidate">
+						<form method="POST" id="proveedor" class="smart-form" >
 							<fieldset>
 								<legend>Datos personales del proveedor</legend>
 								<div class="row">
@@ -351,6 +350,7 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
 <script type="text/javascript">
 function new_proveedor()
 {
@@ -393,7 +393,7 @@ function new_proveedor()
 								label: "Ok!",
 								className: "btn-success",
 								callback: function() {
-									location.href="";
+									location.href="listarProveedor";
 								}
 							}
 						}

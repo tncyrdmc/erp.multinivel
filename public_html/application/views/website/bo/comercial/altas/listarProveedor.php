@@ -259,7 +259,7 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el Usuario.",
+						message: "Se ha eliminado el proveedor.",
 						title: 'Felicitaciones',
 						buttons: {
 							success: {

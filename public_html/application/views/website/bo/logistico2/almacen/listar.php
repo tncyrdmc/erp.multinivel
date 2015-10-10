@@ -313,7 +313,7 @@ function estado_almacen(estatus, id)
 		.done(function( msg ) {
 			bootbox.dialog({
 				message: msg,
-				title: 'Modificar E-Book',
+				title: 'Modificar Almacen',
 					});
 		});//fin Done ajax
 	}

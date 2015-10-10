@@ -1,6 +1,6 @@
 
 
-<form id="nueva" class="smart-form"  novalidate="novalidate" >
+<form id="nueva" class="smart-form" >
 <fieldset>
 <input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
 			
