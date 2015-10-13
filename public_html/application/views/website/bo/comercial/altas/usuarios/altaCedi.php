@@ -41,7 +41,7 @@
 						<div class="row col-xs-8 col-sm-6 col-md-4 col-lg-4" style="margin: 4rem;">
 							<div class="">
 							
-							<form method="POST" enctype="multipart/form-data"   action="/bo/Usuarios/guardarCedi" class="smart-form">
+							<form method="POST" enctype="multipart/form-data"   action="/bo/usuarios/guardarCedi" class="smart-form">
 									<section>
 										<div>
 											
@@ -144,6 +144,11 @@
 											<section class="input">
 												<label class="input">Fecha de inicio
 												<input required type="text" name="fecha_alta" id="startdate"  /> </label>
+											</section>
+											
+											<section class="input">
+												<label class="input">Password
+												<input required type="password" name="password" id="startdate"  /> </label>
 											</section>
 											
 											<br>

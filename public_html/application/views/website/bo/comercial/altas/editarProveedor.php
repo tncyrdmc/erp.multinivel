@@ -89,7 +89,10 @@
 								}
 								?>
 							     </select>
+							     	</label> <a href="#" onclick="new_empresa()">Agregar empresa <i
+										class="fa fa-plus"></i></a>
 		</div>
+	
 		</div>
 		
 	
@@ -492,5 +495,137 @@ function ImpuestosPais(){
 	        
 	      }
 	});
+}
+
+
+function new_empresa()
+{
+	bootbox.dialog({
+		message: '<form id="form_empresa" method="post" class="smart-form">'
+					+'<fieldset>'
+						+'<legend>Información de cuenta</legend>'
+						+'<section id="usuario" class="col col-6">'
+							+'<label class="input">Razón social'
+								+'<input required type="text" name="nombre" placeholder="Empresa">'
+							+'</label>'
+						+'</section>'
+						+'<section id="usuario" class="col col-6">'
+							+'<label class="input">Correo electrónico'
+								+'<input required type="email" name="email">'
+							+'</label>'
+						+'</section>'
+						+'<section id="usuario" class="col col-6">'
+							+'<label class="input">Sítio web'
+								+'<input required type="url" name="site">'
+							+'</label>'
+						+'</section>'
+						+'<section class="col col-6">Regimen fiscal'
+				            +'<label class="select">'
+				                +'<select class="custom-scroll" name="regimen">'
+				                    +'<?foreach ($regimen as $key){?>'
+				                        +'<option value="<?=$key->id_regimen?>">'
+				                            +'<?=$key->abreviatura." ".$key->descripcion?></option>'
+				                        +'<?}?>'
+				                +'</select>'
+				            +'</label>'
+				        +'</section>'
+					+'</fieldset>'
+					+'<fieldset>'
+						+'<legend>Dirección de la empresa</legend>'
+							+'<div id="dir" class="row">'
+								+'<section class="col col-6">'
+									+'País'
+									+'<label class="select">'
+										+'<select id="pais" required name="pais">'
+										+'<?foreach ($pais as $key){?>'
+											+'<option value="<?=$key->Code?>">'
+												+'<?=$key->Name?>'
+											+'</option>'
+										+'<?}?>'
+										+'</select>'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Código postal'
+										+'<input required  type="text" id="cp" name="cp">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Dirección domicilio'
+										+'<input required type="text" name="calle">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Número interior'
+										+'<input required type="text" name="interior">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Número exterior'
+										+'<input required type="text" name="exterior">'
+									+'</label>'
+								+'</section>'
+								+'<section id="colonia" class="col col-6">'
+									+'<label class="input">'
+										+'Ciudad'
+										+'<input type="text" name="colonia" >'
+									+'</label>'
+								+'</section>'
+								+'<section id="municipio" class="col col-6">'
+									+'<label class="input">'
+										+'Provincia'
+										+'<input type="text" name="municipio" >'
+									+'</label>'
+								+'</section>'
+							+'</div>'
+						+'</fieldset>'
+				+'</form>',
+		title: "Nueva Empresa",
+		buttons: {
+			submit: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+
+					$.ajax({
+						type: "POST",
+						url: "/bo/admin/new_empresa",
+						data: $("#form_empresa").serialize()
+					})
+					.done(function( msg )
+					{
+						var empresa = JSON.parse(msg);	
+						$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
+						$("#empresa").val(empresa['id']);
+						bootbox.dialog({
+						message: "Se agregado la empresa",
+						title: 'Empresa',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+									}
+								}
+							}
+						})//fin done ajax
+
+					});//Fin callback bootbox
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
 }
 </script>

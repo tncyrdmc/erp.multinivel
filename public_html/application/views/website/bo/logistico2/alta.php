@@ -86,6 +86,14 @@
 															<h1>Cedis<br>&nbsp</h1>
 														</div>
 													</a>
+												</div>
+													<div class="col-sm-3 link">
+													<a href="/bo/usuarios/menuAltaUsuarioCedi">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
+															<i class="fa fa-edit fa-3x"></i>
+															<h1>Usuario Cedi<br>&nbsp</h1>
+														</div>
+													</a>
 												</div>												
 											</div>
 

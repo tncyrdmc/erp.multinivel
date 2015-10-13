@@ -11,14 +11,18 @@ class Model_cedi extends CI_Model{
 	
 	function insertar($id_cedi, $dni, $username, $nombres, $apellido1, $apellido2, $telefono_fijo, 
 					  $telefono_movil, $email, $ocupacion, $id_pais, $idioma, $fecha_alta){
-					  	
+		
+		
+		
+		
+		
 		$datos = array('id_cedi' => $id_cedi, 'dni' => $dni, 'username' => $username,
 					   'nombres' => $nombres, 'apellido_uno' => $apellido1, 'apellido_dos' => $apellido2, 
 					   'telefono_fijo' => $telefono_fijo, 'telefono_movil' => $telefono_movil, 'email' => $email,
 					   'ocupacion' => $ocupacion, 'id_pais' => $id_pais, 'idioma' => $idioma, 'fecha_alta' => $fecha_alta,
 					   'status' => 'ACT'
 		);
-		$this->db->insert("cedi",$datos);
+		$this->db->insert("users_cedi",$datos);
 		
 	}
 

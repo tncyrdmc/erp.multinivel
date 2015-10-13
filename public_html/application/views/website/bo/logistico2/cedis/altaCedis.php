@@ -123,7 +123,7 @@
 								</label>
 								
 								<label class="input">Telefono
-									<input style="width: 25rem;" type="text" name="telefono" placeholder="Telefono" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido"  required>
+									<input style="width: 25rem;" type="text" name="telefono" >
 								</label>
 								<br>
 								<div class="row">

@@ -307,13 +307,13 @@ class usuarios extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"administracion"))
+		if($this->general->isAValidUser($id,"administracion")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
-		
 		$usuario=$this->general->get_username($id);
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("usuario",$usuario);
@@ -334,13 +334,14 @@ class usuarios extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"administracion"))
+	    if($this->general->isAValidUser($id,"administracion")||$this->general->isAValidUser($id,"logistica"))
 		{
+		}else{
 			redirect('/auth/logout');
 		}
 		
 		$usuario=$this->general->get_username($id);
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("usuario",$usuario);
@@ -399,6 +400,8 @@ class usuarios extends CI_Controller
 	}
 	
 	function editarTipoDeUsuario(){
+		
+	
 		$id              = $this->tank_auth->get_user_id();
 		$style           = $this->general->get_style(1);
 		$user	 	 = $this->model_tipo_usuario->getTipoUsuariosId($_POST['id']);
