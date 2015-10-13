@@ -184,6 +184,7 @@ class usuarios extends CI_Controller
 	}
 	
 	function altaTipoDeUsuarioAcceso(){
+		
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 		redirect('/auth');
@@ -230,7 +231,7 @@ class usuarios extends CI_Controller
 						$email_activation))) {
 							
 				$this->model_tipo_usuario->newUser($_POST['nombre'],$_POST['apellido'],$_POST['tipo']);
-				redirect('/bo/usuarios/listarTipoDeUsuario');
+				redirect('/bo/usuarios/listarTipoDeUsuarioAcceso');
 				/*
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 					$last_id=$this->general->get_last_id();
