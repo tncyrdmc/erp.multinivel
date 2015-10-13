@@ -247,10 +247,10 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="billetera2/index">
+													<a href="billetera2/index_estado">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-money fa-3x"></i>
-															<h5>Billetera</h5>
+															<h5>Estado de Cuenta</h5>
 														</div>
 													</a>
 												</div>
@@ -273,10 +273,10 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="compras/tickets">
+													<a href="billetera2/index">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa   fa-ticket  fa-3x"></i>
-															<h5>Tickets/Boletos</h5>
+															<i class="fa fa-dollar fa-3x"></i>
+															<h5>Billetera</h5>
 														</div>
 													</a>
 												</div>

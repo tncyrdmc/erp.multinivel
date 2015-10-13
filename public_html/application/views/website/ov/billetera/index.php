@@ -12,22 +12,7 @@
 <div class="well">
  <fieldset>
 	<legend>Billetera</legend>
-						<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
-						<a href="estado">
-							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
-								<i class="fa fa-dollar fa-3x"></i>
-								<h5>Estado de Cuenta</h5>
-							</div>	
-						</a>
-					</div>
-					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
-						<a href="/ov/billetera2/historial_cuenta">
-							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
-								<i class="fa fa-calendar fa-3x"></i>
-								<h5>Historial Cuenta</h5>
-							</div>	
-						</a>
-					</div>
+						
 					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
 						<a href="pedir_pago">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">

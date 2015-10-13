@@ -3,12 +3,34 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+						
+						<?php  if($type=='5'){?>
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/administracion"> </a>
-								<a href="/bo/comercial/actionProveedor"> Proveedor </a>
-								
+							<a href="/bo/logistico2/alta">Alta</a>>
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Listar
 							</span>
+								<?php } elseif($type=='4'){?>		
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
+							<span>>
+							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
+							    <a class="" href="/bo/comercial/actionProveedor/"><i class=""></i> Alta</a>>
+								Listar
+							</span>
+					
+							
+			
+						<?php }else{?>	
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>>
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Listar
+							</span>
+					
+							
+						<?php }?>		
 						</h1>
 					</div>
 				</div>
@@ -63,7 +85,7 @@
 													<th data-class="expand">Nombre</th>
 													<th data-hide="phone">Apellido</th>
 													<th data-hide="phone">Pais</th>
-													<th data-hide="phone">Provincia</th>
+													<th data-hide="phone">Email</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -249,7 +271,7 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el Usuario.",
+						message: "Se ha eliminado el proveedor.",
 						title: 'Felicitaciones',
 						buttons: {
 							success: {
@@ -280,18 +302,51 @@ function eliminar(id) {
 function estado(estatus, id)
 {
 		
-	$.ajax({
-		type: "POST",
-		url: "/bo/comercial/cambiar_estado_proveedor",
-		data: {
-			id:id, 
-			estado: estatus
-		},
-		}).done(function( msg )
-				{
-					location.href = "/bo/comercial/listarProveedor";
+
+
+	var msg = "¿Desea desactivar el Proveedor?";
+	var titulo;
+	if(estatus == "DES"){
+		msg = "¿Desea desactivar el Proveedor?";
+		titulo = "Desactivar Proveedor";
+	}else{
+		msg = "¿Desea activar el Proveedor?";
+		titulo = "Activar Proveedor";
+	}
+		
+	bootbox.dialog({
+		message: msg,
+		title: titulo,
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
 				
-			})
+				$.ajax({
+					type: "POST",
+					url: "/bo/comercial/cambiar_estado_proveedor",
+					data: {
+						id:id, 
+						estado: estatus
+					},
+					}).done(function( msg )
+							{
+							
+								location.href = "/bo/comercial/listarProveedor";
+						})
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
 	}
 </script>			
 <style>

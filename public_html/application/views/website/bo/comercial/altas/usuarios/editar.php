@@ -53,7 +53,7 @@ function enviar() {
 											label: "Ok!",
 											className: "btn-success",
 											callback: function() {
-												location.href="/bo/usuarios/listarTipoDeUsuario";
+												location.href="/bo/usuarios/listarTipoDeUsuarioAcceso";
 												}
 											}
 										}

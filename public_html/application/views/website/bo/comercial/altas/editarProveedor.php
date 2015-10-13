@@ -1,6 +1,6 @@
 
 
-<form id="nueva" class="smart-form"  novalidate="novalidate" >
+<form id="nueva" class="smart-form" >
 <fieldset>
 <input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
 			
@@ -26,23 +26,31 @@
 	   </div>
 	   </div>
 		<br>
-
+<div class="row">
+   <div id="tel1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		
 		<?php 
 		$tel=explode("-",$datosProveedor[0]->telefono);
 				
 		for($i = 1;$i < sizeof($tel);$i++)
-		{	?>
-				
-		 <label class="input"> Telefono
+		{	
+		if($tel[$i]!=''){?>
+				<section class="col col-6">Telefono
+		 <label class="input"> <i class='icon-prepend fa fa-phone'></i>
 		 <input name="telefono[]" value="<?php echo $tel[$i]; ?> " 
-		        id="telefono"  type="text">
+		        id="telefono"  type="tel" pattern='[0-9]{7,50}' title='Por favor digite un numero de telefono valido'>
 		 </label>
+		 </section>
 	   <?php 
-		}
+		}}
 	   ?>
-		
-	
+	</div>
+		<section class="col col-3">
+					<button type="button" onclick="agregartel()"
+					class="btn btn-primary">
+					&nbsp;Agregar <i class="fa fa-mobile"></i>&nbsp;
+		</section>									
+	</div>
 		<br>
 		<h4>Direccion de proveedor</h4>
 			<div class="row">
@@ -81,7 +89,10 @@
 								}
 								?>
 							     </select>
+							     	</label> <a href="#" onclick="new_empresa()">Agregar empresa <i
+										class="fa fa-plus"></i></a>
 		</div>
+	
 		</div>
 		
 	
@@ -186,13 +197,14 @@
 							</div>
 							</div>	
 					
-						
-							<?php 
-		
 				
-		for($i = 0;$i < sizeof($cuentaBanco);$i++)
-		{	?>
 			<div class="row">
+				
+						<div id="cuenta" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<?php 
+			for($i = 0;$i < sizeof($cuentaBanco);$i++)
+		{	?>
+		
 							<div class="col col-8">
 							<input type="text" class="hide" value="<?php echo $cuentaBanco[$i]->id ?>" name="id_cuenta[]">
 								<label class="select">Bancos 
@@ -207,16 +219,25 @@
 											</select>
 							</label>
 											
-						
-							</div>							
+						</div>	
+													
 		              <div class="col col-4">
 			             <label class="input"> Cuenta
 				         <input name="cuenta[]" value="<?php echo $cuentaBanco[$i]->cuenta?>" id="condicion_pago" maxlength="60" size="30" required="" type="text">
 			        </label>
+			        </div>	
+			        	<?php }?>
+			        </div>	
+			        	<br>
+			        <section class="col col-3">
+										<button type="button" onclick="agregar_cuenta()"
+											class="btn btn-primary">&nbsp;Agregar cuenta &nbsp;</button>
+									</section>
+									
 		</div>
-	</div>					
+					
 							
-		<?php }?>	
+	    
 						
 						 <label class="select"> Zona
 						<select class="custom-scroll"
@@ -421,6 +442,33 @@ function enviar() {
 		
 }
 
+function agregar_cuenta()
+{
+	
+	$("#cuenta").append('<section class="col col-8">Banco'
+			+'<input type="text" class="hide" value="0" name="id_cuenta[]">'
+			+'<label class="select"> '
+			+'<select class="custom-scroll" name="banco[]" id="banco" required>'
+				+'<?foreach ($bancos as $key){?>'
+				+'<option value="<?=$key->id_banco ?>">'
+					+'<?=$key->descripcion?></option>'
+				+'<?}?>'
+			+'</select>'
+			+'</label>'
+		+'</section>'
+		+'<section class="col col-4">'
+			+'<label class="input">Cuenta <input id="cuenta" required name="cuenta[]" placeholder="02112312345678901" type="text">'
+			+'</label>'
+		+'</section>');
+}
+
+function agregartel()
+{
+		$("#tel1").append("<section class='col col-6'>Telefono<label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='telefono[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+	
+}
+
+
 function ImpuestosPais(){
 	var pa = $("#pais").val();
 	
@@ -447,5 +495,137 @@ function ImpuestosPais(){
 	        
 	      }
 	});
+}
+
+
+function new_empresa()
+{
+	bootbox.dialog({
+		message: '<form id="form_empresa" method="post" class="smart-form">'
+					+'<fieldset>'
+						+'<legend>Información de cuenta</legend>'
+						+'<section id="usuario" class="col col-6">'
+							+'<label class="input">Razón social'
+								+'<input required type="text" name="nombre" placeholder="Empresa">'
+							+'</label>'
+						+'</section>'
+						+'<section id="usuario" class="col col-6">'
+							+'<label class="input">Correo electrónico'
+								+'<input required type="email" name="email">'
+							+'</label>'
+						+'</section>'
+						+'<section id="usuario" class="col col-6">'
+							+'<label class="input">Sítio web'
+								+'<input required type="url" name="site">'
+							+'</label>'
+						+'</section>'
+						+'<section class="col col-6">Regimen fiscal'
+				            +'<label class="select">'
+				                +'<select class="custom-scroll" name="regimen">'
+				                    +'<?foreach ($regimen as $key){?>'
+				                        +'<option value="<?=$key->id_regimen?>">'
+				                            +'<?=$key->abreviatura." ".$key->descripcion?></option>'
+				                        +'<?}?>'
+				                +'</select>'
+				            +'</label>'
+				        +'</section>'
+					+'</fieldset>'
+					+'<fieldset>'
+						+'<legend>Dirección de la empresa</legend>'
+							+'<div id="dir" class="row">'
+								+'<section class="col col-6">'
+									+'País'
+									+'<label class="select">'
+										+'<select id="pais" required name="pais">'
+										+'<?foreach ($pais as $key){?>'
+											+'<option value="<?=$key->Code?>">'
+												+'<?=$key->Name?>'
+											+'</option>'
+										+'<?}?>'
+										+'</select>'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Código postal'
+										+'<input required  type="text" id="cp" name="cp">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Dirección domicilio'
+										+'<input required type="text" name="calle">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Número interior'
+										+'<input required type="text" name="interior">'
+									+'</label>'
+								+'</section>'
+								+'<section class="col col-6">'
+									+'<label class="input">'
+										+'Número exterior'
+										+'<input required type="text" name="exterior">'
+									+'</label>'
+								+'</section>'
+								+'<section id="colonia" class="col col-6">'
+									+'<label class="input">'
+										+'Ciudad'
+										+'<input type="text" name="colonia" >'
+									+'</label>'
+								+'</section>'
+								+'<section id="municipio" class="col col-6">'
+									+'<label class="input">'
+										+'Provincia'
+										+'<input type="text" name="municipio" >'
+									+'</label>'
+								+'</section>'
+							+'</div>'
+						+'</fieldset>'
+				+'</form>',
+		title: "Nueva Empresa",
+		buttons: {
+			submit: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+
+					$.ajax({
+						type: "POST",
+						url: "/bo/admin/new_empresa",
+						data: $("#form_empresa").serialize()
+					})
+					.done(function( msg )
+					{
+						var empresa = JSON.parse(msg);	
+						$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
+						$("#empresa").val(empresa['id']);
+						bootbox.dialog({
+						message: "Se agregado la empresa",
+						title: 'Empresa',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+									}
+								}
+							}
+						})//fin done ajax
+
+					});//Fin callback bootbox
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
 }
 </script>

@@ -28,13 +28,14 @@ class premios extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
-			redirect('/auth/logout');
-		}
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+   	    {
+   	    }else{
+   		redirect('/auth/logout');
+      	}
 
 		$style=$this->modelo_dashboard->get_style(1);
-
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 
@@ -62,7 +63,7 @@ class premios extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$premios = $this->modelo_premios->PremiosPendientes();
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("style",$style);
 		$this->template->set("premios",$premios);
 		
@@ -87,15 +88,16 @@ class premios extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 	
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
-			redirect('/auth/logout');
-		}
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+   	    {
+   	    }else{
+   		redirect('/auth/logout');
+      	}
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$premios = $this->modelo_premios->PremiosTransito();
-	
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("style",$style);
 		$this->template->set("premios",$premios);
 	
@@ -121,15 +123,16 @@ class premios extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 	
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
-			redirect('/auth/logout');
-		}
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+   	    {
+   	    }else{
+   		redirect('/auth/logout');
+      	}
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		//$premios = $this->modelo_premios->PremiosEmbarcados();
-	
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("style",$style);
 		//$this->template->set("premios",$premios);
 	

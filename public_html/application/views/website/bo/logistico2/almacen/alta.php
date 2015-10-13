@@ -2,16 +2,34 @@
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
+		
+			
+			
+				<?php  if($type=='5'){?>
+					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bo/logistico2/"> Logistico </a>
+				<span>
 				> <a href="/bo/logistico2/alta"> Alta </a>
 				> <a href="/bo/almacen/"> Almacen </a>
 				>	Alta
 				</span>
-			</h1>
-		</div>
+				</h1>
+				</div>
+				 <?php }else{?>
+				 	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<h1 class="page-title txt-color-blueDark">
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>> <a href="/bol/dashboard/"> Logistico </a>
+				> <a href="/bo/logistico2/alta"> Alta </a>
+				> <a href="/bo/almacen/"> Almacen </a>
+				>	Alta
+				</span>
+				</h1>
+				</div>
+					<?php }?>
+			
+		
 	</div>
 	<?php if($this->session->flashdata('error')) {
 		echo '<div class="alert alert-danger fade in">
@@ -88,7 +106,7 @@
 								</label>
 								
 								<label class="input">Telefono
-									<input style="width: 25rem;" type="number" name="telefono" placeholder="Telefono" class="form-control" required>
+									<input style="width: 25rem;" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido" name="telefono" placeholder="Telefono" class="form-control" required>
 								</label>
 								<div class="row">
 									<section  id="div_subir" style="width: 25rem;">
@@ -125,17 +143,3 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-<script type="text/javascript">
-function enviar() {
-	
-	 $.ajax({
-							type: "POST",
-							url: "/bo/premios/crear_premio",
-							data: $('#nueva').serialize()
-						})
-						.done(function( msg ) {
-							location.href="/bo/premios/listar";
-						});//fin Done ajax
-		
-}
-</script>

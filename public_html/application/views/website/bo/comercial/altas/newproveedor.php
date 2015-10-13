@@ -4,12 +4,34 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
+			
+			<?php  if($type=='5'){?>
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>&gt;
-							
-								 Proveedor
+							<span>>
+							<a href="/bo/logistico2/alta">Alta</a>>
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Altas
 							</span>
-						</h1>
+		   <?php } elseif($type=='4'){?>		
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
+							<span>>
+							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
+							    <a class="" href="/bo/comercial/actionProveedor/"><i class=""></i> Alta</a>>
+								Nuevo Proveedor
+							</span>
+					
+							
+			<?php }else{?>
+				      <a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>>
+							
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Altas
+							</span>
+			<?php }?>	
+						
+							</h1>
 		</div>
 	</div>
 	<section id="widget-grid" class="">
@@ -43,8 +65,7 @@
 
 					<!-- widget div-->
 					<div>
-						<form method="POST"
-							id="proveedor" class="smart-form" novalidate="novalidate">
+						<form method="POST" id="proveedor" class="smart-form" >
 							<fieldset>
 								<legend>Datos personales del proveedor</legend>
 								<div class="row">
@@ -72,13 +93,13 @@
 										<section class="col col-3">
 											<label class="input"> <i class="icon-prepend fa fa-phone"></i>
 												<input required name="fijo[]" placeholder="(99) 99-99-99-99"
-												type="tel">
+												type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido">
 											</label>
 										</section>
 										<section class="col col-3">
 											<label class="input"> <i class="icon-prepend fa fa-mobile"></i>
 												<input required name="movil[]"
-												placeholder="(999) 99-99-99-99-99" type="tel">
+												placeholder="(999) 99-99-99-99-99" type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido">
 											</label>
 										</section>
 									</div>
@@ -148,6 +169,7 @@
 									<section class="col col-2">
 										País <label class="select"> <select id="pais" required
 											name="pais" onChange="ImpuestosPais()"> 
+												<option value="-" selected>-- Seleciona un pais --</option>
 													<? foreach ( $pais as $key ) { ?>
 													<option value="<?=$key->Code?>">
 														<?=$key->Name?>
@@ -282,7 +304,7 @@
 									<section class="col col-3">
 										<label class="select">Impuesto 
 										<select name="impuesto" id="impuesto">
-									<?foreach ($impuesto as $key){?>
+									<?foreach ($paisImpuesto as $key){?>
 									<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>
 									<?}?>
 								</select>
@@ -338,6 +360,7 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
 <script type="text/javascript">
 function new_proveedor()
 {
@@ -380,7 +403,7 @@ function new_proveedor()
 								label: "Ok!",
 								className: "btn-success",
 								callback: function() {
-									location.href="";
+									location.href="listarProveedor";
 								}
 							}
 						}
@@ -532,11 +555,11 @@ function agregar1(tipo)
 {
 	if(tipo==1)
 	{
-		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' pattern='[0-9]{7,50}' title='Por favor digite un numero de telefono valido' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 	else
 	{
-		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' pattern='[0-9]{7,50}' title='Por favor digite un numero de telefono valido' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 }
 

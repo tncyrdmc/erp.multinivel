@@ -3,14 +3,28 @@
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+		
 			<h1 class="page-title txt-color-blueDark">
+				
+					<?php  if($type=='5'){?>
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
 					<span>
-						> <a href="/bo/logistico2/"> Logistico</a>
+					
 						> <a href="/bo/logistico2/alta"> Alta </a>
 						> <a href="/bo/almacen/index"> Almacen </a>
 						> listar
 					</span>
+					 <?php }else{?>
+					 	<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
+					<span>
+						> <a href="/bol/dashboard/"> Logistico</a>
+						> <a href="/bo/logistico2/alta"> Alta </a>
+						> <a href="/bo/almacen/index"> Almacen </a>
+						> listar
+					</span>
+					 
+					 <?php }?>
+					
 			</h1>
 		</div>
 	</div>
@@ -299,7 +313,7 @@ function estado_almacen(estatus, id)
 		.done(function( msg ) {
 			bootbox.dialog({
 				message: msg,
-				title: 'Modificar E-Book',
+				title: 'Modificar Almacen',
 					});
 		});//fin Done ajax
 	}
