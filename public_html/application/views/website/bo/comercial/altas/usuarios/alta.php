@@ -155,7 +155,7 @@ function new_user()
 			type: "post",
 			url: "newUser",
 			success: function(){
-				location.href="/bo/usuarios/listarTipoDeUsuario"
+				location.href="/bo/usuarios/listarTipoDeUsuarioAcceso"
 			}
 		});
 	}

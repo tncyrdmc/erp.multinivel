@@ -8,18 +8,28 @@
 			<?php  if($type=='5'){?>
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
+							<a href="/bo/logistico2/alta">Alta</a>>
 							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
 								Altas
 							</span>
-						<?php }else{?>			
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-							<a href="/bol/dashboard">Logistica </a>>
-							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
-								Altas
-							</span>
+		   <?php } elseif($type=='4'){?>		
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							
-						<?php }?>	
+							<span>>
+							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
+							    <a class="" href="/bo/comercial/actionProveedor/"><i class=""></i> Alta</a>>
+								Nuevo Proveedor
+							</span>
+					
+							
+			<?php }else{?>
+				      <a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>>
+							
+							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
+								Altas
+							</span>
+			<?php }?>	
 						
 							</h1>
 		</div>

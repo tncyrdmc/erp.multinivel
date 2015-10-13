@@ -11,10 +11,19 @@
 								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>>
 								Proveedor 
 							</span>
+							<?php } elseif($type='4'){?>
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
+							<span>>
+							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
+								 Alta
+								
+							</span>
+					
 						<?php }else{?>		
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-							<a href="/bol/dashboard">Logistica </a>>
+						
 								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
 								 >Proveedor 
 							</span>

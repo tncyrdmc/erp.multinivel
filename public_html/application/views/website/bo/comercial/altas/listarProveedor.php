@@ -7,9 +7,21 @@
 						<?php  if($type=='5'){?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
+							<a href="/bo/logistico2/alta">Alta</a>>
 							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
 								Listar
 							</span>
+								<?php } elseif($type=='4'){?>		
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
+							<span>>
+							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
+							    <a class="" href="/bo/comercial/actionProveedor/"><i class=""></i> Alta</a>>
+								Listar
+							</span>
+					
+							
+			
 						<?php }else{?>	
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>

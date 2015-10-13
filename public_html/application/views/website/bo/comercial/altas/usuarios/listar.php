@@ -244,7 +244,7 @@ function eliminar(id) {
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/usuarios/listarTipoDeUsuario";
+								location.href="/bo/usuarios/listarTipoDeUsuarioAcceso";
 								}
 							}
 						}
