@@ -44,7 +44,41 @@
 							<form method="POST" enctype="multipart/form-data"   action="/bo/usuarios/guardarCedi" class="smart-form">
 									<section>
 										<div>
-											
+											<?php
+											if ($use_username) {
+												$username = array(
+													'name'	=> 'username',
+													'id'	=> 'username',
+													'value' => set_value('username'),
+													'maxlength'	=> $this->config->item('username_max_length', 'tank_auth'),
+													'size'	=> 30,
+												);
+												
+											}
+											$email = array(
+												'name'	=> 'email',
+												'id'	=> 'email',
+												'value'	=> set_value('email'),
+												'maxlength'	=> 80,
+												'size'	=> 30,
+											);
+											$password = array(
+												'name'	=> 'password',
+												'id'	=> 'password',
+												'value' => set_value('password'),
+												'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
+												'size'	=> 30,
+													
+											);
+											$confirm_password = array(
+												'name'	=> 'confirm_password',
+												'id'	=> 'confirm_password',
+												'value' => set_value('confirm_password'),
+												'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
+												'size'	=> 30,
+											);
+											?>
+											<?php echo form_open($this->uri->uri_string()); ?>
 											<label class="select">
 												<label class="label">Seleccione el CEDI al que pertenecerá</label>
 												<select name="id_cedi" id="id_cedi" required="">
@@ -151,9 +185,24 @@
 												<input required type="password" name="password" id="startdate"  /> </label>
 											</section>
 											
+											<section class="input">
+												<label class="input">Contraseña
+													<?php echo form_password($password); ?>
+													><?php echo form_error($password['name']); ?>
+											
+												
+											<section class="input">
+												<label class="input">Confirmar contraseña
+												<?php echo form_password($confirm_password); ?>
+												<input required type="password" name="password" id="startdate"  /> </label>
+											</section>
+													<td></td>
+													<td style="color: red;"><?php echo form_error($confirm_password['name']); ?></td>
+												</tr>
+											
 											<br>
 											<input name="register" value="Crear Usuario" type="submit" class="btn-success">
-											
+											<?php echo form_close(); ?>
 										</div>
 									</section>
 								</form>

@@ -299,7 +299,7 @@ class usuarios extends CI_Controller
 			$this->template->set_partial('footer', 'website/bo/footer');
 			$this->template->build('website/bo/comercial/altas/usuarios/altaUsuarioAcceso');
 	}
-	
+
 	function menuAltaUsuarioCedi(){
 		
 		if (!$this->tank_auth->is_logged_in())
@@ -327,6 +327,79 @@ class usuarios extends CI_Controller
 			$this->template->build('website/bo/comercial/altas/usuarios/menuAltaUsuarioCedi');
 	}
 	
+	function altaCedi(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
+		
+		
+		$this->template->set("tiposUsuario",$tiposUsuario);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		if ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+			redirect('/auth/send_again/');
+		
+		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
+			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
+		
+		} else {
+			$use_username = $this->config->item('use_username', 'tank_auth');
+			if ($use_username) {
+				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+			}
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+			$email_activation = $this->config->item('email_activation', 'tank_auth');
+		
+			if ($this->form_validation->run()) {								// validation ok
+				if (!is_null($data = $this->tank_auth->create_user(
+						$use_username ? $this->form_validation->set_value('username') : '',
+						$this->form_validation->set_value('email'),
+						$this->form_validation->set_value('password'),
+						$email_activation))) {
+							
+				$this->model_tipo_usuario->newUser($_POST['nombre'],$_POST['apellido'],8);
+				
+				$this->model_cedi->insertar($_POST['id_cedi'], $_POST['dni'], $_POST['username'], $_POST['nombres'], $_POST['apellido1'], 
+										    $_POST['apellido2'], $_POST['telefono_fijo'], $_POST['telefono_movil'], $_POST['email'], 
+										    $_POST['ocupacion'], $_POST['id_pais'],$_POST['idioma'], $_POST['fecha_alta']);
+		
+				redirect('/bo/usuarios/menuAltaUsuarioCedi');
+				
+				//redirect('/bo/usuarios/listarTipoDeUsuarioAcceso');
+				
+				} else {
+					$errors = $this->tank_auth->get_error_message();
+					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+				}
+			}
+			$data['use_username'] = $use_username;
+			$this->template->set("data",$data);
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			$this->template->build('website/bo/comercial/altas/usuarios/altaC',$data);
+				
+		}	
+	}
+	
+	/*
 	function altaCedi(){
 		
 		if (!$this->tank_auth->is_logged_in())
@@ -363,6 +436,43 @@ class usuarios extends CI_Controller
 	}
 	
 	function guardarCedi(){
+		
+	if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$use_username = $this->config->item('use_username', 'tank_auth');
+		if ($use_username) {
+			$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+		}
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+		$email_activation = $this->config->item('email_activation', 'tank_auth');
+	
+		if ($this->form_validation->run()) {								// validation ok
+			if (!is_null($data = $this->tank_auth->create_user(
+					$use_username ? $this->form_validation->set_value('username') : '',
+					$this->form_validation->set_value('email'),
+					$this->form_validation->set_value('password'),
+					$email_activation))) {
+						
+			$this->model_tipo_usuario->newUser($_POST['nombres'],$_POST['apellido'],8);
+			//redirect('/bo/usuarios/listarTipoDeUsuarioAcceso');
+			
+			} else {
+				$errors = $this->tank_auth->get_error_message();
+				foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+			}
+		}			
+	
 		if($this->model_cedi->insertar($_POST['id_cedi'], $_POST['dni'], $_POST['username'], $_POST['nombres'], $_POST['apellido1'], $_POST['apellido2'],
 		$_POST['telefono_fijo'], $_POST['telefono_movil'], $_POST['email'], $_POST['ocupacion'], $_POST['id_pais'], 
 		$_POST['idioma'], $_POST['fecha_alta'])){
@@ -371,6 +481,7 @@ class usuarios extends CI_Controller
 		
 		redirect('/bo/usuarios/menuAltaUsuarioCedi');
 	}
+	*/
 	
 	function listarTipoDeUsuarioAcceso(){
 		if (!$this->tank_auth->is_logged_in())

@@ -91,6 +91,11 @@
 												</tr>
 												<?php } ?>
 												<tr>
+													<td>DNI</td>
+													<td><input name="dni" value="" id="dni" maxlength="60" size="30" type="text" required></td>
+													<td style="color: red;"></td>
+												</tr>
+												<tr>
 													<td>Nombre</td>
 													<td><input name="nombre" value="" id="username" maxlength="60" size="30" type="text" required></td>
 													<td style="color: red;"></td>
@@ -100,7 +105,6 @@
 													<td><input name="apellido" value="" id="username" maxlength="60" size="30" type="text" required></td>
 													<td style="color: red;"></td>
 												</tr>
-												
 												<tr>
 													<td>Email</td>
 													<td><?php echo form_input($email); ?></td>
