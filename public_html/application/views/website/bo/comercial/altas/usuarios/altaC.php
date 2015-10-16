@@ -7,6 +7,7 @@
 							<span>>
 								<a href="/bo/administracion">Administración </a>
 								<a href="/bo/usuarios"> > Usuarios </a>
+								<a href="/bo/usuarios/menuAltaUsuarioCedi"> > CEDI </a>
 								 > Alta
 							</span>
 						</h1>
@@ -73,15 +74,16 @@
 											?>
 											<?php echo form_open($this->uri->uri_string()); ?>
 											<label class="select">
-													<label class="label">Seleccione un tipo de usuario</label>
-													<select name="tipo" id="tipo" required="">
-													<?foreach ($tiposUsuario as $tipo) {?>
-														<option value="<?php echo $tipo->id_tipo_usuario; ?>">
-															<?php echo $tipo->descripcion; ?>
+												<label class="label">Seleccione el CEDI al que pertenecerá</label>
+												<select name="id_cedi" id="id_cedi" required="">
+													<?foreach ($cedis as $cedi) {?>
+														<option value="<?php echo $cedi->id_cedi; ?>">
+															<?php echo $cedi->nombre; ?>
 														</option>
 													<?}?>
-													</select>
-											</label><br>
+												</select>
+											</label>
+											<br>
 											<table>
 												<?php if ($use_username) { ?>
 												<tr>
@@ -96,13 +98,18 @@
 													<td style="color: red;"></td>
 												</tr>
 												<tr>
-													<td>Nombre</td>
+													<td>Nombres</td>
 													<td><input name="nombre" value="" id="username" maxlength="60" size="30" type="text" required></td>
 													<td style="color: red;"></td>
 												</tr>
 												<tr>
-													<td>Apellido</td>
+													<td>Apellidos</td>
 													<td><input name="apellido" value="" id="username" maxlength="60" size="30" type="text" required></td>
+													<td style="color: red;"></td>
+												</tr>
+												<tr>
+													<td>Telefono</td>
+													<td><input name="telefono" value="" id="telefono" maxlength="60" size="30" type="text" required></td>
 													<td style="color: red;"></td>
 												</tr>
 												<tr>
@@ -110,6 +117,17 @@
 													<td><?php echo form_input($email); ?></td>
 													<td style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></td>
 												</tr>
+													<label class="select">
+												<label class="label">País</label>
+												<select name="id_pais" id="id_pais" required="">
+													<?foreach ($paises as $pais) {?>
+														<option value="<?php echo $pais->Code; ?>">
+															<?php echo $pais->Name; ?>
+														</option>
+													<?}?>
+												</select>
+											</label>
+											
 												<tr>
 													<td>Contraseña</td>
 													<td><?php echo form_password($password); ?></td>
@@ -181,3 +199,54 @@ function new_user()
 }
 </style>
 			
+		<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+			<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+			<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+			<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+			<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+			<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+			<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+			<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+			<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+			<script src="/template/js/validacion.js"></script>
+			<script type="text/javascript">
+
+				$('#startdate').datepicker({
+					changeMonth: true,
+					numberOfMonths: 2,
+					dateFormat:"yy-mm-dd",
+					changeYear: true,
+					prevText : '<i class="fa fa-chevron-left"></i>',
+					nextText : '<i class="fa fa-chevron-right"></i>'
+				});
+				
+				function new_user()
+				{
+					var tipo=$("#tipo").val();
+					if(tipo!="")
+					{
+						$.ajax({
+							data: {tipo: tipo},
+							type: "post",
+							url: "newUser",
+							success: function(){
+								location.href="/bo/usuarios/listarTipoDeUsuario"
+							}
+						});
+					}
+				}
+				</script>
+				<style>
+				.link
+				{
+					margin: 0.5rem;
+				}
+				.minh
+				{
+					padding: 50px;
+				}
+				.link a:hover
+				{
+					text-decoration: none !important;
+				}
+</style>

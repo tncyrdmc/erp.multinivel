@@ -7,7 +7,7 @@
 							<span>>
 								<a href="/bo/administracion">Administración </a>
 								<a href="/bo/usuarios"> > Usuarios </a>
-								<a href="/bo/usuarios/altaUsuarioAcceso"> > Acceso </a>								
+								<a href="/bo/usuarios/menuAltaUsuarioCedi"> > CEDI </a>
 								 > Listar
 							</span>
 						</h1>
@@ -55,12 +55,12 @@
 											<thead>			                
 												<tr>
 													<th>ID</th>
-													<th data-class="expand">Nombre de Usuario</th>
+													<th data-class="expand">Username</th>
 													<th data-hide="phone">Nombre</th>
 													<th data-hide="phone">Apellido</th>
 													<th data-hide="phone">Email</th>
-													<th>Tipo</th>
-													<th></th>
+													<th>CEDI</th>
+													<th>Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -72,7 +72,7 @@
 														<td><?php echo $user->nombre; ?></td>
 														<td><?php echo $user->apellido; ?></td>
 														<td><?php echo $user->email; ?></td>
-														<td><?php echo $user->tipo; ?></td>
+														<td><?php echo $user->cedi; ?></td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $user->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
 															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $user->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
@@ -198,7 +198,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/usuarios/editarTipoDeUsuario",
+		url: "/bo/usuarios/editarUsuarioCedi",
 		data: {
 			id: id
 			}
@@ -226,30 +226,19 @@ function eliminar(id) {
 		title: 'Eliminar Usuario',
 		buttons: {
 			success: {
-			label: "Aceptar",
-			className: "btn-success",
-			callback: function() {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
 
-					$.ajax({
-						type: "POST",
-						url: "/bo/usuarios/kill_user",
-						data: {id: id}
-					})
-					.done(function( msg )
+				$.ajax({
+					type: "POST",
+					url: "/bo/usuarios/kill_user_cedi",
+					data: {id: id}
+				})
+				.done(function( msg )
 					{
-						bootbox.dialog({
-						message: "Se ha eliminado el Usuario.",
-						title: 'Felicitaciones',
-						buttons: {
-							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-								location.href="/bo/usuarios/listarTipoDeUsuarioAcceso";
-								}
-							}
-						}
-					})//fin done ajax
+					location.href="/bo/usuarios/listarCedi";
+						
 					});//Fin callback bootbox
 
 				}

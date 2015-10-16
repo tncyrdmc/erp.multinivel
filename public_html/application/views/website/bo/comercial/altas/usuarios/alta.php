@@ -7,6 +7,7 @@
 							<span>>
 								<a href="/bo/administracion">Administración </a>
 								<a href="/bo/usuarios"> > Usuarios </a>
+								<a href="/bo/usuarios/altaUsuarioAcceso"> > Acceso </a>
 								 > Alta
 							</span>
 						</h1>

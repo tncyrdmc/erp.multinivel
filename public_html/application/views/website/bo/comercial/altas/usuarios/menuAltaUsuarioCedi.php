@@ -59,7 +59,7 @@
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/listarTipoDeUsuario">
+												<a href="/bo/usuarios/listarCedi">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 														<i class="fa fa-list-alt fa-3x"></i>
 														<h1>Listar</h1>

@@ -39,7 +39,7 @@
 												<a href="/bo/usuarios/altaUsuarioAcceso">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-user fa-3x"></i>
-														<h1>Usuarios de  Acceso</h1>
+														<h1>Usuarios de Acceso</h1>
 													</div>
 												</a>
 												</div>

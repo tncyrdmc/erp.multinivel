@@ -345,6 +345,12 @@ class usuarios extends CI_Controller
 		
 		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
 		
+		$cedis = $this->model_cedi->listarTodos();
+		
+		$this->template->set("cedis",$cedis);
+		
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
 		
 		$this->template->set("tiposUsuario",$tiposUsuario);
 		$this->template->set("usuario",$usuario);
@@ -375,11 +381,11 @@ class usuarios extends CI_Controller
 							
 				$this->model_tipo_usuario->newUser($_POST['nombre'],$_POST['apellido'],8);
 				
-				$this->model_cedi->insertar($_POST['id_cedi'], $_POST['dni'], $_POST['username'], $_POST['nombres'], $_POST['apellido1'], 
-										    $_POST['apellido2'], $_POST['telefono_fijo'], $_POST['telefono_movil'], $_POST['email'], 
-										    $_POST['ocupacion'], $_POST['id_pais'],$_POST['idioma'], $_POST['fecha_alta']);
-		
-				redirect('/bo/usuarios/menuAltaUsuarioCedi');
+				$this->model_cedi->insertar($_POST['id_cedi'], $_POST['dni'], $_POST['username'], $_POST['nombre'], $_POST['apellido'], 
+										    "", $_POST['telefono'],"", $_POST['email'],"", 
+										    $_POST['id_pais'],$_POST['id_pais'], "");
+				
+				redirect('/bo/usuarios/listarCedi');
 				
 				//redirect('/bo/usuarios/listarTipoDeUsuarioAcceso');
 				
@@ -511,9 +517,35 @@ class usuarios extends CI_Controller
 		$this->template->build('website/bo/comercial/altas/usuarios/listar');
 	}
 	
-	function editarTipoDeUsuario(){
+	function listarCedi(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
 		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$usuario=$this->general->get_username($id);
 	
+		$style=$this->modelo_dashboard->get_style(1);
+		$users=$this->model_tipo_usuario->get_all_users_cedi();
+
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("users",$users);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/usuarios/listarC');
+	}
+	
+	function editarTipoDeUsuario(){
 		$id              = $this->tank_auth->get_user_id();
 		$style           = $this->general->get_style(1);
 		$user	 	 = $this->model_tipo_usuario->getTipoUsuariosId($_POST['id']);
@@ -522,6 +554,23 @@ class usuarios extends CI_Controller
 		$this->template->set("tiposUsuario",$tiposUsuario);
 		$this->template->set("user",$user);
 		$this->template->build('website/bo/comercial/altas/usuarios/editar');
+	}
+	
+	function editarUsuarioCedi(){
+		$id             = 	$this->tank_auth->get_user_id();
+		$style          = 	$this->general->get_style(1);
+		
+		$user	 	 	=	$this->model_tipo_usuario->getUsuarioCediId($_POST['id']);
+		
+		$cedis = $this->model_cedi->listarTodos();
+		
+		$this->template->set("cedis",$cedis);
+		
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
+	
+		$this->template->set("user",$user);
+		$this->template->build('website/bo/comercial/altas/usuarios/editarC');
 	}
 	
 	function actualizar_users(){
@@ -551,13 +600,50 @@ class usuarios extends CI_Controller
 		else{
 			echo "No se puede actualizar el usuario";
 		}
+	}
 	
+	function actualizar_users_cedi(){
+		
+		var_dump("llegué");
+		exit();
+		$_POST['mail']=$_POST['email'];
+		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($_POST['id']);
+		
+		if($_POST['email']==""||$_POST['nombre']==""||$_POST['apellido']==""){
+			echo "Faltaron datos por ingrensar";
+			exit();
+		}
+		
+		if($use_mail){
+			echo "El Email ya existe , ingrese otro no existente";
+			exit();
+		}
+
+		$correcto = $this->model_tipo_usuario->actualizar_user_cedi();
+		if($correcto){
+			echo "Usuario Actualizado";
+		}
+		else{
+			echo "No se puede actualizar el usuario";
+		}
 	}
 	
 	function kill_user()
 	{
 		$this->db->query("delete from users where id=".$_POST["id"]);
 		$this->db->query("delete from user_profiles where user_id=".$_POST["id"]);
+	}
+	
+	function kill_user_cedi()
+	{
+		$username = $this->db->query("select username from users where id=".$_POST["id"]);
+		$username = $username->result();
+		//echo $username[0]->username;
+		//var_dump($this->db->query("delete from users_cedi where username='".$username[0]->username."'"));exit();
+		$this->db->query("delete from users_cedi where username='".$username[0]->username."'");
+		$this->db->query("delete from users where id=".$_POST["id"]);
+		$this->db->query("delete from user_profiles where user_id=".$_POST["id"]);
+		//redirect('/bo/usuarios/listarCedi');
 	}
 	
 	function afiliar_nuevo()

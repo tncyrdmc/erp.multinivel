@@ -19,9 +19,8 @@ class Model_cedi extends CI_Model{
 		$datos = array('id_cedi' => $id_cedi, 'dni' => $dni, 'username' => $username,
 					   'nombres' => $nombres, 'apellido_uno' => $apellido1, 'apellido_dos' => $apellido2, 
 					   'telefono_fijo' => $telefono_fijo, 'telefono_movil' => $telefono_movil, 'email' => $email,
-					   'ocupacion' => $ocupacion, 'id_pais' => $id_pais, 'idioma' => $idioma, 'fecha_alta' => $fecha_alta,
-					   'status' => 'ACT'
-		);
+					   'ocupacion' => $ocupacion, 'id_pais' => $id_pais, 'idioma' => $idioma, 'fecha_alta' => $fecha_alta, 'status' => 'ACT');
+		//var_dump($datos);exit();
 		$this->db->insert("users_cedi",$datos);
 		
 	}
