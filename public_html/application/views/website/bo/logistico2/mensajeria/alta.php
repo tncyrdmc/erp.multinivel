@@ -79,25 +79,36 @@
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label class="select">Pais
-											<select id="pais" required name="pais" onChange="CiudadesPais()">
-												<option value="-" selected>-- Seleciona un pais --</option>
-												<?foreach ($paises as $key){?>
-													<option value="<?=$key->Code?>"><?=$key->Name?></option>
-												<?}?>
-											</select>
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Idioma
 											<input type="text" class="form-control" name="idioma" placeholder="Idioma"class="form-control" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Dirección
-											<input type="text" class="form-control" name="direccion" placeholder="Direccion de empresa"class="form-control" required />
+										<label class="select">Pais
+											<select id="pais" required name="pais" onChange="CiudadesPais()">
+												<option value="-" selected>-- Seleciona un pais --</option>
+												<?foreach ($paises as $key){?>
+													<option value="<?=$key->Code?>"><?=$key->Name?></option>
+												<?php } ?>
+											</select>
+										</label>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
+										<label for="" class="select">Estado/Departamento
+											<select id="departamento" name="estado" onChange="CiudadesDepartamento()" required>
+												
+											</select>
+										</label>
+										<a style="cursor: pointer;" onclick="new_departamento()"> Nuevo Departamento <i class="fa fa-plus"></i></a>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
+										<label for="" class="select">Municipio/Ciudad
+											<select id="municipio" required name="municipio">
+												
+											</select>
 										</label>
 									</div>
 									
@@ -108,20 +119,14 @@
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Municipio
-											<input type="text" class="form-control" name="municipio" placeholder="Municipio"class="form-control" required />
+										<label for="" class="input">Dirección
+											<input type="text" class="form-control" name="direccion" placeholder="Direccion de empresa"class="form-control" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Codigo Postal
-											<input type="number" class="form-control" name="codigo_postal" placeholder="Codigo Postal" class="form-control" required />
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Estado
-											<input type="text" class="form-control" name="estado" placeholder="Estado"class="form-control" required />
+											<input type="text" class="form-control" name="codigo_postal" placeholder="Codigo Postal" class="form-control" required />
 										</label>
 									</div>
 									
@@ -417,6 +422,7 @@ function CiudadesPais(){
 	        
 	      }
 	});
+	Departamentos()
 }
 
 function new_ciudad(){
@@ -428,7 +434,7 @@ function new_ciudad(){
 								+'<section class="col col-6">'
 									+'País'
 									+'<label class="select">'
-										+'<select id="pais" required name="pais">'
+										+'<select id="pais2" required name="pais" onChange="Departamentos2()">'
 										+'<?foreach ($paises as $key){?>'
 											+'<option value="<?=$key->Code?>">'
 												+'<?=$key->Name?>'
@@ -438,17 +444,19 @@ function new_ciudad(){
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6">'
+								+'<label for="" class="select">Estado / Departamento'
+									+'<select id="departamento2" required name="departamento">'
+									
+									+'</select>'
+								+'</label>'
+							+'</section>'
+								+'<section class="col col-6">'
 									+'<label class="input">'
 										+'Ciudad'
 										+'<input required  type="text" id="ciudad" name="ciudad" placeholder="Ciudad">'
 									+'</label>'
 								+'</section>'
-								+'<section class="col col-6">'
-								+'<label class="input">'
-									+'Departamento'
-									+'<input required  type="text" id="departamento" name="departamento" placeholder="Departamento">'
-								+'</label>'
-							+'</section>'
+								
 							+'</div>'
 						+'</fieldset>'
 				+'</form>',
@@ -461,7 +469,7 @@ function new_ciudad(){
 
 							$.ajax({
 								type: "POST",
-								url: "/bo/cedis/nuevaCiudad",
+								url: "nuevaCiudad",
 								data: $("#form_ciudad").serialize()
 							})
 							.done(function( msg )
@@ -495,5 +503,138 @@ function new_ciudad(){
 					}
 				}
 			})	
+			
+}
+
+function new_departamento(){
+	bootbox.dialog({
+		message: '<form id="form_depto" method="post" class="smart-form">'
+					+'<fieldset>'
+					+'<legend>Datos De Estado/Departamento</legend>'
+					+'<div class="row">'
+						+'<section class="col col-6">'
+							+'País<label class="select">'
+								+'<select id="pais" required name="pais">'
+									+'<?foreach ($paises as $key){?>'
+										+'<option value="<?=$key->Code?>"><?=$key->Name?></option>'
+									+'<?}?>'
+								+'</select>'
+							+'</label>'
+						+'</section>'
+						
+						+'<section class="col col-6">'
+							+'<label class="input">Nombre de departamento'
+								+'<input required type="text" name="nombre" placeholder="Nombre del estado/departamento">'
+							+'</label>'
+						+'</section>'
+						
+					+'</div>'
+				+'</fieldset>'
+				+'</form>',
+				title: "Nuevo Estado",
+				buttons: {
+					submit: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+
+							$.ajax({
+								type: "POST",
+								url: "nuevoDepartameto",
+								data: $("#form_depto").serialize()
+							})
+							.done(function( msg )
+							{
+								Departamentos();
+								//$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
+								//$("#empresa").val(empresa['id']);
+								bootbox.dialog({
+								message: "Se agrego el estado/departamento correctamente",
+								title: 'Estados / Departamentos',
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "btn-success",
+									callback: function() {
+											}
+										}
+									}
+								})//fin done ajax
+
+							});//Fin callback bootbox
+
+						}
+					},
+						danger: {
+						label: "Cancelar!",
+						className: "btn-danger",
+						callback: function() {
+
+							}
+					}
+				}
+			})	
+}
+
+function Departamentos(){
+	var pa = $("#pais").val();
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/DepartamentoPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		
+		$('#departamento option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+		
+	      for(var i in datos){
+		      $('#departamento').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>'); 		        
+	      }
+	});
+}
+
+function Departamentos2(){
+	var pa = $("#pais2").val();
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/DepartamentoPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		
+		$('#departamento2 option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+		
+	      for(var i in datos){
+		      $('#departamento2').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>'); 		        
+	      }
+	});
+}
+
+function CiudadesDepartamento(){
+	var pa = $("#departamento").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadDepartamento",
+		data: {departamento: pa}
+	})
+	.done(function( msg )
+	{
+		$('#municipio option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      $('#municipio').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>');
+	      }
+	});
 }
 </script>

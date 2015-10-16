@@ -59,8 +59,7 @@ class proveedor_mensajeria extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style(1);
 		$pais = $this->model_admin->get_pais_activo();
-		
-		
+	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("paises",$pais);
@@ -279,13 +278,18 @@ class proveedor_mensajeria extends CI_Controller
 		$proveedor = $this->modelo_proveedor_mensajeria->consultar_proveedor_mensajeria($_POST['id']);
 		$contactos = $this->modelo_proveedor_mensajeria->consultar_contactos_mensajeria($_POST['id']);
 		$tarifas = $this->modelo_proveedor_mensajeria->consultar_tarifas_mensajeria($_POST['id']);
+		$departamentos = $this->modelo_proveedor_mensajeria->ObtenerDepartamentosPais($proveedor[0]->id_pais);
 		$ciudades = $this->modelo_proveedor_mensajeria->ObtenerCiudadesPais($proveedor[0]->id_pais);
+		$ciudades2 = $this->modelo_proveedor_mensajeria->ObtenerCiudadesDepartamento($proveedor[0]->estado);
+		
 		
 		$this->template->set("paises",$pais);
 		$this->template->set("proveedor",$proveedor);
 		$this->template->set("contactos",$contactos);
 		$this->template->set("tarifas",$tarifas);
 		$this->template->set("ciudades",$ciudades);
+		$this->template->set("ciudades2",$ciudades2);
+		$this->template->set("departamentos",$departamentos);
 		
 		$this->template->build('website/bo/logistico2/mensajeria/editar');
 	}
@@ -361,5 +365,33 @@ class proveedor_mensajeria extends CI_Controller
 	function CiudadPais() {
 		$ciudades = $this->modelo_proveedor_mensajeria->ObtenerCiudadesPais($_POST['pais']);
 		echo json_encode($ciudades);
+	}
+	
+	function DepartamentoPais() {
+		$departamentos = $this->modelo_proveedor_mensajeria->ObtenerDepartamentosPais($_POST['pais']);
+		echo json_encode($departamentos);
+	}
+	
+	function CiudadDepartamento() {
+		$ciudades = $this->modelo_proveedor_mensajeria->ObtenerCiudadesDepartamento($_POST['departamento']);
+		echo json_encode($ciudades);
+	}
+	
+	function nuevoDepartameto() {
+		$departamento = array(
+				'Nombre' => $_POST['nombre'],
+				'id_pais' => $_POST['pais'],
+		);
+		$this->modelo_proveedor_mensajeria->crear_departamento($departamento);
+	}
+	
+	function nuevoCiudad() {
+		$ciudad = array(
+				'Name' => $_POST['ciudad'],
+				'CountryCode' => $_POST['pais2'],
+				'id_estate' => $_POST['departamento2'],
+				'District' => $_POST['departamento2'],
+		);
+		$this->modelo_proveedor_mensajeria->crear_ciudad($ciudad);
 	}
 }

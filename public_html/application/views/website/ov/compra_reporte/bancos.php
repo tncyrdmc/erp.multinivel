@@ -4,7 +4,7 @@
 		<div class="row">
 			<? foreach ($bancos as $banco ) { ?>
 				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<a onclick="Enviar(<?= $banco->id_banco ?>,<?= $id_mercancia ?>,<?= $cantidad ?>)">
+					<a onclick="Enviar(<?= $banco->id_banco ?>)">
 						<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
 							<i class="fa fa-bank fa-3x"></i>
 							<h5><?= $banco->descripcion; ?></h5>
@@ -16,7 +16,7 @@
 </fieldset>
 </div>
 <script type="text/javascript">
-	function Enviar(banco, id, cantidad){
+	function Enviar(banco){
 		bootbox.dialog({
 			message: "Estas Seguro(a) <br> El pago tendra un plazo de 24 horas para ser realizado de lo contrarrio debera realizar de nuevo la peticion",
 			title: "Pago",
@@ -26,7 +26,7 @@
 				label: "Aceptar",
 				className: "btn-success",
 				callback: function() {
-						Registrar(id,cantidad,banco);
+						Registrar(banco);
 					}
 				},
 			cancelar: {
@@ -38,13 +38,10 @@
 			}
 		})
 	}
-	function Registrar(id,cantidad,banco){
+	function Registrar(banco){
 		$.ajax({
 			data:{
-				id_mercancia : id,
-				cantidad : cantidad,
 				banco : banco,
-				usr : <?php if(isset($_GET['usr'])){ echo $_GET['usr']; } else { echo '0'; } ?>
 				},
 			type:"post",
 			url:"RegistrarVentaConsignacion",

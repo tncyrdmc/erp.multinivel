@@ -919,12 +919,8 @@
 				{
 					if(msg=="si")
 					{
-						<? if(isset($_GET["usr"]))
-						{ ?>
-							window.location.href='/ov/compras/comprar?tipo=<?=$_GET["tipo"]?>&usr=<?=$_GET["usr"]?>'
-						<? }else{?>
-							window.location.href='/ov/compras/comprar?tipo=<?=$_GET["tipo"]?>'
-						<?}?>
+						window.location.href="DatosEnvio";
+						
 					}
 					else
 					{

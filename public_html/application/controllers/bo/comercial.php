@@ -2081,9 +2081,17 @@ class comercial extends CI_Controller
   
   function kill_proveedor()
   {
-  	$this->db->query("delete from proveedor_datos where id_proveedor=".$_POST["id"]);
-  	$this->db->query("delete from proveedor where id_proveedor=".$_POST["id"]);
-  }
+  	$tieneProductos=$this->model_admin->kill_proveedor($_POST['id']);
+  	if($tieneProductos){
+  		echo "El proveedor posee productos no puede ser eliminado";
+  	}else{
+  		$this->db->query("delete from proveedor_datos where id_proveedor=".$_POST["id"]);
+  		$this->db->query("delete from proveedor where id_proveedor=".$_POST["id"]);
+  		echo "Proveedor elimiando con exito";
+  		
+  	}
+  
+ }
   
   function cambiar_estado_proveedor(){
   	$this->db->query("update proveedor set estatus = '".$_POST['estado']."' where id_proveedor=".$_POST["id"]);

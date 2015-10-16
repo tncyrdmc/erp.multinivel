@@ -168,7 +168,7 @@
 					  <h1 class="section-title-inner"><span><i class="glyphicon glyphicon-shopping-cart"></i> Comprar</span></h1>
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-5 rightSidebar">
-					  <h4 class="caps"><a href="carrito?tipo=<?=$_GET["tipo"]?>"><i class="fa fa-chevron-left"></i> Volver al carrito </a></h4>
+					  <h4 class="caps"><a href="carrito"><i class="fa fa-chevron-left"></i> Volver al carrito </a></h4>
 					</div>
 				</div> <!--/.row-->
 				<!-- widget edit box -->
@@ -211,7 +211,6 @@
 							                              <th data-hide="phone">Subtotal<th>
 							                              <th data-hide="phone">Impuestos</th>
 							                              <th data-hide="phone">Total</th>
-							                              <th data-hide="phone" ></th>
 							                            </tr>
 							                            </thead>
 							                            <tbody>
@@ -219,11 +218,13 @@
 										                  	if($this->cart->contents())
 															{
 																$cantidad=0;
+																$total_compras = 0;
 																foreach ($this->cart->contents() as $items) 
 																{
 																	$impuesto = $this->modelo_compras->ImpuestoMercancia($items['id'], $items['price'])*$items['qty'];	
-																	$total=$items['qty']*$items['price']; ?>	
-																	
+																	$total=$items['qty']*$items['price']; 
+																	$total_compras = $total + $total_compras + $impuesto;
+																?>
 																	<tr>
 												                        <td  class="CartProductThumb">
 												                        	<div>
@@ -242,39 +243,6 @@
 												                         <td></td>
 												                         <td class="price">$ <?echo number_format($impuesto,2)?></td>
 												                         <td class="price">$ <?echo number_format($total+$impuesto,2)?></td>
-												                         <td>
-												                         	<form id="form-payu" method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
-												                         	 <?php 
-													                         	 $valortotal= $total+$impuesto;
-													                         	 $valortotal = $valortotal + (0.045 * $valortotal);
-													                         	 $time = $items['options']['time'].$items['id'];
-													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
-													                         	 $id_usuario = $id;
-													                         	 if(isset($_GET['usr'])){
-													                         	 	$id_usuario = $_GET['usr'];
-													                         	 }
-													                         	 $email=$this->general->get_email($id_usuario);
-													                         	 ?>
-																				  <input name="merchantId"    type="hidden"  value="500238" >
-																				  <input name="accountId"     type="hidden"  value="500538" >
-																				  <input name="description"   type="hidden"  value="<?php echo $compras[$cantidad]['nombre']; ?>"  >
-																				  <input name="referenceCode" type="hidden"  value="<?php echo $time; ?>" >
-																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal; ?>"   >
-																				  <input name="tax"           type="hidden"  value="0"  >
-																				  <input name="taxReturnBase" type="hidden"  value="0" >
-																				  <input name="currency"      type="hidden"  value="USD" >
-																				  <input name="signature"     type="hidden"  value="<?php echo $firma; ?>"  >
-																				  <input name="test"     type="hidden"  value="1"  >
-																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; //ponerle id_venta?>" >
-																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
-																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
-																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
-																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
-																				  <input type="submit" value="Pago PayuLatam"  class="btn btn-block btn-success" >
-																				  <br>
-																				  <a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
-																			</form>	
-												                         </td>
 												                      </tr>
 												                      
 																	<?php $cantidad++;
@@ -285,6 +253,44 @@
 						
 							                          </tbody>
 							                        </table>
+							                        
+							                        	<table class="pull-right">
+							                        		<tr>
+							                        			<td><h1>Sub Total </h1><td>
+							                        			<td><h1>$ <?php echo number_format($total_compras, 2); ?> </h1></td>
+							                        		</tr>
+							                        		<tr>
+							                        			<td><h1>Costo de Envio </h1></td>
+							                        			<td><h1>$ <?php echo number_format($costo_envio[0]->costo, 2)?></h1></td>
+							                        		</tr>
+							                        		<tr>
+							                        			<td><h1>Total </h1></td>
+							                        			<td><h1>$ <?php echo number_format($total_compras+$costo_envio[0]->costo , 2)?></h1></td>
+							                        		</tr>
+							                        	</table>
+							                        
+							                       <div class="col col-xs-12 col-md-12 col-sm-12 col-lg-12">
+							                       	<header>Formas de pago</header>
+							                       	<div class="col-lg-3 col-sm-6 col-md-4 col-xs-6">
+														<a href="#" onclick="consignacion()">
+															<i class="fa fa-money fa-3x"></i>
+															<h5>Banco</h5> 
+														</a>
+													</div>
+													<div class="col-lg-3 col-sm-6 col-md-4 col-xs-6">
+														
+														<a href="#">
+															<h5>PayuLatam</h5> 
+															
+														</a>
+													</div>
+													<div class="col-lg-3 col-sm-6 col-md-4 col-xs-6">
+														<a href="#" title="Pago por PayPal" onclick="">
+															<img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" border="0" alt="PayPal Logo" />	
+														</a>
+													</div>
+													
+							                       </div>
 							                      </div>
 							                      <!--cartContent-->
 							                  
@@ -1084,13 +1090,13 @@
 	function consignacion(id, cant){
 		
 		$.ajax({
-						data:{
-							id_mercancia : id,
-							cantidad : cant
-							},
-						type:"post",
-						url:"/ov/compras/SelecioneBanco?usr=<?php if(isset($_GET['usr'])){ echo $_GET['usr']; } else { echo '0'; } ?>",
-						success: function(msg){
+				data:{
+					id_mercancia : id,
+					cantidad : cant
+				},
+					type:"post",
+					url:"/ov/compras/SelecioneBanco",
+					success: function(msg){
 							
 							bootbox.dialog({
 								message: msg,

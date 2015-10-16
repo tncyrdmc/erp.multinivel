@@ -252,6 +252,8 @@ function index()
 		$this->template->set("usuario",$usuario);
 		$direccion=$this->modelo_compras->get_direccion_comprador($id);
 		$pais=$this->modelo_compras->get_pais();
+		$costo_envio = $this->modelo_compras->consultarCostoEnvio($id);
+		
 		$info_compras=Array();
 		$producto=0;
 		if($this->cart->contents())
@@ -294,12 +296,15 @@ function index()
 				);
 				$producto++;
 			} 
-		} 
+		}
+		
 		$data=array();
 		$data["direccion"]=$direccion;
 		$data["compras"]=$info_compras;
 		$data["pais"]=$pais;
 		$data['id'] = $id;
+		$data['costo_envio'] = $costo_envio;
+		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('footer', 'website/ov/footer');
@@ -3758,7 +3763,7 @@ function index()
 	} 
 	
 	function SelecioneBanco(){
-		if(!isset($_POST['id_mercancia'])){
+		if(!$this->cart->contents()){
 			echo "La compra no puedo ser registrada";
 			return 0;
 		}
@@ -3766,14 +3771,9 @@ function index()
 		{																		// logged in
 			redirect('/auth');
 		}
-		if($_GET['usr'] != 0){
-			$id = $_GET['usr'];	
-		}else{
-			$id = $this->tank_auth->get_user_id();
-		}
+		$id = $this->tank_auth->get_user_id();
+		
 		$data['bancos'] = $this->modelo_compras->BancosPagoUsuario($id);
-		$data['id_mercancia'] = $_POST['id_mercancia'];
-		$data['cantidad'] = $_POST['cantidad'];
 		
 		$this->template->set_theme('desktop');
 		$this->template->build('website/ov/compra_reporte/bancos',$data);
@@ -3811,7 +3811,8 @@ function index()
 	
 	function RegistrarVentaConsignacion(){
 		
-		if(!isset($_POST['id_mercancia'])){
+		
+		if(!$this->cart->contents()){
 			echo "La compra no puedo ser registrada";
 			return 0;
 		}
@@ -3821,77 +3822,49 @@ function index()
 		}
 		
 		$productos = $this->cart->contents();
-		$id = 2;
-		if($_POST['usr'] != 0){
-			$id = $_POST['usr'];	
-		}else{
-			$id = $this->tank_auth->get_user_id();
-		}
-		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
-		$id_mercancia = $_POST['id_mercancia'];
-		$cantidad = $_POST['cantidad'];
+		$id = $this->tank_auth->get_user_id();
 		
-		/*if($this->modelo_compras->ComprovarCompraMercancia($id, $id_mercancia)){
-			$producto_continua = array();
-				
-			foreach ($productos as $producto){
-				if($producto['id'] == $id_mercancia){
-					$this->cart->destroy();
-				}else{
-					$add_cart = array(
-							'id'      => $producto['id'],
-							'qty'     => $producto['qty'],
-							'price'   => $producto['price'],
-							'name'    => $producto['name'],
-							'options' => $producto['options']
-					);
-					$producto_continua[] = $add_cart;
-				}
-			}
-			echo "Atencion!!! Ya has comprado esta mercancia en este mes";
-			$this->cart->insert($producto_continua);
-			return 0;
-		}*/
+		$costo_envio = $this->modelo_compras->consultarEnvio($id);
+		
+		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
 		
 		$direcion_envio = $datos_perfil[0]->calle." ".$datos_perfil[0]->colonia." ".$datos_perfil[0]->municipio." ".$datos_perfil[0]->estado;
 		$telefono = $this->modelo_compras->get_telefonos_comprador($id);
 		$email = $datos_perfil[0]->email;
-		$time = time().$id_mercancia;
 		
-		$costo = $cantidad * $this->modelo_compras->CostoMercancia($id_mercancia);
-		$firma = md5("consignacion~".$time."~".$costo."~USD");
-		$id_transacion = $id_mercancia.$cantidad.$costo.time();
-		$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
+		$costo_total = $costo_envio[0]->costo;
+		$impuestos = 0;
+		foreach ($productos as $producto){
+			$costo_total = $costo_total + ($producto['qty'] * $this->modelo_compras->CostoMercancia($producto['id']));
+			$impuestos = $impuestos + ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
+		}
+		
+		
+		$time = time();
+		$firma = md5("consignacion~".$time."~".$costo_total."~USD");
+		$id_transacion = $firma;
 		$fecha = date("Y-m-d");
 		
-		$venta = $this->modelo_compras->registrar_ventaConsignacion($id, $costo , $id_transacion, $firma, $fecha, $impuestos);
+		$venta = $this->modelo_compras->registrar_ventaConsignacion($id, $costo_total , $id_transacion, $firma, $fecha, $impuestos);
 				
-		$envio=$this->modelo_compras->registrar_envio($venta, $id, $direcion_envio , $telefono, $email);
+		$envio=$this->modelo_compras->registrar_envio($venta, $id, $direcion_envio , $telefono, $email, $costo_envio);
 		
 		$this->modelo_compras->registrar_factura($venta, $id, $direcion_envio , $telefono, $email);
 		
-		$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
-		$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
-		$this->modelo_compras->registrar_movimiento($id, $id_mercancia, $cantidad, $costo+$impuestos, $total, $venta, $puntos);
-		$producto_continua = array();
-		
 		foreach ($productos as $producto){
-			if($producto['id'] == $id_mercancia){
-				$this->cart->destroy();
-			}else{
-				$add_cart = array(
-						'id'      => $producto['id'],
-						'qty'     => $producto['qty'],
-						'price'   => $producto['price'],
-						'name'    => $producto['name'],
-						'options' => $producto['options']
-				);
-				$producto_continua[] = $add_cart;
-			}
+			$puntos = $this->modelo_compras->registrar_venta_mercancia($producto['id'], $venta, $producto['qty']);
+			$impuesto = ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
+			
+			$total = $this->modelo_compras->registrar_impuestos($producto['id']);
+			$this->modelo_compras->registrar_movimiento($id, $producto['id'], $producto['qty'], $producto['price']+$impuesto, $producto['qty']*$total, $venta, $puntos);
+			
 		}
-		$this->cart->insert($producto_continua);
+		$this->modelo_compras->EliminarEnvioHistorial($id);
 		
-		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo+$impuestos));
+		$this->cart->destroy();
+		
+		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo_total+$impuestos));
+		
 		if(isset($banco[0]->id_banco)){
 			$respuesta = "<div class='alert alert-success alert-block'>
 								<a class='close' data-dismiss='alert' href='#'></a>
@@ -3903,6 +3876,7 @@ function index()
 		}else{
 			echo "La venta se a registrado";
 		}
+		
 	}
 	
 	function Cambiar_estado_enviar(){
@@ -3912,6 +3886,51 @@ function index()
 		
 	}
 	
+	function DatosEnvio(){
+		if (!$this->tank_auth->is_logged_in())																	// logged in
+			redirect('/auth');
+		
+		
+		$id=$this->tank_auth->get_user_id();
+		$costo_envio = $this->modelo_compras->consultarCostoEnvio($id);
+		if(isset($costo_envio[0]->costo)){
+			redirect("/ov/compras/comprar");
+		}
+		
+		$usuario=$this->general->get_username($id);
+		$style=$this->general->get_style($id);
+		
+		$data['paises'] = $pais = $this->model_admin->get_pais_activo();
+		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/datos_envio',$data);
+	}
 	
+	function buscarProveedores(){
+		$proveedores = $this->modelo_compras->buscarProveedorTarifaCiudad($_POST['id_ciudad']);
+		
+		echo json_encode($proveedores);
+	}
 	
+	function guardarEnvio(){
+		if (!$this->tank_auth->is_logged_in())																	// logged in
+			redirect('/auth');
+		
+		$id=$this->tank_auth->get_user_id();
+		$tarifa = $this->modelo_compras->consultarTarifa($_POST['tarifa']);
+		
+		$datos = array(
+				'id_user' => $id,
+				'id_proveedor' => $tarifa[0]->id_proveedor,
+				'id_tarifa' => $_POST['tarifa'],
+				'costo' => $tarifa[0]->tarifa,
+		);
+		$this->modelo_compras->guardarDatosEnvio($datos);
+		
+		redirect("/ov/compras/comprar");
+	}
 }

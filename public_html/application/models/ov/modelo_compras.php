@@ -779,7 +779,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		return $venta;
 	}
 	
-	function registrar_envio($venta, $id_usuario, $direccion , $telefono, $correo){
+	function registrar_envio($venta, $id_usuario, $direccion , $telefono, $correo, $tarifa){
 		$usuario =$this->model_perfil_red->datos_perfil($id_usuario);
 		$edad    =$this->model_perfil_red->edad($id_usuario);
 		$dir    =$this->model_perfil_red->dir($id_usuario);
@@ -795,9 +795,10 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 				"colonia" 	=> $dir[0]->colonia,
 				"calle" 	=> $dir[0]->calle,
 				"correo" 	=> $correo,
-				"compania" 	=> "null",
+				"proveedor_mensajeria" 	=> $tarifa[0]->id_proveedor,
 				"celular" 	=> $telefono,
-				"info_ad"	=> ""
+				"info_ad"	=> "",
+				"id_tarifa"	=> $tarifa[0]->id_tarifa
 		);
 		
 		$this->db->insert("cross_venta_envio",$dato_envio);
@@ -1105,5 +1106,33 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		}
 	
 		return false;
+	}
+	
+	function buscarProveedorTarifaCiudad($id_ciudad){
+		$q = $this->db->query("select pt.id, pt.tarifa, p.razon_social from proveedor_tarifas pt, proveedor_mensajeria p where pt.id_proveedor = p.id and pt.ciudad =".$id_ciudad);
+		return $q->result();		
+	}
+	
+	function consultarTarifa($id){
+		$q = $this->db->query("select * from proveedor_tarifas where id =".$id);
+		return $q->result();
+	}
+	
+	function guardarDatosEnvio($datos){
+		$this->db->insert('user_envio', $datos);
+	}
+	
+	function consultarCostoEnvio($id){
+		$q = $this->db->query("select costo from user_envio where id_user =".$id);
+		return $q->result();
+	}
+	
+	function consultarEnvio($id){
+		$q = $this->db->query("select * from user_envio where id_user =".$id);
+		return $q->result();
+	}
+	
+	function EliminarEnvioHistorial($id){
+		$this->db->query("delete from user_envio where id_user =".$id);
 	}
 }

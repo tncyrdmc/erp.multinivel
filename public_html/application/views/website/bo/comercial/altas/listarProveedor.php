@@ -101,7 +101,7 @@
 													
 														<td class='text-center'>
 															<a title="Editar" style='cursor: pointer;' class="txt-color-blue" onclick="editar('<?php echo $row->id_proveedor; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  style='cursor: pointer;' class="txt-color-red" onclick="eliminar('<?php echo $row->id_proveedor; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+													     	<a title="Eliminar" style='cursor: pointer;' class="txt-color-red" onclick="eliminarProveedor('<?php echo $row->id_proveedor; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														
 														
 										                    <?php if ($row->estatus == 'ACT') {?>
@@ -245,7 +245,7 @@ function editar(id){
 	});//fin Done ajax
 }
 
-function eliminar(id) {
+function eliminarProveedor(id) {
 
 	$.ajax({
 		type: "POST",
@@ -271,8 +271,8 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el proveedor.",
-						title: 'Felicitaciones',
+						message: msg,
+						title: 'Proveedor',
 						buttons: {
 							success: {
 							label: "Aceptar",
