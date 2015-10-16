@@ -45,12 +45,14 @@ class Model_tipo_usuario extends CI_Model{
 	}
 	
 	function actualizar_user_cedi(){
-		$this->db->query('UPDATE users SET email="'.$_POST['email'].'" WHERE id="'.$_POST['id'].'"');
-		$this->db->query('UPDATE user_profiles SET nombre="'.$_POST['nombre'].'",apellido="'.$_POST['apellido'].'", WHERE user_id="'.$_POST['id'].'"');
-		$username = $this->db->query('SELECT username from users WHERE user_id="'.$_POST['id'].'"');
+		$username = $this->db->query('SELECT username from users WHERE id = "'.$_POST['id'].'"');
 		$username = $username->result();
 		$username = $username[0]->username;
-		$this->db->query('UPDATE users_cedi SET id_cedi="'.$_POST['id_cedi'].'", dni="'.$_POST['dni'].'", nombres="'.$_POST['nombre'].'",apellido_uno="'.$_POST['apellido'].'",telefono_fijo="'.$_POST['telefono_fijo'].'",email="'.$_POST['email'].'",id_pais="'.$_POST['is_pais'].'" WHERE username="'.$username.'"');
+		$this->db->query('UPDATE users_cedi SET id_cedi = 8, dni="'.$_POST['dni'].'", nombres="'.$_POST['nombre'].'",apellido_uno="'.$_POST['apellido'].'",telefono_fijo="'.$_POST['telefono'].'",email="'.$_POST['email'].'",id_pais="'.$_POST['id_pais'].'" WHERE username = "'.$username.'"');
+		
+		$this->db->query('UPDATE users SET email = "'.$_POST['email'].'" WHERE id="'.$_POST['id'].'"');
+		$this->db->query('UPDATE user_profiles SET nombre = "'.$_POST['nombre'].'",apellido="'.$_POST['apellido'].'" WHERE user_id="'.$_POST['id'].'"');
+		
 		
 		return true;
 	}
@@ -83,12 +85,11 @@ class Model_tipo_usuario extends CI_Model{
 	
 function get_all_users_cedi()
 	{
-		$q=$this->db->query('SELECT u.id as id,u.username as username,u.email as email ,up.nombre as nombre,
-up.apellido,C.nombre as cedi
+		$q=$this->db->query('SELECT u.id, u.username, u.email, up.nombre, up.apellido, C.nombre as cedi
 							
-FROM users u , user_profiles up ,cat_tipo_usuario cu, users_cedi UC, cedi C
+FROM users u , user_profiles up, cat_tipo_usuario cu, users_cedi UC, cedi C
 							
-where(u.id=up.user_id) and (up.id_tipo_usuario=cu.id_tipo_usuario) and (cu.id_tipo_usuario=8) 
+where(u.id = up.user_id) and (up.id_tipo_usuario = cu.id_tipo_usuario) and (cu.id_tipo_usuario = 8) 
 and UC.username = u.username and UC.id_cedi = C.id_cedi');
 		return $q->result();
 	}

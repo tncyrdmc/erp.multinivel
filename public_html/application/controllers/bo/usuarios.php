@@ -604,8 +604,6 @@ class usuarios extends CI_Controller
 	
 	function actualizar_users_cedi(){
 		
-		var_dump("llegué");
-		exit();
 		$_POST['mail']=$_POST['email'];
 		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($_POST['id']);
 		
@@ -618,8 +616,9 @@ class usuarios extends CI_Controller
 			echo "El Email ya existe , ingrese otro no existente";
 			exit();
 		}
-
+		
 		$correcto = $this->model_tipo_usuario->actualizar_user_cedi();
+		
 		if($correcto){
 			echo "Usuario Actualizado";
 		}
