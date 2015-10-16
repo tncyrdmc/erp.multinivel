@@ -48,7 +48,7 @@ class Model_tipo_usuario extends CI_Model{
 		$username = $this->db->query('SELECT username from users WHERE id = "'.$_POST['id'].'"');
 		$username = $username->result();
 		$username = $username[0]->username;
-		$this->db->query('UPDATE users_cedi SET id_cedi = 8, dni="'.$_POST['dni'].'", nombres="'.$_POST['nombre'].'",apellido_uno="'.$_POST['apellido'].'",telefono_fijo="'.$_POST['telefono'].'",email="'.$_POST['email'].'",id_pais="'.$_POST['id_pais'].'" WHERE username = "'.$username.'"');
+		$this->db->query('UPDATE users_cedi SET id_cedi = "'.$_POST['id_cedi'].'", dni="'.$_POST['dni'].'", nombres="'.$_POST['nombre'].'",apellido_uno="'.$_POST['apellido'].'",telefono_fijo="'.$_POST['telefono'].'",email="'.$_POST['email'].'",id_pais="'.$_POST['id_pais'].'" WHERE username = "'.$username.'"');
 		
 		$this->db->query('UPDATE users SET email = "'.$_POST['email'].'" WHERE id="'.$_POST['id'].'"');
 		$this->db->query('UPDATE user_profiles SET nombre = "'.$_POST['nombre'].'",apellido="'.$_POST['apellido'].'" WHERE user_id="'.$_POST['id'].'"');

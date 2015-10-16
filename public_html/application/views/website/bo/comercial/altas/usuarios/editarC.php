@@ -6,10 +6,24 @@
 								<div class="">
 										<section>
 											<div>
-												
-													</select>
-												</label>
+											<label class="select">
+												<label class="label">Seleccione el CEDI al que pertenecerá</label>
+												<select name="id_cedi" id="id_cedi" required="">
+													<?foreach ($cedis as $cedi) {
+														if ($cedi->id_cedi==$user[0]->cedi){?>
+														<option selected value="<?php echo $cedi->id_cedi; ?>">
+															<?php echo $cedi->nombre; ?>
+														</option>
+													<?}else {?>	
+														<option value="<?php echo $cedi->id_cedi; ?>">
+															<?php echo $cedi->nombre; ?>
+														</option>
+													<?}
+													}?>
+												</select>
+											</label>
 												<br>
+												
 												<table>
 													<input type="text" class="hide" value="<?php echo $user[0]->id; ?>" name="id">
 													<tr>
@@ -42,7 +56,7 @@
 													<select name="id_pais" id="id_pais" required="">
 														<?foreach ($paises as $pais) {
 															if ($pais->Code == $user[0]->id_pais){?>
-															<option value="<?php echo $pais->Code; ?>">
+															<option selected value="<?php echo $pais->Code; ?>">
 																<?php echo $pais->Name; ?>
 															</option>
 														<?}else {?>
