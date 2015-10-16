@@ -3,13 +3,41 @@
 //header('Content-Type: text/html; charset=ISO-8859-1');
 class modelo_proveedor_mensajeria extends CI_Model
 {
-	function obtenerCiudadesPais($code){
+	function ObtenerCiudadesPais($code){
 		$q = $this->db->query('select * from City where CountryCode = "'.$code.'"');
 		$ciudades = $q->result();
 		$ciudades_dec = array();
 		foreach ($ciudades as $ciudad){
 			$ciu = array(
 					'ID' => $ciudad->ID,
+					'Name' => utf8_decode($ciudad->Name)
+			);
+			array_push($ciudades_dec, $ciu);
+		}
+		return $ciudades_dec;
+	}
+	
+	function ObtenerDepartamentosPais($code){
+		$q = $this->db->query('select * from estate where id_pais = "'.$code.'"');
+		$departamentos = $q->result();
+		$departamentos_dec = array();
+		foreach ($departamentos as $departamento){
+			$ciu = array(
+					'id' => $departamento->id,
+					'Name' => utf8_decode($departamento->Nombre)
+			);
+			array_push($departamentos_dec, $ciu);
+		}
+		return $departamentos_dec;
+	}
+	
+	function ObtenerCiudadesDepartamento($code){
+		$q = $this->db->query('select * from City where id_estate = '.$code);
+		$ciudades = $q->result();
+		$ciudades_dec = array();
+		foreach ($ciudades as $ciudad){
+			$ciu = array(
+					'id' => $ciudad->ID,
 					'Name' => utf8_decode($ciudad->Name)
 			);
 			array_push($ciudades_dec, $ciu);
@@ -84,5 +112,15 @@ class modelo_proveedor_mensajeria extends CI_Model
 	
 	function eliminar_tarifas($id){
 		$this->db->query("delete from proveedor_tarifas where id_proveedor = ".$id);
+	}
+	
+	function crear_departamento($departamento){
+		$this->db->insert('estate',$departamento);
+		return mysql_insert_id();
+	}
+	
+	function crear_ciudad($ciudad){
+		$this->db->insert('City',$ciudad);
+		return mysql_insert_id();
 	}
 }

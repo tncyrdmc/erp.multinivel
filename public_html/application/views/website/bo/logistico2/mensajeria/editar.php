@@ -16,28 +16,51 @@
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label class="select">Pais
-											<select id="pais" required name="pais" onChange="CiudadesPais()">
-												<option value="-" selected>-- Seleciona un pais --</option>
-												<?foreach ($paises as $key){
-													if($proveedor[0]->id_pais == $key->Code){ ?>
-														<option value="<?=$key->Code?>" selected><?=$key->Name?></option>
-													<?php }?>
-													<option value="<?=$key->Code?>"><?=$key->Name?></option>
-												<?}?>
-											</select>
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Idioma
 											<input type="text" class="form-control" name="idioma" placeholder="Idioma"class="form-control" value="<?php echo $proveedor[0]->idioma; ?>" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Dirección
-											<input type="text" class="form-control" name="direccion" placeholder="Direccion de empresa"class="form-control" value="<?php echo $proveedor[0]->direccion; ?>" required />
+										<label class="select">Pais
+											<select id="pais" required name="pais" onChange="CiudadesPais()">
+												<option value="-" selected>-- Seleciona un pais --</option>
+												<?foreach ($paises as $key){
+													if($proveedor[0]->id_pais == $key->Code){ ?>
+														<option value="<?=$key->Code?>" selected><?=$key->Name?></option>
+													<?php } else {?>
+													<option value="<?=$key->Code?>"><?=$key->Name?></option>
+												<?	}
+												}?>
+											</select>
+										</label>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
+										<label for="" class="select">Estado/Departamento
+											<select id="departamento" name="estado" onChange="CiudadesDepartamento()" required>
+												<? foreach ($departamentos as $key){
+													if($proveedor[0]->estado == $key['id']){ ?>
+														<option value="<?=$key['id']?>" selected><?=$key['Name']?></option>
+													<?php } else {?>
+														<option value="<?=$key['id']?>"><?=$key['Name']?></option>
+													<? }
+												}?>
+											</select>
+										</label>
+									</div>
+									
+									<div class="col col-xs-12 col-sm-6 col-lg-6">
+										<label for="" class="select">Municipio/Ciudad
+											<select id="municipio" required name="municipio">
+												<?foreach ($ciudades2 as $key){
+													if($proveedor[0]->municipio == $key['id']){ ?>
+														<option value="<?=$key['id']?>" selected><?=$key['Name']?></option>
+													<?php }else {?>
+													<option value="<?=$key['id']?>"><?=$key['Name']?></option>
+												<?	}
+												}?>
+											</select>
 										</label>
 									</div>
 									
@@ -48,20 +71,14 @@
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Municipio
-											<input type="text" class="form-control" name="municipio" placeholder="Municipio"class="form-control" value="<?php echo $proveedor[0]->municipio; ?>" required />
+										<label for="" class="input">Dirección
+											<input type="text" class="form-control" name="direccion" placeholder="Direccion de empresa"class="form-control" value="<?php echo $proveedor[0]->direccion; ?>" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Codigo Postal
 											<input type="text" class="form-control" name="codigo_postal" placeholder="Codigo Postal" class="form-control" value="<?php echo $proveedor[0]->codigo_postal; ?>" required />
-										</label>
-									</div>
-									
-									<div class="col col-xs-12 col-sm-6 col-lg-6">
-										<label for="" class="input">Estado
-											<input type="text" class="form-control" name="estado" placeholder="Estado"class="form-control" value="<?php echo $proveedor[0]->estado; ?>" required />
 										</label>
 									</div>
 									
@@ -75,20 +92,20 @@
 							
 								<div class="row">
 									<header>Contacto N° 1</header>
-									<input type="text" name="id_contacto1" class="hide" value="<?php echo $contactos[0]->id; ?>" />
+									<input type="text" name="id_contacto1" class="hide" value="<?php echo $contactos[1]->id; ?>" />
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre
-											<input type="text" class="form-control" name="nommbre_contacto1" placeholder="Nombre de persona de contacto" class="form-control" value="<?php echo $contactos[0]->nombre; ?>" required />
+											<input type="text" class="form-control" name="nommbre_contacto1" placeholder="Nombre de persona de contacto" class="form-control" value="<?php echo $contactos[1]->nombre; ?>" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto1" placeholder="Apellido de persona de contacto" class="form-control" value="<?php echo $contactos[0]->apellido; ?>" required />
+											<input type="text" class="form-control" name="apellido_contacto1" placeholder="Apellido de persona de contacto" class="form-control" value="<?php echo $contactos[1]->apellido; ?>" required />
 										</label>
 									</div>
 									
-									<?php $telefono_movil = explode("/",$contactos[0]->telefono_movil); 
+									<?php $telefono_movil = explode("/",$contactos[1]->telefono_movil); 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -98,7 +115,7 @@
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("/",$contactos[0]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",$contactos[1]->telefono_fijo); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -113,12 +130,12 @@
 										Email
 										<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
-											<input type="email" class="form-control" name="email_contacto1" placeholder="Email de la persona de contacto"class="form-control" value="<?php echo $contactos[0]->mail; ?>" required />
+											<input type="email" class="form-control" name="email_contacto1" placeholder="Email de la persona de contacto"class="form-control" value="<?php echo $contactos[1]->mail; ?>" required />
 										</label>
 									</div>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 											<label for="" class="input">Puesto
-											<input type="text" class="form-control" name="puesto_contacto1" placeholder="Puesto de la persona de contacto" class="form-control" value="<?php echo $contactos[0]->puesto; ?>" />
+											<input type="text" class="form-control" name="puesto_contacto1" placeholder="Puesto de la persona de contacto" class="form-control" value="<?php echo $contactos[1]->puesto; ?>" />
 										</label>
 									</div>
 								</div>
@@ -126,19 +143,19 @@
 								<div class="row">
 									<header>Contacto N° 2</header>
 									
-									<input type="text" name="id_contacto2" class="hide" value="<?php echo $contactos[1]->id; ?>" />
+									<input type="text" name="id_contacto2" class="hide" value="<?php echo $contactos[0]->id; ?>" />
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre
-											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" value="<?php echo $contactos[1]->nombre; ?>" />
+											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" value="<?php echo $contactos[0]->nombre; ?>" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo $contactos[1]->apellido; ?>" />
+											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo $contactos[0]->apellido; ?>" />
 										</label>
 									</div>
-									<?php $telefono_movil = explode("/",$contactos[1]->telefono_movil); 
+									<?php $telefono_movil = explode("/",$contactos[0]->telefono_movil); 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -148,7 +165,7 @@
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("/",$contactos[1]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",$contactos[0]->telefono_fijo); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -162,13 +179,13 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Email<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
-											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto" class="form-control" value="<?php echo $contactos[1]->mail; ?>" />
+											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto" class="form-control" value="<?php echo $contactos[0]->mail; ?>" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Puesto<label for="" class="input">
-											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" value="<?php echo $contactos[1]->puesto; ?>" />
+											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" value="<?php echo $contactos[0]->puesto; ?>" />
 										</label>
 									</div>
 								</div>
@@ -186,7 +203,7 @@
 									<?php $i= 0;
 									foreach ($tarifas as $tarifa){ ?>
 									<div class="row" id="<?php echo $i; ?>">
-										<div class="col col-xs-12 col-sm-6 col-lg-6"  id="ciudad2">
+										<div class="col col-xs-12 col-sm-6 col-lg-6"  id="ciudad">
 											<label class="select">Ciudad
 												<select name="ciudad_tarifa[]">
 												<?php foreach ($ciudades as $ciudad){
@@ -271,6 +288,47 @@ function delete_tarifa(id)
 	
 }
 
+function Departamentos(){
+	var pa = $("#pais").val();
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/DepartamentoPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		
+		$('#departamento option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+		
+	      for(var i in datos){
+		      $('#departamento').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>'); 		        
+	      }
+	});
+}
+
+function CiudadesDepartamento(){
+	var pa = $("#departamento").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadDepartamento",
+		data: {departamento: pa}
+	})
+	.done(function( msg )
+	{
+		$('#municipio option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      $('#municipio').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>');
+	      }
+	});
+}
+
 function CiudadesPais(){
 	var pa = $("#pais").val();
 	
@@ -295,5 +353,7 @@ function CiudadesPais(){
 	        
 	      }
 	});
+	Departamentos()
+	
 }
 </script>

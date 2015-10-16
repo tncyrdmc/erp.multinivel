@@ -71,9 +71,9 @@
 		</script>
 	</head>
 
-	<body style="background:<?=$style[0]->bg_color?>;">
-        <?php echo $template['partials']['header']; ?>
+	<body style="background:<?php if(isset($style[0]->bg_color)){ echo $style[0]->bg_color; } ?>;">
+        <?php if(isset($template['partials']['header'])){ echo $template['partials']['header']; }?>
         <?php echo $template['body']; ?>
-        <?php echo $template['partials']['footer'] ?>
+        <?php if(isset($template['partials']['footer'])){ echo $template['partials']['footer']; }?>
     </body>
 </html>
