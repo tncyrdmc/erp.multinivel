@@ -89,6 +89,11 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from cat_tipo_proveedor where estatus ='ACT'");
 		return $q->result();
 	}
+	function kill_proveedor($id){
+		$q=$this->db->query("SELECT id_proveedor FROM mercancia where id_proveedor=".$id);
+	    return $q->result();	
+		
+	}
 	function get_datosProveedor(){
 		
 	$q=$this->db->query("select * from proveedor p,
