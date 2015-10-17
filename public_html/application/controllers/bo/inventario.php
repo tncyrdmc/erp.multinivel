@@ -179,6 +179,7 @@ class inventario extends CI_Controller
     	}
     	$style=$this->modelo_dashboard->get_style(1);
     	$this->template->set("type",$usuario[0]->id_tipo_usuario);
+    	
     	$this->template->set("usuario",$usuario);
     	$this->template->set("style",$style);
     	
@@ -206,7 +207,13 @@ class inventario extends CI_Controller
    	$this->template->set("type",$usuario[0]->id_tipo_usuario);
    	$this->template->set("usuario",$usuario);
    	$this->template->set("style",$style);
-   	 
+   	$productos=$this->model_inventario->getProductos();
+   	$documento=$this->model_inventario->getAlldocumento();
+   	$almacenesCedi=$this->model_inventario->getAlmacenesCedi();
+   	
+   	$this->template->set("productos",$productos);
+   	$this->template->set("documento",$documento);
+   	$this->template->set("almacenesCedi",	$almacenesCedi);
    	$this->template->set_theme('desktop');
    	$this->template->set_layout('website/main');
    	$this->template->set_partial('header', 'website/bo/header');

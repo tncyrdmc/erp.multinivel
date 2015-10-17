@@ -3,18 +3,19 @@
 class modelo_almacen extends CI_Model
 {
 	function obtenerAlmacenes(){
-		$q = $this->db->query('select * from almacen');
-		$almacenes = $q->result();
-		return $almacenes;
+		$q = $this->db->query("SELECT p.id_cedi,p.nombre,p.descripcion,p.ciudad,p.direccion,p.telefono,p.estatus,c.Name
+                               FROM cedi p ,City c where p.ciudad = c.ID and p.tipo= 'A' ");
+	    return  $q->result();
+		
 	}
 	
 	function crear_almacen($almacen){
-		$this->db->insert('almacen',$almacen);
+		$this->db->insert('cedi',$almacen);
 		return mysql_insert_id();
 	}
 	
 	function eliminar_almacen($id){
-		$this->db->query("delete from almacen where id_almacen = ".$id);
+		$this->db->query("delete from cedi where id_cedi = ".$id);
 	}
 	
 	function cambiar_estado_almacen($id,$estado) {

@@ -16,7 +16,10 @@ class model_inventario extends CI_Model
 		$q=$this->db->query('select * from documento_inventario ');
 		return $q->result();
 	}
-	
+	function getAlmacenesCedi(){
+		$q=$this->db->query('select * from cedi ');
+		return $q->result();
+	}
 	function updateEstatusdocumento(){
 		$datos = array(
 				'estatus' => $_POST['estado'],
@@ -30,9 +33,15 @@ class model_inventario extends CI_Model
    }
    
    function getDocumento($id){
-       	$q=$this->db->query('select * from documento_inventario where id_doc ="4"');
+       	$q=$this->db->query('select * from documento_inventario where id_doc ='.$_POST['id']);
      	return $q->result();
    }
+   
+   function getProductos(){
+   	$q=$this->db->query('select * from producto  ');
+   	return $q->result();
+   }
+   
    function update_Documento(){
    	$datos = array(
    			'nombre' => $_POST['nombre'],
