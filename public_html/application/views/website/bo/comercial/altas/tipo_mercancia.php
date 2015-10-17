@@ -44,30 +44,28 @@
                 <fieldset>
                   <div class="contenidoBotones">
 						<div class="row">
-												<div class="col-sm-1 link"></div>
-												<?php foreach ($tipos as $tipo ) {?>
-												<div class="col-sm-3 link">
-												<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipo->id; ?>">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-tags fa-3x"></i>
-														<h1><?php echo $tipo->descripcion; ?></h1>
-													</div>
-												</a>
-												</div>
-												<?php } ?>
-										 </div>
-									</div>
-								</fieldset>
+							<?php foreach ($tipos as $tipo ) {?>
+								<div class="col col-sm-5 col-xs-12 col-lg-3" >
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipo->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipo->descripcion; ?></h1>
+										</div>
+									</a>
+								</div>
+							<?php } ?>
 						</div>
-						<!-- end widget content -->
-
 					</div>
-					<!-- end widget div -->
-				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
+				</fieldset>
+			</div>
+		<!-- end widget content -->
 		</div>
+		<!-- end widget div -->
+	</div>
+				<!-- end widget -->
+</article>
+			<!-- END COL -->
+</div>
 				<div class="row">         
 			        <!-- a blank row to get started -->
 			        <div class="col-sm-12">

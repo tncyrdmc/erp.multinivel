@@ -2266,7 +2266,6 @@ class comercial extends CI_Controller
 		$empresa	     = $this->model_admin->get_empresa();
 		$regimen	     = $this->model_admin->get_regimen();
 		$zona	         = $this->model_admin->get_zona();
-		$inscripcion	 = $this->model_admin->get_paquete();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
 		$pais            = $this->model_admin->get_pais();
 		
@@ -2275,6 +2274,7 @@ class comercial extends CI_Controller
 		$servicios		 = $this->model_admin->get_servicios();
 		//$promo			 = $this->model_admin->get_promo();
 		$combinados		 = $this->model_admin->get_combinados();
+		$paquete		 = $this->model_admin->get_paquetes();
 		
 		
 		$this->template->set("pais",$pais);
@@ -2293,8 +2293,8 @@ class comercial extends CI_Controller
 		$this->template->set("empresa",$empresa);
 		$this->template->set("regimen",$regimen);
 		$this->template->set("zona",$zona);
-		$this->template->set("inscripcion",$inscripcion);
 		$this->template->set("tipo_paquete",$tipo_paquete);
+		$this->template->set("paquetes",$paquete);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

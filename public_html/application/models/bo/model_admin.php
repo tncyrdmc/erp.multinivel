@@ -8,11 +8,7 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from cat_regimen");
 		return $q->result();
 	}
-	function get_paquete()
-	{
-		$q=$this->db->query("select * from paquete_inscripcion");
-		return $q->result();
-	}
+	
 	function detalle_paquete($id)
 	{
 		$q=$this->db->query("select *, (select descripcion from cat_tipo_paquete A where A.id_paquete=B.id_paquete) tipo from paquete_inscripcion B where id_paquete=".$id);
@@ -64,11 +60,13 @@ class model_admin extends CI_Model
 		CGP where P.id=".$sku." and
 		CGP.id_grupo = P.id_grupo");
 		
-		
+		$q = "";
 		if($tipo==2)
 			$q=$this->db->query("select * from servicio where id=".$sku);
 		if($tipo==3)
 			$q=$this->db->query("select * from combinado where id=".$sku);
+		if($tipo==4)
+			$q=$this->db->query("select * from paquete_inscripcion where id_paquete=".$sku);
 
 		return $q->result();
 	}
@@ -151,14 +149,19 @@ class model_admin extends CI_Model
 		
 		  switch ($id_tipo_mercancia){
 			 case 1:	//producto
-			 $this->db->query("delete from producto where id = '".$sku."'");
+			 	$this->db->query("delete from producto where id = '".$sku."'");
 			 break;
 			 case 2:	//servicio
-			 $this->db->query("delete from servicio where id = '".$sku."'");
+			 	$this->db->query("delete from servicio where id = '".$sku."'");
 			 break;
 			 case 3:	//combinado
-			 $this->db->query("delete from combinado where id = '".$sku."'");
-			 $this->db->query("delete from cross_combinado where id_combinado = '".$sku."'");
+			 	$this->db->query("delete from combinado where id = '".$sku."'");
+				$this->db->query("delete from cross_combinado where id_combinado = '".$sku."'");
+				break;
+			 case 4:	//combinado
+			 	$this->db->query("delete from paquete_inscripcion where id_paquete = '".$sku."'");
+			 	$this->db->query("delete from cross_paquete where id_paquete = '".$sku."'");
+			 	break;
 			 break;
 		  }
 	}
@@ -285,6 +288,16 @@ class model_admin extends CI_Model
 							where M.sku = C.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=3 and 
 							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = C.id_red and
 							CGP.id_red = TR.id and CO.Code = M.pais");
+		return $q->result();
+	}
+	
+	function get_paquetes(){
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, P.nombre, M.pais,
+						CI.url, CTM.descripcion, TR.nombre red, CO.Name, CO.Code2
+						from mercancia M, paquete_inscripcion P, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country CO
+						where M.sku = P.id_paquete and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia= 4 
+						and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = P.id_red and
+						CGP.id_red = TR.id and CO.Code = M.pais");
 		return $q->result();
 	}
 	
@@ -503,27 +516,6 @@ where(a.id_pais=b.Code)");
 
 			$n=0;
 			$this->db->query("delete from cross_combinado where id_combinado=".$sku);
-/*
-			foreach($_POST['producto'] as $producto)
-			{
-					$dato_cross_combinado=array(
-							"id_combinado"      => $sku,
-							"id_producto"       => $producto,
-							"cantidad_producto" => $_POST['n_productos']
-			        );
-					
-					$this->db->insert("cross_combinado",$dato_cross_combinado);
-			}
-
-			foreach($_POST['servicio'] as $servicio)
-			{
-					$dato_cross_combinado=array(
-							"id_servicio"       => $servicio,
-							"cantidad_servicio" => $_POST['n_servicios']
-			        );
-					$this->db->where("id_combinado",$sku);
-					$this->db->update("cross_combinado",$dato_cross_combinado);
-			}*/
 			
 			if(!isset($_POST['n_productos']))$_POST['n_productos']=0;
 			if(!isset($_POST['n_servicios']))$_POST['n_servicios']=0;
@@ -641,6 +633,135 @@ where(a.id_pais=b.Code)");
 				);
 				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
 			}
+		}
+		
+		if($_POST["tipo_merc"]==4)
+		{
+			$sku_q=$this->db->query("SELECT sku from mercancia where id=".$_POST['id_merc']);
+			$sku_res=$sku_q->result();
+			$sku=$sku_res[0]->sku;
+			$dato_paquete=array(
+				"nombre" => $_POST ['nombre'],
+				"Descripcion" => $_POST ['descripcion'],
+				"precio" => $_POST ['costo'],
+				"puntos" => $_POST ['puntos_com'],
+				"estatus" => 'ACT',
+				"id_red" => $_POST ['red']
+			);
+		
+			$this->db->where('id_paquete', $sku);
+			$this->db->update('paquete_inscripcion', $dato_paquete);
+		
+			$n=0;
+			$this->db->query("delete from cross_paquete where id_paquete=".$sku);
+				
+			if(!isset($_POST['n_productos']))$_POST['n_productos']=0;
+			if(!isset($_POST['n_servicios']))$_POST['n_servicios']=0;
+			$productos   = $_POST['producto'];
+			$servicios   = $_POST['servicio'];
+			$n_productos = $_POST['n_productos'];
+			$n_servicios = $_POST['n_servicios'];
+			$producto    = sizeof($_POST['producto']);
+			$servicio    = sizeof($_POST['servicio']);
+		
+			if($productos<$servicios)
+			{
+				if ($n_productos[0]==0)
+				{
+					foreach ($servicios as $key)
+					{
+						$dato_cross_combinado=array(
+								"id_paquete"      => $sku,
+								"id_servicio"       => $key,
+								"cantidad_servicio" => $n_servicios[$n]
+						);
+						$this->db->insert("cross_paquete",$dato_cross_combinado);
+						$n++;
+					}
+				}
+				else
+				{
+					foreach ($servicios as $key)
+					{
+						if($n>$producto)
+						{
+							$productos[$n]='';
+							$n_productos[$n]='';
+						}
+						$dato_cross_combinado=array(
+								"id_paquete"      => $sku,
+								"id_producto"       => $productos[$n],
+								"id_servicio"       => $key,
+								"cantidad_producto" => $n_productos[$n],
+								"cantidad_servicio" => $n_servicios[$n]
+						);
+						$this->db->insert("cross_paquete",$dato_cross_combinado);
+						$n++;
+					}
+				}
+			}
+			if($productos>$servicios)
+			{
+				if($n_servicios[0]==0)
+				{
+					foreach ($productos as $key)
+					{
+						$dato_cross_combinado=array(
+								"id_paquete"      => $sku,
+								"id_producto"       => $key,
+								"cantidad_producto" => $n_productos[$n]
+						);
+						$this->db->insert("cross_paquete",$dato_cross_combinado);
+						$n++;
+					}
+				}
+				else
+				{
+					foreach ($productos as $key)
+					{
+						if($n>$servicio)
+						{
+							$servicio[$n]='';
+							$n_servicios[$n]='';
+						}
+						$dato_cross_combinado=array(
+								"id_paquete"      => $sku,
+								"id_producto"       => $key,
+								"id_servicio"       => $servicios[$n],
+								"cantidad_producto" => $n_productos[$n],
+								"cantidad_servicio" => $n_servicios[$n]
+						);
+						$this->db->insert("cross_paquete",$dato_cross_combinado);
+						$n++;
+					}
+				}
+			}
+			if ($productos==$servicios)
+			{
+				foreach ($_POST['producto'] as $key)
+				{
+					$dato_cross_combinado=array(
+							"id_paquete"      => $sku,
+							"id_producto"       => $key,
+							"id_servicio"       => $servicios[$n],
+							"cantidad_producto" => $n_productos[$n],
+							"cantidad_servicio" => $n_servicios[$n]
+					);
+					$this->db->insert("cross_paquete",$dato_cross_combinado);
+					$n++;
+				}
+			}
+			//////////////////////////////////////////////////////////////////////////////////////////////
+			$dato_mercancia=array(
+					"pais"          	    => $_POST['pais'],
+					"real"              	=> $_POST['real'],
+					"costo"            	 	=> $_POST['costo'],
+					"entrega"           	=> $_POST['entrega'],
+					"costo_publico"    		=> $_POST['costo_publico'],
+					"puntos_comisionables"	=> $_POST['puntos_com']
+			);
+			$this->db->where('id', $_POST['id_merc']);
+			$this->db->update('mercancia', $dato_mercancia);
 		}
 		
 	}
@@ -1552,11 +1673,28 @@ FROM cross_combinado a, producto b, mercancia c
 WHERE a.id_producto<>0 and a.id_producto=b.id and c.id=".$id);
 		return $q->result();
 	}
+	
 	function get_serv_combinado($id)
 	{
 		$q=$this->db->query("SELECT a.*, b.nombre, c.id 
 FROM cross_combinado a, servicio b, mercancia c 
 WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
+		return $q->result();
+	}
+	
+	function get_prod_paquete($id)
+	{
+		$q=$this->db->query("SELECT a.*, b.nombre, c.id
+FROM cross_paquete a, producto b, mercancia c, paquete_inscripcion p
+WHERE a.id_producto <> 0 and a.id_producto= b.id and p.id_paquete = c.sku and p.id_paquete = a.id_paquete and c.id = ".$id);
+		return $q->result();
+	}
+	
+	function get_serv_paquete($id)
+	{
+		$q=$this->db->query("SELECT a.*, b.nombre, c.id
+FROM cross_paquete a, servicio b, mercancia c, paquete_inscripcion p
+WHERE a.id_servicio<>0 and a.id_servicio=b.id and p.id_paquete = c.sku and p.id_paquete = a.id_paquete and c.id=".$id);
 		return $q->result();
 	}
 	

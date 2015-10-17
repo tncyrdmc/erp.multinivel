@@ -2451,7 +2451,49 @@ function index()
 								';
 		}
 	}
-											    	
+	
+	function show_paquetes()
+	{
+		$id = $this->tank_auth->get_user_id();
+		$pais = $this->general->get_pais($id);
+		$comb=$this->modelo_compras->get_paquetes_inscripcion($pais[0]->pais, $id);
+	
+		for($k=0;$k<sizeof($comb);$k++)
+		{
+			$imagen=$this->modelo_compras->get_img($comb[$k]->id);
+			if(isset($imagen[0]))
+			{
+				$comb[$k]->img=$imagen[0]->url;
+			}
+			else
+			{
+				$comb[$k]->img="";
+			}
+		}
+	
+		for($combinados=0;$combinados<sizeof($comb);$combinados++)
+		{
+				
+			echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
+										        </a>
+									 
+									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
+									              		<div class="promotion"> <a onclick="detalles('.$comb[$combinados]->id.',4)"></a></div>
+									            	</div>
+									            	<div class="description">
+									              		<h4><a onclick="detalles('.$comb[$combinados]->id.',3)">'.$comb[$combinados]->nombre.'</a></h4>
+									              	</div>
+									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
+									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
+									       </div>
+								       </div>
+								';
+		}
+	}
+		
 	function buscar_servicio()
 	{
 		$buscar=$_GET['buscar'];
