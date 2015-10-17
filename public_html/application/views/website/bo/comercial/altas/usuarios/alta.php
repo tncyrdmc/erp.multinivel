@@ -7,6 +7,7 @@
 							<span>>
 								<a href="/bo/administracion">Administración </a>
 								<a href="/bo/usuarios"> > Usuarios </a>
+								<a href="/bo/usuarios/altaUsuarioAcceso"> > Acceso </a>
 								 > Alta
 							</span>
 						</h1>
@@ -100,6 +101,7 @@
 													<td><input name="apellido" value="" id="username" maxlength="60" size="30" type="text" required></td>
 													<td style="color: red;"></td>
 												</tr>
+												
 												<tr>
 													<td>Email</td>
 													<td><?php echo form_input($email); ?></td>

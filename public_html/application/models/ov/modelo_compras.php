@@ -795,10 +795,9 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 				"colonia" 	=> $dir[0]->colonia,
 				"calle" 	=> $dir[0]->calle,
 				"correo" 	=> $correo,
-				"compania" 	=> "null",
+				"proveedor_mensajeria" 	=> $tarifa[0]->id_proveedor,
 				"celular" 	=> $telefono,
 				"info_ad"	=> "",
-				"id_proveedor"	=> $tarifa[0]->id_proveedor,
 				"id_tarifa"	=> $tarifa[0]->id_tarifa
 		);
 		
@@ -1126,5 +1125,14 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	function consultarCostoEnvio($id){
 		$q = $this->db->query("select costo from user_envio where id_user =".$id);
 		return $q->result();
+	}
+	
+	function consultarEnvio($id){
+		$q = $this->db->query("select * from user_envio where id_user =".$id);
+		return $q->result();
+	}
+	
+	function EliminarEnvioHistorial($id){
+		$this->db->query("delete from user_envio where id_user =".$id);
 	}
 }

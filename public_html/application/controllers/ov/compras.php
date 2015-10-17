@@ -3824,7 +3824,7 @@ function index()
 		$productos = $this->cart->contents();
 		$id = $this->tank_auth->get_user_id();
 		
-		$costo_envio = $this->modelo_compras->consultarCostoEnvio($id);
+		$costo_envio = $this->modelo_compras->consultarEnvio($id);
 		
 		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
 		
@@ -3833,6 +3833,7 @@ function index()
 		$email = $datos_perfil[0]->email;
 		
 		$costo_total = $costo_envio[0]->costo;
+		$impuestos = 0;
 		foreach ($productos as $producto){
 			$costo_total = $costo_total + ($producto['qty'] * $this->modelo_compras->CostoMercancia($producto['id']));
 			$impuestos = $impuestos + ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
@@ -3858,9 +3859,12 @@ function index()
 			$this->modelo_compras->registrar_movimiento($id, $producto['id'], $producto['qty'], $producto['price']+$impuesto, $producto['qty']*$total, $venta, $puntos);
 			
 		}
+		$this->modelo_compras->EliminarEnvioHistorial($id);
 		
 		$this->cart->destroy();
+		
 		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo_total+$impuestos));
+		
 		if(isset($banco[0]->id_banco)){
 			$respuesta = "<div class='alert alert-success alert-block'>
 								<a class='close' data-dismiss='alert' href='#'></a>
@@ -3872,6 +3876,7 @@ function index()
 		}else{
 			echo "La venta se a registrado";
 		}
+		
 	}
 	
 	function Cambiar_estado_enviar(){

@@ -38,7 +38,7 @@
 			}
 		})
 	}
-	function Registrar(id,cantidad,banco){
+	function Registrar(banco){
 		$.ajax({
 			data:{
 				banco : banco,
