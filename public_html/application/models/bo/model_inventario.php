@@ -11,7 +11,10 @@ class model_inventario extends CI_Model
             );
              $this->db->insert("documento_inventario",$dato_documento);
 	}
-	
+	function Obtener_Almacen($almacen){
+		$q=$this->db->query('select * from cedi where tipo  ="'.$almacen.'"');
+		return $q->result();
+	}
 	function getAlldocumento(){
 		$q=$this->db->query('select * from documento_inventario ');
 		return $q->result();
@@ -49,6 +52,18 @@ class model_inventario extends CI_Model
    	);
    	$this->db->where('id_doc', $_POST['id']);
    	$this->db->update('documento_inventario', $datos);
+   }
+   function ingresar_inventario($datos){
+   	$this->db->insert("inventario",$datos);
+   	return mysql_insert_id();
+   }
+   function ingresar_inventario_historial($datos){
+   	$this->db->insert("inventario_historial",$datos);
+  }
+  
+  function consultar_en_inventario($mercancia,$destino){
+  	$q=$this->db->query('select * from inventario where  id_almacen ="'.$destino.'" and id_mercancia ='.$mercancia);
+  	return $q->result();
   }
 	function update_bloqueados(){
 	   	$this->db->query('update inventario set bloqueados = '.$_POST['bloqueados'].' where id_almacen = '.$_POST['id_cedi'].' and id_mercancia = '.$_POST['mercancia'].'');

@@ -57,11 +57,9 @@
                 
                               {
                               	if($ciudad_actual[0]->id_estate== $key->id){
-  
 													?>
+													
 							<option selected value="<?=$key->id?>"><?=utf8_decode($key->Nombre)?></option>
-													
-													
 														<?php }else{?>
 														
 							<option value="<?=$key->id?>"><?=utf8_decode($key->Nombre)?></option>

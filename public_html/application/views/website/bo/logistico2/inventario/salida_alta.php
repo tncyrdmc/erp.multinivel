@@ -11,8 +11,7 @@
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>
 				> <a href="/bo/inventario/index"> Inventario </a>
-				> Entrada</a>
-			
+				> Salida
 				</span>
 				</h1>
 				</div>
@@ -22,7 +21,8 @@
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> <a href="/bol/dashboard/"> Logistico </a>
 				> <a href="/bo/inventario/index"> Inventario </a>
-				> Entrada
+				> Salida
+				
 				</span>
 				</h1>
 				</div>
@@ -63,7 +63,7 @@
 				-->
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Nueva Entrada</h2>				
+					<h2>Nueva Salida</h2>				
 					
 				</header>
 
@@ -83,10 +83,10 @@
 					
 						
 							
-							<form id="entradas" class="smart-form" method="post" action="new_entrada">
+							<form id="entradas" class="smart-form" method="post" action="new_salida">
                               
                               <fieldset>
-                                <legend>Datos de Entrada</legend>
+                                <legend>Datos de Salida</legend>
                                 <section  class="col col-3">
                                   <label class="select">Tipo de Entrada
                                     <select id="tipo_movimiento_in" required type="text" name="documento">
@@ -105,10 +105,20 @@
                                 </section>
                               </fieldset>
                               <fieldset>
-                              
+                                <section  class="col col-3">
+                                  <label class="select">Almacen/Cedi    <strong>Origen</strong>
+                                    <select id="destino_in" required type="text" name="destino_in">
+                                      <option >--------------Escoja un almacen-----------------</option>
+                                                                               
+                                                 <?foreach (	$almacenesCedi as $key){?>
+													<option value="<?=$key->id_cedi?>"><?=$key->nombre?></option>
+												<?}?>    </select>
+                                  </label>
+                                </section>
+                                
                                 <legend>Almacen</legend>
                                 <section  class="col col-3">
-                                  <label class="select"> <strong>Origen</strong>
+                                  <label class="select"> <strong>Destino</strong>
                                     <select id="tipo" required type="text" name="tipo" onChange="OrigenAlmacen()">
                                       <option value="">--------------Escoja un tipo-----------------</option>
                                          <option value="A">Almacen</option>
@@ -132,16 +142,7 @@
                                 </section>
                                
                                  
-                                <section  class="col col-3">
-                                  <label class="select">Almacen/Cedi    <strong>Destino</strong>
-                                    <select id="destino_in" required type="text" name="destino_in">
-                                      <option >--------------Escoja un almacen-----------------</option>
-                                                                               
-                                                 <?foreach (	$almacenesCedi as $key){?>
-													<option value="<?=$key->id_cedi?>"><?=$key->nombre?></option>
-												<?}?>    </select>
-                                  </label>
-                                </section>
+                              
                               </fieldset>
                               <fieldset id="general_field_in">
                               
