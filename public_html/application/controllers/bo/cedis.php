@@ -61,7 +61,7 @@ class cedis extends CI_Controller
 		}
 		$style=$this->modelo_dashboard->get_style(1);
 		$pais            = $this->model_admin->get_pais();
-		
+		$this->template->set("pais",$pais);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
@@ -125,7 +125,8 @@ class cedis extends CI_Controller
 				'ciudad' => $_POST['ciudad'],
 				'direccion' => $_POST['direccion'],
 				'telefono' => $_POST['telefono'],
-				'estatus' => $_POST['ACT'],
+				'estatus' => 'ACT',
+				'tipo' => 'C',
 		);
 		
 		
@@ -197,9 +198,15 @@ class cedis extends CI_Controller
 		
 		$PaisCiudad = $this->modelo_cedi->consultar_PaisCiudad($cedi[0]->ciudad);
 		$ciudades = $this->modelo_cedi->consultar_ciudades($cedi[0]->ciudad);
+		$ciudad_actual = $this->modelo_cedi->consultar_ciudad_actual($cedi[0]->ciudad);
+		$departamentos = $this->modelo_cedi->consultar_departamento($cedi[0]->ciudad);
+		$departamento_activo = $this->modelo_cedi->consultar_departamento_activo($cedi[0]->ciudad);
 		$this->template->set("pais",$pais);
 		$this->template->set("cedi",$cedi);
 		$this->template->set("ciudades",$ciudades);
+		$this->template->set("departamentos",$departamentos);
+		$this->template->set("ciudad_actual",$ciudad_actual);
+		$this->template->set("departamento_activo",$departamento_activo);
 		$this->template->set("PaisCiudad",$PaisCiudad);
 		$this->template->build('website/bo/logistico2/cedis/editarCedis');
 	}

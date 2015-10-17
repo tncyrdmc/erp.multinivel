@@ -33,37 +33,56 @@
 									<input style="width: 25rem;" type="number" name="telefono" id="telefono" placeholder="Telefono" class="form-control" value="<?php echo $cedi[0]->telefono; ?>" required>
 								</label>
 								
-								<label class="select" style="width: 25rem">Pais
-											<select id="pais" required name="pais" onChange="CiudadesPais()">
-												<option value="-" selected>-- Seleciona un pais --</option>
-												<?foreach ($pais as $key){
+							
+											<div style="width: 25rem;">
+					<label class="select">Pais 
+						<select id="pais" required name="pais" onChange="Departamentos()">
+							<option value="-" selected>-- Seleciona un pais --</option>
+								<?foreach ($pais as $key){
 													if($PaisCiudad[0]->CountryCode == $key->Code){?>
 								               <option selected value="<?=$key->Code?>"><?=$key->Name?></option>
 													
 												<?php }else{?>
 													<option value="<?=$key->Code?>"><?=$key->Name?></option>
-												<?}}?>
-											</select>
-							  </label>
-							 
-							 	
-							<div  style="width: 25rem" id="ciudad">
-									<label class="select">Ciudad
-												<select id="ciudad" name="ciudad" >
-												<?foreach ($ciudades as $key){
+								 <?}}?>
+						</select>
+					</label>
+				 </div>
+
+				<div style="width: 25rem;">
+					<label for="" class="select">Estado/Departamento <select
+						id="departamento" name="estado" onChange="CiudadesDepartamento()"
+						required>
+                              <?foreach ($departamentos as $key)
+                
+                              {
+                              	if($ciudad_actual[0]->id_estate== $key->id){
+													?>
+													
+							<option selected value="<?=$key->id?>"><?=utf8_decode($key->Nombre)?></option>
+														<?php }else{?>
+														
+							<option value="<?=$key->id?>"><?=utf8_decode($key->Nombre)?></option>
+								 <?}}?>
+					</select>
+					</label>
+				</div>
+
+				<div style="width: 25rem;">
+					<label for="" class="select">Municipio/Ciudad <select
+						id="ciudad" required name="ciudad" >
+                             <?foreach ($ciudades as $key){
 													if($cedi[0]->ciudad == $key->ID){
 													?>
 													<option selected value="<?=$key->ID?>"><?=utf8_decode($key->Name)?></option>
 													<?php }else{?>
 													<option value="<?=$key->ID?>"><?=utf8_decode($key->Name)?></option>
-												<?}}?>
-												</select>
-									</label> <a href="#" onclick="new_ciudad()">Agregar Ciudad <i
-										class="fa fa-plus"></i></a>
-									</label>
-							</div>
+							<?}}?>
+					</select>
+					</label>
+				</div>
 						
-								
+								<br>
 								<input type="text" id="id" name="id" value="<?php echo $cedi[0]->id_cedi; ?>" class="hide">
 								<div class="row">
 									<section  id="div_subir" style="width: 25rem;">
@@ -160,32 +179,48 @@ function new_ciudad(){
 }
 
 
-function CiudadesPais(){
+</script>					
+		<script>
+function Departamentos(){
 	var pa = $("#pais").val();
-	
 	$.ajax({
 		type: "POST",
-		url: "/bo/proveedor_mensajeria/CiudadPais",
+		url: "/bo/proveedor_mensajeria/DepartamentoPais",
 		data: {pais: pa}
 	})
 	.done(function( msg )
 	{
-		$('#ciudad option').each(function() {
-		    
+		
+		$('#departamento option').each(function() {   
 		        $(this).remove();
-		    
 		});
 		datos=$.parseJSON(msg);
+		$('#departamento').append('<option value="0">-- Seleciona un Estado / Departamento --</option>');
 	      for(var i in datos){
-		      var impuestos = $('#ciudad');
-		      $('#ciudad select').each(function() {
-				  $(this).append('<option value="'+datos[i]['ID']+'">'+datos[i]['Name']+'</option>');
-			    
-			});
-	    	  
-	        
+		      $('#departamento').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>'); 		        
 	      }
 	});
 }
-</script>					
-						
+
+function CiudadesDepartamento(){
+	var pa = $("#departamento").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadDepartamento",
+		data: {departamento: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ciudad option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+		$('#ciudad').append('<option value="">-- Seleciona una ciudad / municipio </option>');
+	      for(var i in datos){
+		      $('#ciudad').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>');
+	      }
+	});
+}
+
+</script>				
