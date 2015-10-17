@@ -7,7 +7,18 @@ class modelo_cedi extends CI_Model
 		return mysql_insert_id();
 	}
 	
+	function consultar_departamento_activo($city){
+		$q = $this->db->query("select * from estate where id=(Select id_estate from City where ID =  '".$city." ')");
+		$departamento = $q->result();
+		return $departamento;
+	}
 	
+	function consultar_ciudad_actual($city){
+		$q = $this->db->query("select * from City where ID = ".$city );
+		$ciudades = $q->result();
+		return $ciudades;
+		
+	}
 	function nuevaCiudad(){
 		$ciudad = array (
 				"Name" => $_POST ['ciudad'],
@@ -16,10 +27,14 @@ class modelo_cedi extends CI_Model
 		);
 		$this->db->insert ( "City", $ciudad );
 	}
-	
+	function  consultar_departamento($city){
+		$q = $this->db->query("select * from estate where id_pais=(Select CountryCode from City where ID =  '".$city." ')");
+		$departamento = $q->result();
+		return $departamento;
+	}
 	function all_cedi(){
 		$q = $this->db->query("SELECT p.id_cedi,p.nombre,p.descripcion,p.ciudad,p.direccion,p.telefono,p.estatus,c.Name
-                               FROM cedi p ,City c where p.ciudad = c.ID ");
+                               FROM cedi p ,City c where p.ciudad = c.ID and p.tipo= 'C' ");
 	    return  $q->result();
 	}
 	
@@ -36,7 +51,7 @@ class modelo_cedi extends CI_Model
 		return $cedi;
 	}
 	function consultar_ciudades($city){
-		$q = $this->db->query("SELECT * FROM City where CountryCode =(Select CountryCode from City where ID = '".$city." ') ");
+		$q = $this->db->query("select * from City where id_estate =(Select id_estate from City where ID =  '".$city." ') ");
 		$ciudades = $q->result();
 		return $ciudades;
 	}

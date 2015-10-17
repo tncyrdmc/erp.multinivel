@@ -97,25 +97,37 @@
 									</section>
 								</div>
 								
-							<label class="select" style="width: 25rem">Pais
-											<select id="pais" required name="pais" onChange="CiudadesPais()">
-												<option value="-" selected>-- Seleciona un pais --</option>
-												<?foreach ($pais as $key){?>
-													<option value="<?=$key->Code?>"><?=$key->Name?></option>
-												<?}?>
-											</select>
-							</label>
-		
-								
-							<div  style="width: 25rem" id="ciudad">
-									<label class="select">Ciudad
-												<select name="ciudad" >
-												</select>
-									</label> <a href="#" onclick="new_ciudad()">Agregar Ciudad <i
-										class="fa fa-plus"></i></a>
-									</label>
-							</div>
+				
 						
+				<div style="width: 25rem;">
+					<label class="select">Pais 
+						<select id="pais" required name="pais" onChange="Departamentos()">
+							<option value="-" selected>-- Seleciona un pais --</option>
+							<?foreach ($pais as $key){ ?>
+								<option value="<?=$key->Code?>"><?=$key->Name?></option>
+							<? }?>
+						</select>
+					</label>
+				</div>
+
+				<div style="width: 25rem;">
+					<label for="" class="select">Estado/Departamento <select
+						id="departamento" name="estado" onChange="CiudadesDepartamento()"
+						required>
+
+					</select>
+					</label>
+				</div>
+
+				<div style="width: 25rem;">
+					<label for="" class="select">Municipio/Ciudad <select
+						id="ciudad" required name="ciudad" onChange="BuscarProveedores()">
+
+					</select>
+					</label>
+				</div>
+
+		
 							
 								
 								<label class="input">Dirección
@@ -245,31 +257,46 @@ function new_ciudad(){
 
 </script>
 <script>
-function CiudadesPais(){
+function Departamentos(){
 	var pa = $("#pais").val();
-	
 	$.ajax({
 		type: "POST",
-		url: "/bo/proveedor_mensajeria/CiudadPais",
+		url: "/bo/proveedor_mensajeria/DepartamentoPais",
 		data: {pais: pa}
 	})
 	.done(function( msg )
 	{
-		$('#ciudad option').each(function() {
-		    
+		
+		$('#departamento option').each(function() {   
 		        $(this).remove();
-		    
 		});
 		datos=$.parseJSON(msg);
+		$('#departamento').append('<option value="0">-- Seleciona un Estado / Departamento --</option>');
 	      for(var i in datos){
-		      var impuestos = $('#ciudad');
-		      $('#ciudad select').each(function() {
-				  $(this).append('<option value="'+datos[i]['ID']+'">'+datos[i]['Name']+'</option>');
-			    
-			});
-	    	  
-	        
+		      $('#departamento').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>'); 		        
 	      }
 	});
 }
+
+function CiudadesDepartamento(){
+	var pa = $("#departamento").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/proveedor_mensajeria/CiudadDepartamento",
+		data: {departamento: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ciudad option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+		$('#ciudad').append('<option value="">-- Seleciona una ciudad / municipio </option>');
+	      for(var i in datos){
+		      $('#ciudad').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>');
+	      }
+	});
+}
+
 </script>

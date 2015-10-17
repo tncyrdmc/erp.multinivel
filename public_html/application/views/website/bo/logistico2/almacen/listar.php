@@ -25,6 +25,7 @@
 					 
 					 <?php }?>
 					
+				
 			</h1>
 		</div>
 	</div>
@@ -106,36 +107,28 @@
 										<th data-hide="phone, tablet">Ciudad</th>
 										<th data-hide="phone, tablet">Dirección</th>
 										<th data-hide="phone, tablet">Telefono</th>
-										<th data-hide="phone, tablet">WEB</th>
+									
 										<th>Acciones</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($almacenes as $almacen) {?>
+									<?php foreach ($cedi as $row) {?>
 									<tr>
-										<td><?php echo $almacen->id_almacen; ?></td>
-										<td><?php echo $almacen->nombre; ?></td>
-										<td><?php echo $almacen->descripcion; ?></td>
-										<td><?php echo $almacen->ciudad; ?></td>
-										<td><?php echo $almacen->direccion; ?></td>
-										<td><?php echo $almacen->telefono; ?></td>
-										<td>
-										<?php 
-											if($almacen->web){
-												echo "SI";
-											}else{
-												echo "NO";							
-											}
-										?>
-										</td>
+										<td><?php echo $row->id_cedi; ?></td>
+										<td><?php echo $row->nombre; ?></td>
+										<td><?php echo $row->descripcion; ?></td>
+										<td><?php echo utf8_decode($row->Name) ?></td>
+										<td><?php echo $row->direccion; ?></td>
+										<td><?php echo $row->telefono; ?></td>
+									
 										<td class='text-center'>
-											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_almacen("<?php echo $almacen->id_almacen; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
-											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_almacen(<?php echo $almacen->id_almacen; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
-											<?php if ($almacen->estatus == 'ACT') {?>
-												<a title="Desactivar" style='cursor: pointer;' onclick="estado_almacen('DES','<?php echo $almacen->id_almacen; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_cedi("<?php echo $row->id_cedi; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
+											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_cedi(<?php echo $row->id_cedi; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
+											<?php if ($row->estatus == 'ACT') {?>
+												<a title="Desactivar" style='cursor: pointer;' onclick="estado_almacen('DES','<?php echo $row->id_cedi; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>
-												<a title="Activar" style='cursor: pointer;' onclick="estado_almacen('ACT','<?php echo $almacen->id_almacen; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+												<a title="Activar" style='cursor: pointer;' onclick="estado_almacen('ACT','<?php echo $row->id_cedi; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<?php } ?>
 										</td>
 									</tr>
@@ -261,7 +254,7 @@ function estado_almacen(estatus, id)
 		titulo = "Desactivar almacen";
 	}else{
 		msg = "¿Desea activar el almacen?";
-		titulo = "Activar almacen";
+		titulo = "Activarcedi";
 	}
 		
 	bootbox.dialog({
@@ -275,7 +268,7 @@ function estado_almacen(estatus, id)
 				
 				$.ajax({
 					type: "POST",
-					url: "cambiar_estado_almacen",
+					url: "/bo/cedis/cambiar_estado_cedi",
 					data: {
 						id:id, 
 						estado: estatus
@@ -283,7 +276,7 @@ function estado_almacen(estatus, id)
 					}).done(function( msg )
 							{
 							
-								location.href = "listar";
+								location.href = "/bo/almacen/listar";
 						})
 
 				}
@@ -301,10 +294,10 @@ function estado_almacen(estatus, id)
 	
 	}
 
-	function editar_almacen(id){
+	function editar_cedi(id){
 		$.ajax({
 			type: "POST",
-			url: "/bo/almacen/editar_almacen",
+			url: "/bo/cedis/editar_cedi",
 			data: {
 				id: id
 				}
@@ -313,12 +306,12 @@ function estado_almacen(estatus, id)
 		.done(function( msg ) {
 			bootbox.dialog({
 				message: msg,
-				title: 'Modificar Almacen',
+				title: 'Modificar almacen',
 					});
 		});//fin Done ajax
 	}
 
-	function eliminar_almacen(id) {
+	function eliminar_cedi(id) {
 
 		$.ajax({
 			type: "POST",
@@ -329,7 +322,7 @@ function estado_almacen(estatus, id)
 		{
 			bootbox.dialog({
 			message: msg,
-			title: 'Eliminar almacen',
+			title: 'Eliminar Almacen',
 			buttons: {
 				success: {
 				label: "Aceptar",
@@ -338,7 +331,7 @@ function estado_almacen(estatus, id)
 					
 						$.ajax({
 							type: "POST",
-							url: "eliminar_almacen",
+							url: "/bo/almacen/eliminar_almacen",
 							data: {id: id}
 						}).done(function( msg )
 						{
@@ -350,7 +343,7 @@ function estado_almacen(estatus, id)
 								label: "Aceptar",
 								className: "btn-success",
 								callback: function() {
-									location.href="listar";
+									location.href="/bo/almacen/listar";
 									}
 								}
 							}
@@ -371,15 +364,12 @@ function estado_almacen(estatus, id)
 		});
 }
 
-	function ValidarVacio(nombre, direccion, ciudad, telefono){
+	function ValidarVacio(nombre, direccion, telefono){
 		if(nombre == ''){
 			alert('Campo Nombre del almacen es requerido');
 			return false;
 		}else if(direccion == ''){
 			alert('El cambo direccion del almacen es requerido');
-			return false;
-		}else if(ciudad == ''){
-			alert('El cambo ciudad del almacen es requerido');
 			return false;
 		}else if(telefono == ''){
 			alert('El cambo telefono del almacen es requerido');
@@ -395,15 +385,15 @@ function estado_almacen(estatus, id)
 		
 		var nombre = $("#nombre").val();
 		var descripcion = $("#descripcion").val();
-		var ciudad = $("#ciudad").val();
+	
 		var direccion = $("#direccion").val();
 		var telefono = $("#telefono").val();
 		
-		if(ValidarVacio(nombre, direccion, ciudad, telefono)){
+		if(ValidarVacio(nombre, direccion, telefono)){
 			$.ajax({
 				 data: $('#actualizar').serialize(),
 		         type: "post",
-		         url: "actualizar_almacen"
+		         url: "/bo/cedis/actualizar_cedi"
 				}).done(function( msg )
 						{
 					

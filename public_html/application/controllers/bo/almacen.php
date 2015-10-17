@@ -14,6 +14,8 @@ class almacen extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/modelo_almacen');
 		$this->load->model('bo/general');
+		$this->load->model('bo/model_admin');
+		
 	}
 	
 	function index() {
@@ -59,7 +61,8 @@ class almacen extends CI_Controller
 		}
 		
 		$style=$this->modelo_dashboard->get_style(1);
-		
+		$pais            = $this->model_admin->get_pais();
+		$this->template->set("pais",$pais);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
@@ -78,6 +81,8 @@ class almacen extends CI_Controller
 				'ciudad' => $_POST['ciudad'],
 				'direccion' => $_POST['direccion'],
 				'telefono' => $_POST['telefono'],
+				'estatus' => 'ACT',
+				'tipo' => 'A',
 		);
 		
 		if($this->validar_almacen($almacen)){
@@ -150,7 +155,7 @@ class almacen extends CI_Controller
 		$almacenes = $this->modelo_almacen->obtenerAlmacenes();
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
-		$this->template->set("almacenes",$almacenes);
+		$this->template->set("cedi",$almacenes);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -186,9 +191,19 @@ class almacen extends CI_Controller
 		if (!$this->tank_auth->is_logged_in()){																		// logged in
 			redirect('/auth');
 		}
-		$almacen = $this->modelo_almacen->consultar_almacen($_POST['id']);
+		$pais            = $this->model_admin->get_pais();
+		$cedi = $this->modelo_cedi->consultar_cedi($_POST['id']);
 		
-		$this->template->set("almacen",$almacen);
+		$PaisCiudad = $this->modelo_cedi->consultar_PaisCiudad($cedi[0]->ciudad);
+		$ciudades = $this->modelo_cedi->consultar_ciudades($cedi[0]->ciudad);
+		$departamentos = $this->modelo_cedi->consultar_departamento($cedi[0]->ciudad);
+		$departamento_activo = $this->modelo_cedi->consultar_departamento_activo($cedi[0]->ciudad);
+		$this->template->set("pais",$pais);
+		$this->template->set("cedi",$cedi);
+		$this->template->set("ciudades",$ciudades);
+		$this->template->set("departamentos",$departamentos);
+		$this->template->set("departamento_activo",$departamento_activo);
+		$this->template->set("PaisCiudad",$PaisCiudad);
 		$this->template->build('website/bo/logistico2/almacen/editar');
 	}
 	
