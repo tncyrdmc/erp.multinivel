@@ -75,7 +75,7 @@
 																		
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/bloqueo">
+													<a href="/bo/inventario/bloqueo">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
 															<i class="fa fa-lock fa-3x"></i>
 															<h1>Bloqueo</h1>
@@ -83,16 +83,12 @@
 													</a>
 												</div>
 																					
-											</div>
-
-											
-										
-	 </div>
-							</div>
+											</div>										
+									 </div>
+								</div>
 						 </div>
-
-									</div>
-								</fieldset>
+					</div>
+			</fieldset>
 						</div>
 						<!-- end widget content -->
 

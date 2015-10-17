@@ -50,4 +50,7 @@ class model_inventario extends CI_Model
    	$this->db->where('id_doc', $_POST['id']);
    	$this->db->update('documento_inventario', $datos);
   }
+	function update_bloqueados(){
+	   	$this->db->query('update inventario set bloqueados = '.$_POST['bloqueados'].' where id_almacen = '.$_POST['id_cedi'].' and id_mercancia = '.$_POST['mercancia'].'');
+  	}
 }

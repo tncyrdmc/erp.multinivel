@@ -95,7 +95,7 @@ function index()
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/iniciar_transacion',$data);
-}
+	}
 
 	
 	function carrito()
