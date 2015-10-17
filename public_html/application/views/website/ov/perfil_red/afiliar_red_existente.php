@@ -597,7 +597,7 @@ function InformarPremio(premio){
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>
 					> <a href="/ov/perfil_red/TipoAfiliacion">Tipo de Afiliacion</a> >
-					<a href="/ov/perfil_red/afiliarExistente?tipo=2">Red</a> > <a
+					<a href="/ov/perfil_red/afiliar?tipo=2">Redes</a> > <a
 					href="/ov/perfil_red/afiliarExistente?id=<?php echo $_GET['id']; ?>">Afiliar
 						Usuario</a> > Red
 				</span>

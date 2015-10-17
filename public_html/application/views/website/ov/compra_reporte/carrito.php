@@ -232,11 +232,15 @@
 													<a onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
 												</li>
 												<?php } }?>
+												
 											</ul>
 										</div>
 										<br>
 								
 							<? } ?>
+							<div class="dropdown">
+								<a id="dLabel" role="button" class="btn btn-primary btn-block" onClick="paquetes()"> Paquetes de inscripción</a>
+							</div>
 						</div>
 						<!-- end widget content -->
 						
@@ -873,8 +877,8 @@
 							type:"get",
 							url:"actualizar_nav",
 							success: function(msg){
-								
-								$("#cart_cont").html(msg);
+								javascript:location.reload();
+								//$("#cart_cont").html(msg);
 							}
 						});
 						
@@ -980,4 +984,15 @@
 				
 		})
 
+		function paquetes(){
+			$.ajax({
+				type: "get",
+				url: "show_paquetes",
+				data: { },
+				success:function(msg){
+					$("#mercancias").html(msg);
+			
+				}
+			});
+		}
 		</script>

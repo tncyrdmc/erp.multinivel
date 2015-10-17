@@ -213,6 +213,22 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		}
 		return $combinados_bd;
 	}
+	
+	function get_paquetes_inscripcion($pais, $id_usuario)
+	{
+		$q=$this->db->query('SELECT d.id, a.nombre, a.Descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red 
+from paquete_inscripcion a, mercancia d, cross_paquete e, afiliar af
+where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" and af.id_afiliado = '.$id_usuario.' and af.id_red = a.id_red and d.id_tipo_mercancia= 4  and d.pais = "'.$pais.'" group by (d.id)');
+		$combinados_bd =  $q->result();
+		$combinados = array();
+		foreach ($combinados_bd as $combinado){
+			if(!$this->ComprovarCompraMercancia($id_usuario, $combinado->id)){
+				array_push($combinados, $combinado);
+			}
+		}
+		return $combinados_bd;
+	}
+	
 	function get_combinado_espec($busqueda)
 	{
 		$q=$this->db->query('SELECT e.id, a.nombre, b.descripcion d_prod, b.nombre n_prod, c.descripcion d_serv, c.nombre n_serv, d.username, e.costo, e.fecha_alta, 

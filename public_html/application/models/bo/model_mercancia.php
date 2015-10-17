@@ -77,6 +77,7 @@ class model_mercancia extends CI_Model {
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
+	
 	function nuevo_combinado() {
 		$dato_combinado = array (
 				"nombre" => $_POST ['nombre'],
@@ -183,6 +184,114 @@ class model_mercancia extends CI_Model {
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
+	
+	function nuevo_paquete() {
+		$dato_paquete = array (
+				"nombre" => $_POST ['nombre'],
+				"descripcion" => $_POST ['descripcion'],
+				"precio" => $_POST ['costo'],
+				"puntos" => $_POST ['puntos_com'],
+				"estatus" => 'ACT',
+				"id_red" => $_POST ['red']
+		);
+		$this->db->insert ( "paquete_inscripcion", $dato_paquete );
+	
+		$paquete = mysql_insert_id ();
+		$n = 0;
+	
+		if (! isset ( $_POST ['n_productos'] ))
+			$_POST ['n_productos'] = 0;
+		if (! isset ( $_POST ['n_servicios'] ))
+			$_POST ['n_servicios'] = 0;
+		$productos = $_POST ['producto'];
+		$servicios = $_POST ['servicio'];
+		$n_productos = $_POST ['n_productos'];
+		$n_servicios = $_POST ['n_servicios'];
+		$producto = sizeof ( $_POST ['producto'] );
+		$servicio = sizeof ( $_POST ['servicio'] );
+	
+		if ($producto < $servicio) {
+			if ($n_productos [0] == 0) {
+				foreach ( $servicios as $key ) {
+					$dato_cross_combinado = array (
+							"id_paquete" => $paquete,
+							"id_servicio" => $key,
+							"cantidad_servicio" => $n_servicios [$n]
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_combinado );
+					$n ++;
+				}
+			} else {
+				foreach ( $servicios as $key ) {
+					if ($n > $producto) {
+						$productos [$n] = '';
+						$n_productos [$n] = '';
+					}
+					$dato_cross_combinado = array (
+							"id_paquete" => $paquete,
+							"id_producto" => $productos [$n],
+							"id_servicio" => $key,
+							"cantidad_producto" => $n_productos [$n],
+							"cantidad_servicio" => $n_servicios [$n]
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_combinado );
+					$n ++;
+				}
+			}
+		}
+		if ($producto > $servicio) {
+			if ($n_servicios [0] == 0) {
+				foreach ( $productos as $key ) {
+					$dato_cross_combinado = array (
+							"id_paquete" => $paquete,
+							"id_producto" => $key,
+							"cantidad_producto" => $n_productos [$n]
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_combinado );
+					$n ++;
+				}
+			} else {
+				foreach ( $productos as $key ) {
+					if ($n > $servicio) {
+						$servicio [$n] = '';
+						$n_servicios [$n] = '';
+					}
+					$dato_cross_combinado = array (
+							"id_paquete" => $paquete,
+							"id_producto" => $key,
+							"id_servicio" => $servicios [$n],
+							"cantidad_producto" => $n_productos [$n],
+							"cantidad_servicio" => $n_servicios [$n]
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_combinado );
+					$n ++;
+				}
+			}
+		}
+		if ($producto == $servicio) {
+			foreach ( $_POST ['producto'] as $key ) {
+				$dato_cross_combinado = array (
+						"id_paquete" => $paquete,
+						"id_producto" => $key,
+						"id_servicio" => $servicios [$n],
+						"cantidad_producto" => $n_productos [$n],
+						"cantidad_servicio" => $n_servicios [$n]
+				);
+				$this->db->insert ( "cross_paquete", $dato_cross_combinado );
+				$n ++;
+			}
+		}
+	
+		$sku = $paquete;
+	
+		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
+	
+		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
+	
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'] );
+		return $mercancia;
+	}
+	
 	function CrearMercancia($sku, $sku2, $tipo, $pais, $proveedor, $real, $costo, $entrega, $costo_prublico, $puntos) {
 		
 		$dato_mercancia = array (
