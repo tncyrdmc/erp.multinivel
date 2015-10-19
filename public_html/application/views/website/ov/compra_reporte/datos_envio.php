@@ -102,7 +102,7 @@
 
 			<div class="miniCartFooter  miniCartFooterInMobile text-right">
 				<h3 class="text-right subtotal"> Subtotal: $<?php echo $this->cart->total(); ?> </h3>
-				<a class="btn btn-sm btn-danger" onclick="ver_cart()> <i 
+				<a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i 
 					
 					class="fa fa-shopping-cart"> </i> VER CARRITO
 				</a> <a class="btn btn-sm btn-primary" onclick="a_comprar()">

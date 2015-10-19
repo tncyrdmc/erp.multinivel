@@ -123,4 +123,16 @@ class modelo_proveedor_mensajeria extends CI_Model
 		$this->db->insert('City',$ciudad);
 		return mysql_insert_id();
 	}
+	
+	function consultar_envios_mensajeria($id){
+		$q = $this->db->query('select proveedor_mensajeria
+				from cross_venta_envio
+			 	where proveedor_mensajeria ='.$id);
+		$proveedores = $q->result();
+		if(isset($proveedores[0]->proveedor_mensajeria)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

@@ -13,8 +13,7 @@ class inventario extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/general');
-		
-		
+		$this->load->model('bo/modelo_cedi');
 		$this->load->model('bo/model_inventario');
 	}
 
@@ -189,6 +188,60 @@ class inventario extends CI_Controller
     	$this->template->set_partial('footer', 'website/bo/footer');
     	$this->template->build('website/bo/logistico2/inventario/indexentrada');
    }
+   
+	function bloqueo(){
+    	if (!$this->tank_auth->is_logged_in())
+    	{																		// logged in
+    	redirect('/auth');
+    	}
+    	$id=$this->tank_auth->get_user_id();
+    	$usuario=$this->general->get_username($id);
+    	
+    	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+    	{
+    	}else{
+    		redirect('/auth/logout');
+    	}
+    	$style=$this->modelo_dashboard->get_style(1);
+    	$this->template->set("type",$usuario[0]->id_tipo_usuario);
+    	
+    	$cedis = $this->modelo_cedi->all();
+    	$this->template->set("usuario",$usuario);
+    	$this->template->set("style",$style);
+    	$this->template->set("cedis",$cedis);
+    	
+    	$this->template->set_theme('desktop');
+    	$this->template->set_layout('website/main');
+    	$this->template->set_partial('header', 'website/bo/header');
+    	$this->template->set_partial('footer', 'website/bo/footer');
+    	$this->template->build('website/bo/logistico2/inventario/bloqueo');
+   }
+   
+	function mercanciaDeCedis() {
+		$cedis = $this->modelo_cedi->get_mercancia_cedi($_POST['id_cedi']);
+		echo json_encode($cedis);
+	}
+	
+	function cant_disp_y_bloq_cedi() {
+		$cedis = $this->modelo_cedi->get_cant_disp_y_bloq_cedi( $_POST['id_prod'], $_POST['id_cedi']);
+		echo json_encode($cedis);
+	}
+	
+	function bloquear() {
+		
+		if ($_POST['bloqueados'] < $_POST['disponible']){
+			$this->model_inventario->update_bloqueados();
+			
+			$success = "Se ha actualizado el bloqueo del producto en el inventario.";
+			$this->session->set_flashdata('success', $success);
+			redirect('/bo/inventario/bloqueo');		
+		}
+		else{
+			$error = "La cantidad de productos que vaya ha bloquear debe ser menor que la disponible.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/inventario/bloqueo');
+		}
+	}
    
    function inventarioEntradaAlta(){
    	if (!$this->tank_auth->is_logged_in())

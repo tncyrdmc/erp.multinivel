@@ -78,7 +78,7 @@ class mercancia extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$proveedores = array();
-		if($_GET['id'] == 3){
+		if($_GET['id'] == 3 || $_GET['id'] == 4){
 			$proveedores	 = $this->model_mercancia->get_proveedor(2);
 		}else{
 			$proveedores	 = $this->model_mercancia->get_proveedor($_GET['id']);
@@ -97,7 +97,6 @@ class mercancia extends CI_Controller
 		$empresa	     = $this->model_admin->get_empresa();
 		$regimen	     = $this->model_admin->get_regimen();
 		$zona	         = $this->model_admin->get_zona();
-		$inscripcion	 = $this->model_admin->get_paquete();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
 		$pais            = $this->model_admin->get_pais_activo();
 		
@@ -121,7 +120,6 @@ class mercancia extends CI_Controller
 		$this->template->set("empresa",$empresa);
 		$this->template->set("regimen",$regimen);
 		$this->template->set("zona",$zona);
-		$this->template->set("inscripcion",$inscripcion);
 		$this->template->set("tipo_paquete",$tipo_paquete);
 		
 		$this->template->set_theme('desktop');
@@ -132,8 +130,10 @@ class mercancia extends CI_Controller
 			$this->template->build('website/bo/comercial/altas/mercancias/producto');
 		}elseif ($_GET['id'] == 2){
 			$this->template->build('website/bo/comercial/altas/mercancias/servicio');
-		}else{
+		}elseif($_GET['id'] == 3){
 			$this->template->build('website/bo/comercial/altas/mercancias/combinado');
+		}else{
+			$this->template->build('website/bo/comercial/altas/mercancias/paquete');
 		}
 		
 	}
@@ -280,6 +280,7 @@ class mercancia extends CI_Controller
 		
 	    if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
+			
 		}else{
 			redirect('/auth/logout');
 		}
@@ -313,6 +314,57 @@ class mercancia extends CI_Controller
 		else
 		{
 			$sku = $this->model_mercancia->nuevo_combinado();
+			$data = array('upload_data' => $this->upload->get_multi_upload_data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+		}
+		redirect('/bo/comercial/carrito');
+	}
+	
+	function CrearPaquete(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+		{
+				
+		}else{
+			redirect('/auth/logout');
+		}
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		if(!$this->validarMercancia($_POST)){
+			$error = "Datos incompletos para crear la mercancia";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=4');
+		}
+	
+		$ruta="/media/carrito/";
+		//definimos la ruta para subir la imagen
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
+		$config['max_width']  		= '4096';
+		$config['max_height']   	= '3112';
+	
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+	
+		if (!$this->upload->do_multi_upload('img'))
+		{
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=3');
+		}
+		else
+		{
+			$sku = $this->model_mercancia->nuevo_paquete();
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
 		}

@@ -262,9 +262,14 @@ class proveedor_mensajeria extends CI_Controller
 		}
 	
 		$id = $_POST['id'];
-	
-		$this->modelo_proveedor_mensajeria->eliminar_proveedor_mensajeria($id);
-		echo  'El proveedor de mensajeria a sido eliminado corectamente';
+		if(!$this->modelo_proveedor_mensajeria->consultar_envios_mensajeria($id)){
+			$this->modelo_proveedor_mensajeria->eliminar_proveedor_mensajeria($id);
+			echo  'El proveedor de mensajeria a sido eliminado corectamente';
+		}else{
+			echo  'El proveedor de mensajeria no a sido eliminado debido a que tiene un historial con nostros.
+					Te recomiendo que lo desactives';
+		}
+		
 	}
 	
 	function editar_proveedor(){

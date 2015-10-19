@@ -174,6 +174,32 @@
 												</tr>
 												<?}?>
 												
+												<?foreach ($paquetes as $key) {?>
+												<tr>
+													<td><?=$key->id ?></td>
+													<td><?=$key->nombre?></td>
+													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><?=$key->red?></td>
+													<td>
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
+															<?php echo $key->Name; ?>
+													</td>
+													<td><?=$key->descripcion?></td>
+													<td><?=$key->fecha_alta?></td>
+													<td><?=$key->real?></td>
+													<td><?=$key->costo?></td>
+													<td><?=$key->costo_publico?></td>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+														<?if($key->estatus=='DES'){?>
+															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+														<?}else{?>
+															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+														<?}?>
+													</td>
+												</tr>
+												<?}?>
+												
 											</tbody>
 										</table>
 								</div>
