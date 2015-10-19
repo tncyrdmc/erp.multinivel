@@ -89,7 +89,7 @@
                                 <legend>Datos de Entrada</legend>
                                 <section  class="col col-3">
                                   <label class="select">Tipo de Entrada
-                                    <select id="tipo_movimiento_in" required type="text" name="documento">
+                                    <select id="documento" required type="text" name="documento">
                                       <option >--------Escoja un tipo--------------</option>
                                                            <?foreach ($documento as $key){?>
 													<option value="<?=$key->id_doc?>"><?=$key->nombre?></option>
@@ -100,7 +100,7 @@
                                 </section>
                                 <section class="col col-3">Numero
                                   <label class="input"> <i class="icon-prepend fa fa-barcode"></i>
-                                    <input id="clave_in"  required type="text" name="clave_in" placeholder="Clave / Factura">
+                                    <input id="n_documento"  required type="text" name="n_documento" placeholder="Clave / Factura">
                                   </label>
                                 </section>
                               </fieldset>

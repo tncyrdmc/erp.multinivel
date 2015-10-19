@@ -15,6 +15,10 @@ class model_inventario extends CI_Model
 		$q=$this->db->query('select * from cedi where tipo  ="'.$almacen.'"');
 		return $q->result();
 	}
+	function Obtener_Productos_Almacen($almacen){
+		$q=$this->db->query('SELECT * FROM producto p,inventario i where p.id = i.id_mercancia and i.id_almacen="'.$almacen.'" group by p.id,p.nombre ');
+		return $q->result();
+	}
 	function getAlldocumento(){
 		$q=$this->db->query('select * from documento_inventario ');
 		return $q->result();
@@ -63,6 +67,14 @@ class model_inventario extends CI_Model
   
   function consultar_en_inventario($mercancia,$destino){
   	$q=$this->db->query('select * from inventario where  id_almacen ="'.$destino.'" and id_mercancia ='.$mercancia);
+  	return $q->result();
+  }
+  function getProductos_en_inventario(){
+  	$q=$this->db->query('select p.id,p.nombre from producto p ,inventario n where p.id=n.id_mercancia group by p.id,p.nombre ');
+  	return $q->result();
+  }
+  function getAlmacen_en_inventario(){
+  	$q=$this->db->query('SELECT c.id_cedi,c.nombre,c.descripcion,c.estatus,c.tipo FROM inventario n,cedi c where c.id_cedi=n.id_almacen group by c.id_cedi,c.nombre');
   	return $q->result();
   }
 }
