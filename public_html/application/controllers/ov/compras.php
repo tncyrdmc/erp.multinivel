@@ -157,7 +157,9 @@ function index()
 				$producto++;
 			} 
 		} 
+		
 		$data=array();
+		$data['todas_categorias']= $this->modelo_compras->VerificarCompraPaquete($id);
 		$data['compras']= $info_compras;
 		$this->template->set("redes", $redes);
 		$this->template->set_theme('desktop');

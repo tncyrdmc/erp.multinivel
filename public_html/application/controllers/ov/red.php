@@ -16,6 +16,16 @@ class red extends CI_Controller
 		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_tipo_usuario');
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 	}
 
 	function index()

@@ -118,18 +118,18 @@ class Auth extends CI_Controller
 								$this->cobrarRetenciones();
 								redirect('/bo/dashboard');
 							}
-							elseif ($tipo==2)
-							redirect('/ov/dashboard');
-							elseif ($tipo==3)
-							redirect('/bos/dashboard');
+							elseif ($tipo==2){
+								redirect('/ov/dashboard');
+							}elseif ($tipo==3)
+								redirect('/bos/dashboard');
 							elseif ($tipo==4)
-							redirect('/boc/dashboard');
+								redirect('/boc/dashboard');
 							elseif ($tipo==5)
-							redirect('/bol/dashboard');
+								redirect('/bol/dashboard');
 							elseif ($tipo==6)
-							redirect('/boo/dashboard');
+								redirect('/boo/dashboard');
 							elseif ($tipo==7)
-							redirect('/boa/dashboard');
+								redirect('/boa/dashboard');
 						}else{
 							$this->logout2();
 					

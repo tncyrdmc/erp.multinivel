@@ -1227,4 +1227,16 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function EliminarEnvioHistorial($id){
 		$this->db->query("delete from user_envio where id_user =".$id);
 	}
+	function VerificarCompraPaquete($id){
+		$q = $this->db->query("SELECT m.id FROM cross_venta_mercancia cvm, venta v, mercancia m 
+		where v.id_estatus = 2 and cvm.id_venta = v.id_venta and cvm.id_mercancia = m.id and m.id_tipo_mercancia = 4 and v.id_user = ".$id);
+		
+		$mercnacias_id = $q->result();
+		
+		if(isset($mercnacias_id[0]->id)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

@@ -12,8 +12,11 @@ class general extends CI_Model
 		$tipo=$q->result();
 	
 		$idTipoUsuario=$tipo[0]->tipoId;
-	
-		if($modulo=="comercial"){
+		
+		if($modulo=="OV"){
+			return $this->IsActivedPago($id);
+			
+		}else if($modulo=="comercial"){
 			if($idTipoUsuario==4||$idTipoUsuario==1)
 				return true;
 			return false;
@@ -42,6 +45,16 @@ class general extends CI_Model
 		return $q->result();
 	}
 
+	function IsActivedPago($id){
+		$q = $this->db->query('select estatus from user_profiles where user_id = '.$id);
+		$estado = $q->result();
+		
+		if($estado[0]->estatus == 'ACT'){
+			return true;
+		}else{
+			return false;
+		}	
+	}
 	function get_tipo($id)
 	{
 		$q=$this->db->query('select id_tipo_usuario from user_profiles where user_id = '.$id);

@@ -221,6 +221,7 @@
 						
 						<!-- widget content -->
 						<div class="widget-body">
+							<?php if($todas_categorias){?>
 							<? foreach ($redes as $red) {?>
 								<div class="dropdown">
 											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#"> <?= $red->nombre;?></a>
@@ -238,6 +239,7 @@
 										<br>
 								
 							<? } ?>
+							<?php } ?>
 							<div class="dropdown">
 								<a id="dLabel" role="button" class="btn btn-primary btn-block" onClick="paquetes()"> Paquetes de inscripción</a>
 							</div>
