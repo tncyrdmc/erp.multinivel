@@ -271,12 +271,56 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q=$this->db->query('SELECT * from combinado where id='.$sku);
 		return $q->result();
 	}
+	
+	function comb_paquete($i)
+	{
+		$q_sku=$this->db->query('SELECT sku FROM mercancia where id='.$i);
+		$sku_res=$q_sku->result();
+		$sku=$sku_res[0]->sku;
+		$q=$this->db->query('SELECT * from paquete_inscripcion where id_paquete ='.$sku);
+		return $q->result();
+	}
+	
 	function detalles_combinados($i)
 	{
 		$q_sku=$this->db->query('SELECT sku FROM mercancia where id='.$i);
 		$sku_res=$q_sku->result();
 		$sku=$sku_res[0]->sku;
 		$q1=$this->db->query('SELECT * FROM cross_combinado where id_combinado='.$sku);
+		$combinados=$q1->result();
+		$combinado=array();
+		$arr_el=array("merc"=> "","qty"=>"");
+		$j=0;
+		foreach($combinados as $comb)
+		{
+			if($comb->id_producto!=0)
+			{
+				$qp=$this->db->query('SELECT nombre FROM producto where id='.$comb->id_producto);
+				$prod=$qp->result();
+				$arr_el["merc"]=$prod[0]->nombre;
+				$arr_el["qty"]=$comb->cantidad_producto;
+				$combinado[$j]=$arr_el;
+				$j++;
+			}
+			if($comb->id_servicio!=0)
+			{
+				$qp=$this->db->query('SELECT nombre FROM servicio where id='.$comb->id_servicio);
+				$serv=$qp->result();
+				$arr_el["merc"]=$serv[0]->nombre;
+				$arr_el["qty"]=$comb->cantidad_servicio;
+				$combinado[$j]=$arr_el;
+				$j++;
+			}
+		}
+		return $combinado;
+	}
+	
+	function detalles_paquete($i)
+	{
+		$q_sku=$this->db->query('SELECT sku FROM mercancia where id='.$i);
+		$sku_res=$q_sku->result();
+		$sku=$sku_res[0]->sku;
+		$q1=$this->db->query('SELECT * FROM cross_paquete where id_paquete='.$sku);
 		$combinados=$q1->result();
 		$combinado=array();
 		$arr_el=array("merc"=> "","qty"=>"");
@@ -765,15 +809,45 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function ImpuestoMercancia($id_mercancia, $costo){
 		$total = 0;
-		
-		$q = $this->db->query("Select ci.porcentaje from cat_impuesto ci, cross_merc_impuesto cmi where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = ".$id_mercancia);
-		$impuestos = $q->result();
-		
-		foreach($impuestos as $desc)
-		{
-			$mas = ($desc->porcentaje*$costo)/100;
-			$total=$total+$mas;
+		$mercancia = $this->db->query("select id_tipo_mercancia as id_tipo from mercancia where id =".$id_mercancia);
+		$mercancia = $mercancia->result();
+		$impuestos = array();
+		if($mercancia[0]->id_tipo = '3' || $mercancia[0]->id_tipo = '4'){
+			
+			$productos = $this->db->query("Select cp.id_producto, cp.id_servicio from cross_paquete cp, mercancia m where cp.id_paquete = m.sku and m.id =".$id_mercancia);
+			$productosServicios = $productos->result();
+			
+			foreach ($productosServicios as $detalle){
+				if($detalle->id_producto != 0){
+					$q = $this->db->query("Select ci.porcentaje, m.costo from cat_impuesto ci, cross_merc_impuesto cmi, producto p, mercancia m 
+						where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = m.id and p.id = m.sku and p.id = ".$detalle->id_producto);
+					$impuesto_producto = $q->result();
+					array_push($impuestos, $impuesto_producto);
+				}
+				if($detalle->id_servicio != 0){
+					$q = $this->db->query("Select ci.porcentaje, m.costo from cat_impuesto ci, cross_merc_impuesto cmi, servicio s, mercancia m
+						where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = m.id and s.id = m.sku and s.id = ".$detalle->id_servicio);
+					$impuesto_servicio = $q->result();
+					array_push($impuestos, $impuesto_servicio);
+				}
+			}
+			$mas = 0;
+			foreach($impuestos as $desc)
+			{
+				$mas = ($desc[0]->porcentaje* $desc[0]->costo)/100;
+				$total=$total+$mas;
+			}
+			
+		}else{
+			$q = $this->db->query("Select ci.porcentaje from cat_impuesto ci, cross_merc_impuesto cmi where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = ".$id_mercancia);
+			$impuestos = $q->result();
+			foreach($impuestos as $desc)
+			{
+				$mas = ($desc->porcentaje*$costo)/100;
+				$total=$total+$mas;
+			}
 		}
+		
 		return $total;
 	}
 	
@@ -959,8 +1033,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			$q = $this->db->query("SELECT id_grupo as id_red FROM producto where id =".$mercancia[0]->sku);
 		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
 			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
-		}else{
+		}elseif($mercancia[0]->id_tipo_mercancia == 3) {
 			$q = $this->db->query("SELECT id_red FROM combinado where id=".$mercancia[0]->sku);
+		}elseif($mercancia[0]->id_tipo_mercancia == 4) {
+			$q = $this->db->query("SELECT id_red FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
 		}
 		$red = $q->result();
 		return $red[0]->id_red; 

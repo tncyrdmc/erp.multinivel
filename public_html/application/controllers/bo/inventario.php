@@ -276,8 +276,12 @@ class inventario extends CI_Controller
    
    function tipoAlmacen(){
    	$almacen = $this->model_inventario->Obtener_Almacen($_POST['tipo']);
-   
    	echo json_encode($almacen);
+   }
+   
+   function productos_en_Almacen(){
+   	$productos = $this->model_inventario->Obtener_Productos_Almacen($_POST['almacen']);
+   	echo json_encode($productos);
    }
  
    
@@ -327,6 +331,7 @@ class inventario extends CI_Controller
    				"cantidad"     => $_POST['cantidad_in'],
    				"id_mercancia"   => $_POST['mercancia_in'],
    				"otro_origen" => $_POST['origen_in'],
+   				"n_documento" => $_POST['n_documento'],
    				"id_inventario" => $id_inventario,
    				"tipo" => 'E',
    		);
@@ -340,6 +345,7 @@ class inventario extends CI_Controller
    				"cantidad"     => $_POST['cantidad_in'],
    				"id_mercancia"   => $_POST['mercancia_in'],
    				"otro_origen" => '0',
+   				"n_documento" => $_POST['n_documento'],
    				"id_inventario" => $id_inventario,
    				"tipo" => 'E',
    		);
@@ -354,7 +360,7 @@ class inventario extends CI_Controller
    	$this->session->set_flashdata('error', $error);
    	redirect('/bo/inventario/inventarioEntradaAlta');
    }
-   
+   redirect('/bo/inventario/index');
    }
    
    
@@ -375,9 +381,9 @@ class inventario extends CI_Controller
    	$this->template->set("type",$usuario[0]->id_tipo_usuario);
    	$this->template->set("usuario",$usuario);
    	$this->template->set("style",$style);
-   	$productos=$this->model_inventario->getProductos();
+   	$productos=$this->model_inventario->getProductos_en_inventario();
    	$documento=$this->model_inventario->getAlldocumento();
-   	$almacenesCedi=$this->model_inventario->getAlmacenesCedi();
+   	$almacenesCedi=$this->model_inventario->getAlmacen_en_inventario();
    	
    	$this->template->set("productos",$productos);
    	$this->template->set("documento",$documento);
@@ -391,6 +397,66 @@ class inventario extends CI_Controller
    
    
    function new_salida(){
+   	if(!($_POST['destino_in']==null) || !($_POST['destino']==null) && (!($_POST['documento']==null) && !($_POST['mercancia_in']==null) && !($_POST['cantidad_in']==null) && !($_POST['n_documento']==null))){
+   		$id_inventario=0;
    	
+   		$existe_en_inventario=$this->model_inventario->consultar_en_inventario($_POST['mercancia_in'],$_POST['origen_in']);
+   		 
+   		if($existe_en_inventario!=null)
+   		{
+   			if ($_POST['cantidad_in']<=$existe_en_inventario[0]->cantidad){
+	   			$datos_inventario_update=array(
+	   					"cantidad"     => $existe_en_inventario[0]->cantidad-$_POST['cantidad_in'],
+	   					 
+	   			);
+	   			$this->db->where('id_inventario', $existe_en_inventario[0]->id_inventario);
+	   			$this->db->update('inventario', $datos_inventario_update);
+	   			$id_inventario=$existe_en_inventario[0]->id_inventario;
+   			}
+   		}
+   		else{
+   	 }
+   	
+   	
+   		if ($_POST['destino_in']!=null){
+   			$datos=array(
+   					 
+   					"id_origen"     => '0',
+   					"id_destino"     => $_POST['destino_in'],
+   					"id_documento"     => $_POST['documento'],
+   					"cantidad"     => $_POST['cantidad_in'],
+   					"id_mercancia"   => $_POST['mercancia_in'],
+   					"otro_origen" => $_POST['destino_in'],
+   					"n_documento" => $_POST['n_documento'],
+   					"id_inventario" => $id_inventario,
+   					"tipo" => 'S',
+   			);
+   			 
+   		}else{
+   			$datos=array(
+   					 
+   					"id_origen"     => $_POST['origen_in'],
+   					"id_destino"     => $_POST['destino'],
+   					"id_documento"     => $_POST['documento'],
+   					"cantidad"     => $_POST['cantidad_in'],
+   					"id_mercancia"   => $_POST['mercancia_in'],
+   					"otro_origen" => '0',
+   					"n_documento" => $_POST['n_documento'],
+   					"id_inventario" => $id_inventario,
+   					"tipo" => 'S',
+   			);
+   		}
+   	
+   		$this->model_inventario->ingresar_inventario_historial($datos);
+   	
+   		
+   	}else{
+   	
+   		$error = "Complete los datos de formualrio";
+   		$this->session->set_flashdata('error', $error);
+   		redirect('/bo/inventario/inventarioEntradaAlta');
+   	}
+   		
+   	redirect('/bo/inventario/index');
    }
 }

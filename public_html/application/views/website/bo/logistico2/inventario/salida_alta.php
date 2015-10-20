@@ -89,7 +89,7 @@
                                 <legend>Datos de Salida</legend>
                                 <section  class="col col-3">
                                   <label class="select">Tipo de Entrada
-                                    <select id="tipo_movimiento_in" required type="text" name="documento">
+                                    <select id="documento" required type="text" name="documento">
                                       <option >--------Escoja un tipo--------------</option>
                                                            <?foreach ($documento as $key){?>
 													<option value="<?=$key->id_doc?>"><?=$key->nombre?></option>
@@ -100,14 +100,14 @@
                                 </section>
                                 <section class="col col-3">Numero
                                   <label class="input"> <i class="icon-prepend fa fa-barcode"></i>
-                                    <input id="clave_in"  required type="text" name="clave_in" placeholder="Clave / Factura">
+                                    <input id="n_documento"  required type="text" name="n_documento" placeholder="Clave / Factura">
                                   </label>
                                 </section>
                               </fieldset>
                               <fieldset>
                                 <section  class="col col-3">
                                   <label class="select">Almacen/Cedi    <strong>Origen</strong>
-                                    <select id="destino_in" required type="text" name="destino_in">
+                                    <select id="origen_in" required type="text" name="origen_in" onChange="ProductoAlmacen()">
                                       <option >--------------Escoja un almacen-----------------</option>
                                                                                
                                                  <?foreach (	$almacenesCedi as $key){?>
@@ -128,7 +128,7 @@
                                   </label>
                                   <br>
                                   <label for="" class="select"> <select
-						              id="origen" name="origen" >
+						              id="destino" name="destino" >
 								      </select>
 								 </label>
 								 
@@ -136,7 +136,7 @@
                                   <br>
                                   Otro Origen?
                                    <label class="input"> <i class="icon-prepend fa fa-plane"></i>
-                                    <input id="origen_in"   type="text" name="origen_in" placeholder="Origen">
+                                    <input id="destino_in"   type="text" name="destino_in" placeholder="Destino">
                                   </label>
                                   
                                 </section>
@@ -152,11 +152,7 @@
                                 <section class="col col-3">
                                   <label class="select">Producto
                                     <select id="mercancia_in" required type="text" name="mercancia_in">
-                                      <option >----------- Escoja una mercancia ----------</option>
-                                                <?foreach ($productos as $key){?>
-													<option value="<?=$key->id?>"><?=$key->nombre?></option>
-												<?}?>
-												
+                                    
 											 </select>
                                   </label>
                                 </section>
@@ -169,7 +165,7 @@
                               </fieldset>
                               <footer>
                                 <button type="submit" class="btn btn-success">
-                                  Guardar Entrada
+                                  Guardar Salida
                                 </button>
                               </footer>
                            
@@ -223,15 +219,36 @@ function OrigenAlmacen(){
 	})
 	.done(function( msg )
 	{
-		$('#origen option').each(function() {   
+		$('#destino option').each(function() {   
 		        $(this).remove();
 		});
 		datos=$.parseJSON(msg);
-		$('#origen').append('<option value="">-- Seleccione--</option>');
+		$('#destino').append('<option value="">-- Seleccione--</option>');
 	      for(var i in datos){
-		      $('#origen').append('<option value="'+datos[i]['id_cedi']+'">'+datos[i]['nombre']+'</option>'); 		        
+		      $('#destino').append('<option value="'+datos[i]['id_cedi']+'">'+datos[i]['nombre']+'</option>'); 		        
 	      }
 	});
+}
+
+function ProductoAlmacen(){
+	var almacen = $("#origen_in").val();
+	$.ajax({
+		type: "POST",
+		url: "/bo/inventario/productos_en_Almacen",
+		data: { almacen:almacen }
+	})
+	.done(function( msg )
+	{
+		$('#mercancia_in option').each(function() {   
+		        $(this).remove();
+		});
+		datos=$.parseJSON(msg);
+		$('#mercancia_in').append('<option value="">-- Seleccine Producto--</option>');
+	      for(var i in datos){
+		      $('#mercancia_in').append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>'); 		        
+	      }
+	});
+	
 }
 </script>
 

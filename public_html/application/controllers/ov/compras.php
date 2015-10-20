@@ -70,7 +70,7 @@ function index()
 						$detalles=$this->modelo_compras->comb_espec($items['id']);
 						break;
 					case 4:
-						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						$detalles=$this->modelo_compras->comb_paquete($items['id']);
 						break;
 					case 5:
 						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -141,7 +141,7 @@ function index()
 						$detalles=$this->modelo_compras->comb_espec($items['id']);
 						break;
 					case 4:
-						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						$detalles=$this->modelo_compras->comb_paquete($items['id']);
 						break;
 					case 5:
 						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -212,7 +212,7 @@ function index()
 						$detalles=$this->modelo_compras->comb_espec($items['id']);
 						break;
 					case 4:
-						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						$detalles=$this->modelo_compras->comb_paquete($items['id']);
 						break;
 					case 5:
 						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -281,7 +281,7 @@ function index()
 						$detalles=$this->modelo_compras->comb_espec($items['id']);
 						break;
 					case 4:
-						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						$detalles=$this->modelo_compras->comb_paquete($items['id']);
 						break;
 					case 5:
 						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -1537,41 +1537,20 @@ function index()
 							<p class='font-sm'>".$comb[0]->descripcion."</p><br>";
 				foreach($detalles as $det)
 				{
-				echo "		<p class='font-sm'><strong>".$det["merc"]."(".$det["qty"].")</strong></p>";
+					echo "		<p class='font-sm'><strong>".$det["merc"]."(".$det["qty"].")</strong></p>";
 				}
 				break;
 			case 4:
-				$detalles=$this->modelo_compras->detalles_prom_prod($id);
+				$detalles=$this->modelo_compras->detalles_paquete($id);
+				$comb=$this->modelo_compras->comb_paquete($id);
 				echo "	<div class='col-lg-6 col-md-6 col-xs-6 col-sm-6'>
-							<h3 class='text-primary'>".$detalles[0]->nombre."</h3>
-							
-							<p class='font-sm'>".$detalles[0]->descripcion."</p></br>
-							<p class='font-sm'>".$detalles[0]->producto."</p>";
-							if($detalles[0]->peso)
-							{
-								echo"
-									<p class='font-sm'>Peso: ".$detalles[0]->peso."</p>";
-							}
-							if($detalles[0]->alto)
-							{
-								echo"
-									<p class='font-sm'>Alto: ".$detalles[0]->alto."</p>";
-							}
-							if($detalles[0]->ancho)
-							{
-								echo"
-									<p class='font-sm'>Ancho: ".$detalles[0]->ancho."</p>";
-							}
-							if($detalles[0]->profundidad)
-							{
-								echo"
-									<p class='font-sm'>Profundiad: ".$detalles[0]->profundidad."</p>";
-							}
-							if($detalles[0]->diametro)
-							{
-								echo"
-									<p class='font-sm'>Diametro: ".$detalles[0]->diametro."</p><br>";
-							}
+							<h3 class='text-primary'".$comb[0]->nombre."</h3>
+							<p class='font-sm'>Descripcion: <br>".$comb[0]->Descripcion."</p><br>";
+				echo "<h4>Contenido: </h4>";
+				foreach($detalles as $det)
+				{
+					echo "		<p class='font-sm'><strong>".$det["merc"]."(".$det["qty"].")</strong></p>";
+				}
 				break;
 			case 5:
 				$detalles=$this->modelo_compras->detalles_prom_serv($id);
@@ -1714,17 +1693,19 @@ function index()
 			        		);
 						break;
 					case 4:
-						$detalles=$this->modelo_compras->detalles_prom_prod($id);
-						$costo_ini=$detalles[0]->costo*(1-($detalles[0]->prom_costo/100));
+						$detalles=$this->modelo_compras->detalles_paquete($id);
+						$comb=$this->modelo_compras->comb_paquete($id);
+						$costo_q=$this->modelo_compras->costo_merc($id);
+						$costo_ini=$costo_q[0]->costo - (($costo_q[0]->costo * $data['desc'])/100);
 						$costo_total=$costo_ini;
 						
 						$add_cart = array(
-				           'id'      => $detalles[0]->id,
-				           'qty'     => $data['qty'],
-				           'price'   => $costo_total,
-				           'name'    => $data['tipo'],
-				           'options' => array(	'prom_id' => $detalles[0]->id_promocion, 'time' => time())
-			        		);
+								'id'      => $id,
+								'qty'     => $data['qty'],
+								'price'   => $costo_total,
+								'name'    => $data['tipo'],
+								'options' => array(	'prom_id' => 0, 'time' => time())
+						);
 						break;
 					case 5:
 						$detalles=$this->modelo_compras->detalles_prom_serv($id);
@@ -1795,7 +1776,7 @@ function index()
 											$detalles=$this->modelo_compras->comb_espec($items['id']);
 											break;
 										case 4:
-											$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+											$detalles=$this->modelo_compras->comb_paquete($items['id']);
 											break;
 										case 5:
 											$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -1867,7 +1848,7 @@ function index()
 											$detalles=$this->modelo_compras->comb_espec($items['id']);
 											break;
 										case 4:
-											$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+											$detalles=$this->modelo_compras->comb_paquete($items['id']);
 											break;
 										case 5:
 											$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -1961,7 +1942,7 @@ function index()
 											$detalles=$this->modelo_compras->comb_espec($items['id']);
 											break;
 										case 4:
-											$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+											$detalles=$this->modelo_compras->comb_paquete($items['id']);
 											break;
 										case 5:
 											$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -2480,14 +2461,14 @@ function index()
 										        	<i class=""></i>
 										        </a>
 									 
-									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
+									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',4)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
 									              		<div class="promotion"> <a onclick="detalles('.$comb[$combinados]->id.',4)"></a></div>
 									            	</div>
 									            	<div class="description">
-									              		<h4><a onclick="detalles('.$comb[$combinados]->id.',3)">'.$comb[$combinados]->nombre.'</a></h4>
+									              		<h4><a onclick="detalles('.$comb[$combinados]->id.',4)">'.$comb[$combinados]->nombre.'</a></h4>
 									              	</div>
 									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
+									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',4,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
 								       </div>
 								';
@@ -3249,7 +3230,7 @@ function index()
 											$detalles=$this->modelo_compras->comb_espec($items['id']);
 											break;
 										case 4:
-											$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+											$detalles=$this->modelo_compras->comb_paquete($items['id']);
 											break;
 										case 5:
 											$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -3344,7 +3325,7 @@ function index()
 									$detalles=$this->modelo_compras->comb_espec($items['id']);
 									break;
 								case 4:
-									$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+									$detalles=$this->modelo_compras->comb_paquete($items['id']);
 									break;
 								case 5:
 									$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -3425,7 +3406,7 @@ function index()
 									$detalles=$this->modelo_compras->comb_espec($items['id']);
 									break;
 								case 4:
-									$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+									$detalles=$this->modelo_compras->comb_paquete($items['id']);
 									break;
 								case 5:
 									$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
@@ -3782,7 +3763,6 @@ function index()
 			if(!isset($id_afiliado[0]->debajo_de)){
 				break;
 			}
-			$id_mercancia = $this->modelo_compras->consultarMercancia($id_venta);
 			
 			if(!$this->modelo_compras->ComprovarCompraProductoRed($id_afiliado[0]->debajo_de, $capacidad_red[0]->id)){
 				$i = $i-1;
@@ -3932,6 +3912,60 @@ function index()
 		if (!$this->tank_auth->is_logged_in())																	// logged in
 			redirect('/auth');
 		
+		$id = $this->tank_auth->get_user_id();
+		$usuario = $this->general->get_username($id);
+		$grupos = $this->model_mercancia->CategoriasMercancia();
+		$redes = $this->model_tipo_red->RedesUsuario($id);
+		
+		$this->template->set("grupos",$grupos);
+		
+		$info_compras=Array();
+		$producto=0;
+		if($this->cart->contents())
+		{
+		
+			foreach ($this->cart->contents() as $items)
+			{
+				$imgn=$this->modelo_compras->get_img($items['id']);
+				if(isset($imgn[0]->url))
+				{
+					$imagen=$imgn[0]->url;
+				}
+				else
+				{
+					$imagen="";
+				}
+				switch($items['name'])
+				{
+					case 1:
+						$detalles=$this->modelo_compras->detalles_productos($items['id']);
+						break;
+					case 2:
+						$detalles=$this->modelo_compras->detalles_servicios($items['id']);
+						break;
+					case 3:
+						$detalles=$this->modelo_compras->comb_espec($items['id']);
+						break;
+					case 4:
+						$detalles=$this->modelo_compras->comb_paquete($items['id']);
+						break;
+					case 5:
+						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
+						break;
+					case 6:
+						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
+						break;
+				}
+				$info_compras[$producto]=Array(
+						"imagen" => $imagen,
+						"nombre" => $detalles[0]->nombre
+				);
+				$producto++;
+			}
+		}
+		$data=array();
+		$data['compras']= $info_compras;
+		
 		
 		$id=$this->tank_auth->get_user_id();
 		$costo_envio = $this->modelo_compras->consultarCostoEnvio($id);
@@ -3945,6 +3979,7 @@ function index()
 		$data['paises'] = $pais = $this->model_admin->get_pais_activo();
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("compras",$info_compras);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
