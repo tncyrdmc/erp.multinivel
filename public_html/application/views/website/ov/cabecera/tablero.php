@@ -218,7 +218,7 @@ function actualiza()
 {
 	$.ajax({
 		type: "POST",
-		url: "/index.php/ov/cabecera/actualizar",
+		url: "/ov/cabecera/actualizar",
 		data: $('#checkout-form').serialize()
 	})
 	.done(function( msg ) {

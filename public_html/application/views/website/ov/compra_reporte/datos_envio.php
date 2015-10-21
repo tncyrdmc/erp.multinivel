@@ -205,7 +205,18 @@
 		<header>Datos de envio</header>
 		<form class="smart-form" method="POST" action="guardarEnvio">
 			<fieldset>
-				<div class="col col-xs-12 col-sm-8 col-lg-8">
+					<div class="col col-xs-12 col-md-6 col-lg-6">
+						<label class="input">Nombre
+							<input required type="text" id="nombre" name="nombre" value="<?php echo $datos[0]->nombre; ?>">
+						</label>
+					</div>
+					<div class="col col-xs-12 col-md-6 col-lg-6">
+						<label class="input">Apellido
+							<input required type="text" id="apellido" name="apellido" value="<?php echo $datos[0]->apellido; ?>">
+						</label>
+					</div>
+					
+					<div class="col col-xs-12 col-md-6 col-lg-6">
 					<label class="select">Pais 
 						<select id="pais" required name="pais" onChange="Departamentos()">
 							<option value="-" selected>-- Seleciona un pais --</option>
@@ -216,7 +227,7 @@
 					</label>
 				</div>
 
-				<div class="col col-xs-12 col-sm-8 col-lg-8">
+				<div class="col col-xs-12 col-md-6 col-lg-6">
 					<label for="" class="select">Estado/Departamento <select
 						id="departamento" name="estado" onChange="CiudadesDepartamento()"
 						required>
@@ -225,15 +236,44 @@
 					</label>
 				</div>
 
-				<div class="col col-xs-12 col-sm-8 col-lg-8">
+				<div class="col col-xs-12 col-md-6 col-lg-6">
 					<label for="" class="select">Municipio/Ciudad <select
 						id="municipio" required name="municipio" onChange="BuscarProveedores()">
 
 					</select>
 					</label>
 				</div>
+				<div class="col col-xs-12 col-md-6 col-lg-6">
+					<label class="input">Colonia / Barrio
+						<input required type="text" id="colonia" name="colonia" value="<?php echo $datos[0]->colonia; ?>">
+					</label>
+				</div>
 				
-				<div class="col col-xs-12 col-sm-8 col-lg-8">
+				<div class="col col-xs-12 col-md-6 col-lg-6">
+					<label class="input">Dirección
+						<input required type="text" id="direccion" name="direccion" value="<?php echo $datos[0]->calle; ?>">
+					</label>
+				</div>
+					
+				<div class="col col-xs-12 col-md-6 col-lg-6">
+					<label class="input">Codigo Postal
+						<input type="text" id="codigo" name="codigo" value="<?php echo $datos[0]->cp; ?>">
+					</label>
+				</div>
+				
+				<div class="col col-xs-12 col-md-6 col-lg-6">
+					<label class="input">Email
+						<input required type="text" id="email" name="email" value="<?php echo $datos[0]->email; ?>">
+					</label>
+				</div>
+					
+				<div class="col col-xs-12 col-md-6 col-lg-6">
+					<label class="input">Numero Telefonico
+						<input required id="telefono" name="telefono"  type="tel" pattern="[0-9]{7,50}" title="Por favor digite un numero de telefono valido">
+					</label>
+				</div>
+				
+				<div class="col col-xs-12 col-md-6 col-lg-6">
 					<label for="" class="select">Tarifa 
 					<select
 						id="tarifa" required name="tarifa">
@@ -241,12 +281,13 @@
 					</select>
 					</label>
 				</div>
-				<section class="col col-12 pull-right" >
+			</fieldset>
+			
+			<footer class="col col-12 pull-right" >
 					<button type="submit" class="btn btn-success" onclick="CrearComprador()">
 						Siguiente
 					</button>
-				</section>
-			</fieldset>
+			</footer>
 		</form>
 	</div>
 

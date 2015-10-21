@@ -222,6 +222,7 @@
 																foreach ($this->cart->contents() as $items) 
 																{
 																	$impuesto = $this->modelo_compras->ImpuestoMercancia($items['id'], $items['price'])*$items['qty'];	
+																	var_dump($impuesto); 
 																	$total=$items['qty']*$items['price']; 
 																	$total_compras = $total + $total_compras + $impuesto;
 																?>
@@ -256,23 +257,23 @@
 							                        
 							                        	<table class="pull-right">
 							                        		<tr>
-							                        			<td><h1>Sub Total </h1><td>
-							                        			<td><h1>$ <?php echo number_format($total_compras, 2); ?> </h1></td>
+							                        			<td style="width: 15rem;"><h1>Sub Total </h1></td>
+							                        			<td><h1> $ <?php echo number_format($total_compras, 2); ?> </h1></td>
 							                        		</tr>
 							                        		<tr>
-							                        			<td><h1>Costo de Envio </h1></td>
-							                        			<td><h1>$ <?php echo number_format($costo_envio[0]->costo, 2)?></h1></td>
+							                        			<td style="width: 15rem;"><h1>Costo de Envio </h1></td>
+							                        			<td><h1> $ <?php echo number_format($costo_envio[0]->costo, 2)?></h1></td>
 							                        		</tr>
 							                        		<tr>
-							                        			<td><h1>Total </h1></td>
-							                        			<td><h1>$ <?php echo number_format($total_compras+$costo_envio[0]->costo , 2)?></h1></td>
+							                        			<td style="width: 15rem;"><h1>Total </h1></td>
+							                        			<td><h1> $ <?php echo number_format($total_compras+$costo_envio[0]->costo , 2)?></h1></td>
 							                        		</tr>
 							                        	</table>
 							                        
 							                       <div class="col col-xs-12 col-md-12 col-sm-12 col-lg-12">
 							                       	<header>Formas de pago</header>
 							                       	<div class="col-lg-3 col-sm-6 col-md-4 col-xs-6">
-														<a href="#" onclick="consignacion()">
+														<a onclick="consignacion()">
 															<i class="fa fa-money fa-3x"></i>
 															<h5>Banco</h5> 
 														</a>
@@ -281,7 +282,6 @@
 														
 														<a href="#">
 															<h5>PayuLatam</h5> 
-															
 														</a>
 													</div>
 													<div class="col-lg-3 col-sm-6 col-md-4 col-xs-6">

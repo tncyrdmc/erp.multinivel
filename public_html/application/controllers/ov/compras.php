@@ -1631,12 +1631,12 @@ function index()
 	}
 	function add_merc()
 	{
-		$data=$_GET["info"];
-		$data=json_decode($data,true);
-		$id=$data['id'];
+		$data= $_GET["info"];
+		$data = json_decode($data,true);
+		$id = $data['id'];
 		$cantidad = -100;
 		if ($data['tipo'] == '1'){
-			$cantidad_disp=$this->modelo_compras->get_cantidad_almacen($id);
+			$cantidad_disp = $this->modelo_compras->get_cantidad_almacen($id);
 			if (isset($cantidad_disp[0]->cantidad)){
 				$cantidad = $cantidad_disp[0]->cantidad;
 			}else{
@@ -1912,11 +1912,11 @@ function index()
 				              <tbody>
 				              
 				                <tr class="CartProduct cartTableHeader">
-				                  <td style="width:15%"  > Product </td>
-				                  <td style="width:40%"  >Details</td>
-				                  <td style="width:10%"  class="delete">&nbsp;</td>
-				                  <td style="width:10%" >QNT</td>
-				                  <td style="width:10%" >Discount</td>
+				                  <td style="width:15%" > Producto </td>
+				                  <td style="width:40%" >Detalles</td>
+				                  <td style="width:10%" class="delete">&nbsp;</td>
+				                  <td style="width:20%" >Cantidad</td>
+				                  <td style="width:15%" >Descuento</td>
 				                  <td style="width:15%" >Total</td>
 				                </tr>';
 				               foreach ($this->cart->contents() as $items) 
@@ -1961,7 +1961,7 @@ function index()
 											</td>
 											<td >
 												<div class="CartDescription">
-							                      <h4> <a href="product-details.html">'.$detalles[0]->nombre.'</a> </h4>
+							                      <h4>'.$detalles[0]->nombre.'</h4>
 							                   
 							                      <div class="price"> <span>$'.$items['price'].'</span></div>
 							                    </div>
@@ -3850,11 +3850,6 @@ function index()
 		
 		$costo_envio = $this->modelo_compras->consultarEnvio($id);
 		
-		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
-		
-		$direcion_envio = $datos_perfil[0]->calle." ".$datos_perfil[0]->colonia." ".$datos_perfil[0]->municipio." ".$datos_perfil[0]->estado;
-		$telefono = $this->modelo_compras->get_telefonos_comprador($id);
-		$email = $datos_perfil[0]->email;
 		
 		$costo_total = $costo_envio[0]->costo;
 		$impuestos = 0;
@@ -3870,10 +3865,10 @@ function index()
 		$fecha = date("Y-m-d");
 		
 		$venta = $this->modelo_compras->registrar_ventaConsignacion($id, $costo_total , $id_transacion, $firma, $fecha, $impuestos);
-				
-		$envio=$this->modelo_compras->registrar_envio($venta, $id, $direcion_envio , $telefono, $email, $costo_envio);
 		
-		$this->modelo_compras->registrar_factura($venta, $id, $direcion_envio , $telefono, $email);
+		$envio = $this->modelo_compras->registrar_envio($venta, $id, $costo_envio);
+		
+		$this->modelo_compras->registrar_factura($venta, $id, $costo_envio);
 		
 		foreach ($productos as $producto){
 			$puntos = $this->modelo_compras->registrar_venta_mercancia($producto['id'], $venta, $producto['qty']);
@@ -3895,7 +3890,7 @@ function index()
 								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
 			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
 			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
-			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al depertamento de Pagos(pagosgolden@pekcell.com)</p></div>";
+			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al depertamento de Pagos(venta@networksoft.mx)</p></div>";
 			echo $respuesta;
 		}else{
 			echo "La venta se a registrado";
@@ -3918,8 +3913,10 @@ function index()
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
+		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
 		
 		$this->template->set("grupos",$grupos);
+		$this->template->set("datos",$datos_perfil);
 		
 		$info_compras=Array();
 		$producto=0;
@@ -4007,6 +4004,16 @@ function index()
 				'id_proveedor' => $tarifa[0]->id_proveedor,
 				'id_tarifa' => $_POST['tarifa'],
 				'costo' => $tarifa[0]->tarifa,
+				'nombre' => $_POST['nombre'],
+				'apellido' => $_POST['apellido'],
+				'id_pais' => $_POST['pais'],
+				'estado' => $_POST['estado'],
+				'municipio' => $_POST['municipio'],
+				'colonia' => $_POST['colonia'],
+				'calle' => $_POST['direccion'],
+				'cp' => $_POST['codigo'],
+				'email' => $_POST['email'],
+				'telefono' => $_POST['telefono'],
 		);
 		$this->modelo_compras->guardarDatosEnvio($datos);
 		
