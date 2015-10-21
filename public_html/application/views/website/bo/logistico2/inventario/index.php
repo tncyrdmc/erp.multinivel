@@ -74,15 +74,23 @@
 												<div class="col-sm-2 link">
 																		
 												</div>
+												
 												<div class="col-sm-3 link">
 													<a href="/bo/inventario/bloqueo">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
 															<i class="fa fa-lock fa-3x"></i>
-															<h1>Bloqueo</h1>
+															<h1>Bloqueo<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>
-																					
+												<div class="col-sm-3 link">
+													<a href="/bo/inventario/historial_Inventario">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
+															<i class="fa fa-edit fa-3x"></i>
+															<h1>Historial <br>&nbsp</h1>
+														</div>
+													</a>
+												</div>								
 											</div>										
 									 </div>
 								</div>

@@ -119,7 +119,7 @@
                                 <legend>Almacen</legend>
                                 <section  class="col col-3">
                                   <label class="select"> <strong>Destino</strong>
-                                    <select id="tipo" required type="text" name="tipo" onChange="OrigenAlmacen()">
+                                    <select id="tipo"  type="text" name="tipo" onChange="OrigenAlmacen()">
                                       <option value="">--------------Escoja un tipo-----------------</option>
                                          <option value="A">Almacen</option>
                                           <option value="C">Cedi</option>
@@ -134,7 +134,7 @@
 								 
 								 
                                   <br>
-                                  Otro Origen?
+                                  Otro <strong>Destino?</strong>
                                    <label class="input"> <i class="icon-prepend fa fa-plane"></i>
                                     <input id="destino_in"   type="text" name="destino_in" placeholder="Destino">
                                   </label>

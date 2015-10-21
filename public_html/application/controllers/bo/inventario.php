@@ -415,14 +415,14 @@ class inventario extends CI_Controller
    			}
    		}
    		else{
-   	 }
+    	}
    	
    	
    		if ($_POST['destino_in']!=null){
    			$datos=array(
    					 
-   					"id_origen"     => '0',
-   					"id_destino"     => $_POST['destino_in'],
+   					"id_origen"     =>  $_POST['origen_in'],
+   					"id_destino"     => '0',
    					"id_documento"     => $_POST['documento'],
    					"cantidad"     => $_POST['cantidad_in'],
    					"id_mercancia"   => $_POST['mercancia_in'],
@@ -459,4 +459,77 @@ class inventario extends CI_Controller
    		
    	redirect('/bo/inventario/index');
    }
+   
+   function historial_Inventario(){
+   	if (!$this->tank_auth->is_logged_in())
+   	{																		// logged in
+   	redirect('/auth');
+   	}
+   	
+   	$id=$this->tank_auth->get_user_id();
+   	$usuario=$this->general->get_username($id);
+   	$style=$this->general->get_style($id);
+   	$this->template->set("style",$style);
+   	$this->template->set("usuario",$usuario);
+   	
+   	$this->template->set_theme('desktop');
+   	$this->template->set_layout('website/main');
+   	$this->template->set_partial('header', 'website/ov/header');
+   	$this->template->set_partial('footer', 'website/ov/footer');
+   	$this->template->build('website/bo/logistico2/inventario/historial_inventario');
+   }
+   function historial_entrada(){
+  	
+   	$id=$this->tank_auth->get_user_id();
+   	$data=$_GET["info"];
+   	$data=json_decode($data,true);
+   	$Entradas=$this->model_inventario->historial_entradas($data['inicio'],$data['fin'],'E');
+   	$Cedis=$this->model_inventario->getAlmacenesCedi();
+   	$Documento=$this->model_inventario->getAlldocumento();
+   	$Producto=$this->model_inventario->getProductos();
+  
+   	$this->template->set("Entradas",$Entradas);
+   	$this->template->set("Documento",$Documento);
+   	$this->template->set("Producto",$Producto);
+   	$this->template->set("Cedis",$Cedis);
+   	$this->template->set_theme('desktop');
+   	$this->template->build('website/bo/logistico2/inventario/historial_detalles_entrada');
+}
+
+function historial_salida(){
+	 
+	$id=$this->tank_auth->get_user_id();
+	$data=$_GET["info"];
+	$data=json_decode($data,true);
+	$Entradas=$this->model_inventario->historial_entradas($data['inicio'],$data['fin'],'S');
+	$Cedis=$this->model_inventario->getAlmacenesCedi();
+	$Documento=$this->model_inventario->getAlldocumento();
+	$Producto=$this->model_inventario->getProductos();
+
+	$this->template->set("Entradas",$Entradas);
+	$this->template->set("Documento",$Documento);
+	$this->template->set("Producto",$Producto);
+	$this->template->set("Cedis",$Cedis);
+	$this->template->set_theme('desktop');
+	$this->template->build('website/bo/logistico2/inventario/historial_detalles_entrada');
+}
+
+function historial_entrada_salida(){
+	$id=$this->tank_auth->get_user_id();
+	$data=$_GET["info"];
+	$data=json_decode($data,true);
+	$Entradas=$this->model_inventario->historial_entradas_salida($data['inicio'],$data['fin']);
+	$Cedis=$this->model_inventario->getAlmacenesCedi();
+	$Documento=$this->model_inventario->getAlldocumento();
+	$Producto=$this->model_inventario->getProductos();
+	
+	$this->template->set("Entradas",$Entradas);
+	$this->template->set("Documento",$Documento);
+	$this->template->set("Producto",$Producto);
+	$this->template->set("Cedis",$Cedis);
+	$this->template->set_theme('desktop');
+	$this->template->build('website/bo/logistico2/inventario/historial_entrada_salida');
+
+}
+
 }
