@@ -157,6 +157,9 @@ class mercancia extends CI_Controller
 		if( $datos['red'] == null){
 			return false;
 		}
+		if( $_POST['proveedor'] == null){
+			return false;
+		}
 		return true;
 	}
 	function CrearServicio(){
@@ -170,15 +173,12 @@ class mercancia extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+	 	 if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
 		}else{
 			redirect('/auth/logout');
 		}
 		$style=$this->modelo_dashboard->get_style(1);
-		
-		if(!isset($_POST['proveedor']))
-			$_POST['proveedor']='Ninguno';
 		
 		$id = $this->tank_auth->get_user_id();
 		
@@ -232,8 +232,6 @@ class mercancia extends CI_Controller
 		}
 		$style=$this->modelo_dashboard->get_style(1);
 	
-		if(!isset($_POST['proveedor']))
-			$_POST['proveedor']='Ninguno';
 		
 		if(!$this->validarMercancia($_POST)){
 			$error = "Datos incompletos para crear la mercancia";
