@@ -575,6 +575,7 @@
 					
 					
 					break;
+					
 			}
 		}
 
@@ -583,6 +584,23 @@
 			case "1" :
 				window.location="reporte_inventario_excel";
 				break;
-			}
+			case "2" :
+				var inicio=$("#startdate").val();
+				var fin=$("#finishdate").val();
+				window.location="reporte_entrada_excel?inicio="+inicio+"&&fin="+fin;
+				break;
+			
+		case "3" :
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			window.location="reporte_salida_excel?inicio="+inicio+"&&fin="+fin;
+			break;
+		
+		case "4" :
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			window.location="reporte_entrada_salida_excel?inicio="+inicio+"&&fin="+fin;
+			break;
+		}
 		}
 		</script>
