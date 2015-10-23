@@ -105,7 +105,7 @@ class model_afiliado extends CI_Model{
 					"id_usuario"	=> $id,
 					"profundidad"	=> "0",
 					"estatus"		=> "ACT",
-					"premium"			=> '0'
+					"premium"			=> '2'
 			);
 			$this->db->insert("red",$dato_red);
 		}
@@ -309,7 +309,7 @@ class model_afiliado extends CI_Model{
 					"id_usuario"	=> $id,
 					"profundidad"	=> "0",
 					"estatus"		=> "ACT",
-					"premium"			=> '0'
+					"premium"			=> '2'
 			);
 			$this->db->insert("red",$dato_red);
 		}
@@ -452,7 +452,7 @@ class model_afiliado extends CI_Model{
 					"id_usuario"	=> $id,
 					"profundidad"	=> "0",
 					"estatus"		=> "ACT",
-					"premium"			=> '0'
+					"premium"			=> '2'
 			);
 			$this->db->insert("red",$dato_red);
 		}
@@ -602,7 +602,7 @@ class model_afiliado extends CI_Model{
 					"id_usuario"	=> $id,
 					"profundidad"	=> "0",
 					"estatus"		=> "ACT",
-					"premium"			=> '0'
+					"premium"			=> '2'
 			);
 			$this->db->insert("red",$dato_red);
 		}

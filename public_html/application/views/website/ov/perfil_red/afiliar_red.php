@@ -971,7 +971,6 @@ function InformarPremio(premio){
 			<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span> 
-				> <a href="/ov/perfil_red/TipoAfiliacion">Tipo de Afiliacion</a>
 				> <a href="/ov/perfil_red/afiliar?tipo=1">Red</a>
 				> <a href="/ov/perfil_red/nuevo_afilido?id=<?php echo $_GET['id']; ?>">Afiliar</a>
 				> Red
@@ -1048,6 +1047,9 @@ function InformarPremio(premio){
 																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
 												            </li>
 														<? } ?>
+														<li>
+															<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
+												        </li>
 													</ul>
 												</li>
 											</ul>
