@@ -4,15 +4,23 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 							
-							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-pencil-square-o"></i> 
-								<a href="/bo/dashboard">Dashboard</a> 
-							<span>>
-								<a href="/bo/logistico">Modulo log&iacute;stico</a> 
-							</span>
-							<span>>
-								Archivero
-							</span>
+							<?php  if($type=='5'){?>
+					
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>
+				> Archivero</a>
+			
+				</span>
+				
+				 <?php }else{?>
+				 	
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>> <a href="/bol/dashboard/"> Logistico </a>
+		
+				> Archivero
+				</span>
+				
+					<?php }?>
 						</h1>
 					</div>
 				</div>
@@ -58,7 +66,83 @@
 												</div>
 												<!-- end widget edit box -->
 							
+											
 												<!-- widget content -->
+												<div class="widget-body no-padding">
+													<form action="upload.php" class="dropzone dz-clickable" id="personal">
+									                    <div class="dz-message">
+										                    <br /><br /><br /><br /><br /><br />
+										                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+										                    </div>
+										                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										                        <h1>Arrastra tus archivos o da clic para buscarlos en tu computadora</h1>
+										                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+										                        </div><i class="fa fa-file fa-5x"></i>
+										                    </div>
+									                    </div>
+								                	</form>
+												</div>
+												<!-- end widget content -->
+											</div>
+											<!-- end widget div -->
+										</div>
+										<!-- end widget -->
+							
+											
+											
+											
+							</div>
+											</div>
+											<!-- end widget div -->
+										</div>
+										<!-- end widget -->
+							
+									</article>
+								</div>
+							</section>
+						<!-- end widget grid -->
+
+						 <!-- widget grid -->
+							<section id="widget-grid" class="">
+							
+								<!-- row -->
+								<div class="row">
+							
+									<!-- NEW WIDGET START -->
+									<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+										<!-- Widget ID (each widget will need unique ID)-->
+										<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+											<!-- widget options:
+											usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+							
+											data-widget-colorbutton="false"
+											data-widget-editbutton="false"
+											data-widget-togglebutton="false"
+											data-widget-deletebutton="false"
+											data-widget-fullscreenbutton="false"
+											data-widget-custombutton="false"
+											data-widget-collapsed="true"
+											data-widget-sortable="false"
+							
+											-->
+											<header>
+												<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+												<h2>Archivero</h2>
+											</header>
+							
+											<!-- widget div-->
+											<div>
+												<!-- widget edit box -->
+												<div class="jarviswidget-editbox">
+													<!-- This area used as dropdown edit box -->
+												</div>
+												<!-- end widget edit box -->
+							
+							
+							
+							
+								<!-- widget content -->
 												<div class="widget-body no-padding">
 													<?$i=1;
 													if($archivos){?>
@@ -119,75 +203,6 @@
 													<?}else{echo "<h1>No tienes archivos aún</h1>";}?>
 												</div>
 												<!-- end widget content -->
-							
-											</div>
-											<!-- end widget div -->
-										</div>
-										<!-- end widget -->
-							
-									</article>
-								</div>
-							</section>
-						<!-- end widget grid -->
-
-						 <!-- widget grid -->
-							<section id="widget-grid" class="">
-							
-								<!-- row -->
-								<div class="row">
-							
-									<!-- NEW WIDGET START -->
-									<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-										<!-- Widget ID (each widget will need unique ID)-->
-										<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
-											<!-- widget options:
-											usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-							
-											data-widget-colorbutton="false"
-											data-widget-editbutton="false"
-											data-widget-togglebutton="false"
-											data-widget-deletebutton="false"
-											data-widget-fullscreenbutton="false"
-											data-widget-custombutton="false"
-											data-widget-collapsed="true"
-											data-widget-sortable="false"
-							
-											-->
-											<header>
-												<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-												<h2>Export to PDF / Excel</h2>
-											</header>
-							
-											<!-- widget div-->
-											<div>
-												<!-- widget edit box -->
-												<div class="jarviswidget-editbox">
-													<!-- This area used as dropdown edit box -->
-												</div>
-												<!-- end widget edit box -->
-							
-												<!-- widget content -->
-												<div class="widget-body no-padding">
-													<form action="upload.php" class="dropzone dz-clickable" id="personal">
-									                    <div class="dz-message">
-										                    <br /><br /><br /><br /><br /><br />
-										                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-										                    </div>
-										                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-										                        <h1>Arrastra tus archivos o da clic para buscarlos en tu computadora</h1>
-										                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-										                        </div><i class="fa fa-file fa-5x"></i>
-										                    </div>
-									                    </div>
-								                	</form>
-												</div>
-												<!-- end widget content -->
-											</div>
-											<!-- end widget div -->
-										</div>
-										<!-- end widget -->
-							
 									</article>
 									
 							
