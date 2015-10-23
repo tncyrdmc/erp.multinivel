@@ -336,7 +336,8 @@ class mercancia extends CI_Controller
 		$style=$this->modelo_dashboard->get_style(1);
 	
 		$id = $this->tank_auth->get_user_id();
-	
+		
+		$_POST['proveedor'] = '1';
 		if(!$this->validarMercancia($_POST)){
 			$error = "Datos incompletos para crear la mercancia";
 			$this->session->set_flashdata('error', $error);
