@@ -474,7 +474,8 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	function get_cantidad_almacen($id)
 	{
-		$q=$this->db->query("SELECT a.cantidad FROM inventario a, almacen b WHERE a.id_almacen=b.id_almacen and b.web=1 and a.id_mercancia=".$id);
+		$q=$this->db->query("SELECT a.cantidad - a.bloqueados as cantidad, p.id FROM inventario a, cedi b, mercancia m, producto p 
+			WHERE a.id_almacen = b.id_cedi and b.tipo = 'A' and m.sku = p.id and m.id =  ".$id);
 		return $q->result();
 	}
 	function update_inventario($id,$qty)
@@ -811,8 +812,9 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$total = 0;
 		$mercancia = $this->db->query("select id_tipo_mercancia as id_tipo from mercancia where id =".$id_mercancia);
 		$mercancia = $mercancia->result();
+		
 		$impuestos = array();
-		if($mercancia[0]->id_tipo = '3' || $mercancia[0]->id_tipo = '4'){
+		if($mercancia[0]->id_tipo == '4'){
 			
 			$productos = $this->db->query("Select cp.id_producto, cp.id_servicio from cross_paquete cp, mercancia m where cp.id_paquete = m.sku and m.id =".$id_mercancia);
 			$productosServicios = $productos->result();
@@ -841,13 +843,13 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		}else{
 			$q = $this->db->query("Select ci.porcentaje from cat_impuesto ci, cross_merc_impuesto cmi where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = ".$id_mercancia);
 			$impuestos = $q->result();
+			
 			foreach($impuestos as $desc)
 			{
 				$mas = ($desc->porcentaje*$costo)/100;
 				$total=$total+$mas;
 			}
 		}
-		
 		return $total;
 	}
 	
@@ -869,53 +871,49 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return $venta;
 	}
 	
-	function registrar_envio($venta, $id_usuario, $direccion , $telefono, $correo, $tarifa){
-		$usuario =$this->model_perfil_red->datos_perfil($id_usuario);
-		$edad    =$this->model_perfil_red->edad($id_usuario);
-		$dir    =$this->model_perfil_red->dir($id_usuario);
+	function registrar_envio($venta, $id_usuario, $datos_envio){
 		
 		$dato_envio = array(
 				"id_venta"	=> $venta,
-				"nombre" 	=> $usuario[0]->nombre,
-				"apellido" 	=> $usuario[0]->apellido,
-				"cp" 		=> $dir[0]->cp,
-				"id_pais" 	=> $dir[0]->pais,
-				"estado" 	=> $dir[0]->estado,
-				"municipio"	=> $dir[0]->municipio,
-				"colonia" 	=> $dir[0]->colonia,
-				"calle" 	=> $dir[0]->calle,
-				"correo" 	=> $correo,
-				"proveedor_mensajeria" 	=> $tarifa[0]->id_proveedor,
-				"celular" 	=> $telefono,
+				"nombre" 	=> $datos_envio[0]->nombre,
+				"apellido" 	=> $datos_envio[0]->apellido,
+				"cp" 		=> $datos_envio[0]->cp,
+				"id_pais" 	=> $datos_envio[0]->id_pais,
+				"estado" 	=> $datos_envio[0]->estado,
+				"municipio"	=> $datos_envio[0]->municipio,
+				"colonia" 	=> $datos_envio[0]->colonia,
+				"calle" 	=> $datos_envio[0]->calle,
+				"correo" 	=> $datos_envio[0]->email,
+				"proveedor_mensajeria" 	=> $datos_envio[0]->id_proveedor,
+				"celular" 	=> $datos_envio[0]->telefono,
 				"info_ad"	=> "",
-				"id_tarifa"	=> $tarifa[0]->id_tarifa
+				"id_tarifa"	=> $datos_envio[0]->id_tarifa
 		);
+		
 		
 		$this->db->insert("cross_venta_envio",$dato_envio);
 		
 		return mysql_error();
 	}
 	
-	function registrar_factura($venta, $id_usuario, $direccion , $telefono, $correo){
+	function registrar_factura($venta, $id_usuario, $datos_envio){
 		
 		$usuario =$this->model_perfil_red->datos_perfil($id_usuario);
-		$edad    =$this->model_perfil_red->edad($id_usuario);
-		$dir    =$this->model_perfil_red->dir($id_usuario);
-	
+		
 		$dato_fact=array(
 				"id_venta"	=> $venta,
-				"nombre" 	=> $usuario[0]->nombre,
-				"apellido" 	=> $usuario[0]->apellido,
+				"nombre" 	=> $datos_envio[0]->nombre,
+				"apellido" 	=> $datos_envio[0]->apellido,
 				"rfc"		=> $usuario[0]->user_id.time(),
-				"cp" 		=> $dir[0]->cp,
-				"id_pais" 	=> $dir[0]->pais,
-				"estado" 	=> $dir[0]->estado,
-				"municipio"	=> $dir[0]->municipio,
-				"colonia" 	=> $dir[0]->colonia,
-				"calle" 	=> $dir[0]->calle,
-				"correo" 	=> $correo,
+				"cp" 		=> $datos_envio[0]->cp,
+				"id_pais" 	=> $datos_envio[0]->id_pais,
+				"estado" 	=> $datos_envio[0]->estado,
+				"municipio"	=> $datos_envio[0]->municipio,
+				"colonia" 	=> $datos_envio[0]->colonia,
+				"calle" 	=> $datos_envio[0]->calle,
+				"correo" 	=> $datos_envio[0]->email,
 				"compania" 	=> "",
-				"celular" 	=> $telefono
+				"celular" 	=> $datos_envio[0]->telefono
 		);
 		$this->db->insert("cross_venta_factura",$dato_fact);
 		
@@ -1227,5 +1225,17 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function EliminarEnvioHistorial($id){
 		$this->db->query("delete from user_envio where id_user =".$id);
+	}
+	function VerificarCompraPaquete($id){
+		$q = $this->db->query("SELECT m.id FROM cross_venta_mercancia cvm, venta v, mercancia m 
+		where v.id_estatus = 2 and cvm.id_venta = v.id_venta and cvm.id_mercancia = m.id and m.id_tipo_mercancia = 4 and v.id_user = ".$id);
+		
+		$mercnacias_id = $q->result();
+		
+		if(isset($mercnacias_id[0]->id)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

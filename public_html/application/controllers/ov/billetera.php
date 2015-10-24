@@ -24,7 +24,11 @@ class billetera extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
@@ -92,7 +96,10 @@ class billetera extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 		$usuario=$this->modelo_billetera->iniciar($id);
 		if($usuario)
 		{
@@ -110,9 +117,13 @@ class billetera extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
-
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 		//$this->modelo_billetera->desactivar($id);
 		redirect('/auth');
 	}
@@ -124,7 +135,10 @@ class billetera extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
@@ -159,6 +173,10 @@ class billetera extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 		$this->modelo_billetera->cobrar($id);
 	}
 	

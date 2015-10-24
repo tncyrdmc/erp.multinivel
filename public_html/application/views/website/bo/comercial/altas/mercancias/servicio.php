@@ -148,7 +148,7 @@
 													</section>
 													<section class="col col-3">Proveedor
 														<label class="select">
-															<select name="proveedor">
+															<select name="proveedor" required>
 															<?foreach ($proveedores as $key){?>
 																<option value="<?=$key->user_id?>">
 																	<?=$key->nombre." ".$key->apellido?>

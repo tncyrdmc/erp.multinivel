@@ -13,6 +13,16 @@ class escuela_negocios extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/modelo_escuela_negocios');
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 	}
 
 	function index()

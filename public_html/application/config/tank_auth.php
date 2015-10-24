@@ -7,8 +7,8 @@
 | These details are used in emails sent by authentication library.
 |--------------------------------------------------------------------------
 */
-$config['website_name'] = 'PekcellGold';
-$config['webmaster_email'] = 'info@pekcellgold.com';
+$config['website_name'] = 'Nerowrksoft';
+$config['webmaster_email'] = 'info@networsoft.mx';
 
 /*
 |--------------------------------------------------------------------------

@@ -24,7 +24,7 @@ $ci->load->model("model_permissions");?>
 														<div class="carousel-inner">
 															<!-- Slide 1 -->
 															<div class="item active">
-																<img src="/template/img/demo/m3.jpg" alt="demo user">
+																<img src="/template/img/demo/m4.jpg" alt="demo user">
 															</div>
 														</div>
 													</div>

@@ -113,10 +113,15 @@ class dashboard extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$style=$this->modelo_dashboard->get_style($id);
 
 		$id_sponsor=$this->modelo_dashboard->get_red($id);
@@ -183,6 +188,11 @@ class dashboard extends CI_Controller
 	function ConsultarPremio(){
 		$id=$this->tank_auth->get_user_id();
 		$infoPremios = $this->modelo_premios->verEstadoPremio($id);
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
 		
 		$this->template->set("infoPremios",$infoPremios);
 		$this->template->build('website/ov/perfil_red/premio');

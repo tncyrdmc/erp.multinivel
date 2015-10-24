@@ -216,14 +216,14 @@ class logistico extends CI_Controller
 				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+	   if(!$this->general->isAValidUser($id,"logistica"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$archivos=$this->modelo_logistico->get_files($id);
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("archivos",$archivos);
@@ -517,7 +517,7 @@ class logistico extends CI_Controller
 		$ruta="/media/".$id."/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'hqx|cpt|csv|bin|dms|lha|lzh|exe|class|psd|so|sea|dll|oda|pdf|ai|eps|ps|smi|smil|mif|xls|ppt|pptx|wbxml|wmlc|dcr|dir|dxr|dvi|gtar|gz|php|php4|php3|phtml|phps|js|swf|sit|tar|tgz|xhtml|xht|zip|mid|midi|mpga|mp2|mp3|mp4|aif|aiff|aifc|ram|rm|rpm|ra|rv|wav|bmp|gif|jpeg|jpg|jpe|png|tiff|tif|css|html|htm|shtml|txt|text|log|rtx|rtf|xml|xsl|mpeg|mpg|mpe|qt|mov|avi|movie|doc|docx|xlsx|word|xl|eml|json';
+		$config['allowed_types'] 	= '*';
 
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);

@@ -320,7 +320,7 @@ FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e
 	}
 	function get_files($id)
 	{
-		$q=$this->db->query(' SELECT * from archivero_cedi where id_user='.$id);
+		$q=$this->db->query(' SELECT * from archivero_cedi');
 		return $q->result();
 	}
 	function del_file_multiple()

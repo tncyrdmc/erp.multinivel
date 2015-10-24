@@ -2002,21 +2002,15 @@ class comercial extends CI_Controller
 		$ocupacion       = $this->model_admin->get_ocupacion();
 		$tiempo_dedicado = $this->model_admin->get_tiempo_dedicado();
 		$proveedores	 = $this->model_admin->get_proveedor();
-		$promo			 = $this->model_admin->get_promo();
 		$grupo			 = $this->model_admin->get_grupo();
-		$servicio		 = $this->model_admin->get_servicio();
-		$producto		 = $this->model_admin->get_producto();
-		$combinado		 = $this->model_admin->get_combinado();
 		$impuesto		 = $this->model_admin->get_impuesto();
 		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
 		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
 		$empresa	     = $this->model_admin->get_empresa();
 		$regimen	     = $this->model_admin->get_regimen();
 		$zona	         = $this->model_admin->get_zona();
-		$inscripcion	 = $this->model_admin->get_paquete();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
 		
-		$this->template->set("productos",$productos);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("sexo",$sexo);
@@ -2028,18 +2022,13 @@ class comercial extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("tipo_fiscal",$tipo_fiscal);
 		$this->template->set("proveedores",$proveedores);
-		$this->template->set("promo",$promo);
 		$this->template->set("grupo",$grupo);
-		$this->template->set("servicio",$servicio);
-		$this->template->set("producto",$producto);
-		$this->template->set("combinado",$combinado);
 		$this->template->set("impuesto",$impuesto);
 		$this->template->set("tipo_mercancia",$tipo_mercancia);
 		$this->template->set("tipo_proveedor",$tipo_proveedor);
 		$this->template->set("empresa",$empresa);
 		$this->template->set("regimen",$regimen);
 		$this->template->set("zona",$zona);
-		$this->template->set("inscripcion",$inscripcion);
 		$this->template->set("tipo_paquete",$tipo_paquete);
 		$this->template->set("bancos",$bancos);
 

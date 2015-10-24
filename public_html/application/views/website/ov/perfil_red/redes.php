@@ -5,7 +5,6 @@
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/ov"><i class="fa fa-home"></i> Menu</a>
 				<span> 
-					<a href="/ov/perfil_red/TipoAfiliacion"> > Tipo de Afiliacion</a>
 					> Red
 				</span>
 			</h1>
