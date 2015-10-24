@@ -83,7 +83,7 @@ $ci->load->model ( "model_permissions" );
 											class="minh well well-sm txt-color-white text-center link_dashboard"
 											style="background: #2086bf;">
 											<i class="fa fa-edit fa-3x"></i>
-											<h1>Pedidos / Embarque</h1>
+											<h1>Surtidos / Embarque</h1>
 										</div>
 									</a>
 								</div>

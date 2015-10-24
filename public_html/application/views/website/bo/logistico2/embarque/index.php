@@ -8,13 +8,13 @@
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 							
-								> Pedidos / Embarque
+								> Surtidos / Embarque
 							</span>
 						<?php }else{?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 								> <a href="/bol/dashboard/"> Logistico</a>
-								> Pedidos / Embarque
+								> Surtidos / Embarque
 							</span>
 						
 							<?php }?>	

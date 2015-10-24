@@ -992,9 +992,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function registrar_movimiento($id_usuario, $id_mercancia, $cantidad, $subtotal, $total, $venta, $puntos)
 	{
 		
-		$q_alm=$this->db->query("SELECT id_almacen from almacen where web=1");
-		$alm_res = $q_alm->result();
-		$origen = $alm_res[0]->id_almacen;
+		//$q_alm=$this->db->query("SELECT id_almacen from almacen where web=1");
+		//$alm_res = $q_alm->result();
+		//$origen = $alm_res[0]->id_almacen;
+		$origen = 1;
 		$q_user = $this->db->query("SELECT username from users where id=".$id_usuario);
 		$user_res = $q_user->result();
 		$usuario = $user_res[0]->username;

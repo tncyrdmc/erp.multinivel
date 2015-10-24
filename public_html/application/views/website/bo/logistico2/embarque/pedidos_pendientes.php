@@ -8,14 +8,14 @@
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 						
-								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
+								> <a href="/bo/logistico2/pedidos">Surtidos / Embarques</a>
 								> Pedidos Pendientes
 							</span>
 							<?php }else{?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 								> <a href="/bol/dashboard/">Log&iacute;stico</a> 
-								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
+								> <a href="/bo/logistico2/pedidos">Surtidos / Embarques</a>
 								> Pedidos Pendientes
 							</span>
 							
@@ -111,11 +111,11 @@
 																				<thead>
 																					<tr>
 																						<th data-hide="phone">ID</th>
-																						<th data-class="expand">Clave</th>
+																						<th data-class="expand">ID Transacción</th>
 																						<th data-hide="phone">Origen/Almacen</th>
-																						<th data-hide="phone">Producto</th>
-																						<th data-hide="phone">Cantidad</th>
+																						<th data-hide="phone">Proveedor de Mensajeria</th>
 																						<th data-hide="phone">Usuario/Destino</th>
+																						<th data-hide="phone">Telefono</th>
 																						<th data-hide="phone">Email Usuario</th>
 																						<th data-hide="phone,tablet">Fecha</th>
 																						<th data-hide="phone,tablet">Estatus</th>
