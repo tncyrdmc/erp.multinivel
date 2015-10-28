@@ -270,7 +270,7 @@
 			        url: "/bo/logistico/sube_archivo",
 			        addRemoveLinks : true,
 			        maxFilesize: 150,
-			        dictResponseError: 'Error uploading file!',
+			        dictResponseError: 'Error no se logro subir el archivo!',
 			    });
 				 
 				/*
