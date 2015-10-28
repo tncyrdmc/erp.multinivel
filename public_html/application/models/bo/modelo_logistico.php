@@ -147,11 +147,43 @@ class modelo_logistico extends CI_Model
 		}
 		return $mensaje;	
 	}
-	function get_surtidos()
+	/*function get_surtidos()
 	{
 		$q=$this->db->query("SELECT s.*, m.keyword, a.nombre as origen,m.destino,  e.descripcion estatus_e, m.id_mercancia, m.cantidad, cve.correo
 FROM surtido s, movimiento m, cat_estatus_surtido e, cross_venta_envio cve, almacen a, venta v
 WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_venta = s.id_venta and a.id_almacen = m.origen and v.id_venta = cve.id_venta and v.id_estatus = 2 and s.estatus<>2");
+		
+		return $q->result();
+	}
+	*/
+	
+	function get_surtidos()
+	{
+		$q=$this->db->query("SELECT s.id_surtido as id, v.id_venta, m.keyword as id_transaccion, c.nombre as origen, concat(co.Name,' ',es.Nombre,' ',
+							 ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, concat(cve.nombre,' ', cve.apellido) as usuario,
+							 cve.celular, cve.correo, s.fecha
+							
+							FROM surtido s, movimiento m, cedi c, proveedor_mensajeria pm, cat_estatus_surtido e, cross_venta_envio cve, 
+							 venta v, Country co, estate es, City ci
+							
+							WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and s.id_venta = v.id_venta and
+							 s.estatus = e.id_estatus and c.id_cedi = m.origen and c.tipo = 'A' and cve.id_venta = s.id_venta and 
+							 co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio and cve.proveedor_mensajeria = pm.id 
+							 and v.id_venta = cve.id_venta and v.id_estatus = 2 and s.estatus <> 2");
+		
+		return $q->result();
+	}
+	
+	function getDetalleVenta($id){
+		$q=$this->db->query("SELECT p.nombre as producto, cvm.cantidad, tr.nombre as red, pm.nombre_empresa, pt.tarifa,
+							concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',pm.colonia,' ',pm.direccion) as ciudad
+							
+							FROM surtido s, cross_venta_mercancia cvm, mercancia m, producto p, tipo_red tr, cross_venta_envio cve,
+							proveedor_mensajeria pm, proveedor_tarifas pt, Country co, estate es, City ci 
+							
+							WHERE s.id_surtido = ".$id." and s.id_venta = cvm.id_venta and s.id_venta = cve.id_venta and cvm.id_mercancia = m.id
+							and m.sku = p.id and p.id_grupo = tr.id and cve.proveedor_mensajeria = pm.id and pt.id_proveedor = pm.id and 
+							pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.municipio = ci.ID ");
 		
 		return $q->result();
 	}

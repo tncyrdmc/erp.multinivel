@@ -110,16 +110,14 @@
 																			<table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
 																				<thead>
 																					<tr>
-																						<th data-hide="phone">ID</th>
-																						<th data-class="expand">ID Transacción</th>
+																						<th data-class="expand">ID</th>
 																						<th data-hide="phone">Origen/Almacen</th>
-																						<th data-hide="phone">Proveedor de Mensajeria</th>
 																						<th data-hide="phone">Usuario/Destino</th>
-																						<th data-hide="phone">Telefono</th>
-																						<th data-hide="phone">Email Usuario</th>
+																						<th data-hide="phone,tablet">Dirección de envío</th>
+																						<th data-hide="phone,tablet">Telefono</th>
+																						<th data-hide="phone,tablet">Email Usuario</th>
 																						<th data-hide="phone,tablet">Fecha</th>
-																						<th data-hide="phone,tablet">Estatus</th>
-																						<th></th>
+																						<th data-hide="phone,tablet">Acciones</th>
 																						
 																					</tr>
 																				</thead>
@@ -127,17 +125,16 @@
 																					
 																					<?php foreach ($surtidos as $surtido){ ?>
 																						<tr>
-																							<td><?php echo $surtido['id_surtido']; ?></td>
-																							<td><?php echo $surtido['keyword']; ?></td>
-																							<td><?php echo $surtido['origen']; ?></td>
-																							<td><?php echo $surtido['mercancia']; ?></td>
-																							<td><?php echo $surtido['cantidad']; ?></td>
-																							<td><?php echo $surtido['usuario']; ?></td>
-																							<td><?php echo $surtido['email']; ?></td>
-																							<td><?php echo $surtido['fecha']; ?></td>
-																							<td><?php echo $surtido['estatus']; ?></td>
+																							<td><?php echo $surtido->id; ?></td>
+																							<td><?php echo $surtido->origen; ?></td>
+																							<td><?php echo $surtido->usuario; ?></td>
+																							<td><?php echo $surtido->direccion; ?></td>
+																							<td><?php echo $surtido->celular; ?></td>
+																							<td><?php echo $surtido->correo; ?></td>
+																							<td><?php echo $surtido->fecha; ?></td>
 																							<td class='text-center'>
-																								<a class='txt-color-blue' style='cursor: pointer;' onclick='surtir(<?php echo $surtido['id_surtido']; ?>,<?php echo $surtido['id_venta']; ?>)' title='Surtir'><i class='fa fa-truck fa-3x'></i></a>
+																								<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
+																								<a class='txt-color-blue' style='cursor: pointer;' onclick='surtir(<?php echo $surtido->id; ?>,<?php echo $surtido->id_venta; ?>)' title='Surtir'><i class='fa fa-truck fa-3x'></i></a>
 																							</td>
 																						</tr>
 																				<?php } ?>
@@ -354,6 +351,32 @@
 		}
 	});
 				
+	}
+
+	function detalles(id){
+		$.ajax({
+			data:{
+				id : id,
+				},
+			type:"post",
+			url:"detalles",
+			success: function(msg){
+				bootbox.dialog({
+					message: msg,
+					title: "Detalles de la venta",
+					className: "",
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							 window.location="/bo/logistico2/pedidos_pendientes";
+							}
+						}
+					}
+				})
+			}
+		});	
 	}
 </script>
 <script>

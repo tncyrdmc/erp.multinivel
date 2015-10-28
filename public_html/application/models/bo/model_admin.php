@@ -60,7 +60,6 @@ class model_admin extends CI_Model
 		CGP where P.id=".$sku." and
 		CGP.id_grupo = P.id_grupo");
 		
-		$q = "";
 		if($tipo==2)
 			$q=$this->db->query("select * from servicio where id=".$sku);
 		if($tipo==3)

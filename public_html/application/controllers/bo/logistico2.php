@@ -87,7 +87,7 @@ class logistico2 extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		
-		$surtido_movimiento =$this->modelo_logistico->get_surtidos();
+		/*$surtido_movimiento =$this->modelo_logistico->get_surtidos();
 		$surtidos = array();
 		
 		foreach ($surtido_movimiento as $movimiento){
@@ -107,9 +107,9 @@ class logistico2 extends CI_Controller
 						'estatus' => $movimiento->estatus_e
 				);
 			}
-		}
+		}*/
 		
-		
+		$surtidos =$this->modelo_logistico->get_surtidos();
 		
 		$this->template->set("style",$style);
 		$this->template->set("surtidos",$surtidos);
@@ -178,6 +178,30 @@ class logistico2 extends CI_Controller
 	function embarcar()
 	{
 		$this->modelo_logistico->embarcar();
+	}
+	
+	function detalles()
+	{
+		$id = $this->tank_auth->get_user_id();
+		$usuario = $this->general->get_username($id);
+		
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+		{
+		}else{
+			redirect('/auth/logout');
+		}
+		
+		$id_surtido = $_POST['id'];
+		
+		$style=$this->modelo_dashboard->get_style(1);	
+		$this->template->set("style",$style);
+		
+		$detalles_venta = $this->modelo_logistico->getDetalleVenta($id_surtido);
+		$this->template->set("detalles_venta",$detalles_venta);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->build('website/bo/logistico2/embarque/detalles');
 	}
 	
 	function pedidos_embarcados(){
