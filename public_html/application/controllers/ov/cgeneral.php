@@ -322,7 +322,7 @@ class cgeneral extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 			
-		$trimmed = ereg_replace( "([ ]+)", "",$_POST['clave']);
+		$trimmed = $_POST['clave'];
 		
 		if ($_POST['vacio']==1){
 			$this->model_user_webs_personales->insertar($_POST['username'], $trimmed);
