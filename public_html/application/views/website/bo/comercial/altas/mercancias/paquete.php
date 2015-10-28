@@ -68,6 +68,7 @@
 														name="nombre" id="nombre_pr">
 													</label>
 												</section>
+												
 												<div id="tipo_promo">
 
 													<section class="col col-6">
@@ -76,10 +77,7 @@
 																	<option value="<?=$grupo->id_grupo?>">
 																	<?= $grupo->descripcion." (".$grupo->red.")"?>
 																<?}?>
-															
-														
-														
-														
+																
 														</select>
 														</label>
 													</section>
@@ -152,7 +150,13 @@
 															</small>
 														</section>
 													</div>
-													
+													<div>
+													<section class="col col-3">
+													<label class="input">Tipo de Paquete <input type="text"
+														name="tipo" id="tipo">
+													</label>
+												</section>
+													</div>
 													
 											
 											</fieldset>

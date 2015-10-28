@@ -165,7 +165,7 @@
         </div>
         <!--/.search-box -->
         <div class=" transparent pull-right" id="logout">
-			<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/index.php/auth/logout" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
+			<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/auth/logout" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
 				<i style="font-size: 3rem;" class="fa fa-sign-out"></i>
 					</a>
 			</span>
@@ -276,7 +276,7 @@
 											<div class="carousel-inner">
 												<!-- Slide 1 -->
 												<div class="item active">
-													<img src="/template/img/demo/pinkost.png" alt="">
+													<img src="/template/img/demo/banner1.png" alt="">
 													<div class="carousel-caption caption-right">
 												<!--  		<h4>Title 1</h4>
 														<p>
@@ -288,7 +288,7 @@
 												</div>
 												<!-- Slide 2 -->
 												<div class="item">
-													<img src="/template/img/demo/KosTable1.png" alt="">
+													<img src="/template/img/demo/banner2.png" alt="">
 													<div class="carousel-caption caption-left">
 													<!--  	<h4>Title 2</h4>
 														<p>
@@ -300,32 +300,15 @@
 												</div>
 												<!-- Slide 3 -->
 												<div class="item">
-													<img src="/template/img/demo/game-kost-1.png" alt="">
-												<!--	<div class="carousel-caption">
-														<h4>A very long thumbnail title here to fill the space</h4>
+													<img src="/template/img/demo/banner3.png" alt="">
+													<div class="carousel-caption caption-left">
+													<!--  	<h4>Title 2</h4>
+														<p>
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
 														<br>
-													</div> -->
-												</div>
-												<div class="item">
-													<img src="/template/img/demo/Vpskost1.png" alt="">
-												<!--	<div class="carousel-caption">
-														<h4>A very long thumbnail title here to fill the space</h4>
-														<br>
-													</div> -->
-												</div>
-												<div class="item">
-													<img src="/template/img/demo/appkkost1.png" alt="">
-												<!--	<div class="carousel-caption">
-														<h4>A very long thumbnail title here to fill the space</h4>
-														<br>
-													</div> -->
-												</div>
-												<div class="item">
-													<img src="/template/img/demo/pekeylogo.png" alt="">
-												<!--	<div class="carousel-caption">
-														<h4>A very long thumbnail title here to fill the space</h4>
-														<br>
-													</div> -->
+														<a href="javascript:void(0);" class="btn btn-danger btn-sm">Read more</a> -->
+													</div>
 												</div>
 											</div>
 											<a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>

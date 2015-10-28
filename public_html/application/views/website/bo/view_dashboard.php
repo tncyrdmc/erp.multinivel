@@ -21,7 +21,7 @@ $ci->load->model("model_permissions");?>
 														<div class="air air-top-left padding-10">
 															<h4 class="txt-color-white font-md"></h4>
 														</div>
-														<div class="carousel-inner">
+														<div class="carousel-inner" style="max-height: 420px">
 															<!-- Slide 1 -->
 															<div class="item active">
 																<img src="/template/img/demo/m4.jpg" alt="demo user">
@@ -69,6 +69,12 @@ $ci->load->model("model_permissions");?>
 											</div>
   									</div>
 									</div>
+									<br >
+									<br >
+									<br >
+									<br >
+									<br >
+									<br >
                 	<div class="col-sm-12 col-md-12 col-lg-8">
 									<!--Inica la secciion de la perfil y red-->
 									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
