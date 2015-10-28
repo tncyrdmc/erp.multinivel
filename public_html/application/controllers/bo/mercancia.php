@@ -160,6 +160,9 @@ class mercancia extends CI_Controller
 		if( $_POST['proveedor'] == null){
 			return false;
 		}
+		if( $_POST['tipo'] == null){
+			return false;
+		}
 		return true;
 	}
 	function CrearServicio(){

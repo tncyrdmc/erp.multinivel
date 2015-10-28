@@ -150,11 +150,13 @@ function index()
 						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
 						break;
 				}
+				if(isset($detalles[0]->nombre)){
 				$info_compras[$producto]=Array(
 					"imagen" => $imagen,
 					"nombre" => $detalles[0]->nombre
 				);
 				$producto++;
+				}
 			} 
 		} 
 		

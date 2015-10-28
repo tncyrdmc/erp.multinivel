@@ -192,7 +192,8 @@ class model_mercancia extends CI_Model {
 				"precio" => $_POST ['costo'],
 				"puntos" => $_POST ['puntos_com'],
 				"estatus" => 'ACT',
-				"id_red" => $_POST ['red']
+				"id_red" => $_POST ['red'],
+				"tipo" => $_POST['tipo']
 		);
 		$this->db->insert ( "paquete_inscripcion", $dato_paquete );
 	

@@ -54,7 +54,7 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type: "POST",
-							url: "/auth/register",
+							url: "/ov/perfil_red/crear_user",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {

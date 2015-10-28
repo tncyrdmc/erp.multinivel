@@ -156,6 +156,8 @@
 															<?}?>
 															</select>
 														</label>
+																									<a style="cursor: pointer;" onclick="add_proveedor()">Agregar impuesto<i class="fa fa-plus"></i></a>
+											
 													</section>
 													
 													<section class="col col-3">
@@ -343,5 +345,75 @@ function ImpuestosPais(){
 	        
 	      }
 	});
+}
+function add_proveedor(){
+
+	bootbox.dialog({
+		message: '<form id="form_empresa" method="post" class="smart-form">'
+					+'<fieldset>'
+						+'<legend>Información de cuenta</legend>'
+						+'<div class="row">'
+						+'<section class="col col-3">'
+						+'<label class="input"> <i class="icon-prepend fa fa-user"></i>
+						+'<input required type="text" name="nombre" id="nombre" placeholder="Nombre">'
+						+'</label>'
+						+'</section>'
+						+'<section class="col col-3">'
+						+'<label class="input"> <i class="icon-prepend fa fa-user"></i>
+						+'<input required type="text" name="apellido" id="apellido" placeholder="Apellido">'
+						+'</label>'
+						+'</section>'
+						+'<section id="correo1" class="col col-3">'
+						+'<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+						+'<input id="email" required type="email" name="email" placeholder="Email">'
+						+'</label>'
+						+'</section>'
+						+'</div>'
+						+'</fieldset>'
+				+'</form>',
+		title: "Nuevo proveedor",
+		buttons: {
+			submit: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+
+					$.ajax({
+						type: "POST",
+						url: "/bo/admin/new_empresa",
+						data: $("#form_empresa").serialize()
+					})
+					.done(function( msg )
+					{
+						var empresa = JSON.parse(msg);	
+					//	$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
+						//$("#empresa").val(empresa['id']);
+						bootbox.dialog({
+						message: "Se agregado la empresa",
+						title: 'Empresa',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+									}
+								}
+							}
+						})//fin done ajax
+
+					});//Fin callback bootbox
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
+	
 }
 </script>

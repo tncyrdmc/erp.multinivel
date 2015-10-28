@@ -175,7 +175,7 @@
 																	<td class="hidden-xs hidden-sm"><?=$archivo->tamano?> Kb
 																	</td>
 																	<td class="hidden-xs hidden-sm">
-																		<a onclick="borrar('<?=$archivo->id_archivero?>','<?=$archivo->url?>')" class="btn btn-labeled btn-danger" href="#">
+																		<a onclick="borrar('<?=$archivo->id_archivero?>','<?=$archivo->url?>','<?=$archivo->nombre_completo?>')" class="btn btn-labeled btn-danger" href="#">
 																			<span class="btn-label">
 																			<i class="glyphicon glyphicon-trash"></i>
 																			</span>
@@ -330,16 +330,57 @@ function checado()
 		$(".chek").removeAttr("checked")
 	}
 }
-function borrar(id,link)
+function borrar(id,link,name)
 {
+
 	$.ajax({
 		type: "POST",
-		url: "/bo/logistico/del_file",
-		data: {id_archivero_cedi: id, url: link}
-		})
-		.done(function( msg ) {
-		alert( "Data Saved: " + msg );
-		location.href='';
+		url: "/auth/show_dialog",
+		data: {message: '¿ Esta seguro que desea eliminar el archivo '+name+'?'},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+		message: msg,
+		title: 'Eliminar Archivo',
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+				
+					$.ajax({
+						type: "POST",
+						url: "/bo/logistico/del_file",
+						data: {id_archivero_cedi: id, url: link}
+					}).done(function( msg )
+					{
+						bootbox.dialog({
+						message: msg,
+						title: 'Archivo eliminado con exito',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href="/bo/logistico/archivero";
+								}
+							}
+						}
+					})//fin done ajax
+					});//Fin callback bootbox
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
 	});
 }
 function borrar_multiple()
