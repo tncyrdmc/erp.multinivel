@@ -164,11 +164,11 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 							cve.celular, cve.correo, s.fecha
 							
 							FROM surtido s, movimiento m, cedi c, cross_venta_envio cve, 
-							venta v, Country co, estate es, City ci
+							venta v, Country co, estate es, City ci, mercancia me, cross_venta_mercancia cvm
 							
 							WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and s.id_venta = v.id_venta and
 							s.estatus = 1 and c.id_cedi = m.origen and cve.id_venta = s.id_venta and 
-							co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio 
+							co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio and v.id_venta = cvm.id_venta and cvm.id_mercancia = me.id and me.id_tipo_mercancia = 1
 							and v.id_venta = cve.id_venta and v.id_estatus = 2 ");
 		
 		return $q->result();
