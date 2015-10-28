@@ -141,7 +141,7 @@ class logistico2 extends CI_Controller
 	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
-		$por_embarcar = $this->modelo_logistico->get_embarque();
+		/*$por_embarcar = $this->modelo_logistico->get_embarque();
 		
 		$surtidos = array();
 		
@@ -162,9 +162,9 @@ class logistico2 extends CI_Controller
 				);	
 			}
 		}
-	
-	
-	
+	*/
+		$surtidos = $this->modelo_logistico->get_embarque();
+		
 		$this->template->set("style",$style);
 		$this->template->set("surtidos",$surtidos);
 		
@@ -222,7 +222,7 @@ class logistico2 extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("usuario",$usuario);
-		
+		/*
 		
 		$embarcados=$this->modelo_logistico->get_embarcados();
 		
@@ -245,7 +245,9 @@ class logistico2 extends CI_Controller
 						'estatus' => $movimiento->estado_e
 				);
 			}
-		}
+		}*/
+		
+		$surtidos = $this->modelo_logistico->get_embarcados();
 		
 		$this->template->set("style",$style);
 		$this->template->set("surtidos",$surtidos);

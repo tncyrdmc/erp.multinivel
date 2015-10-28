@@ -160,16 +160,16 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 	function get_surtidos()
 	{
 		$q=$this->db->query("SELECT s.id_surtido as id, v.id_venta, m.keyword as id_transaccion, c.nombre as origen, concat(co.Name,' ',es.Nombre,' ',
-							 ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, concat(cve.nombre,' ', cve.apellido) as usuario,
-							 cve.celular, cve.correo, s.fecha
+							ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, concat(cve.nombre,' ', cve.apellido) as usuario,
+							cve.celular, cve.correo, s.fecha
 							
-							FROM surtido s, movimiento m, cedi c, proveedor_mensajeria pm, cat_estatus_surtido e, cross_venta_envio cve, 
-							 venta v, Country co, estate es, City ci
+							FROM surtido s, movimiento m, cedi c, cross_venta_envio cve, 
+							venta v, Country co, estate es, City ci
 							
 							WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and s.id_venta = v.id_venta and
-							 s.estatus = e.id_estatus and c.id_cedi = m.origen and c.tipo = 'A' and cve.id_venta = s.id_venta and 
-							 co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio and cve.proveedor_mensajeria = pm.id 
-							 and v.id_venta = cve.id_venta and v.id_estatus = 2 and s.estatus <> 2");
+							s.estatus = 1 and c.id_cedi = m.origen and cve.id_venta = s.id_venta and 
+							co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio 
+							and v.id_venta = cve.id_venta and v.id_estatus = 2 ");
 		
 		return $q->result();
 	}
@@ -252,11 +252,23 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 		$dato=0;
 		foreach($embarques as $embarque)
 		{
-			$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
+			/*$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
 			h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
-FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
+			FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
 			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
 			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
+			*/
+			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.id_embarque, c.nombre as origen, 
+									e.fecha_entrega, concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, 
+									concat(cve.nombre,' ', cve.apellido) as usuario, cve.celular, cve.correo
+									
+									FROM surtido s, movimiento m, cedi c, embarque e, cross_surtido_embarque g, cross_venta_envio cve,
+									Country co, estate es, City ci
+									
+									WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and c.id_cedi = m.origen and
+									e.id_embarque = g.id_embarque and s.id_surtido = g.id_surtido and co.Code = cve.id_pais and 
+									es.id = cve.estado and ci.ID = cve.municipio  and c.id_cedi = m.origen and e.id_estatus = 1 and 
+									cve.id_venta = s.id_venta and e.id_embarque = ".$embarque->id_embarque." limit 1");
 			$dato_embarque=$q2->result();
 			$embarques_array[$dato]=$dato_embarque[0];
 			$dato++;
@@ -271,11 +283,24 @@ FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e
 		$dato=0;
 		foreach($embarques as $embarque)
 		{
-			$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
+			/*$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
 			h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
 			FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
 			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
 			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
+			*/
+			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.id_embarque, c.nombre as origen, 
+									e.fecha_entrega, concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, 
+									concat(cve.nombre,' ', cve.apellido) as usuario, cve.celular, cve.correo
+									
+									FROM surtido s, movimiento m, cedi c, embarque e, cross_surtido_embarque g, cross_venta_envio cve,
+									Country co, estate es, City ci
+									
+									WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and c.id_cedi = m.origen and
+									e.id_embarque = g.id_embarque and s.id_surtido = g.id_surtido and co.Code = cve.id_pais and 
+									es.id = cve.estado and ci.ID = cve.municipio  and c.id_cedi = m.origen and e.id_estatus = 2 and 
+									cve.id_venta = s.id_venta and e.id_embarque = ".$embarque->id_embarque." limit 1");
+			
 			$dato_embarque=$q2->result();
 			if(isset($dato_embarque[0]->id_embarque)){
 				$embarques_array[$dato]=$dato_embarque[0];
