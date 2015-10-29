@@ -160,7 +160,7 @@ class mercancia extends CI_Controller
 		if( $_POST['proveedor'] == null){
 			return false;
 		}
-		if( $_POST['tipo'] == null){
+		if( $_POST['tipo_mercancia'] == null){
 			return false;
 		}
 		return true;
@@ -289,6 +289,7 @@ class mercancia extends CI_Controller
 		
 		$id = $this->tank_auth->get_user_id();
 		
+		$_POST['proveedor'] = '0';
 		if(!$this->validarMercancia($_POST)){
 			$error = "Datos incompletos para crear la mercancia";
 			$this->session->set_flashdata('error', $error);
@@ -385,7 +386,13 @@ class mercancia extends CI_Controller
 			if($this->ValidarProveedor()){
 				
 				$id=$this->tank_auth->get_user_id();
-				$this->model_mercancia->new_proveedor($id);
+				$id_proveedor = $this->model_mercancia->new_proveedor($id);
+				if(isset($_POST['ser'])){
+					echo "<option value='".$id_proveedor."' selected>".$_POST['nombre']." ".$_POST['apellido']."</option>"; 
+					$id_proveedor;
+				}else{
+					echo "El proveedor ha sido creado ".$_POST['nombre']." ".$_POST['apellido'];
+				}
 			} 
 		}
 		
@@ -420,8 +427,71 @@ class mercancia extends CI_Controller
 			$i++;
 		}
 		
-		echo "El proveedor ha sido creado ".$_POST['nombre']." ".$_POST['apellido'];
 		return true;
 		
+	}
+	
+	function formProveedor(){
+
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		$usuario=$this->general->get_username($id);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$bancos = $this->model_mercancia->Bancos();
+		
+		$sexo            = $this->model_admin->sexo();
+		$civil           = $this->model_admin->edo_civil();
+		$tipo            = $this->model_admin->get_user_type();
+		$tipo_fiscal     = $this->model_admin->tipo_fiscal();
+		$pais            = $this->model_admin->get_pais_activo();
+		$productos       = $this->model_admin->get_mercancia();
+		$estudios        = $this->model_admin->get_estudios();
+		$ocupacion       = $this->model_admin->get_ocupacion();
+		$tiempo_dedicado = $this->model_admin->get_tiempo_dedicado();
+		$proveedores	 = $this->model_admin->get_proveedor();
+		$grupo			 = $this->model_admin->get_grupo();
+		$impuesto		 = $this->model_admin->get_impuesto();
+		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
+		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
+		$empresa	     = $this->model_admin->get_empresa();
+		$regimen	     = $this->model_admin->get_regimen();
+		$zona	         = $this->model_admin->get_zona();
+		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("tipo",$tipo);
+		$this->template->set("pais",$pais);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("proveedores",$proveedores);
+		$this->template->set("grupo",$grupo);
+		$this->template->set("impuesto",$impuesto);
+		$this->template->set("tipo_mercancia",$tipo_mercancia);
+		$this->template->set("tipo_proveedor",$tipo_proveedor);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("regimen",$regimen);
+		$this->template->set("zona",$zona);
+		$this->template->set("tipo_paquete",$tipo_paquete);
+		$this->template->set("bancos",$bancos);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->build('website/bo/comercial/altas/mercancias/form_proveedor');
 	}
 }

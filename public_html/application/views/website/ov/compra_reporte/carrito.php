@@ -528,7 +528,7 @@
 				if(qty>max||qty<min)
 				{
 					bootbox.dialog({
-						message: 'La cantidad de pedido de esta mercancia debe estar entre '+min+' y '+max,
+						message: 'La cantidad solicitada de está mercancia debe estar entre '+min+' y '+max,
 						title: "Error",
 						className: "",
 						buttons: {

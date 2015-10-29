@@ -1100,7 +1100,7 @@
 							
 							bootbox.dialog({
 								message: msg,
-								title: "Selecione Banco",
+								title: "Seleccione Banco",
 								className: "",
 								buttons: {
 									success: {

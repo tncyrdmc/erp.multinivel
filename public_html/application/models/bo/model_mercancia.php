@@ -449,7 +449,7 @@ class model_mercancia extends CI_Model {
 			);
 			$this->db->insert ( "cat_cuenta", $dato_cat_cuenta );
 		}
-	
+		return $id_nuevo;
 	}
 	function actualizarProveedor(){
 		

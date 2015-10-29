@@ -423,7 +423,7 @@ function detalles(id)
 	{
 		bootbox.dialog({
 			message: msg,
-			title: "Informacion Personal",
+			title: "Información Personal",
 			buttons: {
 				success: {
 				label: "Cerrar!",
@@ -448,7 +448,7 @@ function detalles2(id)
 	{
 		bootbox.dialog({
 			message: msg,
-			title: "Informacion Fiscal",
+			title: "Información Fiscal",
 			buttons: {
 				success: {
 				label: "Cerrar!",

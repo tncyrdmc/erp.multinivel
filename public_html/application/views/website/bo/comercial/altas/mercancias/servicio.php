@@ -148,7 +148,7 @@
 													</section>
 													<section class="col col-3">Proveedor
 														<label class="select">
-															<select name="proveedor" required>
+															<select name="proveedor" id="proveedor_select" required>
 															<?foreach ($proveedores as $key){?>
 																<option value="<?=$key->user_id?>">
 																	<?=$key->nombre." ".$key->apellido?>
@@ -156,7 +156,7 @@
 															<?}?>
 															</select>
 														</label>
-																									<a style="cursor: pointer;" onclick="add_proveedor()">Agregar impuesto<i class="fa fa-plus"></i></a>
+														<a style="cursor: pointer;" onclick="add_proveedor()">Agregar Proveedor<i class="fa fa-plus"></i></a>
 											
 													</section>
 													
@@ -348,72 +348,93 @@ function ImpuestosPais(){
 }
 function add_proveedor(){
 
-	bootbox.dialog({
-		message: '<form id="form_empresa" method="post" class="smart-form">'
-					+'<fieldset>'
-						+'<legend>Información de cuenta</legend>'
-						+'<div class="row">'
-						+'<section class="col col-3">'
-						+'<label class="input"> <i class="icon-prepend fa fa-user"></i>
-						+'<input required type="text" name="nombre" id="nombre" placeholder="Nombre">'
-						+'</label>'
-						+'</section>'
-						+'<section class="col col-3">'
-						+'<label class="input"> <i class="icon-prepend fa fa-user"></i>
-						+'<input required type="text" name="apellido" id="apellido" placeholder="Apellido">'
-						+'</label>'
-						+'</section>'
-						+'<section id="correo1" class="col col-3">'
-						+'<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-						+'<input id="email" required type="email" name="email" placeholder="Email">'
-						+'</label>'
-						+'</section>'
-						+'</div>'
-						+'</fieldset>'
-				+'</form>',
-		title: "Nuevo proveedor",
-		buttons: {
-			submit: {
-			label: "Aceptar",
-			className: "btn-success",
-			callback: function() {
+	$.ajax({
+		type: "POST",
+		url: "formProveedor",
+		data: { i : 0 }
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+			message: msg,
+			title: "Nuevo proveedor",
+			buttons: {
+				submit: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+					new_proveedor()
+					}
+				},
+					danger: {
+					label: "Cancelar",
+					className: "btn-danger",
+					callback: function() {
 
-					$.ajax({
-						type: "POST",
-						url: "/bo/admin/new_empresa",
-						data: $("#form_empresa").serialize()
-					})
-					.done(function( msg )
-					{
-						var empresa = JSON.parse(msg);	
-					//	$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
-						//$("#empresa").val(empresa['id']);
-						bootbox.dialog({
-						message: "Se agregado la empresa",
-						title: 'Empresa',
+						}
+				}
+			}
+		})
+	});
+}
+
+function new_proveedor()
+{
+		var ids = new Array( 
+			"#nombre",
+		 	"#apellido",
+		 	"#pais",
+		 	"#cp",
+		 	"#tipo_proveedor",
+		 	"#email",
+		 	"#empresa"
+		 );
+		var mensajes = new Array( 
+			"Por favor ingresa tu nombre",
+		 	"Por favor ingresa tu apellido",
+		 	"Por favor seleciona un pais",
+		 	"Por favor ingresa tu código postal",
+		 	"Por favor seleciona el tipo de proveedor",
+		 	"Por favor ingresa un correo",
+		 	"Por favor seleciona una empresa"
+		 );
+		
+		var validacion = valida_vacios(ids,mensajes);
+		
+		if(validacion)
+		{
+			
+			$.ajax({
+				type: "POST",
+				url: "/bo/mercancia/new_proveedor",
+				data: $('#proveedor').serialize()
+			})
+			.done(function( msg1) {
+				$("#proveedor_select").append(msg1);
+					bootbox.dialog({
+						message: "El proveedor ha sido creado",
+						title: "Atención",
 						buttons: {
 							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-									}
+								label: "Ok!",
+								className: "btn-success",
+								callback: function() {
+									
 								}
 							}
-						})//fin done ajax
-
-					});//Fin callback bootbox
-
-				}
-			},
-				danger: {
-				label: "Cancelar!",
-				className: "btn-danger",
-				callback: function() {
-
-					}
+						}
+					});
+				
+			});
+		}else{
+			$.smallBox({
+			      title: "<h1>Atención</h1>",
+			      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+			      color: "#C46A69",
+			      icon : "fa fa-warning fadeInLeft animated",
+			      timeout: 4000
+			    });
 			}
-		}
-	})
-	
 }
+
 </script>
