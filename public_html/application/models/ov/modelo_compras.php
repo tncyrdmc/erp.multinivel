@@ -1047,6 +1047,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	
 	function CalcularComisionVenta($venta,$afiliado,$puntos,$valor_puntos, $id_red_mercancia){
+		
 		$datos = array(
 				'id_venta' => $venta,
 				'id_afiliado' => $afiliado,
@@ -1054,6 +1055,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				'valor' => $valor_puntos,
 				'id_red' => $id_red_mercancia
 		);
+
 		$this->db->insert('comision', $datos);
 	}
 	
@@ -1117,7 +1119,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	
 	function consultarMercancia($id_venta){
-		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad
+		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad, M.puntos_comisionables, M.id_tipo_mercancia
 							from cross_venta_mercancia CVM, mercancia M 
 							where CVM.id_venta = ".$id_venta."  and CVM.id_mercancia=M.id;");
 		$mercancia = $q->result();
