@@ -60,15 +60,35 @@ class cuentasporcobrar extends compras{
 			$id_venta = $_POST['id_venta'];
 			$id_historial = $_POST['id_historial'];
 			
-			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);
 			
-			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);
-			
+			$mercancia = $this->modelo_compras->consultarMercancia($id_venta);	
+			$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia[0]->id);
+			$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
+			$cliente_venta = $this->modelo_compras->consultar_Afiliado($id_venta);
+			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $cliente_venta[0]->id_user, $id_red);		
+			$puntos_valor=$this->modelo_compras->consultar_tipo_mercancia($id_venta);
+		    $puntos_paquete=$this->modelo_compras->consultar_puntos_paquete($puntos_valor[0]->sku);
+		    
+			if ($puntos_valor[0]->id_tipo_mercancia=='4'){
+				
+		    $this->modelo_compras->set_comision_bono_afiliacion(
+		      $id_venta,$id_afiliado[0]->debajo_de,$id_red,
+		      $puntos_valor[0]->puntos_comisionables,$puntos_valor[0]->costo);
+		    
+		   
+		    $this->modelo_compras->set_puntos_padre($id_afiliado[0]->debajo_de,$puntos_paquete[0]->puntos);
+			/*
+			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);	
+			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);	
 			$this->ComisionBanco($historico);
-			
 			$this->EnvarMail($id_historial);
-			echo  "La peticion se ha cambiado de estado a pago";
+			*/
+			}
+			
+	
+			
 			//$this->session->set_flashdata('correcto', $correcto);
+			echo  "La peticion se ha cambiado de estado a pago";
 		}else{
 			echo  "No se ha podido realizar el cambio de estado de la peticion.";
 			//$this->session->set_flashdata('error', $error);
