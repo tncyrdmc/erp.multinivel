@@ -112,6 +112,7 @@
 																				<thead>
 																					<tr>
 																						<th data-class="expand">ID</th>
+																						<th data-hide="phone">No. guia</th>
 																						<th data-hide="phone">Origen/Almacen</th>
 																						<th data-hide="phone">Usuario/Destino</th>
 																						<th data-hide="phone,tablet">Dirección de envío</th>
@@ -127,6 +128,7 @@
 																					<?php foreach ($surtidos as $surtido){ ?>
 																						<tr>
 																							<td><?php echo $surtido->id; ?></td>
+																							<td><?php echo $surtido->n_guia; ?></td>
 																							<td><?php echo $surtido->origen; ?></td>
 																							<td><?php echo $surtido->usuario; ?></td>
 																							<td><?php echo $surtido->direccion; ?></td>
@@ -463,7 +465,6 @@
 						label: "Aceptar",
 						className: "btn-success",
 						callback: function() {
-							 window.location="/bo/logistico2/pedidos_transito";
 							}
 						}
 					}

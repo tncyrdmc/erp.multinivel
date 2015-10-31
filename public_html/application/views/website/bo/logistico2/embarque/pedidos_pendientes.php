@@ -191,11 +191,16 @@
 	{
 		var darfecha='<div class="row">'
 			+'<form class="smart-form" novalidate="novalidate">'
-				+'<section class="col col-6">'
+				+'<section class="col col-12">'
 					+'<label class="input"> <i class="icon-append fa fa-calendar"></i>'
-						+'<input required id="datepicker" type="text" name="nacimiento" placeholder="Fecha de entrega">'
-					+'</label>'
+						+'<input required class ="col col-12" id="datepicker" type="text" name="nacimiento" placeholder="Fecha de entrega">'
+					+'</label> '
 				+'</section>'
+				+'<section class="col col-12">'
+				+'<label class="input"> '
+					+'<input required class ="col col-12" id="n_guia" type="text" name="n_guia" placeholder="número de guia">'
+				+'</label> '
+			+'</section>'
 			+'</form>'
 		+'</div>';
 		bootbox.dialog({
@@ -208,9 +213,15 @@
 					className: "btn-success",
 					callback: function(){
 						var fecha=$("#datepicker").val();
+						var n_guia=$("#n_guia").val();
+						
 						if(fecha=="")
 						{
 							alert("Especifique una fecha de entrega");
+						}
+						else if(n_guia=="")
+						{
+							alert("Especifique un número de guia");
 						}
 						else
 						{
@@ -218,7 +229,7 @@
 							{
 								$.ajax({
 									type: "post",
-									data: {surtido:id_surtido, venta:id_venta, fecha:fecha,unico:1},
+									data: {surtido:id_surtido, venta:id_venta, fecha:fecha, n_guia:n_guia,unico:1},
 									url: "surtir"
 								})
 								.done(function(msg){
@@ -251,7 +262,7 @@
 										callback: function() {
 											$.ajax({
 												type: "post",
-												data: {surtido:id_surtido, venta:id_venta, fecha:fecha,unico:0},
+												data: {surtido:id_surtido, venta:id_venta, fecha:fecha, n_guia:n_guia,unico:0},
 												url: "surtir"
 											})
 											.done(function(msg){
@@ -370,7 +381,7 @@
 						label: "Aceptar",
 						className: "btn-success",
 						callback: function() {
-							 window.location="/bo/logistico2/pedidos_pendientes";
+							 
 							}
 						}
 					}

@@ -196,8 +196,20 @@ class logistico2 extends CI_Controller
 		$style=$this->modelo_dashboard->get_style(1);	
 		$this->template->set("style",$style);
 		
-		$detalles_venta = $this->modelo_logistico->getDetalleVenta($id_surtido);
-		$this->template->set("detalles_venta",$detalles_venta);
+		$productos = "";
+		$servicios = "";
+		$combinados = "";
+		$paquetes = "";
+		
+		$productos = $this->modelo_logistico->getDetalleVentaProducto($id_surtido);
+		$servicios = $this->modelo_logistico->getDetalleVentaServicio($id_surtido);
+		$combinados = $this->modelo_logistico->getDetalleVentaCombinado($id_surtido);
+		$paquetes = $this->modelo_logistico->getDetalleVentaPaquete($id_surtido);
+		
+		$this->template->set("productos",$productos);
+		$this->template->set("servicios",$servicios);
+		$this->template->set("combinados",$combinados);
+		$this->template->set("paquetes",$paquetes);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

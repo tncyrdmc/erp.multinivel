@@ -164,17 +164,17 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 							cve.celular, cve.correo, s.fecha
 							
 							FROM surtido s, movimiento m, cedi c, cross_venta_envio cve, 
-							venta v, Country co, estate es, City ci, mercancia me, cross_venta_mercancia cvm
+							venta v, Country co, estate es, City ci
 							
 							WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and s.id_venta = v.id_venta and
 							s.estatus = 1 and c.id_cedi = m.origen and cve.id_venta = s.id_venta and 
-							co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio and v.id_venta = cvm.id_venta and cvm.id_mercancia = me.id and me.id_tipo_mercancia = 1
-							and v.id_venta = cve.id_venta and v.id_estatus = 2 ");
+							co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio 
+							and v.id_venta = cve.id_venta and v.id_estatus = 2 group by (s.id_surtido)");
 		
 		return $q->result();
 	}
 	
-	function getDetalleVenta($id){
+	function getDetalleVentaProducto($id){
 		$q=$this->db->query("SELECT p.nombre as producto, cvm.cantidad, tr.nombre as red, pm.nombre_empresa, pt.tarifa,
 							concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',pm.colonia,' ',pm.direccion) as ciudad
 							
@@ -182,8 +182,51 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 							proveedor_mensajeria pm, proveedor_tarifas pt, Country co, estate es, City ci 
 							
 							WHERE s.id_surtido = ".$id." and s.id_venta = cvm.id_venta and s.id_venta = cve.id_venta and cvm.id_mercancia = m.id
-							and m.sku = p.id and p.id_grupo = tr.id and cve.proveedor_mensajeria = pm.id and pt.id_proveedor = pm.id and 
+							and m.sku = p.id and m.id_tipo_mercancia = 1 and p.id_grupo = tr.id and cve.proveedor_mensajeria = pm.id and pt.id_proveedor = pm.id and 
 							pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.municipio = ci.ID ");
+		
+		return $q->result();
+	}
+	
+	function getDetalleVentaServicio($id){
+		$q=$this->db->query("SELECT se.nombre as servicio, cvm.cantidad, tr.nombre as red, pm.nombre_empresa, pt.tarifa,
+concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',pm.colonia,' ',pm.direccion) as ciudad
+
+FROM surtido s, cross_venta_mercancia cvm, mercancia m, servicio se, tipo_red tr, cross_venta_envio cve,
+proveedor_mensajeria pm, proveedor_tarifas pt, Country co, estate es, City ci 
+
+WHERE s.id_surtido = ".$id." and s.id_venta = cvm.id_venta and s.id_venta = cve.id_venta and cvm.id_mercancia = m.id and m.id_tipo_mercancia = 2
+and m.sku = se.id and m.id_tipo_mercancia = 2 and se.id_red = tr.id and cve.proveedor_mensajeria = pm.id and pt.id_proveedor = pm.id and 
+pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.municipio = ci.ID");
+		
+		return $q->result();
+	}
+	
+	function getDetalleVentaCombinado($id){
+		$q=$this->db->query("SELECT se.nombre as combinado, cvm.cantidad, tr.nombre as red, pm.nombre_empresa, pt.tarifa,
+concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',pm.colonia,' ',pm.direccion) as ciudad
+
+FROM surtido s, cross_venta_mercancia cvm, mercancia m, combinado se, tipo_red tr, cross_venta_envio cve,
+proveedor_mensajeria pm, proveedor_tarifas pt, Country co, estate es, City ci
+
+WHERE s.id_surtido = ".$id." and s.id_venta = cvm.id_venta and cvm.id_mercancia = m.id 
+and m.sku = se.id and m.id_tipo_mercancia = 3 and se.id_red = tr.id and s.id_venta = cve.id_venta and cve.proveedor_mensajeria = pm.id 
+and pt.id_proveedor = pm.id and pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and 
+pm.municipio = ci.ID");
+		
+		return $q->result();
+	}
+	
+function getDetalleVentaPaquete($id){
+		$q=$this->db->query("SELECT se.nombre as paquete, cvm.cantidad, tr.nombre as red, pm.nombre_empresa, pt.tarifa,
+concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',pm.colonia,' ',pm.direccion) as ciudad
+
+FROM surtido s, cross_venta_mercancia cvm, mercancia m, paquete_inscripcion se, tipo_red tr, cross_venta_envio cve,
+proveedor_mensajeria pm, proveedor_tarifas pt, Country co, estate es, City ci 
+
+WHERE s.id_surtido = ".$id." and s.id_venta = cvm.id_venta and s.id_venta = cve.id_venta and cvm.id_mercancia = m.id and m.id_tipo_mercancia = 4
+and m.sku = se.id_paquete and se.id_red = tr.id and cve.proveedor_mensajeria = pm.id and pt.id_proveedor = pm.id and 
+pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.municipio = ci.ID");
 		
 		return $q->result();
 	}
@@ -207,11 +250,12 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 	
 	function surtir()
 	{
-		if($_POST["venta"]==0||$_POST["unico"]==1)
+		if($_POST["venta"]==0 || $_POST["unico"]==1)
 		{
 			$dato_embarque=array(
 				"fecha_entrega"	=> $_POST["fecha"],
-				"id_estatus"	=> 1
+				"id_estatus"	=> 1,
+				"n_guia"		=> $_POST["n_guia"]
 			);
 			$this->db->insert("embarque",$dato_embarque);
 			$embarque=mysql_insert_id();
@@ -226,7 +270,8 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 		{
 			$dato_embarque=array(
 				"fecha_entrega"	=> $_POST["fecha"],
-				"id_estatus"	=> 1
+				"id_estatus"	=> 1,
+				"n_guia"		=> $_POST["n_guia"]
 			);
 			$this->db->insert("embarque",$dato_embarque);
 			$embarque=mysql_insert_id();
@@ -258,7 +303,7 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
 			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
 			*/
-			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.id_embarque, c.nombre as origen, 
+			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.n_guia, e.id_embarque, c.nombre as origen, 
 									e.fecha_entrega, concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, 
 									concat(cve.nombre,' ', cve.apellido) as usuario, cve.celular, cve.correo
 									
@@ -289,7 +334,7 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
 			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
 			*/
-			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.id_embarque, c.nombre as origen, 
+			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.n_guia, e.id_embarque, c.nombre as origen, 
 									e.fecha_entrega, concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, 
 									concat(cve.nombre,' ', cve.apellido) as usuario, cve.celular, cve.correo
 									
