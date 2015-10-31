@@ -63,7 +63,7 @@
 										<div class="row">
 											<fieldset>
 
-												<section class="col col-6">
+												<section class="col col-xs-12 col-md-6 col-lg-6">
 													<label class="input">Nombre <input type="text"
 														name="nombre" id="nombre_pr">
 													</label>
@@ -71,7 +71,7 @@
 												
 												<div id="tipo_promo">
 
-													<section class="col col-6">
+													<section class="col col-xs-12 col-md-6 col-lg-6">
 														Categoria <label class="select"> <select name="red">
 																<?foreach ($grupos as $grupo){?>
 																	<option value="<?=$grupo->id_grupo?>">
@@ -84,28 +84,28 @@
 													<div id="moneda">
 														<fieldset id="moneda_field">
 															<legend>Moneda y país</legend>
-															<section class="col col-3">
+															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input"> Costo real <input type="text"
 																	name="real" id="real">
 																</label>
 															</section>
-															<section class="col col-3">
+															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Costo distribuidores <input
 																	type="text" name="costo" id="costo">
 																</label>
 															</section>
-															<section class="col col-3">
+															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Costo publico <input type="text"
 																	name="costo_publico" id="costo_publico">
 																</label>
 															</section>
-															<section class="col col-3">
+															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Tiempo mínimo de entrega <input
 																	placeholder="En días" type="text" name="entrega"
 																	id="entrega">
 																</label>
 															</section>
-															<section class="col col-3">
+															<section class="col col-xs-12 col-md-6 col-lg-3">
 																País del producto <label class="select"> <select
 																	id="pais" required name="pais" id="pais"
 																	onChange="ImpuestosPais()">
@@ -117,23 +117,21 @@
 																</label>
 															</section>
 
-															<section class="col col-3">
+															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Puntos comisionables <input
 																	type="number" min="1" max="" name="puntos_com"
 																	id="puntos_com">
 																</label>
 															</section>
-
 														</fieldset>
-
 													</div>
 													<div>
-														<section style="padding-left: 0px;" class="col col-6">
+														<section style="padding-left: 0px;" class="col col-xs-12 col-md-6 col-lg-6">
 															Descripcion
 															<textarea name="descripcion" style="max-width: 96%"
 																id="mymarkdown"></textarea>
 														</section>
-														<section id="imagenes" class="col col-6">
+														<section id="imagenes" class="col col-xs-12 col-md-6 col-lg-6">
 															<label class="label">Imágen</label>
 															<div class="input input-file">
 																<span class="button"> <input id="img" name="img[]"
@@ -151,7 +149,7 @@
 														</section>
 													</div>
 													<div>
-													<section class="col col-6">
+													<section class="col col-xs-12 col-md-6 col-lg-6">
 														Tipo Paquete <label class="select"> <select name="tipo">
 																<?foreach ($paquetes_actuales as $row){?>
 																	<option value="<?=$row->idnivel?>">
@@ -166,9 +164,9 @@
 											</fieldset>
 											<fieldset>
 												<div class="row">
-														<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
 															id="prods">
-															<section class="col col-8">
+															<section class="col col-xs-12 col-md-6 col-lg-6">
 																Productos <label class="select"> <select
 																	class="custom-scroll" name="producto[]">
 																		<option value="0">Ninguno</option>
@@ -179,16 +177,16 @@
 															</select>
 																</label>
 															</section>
-															<section class="col col-4">
+															<section class="col col-xs-12 col-md-6 col-lg-6">
 																<label class="input">Cantidad de productos <input
 																	type="number" min="1" name="n_productos[]"
 																	id="prod_qty">
 																</label>
 															</section>
 														</div>
-														<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
 															id="servs">
-															<section class="col col-8">
+															<section class="col col col-xs-12 col-md-6 col-lg-6">
 																Servicios <label class="select"> <select
 																	class="custom-scroll" name="servicio[]">
 																		<option value="0">Ninguno</option>
@@ -199,7 +197,7 @@
 															</select>
 																</label>
 															</section>
-															<section class="col col-4">
+															<section class="col col-xs-12 col-md-6 col-lg-6">
 																<label class="input">Cantidad de servicios <input
 																	type="number" min="1" name="n_servicios[]"
 																	id="serv_qty">

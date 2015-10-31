@@ -535,4 +535,15 @@ class model_mercancia extends CI_Model {
 		$q = $this->db->query("select p.id_proveedor as user_id, pd.nombre, pd.apellido from proveedor p, proveedor_datos pd where p.id_proveedor = pd.id_proveedor and mercancia = ".$tipo);
 		return $q->result();
 	}
+	
+	function existeProveedor($id){
+		$q = $this->db->query("select id_proveedor from proveedor p where p.id_proveedor =  '".$id."'");
+		
+		$proveedor =  $q->result();
+		if(isset($proveedor[0]->id_proveedor)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
