@@ -287,6 +287,34 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 			}
 			$this->db->query("update surtido set estatus=2 where id_venta=".$_POST["venta"]);
 		}
+		
+		$q = $this->db->query("SELECT p.id , s.id_almacen_origen , cvm.cantidad, concat(cve.nombre,' ',cve.apellido) as otro_destino
+
+							   FROM surtido s, cross_venta_mercancia cvm, mercancia m, producto p, cross_venta_envio cve
+			
+							   WHERE s.id_surtido = ".$_POST["surtido"]." and s.id_venta = cvm.id_venta and s.id_venta = cve.id_venta and cvm.id_mercancia = m.id
+							   and m.sku = p.id and m.id_tipo_mercancia = 1");  
+		$productos = $q->result();
+		foreach($productos as $producto)
+		{
+			$q2 = $this->db->query("select id_inventario, cantidad from inventario where id_almacen = ".$producto->id_almacen_origen." and id_mercancia = ".$producto->id);
+			$inventario = $q2->result();
+			$cantidad_total = $inventario[0]->cantidad - $producto->cantidad;
+			$this->db->query("update inventario set cantidad=".$cantidad_total." where id_almacen = ".$producto->id_almacen_origen." and id_mercancia = ".$producto->id);
+			
+			$dato_mov=array(
+			"id_origen"		=> $producto->id_almacen_origen,
+			"otro_origen"	=> $producto->otro_destino,
+			"id_destino"	=> 0,
+			"id_documento"	=> 9,
+			"cantidad"		=> $producto->cantidad,
+			"id_inventario"	=> $inventario[0]->id_inventario,
+			"id_mercancia"	=> $producto->id,
+			"tipo"			=> 'S',
+			"n_documento"	=> '',
+		);
+		$this->db->insert("inventario_historial",$dato_mov);
+		}
 	}
 
 	function get_embarque()
@@ -320,7 +348,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 		} 
 		return $embarques_array;
 	} 
-	function get_embarcados()
+	function get_embarcados($inicio, $fin)
 	{
 		$q=$this->db->query("SELECT * from embarque where id_estatus=2");
 		$embarques=$q->result();
@@ -344,7 +372,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 									WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and c.id_cedi = m.origen and
 									e.id_embarque = g.id_embarque and s.id_surtido = g.id_surtido and co.Code = cve.id_pais and 
 									es.id = cve.estado and ci.ID = cve.municipio  and c.id_cedi = m.origen and e.id_estatus = 2 and 
-									cve.id_venta = s.id_venta and e.id_embarque = ".$embarque->id_embarque." limit 1");
+									cve.id_venta = s.id_venta and e.id_embarque = ".$embarque->id_embarque." and e.fecha_entrega>'".$inicio."' and e.fecha_entrega<'".$fin."' limit 1");
 			
 			$dato_embarque=$q2->result();
 			if(isset($dato_embarque[0]->id_embarque)){

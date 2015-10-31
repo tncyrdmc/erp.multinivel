@@ -23,365 +23,540 @@
 						</h1>
 					</div>
 				</div>
-				<div>
-					<section id="widget-grid" class="">
-						<!-- START ROW -->
-						<div class="row">
-							<!-- NEW COL START -->
-							<article class="col-sm-12 col-md-12 col-lg-12">
-								<!-- Widget ID (each widget will need unique ID)-->
-								<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
-									<!-- widget options:
-										usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-										
-										data-widget-colorbutton="false"	
-										data-widget-editbutton="false"
-										data-widget-togglebutton="false"
-										data-widget-deletebutton="false"
-										data-widget-fullscreenbutton="false"
-										data-widget-custombutton="false"
-										data-widget-collapsed="true" 
-										data-widget-sortable="false"
-										
-									-->
-									<header>
-										<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-										<!--<h2>Datos personales</h2>-->				
-										
-									</header>
 				
-									<!-- widget div-->
-									<div>
-										
-										<!-- widget edit box -->
-										<div class="jarviswidget-editbox">
-											<!-- This area used as dropdown edit box -->
-											
-										</div>
-										<!-- end widget edit box -->
-										<!-- widget content -->
-										<div class="widget-body">
-											<div id="myTabContent1" class="tab-content padding-10">
-												<div class="tab-pane fade in active" id="s1">
-													
-													<section id="widget-grid" class="">
-				
-														<!-- row -->
-														<div class="row">
-													
-															<!-- NEW WIDGET START -->
-															<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									
-																<!-- Widget ID (each widget will need unique ID)-->
-																<div class="jarviswidget jarviswidget-color-blueDark"  data-widget-editbutton="false">
-																	<!-- widget options:
-																	usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-													
-																	data-widget-colorbutton="false"
-																	data-widget-editbutton="false"
-																	data-widget-togglebutton="false"
-																	data-widget-deletebutton="false"
-																	data-widget-fullscreenbutton="false"
-																	data-widget-custombutton="false"
-																	data-widget-collapsed="true"
-																	data-widget-sortable="false"
-													
-																	-->
-																	<header>
-																		<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-																		<h2>Embarques</h2>
-													
-																	</header>
-													
-																	<!-- widget div-->
-																	<div>
-													
-																		<!-- widget edit box -->
-																		<div class="jarviswidget-editbox">
-																			<!-- This area used as dropdown edit box -->
-													
-																		</div>
-																		<!-- end widget edit box -->
-													
-																		<!-- widget content -->
-																		<div class="widget-body no-padding">	
-													
-																			<table id="datatable_fixed_column2" class="table table-striped table-bordered table-hover" width="100%">
-																				<thead>
-																					<tr>
-																						<th data-class="expand">ID</th>
-																						<th data-hide="phone">No. guia</th>
-																						<th data-hide="phone">Origen/Almacen</th>
-																						<th data-hide="phone">Usuario/Destino</th>
-																						<th data-hide="phone,tablet">Dirección de envío</th>
-																						<th data-hide="phone,tablet">Telefono</th>
-																						<th data-hide="phone,tablet">Email Usuario</th>
-																						<th data-hide="phone,tablet">Fecha</th>
-																						<th data-hide="phone,tablet">Acciones</th>
-																						
-																					</tr>
-																				</thead>
-																				<tbody>
-																					
-																					<?php foreach ($surtidos as $surtido){ ?>
-																						<tr>
-																							<td><?php echo $surtido->id; ?></td>
-																							<td><?php echo $surtido->n_guia; ?></td>
-																							<td><?php echo $surtido->origen; ?></td>
-																							<td><?php echo $surtido->usuario; ?></td>
-																							<td><?php echo $surtido->direccion; ?></td>
-																							<td><?php echo $surtido->celular; ?></td>
-																							<td><?php echo $surtido->correo; ?></td>
-																							<td><?php echo $surtido->fecha_entrega; ?></td>
-																							<td class='text-center'>
-																								<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
-																							</td>
-																						</tr>
-																				<?php } ?>
-																					
-																				</tbody>
-																			</table>
-													
-																		</div>
-																		<!-- end widget content -->
-													
-																	</div>
-																	<!-- end widget div -->
-																</div>
-																<!-- end widget -->
-													
-															</article>
-															
-															
-															<!-- WIDGET END -->
-													
-														</div>
-													
-													</section>
-												</div>
-												
-												
-											</div>
-										</div>
-										<!-- end widget content -->
-										
-									</div>
-									<!-- end widget div -->
-								</div>
-								<!-- end widget -->
-							</article>
-							<!-- END COL -->
-						</div>
-						<div class="row">         
-					        <!-- a blank row to get started -->
-					        <div class="col-sm-12">
-					            <br />
-					            <br />
-					        </div>
-				        </div>            
-						<!-- END ROW -->
-					</section>
 				</div>
+	
+
+<div class="spinner2"></div>
+		<!-- START ROW -->
+
+		<div class="row">
+			
+
+
+			<!-- NEW COL START -->
+			<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="well">
+					<div class="row">
+						<form class="smart-form" id="reporte-form" method="post">
+							<div class="row">			
+								
+								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+									<label class="input"> <i class="icon-append fa fa-calendar"></i>
+										<input type="text" name="startdate" id="startdate" placeholder="Del">
+									</label>
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+									<label class="input"> <i class="icon-append fa fa-calendar"></i>
+										<input type="text" name="finishdate" id="finishdate" placeholder="Al">
+									</label>
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+									<label class="input">
+										<a id="genera-reporte" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12">Generar Reporte</a>
+									</label>
+								</section>
+							</div>
+							<div class="row" id="row-print" style="display: none;">
+								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
+									
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									
+									<label class="input">
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+									</label>
+								</section>
+								
+							</div>
+							<div class="row" id="row-print-af" style="display: none;">
+								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
+									
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									
+									<label class="input">
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+									</label>
+								</section>
+								
+							</div>
+							<div class="row" id="row-print-usr" style="display: none;">
+								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
+									
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									
+									<label class="input">
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+									</label>
+								</section>
+								
+							</div>
+							<div class="row" id="row-print-red" style="display: none;">
+								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
+									
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									
+									<label class="input" id="remplazar">
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+									</label>
+								</section>
+								
+							</div>
+							<div class="row" id="row-print-web" style="display: none;">
+								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
+									
+								</section>
+								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									
+									<label class="input">
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+									</label>
+								</section>
+								
+							</div>
+						</form>
+					</div>
+					
+				</div>
+							<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget jarviswidget-color-blueDark" id="nuevos_afiliados" data-widget-editbutton="false" style="width: 100%;">
+					
+					<header >
+						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+						<h2>Export to PDF / Excel</h2>
+	
+					</header>
+					
+					<div class="row" id="reporte_div" style="width: 100%;">
+					</div>	
+							
+				</div>
+					
+					<!-- end widget -->
+					<div class="well hide" id="well-print-af" style="display: none;">
+						<div class="row">
+							<form class="smart-form" id="reporte-form" method="post">
+								
+								<div class="row" >
+									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
+										
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" href="reporte_afiliados_excel" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+										</label>
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										</label>
+									</section>
+									
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="well hide" id="well-print-usr" style="display: none;">
+						<div class="row">
+							<form class="smart-form" id="reporte-form" method="post">
+								
+								<div class="row" >
+									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
+										
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+										</label>
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										</label>
+									</section>
+									
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="well hide" id="well-print-red" style="display: none;">
+						<div class="row">
+							<form class="smart-form" id="reporte-form" method="post">
+								
+								<div class="row" >
+									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
+										
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+										</label>
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										</label>
+									</section>
+									
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="well hide" id="well-print-web" style="display: none;">
+						<div class="row">
+							<form class="smart-form" id="reporte-form" method="post">
+								
+								<div class="row" >
+									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
+										
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+										</label>
+									</section>
+									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										</label>
+									</section>
+									
+								</div>
+							</form>
+						</div>
+					</div>
+		
+				</article>
+				
+				<!-- NEW WIDGET START -->
+						<!-- WIDGET END -->
+		
+
+
 			</div>
+		</div>
+		<div class="row">         
+         <!-- a blank row to get started -->
+	    	<div class="col-sm-12">
+	        	<br />
+	        	<br />
+	        </div>
+        </div>
+<!-- END MAIN CONTENT -->
+
+<!-- PAGE RELATED PLUGIN(S) -->
 		<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-<script>
-	function surtir(id_surtido,id_venta)
-	{
-		var darfecha='<div class="row">'
-			+'<form class="smart-form" novalidate="novalidate">'
-				+'<section class="col col-6">'
-					+'<label class="input"> <i class="icon-append fa fa-calendar"></i>'
-						+'<input required id="datepicker" type="text" name="nacimiento" placeholder="Fecha de entrega">'
-					+'</label>'
-				+'</section>'
-			+'</form>'
-		+'</div>';
-		bootbox.dialog({
-			message: darfecha,
-			title: "Embarcar",
-			className: "",
-			buttons: {
-				success: {
-					label: "Aceptar",
+		<script src="/template/js/spin.js"></script>
+		<script type="text/javascript">
+		function Enviar(id)
+		{
+			bootbox.dialog({
+				message: "¿Desea enviar este registro ahora?",
+				title: "Enviar Venta ".concat(id),
+				className: "",
+				buttons: {
+					success: {
+					label: "Si",
 					className: "btn-success",
-					callback: function(){
-						var fecha=$("#datepicker").val();
-						if(fecha=="")
-						{
-							alert("Especifique una fecha de entrega");
-						}
-						else
-						{
-							if(id_venta==0)
-							{
-								$.ajax({
-									type: "post",
-									data: {surtido:id_surtido, venta:id_venta, fecha:fecha,unico:1},
-									url: "surtir"
-								})
-								.done(function(msg){
-									bootbox.dialog({
-										message: "Se ha enviado este producto a embarques exitosamente.",
-										title: "Exito",
-										className: "",
-										buttons: {
-											success: {
-												label: "Aceptar",
-												className: "btn-success",
-												callback: function(){
-													window.location.href="/bo/logistico/surtido_embarques";
-												}
-											}
-										}
-									})
-								});
-							}
-							else
-							{
-								bootbox.dialog({
-									message: "¿Desea surtir toda la venta ahora?",
-									title: "Surtir",
-									className: "",
-									buttons: {
-										success: {
-										label: "Si",
+					callback: function() {
+						$.ajax({
+							type: "post",
+							data: {id:id},
+							url: "Cambiar_estado_enviar"
+						})
+						.done(function(msg){
+							bootbox.dialog({
+								message: "Se han enviado estos producto exitosamente.",
+								title: "Exito",
+								className: "",
+								buttons: {
+									success: {
+										label: "Aceptar",
 										className: "btn-success",
-										callback: function() {
-											$.ajax({
-												type: "post",
-												data: {surtido:id_surtido, venta:id_venta, fecha:fecha,unico:0},
-												url: "surtir"
-											})
-											.done(function(msg){
-												bootbox.dialog({
-													message: "Se ha enviado este producto a embarques exitosamente.",
-													title: "Exito",
-													className: "",
-													buttons: {
-														success: {
-															label: "Aceptar",
-															className: "btn-success",
-															callback: function(){
-																window.location.href="/bo/logistico/surtido_embarques";
-															}
-														}
-													}
-												})
-											});
-											}
-										},
-										primary:{
-											label: "No",
-											className: "btn-primary",
-											callback: function() {
-												$.ajax({
-													type: "post",
-													data: {surtido:id_surtido, venta:id_venta, fecha:fecha,unico:1},
-													url: "surtir"
-												})
-												.done(function(msg){
-													bootbox.dialog({
-														message: "Se ha enviado este producto a embarques exitosamente.",
-														title: "Exito",
-														className: "",
-														buttons: {
-															success: {
-																label: "Aceptar",
-																className: "btn-success",
-																callback: function(){
-																	window.location.href="/bo/logistico/surtido_embarques";
-																}
-															}
-														}
-													})
-												});
-											}
-										},
-										danger:{
-											label: "Cancelar",
-											className: "btn-danger",
-											callback: function(){
-												
-											}
+										callback: function(){
+											window.location.href="reportes";
 										}
 									}
-								});
-							}
-						}
+								}
+							})
+						});
 					}
 				},
 				danger: {
-					label: "Cancelar",
-					className : "btn-danger",
+					label: "No",
+					className: "btn-danger",
 					callback: function(){
-						
+					
 					}
 				}
 			}
-			
 		});
+					
+		}
+
+		</script>
 		
-				$( "#datepicker" ).datepicker({
-				changeMonth: true,
-				numberOfMonths: 2,
-				dateFormat:"yy-mm-dd",
-				//defaultDate: "1970-01-01",
-				changeYear: true
-				});
+		<script type="text/javascript">
+			$("#tipo-reporte").change(function()
+			{
+				if($("#tipo-reporte").val()==1 || $("#tipo-reporte").val()==6)
+				{
+					$("#startdate").prop( "disabled", true );
+					$("#finishdate").prop( "disabled", true );
+				}
+				else
+				{
+					$("#startdate").prop( "disabled", false);
+					$("#finishdate").prop( "disabled", false );
+					$("#imprimir-1").prop( "hide", true );
+				}
+			});
+		</script>
+		<script type="text/javascript" id="script_fila">
+			function nueva_fila()
+			{
+				alert("hola");
+			}
+		</script>
 		
-	}
-	function embarcar(id)
-	{
-		bootbox.dialog({
-			message: "¿Desea embarcar este registro ahora?",
-			title: "Embarcar",
-			className: "",
-			buttons: {
-				success: {
-				label: "Si",
-				className: "btn-success",
-				callback: function() {
-					$.ajax({
-						type: "post",
-						data: {id:id},
-						url: "embarcar"
-					})
-					.done(function(msg){
+		<script type="text/javascript">
+		
+			$("#genera-reporte").click(function()
+			{
+				var inicio=$("#startdate").val();
+				var fin=$("#finishdate").val();
+
+				if(inicio=='')
+				{
+					alert('Introduzca fecha de inicio');
+				}
+				else
+				{
+					if(fin=='')
+					{
+						alert('Introduzca fecha de fin');
+					}
+					else
+					{
+						$("#nuevos_afiliados").show();
+						var datos={'inicio':inicio,'fin':fin};
+						$.ajax({
+							data: {info:JSON.stringify(datos)},
+					        type: "get",
+					        url: "reporte_embarcados",
+							success: function( msg )
+							{
+								$("#reporte_div").html(msg);
+								var responsiveHelper_dt_basic = undefined;
+								var responsiveHelper_datatable_fixed_column = undefined;
+								var responsiveHelper_datatable_col_reorder = undefined;
+								var responsiveHelper_datatable_tabletools = undefined;
+								
+								var breakpointDefinition = {
+									tablet : 1024,
+									phone : 480
+								};
+											var otable = $('#datatable_fixed_column1').DataTable({
+						    	//"bFilter": false,
+						    	//"bInfo": false,
+						    	//"bLengthChange": false
+						    	//"bAutoWidth": false,
+						    	//"bPaginate": false,
+						    	//"bStateSave": true // saves sort state using localStorage
+								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+										"t"+
+										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+								"autoWidth" : true,
+								"preDrawCallback" : function() {
+									// Initialize the responsive datatables helper once.
+									if (!responsiveHelper_datatable_fixed_column) {
+										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+									}
+								},
+								"rowCallback" : function(nRow) {
+									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+								},
+								"drawCallback" : function(oSettings) {
+									responsiveHelper_datatable_fixed_column.respond();
+								}		
+								
+							    });
+						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	   
+							    // Apply the filter
+							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+							    	
+							        otable
+							            .column( $(this).parent().index()+':visible' )
+							            .search( this.value )
+							            .draw();
+
+							       
+							    } );
+							    $("#well-print-usr").hide();
+								$("#row-print-usr").hide();
+								$("#well-print-red").hide();
+								$("#row-print-red").hide();
+								$("#well-print-web").hide();
+								$("#row-print-web").hide();
+							    $("#well-print-af").show();
+								$("#row-print-af").show();
+								
+								    
+							}
+						});
+					}
+				}	
+			});
+
+			function detalles(id){
+				$.ajax({
+					data:{
+						id : id,
+						},
+					type:"post",
+					url:"detalles",
+					success: function(msg){
 						bootbox.dialog({
-							message: "Se han embarcado estos producto exitosamente.",
-							title: "Exito",
+							message: msg,
+							title: "Detalles de la venta",
 							className: "",
 							buttons: {
 								success: {
-									label: "Aceptar",
-									className: "btn-success",
-									callback: function(){
-										window.location.href="/bo/logistico/surtido_embarques";
+								label: "Aceptar",
+								className: "btn-success",
+								callback: function() {
 									}
 								}
 							}
 						})
-					});
-				}
-			},
-			danger: {
-				label: "No",
-				className: "btn-danger",
-				callback: function(){
+					}
+				});	
+			}
+		
+		function ReportePagoBancoExcel(){
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			if (inicio == '' || fin == ''){
+				alert('Introduzca las fechas para buscar');
+				return 0;
+			}
+			window.location="/ov/compras/reporte_pagos_banco_excel?inicio="+inicio+"&&fin="+fin
+		}
+
+		function Reporte_Exel_web_personal(){
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			if (inicio == '' || fin == ''){
+				alert('Introduzca las fechas para buscar');
+				return 0;
+			}
+			window.location="/ov/compras/Reporte_Excel_WP?inicio="+inicio+"&&fin="+fin
+
+			}
+		
+		function reporte_excel(){
+			
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			
+			switch($("#tipo-reporte").val()){
 				
-				}
+			case "1" :{
+				window.location="/ov/compras/reporte_afiliados_todos_excel";
+			}
+			break;
+			case "7" :{
+				window.location="/ov/compras/reporte_compras_afiliados_todos_excel?inicio="+inicio+"&fin="+fin;
+			}
+			break;
+			case "8" :{
+				window.location="/ov/compras/reporte_compras_personales_excel?inicio="+inicio+"&fin="+fin;
+			}
+			break;
 			}
 		}
-	});
+		</script>
+		<script>
+			function reporte_excel_comprar_usr()
+			{
+				var inicio=$("#startdate").val();
+						var fin=$("#finishdate").val();
+						if(inicio=='')
+						{
+							alert('Introduzca fecha de inicio');
+						}
+						else
+						{
+							if(fin=='')
+							{
+								alert('Introduzca fecha de fin');
+							}
+							else
+							{
+								$("#nuevos_afiliados").show();
+								var datos={'inicio':inicio,'fin':fin};
+								$.ajax({
+							         type: "get",
+							         url: "reporte_compras_excel/"+inicio+fin,
+								});
+							}
+						}	
+			}
+
+			function iniciarSpinner(){
 				
-	}
-</script>
-<script>
-	$(document).ready(function() {
+				var opts = {
+						  lines: 12 // The number of lines to draw
+						, length: 28 // The length of each line
+						, width: 14 // The line thickness
+						, radius: 42 // The radius of the inner circle
+						, scale: 1 // Scales overall size of the spinner
+						, corners: 1 // Corner roundness (0..1)
+						, color: '#3276B1' // #rgb or #rrggbb or array of colors
+						, opacity: 0.25 // Opacity of the lines
+						, rotate: 0 // The rotation offset
+						, direction: 1 // 1: clockwise, -1: counterclockwise
+						, speed: 1 // Rounds per second
+						, trail: 60 // Afterglow percentage
+						, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+						, zIndex: 2e9 // The z-index (defaults to 2000000000)
+						, className: 'spinner' // The CSS class to assign to the spinner
+						, top: '50%' // Top position relative to parent
+						, left: '50%' // Left position relative to parent
+						, shadow: false // Whether to render a shadow
+						, hwaccel: true // Whether to use hardware acceleration
+						, position: 'absolute' // Element positioning
+						}
+						
+						var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
+				}
+
+			function FinalizarSpinner(){
+				
+				$("#spinner2").html('');
+			}
+		</script>
+		<script type="text/javascript">
+		
+		// DO NOT REMOVE : GLOBAL FUNCTIONS!
+		
+		$(document).ready(function() {
 			
 			pageSetUp();
 			
@@ -411,7 +586,7 @@
 					tablet : 1024,
 					phone : 480
 				};
-	
+
 				$('#dt_basic').dataTable({
 					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
 						"t"+
@@ -459,58 +634,9 @@
 				}		
 			
 		    });
-		    var otable = $('#datatable_fixed_column1').DataTable({
-		    	//"bFilter": false,
-		    	//"bInfo": false,
-		    	//"bLengthChange": false
-		    	//"bAutoWidth": false,
-		    	//"bPaginate": false,
-		    	//"bStateSave": true // saves sort state using localStorage
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-						"t"+
-						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-				"autoWidth" : true,
-				"preDrawCallback" : function() {
-					// Initialize the responsive datatables helper once.
-					if (!responsiveHelper_datatable_fixed_column) {
-						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-					}
-				},
-				"rowCallback" : function(nRow) {
-					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-				},
-				"drawCallback" : function(oSettings) {
-					responsiveHelper_datatable_fixed_column.respond();
-				}		
-			
-		    });
-		    var otable = $('#datatable_fixed_column2').DataTable({
-		    	//"bFilter": false,
-		    	//"bInfo": false,
-		    	//"bLengthChange": false
-		    	//"bAutoWidth": false,
-		    	//"bPaginate": false,
-		    	//"bStateSave": true // saves sort state using localStorage
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-						"t"+
-						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-				"autoWidth" : true,
-				"preDrawCallback" : function() {
-					// Initialize the responsive datatables helper once.
-					if (!responsiveHelper_datatable_fixed_column) {
-						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column2'), breakpointDefinition);
-					}
-				},
-				"rowCallback" : function(nRow) {
-					responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-				},
-				"drawCallback" : function(oSettings) {
-					responsiveHelper_datatable_fixed_column.respond();
-				}		
-			
-		    });
+		    
 		    // custom toolbar
-		    $("div.toolbar").html('<div class="text-right"></div>');
+		    $("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 		    	   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
@@ -586,32 +712,25 @@
 				}
 			});
 			
+			$('#startdate').datepicker({
+				dateFormat : 'yy-mm-dd',
+				prevText : '<i class="fa fa-chevron-left"></i>',
+				nextText : '<i class="fa fa-chevron-right"></i>',
+				onSelect : function(selectedDate) {
+					$('#finishdate').datepicker('option', 'minDate', selectedDate);
+				}
+			});
+			
+			$('#finishdate').datepicker({
+				dateFormat : 'yy-mm-dd',
+				prevText : '<i class="fa fa-chevron-left"></i>',
+				nextText : '<i class="fa fa-chevron-right"></i>',
+				onSelect : function(selectedDate) {
+					$('#startdate').datepicker('option', 'maxDate', selectedDate);
+				}
+			});
 			/* END TABLETOOLS */
 		
 		})
-		
-		function detalles(id){
-		$.ajax({
-			data:{
-				id : id,
-				},
-			type:"post",
-			url:"detalles",
-			success: function(msg){
-				bootbox.dialog({
-					message: msg,
-					title: "Detalles de la venta",
-					className: "",
-					buttons: {
-						success: {
-						label: "Aceptar",
-						className: "btn-success",
-						callback: function() {
-							}
-						}
-					}
-				})
-			}
-		});	
-	}
-</script>
+
+		</script>
