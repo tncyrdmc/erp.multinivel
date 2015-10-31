@@ -1047,6 +1047,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	
 	function CalcularComisionVenta($venta,$afiliado,$puntos,$valor_puntos, $id_red_mercancia){
+		
 		$datos = array(
 				'id_venta' => $venta,
 				'id_afiliado' => $afiliado,
@@ -1054,6 +1055,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				'valor' => $valor_puntos,
 				'id_red' => $id_red_mercancia
 		);
+
 		$this->db->insert('comision', $datos);
 	}
 	
@@ -1117,9 +1119,59 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	
 	function consultarMercancia($id_venta){
-		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad
+		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad, M.puntos_comisionables, M.id_tipo_mercancia
 							from cross_venta_mercancia CVM, mercancia M 
 							where CVM.id_venta = ".$id_venta."  and CVM.id_mercancia=M.id;");
+		$mercancia = $q->result();
+		return $mercancia;
+	}
+	
+	function consultar_tipo_mercancia($id_venta){
+		
+		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad ,M.puntos_comisionables ,M.id_tipo_mercancia,CVM.id_mercancia,M.sku
+							from cross_venta_mercancia CVM, mercancia M 
+							where CVM.id_venta = ".$id_venta."  and CVM.id_mercancia=M.id and M.id_tipo_mercancia='4'");
+		$mercancia = $q->result();
+		return $mercancia;
+	}
+	function consultar_puntos_paquete($id_paquete){
+		$q = $this->db->query("SELECT * FROM paquete_inscripcion where id_paquete=".$id_paquete);
+		$puntos = $q->result();
+		return $puntos;
+	}
+	function set_comision_bono_afiliacion($id_venta,$id_afiliado,$id_red,$puntos,$valor){
+		$dato=array(
+				"id_venta"       => $id_venta ,
+				"id_afiliado"    => $id_afiliado,
+				"id_red"         => $id_red ,
+				"puntos"         => $puntos,
+				"valor"          => $valor,
+		
+		);
+		$this->db->insert("comision",$dato);
+	}
+	
+	function set_puntos_padre($id_afiliado,$puntos){
+		$q = $this->db->query("SELECT * FROM puntos_padre where id_user=".$id_afiliado);
+		$p_paquete = $q->result();
+		if($p_paquete==null){
+			$dato=array(
+					"id_user"       => $id_afiliado,
+					"puntos"     =>  $puntos,
+			);
+			$this->db->insert("puntos_padre",$dato);
+		}else{
+			$dato=array(
+					"puntos"     =>  $p_paquete[0]->puntos+$puntos,
+			);
+			$this->db->where('id_user',$id_afiliado);
+			$this->db->update("puntos_padre", $dato);
+		}
+		
+	}
+	
+	function consultar_Afiliado($id_venta){
+		$q = $this->db->query("select * from venta where id_venta =".$id_venta);
 		$mercancia = $q->result();
 		return $mercancia;
 	}

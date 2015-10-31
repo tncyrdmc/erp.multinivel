@@ -3762,31 +3762,45 @@ function index()
 	
 	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		
-		for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
-			
-			if(!isset($id_afiliado[0]->debajo_de)){
-				break;
-			}
-			
-			if(!$this->modelo_compras->ComprovarCompraProductoRed($id_afiliado[0]->debajo_de, $capacidad_red[0]->id)){
-				$i = $i-1;
-			}else{
-				
-				$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
-				$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
-				$this->DarComision($id_venta, $id_afiliado, $valor_comision, $config_comision[$i]->valor, $id_categoria_mercancia);					
-			}
-			
-			$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
-			$id_afiliado = $id_padre;
-		}
-		//$this->CalcularComision2($id_padre, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador+1, $costo_mercancia);
+		$this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
+		
 		return 0;
 	}
 	
 	function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
 		$this->modelo_compras->CalcularComisionVenta ( $id_venta, $id_afiliado[0]->debajo_de, $porcentaje_comision, $costo_comision, $id_categoria_mercancia);
 	} 
+	
+	function bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia){
+		$mercancia = $this->modelo_compras->consultarMercancia($id_venta);
+		if($mercancia[0]->id_tipo_mercancia == '4'){
+			return 0;
+		}
+		
+		for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
+				
+			if(!isset($id_afiliado[0]->debajo_de)){
+				break;
+			}
+			
+			$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
+			$fechainicial =  new DateTime($fecha_creacion[0]->created);
+			$fechafinal = new DateTime();
+			
+			$diferencia = $fechainicial->diff($fechafinal);
+			
+			if($diferencia->m < 4){
+				$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
+				$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
+				
+				$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia[0]->puntos_comisionables, $id_categoria_mercancia);
+			}
+			
+			$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
+			$id_afiliado = $id_padre;
+		}
+		
+	}
 	
 	function SelecioneBanco(){
 		if(!$this->cart->contents()){

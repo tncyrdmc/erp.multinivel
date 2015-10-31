@@ -607,6 +607,12 @@ order by (U.id);");
 		return $id_padre;
 	}
 	
+	function ConsultarFechaInscripcion($id){
+		$q = $this->db->query("select created from users where id=".$id);
+		$id_padre = $q->result();
+		return $id_padre;
+	}
+	
 	function ConsultarIdRedPadre($id){
 		$q = $this->db->query("select id_red from afiliar where id_afiliado=".$id);
 		$id_padre = $q->result();
