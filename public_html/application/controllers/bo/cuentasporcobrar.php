@@ -71,8 +71,6 @@ class cuentasporcobrar extends compras{
 		  
 		    $comision=0;
 			if ($puntos_valor[0]->id_tipo_mercancia=='4'){
-				
-
 				if( $puntos_paquete[0]->tipo=="1"){
 					$comision=100;
 				}elseif($puntos_paquete[0]->tipo=="2"){
@@ -81,10 +79,9 @@ class cuentasporcobrar extends compras{
 				else{
 					$comision=3000;
 				}
-				
-		    $this->modelo_compras->set_comision_bono_afiliacion(
+		      $this->modelo_compras->set_comision_bono_afiliacion(
 		      $id_venta,$id_afiliado[0]->debajo_de,$id_red,
-		      $comision,$puntos_valor[0]->costo);
+		      $puntos_valor[0]->puntos_comisionables,$comision);
 		    
 		   
 		    $this->modelo_compras->set_puntos_padre($id_afiliado[0]->debajo_de,$puntos_paquete[0]->puntos);
