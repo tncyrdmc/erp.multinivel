@@ -800,7 +800,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$mercancia = $mercancia->result();
 		return $mercancia[0]->costo;
 	}
-	
+	function get_tipo_mercancia_atual($id){
+		$q = $this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id);
+		return  $q->result();
+	}
 	function CostoPublicoMercancia($id){
 	
 		$mercancia = $this->db->query("select costo_publico from mercancia where id=".$id);

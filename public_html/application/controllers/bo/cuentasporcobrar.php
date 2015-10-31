@@ -93,6 +93,13 @@ class cuentasporcobrar extends compras{
 			
 			}
 			
+			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);
+			
+			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);
+			
+			$this->ComisionBanco($historico);
+			
+			$this->EnvarMail($id_historial);
 	
 			
 			//$this->session->set_flashdata('correcto', $correcto);
@@ -101,6 +108,7 @@ class cuentasporcobrar extends compras{
 			echo  "No se ha podido realizar el cambio de estado de la peticion.";
 			//$this->session->set_flashdata('error', $error);
 		}
+		
 	}
 	
 	private function ComisionBanco($historico){
