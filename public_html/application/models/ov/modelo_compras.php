@@ -810,7 +810,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function ImpuestoMercancia($id_mercancia, $costo){
 		$total = 0;
-		$mercancia = $this->db->query("select id_tipo_mercancia as id_tipo from mercancia where id =".$id_mercancia);
+		$mercancia = $this->db->query("select id_tipo_mercancia as id_tipo,costo from mercancia where id =".$id_mercancia);
 		$mercancia = $mercancia->result();
 		
 		$impuestos = array();
@@ -846,12 +846,13 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			
 			foreach($impuestos as $desc)
 			{
-				$mas = ($desc->porcentaje*$costo)/100;
+				$mas = ($desc->porcentaje*$mercancia[0]->costo)/100;
 				$total=$total+$mas;
 			}
 		}
 		return $total;
 	}
+	
 	
 	function registrar_venta($id_usuario, $costo, $id_metodo, $transacion, $firma, $fecha, $impuesto)
 	{

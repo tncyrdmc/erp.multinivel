@@ -221,9 +221,9 @@
 																$total_compras = 0;
 																foreach ($this->cart->contents() as $items) 
 																{
+																
 																	$impuesto = $this->modelo_compras->ImpuestoMercancia($items['id'], $items['price'])*$items['qty'];	
-																	var_dump($impuesto); 
-																	$total=$items['qty']*$items['price']; 
+																	$total=$items['qty']*($items['price']); 
 																	$total_compras = $total + $total_compras + $impuesto;
 																?>
 																	<tr>
@@ -237,9 +237,9 @@
 												                        		<h4><?php echo $compras[$cantidad]['nombre']; ?></h4>
 												                         	</div>
 												                         </td>
-												                         <td class="price">$ <?echo number_format($items['price'],2)?></td>
+												                         <td class="price">$ <?echo number_format(($items['price']),2)?></td>
 												                         <td class="price"><?php echo $items['qty']; ?></td>
-												                         <td class="price">$ 0</td>
+												                         <td class="price"><?php echo $descuento."%"?></td>
 												                         <td class="price">$ <?echo number_format($total,2)?></td>
 												                         <td></td>
 												                         <td class="price">$ <?echo number_format($impuesto,2)?></td>
