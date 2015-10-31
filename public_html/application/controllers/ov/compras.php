@@ -309,6 +309,12 @@ function index()
 		$data['id'] = $id;
 		$data['costo_envio'] = $costo_envio;
 		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		$descuento=$descuento_por_nivel_actual[0]->porcentage_venta;
+		$this->template->set("calcular_descuento",$calcular_descuento);
+		$this->template->set("descuento",$descuento);
+		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('footer', 'website/ov/footer');
@@ -1633,6 +1639,12 @@ function index()
 	}
 	function add_merc()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id_user=$this->tank_auth->get_user_id();
+		
 		$data= $_GET["info"];
 		$data = json_decode($data,true);
 		$id = $data['id'];
@@ -1651,13 +1663,16 @@ function index()
 		}
 		else 
 		{
+			
+			$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
 				switch($data['tipo'])
 				{
 					case 1:
 						$detalles=$this->modelo_compras->detalles_productos($id);
-						$costo_ini=$detalles[0]->costo;
+						$costo_ini=($detalles[0]->costo*$calcular_descuento);
 						$costo_total=$costo_ini;
-						
+					
 						$add_cart = array(
 				           'id'      => $id,
 				           'qty'     => $data['qty'],
@@ -1669,9 +1684,9 @@ function index()
 						
 					case 2:
 						$detalles=$this->modelo_compras->detalles_servicios($id);
-						$costo_ini=$detalles[0]->costo;
+						$costo_ini=($detalles[0]->costo*$calcular_descuento);
 						$costo_total=$costo_ini;
-						
+			
 						$add_cart = array(
 				           'id'      => $id,
 				           'qty'     => $data['qty'],
@@ -1865,7 +1880,7 @@ function index()
 											<td style="width:20%" class="miniCartProductThumb"><div> <a href="#"> <img src="'.$imagen.'" alt="img"> </a> </div></td>
 											<td style="width:40%"><div class="miniCartDescription">
 						                        <h4> <a href="product-details.html"> '.$detalles[0]->nombre.'</a> </h4>
-						                        <div class="price"> <span> '.$items['price'].' </span> </div>
+						                        <div class="price"> <span> '.($items['price']).' </span> </div>
 						                      </div></td>
 						                    <td  style="width:10%" class="miniCartQuantity"><a > X '.$items['qty'].' </a></td>
 						                    <td  style="width:15%" class="miniCartSubtotal"><span>'.$total.'</span></td>
@@ -1903,6 +1918,15 @@ function index()
 	
 	function ver_carrito()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		
 		if($this->cart->contents())
 		{
 			echo '<div class="row" id="contenido_carro">
@@ -1921,10 +1945,11 @@ function index()
 				                  <td style="width:15%" >Descuento</td>
 				                  <td style="width:15%" >Total</td>
 				                </tr>';
+	
 				               foreach ($this->cart->contents() as $items) 
 								{
 									
-									$total=$items['qty']*$items['price'];	
+									$total=$items['qty']*($items['price']);	
 									$imgn=$this->modelo_compras->get_img($items['id']);
 									if(isset($imgn[0]->url))
 									{
@@ -1965,7 +1990,7 @@ function index()
 												<div class="CartDescription">
 							                      <h4>'.$detalles[0]->nombre.'</h4>
 							                   
-							                      <div class="price"> <span>$'.$items['price'].'</span></div>
+							                      <div class="price"> <span>$'.($items['price']).'</span></div>
 							                    </div>
 							                </td>
 							                <td class="delete"><a title="Delete" onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="glyphicon glyphicon-trash fa-2x"></i></a></td>
@@ -1997,7 +2022,14 @@ function index()
 	}
 	function show_productos()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
 		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
 		$prod=$this->modelo_compras->get_productos();
 		for($i=0;$i<sizeof($prod);$i++)
 		{
@@ -2050,7 +2082,7 @@ function index()
 				              		
 				              		
 				              	</div>
-				            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
+				            	<div class="price"> <span>$ '.($prod[$productos]->costo).'</span></div>
 				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 				       </div>
 			       </div>
@@ -2323,6 +2355,16 @@ function index()
 			$id = $_GET['id_afiliado'];
 		}
 		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id_user=$this->tank_auth->get_user_id();
+		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
+		$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		
+		
 		$idRed = $_GET['id'];
 		$pais = $this->general->get_pais($id);
 		
@@ -2370,6 +2412,8 @@ function index()
 				$comb[$k]->img="";
 			}
 		}
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
 		
 		for($productos=0;$productos<sizeof($prod);$productos++)
 		{
@@ -2386,7 +2430,7 @@ function index()
 									            	<div class="description">
 									              		<h4><a  onclick="detalles('.$prod[$productos]->id.',1)">'.$prod[$productos]->nombre.'</a></h4>
      						              			</div>
-									            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
+									            	<div class="price"> <span>$ '.($prod[$productos]->costo*$calcular_descuento).'</span></div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
 								       </div>
@@ -2408,7 +2452,7 @@ function index()
 									            	<div class="description">
 									              		<h4><a onclick="detalles('.$serv[$servicios]->id.',2)">'.$serv[$servicios]->nombre.'</a></h4>
 									              	</div>
-									            	<div class="price"> <span>$ '.($serv[$servicios]->costo).'</span> </div>
+									            	<div class="price"> <span>$ '.($serv[$servicios]->costo*$calcular_descuento).'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
 								       </div>
@@ -3284,6 +3328,16 @@ function index()
 	}
 	function actualizar_nav()
 	{
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		
 		echo ' <div class="navbar-header">
 			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
 			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite"> </i> <span class="cartRespons colorWhite"> Cart ('.$this->cart->total_items().') </span> </button>
@@ -3342,7 +3396,7 @@ function index()
 									<td style="width:20%" class="miniCartProductThumb"><div> <a href="#"> <img src="'.$imgn[0]->url.'" alt="img"> </a> </div></td>
 									<td style="width:40%"><div class="miniCartDescription">
 				                        <h4> <a href="product-details.html"> '.$detalles[0]->nombre.'</a> </h4>
-				                        <div class="price"> <span> '.$items['price'].' </span> </div>
+				                        <div class="price"> <span> '.($items['price']).' </span> </div>
 				                      </div></td>
 				                    <td  style="width:10%" class="miniCartQuantity"><a > X '.$items['qty'].' </a></td>
 				                    <td  style="width:15%" class="miniCartSubtotal"><span>'.$total.'</span></td>
@@ -3782,6 +3836,9 @@ function index()
 			if(!isset($id_afiliado[0]->debajo_de)){
 				break;
 			}
+			if($id_afiliado[0]->debajo_de == 1){
+				break;
+			}
 			
 			$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
 			$fechainicial =  new DateTime($fecha_creacion[0]->created);
@@ -3795,7 +3852,6 @@ function index()
 				
 				$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia[0]->puntos_comisionables, $id_categoria_mercancia);
 			}
-			
 			$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
 			$id_afiliado = $id_padre;
 		}
@@ -3991,11 +4047,15 @@ function index()
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		
 		$data['paises'] = $pais = $this->model_admin->get_pais_activo();
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("compras",$info_compras);
 		
+		$this->template->set("calcular_descuento",$calcular_descuento);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('footer', 'website/ov/footer');

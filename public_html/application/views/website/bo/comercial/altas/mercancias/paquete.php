@@ -151,11 +151,15 @@
 														</section>
 													</div>
 													<div>
-													<section class="col col-3">
-													<label class="input">Tipo de Paquete <input type="text"
-														name="tipo" id="tipo">
+													<section class="col col-6">
+														Tipo Paquete <label class="select"> <select name="tipo">
+																<?foreach ($paquetes_actuales as $row){?>
+																	<option value="<?=$row->idnivel?>">
+																	<?= $row->nombre ?>
+																<?}?>
+																
+														</select>
 													</label>
-												</section>
 													</div>
 													
 											

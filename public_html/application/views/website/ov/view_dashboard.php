@@ -77,7 +77,7 @@
 														<div class="col-sm-6">
 															<h1><?=$usuario[0]->nombre?> <span class="semi-bold"><?=$usuario[0]->apellido?></span>
 															<br>
-															<small> Diamante</small></h1>
+															<small> <?php echo $nivel_actual_red?></small></h1>
 
 															<ul class="list-unstyled ">
                                 <li>
