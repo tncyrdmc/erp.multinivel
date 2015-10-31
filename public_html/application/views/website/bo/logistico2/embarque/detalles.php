@@ -12,7 +12,7 @@
 			<br><br>
 		<?php } ?>
 		<?php foreach ($combinados as $detalle) {?>
-			<label> <b>Cominado: </b><?= $detalle->combinado;?> </label> <label> <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cantidad: </b><?= $detalle->cantidad;?> </label>
+			<label> <b>Combinado: </b><?= $detalle->combinado;?> </label> <label> <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cantidad: </b><?= $detalle->cantidad;?> </label>
 			<label> <b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Red:</b> <?= $detalle->red;?> </label> 
 			<br><br>
 		<?php } ?>

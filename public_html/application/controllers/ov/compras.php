@@ -3836,6 +3836,9 @@ function index()
 			if(!isset($id_afiliado[0]->debajo_de)){
 				break;
 			}
+			if($id_afiliado[0]->debajo_de == 1){
+				break;
+			}
 			
 			$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
 			$fechainicial =  new DateTime($fecha_creacion[0]->created);
@@ -3849,7 +3852,6 @@ function index()
 				
 				$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia[0]->puntos_comisionables, $id_categoria_mercancia);
 			}
-			
 			$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
 			$id_afiliado = $id_padre;
 		}

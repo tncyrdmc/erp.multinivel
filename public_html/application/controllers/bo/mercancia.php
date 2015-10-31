@@ -192,6 +192,11 @@ class mercancia extends CI_Controller
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/mercancia/nueva_mercancia?id=2');
 		}
+		if(!$this->model_mercancia->existeProveedor($_POST['proveedor'])){
+			$error = "Datos incompletos para crear la mercancia, el proveedor no existe";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=1');
+		}
 		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
@@ -243,6 +248,12 @@ class mercancia extends CI_Controller
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/mercancia/nueva_mercancia?id=1');
 		}
+		if(!$this->model_mercancia->existeProveedor($_POST['proveedor'])){
+			$error = "Datos incompletos para crear la mercancia, el proveedor no existe";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=1');
+		}
+		
 		$id = $this->tank_auth->get_user_id();
 	
 		$ruta="/media/carrito/";
