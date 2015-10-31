@@ -1290,4 +1290,23 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			return false;
 		}
 	}
+	function set_nivel_red_actual($user,$nivel){
+		$dato=array(
+				"nivel_en_red"     =>  $nivel,
+		);
+		$this->db->where('user_id',$user);
+		$this->db->update("user_profiles", $dato);
+
+	}
+	
+	function get_nivel_actual($id){
+		$q = $this->db->query("SELECT n.nombre,n.idnivel,u.user_id  FROM user_profiles u 
+				              ,niveles_afiliado n where u.nivel_en_red=n.idnivel and u.user_id=".$id);
+		return $q->result();
+	}
+	function  get_descuento_por_nivel_actual($id){
+		$q = $this->db->query("SELECT n.porcentage_venta FROM user_profiles u
+				              ,niveles_afiliado n where u.nivel_en_red=n.idnivel and u.user_id=".$id);
+		return $q->result();
+	}
 }

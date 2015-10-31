@@ -1651,11 +1651,13 @@ function index()
 		}
 		else 
 		{
+			$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+			$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
 				switch($data['tipo'])
 				{
 					case 1:
 						$detalles=$this->modelo_compras->detalles_productos($id);
-						$costo_ini=$detalles[0]->costo;
+						$costo_ini=($detalles[0]->costo*$calcular_descuento);
 						$costo_total=$costo_ini;
 						
 						$add_cart = array(
@@ -1669,7 +1671,7 @@ function index()
 						
 					case 2:
 						$detalles=$this->modelo_compras->detalles_servicios($id);
-						$costo_ini=$detalles[0]->costo;
+						$costo_ini=($detalles[0]->costo*$calcular_descuento);
 						$costo_total=$costo_ini;
 						
 						$add_cart = array(
@@ -1903,6 +1905,14 @@ function index()
 	
 	function ver_carrito()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
 		if($this->cart->contents())
 		{
 			echo '<div class="row" id="contenido_carro">
@@ -1921,10 +1931,11 @@ function index()
 				                  <td style="width:15%" >Descuento</td>
 				                  <td style="width:15%" >Total</td>
 				                </tr>';
+	
 				               foreach ($this->cart->contents() as $items) 
 								{
 									
-									$total=$items['qty']*$items['price'];	
+									$total=$items['qty']*($items['price']*$calcular_descuento);	
 									$imgn=$this->modelo_compras->get_img($items['id']);
 									if(isset($imgn[0]->url))
 									{
@@ -1965,7 +1976,7 @@ function index()
 												<div class="CartDescription">
 							                      <h4>'.$detalles[0]->nombre.'</h4>
 							                   
-							                      <div class="price"> <span>$'.$items['price'].'</span></div>
+							                      <div class="price"> <span>$'.($items['price']*$calcular_descuento).'</span></div>
 							                    </div>
 							                </td>
 							                <td class="delete"><a title="Delete" onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="glyphicon glyphicon-trash fa-2x"></i></a></td>
@@ -2050,7 +2061,7 @@ function index()
 				              		
 				              		
 				              	</div>
-				            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
+				            	<div class="price"> <span>$ '.($prod[$productos]->costo).'</span></div>
 				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 				       </div>
 			       </div>
@@ -2370,6 +2381,8 @@ function index()
 				$comb[$k]->img="";
 			}
 		}
+		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
 		
 		for($productos=0;$productos<sizeof($prod);$productos++)
 		{
@@ -2386,7 +2399,7 @@ function index()
 									            	<div class="description">
 									              		<h4><a  onclick="detalles('.$prod[$productos]->id.',1)">'.$prod[$productos]->nombre.'</a></h4>
      						              			</div>
-									            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
+									            	<div class="price"> <span>$ '.($prod[$productos]->costo*$calcular_descuento).'</span></div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
 								       </div>
@@ -2408,7 +2421,7 @@ function index()
 									            	<div class="description">
 									              		<h4><a onclick="detalles('.$serv[$servicios]->id.',2)">'.$serv[$servicios]->nombre.'</a></h4>
 									              	</div>
-									            	<div class="price"> <span>$ '.($serv[$servicios]->costo).'</span> </div>
+									            	<div class="price"> <span>$ '.($serv[$servicios]->costo*$calcular_descuento).'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
 								       </div>

@@ -163,8 +163,10 @@ class dashboard extends CI_Controller
 		if (isset($infoPremios[0]->nombre)){
 			$hayPremios = true;
 		}
+		$nivel_actual_red=$this->modelo_compras->get_nivel_actual($id);
 		
 		$this->template->set("hayPremios",$hayPremios);
+		$this->template->set("nivel_actual_red",$nivel_actual_red[0]->nombre);
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
 	    $this->template->set("telefono",$telefono);

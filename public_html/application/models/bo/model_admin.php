@@ -19,6 +19,10 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from cat_tipo_paquete");
 		return $q->result();
 	}
+	function get_paquetes_actuales(){
+		$q = $this->db->query("SELECT * FROM niveles_afiliado where idnivel='1' or idnivel='2' or idnivel='3'");
+		return $q->result();
+	}
 	function get_paquete_mercancia($id)
 	{
 		$q=$this->db->query("select * from cross_pack_merc");

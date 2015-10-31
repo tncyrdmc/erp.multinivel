@@ -68,7 +68,8 @@ class cuentasporcobrar extends compras{
 			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $cliente_venta[0]->id_user, $id_red);		
 			$puntos_valor=$this->modelo_compras->consultar_tipo_mercancia($id_venta);
 		    $puntos_paquete=$this->modelo_compras->consultar_puntos_paquete($puntos_valor[0]->sku);
-		    
+		  
+		     
 			if ($puntos_valor[0]->id_tipo_mercancia=='4'){
 				
 		    $this->modelo_compras->set_comision_bono_afiliacion(
@@ -77,7 +78,7 @@ class cuentasporcobrar extends compras{
 		    
 		   
 		    $this->modelo_compras->set_puntos_padre($id_afiliado[0]->debajo_de,$puntos_paquete[0]->puntos);
-			
+		    $this->modelo_compras->set_nivel_red_actual($cliente_venta[0]->id_user,$puntos_paquete[0]->tipo);
 			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);	
 			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);	
 			$this->ComisionBanco($historico);
@@ -88,7 +89,7 @@ class cuentasporcobrar extends compras{
 	
 			
 			//$this->session->set_flashdata('correcto', $correcto);
-			echo  "La peticion se ha cambiado de estado a pago";
+			echo  "La peticion se ha cambiado de estado a pago".$puntos_paquete[0]->tipo;
 		}else{
 			echo  "No se ha podido realizar el cambio de estado de la peticion.";
 			//$this->session->set_flashdata('error', $error);
