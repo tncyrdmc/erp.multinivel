@@ -128,14 +128,16 @@
 				</div>
 
 		
-							
+					<label class="input">Codigo Postal
+									<input style="width: 25rem;" type="text" name="codigo_postal" placeholder="Codigo Postal" class="form-control" required>
+				   </label>		
 								
 								<label class="input">Dirección
-									<input style="width: 25rem;" type="text" name="direccion" placeholder="Direeccion" class="form-control" required>
+									<input style="width: 25rem;" type="text" name="direccion" placeholder="Direccion" class="form-control" required>
 								</label>
 								
 								<label class="input">Telefono
-									<input style="width: 25rem;" type="text" name="telefono" >
+									<input style="width: 25rem;" type="text" name="telefono" placeholder="Telefono" >
 								</label>
 								<br>
 								<div class="row">

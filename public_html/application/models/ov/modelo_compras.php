@@ -1313,4 +1313,8 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				              ,niveles_afiliado n where u.nivel_en_red=n.idnivel and u.user_id=".$id);
 		return $q->result();
 	}
+	function  tipo_mercancia($id){
+		$q = $this->db->query("SELECT id FROM mercancia where id_tipo_mercancia='4' and sku=".$id);
+		return $q->result();
+	}
 }

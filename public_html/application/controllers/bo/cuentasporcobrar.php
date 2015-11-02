@@ -101,18 +101,7 @@ class cuentasporcobrar extends compras{
 			$this->ComisionBanco($historico);
 			$this->EnvarMail($id_historial);
 			
-<<<<<<< HEAD
-			}
-			
-			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);
-			
-			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);
-			
-			$this->ComisionBanco($historico);
-			
-			$this->EnvarMail($id_historial);
-=======
->>>>>>> 00c3ab3dec158f3eed59d1f6c61a2894fd243465
+
 	
 			
 			//$this->session->set_flashdata('correcto', $correcto);

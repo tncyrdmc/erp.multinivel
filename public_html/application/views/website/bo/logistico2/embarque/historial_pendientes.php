@@ -3,69 +3,38 @@
 						
 				
 	
-
-						<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-							<thead>
-								<tr>
-								 	<th data-class="expand">	ID</th>
-					                <th data-hide="phone,tablet">Fecha</th>
-					                <th data-hide="phone,tablet">Origen</th>
-						            <th data-hide="phone,tablet">Destino</th>
-						            <th data-hide="phone,tablet">Documento</th>
-							        <th data-hide="phone,tablet">Producto</th>
-							        <th data-hide="phone,tablet">Cantidad</th>
-							       
-						        </tr>
-						    </thead>
-							
-						    <tbody> 
-						     
-							    <?php 
-							    
-							    foreach ($Entradas as $entrada) {
-									    echo 
-									    	"<tr>".
-										        "<td>".$entrada->id_inventario_historial."</td>".
-										        "<td>".$entrada->fecha."</td>";
-									     foreach ($Cedis as $Cedi){
-									    	if($Cedi->id_cedi==$entrada->id_origen){
-									    	echo	"<td>".$Cedi->nombre."</td>";
-									    	}
-									    
-									      }
-									      if($entrada->id_origen=='0'){
-									    	 echo	"<td>".$entrada->otro_origen."</td>";
-									      }
-										   
-									
-										 foreach ($Cedis as $Cedi){
-												    	if($Cedi->id_cedi==$entrada->id_destino){
-												    		echo	"<td>".$Cedi->nombre."</td>";
-												        }
-									      }		
-									      if($entrada->id_destino=='0'){
-									      	echo	"<td>".$entrada->otro_origen."</td>";
-									      }
-									      foreach ($Documento as $documento){
-									      	if($documento->id_doc==$entrada->id_documento){
-									      		echo	"<td>".$documento->nombre."</td>";
-									      	}
-									      }
-									      foreach ($Producto as $producto){
-									      	if($producto->id==$entrada->id_mercancia){
-									      		echo	"<td>".$producto->nombre."</td>";
-									      	}
-									      }
-										    echo "<td>".$entrada->cantidad."</td>";
-										 
-									
-										    
-										      
-							    }
-								 ?>
-							   
-							</tbody>
-						</table>
+	<table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+																				<thead>
+																					<tr>
+																						<th data-class="expand">ID</th>
+																						<th data-hide="phone">Origen/Almacen</th>
+																						<th data-hide="phone">Usuario/Destino</th>
+																						<th data-hide="phone,tablet">Dirección de envío</th>
+																						<th data-hide="phone,tablet">Telefono</th>
+																						<th data-hide="phone,tablet">Email Usuario</th>
+																						<th data-hide="phone,tablet">Fecha</th>
+																				
+																						
+																					</tr>
+																				</thead>
+																				<tbody>
+																					
+																					<?php foreach ($surtidos as $surtido){ ?>
+																						<tr>
+																							<td><?php echo $surtido->id; ?></td>
+																							<td><?php echo $surtido->origen; ?></td>
+																							<td><?php echo $surtido->usuario; ?></td>
+																							<td><?php echo $surtido->direccion; ?></td>
+																							<td><?php echo $surtido->celular; ?></td>
+																							<td><?php echo $surtido->correo; ?></td>
+																							<td><?php echo $surtido->fecha; ?></td>
+																						
+																						</tr>
+																				<?php } ?>
+																					
+																				</tbody>
+																			</table>
+				
 					
 			
 			

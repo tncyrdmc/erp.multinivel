@@ -311,10 +311,11 @@ function index()
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
 		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		
 		$descuento=$descuento_por_nivel_actual[0]->porcentage_venta;
 		$this->template->set("calcular_descuento",$calcular_descuento);
 		$this->template->set("descuento",$descuento);
-		
+	
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('footer', 'website/ov/footer');
