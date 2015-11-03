@@ -143,7 +143,7 @@ class logistico2 extends CI_Controller
 		$surtidos = $this->modelo_logistico->get_embarcados($data['inicio'], $data['fin']);
 		
 		echo "<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' style='width: 100%;'>
-							<thead id='tablacabeza' style='width: 100%;'>
+							<thead id='tablacabeza' style='width: 90%;'>
 								<tr style='width: 100%;'>
 									<th data-class='expand'>ID</th>
 									<th data-hide='phone'>No. guia</th>
