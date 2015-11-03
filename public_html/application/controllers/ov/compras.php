@@ -23,6 +23,7 @@ class compras extends CI_Controller
 		$this->load->model('bo/model_admin');
 		$this->load->model('model_user_webs_personales');
 		$this->load->model('model_comprador');
+		$this->load->model('model_carrito_temporal');
 			
 		$this->load->model('ov/model_web_personal_reporte');
 	}
@@ -1651,14 +1652,17 @@ function index()
 		$id = $data['id'];
 		$cantidad = -100;
 		if ($data['tipo'] == '1'){
+			
 			$cantidad_disp = $this->modelo_compras->get_cantidad_almacen($id);
+			$cantidad_carrito_temporal = $this->modelo_compras->get_cantidad_carrito_temporal($id);
+			
 			if (isset($cantidad_disp[0]->cantidad)){
-				$cantidad = $cantidad_disp[0]->cantidad;
+				$cantidad = $cantidad_disp[0]->cantidad - $cantidad_carrito_temporal[0]->cantidad;
 			}else{
 				$cantidad = 0;
 			}
 		}
-		
+			
 		if ($cantidad < $data['qty']*1 && $cantidad >= 0){
 			echo "Error";
 		}
@@ -3908,7 +3912,6 @@ function index()
 	
 	function RegistrarVentaConsignacion(){
 		
-		
 		if(!$this->cart->contents()){
 			echo "La compra no puedo ser registrada";
 			return 0;
@@ -3922,8 +3925,6 @@ function index()
 		$id = $this->tank_auth->get_user_id();
 		
 		$costo_envio = $this->modelo_compras->consultarEnvio($id);
-		
-		
 		
 		$calcular_descuento=1;
 		
@@ -3954,6 +3955,8 @@ function index()
 		$envio = $this->modelo_compras->registrar_envio($venta, $id, $costo_envio);
 		
 		$this->modelo_compras->registrar_factura($venta, $id, $costo_envio);
+		
+		$this->model_carrito_temporal->insertar($venta);
 		
 		foreach ($productos as $producto){
 			$puntos = $this->modelo_compras->registrar_venta_mercancia($producto['id'], $venta, $producto['qty']);

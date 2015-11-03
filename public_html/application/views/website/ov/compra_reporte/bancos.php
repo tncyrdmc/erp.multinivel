@@ -1,6 +1,5 @@
-	
 <div class="well">
- <fieldset>
+	<fieldset>
 		<div class="row">
 			<? foreach ($bancos as $banco ) { ?>
 				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -13,7 +12,7 @@
 				</div>
 			<?php } ?>
 		</div>
-</fieldset>
+	</fieldset>
 </div>
 <script type="text/javascript">
 	function Enviar(banco){

@@ -472,12 +472,25 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	{
 		$q=$this->db->query("insert into comision values (".$venta.",".$puntos.")");
 	}
+	
 	function get_cantidad_almacen($id)
 	{
 		$q=$this->db->query("SELECT a.cantidad - a.bloqueados as cantidad, p.id FROM inventario a, cedi b, mercancia m, producto p 
-			WHERE a.id_almacen = b.id_cedi and b.tipo = 'A' and m.sku = p.id and m.id =  ".$id);
+		WHERE a.id_almacen = b.id_cedi and b.tipo = 'A' and b.id_cedi = 1 and m.sku = p.id and m.id = ".$id." and 
+		m.sku = a.id_mercancia");
 		return $q->result();
 	}
+	
+	function get_cantidad_carrito_temporal($id)
+	{
+		$q=$this->db->query("SELECT cve.cantidad
+
+					FROM cross_venta_mercancia cve, carrito_temporal ct
+			
+					WHERE ct.id_venta = cve.id_venta and cve.id_mercancia = ".$id);
+		return $q->result();
+	}
+	
 	function update_inventario($id,$qty)
 	{
 		$inventario_q=$this->db->query("SELECT a.id_inventario, a.cantidad FROM inventario a, almacen b WHERE a.id_mercancia=".$id." and a.id_almacen=b.id_almacen and b.web=1");

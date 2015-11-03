@@ -113,6 +113,12 @@ class cuentasporcobrar extends compras{
 		
 	}
 	
+	function cambiar_estado_cancelado(){
+		$id_venta = $_POST['id_venta'];
+		$id_historial = $_POST['id_historial'];
+		$this->modelo_historial_consignacion->CambiarEstadoCancelado($id_venta, $id_historial);
+	}
+	
 	private function ComisionBanco($historico){
 		$venta_mercancia = $this->modelo_historial_consignacion->MercanciaPago($historico[0]->id_venta);
 		

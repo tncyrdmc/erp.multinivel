@@ -127,7 +127,6 @@
 					<header >
 						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
 						<h2>Export to PDF / Excel</h2>
-	
 					</header>
 					
 					<div class="row" id="reporte_div" style="width: 100%;">

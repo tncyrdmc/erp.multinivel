@@ -315,6 +315,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 		);
 		$this->db->insert("inventario_historial",$dato_mov);
 		}
+		$this->db->query("delete from carrito_temporal where id_venta = ".$_POST["venta"]);
 	}
 
 	function get_embarque()

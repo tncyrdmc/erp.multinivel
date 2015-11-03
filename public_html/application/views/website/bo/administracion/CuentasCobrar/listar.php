@@ -54,7 +54,7 @@
 										<th data-hide="phone,tablet">N° Cuenta</th>
 										<th data-hide="phone,tablet">Valor</th>
 										<th data-hide="phone,tablet">Estado</th>
-										<th></th>
+										<th>Acciones</th>
 
 									</tr>
 								</thead>
@@ -70,7 +70,8 @@
 										<td>$ <?php echo number_format($cobro->valor,2); ?></td>
 										<td><?php echo $cobro->estado; ?></td>
 										<td class='text-center'>
-											<a class="btn btn-success" style='cursor: pointer;' onclick="estado_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>','<?php echo $cobro->id_usuario; ?>')" class="txt-color-green">Cambiar a Pago</a>
+											<a  style='cursor: pointer;' onclick="estado_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>','<?php echo $cobro->id_usuario; ?>')"  title = "Cambiar a Pago" class="txt-color-green"><i class="fa fa-check fa-3x"></i></a>
+											<a  style='cursor: pointer;' onclick="cancelar_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>','<?php echo $cobro->id_usuario; ?>')" title = "Cancelar Pago" class="txt-color-red"><i class="fa fa-times fa-3x"></i></a>
 										</td>
 									</tr>
 									<?php } ?>
@@ -201,6 +202,61 @@ function estado_cobro(venta,historial, usuario)
 				$.ajax({
 					type: "POST",
 					url: "/bo/cuentasporcobrar/cambiar_estado",
+					data: {
+						id_venta:venta, 
+						id_historial: historial,
+						id_usuario: usuario
+					},
+					}).done(function( msg )
+							{
+								bootbox.dialog({
+									message: msg,
+									title: "Atención",
+									buttons: {
+										success: {
+										label: "Ok!",
+										className: "btn-success",
+										callback: function() {
+											window.location="/bo/cuentasporcobrar/index";
+											}
+										}
+									}
+								});
+							
+						})
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
+	
+	
+	}
+
+function cancelar_cobro(venta,historial, usuario)
+{
+	var msg = "¿Esta seguro de cancelar el movimiento?";
+	var	titulo = "Confirmación de pago";
+
+	bootbox.dialog({
+		message: msg,
+		title: titulo,
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/cuentasporcobrar/cambiar_estado_cancelado",
 					data: {
 						id_venta:venta, 
 						id_historial: historial,

@@ -20,6 +20,13 @@ where cpb.id_banco = cb.id_banco and cpb.id_usuario = u.id and up.user_id = u.id
 		return true;
 	}
 	
+	function CambiarEstadoCancelado($id_venta, $id_historial){
+		$q = $this->db->query("update venta set id_estatus = 6 where id_venta = ".$id_venta);
+		$q = $this->db->query("update cuenta_pagar_banco_historial set estatus = 6 where id = ".$id_historial);
+		$q = $this->db->query("delete from carrito_temporal where id_venta = ".$id_venta);
+		return true;
+	}
+	
 	function PagoBanco($id){
 		$q = $this->db->query("SELECT * FROM cuenta_pagar_banco_historial where id = ".$id);
 		$historial = $q->result();
