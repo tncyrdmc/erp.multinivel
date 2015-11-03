@@ -127,6 +127,7 @@ class cedis extends CI_Controller
 				'telefono' => $_POST['telefono'],
 				'estatus' => 'ACT',
 				'tipo' => 'C',
+				'codigo_postal' => $_POST['codigo_postal']
 		);
 		
 		
@@ -153,7 +154,9 @@ class cedis extends CI_Controller
 		}elseif ($cedi['direccion'] == ''){
 			$error = "La dirección del cedi es obligatoria";
 		}
-	
+		elseif ($cedi['codigo_postal'] == ''){
+			$error = "El codigo postal  del cedi es obligatoria";
+		}
 		if($error == ''){
 			return true;
 		}else{
@@ -217,6 +220,7 @@ class cedis extends CI_Controller
     			'ciudad' => $_POST['ciudad'],
     			'direccion' => $_POST['direccion'],
     			'telefono' => $_POST['telefono'],
+    			'codigo_postal' => $_POST['codigo_postal']
     			
     	);
     	

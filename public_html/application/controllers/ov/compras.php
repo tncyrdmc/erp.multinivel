@@ -311,10 +311,11 @@ function index()
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
 		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		
 		$descuento=$descuento_por_nivel_actual[0]->porcentage_venta;
 		$this->template->set("calcular_descuento",$calcular_descuento);
 		$this->template->set("descuento",$descuento);
-		
+	
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('footer', 'website/ov/footer');
@@ -3923,10 +3924,22 @@ function index()
 		$costo_envio = $this->modelo_compras->consultarEnvio($id);
 		
 		
+		
+		$calcular_descuento=1;
+		
 		$costo_total = $costo_envio[0]->costo;
 		$impuestos = 0;
 		foreach ($productos as $producto){
-			$costo_total = $costo_total + ($producto['qty'] * $this->modelo_compras->CostoMercancia($producto['id']));
+			
+			$traer_tipo=$this->modelo_compras->get_tipo_mercancia_atual($producto['id']);
+			
+			
+			if($traer_tipo[0]->id_tipo_mercancia!='4'){
+				$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
+				$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+			}
+			
+			$costo_total = $costo_total + (($producto['qty'] * ($this->modelo_compras->CostoMercancia($producto['id'])))*$calcular_descuento);
 			$impuestos = $impuestos + ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
 		}
 		

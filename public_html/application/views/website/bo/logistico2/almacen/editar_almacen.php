@@ -9,7 +9,7 @@
 	}
 ?>	
 <div class="row">
-	<form id="actualizar" class="smart-form" method="POST" action="/bo/cedis/actualizar_cedi">
+	<form id="actualizar" class="smart-form" method="POST" action="/bo/almacen/actualizar_almacen">
 							<fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<label class="input">Nombre
 									<input style="width: 25rem;" type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" value="<?php echo $cedi[0]->nombre; ?>" required>

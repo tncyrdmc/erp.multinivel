@@ -32,7 +32,7 @@
 										<option value="4" >Entaradas/Salidas</option>
 										<option value="5" >Pedidos por entregar</option>
 										<option value="6" >Pedidos en transito</option>
-										<option value="7" >Pedidos entregados</option>
+										<option value="7" >Pedidos embarcados</option>
 										
 									</select> 
 									<i></i> 
@@ -575,7 +575,82 @@
 					
 					
 					break;
+				case '5':
 					
+							$("#nuevos_afiliados").show();
+							var datos={'inicio':inicio,'fin':fin};
+							$.ajax({
+								 data: {info:JSON.stringify(datos)},
+						         type: "get",
+						         url: "/bo/reportes_logistico/pedidos_pendientes",
+								success: function( msg )
+								{
+									$("#reporte_div").html(msg);
+									// custom toolbar
+							    
+								}
+							});
+							
+					
+					
+					break;
+				case '6':
+					var inicio=$("#startdate").val();
+					var fin=$("#finishdate").val();
+					
+							$("#nuevos_afiliados").show();
+							var datos={'inicio':inicio,'fin':fin};
+							$.ajax({
+								 data: {info:JSON.stringify(datos)},
+						         type: "get",
+						         url: "/bo/reportes_logistico/pedidos_transito",
+								success: function( msg )
+								{
+									$("#reporte_div").html(msg);
+									// custom toolbar
+							    
+								}
+							});
+							
+						
+						
+					
+					
+					break;
+				case '7':
+					var inicio=$("#startdate").val();
+					var fin=$("#finishdate").val();
+					if(inicio=='')
+					{
+						alert('Introduzca fecha de inicio');
+					}
+					else
+					{
+						if(fin=='')
+						{
+							alert('Introduzca fecha de fin');
+						}
+						else
+						{
+							$("#nuevos_afiliados").show();
+							var datos={'inicio':inicio,'fin':fin};
+							$.ajax({
+								 data: {info:JSON.stringify(datos)},
+						         type: "get",
+						         url: "/bo/reportes_logistico/pedidos_embarcados",
+								success: function( msg )
+								{
+									$("#reporte_div").html(msg);
+									// custom toolbar
+							    
+								}
+							});
+							
+						}
+					}	
+					
+					
+					break;
 			}
 		}
 
@@ -600,6 +675,19 @@
 			var inicio=$("#startdate").val();
 			var fin=$("#finishdate").val();
 			window.location="reporte_entrada_salida_excel?inicio="+inicio+"&&fin="+fin;
+			break;
+       case "5" :
+			
+			window.location="reporte_pedidos_pendiente_excel";
+			break;
+		case "6" :
+			
+			window.location="reporte_pedidos_transito_excel";
+			break;
+		case "7" :
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			window.location="reporte_pedidos_embarcados_excel?inicio="+inicio+"&&fin="+fin;
 			break;
 		}
 		}

@@ -19,6 +19,7 @@ class reportes_logistico extends CI_Controller
 		$this->load->model('modelo_cobros');
 		$this->load->model('bo/modelo_cedi');
 		$this->load->model('bo/model_inventario');
+		$this->load->model('bo/modelo_logistico');
 	}
 
 	function index()
@@ -47,6 +48,210 @@ class reportes_logistico extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/reportes/reportes');
+	}
+	
+	function pedidos_pendientes(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+		{
+		}else{
+			redirect('/auth/logout');
+		}
+		$style=$this->modelo_dashboard->get_style(1);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$surtidos =$this->modelo_logistico->get_surtidos();
+		
+		$this->template->set("style",$style);
+		$this->template->set("surtidos",$surtidos);
+
+		$this->template->build('website/bo/logistico2/embarque/historial_pendientes');
+		
+		
+		
+	}
+	function  reporte_pedidos_pendiente_excel(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$surtidos =$this->modelo_logistico->get_surtidos();
+	
+		$i=0;
+		$this->load->library('excel');
+		
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_pedidos_pendientes.xls");
+		foreach ($surtidos as $row)
+		{
+			$i=$i+1;
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $row->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $row->origen);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $row->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $row->direccion);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $row->celular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $row->correo);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $row->fecha);
+		}
+		
+		$filename='pedidos_pendientes.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+		
+	}
+	function pedidos_transito(){
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+		{
+		}else{
+			redirect('/auth/logout');
+		}
+		$style=$this->modelo_dashboard->get_style(1);
+		$this->template->set("usuario",$usuario);
+		
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		
+		$surtidos = $this->modelo_logistico->get_embarque();
+		
+		$this->template->set("style",$style);
+		$this->template->set("surtidos",$surtidos);
+		
+
+		$this->template->build('website/bo/logistico2/embarque/hisorial_transito');
+	}
+	
+	function reporte_pedidos_transito_excel(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$surtidos = $this->modelo_logistico->get_embarque();
+		$i=0;
+		$this->load->library('excel');
+		
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_pedidos_transito.xls");
+		foreach ($surtidos as $row)
+		{
+			$i=$i+1;
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $row->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $row->n_guia);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $row->origen);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $row->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $row->direccion);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $row->celular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $row->correo);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $row->fecha_entrega);
+		}
+		
+		$filename='pedidos_transito.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	}
+	function pedidos_embarcados(){
+
+		$data=$_GET["info"];
+		$data=json_decode($data,true);
+		$fecha_ini=str_replace('.', '-', $data['inicio']);
+		$fecha_fin=str_replace('.', '-', $data['fin']);
+		$ano_ini=substr($fecha_ini, 6);
+		$mes_ini=substr($fecha_ini, 3,2);
+		$dia_ini=substr($fecha_ini, 0,2);
+		$ano_fin=substr($fecha_fin, 6);
+		$mes_fin=substr($fecha_fin, 3,2);
+		$dia_fin=substr($fecha_fin, 0,2);
+		$inicio=$ano_ini.'-'.$mes_ini.'-'.$dia_ini;
+		$fin=$ano_fin.'-'.$mes_fin.'-'.$dia_fin;
+		
+		$surtidos = $this->modelo_logistico->get_embarcados($data['inicio'], $data['fin']);
+		//var_dump($surtidos);
+		//exit();
+		$this->template->set("surtidos",$surtidos);
+		
+		
+		$this->template->build('website/bo/logistico2/embarque/historial_embarcados');
+		
+			
+	}
+	function reporte_pedidos_embarcados_excel(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$inicio = '2000-01-01';
+		if($_GET['inicio'] != null){
+			$inicio = $_GET['inicio'];
+		}
+		$fin = '3000-12-12';
+		if($_GET['fin'] != null){
+			$fin = $_GET['fin'];
+		}
+		
+		$embarcados  =  $this->modelo_logistico->get_embarcados($inicio, $fin);
+		$i=0;
+		$this->load->library('excel');
+		
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_pedidos_embarcados.xls");
+		foreach ($embarcados as $row)
+		{
+			$i=$i+1;
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $row->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $row->n_guia);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $row->origen);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $row->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $row->direccion);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $row->celular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $row->correo);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $row->fecha_entrega);
+		}
+		
+		$filename='pedidos_embarcados.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
 	}
 	
 	function reporte_inventario()

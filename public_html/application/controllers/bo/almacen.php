@@ -15,6 +15,8 @@ class almacen extends CI_Controller
 		$this->load->model('bo/modelo_almacen');
 		$this->load->model('bo/general');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/modelo_cedi');
+		
 		
 	}
 	
@@ -83,6 +85,7 @@ class almacen extends CI_Controller
 				'telefono' => $_POST['telefono'],
 				'estatus' => 'ACT',
 				'tipo' => 'A',
+				'codigo_postal' => $_POST['codigo_postal']
 		);
 		
 		if($this->validar_almacen($almacen)){
@@ -105,6 +108,9 @@ class almacen extends CI_Controller
 		}elseif ($almacen['direccion'] == ''){
 			$error = "La dirección del almacen es obligatoria";
 		}
+		elseif ($almacen['codigo_postal'] == ''){
+			$error = "El codigo postal  del almacen es obligatoria";
+		}
 		
 		if($error == ''){
 			return true;
@@ -126,6 +132,9 @@ class almacen extends CI_Controller
 			$error = "El telefono del almacen es obligatorio";
 		}elseif ($almacen['direccion'] == ''){
 			$error = "La dirección del almacen es obligatoria";
+		}
+		elseif ($almacen['codigo_postal'] == ''){
+			$error = "EL codigo postal del almacen es obligatoria";
 		}
 	
 		if($error == ''){
@@ -196,15 +205,18 @@ class almacen extends CI_Controller
 		
 		$PaisCiudad = $this->modelo_cedi->consultar_PaisCiudad($cedi[0]->ciudad);
 		$ciudades = $this->modelo_cedi->consultar_ciudades($cedi[0]->ciudad);
+		$ciudad_actual = $this->modelo_cedi->consultar_ciudad_actual($cedi[0]->ciudad);
 		$departamentos = $this->modelo_cedi->consultar_departamento($cedi[0]->ciudad);
 		$departamento_activo = $this->modelo_cedi->consultar_departamento_activo($cedi[0]->ciudad);
 		$this->template->set("pais",$pais);
 		$this->template->set("cedi",$cedi);
 		$this->template->set("ciudades",$ciudades);
 		$this->template->set("departamentos",$departamentos);
+		$this->template->set("ciudad_actual",$ciudad_actual);
 		$this->template->set("departamento_activo",$departamento_activo);
 		$this->template->set("PaisCiudad",$PaisCiudad);
-		$this->template->build('website/bo/logistico2/almacen/editar');
+		
+		$this->template->build('website/bo/logistico2/almacen/editar_almacen');
 	}
 	
 	function actualizar_almacen(){
@@ -218,7 +230,7 @@ class almacen extends CI_Controller
 				'ciudad' => $_POST['ciudad'],
 				'direccion' => $_POST['direccion'],
 				'telefono' => $_POST['telefono'],
-				'web' => $_POST['web'],
+				'codigo_postal' => $_POST['codigo_postal']
 		);
 		
 		if($this->validar_almacen($almacen)){

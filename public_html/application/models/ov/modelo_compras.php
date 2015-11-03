@@ -800,7 +800,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$mercancia = $mercancia->result();
 		return $mercancia[0]->costo;
 	}
-	
+	function get_tipo_mercancia_atual($id){
+		$q = $this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id);
+		return  $q->result();
+	}
 	function CostoPublicoMercancia($id){
 	
 		$mercancia = $this->db->query("select costo_publico from mercancia where id=".$id);
@@ -1308,6 +1311,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function  get_descuento_por_nivel_actual($id){
 		$q = $this->db->query("SELECT n.porcentage_venta FROM user_profiles u
 				              ,niveles_afiliado n where u.nivel_en_red=n.idnivel and u.user_id=".$id);
+		return $q->result();
+	}
+	function  tipo_mercancia($id){
+		$q = $this->db->query("SELECT id FROM mercancia where id_tipo_mercancia='4' and sku=".$id);
 		return $q->result();
 	}
 }

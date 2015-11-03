@@ -123,8 +123,8 @@
 										<td><?php echo $row->telefono; ?></td>
 									
 										<td class='text-center'>
-											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_cedi("<?php echo $row->id_cedi; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
-											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_cedi(<?php echo $row->id_cedi; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
+											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_almacen("<?php echo $row->id_cedi; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
+											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_almacen(<?php echo $row->id_cedi; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
 											<?php if ($row->estatus == 'ACT') {?>
 												<a title="Desactivar" style='cursor: pointer;' onclick="estado_almacen('DES','<?php echo $row->id_cedi; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>
@@ -294,24 +294,23 @@ function estado_almacen(estatus, id)
 	
 	}
 
-	function editar_cedi(id){
-		$.ajax({
-			type: "POST",
-			url: "/bo/cedis/editar_cedi",
-			data: {
-				id: id
-				}
-			
-		})
-		.done(function( msg ) {
-			bootbox.dialog({
-				message: msg,
-				title: 'Modificar almacen',
-					});
-		});//fin Done ajax
-	}
-
-	function eliminar_cedi(id) {
+function editar_almacen(id){
+	$.ajax({
+		type: "POST",
+		url: "/bo/almacen/editar_almacen",
+		data: {
+			id: id
+			}
+		
+	})
+	.done(function( msg ) {
+		bootbox.dialog({
+			message: msg,
+			title: 'Modificar Almacen',
+				});
+	});//fin Done ajax
+}
+	function eliminar_almacen(id) {
 
 		$.ajax({
 			type: "POST",

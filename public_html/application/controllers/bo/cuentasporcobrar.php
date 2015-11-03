@@ -101,6 +101,7 @@ class cuentasporcobrar extends compras{
 			$this->ComisionBanco($historico);
 			$this->EnvarMail($id_historial);
 			
+
 	
 			
 			//$this->session->set_flashdata('correcto', $correcto);
@@ -109,6 +110,7 @@ class cuentasporcobrar extends compras{
 			echo  "No se ha podido realizar el cambio de estado de la peticion.";
 			//$this->session->set_flashdata('error', $error);
 		}
+		
 	}
 	
 	private function ComisionBanco($historico){
