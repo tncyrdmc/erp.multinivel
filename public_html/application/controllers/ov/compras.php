@@ -1656,21 +1656,25 @@ function index()
 		$data= $_GET["info"];
 		$data = json_decode($data,true);
 		$id = $data['id'];
-		$cantidad = -100;
+		$cantidad = 0;
+		$cantidad_carrito_temporal =0;
 		if ($data['tipo'] == '1'){
 			
 			$cantidad_disp = $this->modelo_compras->get_cantidad_almacen($id);
 			$cantidad_carrito_temporal = $this->modelo_compras->get_cantidad_carrito_temporal($id);
 			
 			if (isset($cantidad_disp[0]->cantidad)){
-				$cantidad = $cantidad_disp[0]->cantidad - $cantidad_carrito_temporal[0]->cantidad;
+				if (isset($cantidad_carrito_temporal[0]->cantidad)){
+					$cantidad = $cantidad_disp[0]->cantidad - $cantidad_carrito_temporal[0]->cantidad;
+				}
+				else $cantidad = $cantidad_disp[0]->cantidad ;
 			}else{
 				$cantidad = 0;
 			}
 		}
-			
 		if ($cantidad < $data['qty']*1 && $cantidad >= 0){
 			echo "Error";
+			exit();
 		}
 		else 
 		{
