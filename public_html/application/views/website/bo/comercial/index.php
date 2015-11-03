@@ -36,10 +36,10 @@
 											</div>
 											<div class="col-sm-8 link">
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/altas">
+													<a href="/bo/comercial/actionProveedor">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-edit fa-3x"></i>
-															<h1>Altas</h1>
+															<h1>Proveedor</h1>
 														</div>
 													</a>
 												</div>

@@ -44,17 +44,53 @@
                 <fieldset>
                   <div class="contenidoBotones">
 						<div class="row">
-							<?php foreach ($tipos as $tipo ) {?>
-								<div class="col col-sm-5 col-xs-12 col-lg-3" >
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipo->id; ?>" style="height: 10rem;">
+						<div class="col-sm-2 link">
+											</div>
+						<div class="col-sm-8 link">
+							
+								<div class="col-sm-4 link" ">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[0]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipo->descripcion; ?></h1>
+											<h1><?php echo $tipos[0]->descripcion;?></h1>
+						
+											<br />
 										</div>
 									</a>
 								</div>
-							<?php } ?>
+								<div class="col-sm-4 link" ">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[1]->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipos[1]->descripcion;?></h1>
+						
+											<br />
+										</div>
+									</a>
+								</div>
+								<div class="col-sm-4 link" ">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[2]->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipos[2]->descripcion;?></h1>
+						
+											<br />
+										</div>
+									</a>
+								</div>
+								<div class="col-sm-4 link" ">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[3]->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipos[3]->descripcion;?></h1>
+						
+											
+										</div>
+									</a>
+								</div>
+						
 						</div>
+							</div>
 					</div>
 				</fieldset>
 			</div>
