@@ -311,9 +311,15 @@ function index()
 		$data['costo_envio'] = $costo_envio;
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		if ($descuento_por_nivel_actual!=null){
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+			$descuento=$descuento_por_nivel_actual[0]->porcentage_venta;
+		}else{
+			$calcular_descuento=1;
+			$descuento=0;
+		}
 		
-		$descuento=$descuento_por_nivel_actual[0]->porcentage_venta;
+		
 		$this->template->set("calcular_descuento",$calcular_descuento);
 		$this->template->set("descuento",$descuento);
 	
@@ -1670,7 +1676,15 @@ function index()
 		{
 			
 			$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
-			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+			if ($descuento_por_nivel_actual!=null){
+				$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+			}else{
+				$calcular_descuento=1;
+			}
+			
+			//var_dump($calcular_descuento);
+			//exit();
+	
 				switch($data['tipo'])
 				{
 					case 1:
@@ -1930,7 +1944,12 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		if ($descuento_por_nivel_actual!=null){
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		}else{
+			$calcular_descuento=1;
+		}
+		
 		
 		if($this->cart->contents())
 		{
@@ -2367,8 +2386,11 @@ function index()
 		$id_user=$this->tank_auth->get_user_id();
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
-		$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
-		
+		if ($descuento_por_nivel_actual!=null){
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		}else{
+			$calcular_descuento=1;
+		}
 		
 		$idRed = $_GET['id'];
 		$pais = $this->general->get_pais($id);
@@ -2417,8 +2439,14 @@ function index()
 				$comb[$k]->img="";
 			}
 		}
+		
+		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		if ($descuento_por_nivel_actual!=null){
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		}else{
+			$calcular_descuento=1;
+		}
 		
 		for($productos=0;$productos<sizeof($prod);$productos++)
 		{
@@ -3341,7 +3369,12 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		if ($descuento_por_nivel_actual!=null){
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		}else{
+			$calcular_descuento=1;
+		}
+		
 		
 		echo ' <div class="navbar-header">
 			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
@@ -3936,8 +3969,13 @@ function index()
 			
 			
 			if($traer_tipo[0]->id_tipo_mercancia!='4'){
+				
 				$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-				$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+				if ($descuento_por_nivel_actual!=null){
+					$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+				}else{
+					$calcular_descuento=1;
+				}
 			}
 			
 			$costo_total = $costo_total + (($producto['qty'] * ($this->modelo_compras->CostoMercancia($producto['id'])))*$calcular_descuento);
@@ -4064,7 +4102,11 @@ function index()
 		$style=$this->general->get_style($id);
 		
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		$calcular_descuento="0.".(100-$descuento_por_nivel_actual[0]->porcentage_venta);
+		if ($descuento_por_nivel_actual!=null){
+			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
+		}else{
+			$calcular_descuento=1;
+		}
 		
 		$data['paises'] = $pais = $this->model_admin->get_pais_activo();
 		$this->template->set("style",$style);

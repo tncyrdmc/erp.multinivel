@@ -73,22 +73,22 @@ class cuentasporcobrar extends compras{
 		    if(isset($puntos_valor[0]->id_tipo_mercancia)){
 		    	
 		    	if ($puntos_valor[0]->id_tipo_mercancia=='4'){
-					
+		    		$puntos_paquete=$this->modelo_compras->consultar_puntos_paquete($puntos_valor[0]->sku);
+		    		
 					if( $puntos_paquete[0]->tipo=="1"){
 						$comision=100;
 					}elseif($puntos_paquete[0]->tipo=="2"){
 						$comision=1200;
 					}
-					else{
+					elseif($puntos_paquete[0]->tipo=="3"){
 						$comision=3000;
 					}
 					
-					$puntos_paquete=$this->modelo_compras->consultar_puntos_paquete($puntos_valor[0]->sku);
 					
 				    $this->modelo_compras->set_comision_bono_afiliacion(
 				    $id_venta,$id_afiliado[0]->debajo_de,$id_red,
 				    $puntos_valor[0]->puntos_comisionables,$comision);
-				    
+				  
 				   
 				    $this->modelo_compras->set_puntos_padre($id_afiliado[0]->debajo_de,$puntos_paquete[0]->puntos);
 				    $this->modelo_compras->set_nivel_red_actual($cliente_venta[0]->id_user,$puntos_paquete[0]->tipo);
