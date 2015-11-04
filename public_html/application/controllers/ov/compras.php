@@ -1662,6 +1662,9 @@ function index()
 			
 			$cantidad_disp = $this->modelo_compras->get_cantidad_almacen($id);
 			$cantidad_carrito_temporal = $this->modelo_compras->get_cantidad_carrito_temporal($id);
+			$limites=$this->modelo_compras->get_limite_prod($id);
+			$min=$limites[0]->min_venta;
+			$max=$limites[0]->max_venta;
 			
 			if (isset($cantidad_disp[0]->cantidad)){
 				if (isset($cantidad_carrito_temporal[0]->cantidad)){
@@ -1672,10 +1675,12 @@ function index()
 				$cantidad = 0;
 			}
 		}
-		if ($cantidad < $data['qty']*1 && $cantidad >= 0){
+		//var_dump($cantidad)
+		if ($cantidad < $data['qty']*1){
 			echo "Error";
 			exit();
 		}
+		
 		else 
 		{
 			

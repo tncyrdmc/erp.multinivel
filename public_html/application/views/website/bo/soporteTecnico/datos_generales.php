@@ -62,21 +62,21 @@
 					<b>Skype</b>
 		        </label>
 				<label style="margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10"><i class="icon-prepend fa fa-check-circle-o"></i>
-					<input type="text" class="form-control " name="skype" placeholder="Correo vinculado con Skype" value='<?php $vacio=0;if(!isset($datos_generales[0]->skype)){echo "";$vacio=$vacio+1;}else{echo $datos_generales[0]->skype;}?>'>
+					<input type="email" class="form-control " name="skype" placeholder="Correo vinculado con Skype" value='<?php $vacio=0;if(!isset($datos_generales[0]->skype)){echo "";$vacio=$vacio+1;}else{echo $datos_generales[0]->skype;}?>'>
 		        </label>
 		        
 		        <label style=" width: 50%; margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<b>Pekey</b>
+					<b>Correo electrónico</b>
 		        </label>
 		        <label style="margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10"><i class="icon-prepend fa fa-check-circle-o"></i>
-					<input type="text" class="form-control" name="pekey" placeholder="Numero de Telefono" value='<?php if(!isset($datos_generales[0]->pekey)){echo ""; $vacio=$vacio+1;}else{echo $datos_generales[0]->pekey;}?>'>
+					<input type="email" class="form-control" name="pekey" placeholder="Correo electrónico" value='<?php if(!isset($datos_generales[0]->pekey)){echo ""; $vacio=$vacio+1;}else{echo $datos_generales[0]->pekey;}?>'>
 		        </label>
 		        
 		        <label style=" width: 50%; margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<b>Pinkost</b>
+					<b>Número telefónico</b>
 		        </label>
 		        <label style="margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10"><i class="icon-prepend fa fa-check-circle-o"></i>
-					<input type="text" class="form-control" name="pinkost" placeholder="Numero de Telefono" value='<?php if(!isset($datos_generales[0]->pinkost)){echo ""; $vacio=$vacio+1;}else{echo $datos_generales[0]->pinkost;}?>'>
+					<input type="number" class="form-control" name="pinkost" placeholder="Numero de Telefono" value='<?php if(!isset($datos_generales[0]->pinkost)){echo ""; $vacio=$vacio+1;}else{echo $datos_generales[0]->pinkost;}?>'>
 		        </label>
 		        
 		        <label style="margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10">
