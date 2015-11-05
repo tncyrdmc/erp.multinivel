@@ -37,15 +37,15 @@
 													<a href="/bo/configuracion/tipoRed">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-list fa-3x"></i>
-															<h1>Redes</h1>
+															<h1>Redes<br><br></h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="/bo/admin/paises">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-usd fa-3x"></i>
-															<h1>Pais/Moneda</h1>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
+													<a href="/bo/capacidadRed/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-sort-numeric-asc fa-3x"></i>
+															<h1>Frontalidad /Profundidad </h1>
 														</div>
 													</a>
 												</div>
@@ -53,7 +53,7 @@
 													<a href="/bo/configuracion/comisiones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-money fa-3x"></i>
-															<h1>Comisiones</h1>
+															<h1>Comisiones<br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -61,7 +61,7 @@
 												   <a href="retenciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-credit-card fa-3x"></i>
-															<h1>Retenciones</h1>
+															<h1>Retenciones<br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -69,7 +69,7 @@
 													<a href="impuestos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-fax fa-3x"></i>
-															<h1>Impuestos <br></h1>
+															<h1>Impuestos <br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -77,7 +77,7 @@
 													<a href="/bo/bancos/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-bank fa-3x"></i>
-															<h1>Bancos <br><br><br></h1>
+															<h1>Bancos <br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -85,7 +85,7 @@
 													<a href="premios">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-gift fa-3x"></i>
-															<h1>Premios </h1><br><br><br>
+															<h1>Premios <br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -94,7 +94,7 @@
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-envelope fa-3x"></i>
 															<h1>E-mails</h1>
-															<h1>Departamentos<br><br></h1>
+															<h1>Departamentos</h1>
 														</div>
 													</a>
 											</div>
@@ -102,18 +102,19 @@
 													<a href="/bo/configuracion/soporte_tecnico">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-support fa-3x"></i>
-															<h1>Soporte Técnico<br><br></h1>
+															<h1>Soporte Técnico<br></h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="/bo/capacidadRed/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-sort-numeric-asc fa-3x"></i>
-															<h1>Frontalidad /Profundidad <br><br></h1>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
+													<a href="/bo/admin/paises">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-usd fa-3x"></i>
+															<h1>Pais/Moneda<br><br></h1>
 														</div>
 													</a>
 												</div>
+												
 											</div>
 										 </div>
 									</div>

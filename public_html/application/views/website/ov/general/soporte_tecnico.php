@@ -88,8 +88,8 @@
 										
 										<div class="col-xs-12 col-md-2 col-sm-2 col-lg-2">
 											<center>
-											<a title="PeKey" href="" class="txt-color-gray"><i class="fa fa-mobile-phone fa-3x"></i></a>
-											<br><h2 style=" font-size: 14px; font-family: italic"><b>Pekey:</b> <?php if(!isset($datos_generales[0]->pekey)){echo "";} else{echo $datos_generales[0]->pekey;}?></h2>
+											<a title="PeKey" href="" class="txt-color-gray"><i class="fa fa-envelope fa-3x"></i></a>
+											<br><h2 style=" font-size: 14px; font-family: italic"><b>e-mail:</b> <?php if(!isset($datos_generales[0]->pekey)){echo "";} else{echo $datos_generales[0]->pekey;}?></h2>
 											</center>
 										</div>
 										
@@ -98,7 +98,7 @@
 										<div class="col-xs-12 col-md-2 col-sm-2 col-lg-2">
 											<center>
 												<a title="PinKost" href="" class="txt-color-gray"><i class="fa fa-phone  fa-3x"></i></a>
-												<br><h2 style=" font-size: 14px; font-family: italic " ><b>PinKost:</b> <?php if(!isset($datos_generales[0]->pinkost)){echo "";} else{echo $datos_generales[0]->pinkost;}?><br><br><br><br></h2>
+												<br><h2 style=" font-size: 14px; font-family: italic " ><b>teléfono:</b> <?php if(!isset($datos_generales[0]->pinkost)){echo "";} else{echo $datos_generales[0]->pinkost;}?><br><br><br><br></h2>
 											</center>
 										</div>
 									</center>

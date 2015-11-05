@@ -9,11 +9,17 @@
 							<span>
 								> Carrito de Compras
 							</span>	
-							 <?php }else{?>
+							 <?php }else if(isset($_GET['co'])){?>
 							
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bol/dashboard"> Comercial</a> > Carrito de Compras
+								<a href="/bo/comercial"> Comercial</a> > Carrito de Compras
+							</span>
+							  <?php }else{?>
+							
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>> <a href="/bol/dashboard">Logistico</a> >
+								<a href="/bo/logistico2/alta"> Alta</a> > Carrito de Compras
 							</span>
 							 <?php }?>
 						</h1>
@@ -43,6 +49,28 @@
 										<div class="row">
 											<div class="col-sm-3 link">
 											</div>
+											
+							 <?php if(isset($_GET['co'])){?>
+											<div class="col-sm-6 link">
+												<div class="col-sm-4 link">
+												<a href="/bo/mercancia/index?co=c">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+														<i class="fa fa-edit fa-3x"></i>
+														<h1>Alta</h1>
+													</div>
+												</a>
+												</div>
+												<div class="col-sm-4 link">
+												<a href="/bo/comercial/carrito?co=c">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-list-alt fa-3x"></i>
+														<h1>Listar</h1>
+													</div>
+												</a>
+												</div>
+											</div>
+											
+											 <?php } else{?>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
 												<a href="/bo/mercancia/index">
@@ -61,6 +89,8 @@
 												</a>
 												</div>
 											</div>
+											
+											 <?php }?>
 										 </div>
 									</div>
 								</fieldset>
