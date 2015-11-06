@@ -5,16 +5,11 @@
 						<h1 class="page-title txt-color-blueDark">
 						<?php  if($type=='5'){?>
 						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
-						>
-						 	<span>
-								 Alta
-							</span>
+						> <span> Alta </span>
 						 <?php }else{?>
 						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
-						>
-						 	<span>
-								 Alta
-							</span>
+						> <a href="/bol/dashboard">Logistico</a>
+						> <span> Alta </span>
 							<?php }?>
 						</h1>
 					</div>

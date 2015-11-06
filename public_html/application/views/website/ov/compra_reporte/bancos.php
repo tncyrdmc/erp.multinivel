@@ -54,7 +54,7 @@
 						label: "Aceptar",
 						className: "btn-success",
 						callback: function() {
-							 window.location="/ov/compras/carrito?tipo=1";
+							 window.location="/ov/dashboard";
 							}
 						}
 					}
