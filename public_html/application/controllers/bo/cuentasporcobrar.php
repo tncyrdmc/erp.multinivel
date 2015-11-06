@@ -84,7 +84,7 @@ class cuentasporcobrar extends compras{
 						$comision=3000;
 					}
 					
-				/*	
+				
 				    $this->modelo_compras->set_comision_bono_afiliacion(
 				    $id_venta,$id_afiliado[0]->debajo_de,$id_red,
 				    $puntos_valor[0]->puntos_comisionables,$comision);
@@ -92,14 +92,14 @@ class cuentasporcobrar extends compras{
 				   
 				    $this->modelo_compras->set_puntos_padre($id_afiliado[0]->debajo_de,$puntos_paquete[0]->puntos);
 				    $this->modelo_compras->set_nivel_red_actual($cliente_venta[0]->id_user,$puntos_paquete[0]->tipo);
-				*/	
+					
 				
 				}
 		    }		
-			//$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);
+			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);
 			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);
 			$this->ComisionBanco($historico);
-			//$this->EnvarMail($id_historial);
+			$this->EnvarMail($id_historial);
 			
 
 	
