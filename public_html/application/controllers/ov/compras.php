@@ -3862,29 +3862,29 @@ function index()
 	
 	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		
-        $this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);	
-		$id_padre_nivel_tres=$this->Encontrar_a_padre_niveltres($id_afiliado[0]->debajo_de,$capacidad_red[0]->id);	
+	   $this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
 		$productos_venta=$this->modelo_compras->get_productos_venta($id_venta);
+		$consultar_user_venta=$this->modelo_compras->get_user_venta($id_venta);
+		$id_padre_nivel_tres=$this->Encontrar_a_padre_niveltres($consultar_user_venta[0]->id_user,$capacidad_red[0]->id);
 		
-		$porcentage_a_pagar=1;
+		
 		foreach ($productos_venta  as $row){
 			
-		 $porcentage_comision_user_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_afiliado[0]->debajo_de);
+		 $porcentage_comision_user_actual=$this->modelo_compras->get_descuento_por_nivel_actual($consultar_user_venta[0]->id_user);
 		 $porcentage_comision_user_padre=$this->modelo_compras->get_descuento_por_nivel_actual($id_padre_nivel_tres);
 		 $porcentage_a_pagar= (($porcentage_comision_user_padre[0]->porcentage_venta)-($porcentage_comision_user_actual[0]->porcentage_venta))/100;
 		 
-			 if ($porcentage_a_pagar!='0'){
+		 if ($porcentage_a_pagar!=0){
 			 $valor_de_producto=$this->modelo_compras->get_datos_producto($row->id_mercancia);
 			 $valor_a_consiganar=((($valor_de_producto[0]->costo)*($porcentage_a_pagar)));
-				    
-				       
-				       $this->modelo_compras->set_comision_bono_afiliacion($id_venta,
-					   $id_padre_nivel_tres,$capacidad_red[0]->id,
-					   "0",($valor_a_consiganar)*($row->cantidad));
+			      
+				 if ($valor_de_producto[0]->id_tipo_mercancia!='4')
+					       $this->modelo_compras->set_comision_bono_afiliacion($id_venta,
+						   $id_padre_nivel_tres,$capacidad_red[0]->id,
+						   "0",($valor_a_consiganar)*($row->cantidad));
+				}
 			}
-	  
-		}
-		
+	    
 		return 0;
 	}
 	
