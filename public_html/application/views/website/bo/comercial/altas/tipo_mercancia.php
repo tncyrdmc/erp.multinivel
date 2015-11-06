@@ -10,11 +10,19 @@
 								 <a href="/bo/comercial/carrito_de_compras">Mercancia</a>
 								> Alta
 							</span>
-						<?php }else{?>	
+					<?php }else if(isset($_GET['co'])){?>
 							
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>&gt;
-								<a href="/bo/comercial">Comercial</a> >
+							<span>>
+								<a href="/bo/comercial"> Comercial</a> >
+								<a href="/bo/comercial/carrito_de_compras?co=c">Carrito de Compras</a>
+								> Alta
+							</span>
+				    <?php } else{?>	
+							
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>&gt;> <a href="/bol/dashboard">Logistico</a> >
+								<a href="/bo/logistico2/alta">Alta</a> >
 								 <a href="/bo/comercial/carrito_de_compras">Carrito de Compras</a>
 								> Alta
 							</span>
@@ -44,52 +52,43 @@
                 <fieldset>
                   <div class="contenidoBotones">
 						<div class="row">
-						<div class="col-sm-2 link">
-											</div>
-						<div class="col-sm-8 link">
 							
-								<div class="col-sm-4 link" ">
+								<div class="col-sm-12 col-md-5 col-lg-5 link">
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[0]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
 											<h1><?php echo $tipos[0]->descripcion;?></h1>
-						
-											<br />
-										</div>
-									</a>
-								</div>
-								<div class="col-sm-4 link" ">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[1]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[1]->descripcion;?></h1>
-						
-											<br />
-										</div>
-									</a>
-								</div>
-								<div class="col-sm-4 link" ">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[2]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[2]->descripcion;?></h1>
-						
-											<br />
-										</div>
-									</a>
-								</div>
-								<div class="col-sm-4 link" ">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[3]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[3]->descripcion;?></h1>
-						
 											
 										</div>
 									</a>
 								</div>
+								<div class="col-sm-12 col-md-5 col-lg-5 link">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[1]->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipos[1]->descripcion;?></h1>
+											
+										</div>
+									</a>
+								</div>
+								<div class="col-sm-12 col-md-5 col-lg-5 link">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[2]->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipos[2]->descripcion;?></h1>
+											
+										</div>
+									</a>
+								</div>
+								<div class="col-sm-12 col-md-5 col-lg-5 link">
+									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[3]->id; ?>" style="height: 10rem;">
+										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											<i class="fa fa-tags fa-3x"></i>
+											<h1><?php echo $tipos[3]->descripcion;?></h1>
+										</div>
+									</a>
+								</div>
 						
-						</div>
 							</div>
 					</div>
 				</fieldset>
@@ -102,6 +101,7 @@
 </article>
 			<!-- END COL -->
 </div>
+</section>
 				<div class="row">         
 			        <!-- a blank row to get started -->
 			        <div class="col-sm-12">

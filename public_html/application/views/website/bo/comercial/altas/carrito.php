@@ -11,10 +11,20 @@
 								<a href="/bo/comercial/carrito_de_compras"> Mercancia </a> > Listar
 							</span>
 							
-					<?php }else{?>	
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+					<?php }else if(isset($_GET['co'])){?>
+							
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras"> Carrito de Compras </a> > Listar
+								<a href="/bo/comercial"> Comercial</a> >
+								<a href="/bo/comercial/carrito_de_compras?co=c">Carrito de Compras</a>
+								> Alta
+							</span>
+				    <?php } else{?>	
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>> <a href="/bol/dashboard">Logistico</a> >
+								<a href="/bo/logistico2/alta">Alta</a> > 
+								<a href="/bo/comercial/carrito_de_compras"> Carrito de Compras 
+								</a> > Listar
 							</span>	
 					
 				<?php }?>				

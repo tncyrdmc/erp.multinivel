@@ -4,18 +4,15 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						<?php  if($type=='5'){?>
-						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
-						>
-						 	<span>
-								 Inventario
-							</span>
+							<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+							> Inventario
 						 <?php }else{?>
 						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
-						>
-						 	<span>
-								 Inventario
+							<span>
+								> <a href="/bol/dashboard">Logistico</a>
+								> Inventario
 							</span>
-							<?php }?>
+						<?php }?>
 						</h1>
 					</div>
 				</div>

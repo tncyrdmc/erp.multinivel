@@ -1625,16 +1625,16 @@ function index()
 			$data=json_decode($data,true);
 			$id=$data['id'];	
 			if($data['tipo']=='1')
-					{
-						$limites=$this->modelo_compras->get_limite_prod($id);
-						$min=$limites[0]->min_venta;
-						$max=$limites[0]->max_venta;
-					}
-					else
-					{
-						$min=1;
-						$max=10;
-					}
+			{
+				$limites=$this->modelo_compras->get_limite_prod($id);
+				$min=$limites[0]->min_venta;
+				$max=$limites[0]->max_venta;
+			}
+			else
+			{
+				$min=1;
+				$max=10;
+			}
 			echo "<form id='comprar'  method='post' action=''>
 				<div class='row'>
 					<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
@@ -1651,10 +1651,12 @@ function index()
 		{																		// logged in
 		redirect('/auth');
 		}
+		
 		$id_user=$this->tank_auth->get_user_id();
 		
 		$data= $_GET["info"];
 		$data = json_decode($data,true);
+		
 		$id = $data['id'];
 		$cantidad = 0;
 		$cantidad_carrito_temporal =0;
@@ -1662,6 +1664,9 @@ function index()
 			
 			$cantidad_disp = $this->modelo_compras->get_cantidad_almacen($id);
 			$cantidad_carrito_temporal = $this->modelo_compras->get_cantidad_carrito_temporal($id);
+			$limites=$this->modelo_compras->get_limite_prod($id);
+			$min=$limites[0]->min_venta;
+			$max=$limites[0]->max_venta;
 			
 			if (isset($cantidad_disp[0]->cantidad)){
 				if (isset($cantidad_carrito_temporal[0]->cantidad)){
@@ -1671,13 +1676,12 @@ function index()
 			}else{
 				$cantidad = 0;
 			}
+			
+			if ($cantidad < $data['qty']*1){
+				echo "Error";
+				exit();
+			}
 		}
-		if ($cantidad < $data['qty']*1 && $cantidad >= 0){
-			echo "Error";
-			exit();
-		}
-		else 
-		{
 			
 			$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
 			if ($descuento_por_nivel_actual!=null){
@@ -1935,7 +1939,7 @@ function index()
 		        </div>
 		        <!--/.search-box --> ';
 			
-		}
+		
 		
 	}
 	
@@ -3902,34 +3906,39 @@ function index()
 	} 
 	
 	function bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia){
-		$mercancia = $this->modelo_compras->consultarMercancia($id_venta);
-		if($mercancia[0]->id_tipo_mercancia == '4'){
-			return 0;
-		}
+		$mercancias = $this->modelo_compras->consultarMercancia($id_venta);
 		
-		for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
+		foreach ($mercancias as $mercancia){
+		
+			if($mercancia->id_tipo_mercancia == '4'){
+				return 0;
+			}
+			
+			for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
+					
+				if(!isset($id_afiliado[0]->debajo_de)){
+					break;
+				}
+				if($id_afiliado[0]->debajo_de == 1){
+					break;
+				}
 				
-			if(!isset($id_afiliado[0]->debajo_de)){
-				break;
-			}
-			if($id_afiliado[0]->debajo_de == 1){
-				break;
-			}
-			
-			$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
-			$fechainicial =  new DateTime($fecha_creacion[0]->created);
-			$fechafinal = new DateTime();
-			
-			$diferencia = $fechainicial->diff($fechafinal);
-			
-			if($diferencia->m < 4){
-				$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
-				$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
+				$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
+				$fechainicial =  new DateTime($fecha_creacion[0]->created);
+				$fechafinal = new DateTime();
 				
-				$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia[0]->puntos_comisionables, $id_categoria_mercancia);
+				$diferencia = $fechainicial->diff($fechafinal);
+				
+				if($diferencia->m < 4){
+					$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
+					$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
+					
+					$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia->puntos_comisionables, $id_categoria_mercancia);
+				}
+				$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
+				$id_afiliado = $id_padre;
 			}
-			$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
-			$id_afiliado = $id_padre;
+				
 		}
 		
 	}

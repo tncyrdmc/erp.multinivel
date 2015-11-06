@@ -5,15 +5,19 @@ $ci->load->model ( "model_permissions" );
 ?>
 <!-- MAIN CONTENT -->
 <div id="content">
-
-	<!-- row -->
+	<?php  if($usuario[0]->id_tipo_usuario=='1'){?>
 	<div class="row">
-		<br />
-		<br />
-		<br />
-	</div>
-	<!-- end row -->
-
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+						<h1 class="page-title txt-color-blueDark">
+							<a href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> Logistico
+							</span>
+						</h1>
+					</div>
+					
+				</div>
+	<?php } ?>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="well well-sm">
