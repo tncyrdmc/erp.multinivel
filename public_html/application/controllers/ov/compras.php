@@ -4084,11 +4084,44 @@ function index()
 		if (!$this->tank_auth->is_logged_in())																	// logged in
 			redirect('/auth');
 		
+		$productos = $this->cart->contents();
+		$hay_productos=false;
 		$id = $this->tank_auth->get_user_id();
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
+		
+		foreach ($productos as $producto){
+			$mercancia = $this->modelo_compras->esProducto($producto['id']);
+			if($mercancia){
+				$hay_productos = true;
+			}
+			
+		}
+		if(!$hay_productos){
+			$telefono = $this->modelo_compras->traer_telefonos($id);
+			
+			$datos = array(
+					'id_user' => $id,
+					'id_proveedor' => '0',
+					'id_tarifa' => '0',
+					'costo' => '0',
+					'nombre' => $datos_perfil[0]->nombre,
+					'apellido' => $datos_perfil[0]->apellido,
+					'id_pais' => $datos_perfil[0]->pais,
+					'estado' => $datos_perfil[0]->estado,
+					'municipio' => $datos_perfil[0]->municipio,
+					'colonia' => $datos_perfil[0]->colonia,
+					'calle' => $datos_perfil[0]->calle,
+					'cp' => $datos_perfil[0]->cp,
+					'email' => $datos_perfil[0]->email,
+					'telefono' => $telefono[0]->numero,
+			);
+			$this->modelo_compras->guardarDatosEnvio($datos);
+			redirect("/ov/compras/comprar");
+			
+		}
 		
 		$this->template->set("grupos",$grupos);
 		$this->template->set("datos",$datos_perfil);

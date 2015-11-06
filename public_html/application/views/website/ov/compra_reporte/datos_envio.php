@@ -287,6 +287,10 @@
 					<button type="submit" class="btn btn-success" onclick="CrearComprador()">
 						Siguiente
 					</button>
+					<a class="btn btn-danger" href="/ov/compras/carrito?tipo=1">
+						Atras
+					</a>
+					
 			</footer>
 		</form>
 	</div>

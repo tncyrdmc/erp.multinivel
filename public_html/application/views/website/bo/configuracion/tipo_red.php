@@ -34,9 +34,9 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 link">
+											<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 link">
 											</div>
-											<div class="col-xs-11 col-sm-12 col-md-6 col-lg-6 link">
+											<div class="col-xs-11 col-sm-12 col-md-6 col-lg-8 link">
 												<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 link">
 													<a href="/bo/tipo_red/crear_red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
@@ -56,7 +56,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 link">	
+												<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 link">	
 													<a href="/bo/configuracion/categorias">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;  padding-bottom: 19%;">
 															<i class="fa fa-th fa-3x"></i>
