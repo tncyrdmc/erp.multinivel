@@ -1330,4 +1330,12 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q = $this->db->query("SELECT id FROM mercancia where id_tipo_mercancia='4' and sku=".$id);
 		return $q->result();
 	}
+	function get_productos_venta($id_venta){
+		$q = $this->db->query("SELECT * FROM cross_venta_mercancia where id_venta=".$id_venta);
+		return $q->result();
+	}
+	function get_datos_producto($id_producto){
+		$q = $this->db->query("SELECT * FROM mercancia where id=".$id_producto);
+		return $q->result();
+	}
 }

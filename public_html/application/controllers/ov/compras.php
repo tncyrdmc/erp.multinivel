@@ -3851,16 +3851,50 @@ function index()
 			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $id_usuario, $id_red);
 				
 			$this->CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $valor_total_venta);
-			return "Regsitro Corecto";
+			return "Registro Corecto";
 		}
 	}
 
 	
 	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		
-		$this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
+	//	$this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
+	  
 		
+		
+		$id_padre_nivel_tres=$this->Encontrar_a_padre_niveltres($id_afiliado[0]->debajo_de,$capacidad_red[0]->id);
+	   //	var_dump($id_padre_nivel_tres);
+		
+		$productos_venta=$this->modelo_compras->get_productos_venta($id_venta);
+		
+		
+		foreach ($productos_venta  as $row){
+			
+		 //$porcentage_comision_user_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_afiliado[0]->debajo_de);
+		 //$porcentage_comision_user_padre=$this->modelo_compras->get_descuento_por_nivel_actual($id_padre_nivel_tres);
+		 //$porcentage_a_pagar= (($porcentage_comision_user_padre[0]->porcentage_venta)-($porcentage_comision_user_actual[0]->porcentage_venta));
+			       $valor_de_producto=$this->modelo_compras->get_datos_producto($row->id_mercancia);
+			       $this->modelo_compras->set_comision_bono_afiliacion($id_venta,
+				   $id_padre_nivel_tres,$capacidad_red[0]->id,
+				   "0", $valor_de_producto[0]->costo);
+		}
+	  
+	    
 		return 0;
+	}
+	
+	function Encontrar_a_padre_niveltres($user,$id_red){
+	
+		$id_afiliado = $this->model_perfil_red->ConsultarIdPadre($user, $id_red);
+		$nivel_de_padre = $this->model_perfil_red->Consultar_nivel_red($id_afiliado[0]->debajo_de);
+		
+		if($nivel_de_padre[0]->nivel_en_red=='3'){
+			return $nivel_de_padre[0]->user_id;
+		}
+		else{
+			return $this->Encontrar_a_padre_niveltres($id_afiliado[0]->debajo_de,$id_red);
+		}
+
 	}
 	
 	function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
@@ -3955,7 +3989,7 @@ function index()
 		}
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
-			redirect('/auth');
+		redirect('/auth');
 		}
 		
 		$productos = $this->cart->contents();
@@ -3963,17 +3997,19 @@ function index()
 		
 		$costo_envio = $this->modelo_compras->consultarEnvio($id);
 		
+		
+		
 		$calcular_descuento=1;
 		
 		$costo_total = $costo_envio[0]->costo;
 		$impuestos = 0;
 		foreach ($productos as $producto){
-			
-			$traer_tipo=$this->modelo_compras->get_tipo_mercancia_atual($producto['id']);
-			
-			
-			if($traer_tipo[0]->id_tipo_mercancia!='4'){
 				
+			$traer_tipo=$this->modelo_compras->get_tipo_mercancia_atual($producto['id']);
+				
+				
+			if($traer_tipo[0]->id_tipo_mercancia!='4'){
+		
 				$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
 				if ($descuento_por_nivel_actual!=null){
 					$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
@@ -3981,7 +4017,7 @@ function index()
 					$calcular_descuento=1;
 				}
 			}
-			
+				
 			$costo_total = $costo_total + (($producto['qty'] * ($this->modelo_compras->CostoMercancia($producto['id'])))*$calcular_descuento);
 			$impuestos = $impuestos + ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
 		}
@@ -3998,15 +4034,13 @@ function index()
 		
 		$this->modelo_compras->registrar_factura($venta, $id, $costo_envio);
 		
-		$this->model_carrito_temporal->insertar($venta);
-		
 		foreach ($productos as $producto){
 			$puntos = $this->modelo_compras->registrar_venta_mercancia($producto['id'], $venta, $producto['qty']);
 			$impuesto = ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
-			
+				
 			$total = $this->modelo_compras->registrar_impuestos($producto['id']);
 			$this->modelo_compras->registrar_movimiento($id, $producto['id'], $producto['qty'], $producto['price']+$impuesto, $producto['qty']*$total, $venta, $puntos);
-			
+				
 		}
 		$this->modelo_compras->EliminarEnvioHistorial($id);
 		
@@ -4025,8 +4059,9 @@ function index()
 		}else{
 			echo "La venta se a registrado";
 		}
-		
 	}
+	
+	
 	
 	function Cambiar_estado_enviar(){
 		
