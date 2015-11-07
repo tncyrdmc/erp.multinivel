@@ -1,3 +1,13 @@
+			<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>
 			<!-- MAIN CONTENT -->
 			<div id="content" >
 				<div class="row">
@@ -498,8 +508,16 @@ function agregar_evento()
 							 data:{info:JSON.stringify(datos)},
 					         type: "get",
 					         url: "nuevo_evento",
-					         success: function(){
-					              location.href="/bo/eventos/listar";
+					         success: function(msg){
+						          if (msg=="error_desc"){
+										alert("La casilla de descripción, no puede tener mas de 140 carácteres");
+							          }
+						          else if (msg=="error_obs"){
+										alert("La casilla de observación, no puede tener mas de 50 carácteres");
+							          }
+						          else{
+					              	location.href="/bo/eventos/listar";
+					              }
 					         }
 						});
 					}

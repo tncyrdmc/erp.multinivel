@@ -683,6 +683,7 @@ class perfil_red extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
+		
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("afiliados",$afiliados);

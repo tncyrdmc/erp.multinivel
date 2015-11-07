@@ -110,6 +110,15 @@ class eventos extends CI_Controller
 		
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
+		
+		if (strlen($data['descripcion']) > 140){
+			echo "error_desc";
+			exit();
+		}
+		else if (strlen($data['observacion']) > 50){
+			echo "error_obs";
+			exit();
+		}
 		$tipo=$data['tipo'];
 		$color=$data['color'];
 		$nombre=$data['nombre'];

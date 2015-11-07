@@ -694,11 +694,11 @@ function botbox(nombre, id, lado)
 			+'</div>'
 		+'</div>'
 		+'</div>'
-		+'<script>'
+		+'<script type="text/javascript">'
 		+' $(function()'
 		+ '{'
 		 +	'a = new Date();'
-			+'año = a.getFullYear()-19;'
+			+'año = a.getFullYear()-20;'
 			+'$( "#datepicker_r" ).datepicker({'
 			+'changeMonth: true,'
 			+'numberOfMonths: 2,'
@@ -709,6 +709,9 @@ function botbox(nombre, id, lado)
 		+'});',
 		title: "Afiliar a "+nombre,
 	});
+
+	
+		
 	$('.wizard_r').on('finished.fu.wizard', function (e, data) {
 			
 			  		var ids = new Array( 
