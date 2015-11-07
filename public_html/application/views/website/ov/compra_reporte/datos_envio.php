@@ -310,7 +310,7 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" charset="charset">
 function Departamentos(){
 	var pa = $("#pais").val();
 	$.ajax({
@@ -327,6 +327,8 @@ function Departamentos(){
 		datos=$.parseJSON(msg);
 		$('#departamento').append('<option value="0">-- Seleciona un Estado / Departamento --</option>');
 	      for(var i in datos){
+		    
+		     
 		      $('#departamento').append('<option value="'+datos[i]['id']+'">'+datos[i]['Name']+'</option>'); 		        
 	      }
 	});

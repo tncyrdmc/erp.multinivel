@@ -1338,7 +1338,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q = $this->db->query("SELECT * FROM mercancia where id=".$id_producto);
 		return $q->result();
 	}
-<<<<<<< HEAD
+
 	
 	function esProducto($id_mercancia){
 		$q = $this->db->query("SELECT sku, id_tipo_mercancia FROM mercancia where id=".$id_mercancia);
@@ -1373,10 +1373,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		}else{
 			return false;
 		}
-=======
+	}
 	function get_user_venta($id_venta){
 		$q = $this->db->query("SELECT id_user FROM venta where id_venta=".$id_venta);
 		return $q->result();
->>>>>>> c175899787f63981761c2c898025cda9ff6dae0a
+
 	}
 }

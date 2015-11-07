@@ -221,95 +221,7 @@
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 
-		<script type="text/javascript">
-	/*		$(document).ready(function() {
-			 	
-				/* DO NOT REMOVE : GLOBAL FUNCTIONS!
-				 *
-				 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-				 *
-				 * // activate tooltips
-				 * $("[rel=tooltip]").tooltip();
-				 *
-				 * // activate popovers
-				 * $("[rel=popover]").popover();
-				 *
-				 * // activate popovers with hover states
-				 * $("[rel=popover-hover]").popover({ trigger: "hover" });
-				 *
-				 * // activate inline charts
-				 * runAllCharts();
-				 *
-				 * // setup widgets
-				 * setup_widgets_desktop();
-				 *
-				 * // run form elements
-				 * runAllForms();
-				 *
-				 ********************************
-				 *
-				 * pageSetUp() is needed whenever you load a page.
-				 * It initializes and checks for all basic elements of the page
-				 * and makes rendering easier.
-				 *
-				 */
-				
-			/*	 pageSetUp();
 
-				  Dropzone.autoDiscover = false;
-			    $("#personal").dropzone({
-			        paramName: "foto",
-			        url: "/ov/cabecera/sube_archivo",
-			        addRemoveLinks : true,
-			        maxFilesize: 150,
-			        dictResponseError: 'Error uploading file!',
-			    });
-				 
-				/*
-				 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
-				 * eg alert("my home function");
-				 * 
-				 * var pagefunction = function() {
-				 *   ...
-				 * }
-				 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
-				 * 
-				 * TO LOAD A SCRIPT:
-				 * var pagefunction = function (){ 
-				 *  loadScript(".../plugin.js", run_after_loaded);	
-				 * }
-				 * 
-				 * OR
-				 * 
-				 * loadScript(".../plugin.js", run_after_loaded);
-				 */
-
-				 /* COLUMN FILTER  */
-		    	/* var otable = $('#datatable_fixed_column').DataTable({
-		    			"columnDefs": [ {
-			            "searchable": false,
-			            "orderable": false,
-			            "sortable": false,
-			            "targets": 0
-			        	} ],
-			        	"order": [[ 1, 'asc' ]],
-		    	//"bFilter": false,
-		    	//"bInfo": false,
-		    	//"bLengthChange": false
-		    	//"bAutoWidth": false,
-		    	//"bPaginate": false,
-		    	//"bStateSave": true // saves sort state using localStorage
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-						"t"+
-						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-				"autoWidth" : true,	
-			
-		    });
-		    /* END COLUMN FILTER */   
-				
-			/*})
-		*/
-		</script>
 <script>
 function checado()
 {
@@ -389,6 +301,16 @@ function compartir(id)
 					tablet : 1024,
 					phone : 480
 				};
+				 pageSetUp();
+
+				  Dropzone.autoDiscover = false;
+			    $("#personal").dropzone({
+			        paramName: "foto",
+			        url: "/ov/cabecera/sube_archivo",
+			        addRemoveLinks : true,
+			        maxFilesize: 150,
+			        dictResponseError: 'Error uploading file!',
+			    });
 	
 				$('#dt_basic').dataTable({
 					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
