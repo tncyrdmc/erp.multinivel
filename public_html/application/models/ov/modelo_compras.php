@@ -1330,4 +1330,53 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q = $this->db->query("SELECT id FROM mercancia where id_tipo_mercancia='4' and sku=".$id);
 		return $q->result();
 	}
+	function get_productos_venta($id_venta){
+		$q = $this->db->query("SELECT * FROM cross_venta_mercancia where id_venta=".$id_venta);
+		return $q->result();
+	}
+	function get_datos_producto($id_producto){
+		$q = $this->db->query("SELECT * FROM mercancia where id=".$id_producto);
+		return $q->result();
+	}
+<<<<<<< HEAD
+	
+	function esProducto($id_mercancia){
+		$q = $this->db->query("SELECT sku, id_tipo_mercancia FROM mercancia where id=".$id_mercancia);
+		$mercancia = $q->result();
+		
+		if($mercancia[0]->id_tipo_mercancia == 1){
+			return true;
+		}elseif($mercancia[0]->id_tipo_mercancia == 2){
+			return false;
+		}elseif($mercancia[0]->id_tipo_mercancia == 3){
+			return $this->tieneProductosCombinado($mercancia[0]->sku);
+		}elseif($mercancia[0]->id_tipo_mercancia == 4){
+			return $this->tieneProductosPaquete($mercancia[0]->sku);
+		}
+	}
+	
+	function tieneProductosCombinado($id) {
+		$q = $this->db->query("SELECT count(id_producto) as producto FROM cross_combinado where id_producto <> 0 and id_combinado=".$id);
+		$cantidad_productos = $q->result();
+		if($cantidad_productos[0]->producto > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function tieneProductosPaquete($id) {
+		$q = $this->db->query("SELECT count(id_producto) as producto FROM cross_paquete where id_producto <> 0 and id_paquete=".$id);
+		$cantidad_productos = $q->result();
+		if($cantidad_productos[0]->prodicto > 0){
+			return true;
+		}else{
+			return false;
+		}
+=======
+	function get_user_venta($id_venta){
+		$q = $this->db->query("SELECT id_user FROM venta where id_venta=".$id_venta);
+		return $q->result();
+>>>>>>> c175899787f63981761c2c898025cda9ff6dae0a
+	}
 }

@@ -510,7 +510,7 @@ function codpos_red()
 									<div id="uno" class="row fuelux">
 									
 									<?php 
-									if( $contar < $red_frontales[0]->frontal || $premium == '2' )  {   ?>
+									if( $contar < $red_frontales[0]->frontal || $red_frontales[0]->frontal == '0')  {   ?>
 	                                    
 	                                	<div id="myWizard" class="wizard">
 		                                	
@@ -901,16 +901,8 @@ function codpos_red()
 				
 											</div>
 										</div>
-										<?}	elseif($premium == '0'){ ?> 
-										<script type="text/javascript">
-										window.onload = function() {
-										    SelecionarFase();
-										    // Puedes agregar mas eventos que se ejecutaran al cargar la pagina
-										}
-										</script>
-											<a id="fases"  onclick="SelecionarFase()">Mas informacion</a>
-										<?php } else {?>
-										<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?>, pero puedes afiliar en red"</h1>
+										<? } else {?>
+										<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?> directo, pero puedes afiliar en red"</h1>
 											<?php }?>
 									</div>
 								</div>

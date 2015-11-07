@@ -1049,10 +1049,12 @@ function InformarPremio(premio){
 															<li>
 																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
 												            </li>
-														<? } ?>
-														<li>
-															<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
-												        </li>
+														<? }
+														if($red_frontales[0]->frontal == '0' ){?>
+															<li>
+																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
+													        </li>
+													     <?php } ?>
 													</ul>
 												</li>
 											</ul>

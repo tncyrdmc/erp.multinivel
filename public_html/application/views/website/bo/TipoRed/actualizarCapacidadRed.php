@@ -41,6 +41,7 @@
 							<form class="smart-form" action="/bo/capacidadRed/actualizar_capacidad_de_la_red" method="POST" role="form">
 
 								<legend>Capacidad de la Red </legend>
+								<spam>Nota: Si tu red es de forntalidad infinita, la configuracion de frontalidad ponle 0.</spam>
 								<div class="form-group" style="width: 5rem; margin-top: 2rem;">
 									<label>Frontales</label> <input style="padding-left: 3rem;"
 										type="text" class="form-control" name="frontal"

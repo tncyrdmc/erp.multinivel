@@ -84,7 +84,7 @@ class cuentasporcobrar extends compras{
 						$comision=3000;
 					}
 					
-					
+				
 				    $this->modelo_compras->set_comision_bono_afiliacion(
 				    $id_venta,$id_afiliado[0]->debajo_de,$id_red,
 				    $puntos_valor[0]->puntos_comisionables,$comision);

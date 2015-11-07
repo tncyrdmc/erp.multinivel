@@ -607,6 +607,13 @@ order by (U.id);");
 		return $id_padre;
 	}
 	
+
+	function Consultar_nivel_red($id_user){
+		$q = $this->db->query("select u.user_id,u.nivel_en_red from user_profiles u
+ where   u.user_id=".$id_user);
+		return $q->result();
+	}
+	
 	function ConsultarFechaInscripcion($id){
 		$q = $this->db->query("select created from users where id=".$id);
 		$id_padre = $q->result();

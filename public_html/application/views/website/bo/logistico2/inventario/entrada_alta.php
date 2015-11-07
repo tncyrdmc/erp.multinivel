@@ -83,7 +83,7 @@
 					
 						
 							
-							<form id="entradas" class="smart-form" method="post" action="new_entrada">
+							<form id="entradas" class="smart-form" method="POST">
                               
                               <fieldset>
                                 <legend>Datos de Entrada</legend>
@@ -167,23 +167,10 @@
                               
                               </fieldset>
                               <footer>
-                                <button type="submit" class="btn btn-success">
+                                <a class="btn btn-success" onClick="GuardarEntrada()">
                                   Guardar Entrada
-                                </button>
+                                </a>
                               </footer>
-                           
-							  
-							  
-							  
-							  
-				
-									
-									
-									
-						
-							
-							
-							
 						</form>
 
 					</div>
@@ -230,6 +217,35 @@ function OrigenAlmacen(){
 	      for(var i in datos){
 		      $('#origen').append('<option value="'+datos[i]['id_cedi']+'">'+datos[i]['nombre']+'</option>'); 		        
 	      }
+	});
+}
+
+function GuardarEntrada(){
+	$.ajax({
+		type: "POST",
+		url: "/bo/inventario/new_entrada",
+		data: $("#entradas").serialize()
+	})
+	.done(function( msg )
+	{
+		if(msg != ''){
+			bootbox.dialog({
+				message: "la entrada a sido registrada",
+				title: 'Entrada',
+				buttons: {
+					success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							location.href="/bo/inventario/inventarioEntradaAlta";
+						}
+				}
+			}
+		
+	})//fin done ajax
+		}else{
+			location.href="/bo/inventario/inventarioEntradaAlta";
+		}
 	});
 }
 </script>

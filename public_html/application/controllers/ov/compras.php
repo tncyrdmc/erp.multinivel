@@ -1625,16 +1625,16 @@ function index()
 			$data=json_decode($data,true);
 			$id=$data['id'];	
 			if($data['tipo']=='1')
-					{
-						$limites=$this->modelo_compras->get_limite_prod($id);
-						$min=$limites[0]->min_venta;
-						$max=$limites[0]->max_venta;
-					}
-					else
-					{
-						$min=1;
-						$max=10;
-					}
+			{
+				$limites=$this->modelo_compras->get_limite_prod($id);
+				$min=$limites[0]->min_venta;
+				$max=$limites[0]->max_venta;
+			}
+			else
+			{
+				$min=1;
+				$max=10;
+			}
 			echo "<form id='comprar'  method='post' action=''>
 				<div class='row'>
 					<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
@@ -1651,10 +1651,12 @@ function index()
 		{																		// logged in
 		redirect('/auth');
 		}
+		
 		$id_user=$this->tank_auth->get_user_id();
 		
 		$data= $_GET["info"];
 		$data = json_decode($data,true);
+		
 		$id = $data['id'];
 		$cantidad = 0;
 		$cantidad_carrito_temporal =0;
@@ -1674,15 +1676,12 @@ function index()
 			}else{
 				$cantidad = 0;
 			}
+			
+			if ($cantidad < $data['qty']*1){
+				echo "Error";
+				exit();
+			}
 		}
-		//var_dump($cantidad)
-		if ($cantidad < $data['qty']*1){
-			echo "Error";
-			exit();
-		}
-		
-		else 
-		{
 			
 			$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
 			if ($descuento_por_nivel_actual!=null){
@@ -1940,7 +1939,7 @@ function index()
 		        </div>
 		        <!--/.search-box --> ';
 			
-		}
+		
 		
 	}
 	
@@ -3856,16 +3855,51 @@ function index()
 			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $id_usuario, $id_red);
 				
 			$this->CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $valor_total_venta);
-			return "Regsitro Corecto";
+			return "Registro Corecto";
 		}
 	}
 
 	
 	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		
-		$this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
+	   $this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
+		$productos_venta=$this->modelo_compras->get_productos_venta($id_venta);
+		$consultar_user_venta=$this->modelo_compras->get_user_venta($id_venta);
+		$id_padre_nivel_tres=$this->Encontrar_a_padre_niveltres($consultar_user_venta[0]->id_user,$capacidad_red[0]->id);
 		
+		
+		foreach ($productos_venta  as $row){
+			
+		 $porcentage_comision_user_actual=$this->modelo_compras->get_descuento_por_nivel_actual($consultar_user_venta[0]->id_user);
+		 $porcentage_comision_user_padre=$this->modelo_compras->get_descuento_por_nivel_actual($id_padre_nivel_tres);
+		 $porcentage_a_pagar= (($porcentage_comision_user_padre[0]->porcentage_venta)-($porcentage_comision_user_actual[0]->porcentage_venta))/100;
+		 
+		 if ($porcentage_a_pagar!=0){
+			 $valor_de_producto=$this->modelo_compras->get_datos_producto($row->id_mercancia);
+			 $valor_a_consiganar=((($valor_de_producto[0]->costo)*($porcentage_a_pagar)));
+			      
+				 if ($valor_de_producto[0]->id_tipo_mercancia!='4')
+					       $this->modelo_compras->set_comision_bono_afiliacion($id_venta,
+						   $id_padre_nivel_tres,$capacidad_red[0]->id,
+						   "0",($valor_a_consiganar)*($row->cantidad));
+				}
+			}
+	    
 		return 0;
+	}
+	
+	function Encontrar_a_padre_niveltres($user,$id_red){
+	
+		$id_afiliado = $this->model_perfil_red->ConsultarIdPadre($user, $id_red);
+		$nivel_de_padre = $this->model_perfil_red->Consultar_nivel_red($id_afiliado[0]->debajo_de);
+		
+		if($nivel_de_padre[0]->nivel_en_red=='3'){
+			return $nivel_de_padre[0]->user_id;
+		}
+		else{
+			return $this->Encontrar_a_padre_niveltres($id_afiliado[0]->debajo_de,$id_red);
+		}
+
 	}
 	
 	function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
@@ -3873,34 +3907,39 @@ function index()
 	} 
 	
 	function bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia){
-		$mercancia = $this->modelo_compras->consultarMercancia($id_venta);
-		if($mercancia[0]->id_tipo_mercancia == '4'){
-			return 0;
-		}
+		$mercancias = $this->modelo_compras->consultarMercancia($id_venta);
 		
-		for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
+		foreach ($mercancias as $mercancia){
+		
+			if($mercancia->id_tipo_mercancia == '4'){
+				return 0;
+			}
+			
+			for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
+					
+				if(!isset($id_afiliado[0]->debajo_de)){
+					break;
+				}
+				if($id_afiliado[0]->debajo_de == 1){
+					break;
+				}
 				
-			if(!isset($id_afiliado[0]->debajo_de)){
-				break;
-			}
-			if($id_afiliado[0]->debajo_de == 1){
-				break;
-			}
-			
-			$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
-			$fechainicial =  new DateTime($fecha_creacion[0]->created);
-			$fechafinal = new DateTime();
-			
-			$diferencia = $fechainicial->diff($fechafinal);
-			
-			if($diferencia->m < 4){
-				$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
-				$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
+				$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
+				$fechainicial =  new DateTime($fecha_creacion[0]->created);
+				$fechafinal = new DateTime();
 				
-				$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia[0]->puntos_comisionables, $id_categoria_mercancia);
+				$diferencia = $fechainicial->diff($fechafinal);
+				
+				if($diferencia->m < 4){
+					$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
+					$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
+					
+					$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia->puntos_comisionables, $id_categoria_mercancia);
+				}
+				$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
+				$id_afiliado = $id_padre;
 			}
-			$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
-			$id_afiliado = $id_padre;
+				
 		}
 		
 	}
@@ -3960,7 +3999,7 @@ function index()
 		}
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
-			redirect('/auth');
+		redirect('/auth');
 		}
 		
 		$productos = $this->cart->contents();
@@ -3968,17 +4007,19 @@ function index()
 		
 		$costo_envio = $this->modelo_compras->consultarEnvio($id);
 		
+		
+		
 		$calcular_descuento=1;
 		
 		$costo_total = $costo_envio[0]->costo;
 		$impuestos = 0;
 		foreach ($productos as $producto){
-			
-			$traer_tipo=$this->modelo_compras->get_tipo_mercancia_atual($producto['id']);
-			
-			
-			if($traer_tipo[0]->id_tipo_mercancia!='4'){
 				
+			$traer_tipo=$this->modelo_compras->get_tipo_mercancia_atual($producto['id']);
+				
+				
+			if($traer_tipo[0]->id_tipo_mercancia!='4'){
+		
 				$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
 				if ($descuento_por_nivel_actual!=null){
 					$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
@@ -3986,7 +4027,7 @@ function index()
 					$calcular_descuento=1;
 				}
 			}
-			
+				
 			$costo_total = $costo_total + (($producto['qty'] * ($this->modelo_compras->CostoMercancia($producto['id'])))*$calcular_descuento);
 			$impuestos = $impuestos + ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
 		}
@@ -4003,15 +4044,13 @@ function index()
 		
 		$this->modelo_compras->registrar_factura($venta, $id, $costo_envio);
 		
-		$this->model_carrito_temporal->insertar($venta);
-		
 		foreach ($productos as $producto){
 			$puntos = $this->modelo_compras->registrar_venta_mercancia($producto['id'], $venta, $producto['qty']);
 			$impuesto = ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
-			
+				
 			$total = $this->modelo_compras->registrar_impuestos($producto['id']);
 			$this->modelo_compras->registrar_movimiento($id, $producto['id'], $producto['qty'], $producto['price']+$impuesto, $producto['qty']*$total, $venta, $puntos);
-			
+				
 		}
 		$this->modelo_compras->EliminarEnvioHistorial($id);
 		
@@ -4030,8 +4069,9 @@ function index()
 		}else{
 			echo "La venta se a registrado";
 		}
-		
 	}
+	
+	
 	
 	function Cambiar_estado_enviar(){
 		
@@ -4044,11 +4084,44 @@ function index()
 		if (!$this->tank_auth->is_logged_in())																	// logged in
 			redirect('/auth');
 		
+		$productos = $this->cart->contents();
+		$hay_productos=false;
 		$id = $this->tank_auth->get_user_id();
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
+		
+		foreach ($productos as $producto){
+			$mercancia = $this->modelo_compras->esProducto($producto['id']);
+			if($mercancia){
+				$hay_productos = true;
+			}
+			
+		}
+		if(!$hay_productos){
+			$telefono = $this->modelo_compras->traer_telefonos($id);
+			
+			$datos = array(
+					'id_user' => $id,
+					'id_proveedor' => '0',
+					'id_tarifa' => '0',
+					'costo' => '0',
+					'nombre' => $datos_perfil[0]->nombre,
+					'apellido' => $datos_perfil[0]->apellido,
+					'id_pais' => $datos_perfil[0]->pais,
+					'estado' => $datos_perfil[0]->estado,
+					'municipio' => $datos_perfil[0]->municipio,
+					'colonia' => $datos_perfil[0]->colonia,
+					'calle' => $datos_perfil[0]->calle,
+					'cp' => $datos_perfil[0]->cp,
+					'email' => $datos_perfil[0]->email,
+					'telefono' => $telefono[0]->numero,
+			);
+			$this->modelo_compras->guardarDatosEnvio($datos);
+			redirect("/ov/compras/comprar");
+			
+		}
 		
 		$this->template->set("grupos",$grupos);
 		$this->template->set("datos",$datos_perfil);
