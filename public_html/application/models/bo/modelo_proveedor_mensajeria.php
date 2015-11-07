@@ -24,7 +24,7 @@ class modelo_proveedor_mensajeria extends CI_Model
 		foreach ($departamentos as $departamento){
 			$ciu = array(
 					'id' => $departamento->id,
-					'Name' => $departamento->Nombre
+					'Name' => utf8_decode($departamento->Nombre)
 			);
 			array_push($departamentos_dec, $ciu);
 		}
