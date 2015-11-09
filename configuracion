@@ -17,8 +17,19 @@ PASOS PARA INICIAR OFICINA VIRTUAL
 		Allow from all
 		Require all granted
 	</Directory>
+	
+	<Directory /var/www/erp.multinivel/>
+  		Options Indexes FollowSymLinks
+  		AllowOverride All
+  		Allow from all
+  		Require all granted
+	</Directory>
 
-6. Habilitar el uso de las etiquetas <? 
+6. Habilitar las sobre escrituras
+
+	sudo a2enmod rewrite
+	
+7. Habilitar el uso de las etiquetas <? 
 	abrir el archivo de php.ini
 		sudo gedit /etc/php5/apache2/php.ini
 	buscar la linea
@@ -26,7 +37,7 @@ PASOS PARA INICIAR OFICINA VIRTUAL
 	reemplazar por:
 		short_open_tag = On
 
-7. Habilitar Administrador de Base de Datos
+8. Habilitar Administrador de Base de Datos
 En mysql 
 	GRANT ALL PRIVILEGES ON *.*	TO 'user'@'%' IDENTIFIED BY 'password';
 En terminal 
