@@ -690,13 +690,7 @@ function index()
 			}
 		}
 	}
-	
-	/*preorden(nodo)
-	si nodo != nulo entonces retorna
-	imprime nodo.valor
-	preorden(nodo.izquierda)
-	preorden(nodo.derecha)*/
-	
+
 	function reporte_afiliados_todos()
 	{
 		$id=$this->tank_auth->get_user_id();
@@ -3963,8 +3957,6 @@ function index()
 	
 	function SelecioneBancoWebPersonal(){
 		
-		//var_dump("dni: ".$_POST['dni'].", id_afiliado: ".$_POST['id_afiliado'].", id: ".$_POST['id_mercancia'].", cantidad:".$_POST['cantidad']);
-		//exit();
 		if(!isset($_POST['id_mercancia'])){
 			echo "La compra no puedo ser registrada";
 			return 0;
@@ -3989,7 +3981,6 @@ function index()
 		$this->template->build('website/ov/compra_reporte/bancosWebPersonal',$data);
 	}
 	
-	////////////////////////////////////////////////////////////////////////////////////////////
 	
 	function RegistrarVentaConsignacion(){
 		
@@ -4234,5 +4225,9 @@ function index()
 		$this->modelo_compras->guardarDatosEnvio($datos);
 		
 		redirect("/ov/compras/comprar");
+	}
+
+	function datos_comprador_web_personal(){
+		$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
 	}
 }

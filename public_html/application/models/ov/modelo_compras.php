@@ -218,7 +218,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.Descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red 
 from paquete_inscripcion a, mercancia d, cross_paquete e, afiliar af
-where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" and af.id_afiliado = '.$id_usuario.' and af.id_red = a.id_red and d.id_tipo_mercancia= 4  and d.pais = "'.$pais.'" group by (d.id)');
+where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" and af.id_red = a.id_red and d.id_tipo_mercancia= 4  and d.pais = "'.$pais.'" group by (d.id)');
 		$combinados_bd =  $q->result();
 		$combinados = array();
 		foreach ($combinados_bd as $combinado){

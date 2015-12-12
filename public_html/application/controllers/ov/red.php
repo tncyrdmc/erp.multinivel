@@ -20,12 +20,7 @@ class red extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
-		
-		$id=$this->tank_auth->get_user_id();
-		if($this->general->isAValidUser($id,"OV") == false)
-		{
-			redirect('/ov/compras/carrito');
-		}
+
 	}
 
 	function index()
@@ -36,6 +31,12 @@ class red extends CI_Controller
 			}
 
 		$id            = $this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$style         = $this->general->get_style($id);
 		
 		$redes = $this->model_tipo_red->RedesUsuario($id);

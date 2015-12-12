@@ -58,7 +58,7 @@
 												</div>
 												<div class="col-sm-3 link">
 												<a href="/bo/logistico2/pedidos_transito">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-check fa-3x"></i>
 														<h1>Pedidos en Transito</h1>
 													</div>
@@ -66,7 +66,7 @@
 												</div>
 												<div class="col-sm-3 link">
 												<a href="/bo/logistico2/pedidos_embarcados">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-car fa-3x"></i>
 														<h1>Pedidos Embarcados </h1>
 													</div>

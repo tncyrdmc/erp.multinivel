@@ -39,23 +39,7 @@
 													<a href="/bo/comercial/actionProveedor">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-edit fa-3x"></i>
-															<h1>Proveedor</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/red">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-sitemap fa-3x"></i>
-															<h1>Red</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/reportes">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-book fa-3x"></i>
-															<h1>Reportes</h1>
+															<h1>Proveedores <br>&nbsp</h1>
 														</div>
 													</a>
 												</div>
@@ -67,11 +51,19 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-3 link">	
-													<a href="http://pekcell.com:2095/" target="_blank">
+												<div class="col-sm-3 link">
+													<a href="/bo/comercial/red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-envelope fa-3x"></i>
-															<h1>Email <br>&nbsp</h1>
+															<i class="fa fa-sitemap fa-3x"></i>
+															<h1>Red de Afiliacion</h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-3 link">
+													<a href="/bo/reportes">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-book fa-3x"></i>
+															<h1>Reportes</h1>
 														</div>
 													</a>
 												</div>
@@ -79,7 +71,7 @@
 													<a href="/bo/CuentasPagar/Archivero">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder fa-3x"></i>
-															<h1>Archivero <br>&nbsp</h1>
+															<h1>Archivero</h1>
 														</div>
 													</a>
 												</div>

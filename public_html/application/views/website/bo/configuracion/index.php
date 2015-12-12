@@ -57,8 +57,16 @@
 														</div>
 													</a>
 												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
+													<a href="/bo/admin/paises">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-usd fa-3x"></i>
+															<h1>Pais/Moneda<br><br></h1>
+														</div>
+													</a>
+												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-												   <a href="retenciones">
+												   <a href="/bo/configuracion/retenciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-credit-card fa-3x"></i>
 															<h1>Retenciones<br><br></h1>
@@ -66,7 +74,7 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="impuestos">
+													<a href="/bo/configuracion/impuestos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-fax fa-3x"></i>
 															<h1>Impuestos <br><br></h1>
@@ -106,14 +114,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="/bo/admin/paises">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-usd fa-3x"></i>
-															<h1>Pais/Moneda<br><br></h1>
-														</div>
-													</a>
-												</div>
+
 												
 											</div>
 										 </div>

@@ -480,7 +480,7 @@ order by (U.id);");
 	{
 		$this->db->query("delete from cross_tel_user where id_user=".$id);
 		$this->db->query("delete from cross_dir_user where id_user=".$id);
-		//tipo_tel 1=fijo 2=movil
+
 		if($_POST["fijo"])
 		{
 			foreach ($_POST["fijo"] as $fijo)
@@ -569,9 +569,6 @@ order by (U.id);");
                 "estatus"			=>	"ACT"
             );
 		$this->db->update("cat_img",$dato_img,"id_img = ".$id_img[0]->id_img);
-		
-		//$id_foto=mysql_insert_id();
-
 
 	}
 	function del($id,$tipo)

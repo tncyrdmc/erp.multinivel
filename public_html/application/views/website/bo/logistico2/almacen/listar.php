@@ -368,10 +368,10 @@ function editar_almacen(id){
 			alert('Campo Nombre del almacen es requerido');
 			return false;
 		}else if(direccion == ''){
-			alert('El cambo direccion del almacen es requerido');
+			alert('El campo direccion del almacen es requerido');
 			return false;
 		}else if(telefono == ''){
-			alert('El cambo telefono del almacen es requerido');
+			alert('El campo telefono del almacen es requerido');
 			return false;
 		}else{
 			return true;

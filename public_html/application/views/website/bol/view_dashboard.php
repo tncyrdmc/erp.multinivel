@@ -9,7 +9,7 @@ $ci->load->model ( "model_permissions" );
 	<div class="row">
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h1 class="page-title txt-color-blueDark">
-							<a href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span> 
 								> Logistico
 							</span>
@@ -57,7 +57,7 @@ $ci->load->model ( "model_permissions" );
 											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 												<i class="fa fa-edit fa-3x"></i>
 												<h1>
-													<br /> Alta
+													 Alta
 												</h1>
 											</div>
 										</a>
@@ -68,54 +68,49 @@ $ci->load->model ( "model_permissions" );
 											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 												<i class="fa fa-cubes fa-3x"></i>
 												<h1>
-													<br />
 													Inventario
 												</h1>
 											</div>
 										</a>
 									</div>
-									
 									<div class="col-sm-4 link">
-										<a href="/bo/logistico2/pedidos">
-											<div
-												class="minh well well-sm txt-color-white text-center link_dashboard"
-												style="background: #2086bf;">
-												<i class="fa fa-edit fa-3x"></i>
-												<h1>Surtidos / Embarque</h1>
+										<a href="/bo/reportes_logistico/">
+											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+												<i class="fa fa-book fa-3x"></i>
+												<h1>
+													Reportes
+												</h1>
 											</div>
 										</a>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-sm-4 link">
+										<a href="/bo/logistico2/pedidos">
+											<div
+												class="minh well well-sm txt-color-white text-center link_dashboard"
+												style="background: #2086bf;">
+												<i class="fa fa-edit fa-3x"></i>
+												<h1>Embarque</h1>
+											</div>
+										</a>
+									</div>
+									<div class="col-sm-4 link">
 										<a href="/bo/premios/index">
 											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 												<i class="fa fa-trophy fa-3x"></i>
 												<h1>
-													Premios / <br />Entrega
+													Premios
 												</h1>
 											</div>
 										</a>
 									</div>
-	
-									<div class="col-sm-4 link">
-										<a href="/bo/reportes_logistico/">
-											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-												<i class="fa fa-book fa-3x"></i>
-												<h1>
-													<br />
-													Reportes
-												</h1>
-											</div>
-										</a>
-									</div>
-									
+								
 									<div class="col-sm-4 link">
 										<a href="/bo/logistico/archivero">
 											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 												<i class="fa fa-folder fa-3x"></i>
 												<h1>
-													<br />
 													Archivero
 												</h1>
 											</div>

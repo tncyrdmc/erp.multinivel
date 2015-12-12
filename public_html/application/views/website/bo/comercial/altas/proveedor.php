@@ -16,7 +16,7 @@
 							
 							<span>>
 							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
-								 Alta
+								 Proveedor
 								
 							</span>
 					

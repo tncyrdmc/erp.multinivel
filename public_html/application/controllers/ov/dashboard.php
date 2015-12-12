@@ -117,10 +117,10 @@ class dashboard extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($this->general->isAValidUser($id,"OV") == false)
+	/*	if($this->general->isAValidUser($id,"OV") == false)
 		{
 			redirect('/ov/compras/carrito');
-		}
+		}*/
 		
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -163,10 +163,10 @@ class dashboard extends CI_Controller
 		if (isset($infoPremios[0]->nombre)){
 			$hayPremios = true;
 		}
-		$nivel_actual_red=$this->modelo_compras->get_nivel_actual($id);
+		//$nivel_actual_red=$this->modelo_compras->get_nivel_actual($id);
 		
 		$this->template->set("hayPremios",$hayPremios);
-		$this->template->set("nivel_actual_red",$nivel_actual_red[0]->nombre);
+		//$this->template->set("nivel_actual_red",$nivel_actual_red[0]->nombre);
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
 	    $this->template->set("telefono",$telefono);

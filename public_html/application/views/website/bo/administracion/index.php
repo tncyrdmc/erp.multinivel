@@ -43,11 +43,11 @@
 														</div>
 													</a>
 											</div>
-												<div class="col-sm-2 link">	
-													<a href="http://pekcell.com:2095/" target="_blank">
+											<div class="col-sm-2 link">	
+													<a href="/bo/cuentasporcobrar/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-envelope fa-3x"></i>
-															<h1>Email <br>&nbsp</h1>
+															<i class="fa fa-bank fa-3x"></i>
+															<h1>Cuentas Por Cobrar</h1>
 														</div>
 													</a>
 												</div>
@@ -58,15 +58,15 @@
 															<h1>Cuentas por Pagar</h1>
 														</div>
 													</a>
-												</div>
-												<div class="col-sm-2 link">	
-													<a href="/bo/cuentasporcobrar/index">
+											</div>
+											<div class="col-sm-2 link">	
+													<a href="/bo/CuentasPagar/Archivos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-bank fa-3x"></i>
-															<h1>Cuentas Por Cobrar</h1>
+															<i class="fa fa-archive fa-3x"></i>
+															<h1>Historial Pagos</h1>
 														</div>
 													</a>
-												</div>
+											</div>
 											</div>
 										 </div>
 									</div>

@@ -1,7 +1,9 @@
-			<!-- MAIN CONTENT -->
+
+				<!-- MAIN CONTENT -->
 			<div id="content" >
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+
 						<h1 class="page-title txt-color-blueDark">
 						<?php  if($type=='5'){?>
 						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
@@ -32,41 +34,31 @@
 						</div>
 						<!-- end widget edit box -->
 						<!-- widget content -->
-						<div class="widget-body no-padding smart-form">
+				<div class="widget-body no-padding smart-form">
                 <fieldset>
                   <div class="contenidoBotones">
 						<div class="row">
-							<div class="col-sm-1"></div>						
-							<div class="col-sm-9">
-								<div class="col-sm-3 link">
+							<div class="col-sm-3"></div>						
+							<div class="col-sm-8">
+								<div class="col-sm-4 link">
 													<a href="/bo/almacen/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Almacen<br>&nbsp</h1>
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-building  fa-3x"></i>
+															<h1>Almacen</h1>
+														</div>
+													</a>
+												</div>
+
+												<div class="col-sm-4 link">
+													<a href="/bo/cedis/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-globe fa-3x"></i>
+															<h1>Cedis</h1>
 														</div>
 													</a>
 												</div>
 											
-																								
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito_de_compras">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Mercancia<br>&nbsp</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/actionProveedor">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-truck fa-3x"></i>
-															<h1>Proveedor<br>&nbsp</h1>
-
-														</div>
-													</a>
-												</div>
-												
-												<div class="col-sm-3 link">
+												<div class="col-sm-4 link">
 													<a href="/bo/proveedor_mensajeria/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-send fa-3x"></i>
@@ -74,49 +66,33 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/cedis/index">
+												<div class="col-sm-4 link">
+													<a href="/bo/inventario/documento">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Cedis<br>&nbsp</h1>
+															<i class="fa fa-file-text-o fa-3x"></i>
+															<h1>Documentos / Logistica</h1>
 														</div>
 													</a>
 												</div>
-													<div class="col-sm-3 link">
-													<a href="/bo/usuarios/menuAltaUsuarioCedi">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Usuario Cedi<br>&nbsp</h1>
-														</div>
-													</a>
-												</div>												
 											</div>
 
 											
 										
-	 </div>
-							</div>
-						 </div>
-
-									</div>
-								</fieldset>
-						</div>
-						<!-- end widget content -->
-
+	 						</div>
 					</div>
-					<!-- end widget div -->
+				</fieldset>
 				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
-		</div>
-				<div class="row">         
-			        <!-- a blank row to get started -->
-			        <div class="col-sm-12">
-			            <br />
-			            <br />
-			        </div>
-		        </div>
+
+				</div>
+
+				</div>
+						<!-- end widget content -->
+				</article>
+			</div>
+					<!-- end widget div -->
+	</section>
+
+
 			</div>
 			<!-- END MAIN CONTENT -->
 <style>
@@ -133,4 +109,5 @@
 	text-decoration: none !important;
 }
 </style>
+			
 			

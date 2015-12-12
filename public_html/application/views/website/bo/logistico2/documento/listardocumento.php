@@ -5,7 +5,6 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 		
 			<h1 class="page-title txt-color-blueDark">
-				
 					<?php  if($type=='5'){?>
 					
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
@@ -17,8 +16,6 @@
 				</h1>
 				</div>
 				 <?php }else{?>
-				 	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> <a href="/bol/dashboard/"> Logistico </a>
 				> <a href="/bo/inventario/index"> Inventario </a>

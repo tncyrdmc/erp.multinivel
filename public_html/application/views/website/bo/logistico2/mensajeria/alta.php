@@ -3,8 +3,8 @@
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-			<h1 class="page-title txt-color-blueDark">
+		<h1 class="page-title txt-color-blueDark">
+			<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> <a href="/bol/"> Logistico </a>
 				> <a href="/bo/logistico2/alta"> Alta </a>
 				> <a href="/bo/proveedor_software/"> Proveedor de Mensajeria </a>
@@ -64,7 +64,7 @@
 					<div class="widget-body no-padding">
 						
 						<form class="smart-form" method="POST" action="/bo/proveedor_mensajeria/crear_proveedor">
-							<fieldset>
+							<fieldset style="padding: 4rem;">
 								<div class="row">
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre de empresa
@@ -110,6 +110,7 @@
 												
 											</select>
 										</label>
+										<a style="cursor: pointer;" onclick="new_ciudad()"> Nueva Ciudad <i class="fa fa-plus"></i></a>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -280,7 +281,7 @@
 								</div>
 								
 								<div class="row" id="tarifa">
-									<header>Tarifas</header>
+									<header>Tarifas</header><br><br>
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>
@@ -321,7 +322,7 @@
 							<div class="row">
 								<section  id="div_subir" style="width: 25rem;">
 									<div style="width: 25rem;">
-										<input type="submit" class="btn btn-success" style="margin-left: 66% ! important; width: 40%;" id="boton_subir" value="Agregar">
+										<input type="submit" class="btn btn-success" style=" width: 40%;" id="boton_subir" value="Ingresar">
 									</div>
 								</section>
 							</div>

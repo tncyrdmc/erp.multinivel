@@ -52,35 +52,37 @@
                 <fieldset>
                   <div class="contenidoBotones">
 						<div class="row">
-							
-								<div class="col-sm-12 col-md-5 col-lg-5 link">
+								<div class="col-sm-12 link">
+									<div class="col-sm-1 link">
+									</div>
+									<div class="col-sm-2 link">
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[0]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[0]->descripcion;?></h1>
+											<h1><?php echo $tipos[0]->descripcion;?><br>&nbsp</h1>
 											
 										</div>
 									</a>
 								</div>
-								<div class="col-sm-12 col-md-5 col-lg-5 link">
+								<div class="col-sm-2 link">
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[1]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[1]->descripcion;?></h1>
+											<h1><?php echo $tipos[1]->descripcion;?><br>&nbsp</h1>
 											
 										</div>
 									</a>
 								</div>
-								<div class="col-sm-12 col-md-5 col-lg-5 link">
+								<div class="col-sm-2 link">
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[2]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[2]->descripcion;?></h1>
+											<h1><?php echo $tipos[2]->descripcion;?><br>&nbsp</h1>
 											
 										</div>
 									</a>
 								</div>
-								<div class="col-sm-12 col-md-5 col-lg-5 link">
+								<div class="col-sm-2 link">
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[3]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
@@ -88,7 +90,8 @@
 										</div>
 									</a>
 								</div>
-						
+								</div>
+		
 							</div>
 					</div>
 				</fieldset>
