@@ -36,7 +36,7 @@
     <fieldset id="pswd">
 		<form class="smart-form" action="/bo/rangos/ingresar_rango/" method="POST" role="form">
 			<legend>Nuevo Rango</legend><br>
-			<div class="form-group" style="width: 20rem;">
+			<div class="form-group" style="width: 50rem;">
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
 				<input id='desc' class="form-control" name="desc" size="20" placeholder="Nombre" type="text" required>
 	        </label>
@@ -50,8 +50,7 @@
 										</div>
 										<div class="col col-lg-2 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_condicion()"> Agregar condicion <i class="fa fa-plus"></i></a>
-										</div>
-								
+										</div>								
 										
 									</div>
 									<div class="row">
@@ -59,18 +58,22 @@
 										</div>
 										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
 											<label class="select">Tipo de condicion
-												<select name="tipo_rango[]" id="t1" >
+												<select name="tipo_rango" >
+													<?php foreach($tipo_rango as $tipos){ ?>
+														<option value="<?= $tipos->id ?>"><?= $tipos->descripcion ?></option>
+														<?php } ?>
 												</select>
 											</label>
 										</div>
 										
 										<div class="col col-xs-12 col-sm-5 col-lg-3">
 											Valor<label for="" class="input">
-												<i class="icon-prepend fa fa-dollar"></i>
-												<input type="number" class="form-control" name="valor_tipo[]" placeholder=""class="form-control" required />
+												<i class="icon-prepend fa fa-sort"></i>
+												<input type="number" class="form-control" name="valor_tipo" placeholder=""class="form-control" required />
 											</label>		
 										</div>
 									</div>
+									
 									
 								</div>
 								
@@ -103,7 +106,41 @@
 		        </div>
 			</div>
 			<!-- END MAIN CONTENT -->
+<script type="text/javascript">
+var i=0;
+	function add_condicion()
+{
+	var code=	'<div id="'+i+'" class="row">'
+	+'<div class="col col-lg-2">'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">'
+		+'<label class="select">Tipo de Condicion'
+		+'<select name="tipo_rango" >'
+		+'<?php foreach($tipo_rango as $tipos){ ?>'
+		+'<option value="<?= $tipos->id ?>"><?= $tipos->descripcion ?></option>'
+		+'<?php } ?>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
+		+'Valor<label for="" class="input">'
+			+'<i class="icon-prepend fa fa-sort"></i>'
+			+'<input type="number" class="form-control" name="valor_tipo" placeholder=""class="form-control" required />'
+			+'<a style="cursor: pointer;" onclick="delete_condicion('+i+')">Eliminar Condicion <i class="fa fa-minus"></i></a>'
+		+'</label>'
+	+'</div>'
+	+'</div>';
+	$("#cross_tipo_rango").append(code);
+	i = i + 1;
+}
 
+function delete_condicion(id)
+{	
+	$("#"+id+"").remove();
+	
+}
+
+</script>
 			
 <style>
 .link

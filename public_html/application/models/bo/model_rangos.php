@@ -9,5 +9,11 @@ function get_tipo_rango(){
 		return $q->result();
 }
 
+function get_tipo_rango_not_in($id){
+
+		$q=$this->db->query("select * from cat_tipo_rango where id not in (".$id.")");
+		return $q->result();
+}
+
 
 }
