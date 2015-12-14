@@ -99,4 +99,31 @@ class Rangos extends CI_Controller
 
 
 	}
+	function set_tipo_rango(){
+$code="";
+		if(isset($_POST['id'])){
+			$ids=$_POST['id'];
+			
+					$tipo_rango=$this->model_rangos->get_tipo_rango_not_in($ids);
+			foreach ($tipo_rango as $tipo) {
+				$code+="<option value='".$tipo->id."'>".$tipo->descripcion."</option>";
+				
+
+			}
+			
+		
+			echo $code;
+
+		}
+	}
+	function ingresar_rango(){
+		$q=$this->model_rangos->ingresar_rango();
+
+echo $q;
+	}
+	function ingresar_tipo_rango(){
+		$this->model_rangos->ingresar_tipo_rango();
+
+
+	}
 }
