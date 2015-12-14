@@ -13,7 +13,7 @@ class Rangos extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
-		
+		$this->load->model('bo/model_rangos');
 	}
 	function index(){
 
@@ -39,6 +39,7 @@ class Rangos extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/rangos/index');
+
 	}
 
 	function alta(){
@@ -58,6 +59,9 @@ class Rangos extends CI_Controller
 		$style=$this->modelo_dashboard->get_style($id);
 
 		$this->template->set("style",$style);
+
+		$tipo_rango=$this->model_rangos->get_tipo_rango();
+		$this->template->set("tipo_rango",$tipo_rango);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

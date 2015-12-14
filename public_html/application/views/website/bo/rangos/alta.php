@@ -6,7 +6,7 @@
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
 								<a href="/bo/configuracion/">Configuracion</a> > 
-								<a href="/bo/configuracion/compensacion/">Plan de compensación</a> >
+								<a href="/bo/configuracion/compensacion/">Plan de compensacion</a> >
 								<a href="/bo/rangos/">Rangos</a>
 								> Nuevo rango
 							</span>
@@ -43,6 +43,40 @@
 			<label style="margin: 1rem;">
 				<textarea id='porc' class="form-control" name="porc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required></textarea>
 	        </label>
+	        <div class="row" id="cross_tipo_rango">
+									<header>Condiciones</header><br><br>
+									<div class="row">
+										<div class="col col-lg-3 col-xs-2">
+										</div>
+										<div class="col col-lg-2 col-xs-2">
+											<a style="cursor: pointer;" onclick="add_condicion()"> Agregar condicion <i class="fa fa-plus"></i></a>
+										</div>
+								
+										
+									</div>
+									<div class="row">
+										<div class="col col-lg-2">
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
+											<label class="select">Tipo de condicion
+												<select name="tipo_rango[]" id="t1" >
+												</select>
+											</label>
+										</div>
+										
+										<div class="col col-xs-12 col-sm-5 col-lg-3">
+											Valor<label for="" class="input">
+												<i class="icon-prepend fa fa-dollar"></i>
+												<input type="number" class="form-control" name="valor_tipo[]" placeholder=""class="form-control" required />
+											</label>		
+										</div>
+									</div>
+									
+								</div>
+								
+								<div id="tipos">
+								
+								</div>
 
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Crear</button>
 			</div>
@@ -69,6 +103,8 @@
 		        </div>
 			</div>
 			<!-- END MAIN CONTENT -->
+
+			
 <style>
 .link
 {
