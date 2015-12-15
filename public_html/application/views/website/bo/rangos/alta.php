@@ -46,7 +46,6 @@
 
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
-
 									<header>Condiciones</header><br><br>
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
@@ -61,7 +60,7 @@
 										</div>
 										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
 											<label class="select">Tipo de condicion
-												<select name="tipo_rango" id="t[]" >
+												<select name="tipo_rango" id="t0" >
 													<?php foreach($tipo_rango as $tipos){ ?>
 														<option value="<?= $tipos->id ?>"><?= $tipos->descripcion ?></option>
 														<?php } ?>
@@ -72,12 +71,10 @@
 										<div class="col col-xs-12 col-sm-5 col-lg-3">
 											Valor<label for="" class="input">
 												<i class="icon-prepend fa fa-sort"></i>
-												<input type="number" class="form-control" id="valor_tipo[]" name="valor_tipo" placeholder=""class="form-control" required />
+												<input type="number" class="form-control" id="valor_tipo" name="valor_tipo" placeholder=""class="form-control" required />
 											</label>		
 										</div>
-									</div>
-									
-									
+									</div>						
 			</div>
 		</div>
 
@@ -113,17 +110,35 @@
 			<!-- END MAIN CONTENT -->
 
 <script type="text/javascript">
-var i=0;
-var name=$("#nombre").val();
-var descr=$("#desc").val();
-var tipos=$("#t").val();
-var valor=$("#valor_tipo").val();
+var i=1;
+
+var descr="";
+var tipos="";
+var valor=0;
+var id_tipo="";
+//var mensaje="Hola";
 
 
 
 function enviar() {
-	
-	 $.ajax({
+	var name=$("#nombre").val();
+	descr=$("#desc").val();
+	valor=$("#valor_tipo").val();
+	tipos=$("#t0").val();
+ /*$.ajax({
+							type: "POST",
+							url: "/bo/rangos/ingresar_rango_prueba",
+							data: $("#ingresar_rangos").serialize()
+						})
+						.done(function( msg ) {
+
+
+							});
+
+					}*/
+
+
+	$.ajax({
 							type: "POST",
 							url: "/bo/rangos/ingresar_rango",
 							data: {
@@ -132,8 +147,11 @@ function enviar() {
 							}
 						})
 						.done(function( msg ) {
-
-								 $.ajax({
+							
+							//alert(msg);
+								
+								
+								/* $.ajax({
 							type: "POST",
 							url: "/bo/rangos/ingresar_tipo_rango",
 							id:msg,
@@ -142,16 +160,34 @@ function enviar() {
 						})
 						.done(function( msg ) {
 							location.href="/bo/rangos/listar";
-						});
+						});*/
 
 						});//fin Done ajax
-		
+	ingresar_cross_rango_tipo();	
 }
+function ingresar_cross_rango_tipo(){
+	valor=parseFloat($("#valor_tipo").val());
+	tipos=$("#t0").val();
+	alert(tipos);
+	alert(valor);
+
+		 $.ajax({
+							type: "POST",
+							url: "/bo/rangos/ingresar_tipo_rango",
+							data: {
+							id_tipos:tipos,
+							valores:valor
+									}
+				}).done(function( msg ){
+							location.href="/bo/rangos/listar";
+										});
+
+									}
 
 	function add_condicion()
 {
 
-	var id_tipo=$('#t').val();
+	id_tipo+=$('#t0').val();
 	alert(id_tipo);
 	$.ajax({
 		type: "POST",
@@ -161,12 +197,12 @@ function enviar() {
 	.done(function( msg )
 	{
 
-	var code=	'<div id="'+i+'" class="row">'
+	var code=	'<div id="'+(i)+'" class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">'
 		+'<label class="select">Tipo de Condicion'
-		+'<select name="tipo_rango" id="t[]" >'
+		+'<select name="tipo_rango" id="t'+(i)+'"">'
 		+ msg
 		+'</select>'
 	+'</label>'
@@ -174,14 +210,19 @@ function enviar() {
 	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
 		+'Valor<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-sort"></i>'
-			+'<input type="number" class="form-control" name="valor_tipo[]" placeholder=""class="form-control" required />'
+			+'<input type="number" class="form-control" name="valor_tipo" placeholder=""class="form-control" required />'
 			+'<a style="cursor: pointer;" onclick="delete_condicion('+i+')">Eliminar Condicion <i class="fa fa-minus"></i></a>'
 		+'</label>'
 	+'</div>'
 	+'</div>';
 	$("#cross_tipo_rango").append(code);
+	id_tipo+=',';
+	id_tipo+=$('#t"+i"').val();
+	alert(d_tipo);
 	i = i + 1;	
+	
 	});
+
 
 }
 

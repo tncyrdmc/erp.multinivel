@@ -103,10 +103,9 @@ class Rangos extends CI_Controller
 $code="";
 		if(isset($_POST['id'])){
 			$ids=$_POST['id'];
-			
-					$tipo_rango=$this->model_rangos->get_tipo_rango_not_in($ids);
+			$tipo_rango=$this->model_rangos->get_tipo_rango_not_in($ids);
 			foreach ($tipo_rango as $tipo) {
-				$code+="<option value='".$tipo->id."'>".$tipo->descripcion."</option>";
+				$code=+"<option value='".$tipo->id."'>".$tipo->descripcion."</option>";
 				
 
 			}
@@ -117,13 +116,38 @@ $code="";
 		}
 	}
 	function ingresar_rango(){
-		$q=$this->model_rangos->ingresar_rango();
+		$name=$_POST['nombre'];
+		$desc=$_POST['desc'];
+		$q=$this->model_rangos->ingresar_rango($name,$desc);
 
-echo $q;
+echo json_decode($q);
 	}
 	function ingresar_tipo_rango(){
-		$this->model_rangos->ingresar_tipo_rango();
+		
+		$id_tipos=$_POST['id_tipos'];
+		$valores=$_POST['valores'];
+		$this->model_rangos->ingresar_tipo_rango($id_tipos,$valores);
 
 
 	}
+
+	/*function ingresar_rango_prueba(){
+			$datos_rango=array(
+				"name"=>$_POST['nombre'],
+				"descripcion"=>$_POST['desc']
+				);
+
+
+			$q=$this->model_rangos->prueba_tipo_rango($datos_rango);
+
+
+				$datos_cross=array(
+					"id_rango"=>$q,
+				"id_tipo_rango"=>$_POST['t0'],
+				"valor"=>$_POST['valor_tipo']
+
+				);
+
+				$this->model_rangos->prueba_tipo_rango2($datos_cross);	
+	}*/
 }
