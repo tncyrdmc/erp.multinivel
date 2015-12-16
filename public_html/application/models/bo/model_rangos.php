@@ -42,23 +42,46 @@ function get_rango_max(){
 	$g=$this->db->query("select max(id_rango) from cat_rango");
 	return $g->result();
 }
-function ingresar_tipo_rango($id_tipos,$valores){
-/*for ($i=0;$i<$_POST['id_tipos'];$i++) {
-		$dato_cross=array(
-		"id_rango"=>$_POST['id'],
-		"id_tipo_rango"=>$_POST['id_tipos'][$i],
-		"valor"=>$_POST['valores'][$i]
-		);*/
-$ObtenerMax=$this->get_rango_max()+0.0;
+function ingresar_tipo_rango($id_rango,$valores, $id_tipo){
 
 $dato_cross=array(
-		"id_rango"=>$ObtenerMax,
-		"id_tipo_rango"=>$id_tipos,
+		"id_rango"=>$id_rango,
+		"id_tipo_rango"=>$id_tipo,
 		"valor"=>$valores
 		);
 	$this->db->insert("cross_rango_tipos",$dato_cross);
 
 
+}
+
+function ingresar_tipo_rango_afil($id_rango,$valores, $id_tipo){
+
+$dato_cross=array(
+		"id_rango"=>$id_rango,
+		"id_tipo_rango"=>$id_tipo,
+		"valor"=>$valores
+		);
+	$this->db->insert("cross_rango_tipos",$dato_cross);
+
+
+}
+
+function ingresar_tipo_rango_pun($id_rango,$valores, $id_tipo){
+
+$dato_cross=array(
+		"id_rango"=>$id_rango,
+		"id_tipo_rango"=>$id_tipo,
+		"valor"=>$valores
+		);
+	$this->db->insert("cross_rango_tipos",$dato_cross);
+
+
+}
+
+function get_cat_rangos(){
+
+			$q=$this->db->query("select * from cat_rango");
+		return $q->result();
 }
 /*function prueba_tipo_rango($datos_rango){
 
@@ -71,6 +94,36 @@ prueba_tipo_rango2($datos_cross){
 $this->db->insert("cross_rango_tipos",$datos_cross);
 
 }*/
+
+function get_rangos_id($id){
+
+
+	$rangos=$this->db->query('select * from cat_rango where id_rango='.$id.'');
+	return $rangos->result();
+}
+
+function actualizar_rangos(){
+
+	$datos=array('name' =>$_POST['nombre'] ,
+				 'descripcion' =>$_POST['descripcion'] 
+	 );
+
+		$this->db->where('id_rango', $_POST['id']);
+		$this->db->update('cat_rango', $datos);
+		
+		return true;
+}
+
+function kill_rangos(){
+
+	$this->db->query("delete from cat_rango where id_rango=".$_POST["id"]);
+}
+
+function cambiar_estado_rangos(){
+	$this->db->query("update cat_rango set estatus = '".$_POST['estado']."' where id_rango=".$_POST["id"]);
+		return true;
+
+}
 
 
 }

@@ -49,32 +49,60 @@
 									<header>Condiciones</header><br><br>
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
-										</div>
-										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_condicion()"> Agregar condicion <i class="fa fa-plus"></i></a>
-										</div>								
-										
+										</div>																	
 									</div>
+
+
 									<div class="row">
 										<div class="col col-lg-2">
 										</div>
 										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
-											<label class="select">Tipo de condicion
-												<select name="tipo_rango" id="t0" >
-													<?php foreach($tipo_rango as $tipos){ ?>
-														<option value="<?= $tipos->id ?>"><?= $tipos->descripcion ?></option>
-														<?php } ?>
-												</select>
-											</label>
+
+											<header>Venta</header>
+										</div>
+										
+										<div class="col col-xs-12 col-sm-5 col-lg-3">
+											Valor<label for="" class="input">
+												<i class="icon-prepend fa fa-money"></i>
+
+												<input type="text" id="venta" class="form-control"  name="valor_tipo" placeholder=""class="form-control" required />
+											</label>		
+										</div>
+									</div>	
+
+
+										<div class="row">
+										<div class="col col-lg-2">
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
+											<header>Afiliados</header>
 										</div>
 										
 										<div class="col col-xs-12 col-sm-5 col-lg-3">
 											Valor<label for="" class="input">
 												<i class="icon-prepend fa fa-sort"></i>
-												<input type="number" class="form-control" id="valor_tipo" name="valor_tipo" placeholder=""class="form-control" required />
+
+												<input type="text"  id="afiliados" class="form-control"  name="valor_tipo" placeholder=""class="form-control" required />
 											</label>		
 										</div>
-									</div>						
+									</div>	
+
+									<div class="row">
+										<div class="col col-lg-2">
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
+											<header>Puntos</header>
+										</div>
+										
+										<div class="col col-xs-12 col-sm-5 col-lg-3">
+											Valor<label for="" class="input">
+												<i class="icon-prepend fa fa-sort"></i>
+
+												<input type="text" id="puntos" class="form-control"  name="puntos" placeholder=""class="form-control" required />
+											</label>		
+										</div>
+									</div>
+
 			</div>
 		</div>
 
@@ -110,12 +138,12 @@
 			<!-- END MAIN CONTENT -->
 
 <script type="text/javascript">
-var i=1;
 
+var name="";
 var descr="";
-var tipos="";
-var valor=0;
-var id_tipo="";
+var venta="";
+var afiliados="";
+var puntos="";
 //var mensaje="Hola";
 
 
@@ -123,66 +151,30 @@ var id_tipo="";
 function enviar() {
 	var name=$("#nombre").val();
 	descr=$("#desc").val();
-	valor=$("#valor_tipo").val();
-	tipos=$("#t0").val();
- /*$.ajax({
-							type: "POST",
-							url: "/bo/rangos/ingresar_rango_prueba",
-							data: $("#ingresar_rangos").serialize()
-						})
-						.done(function( msg ) {
-
-
-							});
-
-					}*/
-
-
+	venta=$("#venta").val();
+	afiliados=$("#afiliados").val();
+	puntos=$("#puntos").val();
+	alert(venta);
+	alert(afiliados);
+	alert(puntos);
 	$.ajax({
 							type: "POST",
 							url: "/bo/rangos/ingresar_rango",
 							data: {
 								nombre:name,
-								desc:descr
+								desc:descr,
+								venta:venta,
+								afiliado:afiliados,
+								punto:puntos
 							}
 						})
 						.done(function( msg ) {
 							
-							//alert(msg);
-								
-								
-								/* $.ajax({
-							type: "POST",
-							url: "/bo/rangos/ingresar_tipo_rango",
-							id:msg,
-							id_tipos:tipos,
-							valores:valor
-						})
-						.done(function( msg ) {
-							location.href="/bo/rangos/listar";
-						});*/
 
 						});//fin Done ajax
-	ingresar_cross_rango_tipo();	
+	
 }
-function ingresar_cross_rango_tipo(){
-	valor=parseFloat($("#valor_tipo").val());
-	tipos=$("#t0").val();
-	alert(tipos);
-	alert(valor);
 
-		 $.ajax({
-							type: "POST",
-							url: "/bo/rangos/ingresar_tipo_rango",
-							data: {
-							id_tipos:tipos,
-							valores:valor
-									}
-				}).done(function( msg ){
-							location.href="/bo/rangos/listar";
-										});
-
-									}
 
 	function add_condicion()
 {

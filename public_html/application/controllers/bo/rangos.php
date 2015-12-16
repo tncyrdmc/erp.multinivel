@@ -85,9 +85,9 @@ class Rangos extends CI_Controller
 		{
 			redirect('/auth/logout');
 		}
-
+		$cat_rangos=$this->model_rangos->get_cat_rangos();
 		$style=$this->modelo_dashboard->get_style($id);
-
+		$this->template->set("cat_rangos",$cat_rangos);
 		$this->template->set("style",$style);
 
 		$this->template->set_theme('desktop');
@@ -118,17 +118,47 @@ $code="";
 	function ingresar_rango(){
 		$name=$_POST['nombre'];
 		$desc=$_POST['desc'];
-		$q=$this->model_rangos->ingresar_rango($name,$desc);
 
-echo json_decode($q);
+		$q=$this->model_rangos->ingresar_rango($name,$desc);
+			$this->model_rangos->ingresar_tipo_rango($q,$_POST['venta'],'1');
+			$this->model_rangos->ingresar_tipo_rango_afil($q,$_POST['afiliado'],'2');
+			$this->model_rangos->ingresar_tipo_rango_pun($q,$_POST['punto'],'3');
+		
+		
+       echo true;
 	}
 	function ingresar_tipo_rango(){
 		
 		$id_tipos=$_POST['id_tipos'];
 		$valores=$_POST['valores'];
-		$this->model_rangos->ingresar_tipo_rango($id_tipos,$valores);
+		$this->model_rangos->ingresar_tipo_rango($id_tipos,$valores,'');
 
 
+	}
+
+	function editar_rangos(){
+		$id= $this->tank_auth->get_user_id();
+		$style= $this->general->get_style($id);
+		$rangos= $this->model_rangos->get_rangos_id($_POST['id']);
+	
+		$this->template->set("rangos",$rangos);
+		$this->template->build('website/bo/rangos/editar_rangos');
+
+	}
+	function actualizar_rangos(){
+
+		$correcto = $this->model_rangos->actualizar_rangos();
+		if($correcto){
+			echo "Rango Actualizado";
+		}
+		else{
+			echo "No se logro actualizar el rango";
+		}
+	}
+
+	function kill_rangos(){
+
+		$kill_rangos=$this->model_rangos->kill_rangos();
 	}
 
 	/*function ingresar_rango_prueba(){
@@ -150,4 +180,12 @@ echo json_decode($q);
 
 				$this->model_rangos->prueba_tipo_rango2($datos_cross);	
 	}*/
+
+
+	function cambiar_estado_rangos(){
+
+		$correcto=$this->model_rangos->cambiar_estado_rangos();
+		echo "";
+
+	}
 }
