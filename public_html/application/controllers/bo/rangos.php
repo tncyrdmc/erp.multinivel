@@ -48,7 +48,7 @@ class Rangos extends CI_Controller
 			redirect('/auth');
 		}
 
-			$id=$this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
 		if($usuario[0]->id_tipo_usuario!=1)
@@ -116,22 +116,37 @@ $code="";
 		}
 	}
 	function ingresar_rango(){
+
+		$condiciones = $_POST['id_tipo_condicion'];
+		$valores = $_POST['valor_rango'];
+
+		$id_rango=$this->model_rangos->ingresar_rango();
+
+		$this->model_rangos->ingresar_condicion_rango($id_rango,$condiciones,$valores);
+	/*
 		$name=$_POST['nombre'];
 		$desc=$_POST['desc'];
 
+
 		$q=$this->model_rangos->ingresar_rango($name,$desc);
-			$this->model_rangos->ingresar_tipo_rango($q,$_POST['venta'],'1');
-			$this->model_rangos->ingresar_tipo_rango_afil($q,$_POST['afiliado'],'2');
-			$this->model_rangos->ingresar_tipo_rango_pun($q,$_POST['punto'],'3');
+
+			$this->IngTipRango($q,$_POST['venta']);
+			//$this->model_rangos->IngTipRangoAfil($q,$_POST['afiliado'],'2');
+			//$this->model_rangos->IngTipRangoPun($q,$_POST['punto'],'3');
 		
 		
-       echo true;
+       x*/
+	}
+
+	function IngTipRango($q,$valor){
+		$this->model_rangos->IngTipRango($q,$valor,'1');
+
 	}
 	function ingresar_tipo_rango(){
 		
 		$id_tipos=$_POST['id_tipos'];
 		$valores=$_POST['valores'];
-		$this->model_rangos->ingresar_tipo_rango($id_tipos,$valores,'');
+		$this->model_rangos->IngTipRango($id_tipos,$valores,'');
 
 
 	}
@@ -140,7 +155,9 @@ $code="";
 		$id= $this->tank_auth->get_user_id();
 		$style= $this->general->get_style($id);
 		$rangos= $this->model_rangos->get_rangos_id($_POST['id']);
-	
+		$RangoVentas=$this->model_rangos->get_cross_rango($_POST['id']);
+		$this->template->set("RangoVentas",$RangoVentas);
+		//var_dump($RangoVentas[1]);
 		$this->template->set("rangos",$rangos);
 		$this->template->build('website/bo/rangos/editar_rangos');
 

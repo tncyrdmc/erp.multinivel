@@ -78,7 +78,7 @@
 												<?foreach ($cat_rangos as $cat_rango) {?>
 													<tr>
 														<td><?php echo $cat_rango->id_rango; ?></td>
-														<td><?php echo $cat_rango->name; ?></td>
+														<td><?php echo $cat_rango->nombre; ?></td>
 														<td><?php echo $cat_rango->descripcion; ?></td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-pencil fa-3x"></i></a>

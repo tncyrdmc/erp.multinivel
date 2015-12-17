@@ -1,3 +1,10 @@
+<?php 
+	$rangos="";
+	foreach($tipo_rango as $categoria){
+		$rangos=$rangos."<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
+	}
+?>
+
 	<!-- MAIN CONTENT -->
 			<div id="content" >
 				<div class="row">
@@ -34,7 +41,7 @@
 						<div class="widget-body no-padding smart-form">
 <div>
     <fieldset id="pswd">
-		<form class="smart-form" action="/bo/rangos/ingresar_rango/" method="POST" role="form">
+		<form id="rangos" action="/bo/rangos/ingresar_rango/" method="POST" role="form">
 			<legend>Nuevo Rango</legend><br>
 			
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
@@ -52,66 +59,45 @@
 										</div>																	
 									</div>
 
-
+									<div class="row" id="rango">
+									<div class="row">
+										<div class="col col-lg-3 col-xs-2">
+										</div>
+										<div class="col col-lg-2 col-xs-2">
+											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condición <i class="fa fa-plus"></i></a>
+										</div>
+										
+									</div>
 									<div class="row">
 										<div class="col col-lg-2">
 										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
-
-											<header>Venta</header>
-										</div>
-										
-										<div class="col col-xs-12 col-sm-5 col-lg-3">
-											Valor<label for="" class="input">
-												<i class="icon-prepend fa fa-money"></i>
-
-												<input type="text" id="venta" class="form-control"  name="valor_tipo" placeholder=""class="form-control" required />
-											</label>		
-										</div>
-									</div>	
-
-
-										<div class="row">
-										<div class="col col-lg-2">
-										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
-											<header>Afiliados</header>
+										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo_condicion">
+											<label class="select">Tipo Condicion
+											<select name="id_tipo_condicion[]" >
+													<?php	
+														foreach($tipo_rango as $categoria){
+															echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
+														}
+													?>
+											</select>
+											</label>
 										</div>
 										
 										<div class="col col-xs-12 col-sm-5 col-lg-3">
 											Valor<label for="" class="input">
 												<i class="icon-prepend fa fa-sort"></i>
-
-												<input type="text"  id="afiliados" class="form-control"  name="valor_tipo" placeholder=""class="form-control" required />
-											</label>		
-										</div>
-									</div>	
-
-									<div class="row">
-										<div class="col col-lg-2">
-										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">
-											<header>Puntos</header>
-										</div>
-										
-										<div class="col col-xs-12 col-sm-5 col-lg-3">
-											Valor<label for="" class="input">
-												<i class="icon-prepend fa fa-sort"></i>
-
-												<input type="text" id="puntos" class="form-control"  name="puntos" placeholder=""class="form-control" required />
+												<input id="valor_rango[]" type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />
 											</label>		
 										</div>
 									</div>
-
-			</div>
-		</div>
-
-
-								<div id="tipos">
+									
+								</div>
+								
+								<div id="rangos">
 								
 								</div>
 
-			<button style="margin: 1rem;margin-bottom: 4rem;" type="button" onclick="enviar()" class="btn btn-success">Crear</button>
+			<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Crear</button>
 			
 		</form>
     </fieldset>
@@ -138,92 +124,69 @@
 			<!-- END MAIN CONTENT -->
 
 <script type="text/javascript">
+var i=0;
 
-var name="";
-var descr="";
-var venta="";
-var afiliados="";
-var puntos="";
-//var mensaje="Hola";
-
-
+$( "#rangos" ).submit(function( event ) {
+	event.preventDefault();
+	enviar();
+});
 
 function enviar() {
-	var name=$("#nombre").val();
-	descr=$("#desc").val();
-	venta=$("#venta").val();
-	afiliados=$("#afiliados").val();
-	puntos=$("#puntos").val();
-	alert(venta);
-	alert(afiliados);
-	alert(puntos);
+
 	$.ajax({
-							type: "POST",
-							url: "/bo/rangos/ingresar_rango",
-							data: {
-								nombre:name,
-								desc:descr,
-								venta:venta,
-								afiliado:afiliados,
-								punto:puntos
-							}
+						type: "POST",
+						url: "/bo/rangos/ingresar_rango",
+						data: $('#rangos').serialize()
 						})
 						.done(function( msg ) {
 							
-
+							bootbox.dialog({
+						message: "Se ha creado el rango."+msg,
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href="/bo/rangos/alta";
+								}
+							}
+						}
+					})
 						});//fin Done ajax
 	
 }
 
-
-	function add_condicion()
+function add_rango()
 {
 
-	id_tipo+=$('#t0').val();
-	alert(id_tipo);
-	$.ajax({
-		type: "POST",
-		url: "/bo/rangos/set_tipo_rango",
-		data: {id: id_tipo}
-	})
-	.done(function( msg )
-	{
-
-	var code=	'<div id="'+(i)+'" class="row">'
+	var code=	'<div id="'+i+'" class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo">'
-		+'<label class="select">Tipo de Condicion'
-		+'<select name="tipo_rango" id="t'+(i)+'"">'
-		+ msg
-		+'</select>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
+		+'<label class="select">Tipo Condición'
+		+'<select name="id_tipo_condicion[]" >'
+		+'<?php	echo $rangos; ?>'
+	+'</select>'
 	+'</label>'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
-		+'Valor<label for="" class="input">'
+		+'Tarifa<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-sort"></i>'
-			+'<input type="number" class="form-control" name="valor_tipo" placeholder=""class="form-control" required />'
-			+'<a style="cursor: pointer;" onclick="delete_condicion('+i+')">Eliminar Condicion <i class="fa fa-minus"></i></a>'
+			+'<input type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />'
+			+'<a style="cursor: pointer;" onclick="delete_rango('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
 		+'</label>'
 	+'</div>'
 	+'</div>';
-	$("#cross_tipo_rango").append(code);
-	id_tipo+=',';
-	id_tipo+=$('#t"+i"').val();
-	alert(d_tipo);
-	i = i + 1;	
-	
-	});
-
-
+	$("#rango").append(code);
+	i = i + 1
 }
 
-function delete_condicion(id)
+function delete_rango(id)
 {	
 	$("#"+id+"").remove();
 	
 }
-
 </script>
 	
 

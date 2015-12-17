@@ -2,13 +2,32 @@
 							<fieldset>
 								<input type="text" class="hide" name="id" value="<?php echo $_POST['id']; ?>" name="id">
 								<label class="input"> Nombre
-								<input type="text" name="nombre" required placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $rangos[0]->name; ?>" required>
+								<input type="text" name="nombre" required placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $rangos[0]->nombre; ?>" required>
 								<label class="input"> Descripcion
 								<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $rangos[0]->descripcion; ?>" required>
 								<label class="input"> Condiciones
-								<input type="text" name="name" required placeholder="Nombre" style="width: 50%;" class="form-control" value="" required>
-								<input type="number" name="porcentaje" required placeholder="valor" style="width: 50%;" class="form-control" value="" required>
 								<br>
+
+								<?php 
+
+foreach ($RangoVentas as $rangoventa ) {
+	if($rangoventa->id_tipo_rango=="1"){
+
+	echo "Ventas"."<br>".'<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="'.$rangoventa->valor.'">';}
+	else{
+			if($rangoventa->id_tipo_rango=="2"){
+
+	echo "Afiliados"."<br>".'<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="'.$rangoventa->valor.'">';}
+	else{
+		if($rangoventa->id_tipo_rango=="3"){
+
+	echo "Puntos"."<br>".'<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="'.$rangoventa->valor.'">';}
+	}
+
+	}	
+}
+								?>
+
 
 							</fieldset>
 							<footer>

@@ -26,74 +26,54 @@ function get_tipo_rango_not_in($id){
 
 		return $q->result();
 }
-function ingresar_rango($nombre,$desc){
-
-	$dato_rango=array(
-		"name"=>$nombre,
-		"descripcion"=>$desc
+function ingresar_rango(){
+		$rango = array(
+				'nombre' => $_POST['nombre'],
+				'descripcion' => $_POST['desc'],
+				'estatus' => 'ACT'
 		);
-	$this->db->insert("cat_rango",$dato_rango);
+
+	$this->db->insert("cat_rango",$rango);
 	$q=$this->get_rango_max();
-	return $q->result();
+	return $q[0]->max;
 }
 
 function get_rango_max(){
 
-	$g=$this->db->query("select max(id_rango) from cat_rango");
+	$g=$this->db->query("select max(id_rango) as max from cat_rango");
 	return $g->result();
 }
-function ingresar_tipo_rango($id_rango,$valores, $id_tipo){
+function ingresar_condicion_rango($id_rango,$condiciones,$valores){
+		
+		$condicionRango = array();
+		$i = 0;
+		foreach ($condiciones as $condicion){
+			if($valores[$i] != ''){
+				$condicion = array(
+						'id_rango' => intval($id_rango),
+						'id_tipo_rango' => intval($condicion),
+						'valor' => intval($valores[$i]),
+				);
+				array_push($condicionRango, $condicion);
+				$i = $i + 1;
+			}
+		}
 
-$dato_cross=array(
-		"id_rango"=>$id_rango,
-		"id_tipo_rango"=>$id_tipo,
-		"valor"=>$valores
-		);
-	$this->db->insert("cross_rango_tipos",$dato_cross);
-
-
-}
-
-function ingresar_tipo_rango_afil($id_rango,$valores, $id_tipo){
-
-$dato_cross=array(
-		"id_rango"=>$id_rango,
-		"id_tipo_rango"=>$id_tipo,
-		"valor"=>$valores
-		);
-	$this->db->insert("cross_rango_tipos",$dato_cross);
-
-
-}
-
-function ingresar_tipo_rango_pun($id_rango,$valores, $id_tipo){
-
-$dato_cross=array(
-		"id_rango"=>$id_rango,
-		"id_tipo_rango"=>$id_tipo,
-		"valor"=>$valores
-		);
-	$this->db->insert("cross_rango_tipos",$dato_cross);
-
+		
+		
+	foreach ($condicionRango as $condicion) {
+		$this->db->insert("cross_rango_tipos",$condicion);
+	}
 
 }
+
 
 function get_cat_rangos(){
 
 			$q=$this->db->query("select * from cat_rango");
 		return $q->result();
 }
-/*function prueba_tipo_rango($datos_rango){
 
-	$this->db->insert("cat_rango",$datos_rango);
-	$q=$this->get_rango_max();
- return $g->result();
-}
-
-prueba_tipo_rango2($datos_cross){
-$this->db->insert("cross_rango_tipos",$datos_cross);
-
-}*/
 
 function get_rangos_id($id){
 
@@ -125,5 +105,12 @@ function cambiar_estado_rangos(){
 
 }
 
+
+function get_cross_rango($id_rangos){
+	$rangos=$this->db->query('select * from cross_rango_tipos where id_rango='.intval($id_rangos).'');
+	return $rangos->result();
+
+
+}
 
 }
