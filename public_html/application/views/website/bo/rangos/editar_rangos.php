@@ -8,25 +8,52 @@
 								<label class="input"> Condiciones
 								<br>
 
-								<?php 
+													<?php
+													$Valor_Rango="";	
+														foreach($RangoVentas as $rangoventa ){
 
-foreach ($RangoVentas as $rangoventa ) {
-	if($rangoventa->id_tipo_rango=="1"){
+															echo '<div class="row">
+																		<div class="col col-lg-2">
+																		</div>
+																		<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo_condicion">
+																	<label class="select">Tipo Condicion
+																	<select name="id_tipo_condicion[]" >';
+														foreach($tipo_rango as $categoria){
+																if($categoria->id==$rangoventa->$rangoventa->id_tipo_rango){
+															echo "<option selected>".$categoria->nombre."";
+															$Valor_Rango=$rangoventa->valor;
+																			}
+																echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
+																
+														}
+															
+														echo "</select>
+																</label>
+																</div>";
+/*
+															foreach($tipo_rango as $categoria){
+																		if($categoria->id==$rangoventa->$rangoventa->id_tipo_rango){
+																				echo '<div class="col col-xs-12 col-sm-5 col-lg-3">'.
+																						'Valor<label for="" class="input">'.
+																						'<i class="icon-prepend fa fa-sort"></i>'.
+																						'<input id="valor_rango[]" type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" value="'.echo $Valor_Rango;.'"'.
+																						"</label>div></div>";}
 
-	echo "Ventas"."<br>".'<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="'.$rangoventa->valor.'">';}
-	else{
-			if($rangoventa->id_tipo_rango=="2"){
 
-	echo "Afiliados"."<br>".'<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="'.$rangoventa->valor.'">';}
-	else{
-		if($rangoventa->id_tipo_rango=="3"){
+															}*/											
 
-	echo "Puntos"."<br>".'<input type="text" name="descripcion" required placeholder="Nombre" style="width: 50%;" class="form-control" value="'.$rangoventa->valor.'">';}
-	}
+			
+														}
+													?>
 
-	}	
-}
-								?>
+										
+										
+											
+												
+												
+											</label>		
+										</div>
+									</div>
 
 
 							</fieldset>
