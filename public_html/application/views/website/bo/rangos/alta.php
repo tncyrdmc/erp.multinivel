@@ -132,7 +132,6 @@ $( "#rangos" ).submit(function( event ) {
 });
 
 function enviar() {
-
 	$.ajax({
 						type: "POST",
 						url: "/bo/rangos/ingresar_rango",
@@ -187,6 +186,8 @@ function delete_rango(id)
 	$("#"+id+"").remove();
 	
 }
+
+
 </script>
 	
 

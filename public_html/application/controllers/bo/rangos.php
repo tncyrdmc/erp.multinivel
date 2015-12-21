@@ -152,6 +152,7 @@ $code="";
 	}
 
 	function editar_rangos(){
+
 		$id= $this->tank_auth->get_user_id();
 		$style= $this->general->get_style($id);
 		$rangos= $this->model_rangos->get_rangos_id($_POST['id']);
@@ -159,12 +160,13 @@ $code="";
 		$tipo_rango=$this->model_rangos->get_tipo_rango();
 		$this->template->set("RangoVentas",$RangoVentas);
 		$this->template->set("tipo_rango",$tipo_rango);
-		//var_dump($RangoVentas[1]);
 		$this->template->set("rangos",$rangos);
 		$this->template->build('website/bo/rangos/editar_rangos');
 
 	}
 	function actualizar_rangos(){
+		var_dump($_POST['id']);
+		
 
 		$correcto = $this->model_rangos->actualizar_rangos();
 		if($correcto){
@@ -178,27 +180,8 @@ $code="";
 	function kill_rangos(){
 
 		$kill_rangos=$this->model_rangos->kill_rangos();
+		$this->model_rangos->kill_cross_rango();
 	}
-
-	/*function ingresar_rango_prueba(){
-			$datos_rango=array(
-				"name"=>$_POST['nombre'],
-				"descripcion"=>$_POST['desc']
-				);
-
-
-			$q=$this->model_rangos->prueba_tipo_rango($datos_rango);
-
-
-				$datos_cross=array(
-					"id_rango"=>$q,
-				"id_tipo_rango"=>$_POST['t0'],
-				"valor"=>$_POST['valor_tipo']
-
-				);
-
-				$this->model_rangos->prueba_tipo_rango2($datos_cross);	
-	}*/
 
 
 	function cambiar_estado_rangos(){
