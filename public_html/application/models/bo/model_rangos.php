@@ -51,7 +51,7 @@ function ingresar_condicion_rango($id_rango,$condiciones,$valores){
 	}
 }
 function actualizar_condicion_rango($id_rango,$condiciones,$valores){
-		
+		$this->kill_cross_rango();
 		$condicionRango = array();
 		$i = 0;
 		foreach ($condiciones as $condicion){
@@ -66,12 +66,12 @@ function actualizar_condicion_rango($id_rango,$condiciones,$valores){
 			}
 		}		
 	foreach ($condicionRango as $condicion) {
-		var_dump($condicion['id_tipo_rango']);
-		$this->db->query('update cross_rango_tipos set id_rango='.$condicion['id_rango'].', id_tipo_rango='
-			.$condicion['id_tipo_rango'].', valor='.$condicion['valor']
-			.' where id_rango='.$condicion['id_rango'].' AND id_tipo_rango='.$condicion['id_tipo_rango'].'');
-		//$this->db->where('id_rango', $condicion['id_rango']);
-		//$this->db->update('cross_rango_tipos', $condicion);
+		$this->db->insert("cross_rango_tipos",$condicion);
+		
+		//$this->db->query('update cross_rango_tipos set id_rango='.$condicion['id_rango'].', id_tipo_rango='
+			//.$condicion['id_tipo_rango'].', valor='.$condicion['valor']
+			//.' where id_rango='.$condicion['id_rango'].' AND id_tipo_rango='.$condicion['id_tipo_rango'].'');
+
 	}
 }
 
