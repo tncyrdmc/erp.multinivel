@@ -50,6 +50,32 @@ function ingresar_condicion_rango($id_rango,$condiciones,$valores){
 		$this->db->insert("cross_rango_tipos",$condicion);
 	}
 }
+function actualizar_condicion_rango($id_rango,$condiciones,$valores){
+		
+		$condicionRango = array();
+		$i = 0;
+		foreach ($condiciones as $condicion){
+			if($valores[$i] != ''){
+				$condicion = array(
+						'id_rango' => intval($id_rango),
+						'id_tipo_rango' => intval($condicion),
+						'valor' => intval($valores[$i]),
+				);
+				array_push($condicionRango, $condicion);
+				$i = $i + 1;
+			}
+		}		
+	foreach ($condicionRango as $condicion) {
+		var_dump($condicion['id_tipo_rango']);
+		$this->db->query('update cross_rango_tipos set id_rango='.$condicion['id_rango'].', id_tipo_rango='
+			.$condicion['id_tipo_rango'].', valor='.$condicion['valor']
+			.' where id_rango='.$condicion['id_rango'].' AND id_tipo_rango='.$condicion['id_tipo_rango'].'');
+		//$this->db->where('id_rango', $condicion['id_rango']);
+		//$this->db->update('cross_rango_tipos', $condicion);
+	}
+}
+
+
 function get_cat_rangos(){
 			$q=$this->db->query("select * from cat_rango");
 		return $q->result();
@@ -59,7 +85,7 @@ function get_rangos_id($id){
 	return $rangos->result();
 }
 function actualizar_rangos(){
-	$datos=array('name' =>$_POST['nombre'] ,
+	$datos=array('nombre' =>$_POST['nombre'] ,
 				 'descripcion' =>$_POST['descripcion'] 
 	 );
 		$this->db->where('id_rango', $_POST['id']);
@@ -80,5 +106,17 @@ function get_cross_rango($id_rangos){
 	$rangos=$this->db->query('select * from cross_rango_tipos where id_rango='.intval($id_rangos).'');
 	return $rangos->result();
 }
+function get_cross_rango_tipos(){
+$ObtenerCrossRangoTipos=$this->db->query('select * from cross_rango_tipos');
+return $ObtenerCrossRangoTipos->result();
+}
+function get_cat_tipo_rango(){
+$ObtenerCatTipoRango=$this->db->query('select * from cat_tipo_rango');
+return $ObtenerCatTipoRango->result();
+} 
+function eliminar_condiciones_rango($condiciones){
+	
+	$this->db->query('delete from cross_rango_tipos where id_rango='.$_POST["id"].' and id_tipo_rango not in ('.$condiciones.')');
 
+}
 }

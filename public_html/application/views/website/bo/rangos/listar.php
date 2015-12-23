@@ -70,6 +70,7 @@
 													<th>ID</th>
 													<th data-class="expand">Nombre</th>
 													<th data-hide="phone,tablet">Descripcion</th>
+													<th data-hide="phone,tablet">Condiciones</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -80,6 +81,15 @@
 														<td><?php echo $cat_rango->id_rango; ?></td>
 														<td><?php echo $cat_rango->nombre; ?></td>
 														<td><?php echo $cat_rango->descripcion; ?></td>
+														<td><?php  foreach ($cross_rango_tipos as $CrossRangoTipos) {
+															if($CrossRangoTipos->id_rango==$cat_rango->id_rango){
+																foreach ($cat_rango_tipo as $CatRangoTipo) {
+																	if($CatRangoTipo->id==$CrossRangoTipos->id_tipo_rango){
+																		echo $CatRangoTipo->nombre.'&nbsp&nbsp&nbspValor: '.$CrossRangoTipos->valor.'<br>';
+																	}
+																}
+															}
+														}?></td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
 															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>

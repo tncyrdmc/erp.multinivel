@@ -86,8 +86,12 @@ class Rangos extends CI_Controller
 			redirect('/auth/logout');
 		}
 		$cat_rangos=$this->model_rangos->get_cat_rangos();
+		$cross_rango_tipos=$this->model_rangos->get_cross_rango_tipos();
+		$cat_rango_tipo=$this->model_rangos->get_cat_tipo_rango();
 		$style=$this->modelo_dashboard->get_style($id);
 		$this->template->set("cat_rangos",$cat_rangos);
+		$this->template->set("cross_rango_tipos",$cross_rango_tipos);
+		$this->template->set("cat_rango_tipo",$cat_rango_tipo);
 		$this->template->set("style",$style);
 
 		$this->template->set_theme('desktop');
@@ -123,19 +127,6 @@ $code="";
 		$id_rango=$this->model_rangos->ingresar_rango();
 
 		$this->model_rangos->ingresar_condicion_rango($id_rango,$condiciones,$valores);
-	/*
-		$name=$_POST['nombre'];
-		$desc=$_POST['desc'];
-
-
-		$q=$this->model_rangos->ingresar_rango($name,$desc);
-
-			$this->IngTipRango($q,$_POST['venta']);
-			//$this->model_rangos->IngTipRangoAfil($q,$_POST['afiliado'],'2');
-			//$this->model_rangos->IngTipRangoPun($q,$_POST['punto'],'3');
-		
-		
-       x*/
 	}
 
 	function IngTipRango($q,$valor){
@@ -165,10 +156,33 @@ $code="";
 
 	}
 	function actualizar_rangos(){
-		var_dump($_POST['id']);
-		
+		$noEliminar="";
+		$contado=0;
+if(isset($_POST['id_tipo_condicion'])){
+$contador=count($_POST['id_tipo_condicion']);
+$condiciones=$_POST["id_tipo_condicion"];
+for($i=0;$i<$contador;$i++){
+$noEliminar.=$condiciones[$i];	
+if($i!=$contador-1){
+$noEliminar.=",";
+}
+}}
+
 
 		$correcto = $this->model_rangos->actualizar_rangos();
+	if(isset($_POST['id_tipo_condicionAgregar']) && isset($_POST['valor_rangoAgregar'])){
+		$this->model_rangos->ingresar_condicion_rango($_POST['id'],$_POST['id_tipo_condicionAgregar'],$_POST['valor_rangoAgregar']);
+	}	
+		if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
+		$this->model_rangos->actualizar_condicion_rango($_POST['id'],$_POST['id_tipo_condicion'],$_POST['valor_rango']);
+	}
+
+
+	if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
+	if($contador!=1){
+		$this->model_rangos->eliminar_condiciones_rango($noEliminar);
+	}
+}
 		if($correcto){
 			echo "Rango Actualizado";
 		}
