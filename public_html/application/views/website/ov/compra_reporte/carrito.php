@@ -351,8 +351,8 @@
         	<br />
         </div>
     </div>
-    <script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> 
-    <script src="js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <!--<script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> -->
+    <script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 	<script type="text/javascript">
 			function detalles(id,tipo)
@@ -974,10 +974,10 @@
 				type: "get",
 				url: "show_paquetes",
 				data: { },
-				success:function(msg){
+				}).done(function(msg){
 					$("#mercancias").html(msg);
 			
-				}
+				
 			});
 		}
 		</script>

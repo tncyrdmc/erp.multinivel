@@ -2520,6 +2520,7 @@ function index()
 	{
 		$id = $this->tank_auth->get_user_id();
 		$pais = $this->general->get_pais($id);
+		
 		$comb=$this->modelo_compras->get_paquetes_inscripcion($pais[0]->pais, $id);
 	
 		for($k=0;$k<sizeof($comb);$k++)
