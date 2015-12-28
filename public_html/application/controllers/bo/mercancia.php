@@ -392,6 +392,11 @@ class mercancia extends CI_Controller
 		echo json_encode($impuestos);
 		
 	}
+
+	function ImpuestaPaisPorId(){
+		$PorcentajeImpuesto=$this->model_mercancia->ImpuestaPaisPorId($_POST['impuesto']);
+		echo $PorcentajeImpuesto;
+	}
 	
 	function new_proveedor()
 	{

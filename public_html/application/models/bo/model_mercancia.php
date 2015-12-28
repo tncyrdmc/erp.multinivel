@@ -45,6 +45,7 @@ class model_mercancia extends CI_Model {
 		return $mercancia;
 	}
 	function nuevo_producto() {
+		var_dump($_POST['iva']);
 		$dato_producto = array (
 				"nombre" => $_POST ['nombre'],
 				"concepto" => $_POST ['concepto'],
@@ -72,12 +73,18 @@ class model_mercancia extends CI_Model {
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
-		
-		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'] );
+		$iva=$this->validar_iva();
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva );
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
-	
+	function validar_iva(){
+		if($_POST['iva']=='1'){
+			return 'CON';
+		}elseif($_POST['iva']=='0'){
+			return 'MAS';
+		}
+	}
 	function nuevo_combinado() {
 		$dato_combinado = array (
 				"nombre" => $_POST ['nombre'],
@@ -293,7 +300,7 @@ class model_mercancia extends CI_Model {
 		return $mercancia;
 	}
 	
-	function CrearMercancia($sku, $sku2, $tipo, $pais, $proveedor, $real, $costo, $entrega, $costo_prublico, $puntos) {
+	function CrearMercancia($sku, $sku2, $tipo, $pais, $proveedor, $real, $costo, $entrega, $costo_prublico, $puntos,$iva) {
 		
 		$dato_mercancia = array (
 				"sku" => $sku,
@@ -306,7 +313,8 @@ class model_mercancia extends CI_Model {
 				"costo" => $costo,
 				"entrega" => $entrega,
 				"costo_publico" => $costo_prublico,
-				"puntos_comisionables" => $puntos 
+				"puntos_comisionables" => $puntos,
+				"iva" => $iva 
 		);
 		$this->db->insert ( "mercancia", $dato_mercancia );
 		return mysql_insert_id ();
@@ -372,6 +380,10 @@ class model_mercancia extends CI_Model {
 	}
 	function ImpuestoPais($pais) {
 		$q = $this->db->query ( "SELECT * FROM cat_impuesto where id_pais = '" . $pais . "'" );
+		return $q->result ();
+	}
+	function ImpuestaPaisPorId($id_impuesto){
+		$q = $this->db->query ( "SELECT porcentaje FROM cat_impuesto where id_impuesto = " . $id_impuesto . "" );
 		return $q->result ();
 	}
 	function new_proveedor($id) {

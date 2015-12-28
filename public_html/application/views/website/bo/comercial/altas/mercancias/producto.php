@@ -49,7 +49,7 @@
 					<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"   action="/bo/mercancia/CrearProducto" class="smart-form">
+							<form method="POST" enctype="multipart/form-data"   action="/bo/mercancia/CrearProducto" class="smart-form" name="form_product">
 								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
 								
 								<fieldset>
@@ -157,7 +157,7 @@
 													<section class="col col-2">
 														<label class="input" >
 															Costo real
-															<input type="text" name="real" id="real" required>
+															<input type="number" name="real" id="real" onchange="obtener_iva_real_text(this.value)" required>
 														</label>
 													</section>
 													<section class="col col-2">
@@ -225,10 +225,10 @@
 															<section class="col col-2">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
-																		<input type="radio" value="1" name="iva" checked="">
+																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio(document.form_product.iva)" checked="">
 																		<i></i>con IVA</label>
 																		<label class="radio">
-																			<input type="radio" value="0" name="iva">
+																			<input type="radio" value="0" onchange="calcular_iva_real_radio(document.form_product.iva)" name="iva">
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
@@ -237,19 +237,19 @@
 													<section class="col col-2">
 														<label class="input">
 															Costo real con IVA
-															<input type="number" min="1" max="" name="real_iva" id="real_iva">
+															<input type="number" min="1" max="" name="real_iva" id="real_iva" disabled value="">
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo distribuidores con IVA
-															<input type="number" min="1" max="" name="distribuidores_iva" id="distribuidores_iva">
+															<input type="number" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo público con IVA
-															<input type="number" min="1" max="" name="publico_iva" id="publico_iva">
+															<input type="number" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
 																										</div>
@@ -1742,4 +1742,44 @@ function ImpuestosPais(){
 	      }
 	});
 }
+
+function obtener_iva_real_text(resultado){
+var tipo=$("input:radio[name=iva]:checked").val();
+if(tipo=="1"){
+$("#real_iva").val("1");
+}
+if(tipo=="0"){
+$("#real_iva").val("0");
+}
+
+}
+function calcular_dependiendo_tipo_iva(){
+		var Impuesto = $("#impuesto").val();
+		var porcentaje=0;
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPaisPorId",
+		data: {impuesto: Impuesto}
+	})
+	.done(function( msg )
+	{
+		porcentaje=parseFloat(msg);
+	});
+}
+function calcular_iva_real_radio(resultado){
+	var tipo_iva=$("input:radio[name=iva]:checked").val();
+	/*if(resultado=="0"){
+		$("#real_iva").val(parseFloat(tipo_iva)/0.16);
+	}
+	if(resultado=="1"){
+		$("#real_iva").val(parseFloat(tipo_iva)*0.16);
+	}*/
+	    for(i=0;i<resultado.length;i++){
+        	if(resultado[i].checked) 
+        		$("#real_iva").val(resultado[i].value);
+	    }
+
+}
+
 </script>

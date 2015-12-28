@@ -140,7 +140,19 @@
 											<input placeholder="En días" type="text" name="entrega" id="entrega">
 											</label>
 											</section>
-											<section class="col col-3">País del producto
+
+											
+											
+											<section class="col col-3">
+											<label class="input">
+												Puntos comisionables
+												<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+											</label>
+											</section>
+
+											<legend>Impuestos</legend>
+											<div class="row">
+												<section class="col col-2">País del producto
 												<label class="select">
 													
 													<select id="pais" required name="pais" id="pais" onChange="ImpuestosPais()">
@@ -151,7 +163,7 @@
 													</select>
 												</label>
 											</section>
-											<section class="col col-3" id="impuesto">Impuesto
+											<section class="col col-2" id="impuesto">Impuesto
 												<label class="select">
 													<select name="id_impuesto[]">
 													
@@ -159,14 +171,38 @@
 												</label>
 												<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 											</section>
-											
-											
-											<section class="col col-3">
-											<label class="input">
-												Puntos comisionables
-												<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
-											</label>
-											</section>
+																										<section class="col col-2">Requiere especificación
+																<div class="inline-group">
+																	<label class="radio">
+																		<input type="radio" value="1" name="iva" checked="">
+																		<i></i>con IVA</label>
+																		<label class="radio">
+																			<input type="radio" value="0" name="iva">
+																			<i></i>más IVA</label>
+																		</div>
+																	</section>
+											</div>
+											<div class="row">
+
+														<section class="col col-2">
+														<label class="input">
+															Costo real con IVA
+															<input type="number" min="1" max="" name="real_iva" id="real_iva" disabled>
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="input">
+															Costo distribuidores con IVA
+															<input type="number" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="input">
+															Costo público con IVA
+															<input type="number" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+														</label>
+													</section>
+													</div>
 											</fieldset></div>
 											<div>
 											<section style="padding-left: 0px;" class="col col-6">Descripcion
