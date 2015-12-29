@@ -157,19 +157,19 @@
 													<section class="col col-2">
 														<label class="input" >
 															Costo real
-															<input type="number" name="real" id="real" onchange="obtener_iva_real_text(this.value)" required>
+															<input type="number" name="real" id="real" onchange="Resultado_ConSin_iva('real','real_iva')" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" name="costo" id="costo" required>
+															<input type="text" name="costo" id="costo" onchange="Resultado_ConSin_iva('costo','distribuidores_iva')" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo publico
-															<input type="text" name="costo_publico" id="costo_publico" required>
+															<input type="text" name="costo_publico" id="costo_publico" onchange="Resultado_ConSin_iva('costo_publico','publico_iva')" required>
 														</label>
 													</section>
 													<section class="col col-2">
@@ -203,7 +203,7 @@
 
 														<section class="col col-2">País de la mercancía
 														<label class="select">
-															<select id="pais" required name="pais" onChange="ImpuestosPais()">
+															<select id="pais" required name="pais" onChange="ImpuestosPais()" >
 																<option value="-" selected>-- Seleciona un pais --</option>
 																<?foreach ($pais as $key)
 																{?>
@@ -216,7 +216,7 @@
 													</section>
 													<section class="col col-2" id="impuesto">Impuesto
 														<label class="select">
-															<select name="id_impuesto[]">
+															<select id="id_impuesto[]" name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
 																
 															</select>
 														</label>
@@ -237,19 +237,19 @@
 													<section class="col col-2">
 														<label class="input">
 															Costo real con IVA
-															<input type="number" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo distribuidores con IVA
-															<input type="number" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo público con IVA
-															<input type="number" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
 																										</div>
@@ -1742,44 +1742,74 @@ function ImpuestosPais(){
 	      }
 	});
 }
-
-function obtener_iva_real_text(resultado){
-var tipo=$("input:radio[name=iva]:checked").val();
+function validar_impuesto(){
+	var  Impuesto = new Array();
+$('select[name="id_impuesto[]"]').each(function() {	
+	Impuesto.push($(this).val());
+});	
+return Impuesto[0];
+}
+function validar_tipo_iva(porcentaje, tipo, valor){
+	var valor_iva=0;
+	valor_iva=((valor)*parseFloat(porcentaje))/(100);
 if(tipo=="1"){
-$("#real_iva").val("1");
+	precio_con_iva=valor-valor_iva;
+	return precio_con_iva;
 }
 if(tipo=="0"){
-$("#real_iva").val("0");
+	precio_con_iva=valor+valor_iva;
+	return precio_con_iva;
 }
+}
+function calcular_dependiendo_tipo_iva(tipo,valor){
 
-}
-function calcular_dependiendo_tipo_iva(){
-		var Impuesto = $("#impuesto").val();
+		var  Impuesto=validar_impuesto();
+		var resultado=0;
 		var porcentaje=0;
-	
+		var recibir="";
+		var precio_con_iva=0;
+	if((Impuesto!=null && tipo!=null && valor!=null) &&( typeof(Impuesto) != "undefined" && typeof(valor) != "undefined")){	
 	$.ajax({
+		async: false,
 		type: "POST",
-		url: "/bo/mercancia/ImpuestaPaisPorId",
+		url: "/bo/mercancia/ImpuestoPaisPorId",
 		data: {impuesto: Impuesto}
 	})
 	.done(function( msg )
 	{
-		porcentaje=parseFloat(msg);
+		recibir=$.parseJSON(msg);
+		porcentaje=recibir[0]["porcentaje"];
 	});
+resultado=validar_tipo_iva(porcentaje,tipo,valor);
+return resultado;
+}else{
+	return "Falta algun dato";
+}
 }
 function calcular_iva_real_radio(resultado){
 	var tipo_iva=$("input:radio[name=iva]:checked").val();
-	/*if(resultado=="0"){
-		$("#real_iva").val(parseFloat(tipo_iva)/0.16);
-	}
-	if(resultado=="1"){
-		$("#real_iva").val(parseFloat(tipo_iva)*0.16);
-	}*/
+	var valor_real=$("#real").val();
+	var valor_distribuidor=$("#costo").val();
+	var valor_publico=$("#costo_publico").val();
+	var Resultado_Final=0;
 	    for(i=0;i<resultado.length;i++){
-        	if(resultado[i].checked) 
-        		$("#real_iva").val(resultado[i].value);
+        	if(resultado[i].checked){
+        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_real);
+        	$("#real_iva").val(Resultado_Final);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_distribuidor);
+        	$("#distribuidores_iva").val(Resultado_Final);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_publico);
+        	$("#publico_iva").val(Resultado_Final);
+        }
 	    }
 
+}
+
+function Resultado_ConSin_iva(id_dato,id_modificar){
+var tipo_iva = $("input:radio[name=iva]:checked").val();
+var valor=$("#"+id_dato).val();
+Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor);
+$("#"+id_modificar).val(Resultado_Final);
 }
 
 </script>
