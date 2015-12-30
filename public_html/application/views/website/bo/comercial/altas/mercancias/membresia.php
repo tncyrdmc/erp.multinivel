@@ -15,7 +15,7 @@
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>&gt;
 								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras"> Carrito de Compras </a>
-								> <a href="/bo/mercancia/index" >Alta</a> > Servicio
+								> <a href="/bo/mercancia/index" >Alta</a> > Membresía
 				</span>
 				
 				<?php }?>
@@ -53,7 +53,7 @@
 								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
 									
 								<fieldset>
-									<legend>Datos del Servicio</legend>
+									<legend>Datos de la Membresía</legend>
 									<div id="form_mercancia">
 										<div class="row">
 												<fieldset>
@@ -106,18 +106,8 @@
 													<legend>Moneda y país</legend>
 													<section class="col col-2">
 														<label class="input">
-														Costo real
-														<input type="text" name="real" id="real" onchange="Resultado_ConSin_iva('real','real_iva')" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Costo distribuidores
-														<input type="text" name="costo" id="costo" onchange="Resultado_ConSin_iva('costo','distribuidores_iva')" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Costo publico
-														<input type="text" name="costo_publico" id="costo_publico" onchange="Resultado_ConSin_iva('costo_publico','publico_iva')" required>
+														Costo
+														<input type="text" name="real" id="real" required >
 														</label>
 													</section>
 													<section class="col col-2">
@@ -141,17 +131,6 @@
 														<a style="cursor: pointer;" onclick="add_proveedor()">Agregar Proveedor<i class="fa fa-plus"></i></a>
 											
 													</section>
-													
-													<section class="col col-3">
-														<label class="input">
-														Puntos comisionables
-															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
-														</label>
-													</section>
-													<legend>Impuestos</legend>
-
-													
-													<div class="row">
 														<section class="col col-2">País del servicio
 														<label class="select">
 															<select id="pais" required name="pais" onChange="ImpuestosPais()">
@@ -163,46 +142,12 @@
 															</select>
 														</label>
 													</section>
-																	<section class="col col-2" id="impuesto">Impuesto
-														<label class="select">
-															<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
-															
-															</select>
-															
-														</label>
-														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
-															<section class="col col-2">Requiere especificación
-																<div class="inline-group">
-																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio(document.form_service.iva)" checked="">
-																		<i></i>con IVA</label>
-																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_iva_real_radio(document.form_service.iva)" name="iva">
-																			<i></i>más IVA</label>
-																		</div>
-																	</section>
-																	</div>
-																	<div class="row">
-																		<section class="col col-2">
+													<section class="col col-3">
 														<label class="input">
-															Costo real con IVA
-															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled>
+														Puntos comisionables
+															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
 														</label>
 													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo público con IVA
-															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
-														</label>
-													</section>
-													</div>
 												</fieldset>
 											</div>
 										</div>
@@ -473,77 +418,6 @@ function new_proveedor()
 			    });
 			}
 
-}
-
-function validar_impuesto(){
-	var  Impuesto = new Array();
-$('select[name="id_impuesto[]"]').each(function() {	
-	Impuesto.push($(this).val());
-});	
-return Impuesto[0];
-}
-function validar_tipo_iva(porcentaje, tipo, valor){
-	var valor_iva=0;
-	valor_iva=((valor)*parseFloat(porcentaje))/(100);
-if(tipo=="1"){
-	precio_con_iva=valor-valor_iva;
-	return precio_con_iva;
-}
-if(tipo=="0"){
-	precio_con_iva=parseFloat(valor)+valor_iva;
-	return precio_con_iva;
-}
-}
-
-
-function calcular_dependiendo_tipo_iva(tipo,valor){
-		var  Impuesto=validar_impuesto();
-		var resultado=0;
-		var porcentaje=0;
-		var recibir="";
-		var precio_con_iva=0;
-	if( ( typeof(Impuesto) != "undefined" && typeof(valor) != "undefined" && typeof(tipo) != "undefined") && (Impuesto != "" && valor!="" && tipo!="") && (Impuesto!=null && tipo!=null && valor!=null)){	
-	$.ajax({
-		async: false,
-		type: "POST",
-		url: "/bo/mercancia/ImpuestoPaisPorId",
-		data: {impuesto: Impuesto}
-	})
-	.done(function( msg )
-	{
-		recibir=$.parseJSON(msg);
-		porcentaje=recibir[0]["porcentaje"];
-	});
-resultado=validar_tipo_iva(porcentaje,tipo,valor);
-return resultado;
-}else{
-	return "Falta algun dato";
-}
-}
-function calcular_iva_real_radio(resultado){
-	var tipo_iva=$("input:radio[name=iva]:checked").val();
-	var valor_real=$("#real").val();
-	var valor_distribuidor=$("#costo").val();
-	var valor_publico=$("#costo_publico").val();
-	var Resultado_Final=0;
-	    for(i=0;i<resultado.length;i++){
-        	if(resultado[i].checked){
-        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_real);
-        	$("#real_iva").val(Resultado_Final);
-        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_distribuidor);
-        	$("#distribuidores_iva").val(Resultado_Final);
-        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_publico);
-        	$("#publico_iva").val(Resultado_Final);
-        }
-	    }
-
-}
-
-function Resultado_ConSin_iva(id_dato,id_modificar){
-var tipo_iva = $("input:radio[name=iva]:checked").val();
-var valor=$("#"+id_dato).val();
-Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor);
-$("#"+id_modificar).val(Resultado_Final);
 }
 
 </script>

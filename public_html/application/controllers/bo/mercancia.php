@@ -133,9 +133,11 @@ class mercancia extends CI_Controller
 			$this->template->build('website/bo/comercial/altas/mercancias/servicio');
 		}elseif($_GET['id'] == 3){
 			$this->template->build('website/bo/comercial/altas/mercancias/combinado');
-		}else{
+		}elseif($_GET['id'] == 4){
 			
 			$this->template->build('website/bo/comercial/altas/mercancias/paquete');
+		}else{
+			$this->template->build('website/bo/comercial/altas/mercancias/membresia');
 		}
 		
 	}

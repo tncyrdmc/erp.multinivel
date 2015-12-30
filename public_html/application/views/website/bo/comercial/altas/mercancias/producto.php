@@ -196,7 +196,7 @@
 															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
 														</label>
 													</section>
-													</fieldset><fieldset>
+													
 													<legend>Impuestos</legend>
 													<div class="row">
 														
@@ -1757,18 +1757,19 @@ if(tipo=="1"){
 	return precio_con_iva;
 }
 if(tipo=="0"){
-	precio_con_iva=valor+valor_iva;
+	precio_con_iva=parseFloat(valor)+valor_iva;
 	return precio_con_iva;
 }
 }
-function calcular_dependiendo_tipo_iva(tipo,valor){
 
+
+function calcular_dependiendo_tipo_iva(tipo,valor){
 		var  Impuesto=validar_impuesto();
 		var resultado=0;
 		var porcentaje=0;
 		var recibir="";
 		var precio_con_iva=0;
-	if((Impuesto!=null && tipo!=null && valor!=null) &&( typeof(Impuesto) != "undefined" && typeof(valor) != "undefined")){	
+	if( ( typeof(Impuesto) != "undefined" && typeof(valor) != "undefined" && typeof(tipo) != "undefined") && (Impuesto != "" && valor!="" && tipo!="") && (Impuesto!=null && tipo!=null && valor!=null)){	
 	$.ajax({
 		async: false,
 		type: "POST",
