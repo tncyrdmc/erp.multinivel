@@ -280,6 +280,12 @@ class model_admin extends CI_Model
 							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=2 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id and C.Code = M.pais");
 		return $q->result();
 	}
+	function get_membresias(){
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , MEM.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2
+							from mercancia M, membresia MEM, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
+							where M.sku = MEM.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=5 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = MEM.id_red and CGP.id_red = TR.id and C.Code = M.pais");
+		return $q->result();
+	}
 	
 	function get_combinados(){
 		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, C.nombre, M.pais,

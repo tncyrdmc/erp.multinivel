@@ -169,6 +169,27 @@ class mercancia extends CI_Controller
 		}
 		return true;
 	}
+
+	function validarMercanciaMembresia($datos){
+if($datos['pais'] == "-"){
+			return false;
+		}
+		if($datos['costo'] == null){
+			return false;
+		}
+
+		if($datos['nombre'] == null){
+			return false;
+		}
+		if( $datos['red'] == null){
+			return false;
+		}
+
+		if( $_POST['tipo_mercancia'] == null){
+			return false;
+		}
+		return true;
+	}
 	function CrearServicio(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -226,6 +247,58 @@ class mercancia extends CI_Controller
 			
 		}
 		
+	}
+	function CrearMembresia(){
+			if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$id=$this->tank_auth->get_user_id();
+		
+	 	 if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
+		{
+		}else{
+			redirect('/auth/logout');
+		}
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$id = $this->tank_auth->get_user_id();
+		
+		if(!$this->validarMercanciaMembresia($_POST)){
+			$error = "Datos incompletos para crear la mercancia";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=5');
+		}
+		
+		$ruta="/media/carrito/";
+		//definimos la ruta para subir la imagen
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
+		$config['max_width']  		= '4096';
+		$config['max_height']   	= '3112';
+		
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+		
+		if (!$this->upload->do_multi_upload('img'))
+		{
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=5');
+		}
+		else
+		{
+			$sku = $this->model_mercancia->nueva_membresia();
+			$data = array('upload_data' => $this->upload->get_multi_upload_data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			redirect('/bo/comercial/carrito');
+			
+		}
 	}
 	
 	function CrearProducto(){

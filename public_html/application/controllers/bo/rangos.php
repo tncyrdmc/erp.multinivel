@@ -120,7 +120,6 @@ $code="";
 		}
 	}
 	function ingresar_rango(){
-
 		$condiciones = $_POST['id_tipo_condicion'];
 		$valores = $_POST['valor_rango'];
 
@@ -158,7 +157,6 @@ $code="";
 	function actualizar_rangos(){
 	$noEliminar="";
 	$contador=0;
-
 if(isset($_POST['id_tipo_condicion'])){
 		$contador=count($_POST['id_tipo_condicion']);
 	$condiciones=$_POST["id_tipo_condicion"];
@@ -179,9 +177,9 @@ if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
 
 
 	$correcto = $this->model_rangos->actualizar_rangos();
-	if(isset($_POST['id_tipo_condicionAgregar']) && isset($_POST['valor_rangoAgregar'])){
-		$this->model_rangos->ingresar_condicion_rango($_POST['id'],$_POST['id_tipo_condicionAgregar'],$_POST['valor_rangoAgregar']);
-	}	
+	//if(isset($_POST['id_tipo_condicionAgregar']) && isset($_POST['valor_rangoAgregar'])){
+	//	$this->model_rangos->ingresar_condicion_rango($_POST['id'],$_POST['id_tipo_condicionAgregar'],$_POST['valor_rangoAgregar']);
+	//}	
 
 
 

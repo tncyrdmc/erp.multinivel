@@ -11,7 +11,7 @@
 									<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form">
+							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form" name="form_product">
 								
 									<section class="col col-6" style="display:none;">
 										<label class="select"> 
@@ -222,7 +222,16 @@
 														</label>
 													</section>
 													
-													<section class="col col-12" style="width: 50%;">País de la mercancía
+										
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Puntos comisionables
+															<input type="number" min="1" max="" value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
+														</label>
+													</section>
+													<legend>Impuestos</legend>
+																<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
 															<select id="pais2" required name="pais" onChange="ImpuestosPais()">
 																<?foreach ($pais as $key)
@@ -237,13 +246,6 @@
 																	<?}?>
 																<?}?>
 															</select>
-														</label>
-													</section>
-													
-													<section class="col col-12" style="width: 50%;">
-														<label class="input">
-															Puntos comisionables
-															<input type="number" min="1" max="" value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
 													<?$i=0?>
@@ -277,12 +279,45 @@
 															
 														</section>
 													<?}?>
-													
+													<div class="row">
 													<section class="col col-6" style="width: 50%">
 														<br>
 														<br>
 														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
+																				<section class="col col-6">Requiere especificación
+																<div class="inline-group">
+																	<label class="radio">
+																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio(document.form_product.iva)" checked="">
+																		<i></i>con IVA</label>
+																		<label class="radio">
+																			<input type="radio" value="0" onchange="calcular_iva_real_radio(document.form_product.iva)" name="iva">
+																			<i></i>más IVA</label>
+																		</div>
+																	</section>
+																	</div>
+																	<div class="row">
+																						<section class="col col-6">
+														<label class="input">
+															Costo real con IVA
+															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+														</label>
+													</section>
+													<section class="col col-6">
+														<label class="input">
+															Costo distribuidores con IVA
+															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+														</label>
+													</section>
+													</div>
+													<div class="row">
+													<section class="col col-6">
+														<label class="input">
+															Costo público con IVA
+															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+														</label>
+													</section>
+													</div>
 												
 											</fieldset>
 												
@@ -465,6 +500,77 @@ function ImpuestosPais(){
 	        
 	      }
 	});
+}
+
+function validar_impuesto(){
+	var  Impuesto = new Array();
+$('select[name="id_impuesto[]"]').each(function() {	
+	Impuesto.push($(this).val());
+});	
+return Impuesto[0];
+}
+function validar_tipo_iva(porcentaje, tipo, valor){
+	var valor_iva=0;
+	valor_iva=((valor)*parseFloat(porcentaje))/(100);
+if(tipo=="1"){
+	precio_con_iva=valor-valor_iva;
+	return precio_con_iva;
+}
+if(tipo=="0"){
+	precio_con_iva=parseFloat(valor)+valor_iva;
+	return precio_con_iva;
+}
+}
+
+
+function calcular_dependiendo_tipo_iva(tipo,valor){
+		var  Impuesto=validar_impuesto();
+		var resultado=0;
+		var porcentaje=0;
+		var recibir="";
+		var precio_con_iva=0;
+	if( ( typeof(Impuesto) != "undefined" && typeof(valor) != "undefined" && typeof(tipo) != "undefined") && (Impuesto != "" && valor!="" && tipo!="") && (Impuesto!=null && tipo!=null && valor!=null)){	
+	$.ajax({
+		async: false,
+		type: "POST",
+		url: "/bo/mercancia/ImpuestoPaisPorId",
+		data: {impuesto: Impuesto}
+	})
+	.done(function( msg )
+	{
+		recibir=$.parseJSON(msg);
+		porcentaje=recibir[0]["porcentaje"];
+	});
+resultado=validar_tipo_iva(porcentaje,tipo,valor);
+return resultado;
+}else{
+	return "Falta algun dato";
+}
+}
+function calcular_iva_real_radio(resultado){
+	var tipo_iva=$("input:radio[name=iva]:checked").val();
+	var valor_real=$("#real").val();
+	var valor_distribuidor=$("#costo").val();
+	var valor_publico=$("#costo_publico").val();
+	var Resultado_Final=0;
+	    for(i=0;i<resultado.length;i++){
+        	if(resultado[i].checked){
+        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_real);
+        	$("#real_iva").val(Resultado_Final);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_distribuidor);
+        	$("#distribuidores_iva").val(Resultado_Final);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_publico);
+        	$("#publico_iva").val(Resultado_Final);
+        }
+	    }
+
+}
+
+function Resultado_ConSin_iva(id_dato,id_modificar){
+var tipo_iva = $("input:radio[name=iva]:checked").val();
+var valor=$("#"+id_dato).val();
+Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor);
+$("#"+id_modificar).val(Resultado_Final);
 }
 
 </script>

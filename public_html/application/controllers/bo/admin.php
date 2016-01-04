@@ -418,6 +418,9 @@ class admin extends CI_Controller
 				$this->template->set("servicio",$servicio);
 				$this->template->set("style",$style);
 				$this->template->build('website/bo/comercial/altas/modificar_paquete');	
+		}elseif($id_merc==5)
+		{
+				$this->template->build('website/bo/comercial/altas/modificar_membresia');
 		}
 	}
 	

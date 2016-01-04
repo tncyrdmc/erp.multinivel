@@ -130,8 +130,27 @@ $( "#rangos" ).submit(function( event ) {
 	event.preventDefault();
 	enviar();
 });
+function validar_rangos_repetidos(){
+		var  rangos = new Array();
+		var rango_repetido=false;
+$('select[name="id_tipo_condicion[]"]').each(function() {	
+	rangos.push($(this).val());
+});	
 
+   for(i=0;i<(rangos.length-1);i++){
+     for(j=i+1;j<(rangos.length);j++){
+          if(rangos[i]==rangos[j]){
+          	rango_repetido=true;
+          }
+ 
+     }
+ }
+     return rango_repetido;
+}
 function enviar() {
+	var verificar_rango=false;
+	verificar_rango=validar_rangos_repetidos();
+	if(verificar_rango!=true){
 	$.ajax({
 						type: "POST",
 						url: "/bo/rangos/ingresar_rango",
@@ -147,13 +166,15 @@ function enviar() {
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/rangos/alta";
+								location.href="/bo/rangos/listar";
 								}
 							}
 						}
 					})
 						});//fin Done ajax
-	
+	}else{
+		alert("Ha repetido alguna condición del rango");
+	}
 }
 
 function add_rango()

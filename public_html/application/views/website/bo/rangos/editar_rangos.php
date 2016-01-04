@@ -7,7 +7,7 @@
 		$rangos1=$rangos1."<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
 	}
 ?>
-<form id="nueva" class="smart-form" action="/bo/rangos/actualizar_rangos" method="POST" novalidate="novalidate" >
+<form id="nueva" name="nueva" class="smart-form" action="/bo/rangos/actualizar_rangos" method="POST"  >
 							<fieldset>
 								<input type="text" class="hide" name="id" value="<?php echo $_POST['id']; ?>" id="id">
 								<label class="input"> Nombre
@@ -83,8 +83,28 @@
 	event.preventDefault();
 	enviar();
 });
-function enviar() {
 
+	function validar_rangos_repetidos(){
+		var  rangos = new Array();
+		var rango_repetido=false;
+$('select[name="id_tipo_condicion[]"]').each(function() {	
+	rangos.push($(this).val());
+});	
+
+   for(i=0;i<(rangos.length-1);i++){
+     for(j=i+1;j<(rangos.length);j++){
+          if(rangos[i]==rangos[j]){
+          	rango_repetido=true;
+          }
+ 
+     }
+ }
+     return rango_repetido;
+}
+function enviar() {
+	var verificar_rango=false;
+	verificar_rango=validar_rangos_repetidos();
+	if(verificar_rango!=true){
 	 $.ajax({
 							type: "POST",
 							url: "/bo/rangos/actualizar_rangos",
@@ -106,7 +126,9 @@ function enviar() {
 										}
 									});
 						});//fin Done ajax
-		
+		}else{
+			alert("Ha repetido alguna condición del rango");
+		}
 }
 var i=0;
 function add_rango(id)
@@ -118,7 +140,7 @@ function add_rango(id)
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
 		+'<label class="select">Tipo Condición'
-		+'<select name="id_tipo_condicionAgregar[]" >'
+		+'<select name="id_tipo_condicion[]" >'
 		+'<?php	echo $rangos1; ?>'
 	+'</select>'
 	+'</label>'
@@ -126,7 +148,7 @@ function add_rango(id)
 	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
 		+'Tarifa<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-sort"></i>'
-			+'<input type="number" class="form-control" name="valor_rangoAgregar[]" placeholder=""class="form-control" required />'
+			+'<input type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />'
 			+'<a style="cursor: pointer; color:red;" onclick="delete_rango1('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
 		+'</label>'
 	+'</div>'

@@ -44,6 +44,25 @@ class model_mercancia extends CI_Model {
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
+	function nueva_membresia(){
+			$dato_membresia = array (
+				"nombre" => $_POST ['nombre'],
+				"caducidad" => $_POST['caducidad'],
+				"descripcion" => $_POST ['descripcion'],
+				"id_red" => $_POST ['red'] 
+		);
+		$this->db->insert ( "membresia", $dato_membresia );
+		
+		$sku = mysql_insert_id ();
+		
+		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
+		$iva=$this->validar_iva();
+		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
+		
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, 0, $_POST ['costo'], '0', 0, $_POST ['puntos_com'], $iva );
+		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		return $mercancia;	
+	}
 	function nuevo_producto() {
 		
 		$dato_producto = array (
