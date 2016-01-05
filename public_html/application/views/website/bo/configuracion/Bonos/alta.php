@@ -324,7 +324,7 @@ function enviar() {
 							className: "btn-success",
 							callback: function() {
 								
-								//location.href="/bo/bonos/listar";
+								location.href="/bo/bonos/listar";
 								FinalizarSpinner();
 								}
 							}
@@ -501,7 +501,7 @@ function iniciarSpinner(){
 			}
 			
 			var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
-			//$('#spinner2').attr('class', "modal-backdrop fade in");
+			$('#spinner2').attr('class', "modal-backdrop fade in");
 			
 	}
 

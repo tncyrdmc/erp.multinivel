@@ -2,7 +2,6 @@
 
 class bonos extends CI_Controller
 {
-	private $opciones="";
 
 	function __construct()
 	{
@@ -61,6 +60,35 @@ class bonos extends CI_Controller
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/configuracion/Bonos/alta');
+	}
+	
+	function listar()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$bonos=$this->model_bonos->get_bonos();
+		$this->template->set("bonos",$bonos);
+		
+		$valorNiveles=$this->model_bonos->get_valor_niveles();
+		$this->template->set("valorNiveles",$valorNiveles);
+		
+		$condicionesBono=$this->model_bonos->get_condiciones_bonos();
+		
+		$this->template->set("condicionesBono",$condicionesBono);
+		
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/listar');
 	}
 	
 	function ingresar_bono(){
@@ -282,27 +310,25 @@ class bonos extends CI_Controller
 					</label>';
 	}
 	
-	private function set_mercancia_por_redes($red,$idTipoMercancia) {
-		
-		foreach ($idTipoMercancia as $idTipoMercancia){
-		
+	private function set_mercancia_por_redes($red,$idTipoMercancias) {
+
+		foreach ($idTipoMercancias as $idTipoMercancia){
+			echo $idTipoMercancia." - ".$red;
 			if($idTipoMercancia==1){
 				$mercancias=$this->model_bonos->get_productos_red($red);
-			}elseif($idTipoMercancia==2){
+			}else if($idTipoMercancia==2){
 				$mercancias=$this->model_bonos->get_servicios_red($red);
-			}elseif($idTipoMercancia==3){
+			}else if($idTipoMercancia==3){
 				$mercancias=$this->model_bonos->get_combinados_red($red);
-			}elseif($idTipoMercancia==4){
+			}else if($idTipoMercancia==4){
 				$mercancias=$this->model_bonos->get_paquetes_red($red);
-			}elseif($idTipoMercancia==5){
+			}else if($idTipoMercancia==5){
 				
 			}
 
 			foreach ($mercancias as $mercancia){
-				$opciones=$opciones."<option value='".$mercancia->id."'>".$mercancia->nombre."( ".$mercancia->Name." )</option>";
+				echo "<option value='".$mercancia->id."'>".$mercancia->nombre."( ".$mercancia->Name." )</option>";
 			}
-			
-			echo $opciones;
 		}
 	}
 	
