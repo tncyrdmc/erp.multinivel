@@ -1,3 +1,4 @@
+
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 //header('Content-Type: text/html; charset-utf-8');
 //header('Content-Type: text/html; charset=ISO-8859-1');
@@ -70,6 +71,8 @@ class model_admin extends CI_Model
 			$q=$this->db->query("select * from combinado where id=".$sku);
 		if($tipo==4)
 			$q=$this->db->query("select * from paquete_inscripcion where id_paquete=".$sku);
+		if($tipo==5)
+			$q=$this->db->query("select * from membresia where id=".$sku);
 
 		return $q->result();
 	}
@@ -164,6 +167,9 @@ class model_admin extends CI_Model
 			 case 4:	//combinado
 			 	$this->db->query("delete from paquete_inscripcion where id_paquete = '".$sku."'");
 			 	$this->db->query("delete from cross_paquete where id_paquete = '".$sku."'");
+			 	break;
+			 case 5:
+			 	$this->db->query("delete from membresia where id = '".$sku."'");
 			 	break;
 			 break;
 		  }
@@ -436,6 +442,9 @@ where(a.id_pais=b.Code)");
 
 			$this->db->where('id', $sku);
 			$this->db->update('producto', $dato_producto); 
+			$iva="";
+			if($_POST['iva']=="1"){$iva="CON";}
+			if($_POST['iva']=="0"){$iva="MAS";}
 			
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
@@ -444,7 +453,8 @@ where(a.id_pais=b.Code)");
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
-					"puntos_comisionables"	=> $_POST['puntos_com']
+					"puntos_comisionables"	=> $_POST['puntos_com'],
+					"iva"					=> $iva
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
@@ -479,7 +489,9 @@ where(a.id_pais=b.Code)");
 
 			$this->db->where('id', $sku);
 			$this->db->update('servicio', $dato_servicio); 
-			
+			$iva="";
+			if($_POST['iva']=="1"){$iva="CON";}
+			if($_POST['iva']=="0"){$iva="MAS";}
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
 					"id_proveedor"      	=> $_POST['proveedor'],
@@ -487,7 +499,8 @@ where(a.id_pais=b.Code)");
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
-					"puntos_comisionables"	=> $_POST['puntos_com']
+					"puntos_comisionables"	=> $_POST['puntos_com'],
+					"iva"					=> $iva
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 

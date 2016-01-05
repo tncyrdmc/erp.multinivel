@@ -11,7 +11,7 @@
 									<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form" name="form_product">
+							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form">
 								
 									<section class="col col-6" style="display:none;">
 										<label class="select"> 
@@ -179,21 +179,21 @@
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo real
-															<input type="text" value='<?php echo $mercancia[0]->real?>' name="real">
+															<input type="text" value='<?php echo $mercancia[0]->real?>' onchange="Resultado_ConSin_iva('real','real_iva')" name="real" id="real">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" value='<?php echo $mercancia[0]->costo?>' name="costo">
+															<input type="text" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="Resultado_ConSin_iva('costo','distribuidores_iva')">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo publico
-															<input type="text" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico">
+															<input type="text" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="Resultado_ConSin_iva('costo_publico','publico_iva')">
 														</label>
 													</section>
 													
@@ -251,13 +251,13 @@
 													<?$i=0?>
 													<?foreach($impuestos_merc as $merc)
 													{?>	
-														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
+														<section class="col col-6" id="impuesto" name="impuesto">Impuesto
 															<label class="select">
 																
 																	<?foreach ($impuesto as $key){
 																		if($key->id_pais==$mercancia[0]->pais){?>
 																		
-																		<select name="id_impuesto[]">
+																		<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
@@ -288,10 +288,10 @@
 																				<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio(document.form_product.iva)" checked="">
+																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>
 																		<i></i>con IVA</label>
 																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_iva_real_radio(document.form_product.iva)" name="iva">
+																			<input type="radio" value="0" onchange="calcular_iva_real_radio()" name="iva" <?if($mercancia[0]->iva=="MAS"){ echo "checked"; }?>>
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
@@ -547,23 +547,19 @@ return resultado;
 	return "Falta algun dato";
 }
 }
-function calcular_iva_real_radio(resultado){
+function calcular_iva_real_radio(){
+
 	var tipo_iva=$("input:radio[name=iva]:checked").val();
 	var valor_real=$("#real").val();
 	var valor_distribuidor=$("#costo").val();
 	var valor_publico=$("#costo_publico").val();
 	var Resultado_Final=0;
-	    for(i=0;i<resultado.length;i++){
-        	if(resultado[i].checked){
-        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_real);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor_real);
         	$("#real_iva").val(Resultado_Final);
-        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_distribuidor);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor_distribuidor);
         	$("#distribuidores_iva").val(Resultado_Final);
-        	Resultado_Final= calcular_dependiendo_tipo_iva(resultado[i].value,valor_publico);
+        	Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor_publico);
         	$("#publico_iva").val(Resultado_Final);
-        }
-	    }
-
 }
 
 function Resultado_ConSin_iva(id_dato,id_modificar){

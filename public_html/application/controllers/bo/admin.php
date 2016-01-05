@@ -294,7 +294,7 @@ class admin extends CI_Controller
 	}
 	function edit_merc()
 	{
-		if (!$this->tank_auth->is_logged_in())
+		/*if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
@@ -306,10 +306,10 @@ class admin extends CI_Controller
 		
 		}else{
 			redirect('/auth/logout');
-		}
+		}*/
 		
-		$style = $this->modelo_dashboard->get_style(1);
-		$usuario = $this->general->get_username($id);
+		//$style = $this->modelo_dashboard->get_style(1);
+		//$usuario = $this->general->get_username($id);
 		
 		$promo          = $this->model_admin->get_promo();
 		$grupos         = $this->model_mercancia->CategoriasMercancia();
@@ -327,7 +327,6 @@ class admin extends CI_Controller
 		$id_merc 		= $merc[0]->id_tipo_mercancia;
 		$sku			= $merc[0]->sku;
 		$red          = $this->model_admin->get_red();
-		
 		$data_merc 		= $this->model_admin->get_data_mercancia($id_merc,$sku);
 		$img       		= $this->model_admin->get_img_merc();
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
@@ -354,7 +353,7 @@ class admin extends CI_Controller
 			$this->template->set("pais",$pais);
 			$this->template->set("impuestos_merc",$impuestos_merc);
 			$this->template->set("impuesto",$impuesto);
-			$this->template->set("style",$style);
+			//$this->template->set("style",$style);
 			$this->template->build('website/bo/comercial/altas/modificar_producto');
 		}elseif($id_merc==2)
 		{
@@ -370,7 +369,7 @@ class admin extends CI_Controller
 			$this->template->set("pais",$pais);
 			$this->template->set("impuestos_merc",$impuestos_merc);
 			$this->template->set("impuesto",$impuesto);
-			$this->template->set("style",$style);
+			//$this->template->set("style",$style);
 			$this->template->build('website/bo/comercial/altas/modificar_servicio');
 			}elseif($id_merc==3)
 			{
@@ -394,7 +393,7 @@ class admin extends CI_Controller
 				$this->template->set("servs",$servs);
 				$this->template->set("producto",$producto);
 				$this->template->set("servicio",$servicio);
-				$this->template->set("style",$style);
+				//$this->template->set("style",$style);
 				$this->template->build('website/bo/comercial/altas/modificar_combinado');	
 		}elseif($id_merc==4)
 		{
@@ -416,11 +415,20 @@ class admin extends CI_Controller
 				$this->template->set("servs",$servs);
 				$this->template->set("producto",$producto);
 				$this->template->set("servicio",$servicio);
-				$this->template->set("style",$style);
+				//$this->template->set("style",$style);
 				$this->template->build('website/bo/comercial/altas/modificar_paquete');	
-		}elseif($id_merc==5)
-		{
-				$this->template->build('website/bo/comercial/altas/modificar_membresia');
+		}elseif($id_merc==5){
+			$proveedores    = $this->model_admin->get_proveedor2(2);
+			//$this->template->set("id_mercancia",$id_mercancia);
+			$this->template->set("data_merc",$data_merc);
+			//$this->template->set("red",$red);
+			$this->template->set("img",$img);
+			$this->template->set("mercancia",$mercancia);
+			$this->template->set("proveedores",$proveedores);
+			$this->template->set("pais",$pais);
+			$this->template->set("impuestos_merc",$impuestos_merc);
+			$this->template->set("impuesto",$impuesto);
+			$this->template->build('website/bo/comercial/altas/modificar_membresia');	
 		}
 	}
 	
