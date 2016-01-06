@@ -92,6 +92,11 @@ function actualizar_rangos(){
 		$this->db->update('cat_rango', $datos);
 		return true;
 }
+function validar_rango_bono($id_rango){
+	$query = $this->db->query('SELECT * FROM cat_bono_condicion where id_rango='.$id_rango);
+
+return $query->num_rows();
+}
 function kill_rangos(){
 	$this->db->query("delete from cat_rango where id_rango=".$_POST["id"]);
 }

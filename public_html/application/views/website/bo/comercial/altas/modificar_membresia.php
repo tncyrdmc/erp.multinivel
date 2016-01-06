@@ -2,6 +2,10 @@
 <!-- MAIN CONTENT -->
 <!DOCTYPE html>
 <html>
+<?
+$valor_iva=0;
+$valor_total=0;
+?>
 <div id="content">
 	
 	<section id="widget-grid" class="">
@@ -19,7 +23,7 @@
 							<section class="col col-6" style="display:none;">
 						            <label class="select"> 
 						                <select id="tipo_merc" required name="tipo_merc">
-						                	<option value="2">merc</option>
+						                	<option value="5">merc</option>
 						                    </select>
 						            </label>
 						        </section>
@@ -152,7 +156,17 @@
 																		if($key->id_pais==$mercancia[0]->pais){?>
 																		<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
 																		<?if($merc->id_impuesto==$key->id_impuesto)
-																		{?>
+																		{
+																			
+																			$valor_iva=($mercancia[0]->costo*$key->porcentaje)/100;
+
+																			if($mercancia[0]->iva=="CON"){  
+																			$valor_total=	$mercancia[0]->costo-$valor_iva;
+																		}
+																			if($mercancia[0]->iva=="MAS"){
+																			$valor_total=$mercancia[0]->costo+$valor_iva;
+																		}
+																			?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
@@ -171,7 +185,8 @@
 
 
 													<?}?>
-																					<section class="col col-6">Requiere especificación
+																					
+																<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
 																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>
@@ -179,7 +194,7 @@
 																		<label class="radio">
 																			<input type="radio" value="0" onchange="calcular_iva_real_radio()" name="iva" <?if($mercancia[0]->iva=="MAS"){ echo "checked"; }?>>
 																			<i></i>más IVA</label>
-																		</div>
+																		
 																	</section>
 																	</div>
 																	<div class="row">
@@ -187,7 +202,7 @@
 													<section class="col col-6">
 														<label class="input">
 															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+															<input type="text" value='<? echo $valor_total; ?>' min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
 														</label>
 													</section>
 													</div>
@@ -197,6 +212,8 @@
 													<br>
 														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
+													</div>
+
 												</fieldset>
 											</div>
 										</div>

@@ -1,5 +1,13 @@
 
 <!-- MAIN CONTENT -->
+<?
+$valor_iva_real=0;
+$valor_iva_distribuidores=0;
+$valor_iva_publico=0;
+$valor_total_real=0;
+$valor_total_distribuidores=0;
+$valor_total_publico=0;
+?>
 <div id="content">
 	
 	<section id="widget-grid" class="">
@@ -255,7 +263,23 @@
 															<label class="select">
 																
 																	<?foreach ($impuesto as $key){
-																		if($key->id_pais==$mercancia[0]->pais){?>
+																		if($key->id_pais==$mercancia[0]->pais){
+
+																			$valor_iva_real=($mercancia[0]->real*$key->porcentaje)/100;
+																			$valor_iva_distribuidores=($mercancia[0]->costo*$key->porcentaje)/100;
+																			$valor_iva_publico=($mercancia[0]->costo_publico*$key->porcentaje)/100;
+
+																		if($mercancia[0]->iva=="CON"){  
+																			$valor_total_real=	$mercancia[0]->real-$valor_iva_real;
+																			$valor_total_distribuidores= $mercancia[0]->costo-$valor_iva_distribuidores;
+																			$valor_total_publico=	$mercancia[0]->costo_publico-$valor_iva_publico;
+																		}
+																			if($mercancia[0]->iva=="MAS"){
+																			$valor_total_real=	$mercancia[0]->real+$valor_iva_real;
+																			$valor_total_distribuidores=$mercancia[0]->costo+$valor_iva_distribuidores;
+																			$valor_total_publico=	$mercancia[0]->costo_publico+$valor_iva_publico;
+																		}
+																			?>
 																		
 																		<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
 																		<?if($merc->id_impuesto==$key->id_impuesto)
@@ -300,13 +324,13 @@
 																						<section class="col col-6">
 														<label class="input">
 															Costo real con IVA
-															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+															<input type="text" value="<? echo $valor_total_real ?>" min="1" max="" name="real_iva" id="real_iva" disabled value="">
 														</label>
 													</section>
 													<section class="col col-6">
 														<label class="input">
 															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+															<input type="text" value="<? echo $valor_total_distribuidores ?>" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
 														</label>
 													</section>
 													</div>
@@ -314,7 +338,7 @@
 													<section class="col col-6">
 														<label class="input">
 															Costo público con IVA
-															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+															<input type="text" value="<? echo $valor_total_publico ?>" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
 													</div>

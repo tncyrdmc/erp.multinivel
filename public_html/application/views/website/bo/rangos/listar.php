@@ -261,7 +261,7 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el rango.",
+						message: "No se ha podido eliminar",
 						title: 'Felicitaciones',
 						buttons: {
 							success: {

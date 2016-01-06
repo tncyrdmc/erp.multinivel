@@ -192,11 +192,20 @@ if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
 	}
 
 	function kill_rangos(){
-
+		$validar_cat_bono_condicion=validar_rango_bono($_POST["id"]);
+		if($validar_cat_bono_condicion==0){
 		$kill_rangos=$this->model_rangos->kill_rangos();
 		$this->model_rangos->kill_cross_rango();
+		echo "Se ha eliminado el rango.";
+	}else{
+		echo "No se ha podido eliminar el rango, esta asociado a un bono.";
+		}
+		//echo "No se ha podido eliminar el rango, esta asociado a un bono.";
 	}
-
+function validar_rango_bono($id_rango){
+	$validar=$this->model_rangos->validar_rango_bono($id_rango);
+	return $validar;
+}
 
 	function cambiar_estado_rangos(){
 

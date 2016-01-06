@@ -418,8 +418,10 @@ class admin extends CI_Controller
 				//$this->template->set("style",$style);
 				$this->template->build('website/bo/comercial/altas/modificar_paquete');	
 		}elseif($id_merc==5){
+			$id_mercancia = $_POST['id'];
+			$proveedores    = $this->model_admin->get_proveedor2(1);
 			$proveedores    = $this->model_admin->get_proveedor2(2);
-			//$this->template->set("id_mercancia",$id_mercancia);
+			$this->template->set("id_mercancia",$id_mercancia);
 			$this->template->set("data_merc",$data_merc);
 			//$this->template->set("red",$red);
 			$this->template->set("img",$img);
@@ -752,6 +754,7 @@ class admin extends CI_Controller
 	
 	function update_mercancia()
 	{		
+	
 		$this->model_admin->update_mercancia();
 		
 		$ruta="/media/carrito/";

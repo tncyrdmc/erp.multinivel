@@ -785,6 +785,52 @@ where(a.id_pais=b.Code)");
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia);
 		}
+		if($_POST["tipo_merc"]==5)
+		{
+			$sku_q=$this->db->query("SELECT sku from mercancia where id=".$_POST['id_merc']);
+			$sku_res=$sku_q->result();
+			$sku=$sku_res[0]->sku;
+			$dato_membresia=array(
+					"nombre"       => $_POST['nombre'],
+					"caducidad"     => $_POST['caducidad'],
+					"descripcion"  => $_POST['descripcion'],
+					"id_red"    => $_POST['red']
+	            );
+
+			$this->db->where('id', $sku);
+			$this->db->update('membresia', $dato_membresia); 
+			$iva="";
+			if($_POST['iva']=="1"){$iva="CON";}
+			if($_POST['iva']=="0"){$iva="MAS";}
+			$dato_mercancia=array(
+					"pais"          	    => $_POST['pais'],
+					"id_proveedor"      	=> 0,
+					"real"              	=> 0,
+					"costo"            	 	=> $_POST['costo'],
+					"entrega"           	=> "0",
+					"costo_publico"    		=> 0,
+					"puntos_comisionables"	=> $_POST['puntos_com'],
+					"iva"					=> $iva
+	            );
+			$this->db->where('id', $_POST['id_merc']);
+			$this->db->update('mercancia', $dato_mercancia); 
+			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
+			
+			if (isset($_POST['id_impuesto'])){
+				foreach($_POST['id_impuesto'] as $impuesto)
+				{
+					$dato_impuesto=array(
+						"id_mercancia"	=> $_POST['id_merc'],
+						"id_impuesto"	=> $impuesto
+					);
+					$this->db->insert("cross_merc_impuesto",$dato_impuesto);
+				}
+			}
+			// Produces:
+			// UPDATE mytable 
+			// SET title = '{$title}', name = '{$name}', date = '{$date}'
+			// WHERE id = $id
+		}
 		
 	}
 	function new_mercancia()
