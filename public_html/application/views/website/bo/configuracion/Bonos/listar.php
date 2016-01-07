@@ -111,8 +111,8 @@
 														foreach ($condicionesBono as $condicion){
 																
 																if($condicion['id_bono']==$bono->id){
-																	echo "-Completar el rango ".$condicion['nombreRango']." cuando genera ".$condicion['condicionRango']." ".$condicion['tipoRango']." ";
-																	echo "en la red ".$condicion['nombreRed']." en ".$condicion['condiciones'];
+																	echo "-Completar el rango <b>".$condicion['nombreRango']."</b> cuando genera <b>".$condicion['condicionRango']."</b> <b>".$condicion['tipoRango']."</b> ";
+																	echo "en la red <b>".$condicion['nombreRed']."</b> en <b>".$condicion['condiciones']."</b>";
 																    echo "<br>";
 															}
 														}
@@ -165,6 +165,9 @@
 	<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 	<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 	<script src="/template/js/validacion.js"></script>
+	
+	<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>   
+	<script src="/template/js/spin.js"></script>
 	<script type="text/javascript">
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -248,7 +251,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/rangos/editar_rangos/",
+		url: "/bo/bonos/editar_bono/",
 		data: {
 			id: id
 			}
@@ -257,7 +260,7 @@ function editar(id){
 	.done(function( msg ) {
 		bootbox.dialog({
 			message: msg,
-			title: 'Modificar Rangos',
+			title: 'Modificar Bono',
 				});
 	});//fin Done ajax
 }
@@ -267,13 +270,13 @@ function eliminar(id) {
 	$.ajax({
 		type: "POST",
 		url: "/auth/show_dialog",
-		data: {message: '¿ Esta seguro que desea Eliminar el Rango ?'},
+		data: {message: '¿ Esta seguro que desea Eliminar el Bono ?'},
 	})
 	.done(function( msg )
 	{
 		bootbox.dialog({
 		message: msg,
-		title: 'Eliminar Rango',
+		title: 'Eliminar Bono',
 		buttons: {
 			success: {
 			label: "Aceptar",
@@ -282,20 +285,20 @@ function eliminar(id) {
 
 					$.ajax({
 						type: "POST",
-						url: "/bo/rangos/kill_rangos",
+						url: "/bo/bonos/kill_bono",
 						data: {id: id}
 					})
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el rango.",
+						message: "Se ha eliminado el Bono. "+msg,
 						title: 'Felicitaciones',
 						buttons: {
 							success: {
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/rangos/listar";
+								location.href="/bo/bonos/listar";
 								}
 							}
 						}
@@ -321,14 +324,14 @@ function estado(estatus, id)
 		
 	$.ajax({
 		type: "POST",
-		url: "/bo/rangos/cambiar_estado_rangos",
+		url: "/bo/bonos/cambiar_estado_bono",
 		data: {
 			id:id, 
 			estado: estatus
 		},
 		}).done(function( msg )
 				{
-					location.href = "/bo/rangos/listar";
+				location.href = "/bo/bonos/listar";
 				
 			})
 	}

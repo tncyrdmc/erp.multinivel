@@ -50,6 +50,17 @@ function insert_bono($bono){
 	return $q[0]->id;
 }
 
+function kill_bono($id){
+	$this->db->query("DELETE FROM cat_bono_valor_nivel where id_bono='".$id."'");
+	$this->db->query("DELETE FROM cat_bono_condicion where id_bono='".$id."'");
+	$this->db->query("DELETE FROM bono where id='".$id."'");
+}
+
+function cambiar_estado_bono($estado,$id_bono){
+	$this->db->query("update bono set estatus = '".$estado."' where id=".$id_bono);
+	return true;
+}
+
 function insert_bono_valor_niveles($valoresBono){
 	$this->db->insert("cat_bono_valor_nivel",$valoresBono);
 
@@ -79,7 +90,14 @@ function get_rangos_id($id){
 								and(cr.id_rango=".$id.") ");
 	return $q->result();
 }
-
+function get_rangos_bono($id){
+	$q=$this->db->query("SELECT * FROM cat_bono_condicion where id_bono=".$id." group by id_rango");
+	return $q->result();
+}
+function get_tipo_rangos_bono($id){
+	$q=$this->db->query("SELECT * FROM cat_bono_condicion where id_bono=".$id." group by id_rango,id_tipo_rango");
+	return $q->result();
+}
 function get_rangos_id_tipo($id,$tipoRango){
 
 	$q=$this->db->query("SELECT cr.id_rango as id_rango,cr.nombre as nombre_rango,cr.descripcion as descripcion,
@@ -174,10 +192,33 @@ function get_paquete_por_id($idPaquete){
 							and M.id=".$idPaquete."");
 	return $q->result();
 }
+
+function get_membresia_red($idRed){
+	$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2
+							from mercancia M, membresia S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
+							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=5 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id and C.Code = M.pais
+							and TR.id=".$idRed."");
+	return $q->result();
+}
+function get_membresia_por_id($idMembresia){
+	$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2
+							from mercancia M, membresia S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
+							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=5 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id and C.Code = M.pais
+							and M.id=".$idMembresia."");
+	return $q->result();
+}
+
 function get_bonos(){
 	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus
 						FROM bono b
 						where b.plan='NO'
+			");
+	return $q->result();
+}
+function get_bono_id($id){
+	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus,b.mes_desde_afiliacion,b.mes_desde_activacion
+						FROM bono b
+						where b.plan='NO' and id=".$id."
 			");
 	return $q->result();
 }
@@ -187,6 +228,13 @@ function get_valor_niveles(){
 			");
 	return $q->result();
 }
+
+function get_valor_niveles_id_bono($id){
+	$q=$this->db->query("SELECT * FROM cat_bono_valor_nivel where id_bono=".$id." order by nivel;
+			");
+	return $q->result();
+}
+
 
 function get_condiciones_bonos(){
 	$q=$this->db->query("SELECT * from cat_bono_condicion");
@@ -208,6 +256,21 @@ function get_condiciones_bonos(){
 		array_push($resultado, $bonoCondiciones);
 	}
 	return $resultado ;
+}
+
+function get_condiciones_bonos_id_bono($id_bono){
+	$q=$this->db->query("SELECT * FROM cat_bono_condicion where id_bono=".$id_bono." order by id_tipo_rango");
+	return $q->result();
+}
+
+function get_red_condiciones_bonos_id_bono($id_bono){
+	$q=$this->db->query("SELECT * FROM cat_bono_condicion where id_bono=".$id_bono." group by id_rango,id_tipo_rango,id_red order by id_red");
+	return $q->result();
+}
+
+function get__condicioneses_bonos_id_bono($id_bono){
+	$q=$this->db->query("SELECT * FROM cat_bono_condicion where id_bono=".$id_bono." group by id_rango,id_tipo_rango,id_red,condicion1,condicion2 order by id_red");
+	return $q->result();
 }
 
 	private function get_nombre_rango($id_rango){
@@ -289,7 +352,7 @@ function get_condiciones_bonos(){
 			}else if($idTipoMercancia==4){
 				$mercancia=$this->get_paquete_por_id($id_mercancia);
 			}else if($idTipoMercancia==5){
-				
+				$mercancia=$this->get_membresia_por_id($id_mercancia);
 			}
 		
 		return $mercancia;
