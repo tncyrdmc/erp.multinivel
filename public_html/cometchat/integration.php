@@ -1,6 +1,4 @@
 <?php
-include_once("cometchat/model_soporte_chat.php");
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -98,66 +96,16 @@ function chatLogin($userName,$userPass) {
         return $userid;
 }
 
-
-
 function getFriendsList($userid,$time) {	
 	global $hideOffline;
 	$offlinecondition = '';	
 	if ($hideOffline) {
 		$offlinecondition = "where ((cometchat_status.lastactivity > (".mysqli_real_escape_string($GLOBALS['dbh'],$time)."-".((ONLINE_TIMEOUT)*2).")) OR cometchat_status.isdevice = 1) and (cometchat_status.status IS NULL OR cometchat_status.status <> 'invisible' OR cometchat_status.status <> 'offline')";
 	}
-	
-	
-	if($_COOKIE['red1']=="1"){
-		//De usuario a usuario
-		$sql = ("select DISTINCT users.id userid,
-		users.username username,  users.username link,
-		users.id  avatar, cometchat_status.lastactivity lastactivity,
-		cometchat_status.status, cometchat_status.message,
-		cometchat_status.isdevice
-        from  users
-        left join cometchat_status on users.id = cometchat_status.userid
-        left join afiliar on afiliar.id=users.id
-        left join user_profiles on user_profiles.user_id=users.id
-        where afiliar.id_red=(select afiliar.id_red from afiliar where afiliar.id=".$userid.")
-		and user_profiles.id_tipo_usuario=2");
-			
-		return $sql;
-		
-		
-	}else if($_COOKIE['red1']=="2"){
-		//De usuario a soporte
-		$sql =("select DISTINCT users.id userid,users.username username,  
-            users.username link, users.id  avatar, cometchat_status.lastactivity lastactivity,
-			cometchat_status.status, cometchat_status.message,cometchat_status.isdevice 
-			from (users
-			left join cometchat_status on users.id = cometchat_status.userid)
-			left join afiliar on afiliar.id=users.id
-			left join user_profiles on user_profiles.user_id=users.id 
-			left join user_soporte on user_soporte.id_user=users.id
-			where  user_profiles.id_tipo_usuario='3' 
-			and user_soporte.id_red_temporal=
-			(SELECT id_red_temporal from user_red_temporal where id_user=".$userid.") 
-			or users.id=".$userid."");
-			return $sql;
-			
-	}else if($_COOKIE['red1']=="3"){
-		//De soporte a usuario
-		$sql =("select DISTINCT users.id userid,users.username username,
-        users.username link, users.id  avatar, cometchat_status.lastactivity lastactivity,
-        cometchat_status.status, cometchat_status.message,cometchat_status.isdevice
-        from (users
-		left join cometchat_status on users.id = cometchat_status.userid)
-		left join afiliar on afiliar.id=users.id
-		left join user_profiles on user_profiles.user_id=users.id
-        left join user_red_temporal on user_red_temporal.id_user=users.id
-		where user_red_temporal.id_red_temporal= (select id_red_temporal from user_soporte
-		where id_user=".$userid." and user_profiles.id_tipo_usuario='2' )
-		or users.id=".$userid."");
-		return $sql;
-		
-	       }
-   		}
+	$sql = ("select DISTINCT ".TABLE_PREFIX.DB_USERTABLE.".".DB_USERTABLE_USERID." userid, ".TABLE_PREFIX.DB_USERTABLE.".".DB_USERTABLE_NAME." username, ".TABLE_PREFIX.DB_USERTABLE.".".DB_USERTABLE_USERID." link, ".DB_AVATARFIELD." avatar, cometchat_status.lastactivity lastactivity, cometchat_status.status, cometchat_status.message, cometchat_status.isdevice from ".TABLE_PREFIX.DB_USERTABLE." left join cometchat_status on ".TABLE_PREFIX.DB_USERTABLE.".".DB_USERTABLE_USERID." = cometchat_status.userid ".DB_AVATARTABLE." ".$offlinecondition." order by username asc");
+ 
+	return $sql;
+}
 
 function getFriendsIds($userid) {
 	$sql = ("select ".TABLE_PREFIX."friends.friend_user_id friendid from ".TABLE_PREFIX."friends where ".TABLE_PREFIX."friends.initiator_user_id = '".mysqli_real_escape_string($GLOBALS['dbh'],$userid)."' and is_confirmed = 1 union select ".TABLE_PREFIX."friends.initiator_user_id friendid from ".TABLE_PREFIX."friends where ".TABLE_PREFIX."friends.friend_user_id = '".mysqli_real_escape_string($GLOBALS['dbh'],$userid)."' and is_confirmed = 1");

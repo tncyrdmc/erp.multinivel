@@ -42,13 +42,12 @@ $trayicon = array();
 
 /* ICONS START */
 
-$trayicon[] = array('home','Home','/','','','','','','1');
-$trayicon[] = array('chatrooms','Chatrooms','modules/chatrooms/index.php','_lightbox','600','300','','1','1');
+$trayicon[] = array('home','Home','/','','','','','','');
+$trayicon[] = array('chatrooms','Chatrooms','modules/chatrooms/index.php','_popup','600','300','','1','1');
 $trayicon[] = array('announcements','Announcements','modules/announcements/index.php','_popup','280','300','','1','');
 $trayicon[] = array('games','Single Player Games','modules/games/index.php','_popup','465','300','','1','');
 $trayicon[] = array('share','Share This Page','modules/share/index.php','_popup','350','50','','1','');
 $trayicon[] = array('scrolltotop','Scroll To Top','javascript:jqcc.cometchat.scrollToTop();','','','','','','');
-$trayicon[] = array('facebook','Facebook Fan Page','modules/facebook/index.php','_popup','500','460','','1','1');
 
 /* ICONS END */
 

@@ -261,8 +261,8 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "No se ha podido eliminar",
-						title: 'Felicitaciones',
+						message: msg,
+						title: '¡Atención!',
 						buttons: {
 							success: {
 							label: "Aceptar",

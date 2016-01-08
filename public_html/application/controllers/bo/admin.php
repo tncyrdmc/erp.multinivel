@@ -265,9 +265,11 @@ class admin extends CI_Controller
 		}else{
 			redirect('/auth/logout');
 		}
-		
+		$validar_venta=$this->model_admin->validar_venta($id);
+		$validar_actividad=$this->model_admin->validar_actividad($id);
 		$esta = $this->model_admin->ver_si_merc_ha_sido_vendida($id);
-		
+
+		if($validar_venta==null && $validar_actividad==null){
 		if ($esta == NULL){
 			
 			$datos = $this->model_admin->del_merc($id);
@@ -285,6 +287,10 @@ class admin extends CI_Controller
 		else {
 			echo "Ha ocurrido un error eliminando la mercancia, debido a que la mercancia tiene un historial de ventas.
 					<br> Lo mas recomendable es que desactive la mercancia del carrito de compras.";
+		}
+		}else{
+			echo "No se puede eliminar la mercancia, debido a que esta asociado a un bono.
+			<br> Lo mas recomendable es que desactive la mercancia del carrito de compras.";
 		}
 	}
 	

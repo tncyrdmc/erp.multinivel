@@ -133,6 +133,16 @@ class model_admin extends CI_Model
 	
 		return $datos->result();
 	}
+	function validar_venta($id){
+			$query = $this->db->query('select * from cat_bono_condicion where id_tipo_rango=2 and condicion2='.$id.'');
+
+			return $query->result();
+	}
+	function validar_actividad($id){
+			$query = $this->db->query('select * from cat_bono_condicion where id_tipo_rango=3 and condicion2='.$id.'');
+
+			return $query->result();
+	}
 	
 	function traer_foto($id){
 		$datos = $this->db->query('select CI.url url, M.id_tipo_mercancia id_tipo_mercancia, CI.id_img id_img, M.sku sku

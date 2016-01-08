@@ -303,12 +303,8 @@ $valor_total_publico=0;
 															
 														</section>
 													<?}?>
-													<div class="row">
-													<section class="col col-6" style="width: 50%">
-														<br>
-														<br>
-														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
+												
+								
 																				<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
@@ -341,8 +337,13 @@ $valor_total_publico=0;
 															<input type="text" value="<? echo $valor_total_publico ?>" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
+													<section class="col col-6" style="width: 50%">
+														<br>
+														<br>
+														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
 													</div>
-												
+					
 											</fieldset>
 												
 											<fieldset>

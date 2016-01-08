@@ -7,13 +7,6 @@
 $videoPluginType = '3';
 $vidWidth = '640';
 $vidHeight = '480';
-$videoPluginType = '3';
-$vidWidth = '220';
-$vidHeight = '165';
-$videoPluginType = '0';
-$vidWidth = '640';
-$vidHeight = '480';
-
 $applicationid = '';
 $appAuthSecret = '';
 $maxP = '10';
