@@ -23,7 +23,7 @@ include_once(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'application'.DIRECT
 // DO NOT EDIT DATABASE VALUES BELOW
 
 define('DB_SERVER',			$db['default']['hostname']				 );
-define('DB_PORT',			$db['port']								 );
+define('DB_PORT',			$db['default']['port']								 );
 define('DB_USERNAME',			$db['default']['username']				 );
 define('DB_PASSWORD',			$db['default']['password']				 );
 define('DB_NAME',			$db['default']['database'] 				 );

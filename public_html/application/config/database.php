@@ -53,6 +53,7 @@ $db['default']['hostname'] = '68.178.143.40';
 $db['default']['username'] = 'erpMultinivel';
 $db['default']['password'] = 'Multinivel#54321';
 $db['default']['database'] = 'erpMultinivel';
+$db['default']['port'] = '';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
