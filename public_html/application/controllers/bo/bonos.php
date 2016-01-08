@@ -2,7 +2,6 @@
 
 class bonos extends CI_Controller
 {
-	private $opciones="";
 
 	function __construct()
 	{
@@ -61,6 +60,74 @@ class bonos extends CI_Controller
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/configuracion/Bonos/alta');
+	}
+	
+	function listar()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$bonos=$this->model_bonos->get_bonos();
+		$this->template->set("bonos",$bonos);
+		
+		$valorNiveles=$this->model_bonos->get_valor_niveles();
+		$this->template->set("valorNiveles",$valorNiveles);
+		
+		$condicionesBono=$this->model_bonos->get_condiciones_bonos();
+		$this->template->set("condicionesBono",$condicionesBono);
+		
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/listar');
+	}
+	
+	function kill_bono(){
+		
+		if(isset($_POST['id'])){
+			$this->model_bonos->kill_bono($_POST['id']);
+		}
+	}
+	
+	function cambiar_estado_bono(){
+		if(isset($_POST['estado'])&&isset($_POST['id']))
+		$this->model_bonos->cambiar_estado_bono($_POST['estado'],$_POST['id']);
+	
+	}
+	
+	function editar_bono(){
+		$bono=$this->model_bonos->get_bono_id($_POST['id']);
+		$this->template->set("bono",$bono);
+		
+		$valorNiveles=$this->model_bonos->get_valor_niveles_id_bono($_POST['id']);
+		$this->template->set("valorNiveles",$valorNiveles);
+		
+		$rangosActivos=$this->model_bonos->get_rangos();
+		$this->template->set("rangosActivos",$rangosActivos);
+		
+		$rangosBono=$this->model_bonos->get_rangos_bono($_POST['id']);
+		$this->template->set("rangosBono",$rangosBono);
+		
+		
+		$tipoRangosBono=$this->model_bonos->get_tipo_rangos_bono($_POST['id']);
+		$this->template->set("tipoRangosBono",$tipoRangosBono);
+		
+		$redCondicionesBono=$this->model_bonos->get_red_condiciones_bonos_id_bono($_POST['id']);
+		$this->template->set("redCondicionesBono",$redCondicionesBono);
+		
+		$condicionesBono=$this->model_bonos->get__condicioneses_bonos_id_bono($_POST['id']);
+		$this->template->set("condicionesBono",$condicionesBono);
+		
+		$this->template->build('website/bo/configuracion/Bonos/editar');
+	
 	}
 	
 	function ingresar_bono(){
@@ -147,7 +214,7 @@ class bonos extends CI_Controller
 				<div class="widget-body col col-4">
 					<h3 class="semi-bold">Redes</h3>
 					<label class="select select-multiple">Seleccione las Redes validas para generar el bono
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_red'.$idRango.$idTipoRango.'[]" onChange="'.$nombreMetodo.'($(this).val(),'.$tipoRango->id_rango.$idDiv.','.$idRango.$idTipoRango.');">
+						<select id="id_red'.$idRango.$idTipoRango.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_red'.$idRango.$idTipoRango.'[]" onChange="'.$nombreMetodo.'($(this).val(),'.$tipoRango->id_rango.$idDiv.','.$idRango.$idTipoRango.');">
 						<option selected value="0">--- Todas ---</option>
 							'.$todasLasredes.'
 						</select>
@@ -202,7 +269,7 @@ class bonos extends CI_Controller
 		
 		echo '<h3 class="semi-bold">Tipos de Mercancia</h3>
 					<label class="select select-multiple">Seleccione los Tipos de Mercancia
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]" onChange=\'set_mercancia($(this).val(),'.$idDiv.','.json_encode($_POST["idRed"]).','.$idRangoDiv.');\'>
+						<select id="id_condicion_1'.$idRangoDiv.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]" onChange=\'set_mercancia($(this).val(),'.$idDiv.','.json_encode($_POST["idRed"]).','.$idRangoDiv.');\'>
 						<option selected value="0">--- Todas ---</option>
 						'.$opciones.'
 						</select>
@@ -213,7 +280,7 @@ class bonos extends CI_Controller
 	function set_mercancia(){
 		echo '<h3 class="semi-bold">Mercancias</h3>
 						<label class="select select-multiple">Seleccione la mercancia
-							<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$_POST['idRangoDiv'].'[]">
+							<select id="id_condicion_2'.$_POST['idRangoDiv'].'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$_POST['idRangoDiv'].'[]">
 								<option selected value="0">--- Todas ---</option>';
 		foreach ($_POST['idRedes'] as $red){
 			$this->set_mercancia_por_redes ( $red,$_POST['idTipoMercancia']);
@@ -226,14 +293,14 @@ class bonos extends CI_Controller
 	private function set_todos_los_niveles_red($idRangoDiv){
 		echo '<h3 class="semi-bold">Frontalidad</h3>
 					<label class="select select-multiple">Seleccione numero de Frontales
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]">
+						<select id="id_condicion_1'.$idRangoDiv.'" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]">
 						<option selected value="0">--- Todas ---</option>
 						</select>
 					</label>';
 			
 		echo '<h3 class="semi-bold">Profundidad</h3>
 					<label class="select select-multiple">Seleccione numero de Profundidad
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$idRangoDiv.'[]">
+						<select id="id_condicion_2'.$idRangoDiv.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$idRangoDiv.'[]">
 						<option selected value="0">--- Todas ---</option>
 						</select>
 					</label>';
@@ -242,14 +309,14 @@ class bonos extends CI_Controller
 	private function set_todos_los_niveles_mercancia($idRangoDiv){
 		echo '<h3 class="semi-bold">Tipos de Mercancia</h3>
 					<label class="select select-multiple">Seleccione los Tipos de Mercancia
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]">
+						<select id="id_condicion_1'.$idRangoDiv.'"  class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]">
 						<option selected value="0">--- Todas ---</option>
 						</select>
 					</label>';
 			
 		echo '<h3 class="semi-bold">Mercancias</h3>
 					<label class="select select-multiple">Seleccione la mercancia
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$idRangoDiv.'[]">
+						<select id="id_condicion_2'.$idRangoDiv.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$idRangoDiv.'[]">
 						<option selected value="0">--- Todas ---</option>
 						</select>
 					</label>';
@@ -259,11 +326,11 @@ class bonos extends CI_Controller
 
 		$opciones="";
 		for($i=1;$i<=$frontal;$i++){
-			$opciones=$opciones."<option value=\'".$i."\'>".$i."</option>";
+			$opciones=$opciones."<option value=".$i.">".$i."</option>";
 		}
 		echo '<h3 class="semi-bold">Frontalidad</h3>
 					<label class="select select-multiple">Seleccione numero de Frontales
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]">
+						<select id="id_condicion_1'.$idRangoDiv.'" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_1'.$idRangoDiv.'[]">
 						<option selected value="0">--- Todas ---</option>
 						'.$opciones.'
 						</select>
@@ -275,34 +342,32 @@ class bonos extends CI_Controller
 		}
 		echo '<h3 class="semi-bold">Profundidad</h3>
 					<label class="select select-multiple">Seleccione numero de Profundidad
-						<select multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$idRangoDiv.'[]">
+						<select id="id_condicion_2'.$idRangoDiv.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_condicion_2'.$idRangoDiv.'[]">
 						<option selected value="0">--- Todas ---</option>
 						'.$opciones.'
 						</select>
 					</label>';
 	}
 	
-	private function set_mercancia_por_redes($red,$idTipoMercancia) {
-		
-		foreach ($idTipoMercancia as $idTipoMercancia){
-		
+	private function set_mercancia_por_redes($red,$idTipoMercancias) {
+
+		foreach ($idTipoMercancias as $idTipoMercancia){
+			echo $idTipoMercancia." - ".$red;
 			if($idTipoMercancia==1){
 				$mercancias=$this->model_bonos->get_productos_red($red);
-			}elseif($idTipoMercancia==2){
+			}else if($idTipoMercancia==2){
 				$mercancias=$this->model_bonos->get_servicios_red($red);
-			}elseif($idTipoMercancia==3){
+			}else if($idTipoMercancia==3){
 				$mercancias=$this->model_bonos->get_combinados_red($red);
-			}elseif($idTipoMercancia==4){
+			}else if($idTipoMercancia==4){
 				$mercancias=$this->model_bonos->get_paquetes_red($red);
-			}elseif($idTipoMercancia==5){
-				
+			}else if($idTipoMercancia==5){
+				$mercancias=$this->model_bonos->get_membresia_red($red);
 			}
 
 			foreach ($mercancias as $mercancia){
-				$opciones=$opciones."<option value='".$mercancia->id."'>".$mercancia->nombre."( ".$mercancia->Name." )</option>";
+				echo "<option value='".$mercancia->id."'>".$mercancia->nombre."( ".$mercancia->Name." )</option>";
 			}
-			
-			echo $opciones;
 		}
 	}
 	
@@ -349,131 +414,5 @@ class bonos extends CI_Controller
 		}
 
 	}
-	/*
-	
-	function ValidarDatos($banco,$pais,$cuenta, $clabe){
-		if (!isset($banco) && !isset($pais) && !isset($cuenta)){
-			echo "Por favor llena el formulario";
-			return false;
-		}else{
-			return true;
-		}
-	}
-	
-	function listar()
-	{
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-	
-		$id=$this->tank_auth->get_user_id();
-		$usuario = $this->general->get_username($id);
-	
-		$style=$this->modelo_dashboard->get_style(1);
-		$bancos = $this->modelo_bancos->Bancos();
-		
-		$this->template->set("style",$style);
-		$this->template->set("bancos",$bancos);
-	
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
-		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/configuracion/Bancos/listar');
-	}
-	
-	function eliminar_banco(){
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-		redirect('/auth');
-		}
-		
-		$id=$this->tank_auth->get_user_id();
-		$usuario = $this->general->get_username($id);
-		
-		if(isset($_POST['id'])){
-			$ventas = $this->modelo_bancos->ConsultarTransacionBanco($_POST['id']);
-			
-			if(isset($ventas[0]->id_banco)){
-				echo "El Banco no se puede eliminar debido a que ya se han realizado pagos por medio del banco";
-			}else{
-				$this->modelo_bancos->EliminarBanco($_POST['id']);
-				echo "El banco con id ".$_POST['id']." ha sido eliminado";
-			}
-		}
-	}
-	
-	function cambiar_estado_banco(){
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-		redirect('/auth');
-		}
-		
-		$id=$this->tank_auth->get_user_id();
-		$usuario = $this->general->get_username($id);
-		
-		
-		if(isset($_POST['id'])){
-			$this->modelo_bancos->CambiarEstadoBanco($_POST['id'], $_POST['estado']);
-		}
-	}
-	
-	function editar_banco(){
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-	
-		$id=$this->tank_auth->get_user_id();
-		$usuario = $this->general->get_username($id);
-		$paises            = $this->model_admin->get_pais_activo();
-		
-		$style=$this->modelo_dashboard->get_style(1);
-		$banco = $this->modelo_bancos->Banco($_POST['id']);
-		
-		$this->template->set("style",$style);
-		$this->template->set("banco",$banco);
-		$this->template->set("paices",$paises);
-		
-		$this->template->build('website/bo/configuracion/Bancos/editar');
-	}
-	
-	function actualizar_banco(){
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-	
-		$id = $this->tank_auth->get_user_id();
-	
-		if(isset($_POST)){
-			$id_banco = $_POST['id'];
-			$banco = $_POST['banco'];
-			$pais = $_POST['pais'];
-			$cuenta = $_POST['cuenta'];
-			$clabe = $_POST['clabe'];
-				
-			if($this->ValidarDatos2($banco, $pais, $cuenta, $clabe)){
-					
-				$this->ValidarDatos2($banco,$pais,$cuenta, $clabe);
-			
-				$this->modelo_bancos->actualizar_banco($id_banco, $banco, $cuenta, $pais, $clabe);
-				echo "El Banco a sido actualizado.";
-					
-					
-			}
-		}
-	}
-	
-	function ValidarDatos2($banco,$pais,$cuenta, $clabe){
-		if (!isset($banco) && !isset($pais) && !isset($cuenta)){
-			
-			echo "Por favor llena el formulario.";
-			return false;
-		}else{
-			return true;
-		}
-	}
-*/
+
 }

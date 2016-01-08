@@ -4,74 +4,36 @@
 		$rangos=$rangos."<option value=\'".$categoria->id_rango."\'>".$categoria->nombre_rango."</option>";
 	}
 ?>
-		
-			<!-- MAIN CONTENT -->
-			<div id="content" >
-				<div id="spinner2"></div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> <a href="/bo/configuracion/"> Configuracion</a> 
-								> <a href="/bo/configuracion/compensacion"> Plan de compensación</a> 
-								> <a href="/bo/bonos"> Bonos</a>
-								> Alta
-							</span>
-						</h1>
-					</div>
-				</div>
-	<section id="widget-grid" class="">
-		<!-- START ROW -->
-		<div class="row">
-			<!-- NEW COL START -->
-			<article class="col-sm-12 col-md-12 col-lg-12">
-				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false"
-          data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-sortable="false"
-          data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-collapsed="false">
-					<div>
-
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding smart-form">
-          <fieldset>
-            <div class="contenidoBotones">
-			<div>
-			<div class="widget-body">
-			<form id="bonos" action="/bo/bonos/nuevo_bono" method="POST" role="form">
-			<legend>Nuevo Bono</legend><br>
-			
+<script type="text/javascript">
+var i=1;
+var j=0;
+</script>
+			<form id="bonos" action="/bo/bonos/nuevo_bono" method="POST" role="form" class="widget-body no-padding smart-form">
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
-				<input id="nombre" class="form-control" name="nombre" style="width:200px; height:30px;" placeholder="Nombre" required="" type="text">
+				<input id="nombre" class="form-control" name="nombre" style="width:200px; height:30px;" placeholder="Nombre" required="" type="text" value="<?php echo $bono[0]->nombre;?>">
 	        </label>
 			<label style="margin: 1rem;">
-				<textarea id="mymarkdown" name="descripcion" class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required=""></textarea>
+				<textarea id="mymarkdown" name="descripcion" class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required=""><?php echo $bono[0]->descripcion;?></textarea>
 	        </label>
 		<div style="margin: 1rem;">
 		<h4>Frecencia</h4>
 	        		<label class="radio">
-						<input value="UNI" name="frecuencia" placeholder="frecuencia" type="radio">
+						<input value="UNI" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'UNI') echo 'checked=""';?>>
 					<i></i>Unica</label>
 					<label class="radio">
-						<input value="ANO" name="frecuencia" placeholder="frecuencia" type="radio">
+						<input value="ANO" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'ANO') echo 'checked=""';?>>
 					<i></i>Anual</label>
 					<label class="radio">
-						<input checked="" value="MES" name="frecuencia" placeholder="frecuencia" type="radio">
+						<input value="MES" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'MES') echo 'checked=""';?>>
 					<i></i>Mensual</label>
 					<label class="radio">
-						<input value="QUI" name="frecuencia" placeholder="frecuencia" type="radio">
+						<input value="QUI" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'QUI') echo 'checked=""';?>>
 					<i></i>Quincenal</label>					
 					<label class="radio">
-						<input value="SEM" name="frecuencia" placeholder="frecuencia" type="radio">
+						<input value="SEM" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'SEM') echo 'checked=""';?>>
 					<i></i>Semanal</label>
 					<label class="radio">
-						<input value="DIA" name="frecuencia" placeholder="frecuencia" type="radio">
+						<input value="DIA" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'DIA') echo 'checked=""';?>>
 					<i></i>Diario</label>
 		<br><br>
 		<label class="toggle" style="width: 4rem;">
@@ -79,7 +41,7 @@
 			<i data-swchon-text="SI" data-swchoff-text="NO"></i>Plan
 		</label>
 		</div>
-		<div class="form-group" style="width: 100rem;">
+		<div class="form-group">
 	        <div class="row" id="cross_tipo_rango">
 									<header>Rangos</header><br><br>
 									<div class="row">
@@ -99,9 +61,9 @@
 									<div class="row">
 										<div class="col col-lg-2">
 										</div>
-										<div class="col col-xs-12 col-sm-12 col-lg-10" id="tipo_condicion">
+										<div class="col col-xs-12 col-sm-12 col-lg-10">
 											<label class="select">Nombre Rango
-											<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
+											<select id="id_rango0" style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
 											<option value='0'>--- Seleccione Rango ---</option>
 													<?php	
 														foreach($rangosActivos as $categoria){
@@ -123,18 +85,18 @@
 									Intervalos de Tiempo
 								</legend>
 									<div class="row">
-										<div class="col-sm-12 col-md-2 col-lg-2">
+										<div class="col-sm-12 col-md-3 col-lg-3">
 											<div class="form-group">
 												<label>Meses de Afiliacion</label>
-												<input class="form-control spinner-both"  id="mesDesdeAfiliacion" name="mesDesdeAfiliacion" value="0">
+												<input class="form-control spinner-both"  id="mesDesdeAfiliacion" name="mesDesdeAfiliacion" value="<?php echo $bono[0]->mes_desde_afiliacion;?>">
 											</div>
 										</div>
 										<div class="col-sm-12 col-md-2 col-lg-2">
 										</div>
-										<div class="col-sm-12 col-md-2 col-lg-2">
+										<div class="col-sm-12 col-md-3 col-lg-3">
 											<div class="form-group">
 												<label>Meses Activo</label>
-												<input class="form-control spinner-both"  id="mesDesdeActivacion" name="mesDesdeActivacion" value="0">
+												<input class="form-control spinner-both"  id="mesDesdeActivacion" name="mesDesdeActivacion" value="<?php echo $bono[0]->mes_desde_activacion;?>">
 											</div>
 										</div>
 									</div>
@@ -142,14 +104,14 @@
 								<br>
 								<label style="margin: 1rem;"><h2>Fecha de Activacion</h2></label>
 								<div style="margin: 1rem;">
-									<section class="col col-2">
+									<section class="col col-4">
 										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-											<input required id="inicio" value="" type="text" name="inicio" placeholder="Fecha de Inicio">
+											<input required id="inicio" value="<?php echo $bono[0]->inicio;?>" type="text" name="inicio" placeholder="Fecha de Inicio">
 										</label>
 									</section>
-									<section class="col col-2">
+									<section class="col col-4">
 										<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-											<input required id="fin" value="" type="text" name="fin" placeholder="Fecha de Fin">
+											<input required id="fin" value="<?php echo $bono[0]->fin;?>" type="text" name="fin" placeholder="Fecha de Fin">
 										</label>
 									</section><br><br><br>
 								<h4></h4>
@@ -170,24 +132,32 @@
 										</div>
 										
 									</div>
-									<div class="row">
+									<?php 
+									$contador=0;
+									foreach($valorNiveles as $nivel) {
+									?>
+									<div id="nivel<?php echo $contador;?>" class="row">
 										<div class="col col-lg-2">
 										</div>
-										
-										<div class="col col-lg-2">
-										<span style="margin: 2rem;">Afiliado</span>
+									<div class="col col-lg-2">
+										<span style="margin: 2rem;">Nivel</span>
 		        							<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>
-												<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="0" required type="number" readonly>
+												<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" required type="number" readonly value="<?php echo $nivel->nivel;?>">
 											</label>
 										</div>
 										<div class="col col-lg-1">
 										</div>
 										<div class="col col-lg-2">
 		        							<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>
-												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number">
+												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number" value="<?php echo $nivel->valor;?>">
 											</label>
-										</div>
+											<?php if($contador>0){?>
+											<a style="cursor: pointer;color: red;" onclick="delete_nivel(<?php echo $contador;?>)">Eliminar Nivel <i class="fa fa-minus"></i></a>
+											<?php }?>
+										</div><br>
 									</div>
+									<script type="text/javascript">j++;</script>
+								<?php $contador++;}?>
 
 								<div id="niveles">
 								</div>
@@ -199,71 +169,9 @@
     	</div>
     </div>
     </form>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</fieldset>
-	</div>
-						<!-- end widget content -->
 
-					</div>
-					<!-- end widget div -->
-				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
-		</div>
-		</section>
-				<div>         
-			        <!-- a blank row to get started -->
-			        <div class="col-sm-12">
-			            <br />
-			            <br />
-			        </div>
-		        </div>
-			</div>
-<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>   
-<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script> 	
-<script src="/template/js/spin.js"></script>
-
-
-		
-			<!-- END MAIN CONTENT -->
 <script type="text/javascript">
-$(document).ready(function() {
 
-	pageSetUp();
-
-	$("#mesDesdeAfiliacion").spinner({
-	    min: 0,
-	    max: 36,
-	    step: 1,
-	    start: 1000,
-	    numberFormat: "C"
-	});
-
-	$("#mesDesdeActivacion").spinner({
-	    min: 0,
-	    max: 36,
-	    step: 1,
-	    start: 1000,
-	    numberFormat: "C"
-	});
-	
-});
-
-$("#mymarkdown").markdown({
-	autofocus:false,
-	savable:false
-})
-
-
-$(function()
-		 {
 	$('#inicio').datepicker({
 		changeMonth: true,
 		numberOfMonths: 2,
@@ -287,10 +195,30 @@ $(function()
 			$('#inicio').datepicker('option', 'maxDate', selectedDate);
 		}
 	});
-		});
 
-var i=1;
-var j=1;
+	$("#mesDesdeAfiliacion").spinner({
+	    min: 0,
+	    max: 36,
+	    step: 1,
+	    start: 1000,
+	    numberFormat: "C"
+	});
+
+	$("#mesDesdeActivacion").spinner({
+	    min: 0,
+	    max: 36,
+	    step: 1,
+	    start: 1000,
+	    numberFormat: "C"
+	});
+
+	pageSetUp();
+
+
+$("#mymarkdown").markdown({
+	autofocus:false,
+	savable:false
+})
 
 $( "#bonos" ).submit(function( event ) {
 	event.preventDefault();
@@ -342,7 +270,7 @@ function add_rango()
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-12 col-lg-10">'
 		+'<label class="select">Nombre Rango'
-		+'<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),\'rango'+i+'\');">'
+		+'<select id="id_rango'+i+'" style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),\'rango'+i+'\');">'
 		+'<option value="0">--- Seleccione Rango ---</option>'
 		+'<?php	echo $rangos; ?>'
 	+'</select>'
@@ -362,9 +290,9 @@ function add_nivel()
 	+'<div class="col col-lg-2">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
-	+'<span style="margin: 2rem;">Nivel Padre</span>'
+	+'<span >Nivel</span>'
 		+'<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>'
-		+'<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" readonly>'
+		+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" readonly>'
 		+'</label>'
 	+' </div>'
 	+'<div class="col col-lg-1">'
@@ -404,9 +332,9 @@ var code='<div class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
-	+'<span style="margin: 2rem;">Afiliado</span>'
+	+'<span style="margin: 2rem;">Nivel</span>'
 	+'<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>'
-	+'<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="0" required="" type="number" readonly>'
+	+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="0" required="" type="number" readonly>'
 	+'</label>'
 	+'</div>'
 	+'<div class="col col-lg-1">'
@@ -510,6 +438,95 @@ function FinalizarSpinner(){
 	$("#spinner2").html('');
 	$("#spinner2").removeClass("modal-backdrop fade in");
 }
+
+function set_datos_rango_bono(idRango,idTipoRango,idDivRango)
+{	
+
+	$.ajax({
+		type: "POST",
+		url: "/bo/bonos/set_Rango",
+		data: {idRango : idRango}
+		})
+		.done(function( msg ) {
+			$('#'+idDivRango+'').html(msg);
+			
+		});
+}
+
+function select_rango(idRango,idDivRango){
+	$('#id_'+idDivRango).val(idRango).change();
+	
+}
+
+function select_redes_condiciones(idRango,idTipoRango,redes,condiciones1,condiciones2){
+
+	var myVar =setInterval(function (){
+		$('#id_red'+idRango+""+idTipoRango).val(redes).change()
+		clearInterval(myVar);
+		select_condicion1(idRango+""+idTipoRango,condiciones1,condiciones2);
+		}, 5000);
+	
+}
+
+function select_condicion1(idCondicion,condiciones1,condiciones2){
+	var myVar =setInterval(function (){
+		$('#id_condicion_1'+idCondicion).val(condiciones1).change()
+		clearInterval(myVar);
+		select_condicion2(idCondicion,condiciones2);
+		}, 2000);
+}
+
+function select_condicion2(idCondicion,condiciones2){
+	var myVar =setInterval(function (){
+		$('#id_condicion_2'+idCondicion).val(condiciones2).change()
+		clearInterval(myVar);
+		}, 2000);
+}
+
+<?php 
+$contador=0;
+foreach ($rangosBono as $rango){
+	if($contador>0){
+		?>
+		add_rango();
+<?php }?>
+select_rango(<?php echo $rango->id_rango ;?>,'rango<?php echo $contador ;?>');
+<?php 
+$contador++;
+}
+
+foreach ($tipoRangosBono as $tipoRango){
+		?>	
+		
+		var idRed=[];
+		var idCondicion1=[];
+		var idCondicion2=[];
+		<?php 
+		foreach ($redCondicionesBono as $condicion){
+				
+				if($tipoRango->id_rango==$condicion->id_rango&&$tipoRango->id_tipo_rango==$condicion->id_tipo_rango){?>
+					idRed.push(<?php echo $condicion->id_red;?>);
+			<?php }
+		}?>
+
+		<?php 
+				foreach ($condicionesBono as $condicion){
+						
+						if($tipoRango->id_rango==$condicion->id_rango&&$tipoRango->id_tipo_rango==$condicion->id_tipo_rango){?>
+							idCondicion1.push(<?php echo $condicion->condicion1;?>);
+							idCondicion2.push(<?php echo $condicion->condicion2;?>);
+					<?php }
+				}?>
+
+		select_redes_condiciones(<?php echo $tipoRango->id_rango ;?>,<?php echo $tipoRango->id_tipo_rango ;?>,idRed,idCondicion1,idCondicion2);
+		
+<?php 
+	
+	}
+
+ ?>
+
+
 </script>
 <style>
 .link
