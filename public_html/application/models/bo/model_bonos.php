@@ -266,13 +266,13 @@ function get_condiciones_bonos(){
 							bono B,cat_bono_condicion CBC,cat_bono_valor_nivel CBN ,
 							cat_rango CR,cat_tipo_rango CTR,tipo_red TR
 							where(B.id=CBC.id_bono)
+							and(B.plan='NO')
 							and(B.id=CBN.id_bono)
 							and(CBC.id_rango=CR.id_rango)
 							and(CBC.id_tipo_rango=CTR.id)
 							and(CBC.id_red=TR.id)
-							group by CBC.id_rango,CBC.id_tipo_rango");
+							group by CBC.id_bono,CBC.id_rango,CBC.id_tipo_rango");
 	$condiciones_bono=$q->result();
-	
 	$resultado=array();
 	
 	foreach ($condiciones_bono as $condicion_bono){
@@ -289,7 +289,7 @@ function get_condiciones_bonos(){
 		
 		array_push($resultado, $bonoCondiciones);
 	}
-
+	
 	return $resultado ;
 }
 
