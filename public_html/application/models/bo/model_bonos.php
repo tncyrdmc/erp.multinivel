@@ -270,7 +270,6 @@ function get_condiciones_bonos(){
 							and(B.id=CBN.id_bono)
 							and(CBC.id_rango=CR.id_rango)
 							and(CBC.id_tipo_rango=CTR.id)
-							and(CBC.id_red=TR.id)
 							group by CBC.id_bono,CBC.id_rango,CBC.id_tipo_rango");
 	$condiciones_bono=$q->result();
 	$resultado=array();

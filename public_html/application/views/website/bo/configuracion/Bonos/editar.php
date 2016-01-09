@@ -245,7 +245,7 @@ function enviar() {
 						.done(function( msg ) {
 
 							bootbox.dialog({
-						message: "Se ha creado el Bono."+msg,
+						message: "Se ha Modificado el Bono."+msg,
 						title: 'Felicitaciones',
 						buttons: {
 							success: {
