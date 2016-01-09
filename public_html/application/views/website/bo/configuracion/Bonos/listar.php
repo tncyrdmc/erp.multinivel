@@ -72,8 +72,8 @@
 													<th data-hide="phone,tablet">Descripcion</th>
 													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Fecuencia</th>
-													<th data-hide="phone,tablet">Valor por Nivel</th>
 													<th data-hide="phone,tablet">Condiciones</th>
+													<th data-hide="phone,tablet">Valor por Nivel</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -98,22 +98,28 @@
 																echo "Diario";
 														?></td>
 														<td>
-														<?php foreach ($valorNiveles as $valorNivel){
-															if($valorNivel->id_bono==$bono->id){
-																
-																echo "Nivel : ".$valorNivel->nivel." =<br> $ ".$valorNivel->valor."<br>";
-															}
-														}
-														?>
-														</td>
-														<td>
 														<?php 
 														foreach ($condicionesBono as $condicion){
 																
 																if($condicion['id_bono']==$bono->id){
 																	echo "-Completar el rango <b>".$condicion['nombreRango']."</b> cuando genera <b>".$condicion['condicionRango']."</b> <b>".$condicion['tipoRango']."</b> ";
-																	echo "en la red <b>".$condicion['nombreRed']."</b> en <b>".$condicion['condiciones']."</b>";
+																	echo "en la red <b>".$condicion['nombreRed']."</b> en";
+																	foreach($condicion['condicion1'] as $con){
+																		echo ",<b> ".$con."</b>";
+																	}
+																	foreach($condicion['condicion2'] as $con){
+																		echo ",<b> ".$con."</b>";
+																	}
 																    echo "<br>";
+															}
+														}
+														?>
+														</td>
+														<td>
+														<?php foreach ($valorNiveles as $valorNivel){
+															if($valorNivel->id_bono==$bono->id){
+																
+																echo "Nivel ".$valorNivel->nivel." : <br> <b>$ ".$valorNivel->valor."</b><br>";
 															}
 														}
 														?>

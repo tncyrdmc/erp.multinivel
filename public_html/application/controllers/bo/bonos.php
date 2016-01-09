@@ -103,33 +103,7 @@ class bonos extends CI_Controller
 	
 	}
 	
-	function editar_bono(){
-		$bono=$this->model_bonos->get_bono_id($_POST['id']);
-		$this->template->set("bono",$bono);
-		
-		$valorNiveles=$this->model_bonos->get_valor_niveles_id_bono($_POST['id']);
-		$this->template->set("valorNiveles",$valorNiveles);
-		
-		$rangosActivos=$this->model_bonos->get_rangos();
-		$this->template->set("rangosActivos",$rangosActivos);
-		
-		$rangosBono=$this->model_bonos->get_rangos_bono($_POST['id']);
-		$this->template->set("rangosBono",$rangosBono);
-		
-		
-		$tipoRangosBono=$this->model_bonos->get_tipo_rangos_bono($_POST['id']);
-		$this->template->set("tipoRangosBono",$tipoRangosBono);
-		
-		$redCondicionesBono=$this->model_bonos->get_red_condiciones_bonos_id_bono($_POST['id']);
-		$this->template->set("redCondicionesBono",$redCondicionesBono);
-		
-		$condicionesBono=$this->model_bonos->get__condicioneses_bonos_id_bono($_POST['id']);
-		$this->template->set("condicionesBono",$condicionesBono);
-		
-		$this->template->build('website/bo/configuracion/Bonos/editar');
-	
-	}
-	
+
 	function ingresar_bono(){
 
 		$nombre=$_POST['nombre'];
@@ -159,7 +133,68 @@ class bonos extends CI_Controller
 			$this->insertRangosRedesCondiciones($rango,$bono,$idBono);
 		}
 	}
+	
+	function editar_bono(){
+		$bono=$this->model_bonos->get_bono_id($_POST['id']);
+		$this->template->set("bono",$bono);
+	
+		$valorNiveles=$this->model_bonos->get_valor_niveles_id_bono($_POST['id']);
+		$this->template->set("valorNiveles",$valorNiveles);
+	
+		$rangosActivos=$this->model_bonos->get_rangos();
+		$this->template->set("rangosActivos",$rangosActivos);
+	
+		$rangosBono=$this->model_bonos->get_rangos_bono($_POST['id']);
+		$this->template->set("rangosBono",$rangosBono);
+	
+	
+		$tipoRangosBono=$this->model_bonos->get_tipo_rangos_bono($_POST['id']);
+		$this->template->set("tipoRangosBono",$tipoRangosBono);
+	
+		$redCondicionesBono=$this->model_bonos->get_red_condiciones_bonos_id_bono($_POST['id']);
+		$this->template->set("redCondicionesBono",$redCondicionesBono);
+	
+		$condicionesBono=$this->model_bonos->get__condicioneses_bonos_id_bono($_POST['id']);
+		$this->template->set("condicionesBono",$condicionesBono);
+	
+		$this->template->build('website/bo/configuracion/Bonos/editar');
+	
+	}
+	
+	function actualizar_bono(){
+	
+		$id_bono=$_POST['id'];
+		$nombre=$_POST['nombre'];
+		$descripcion=$_POST['descripcion'];
+		$inicio=$_POST['inicio'];
+		$fin=$_POST['fin'];
+		$mes_desde_afiliacion=$_POST['mesDesdeAfiliacion'];
+		$mes_desde_activacion=$_POST['mesDesdeActivacion'];
+		$frecuencia=$_POST['frecuencia'];
+		$plan = isset($_POST['plan']) && $_POST['plan']  ? "SI" : "NO";
+		$estatus="ACT";
+	
+
+		$bono = $this->model_bonos->setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$estatus,$plan);
+		$this->model_bonos->actualizar_bono($id_bono,$bono);
+	
+		$id_niveles_bonos = $_POST['id_niveles_bonos'];
+		$valores = $_POST['valor'];
+		$this->model_bonos->kill_bono_valor_nivel($id_bono);
 		
+		for ($i=0;$i<sizeof($valores);$i++){
+			$valoresBono = $this->model_bonos->setUpValoresBones($id_bono,$id_niveles_bonos[$i],$valores[$i]);
+			$this->model_bonos->actualizar_bono_valor_niveles($id_bono,$valoresBono);
+		}
+
+		$this->model_bonos->kill_bono_condicion($id_bono);
+		
+		$rangos = $_POST['idTipoRango'];
+		foreach ($rangos as $rango){
+			$this->insertRangosRedesCondiciones($rango,$bono,$id_bono);
+		}
+	}
+	
 	function set_Rango(){
 		
 		$rango=$this->model_bonos->get_rangos_id($_POST['idRango']);

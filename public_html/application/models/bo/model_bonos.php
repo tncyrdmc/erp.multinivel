@@ -50,6 +50,13 @@ function insert_bono($bono){
 	return $q[0]->id;
 }
 
+function actualizar_bono($idBono,$datosBono){
+
+	$this->db->where('id',$idBono);
+	$this->db->update('bono', $datosBono);
+	return true;
+}
+
 function kill_bono($id){
 	$this->db->query("DELETE FROM cat_bono_valor_nivel where id_bono='".$id."'");
 	$this->db->query("DELETE FROM cat_bono_condicion where id_bono='".$id."'");
@@ -62,6 +69,20 @@ function cambiar_estado_bono($estado,$id_bono){
 }
 
 function insert_bono_valor_niveles($valoresBono){
+	$this->db->insert("cat_bono_valor_nivel",$valoresBono);
+
+}
+
+function kill_bono_valor_nivel($idBono){
+	$this->db->query("DELETE FROM cat_bono_valor_nivel where id_bono='".$idBono."'");
+}
+
+function kill_bono_condicion($idBono){
+	$this->db->query("DELETE FROM cat_bono_condicion where id_bono='".$idBono."'");
+}
+
+function actualizar_bono_valor_niveles($idBono,$valoresBono){
+
 	$this->db->insert("cat_bono_valor_nivel",$valoresBono);
 
 }
@@ -237,7 +258,19 @@ function get_valor_niveles_id_bono($id){
 
 
 function get_condiciones_bonos(){
-	$q=$this->db->query("SELECT * from cat_bono_condicion");
+	$q=$this->db->query("SELECT CBC.id , CBC.id_bono as id_bono,CR.nombre as nombreRango,
+							CTR.nombre as nombreTipoRango ,CBC.id_tipo_rango as id_tipo_rango,CBC.condicion_rango as condicionRango ,
+							GROUP_CONCAT(DISTINCT TR.nombre) as nombreRedes ,
+							GROUP_CONCAT(DISTINCT CBC.condicion1)as condicion1,
+							GROUP_CONCAT(DISTINCT CBC.condicion2)as condicion2 FROM 
+							bono B,cat_bono_condicion CBC,cat_bono_valor_nivel CBN ,
+							cat_rango CR,cat_tipo_rango CTR,tipo_red TR
+							where(B.id=CBC.id_bono)
+							and(B.id=CBN.id_bono)
+							and(CBC.id_rango=CR.id_rango)
+							and(CBC.id_tipo_rango=CTR.id)
+							and(CBC.id_red=TR.id)
+							group by CBC.id_rango,CBC.id_tipo_rango");
 	$condiciones_bono=$q->result();
 	
 	$resultado=array();
@@ -246,15 +279,17 @@ function get_condiciones_bonos(){
 
 		$bonoCondiciones = array(
 				'id_bono' => $condicion_bono->id_bono,
-				'nombreRango' => $this->get_nombre_rango($condicion_bono->id_rango),
-				'tipoRango' => $this->get_nombre_tipo_rango($condicion_bono->id_tipo_rango),
-				'nombreRed' => $this->get_nombre_red_bono ($condicion_bono->id_red),
-				'condicionRango' => $condicion_bono->condicion_rango,
-				'condiciones' => $this->get_condiciones_bono ($condicion_bono->id_tipo_rango,$condicion_bono->condicion1,$condicion_bono->condicion2),
+				'nombreRango' => $condicion_bono->nombreRango,
+				'tipoRango' => $condicion_bono->nombreTipoRango,
+				'nombreRed' => $condicion_bono->nombreRedes,
+				'condicionRango' => $condicion_bono->condicionRango,
+				'condicion1' => $this->get_nombre_condicion_bono($condicion_bono->id_tipo_rango,$condicion_bono->condicion1,1),
+				'condicion2' => $this->get_nombre_condicion_bono($condicion_bono->id_tipo_rango,$condicion_bono->condicion2,2),
 		);
 		
 		array_push($resultado, $bonoCondiciones);
 	}
+
 	return $resultado ;
 }
 
@@ -304,57 +339,65 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $tipoRango;
 	}
 
-	private function get_condiciones_bono($id_tipo_rango,$condicion1,$condicion2){
+	private function get_nombre_condicion_bono($id_tipo_rango,$condiciones,$tipoCondicion){
+		$condiciones = explode(',', $condiciones);
 		
-		if($id_tipo_rango==1){
-		
-				if ($condicion1==0)
-					$condicion1 ="Todos";
-				if ($condicion2==0)
-					$condicion2 ="Todos";
-			
-			return "Niveles ".$condicion1." x ".$condicion2;
-			
-		}else{
-			$con1 ="Todos";
-			$con2 ="Todos";
-			if (!$condicion1==0){
-				$con1=$this->get_nombre_tipo_mercancia($condicion1);
-			}
-			
-			if (!$condicion2==0){
+		$nombreCondicion=array();
+		foreach ($condiciones as $condicion){
+			if($id_tipo_rango==1){
+					
+				if ($condicion==0)
+					array_push($nombreCondicion,"Todos");
+				else 
+					array_push($nombreCondicion,$condicion);
+					
+			}else{
+				$con ="Todos";
 				
-				$q=$this->get_mercancia_por_id($condicion1,$condicion2);
-				if(isset($q[0]->nombre))
-					$con2=$q[0]->nombre;
+				if (!$condicion=='0'){
+					
+					if($tipoCondicion==1){
+					$con=$this->get_nombre_tipo_mercancia($condicion);
+					}
+					else{
+					$con=$this->get_mercancia_por_id($condicion);
+					}
+				}
+				array_push($nombreCondicion,$con);
 			}
-			return $con1." ".$con2;
 		}
+		return $nombreCondicion;
 	}
 	
 	private function get_nombre_tipo_mercancia($id_tipo_mercancia){
 		$q=$this->db->query("SELECT * FROM cat_tipo_mercancia where id=".$id_tipo_mercancia."");
 		$nombre=$q->result();
-		return $nombre[0]->descripcion;
+		if(isset($nombre[0]->descripcion))
+			return $nombre[0]->descripcion;
+		return "";
 	}
 	
-	private function get_mercancia_por_id($idTipoMercancia,$id_mercancia){
+	private function get_mercancia_por_id($id_mercancia){
+		
+		$q=$this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id_mercancia."");
+		$idTipoMercancia=$q->result();
 		$mercancia=array();
-			if($idTipoMercancia==1){
+			if($idTipoMercancia[0]->id_tipo_mercancia==1){
 				$mercancia=$this->get_producto_por_id($id_mercancia);
 				
-			}else if($idTipoMercancia==2){
+			}else if($idTipoMercancia[0]->id_tipo_mercancia==2){
 				$mercancia=$this->get_servicio_por_id($id_mercancia);
 				
-			}else if($idTipoMercancia==3){
+			}else if($idTipoMercancia[0]->id_tipo_mercancia==3){
 				$mercancia=$this->get_combinado_por_id($id_mercancia);
 				
-			}else if($idTipoMercancia==4){
+			}else if($idTipoMercancia[0]->id_tipo_mercancia==4){
 				$mercancia=$this->get_paquete_por_id($id_mercancia);
-			}else if($idTipoMercancia==5){
+			}else if($idTipoMercancia[0]->id_tipo_mercancia==5){
 				$mercancia=$this->get_membresia_por_id($id_mercancia);
 			}
-		
-		return $mercancia;
+		if(isset($mercancia[0]->nombre))
+			return $mercancia[0]->nombre;
+		return "";
 	}
 }
