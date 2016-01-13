@@ -179,6 +179,7 @@ $valor_total_publico=0;
 														</label>
 													</section>
 													<legend>Impuesto</legend>
+													<div class="row">
 													<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
 															<select id="pais2" required name="pais" onChange="ImpuestosPais()">
@@ -249,6 +250,7 @@ $valor_total_publico=0;
 															
 															
 													<?}?>
+													</div>
 													<fieldset>
 													<div class="row">
 																	
@@ -267,13 +269,15 @@ $valor_total_publico=0;
 													<br>
 														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
+
 													
+																	</div>
 																	</div>
 																	
 
 																	<div class="row">
 																	
-																						<section class="col col-6">
+													<section class="col col-6">
 														<label class="input">
 															Costo real con IVA
 															<input type="text" value="<? echo $valor_total_real; ?>" min="1" max="" name="real_iva" id="real_iva" disabled value="">
@@ -296,7 +300,7 @@ $valor_total_publico=0;
 														</label>
 													</section>
 													</fieldset>
-													</div>
+											
 												</fieldset>
 											</div>
 										</div>

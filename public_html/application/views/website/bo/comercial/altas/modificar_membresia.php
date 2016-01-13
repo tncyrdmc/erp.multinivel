@@ -127,11 +127,8 @@ $valor_total=0;
 															<input type="number" min="1" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
-													<?$i=0?>
-													<?foreach($impuestos_merc as $merc)
-													{?>	
 													<legend>Impuesto</legend>
-																<section class="col col-12" style="width: 50%;">País de la mercancía
+													<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
 															<select id="pais2" required name="pais" onChange="ImpuestosPais()">
 																<?foreach ($pais as $key)
@@ -148,13 +145,16 @@ $valor_total=0;
 															</select>
 														</label>
 													</section>
-
-														<section class="col col-6" id="impuesto">Impuesto
+													<?$i=0?>
+													<?foreach($impuestos_merc as $merc)
+													{?>	
+													<section id="impuesto">
+														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
-																
+															<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
+	
 																	<?foreach ($impuesto as $key){
 																		if($key->id_pais==$mercancia[0]->pais){?>
-																		<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{
 																			
@@ -178,14 +178,18 @@ $valor_total=0;
 																			</option>
 																		<?}?>
 																	
-																</select>
+																
+														<?}}?>	
+																	</select>
 																<a class='txt-color-red' onclick="dell_impuesto(<?=$i?>)" style='cursor: pointer;'>Eliminar <i class="fa fa-minus"></i></a>
-														<?}}?>	</label>
+														</label>
+														</section>
 														</section>
 
 
+
 													<?}?>
-																					
+															</div>						
 																<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
@@ -269,6 +273,7 @@ $(document).ready(function() {
 
 function add_impuesto()
 {
+	i=i+1;
 	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'

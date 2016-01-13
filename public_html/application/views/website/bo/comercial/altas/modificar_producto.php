@@ -259,9 +259,10 @@ $valor_total_publico=0;
 													<?$i=0?>
 													<?foreach($impuestos_merc as $merc)
 													{?>	
-														<section class="col col-6" id="impuesto" name="impuesto">Impuesto
+													<section id="impuesto" name="impuesto">
+														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
-																
+																<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
 																	<?foreach ($impuesto as $key){
 																		if($key->id_pais==$mercancia[0]->pais){
 
@@ -281,7 +282,7 @@ $valor_total_publico=0;
 																		}
 																			?>
 																		
-																		<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
+																		
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
@@ -296,11 +297,15 @@ $valor_total_publico=0;
 																		<?}?>
 																		
 																	
-																</select>
-																<a class='txt-color-red' onclick="dell_impuesto(<?=$i?>)" style='cursor: pointer;'>Eliminar <i class="fa fa-minus"></i></a>
+																
 														<?}
-																	}?>	</label>
+																	}?>	
+
+																	</select>
+																		<a class='txt-color-red' onclick="dell_impuesto(<?=$i?>)" style='cursor: pointer;'>Eliminar <i class="fa fa-minus"></i></a>
+																	</label>
 															
+														</section>
 														</section>
 													<?}?>
 												
@@ -315,6 +320,11 @@ $valor_total_publico=0;
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
+																					<section class="col col-6" style="width: 50%">
+														<br>
+														<br>
+														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
 																	</div>
 																	<div class="row">
 																						<section class="col col-6">
@@ -337,11 +347,7 @@ $valor_total_publico=0;
 															<input type="text" value="<? echo $valor_total_publico ?>" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
-													<section class="col col-6" style="width: 50%">
-														<br>
-														<br>
-														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
+									
 													</div>
 					
 											</fieldset>
@@ -477,6 +483,7 @@ var i = <?= $i?>;
 
 function add_impuesto()
 {
+	i=i+1;
 	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
