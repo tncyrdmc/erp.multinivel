@@ -316,7 +316,7 @@ class model_perfil_red extends CI_Model
 	function get_pais()
 	{
 		/*7= español 3=inglés*/
-		$q=$this->db->query("select Code, Name, Code2 from Country where  estatus = 'ACT'");
+		$q=$this->db->query("select Code, Name, Code2 from Country where Code !='AAA'");
 		return $q->result();
 	}
 	/*function get_afiliados_($id, $id_afiliado)

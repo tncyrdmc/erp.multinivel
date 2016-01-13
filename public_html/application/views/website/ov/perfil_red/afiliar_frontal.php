@@ -18,7 +18,7 @@ $(document).ready(function() {
 						"#nombre",
 					 	"#apellido",
 					 	"#datepicker",
-					 	"#cp",
+					 	"#keyword",
 					 	"#username",
 					 	"#email",
 					 	"#password",
@@ -29,7 +29,7 @@ $(document).ready(function() {
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa tu código postal",
+					 	"Por favor ingresa tu DNI",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",
@@ -54,7 +54,7 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type: "POST",
-							url: "/ov/perfil_red/crear_user",
+							url: "/auth/register",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {
@@ -156,23 +156,7 @@ $( this ).remove();
 */
 function codpos()
 {
-	var pais = $("#pais").val();
-	if(pais=="MEX")
-	{
-		var cp=$("#cp").val();
-		$.ajax({
-			type: "POST",
-			url: "/ov/perfil_red/cp",
-			data: {cp: cp},
-		})
-		.done(function( msg )
-		{
-			$("#colonia").remove();
-			$("#municipio").remove();
-			$("#estado").remove();
-			$("#dir").append(msg);
-		})
-	}
+	
 }
 function clickme()
 {
@@ -245,7 +229,7 @@ function faseCambio(fase){
 
 function use_username()
 {
-	$("#msg_usuario").remove();
+	$('#username').val($('#username').val().replace(" ",""));
 	var username=$("#username").val();
 	$.ajax({
 		type: "POST",
@@ -254,12 +238,13 @@ function use_username()
 	})
 	.done(function( msg )
 	{
-		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
+		$("#msg_usuario").remove();
+		$("#usuario").append("<div id='msg_usuario'>"+msg+"</div>")
 	});
+	validate_user_data();
 }
 function use_mail()
 {
-	$("#msg_correo").remove();
 	var mail=$("#email").val();
 	$.ajax({
 		type: "POST",
@@ -268,38 +253,52 @@ function use_mail()
 	})
 	.done(function( msg )
 	{
-		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
+		$("#msg_correo").remove();
+		$("#correo").append("<div id='msg_correo'>"+msg+"</div>")
 	});
+	validate_user_data()
 }
-function use_username_r()
+
+
+function confirm_pass()
 {
-	$("#msg_usuario_r").remove();
-	var username=$("#username_r").val();
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
 	$.ajax({
 		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
+		url: "/ov/perfil_red/confirm_password",
+		data: {password: password,confirm_password: confirm_password},
 	})
 	.done(function( msg )
 	{
-		$("#usuario_r").append("<p id='msg_usuario_r'>"+msg+"</msg>")
+		$("#msg_confirm_password").remove();
+		$("#confirmar_password").append("<div id='msg_confirm_password'>"+msg+"</div>")
 	});
+	validate_user_data()
 }
-function use_mail_r()
+
+function validate_user_data()
 {
-	$("#msg_correo_r").remove();
-	var mail=$("#email_r").val();
-	$("#mail_important").attr('value',mail);
+	var username=$("#username").val();
+	var mail=$("#email").val();
+
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
+
+	$("#validate_user_data").remove();
+
 	$.ajax({
 		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
+		url: "/ov/perfil_red/validate_user_data",
+		data: {mail: mail,username: username,password: password,confirm_password: confirm_password},
 	})
 	.done(function( msg )
 	{
-		$("#correo_r").append("<p id='msg_correo_r'>"+msg+"</msg>")
+		$("#validate_user_data").remove();
+		$("#register").append("<div id='validate_user_data'>"+msg+"</div>")
 	});
 }
+
 function otra()
 {
 	if($("#otro:checked").val()=="on")
@@ -313,17 +312,7 @@ function otra()
 		$("#afiliado_value").attr("name","");
 	}
 }
-function agregar(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
+
 function agregar_red(tipo)
 {
 	if(tipo==1)
@@ -338,13 +327,14 @@ function agregar_red(tipo)
  $(function()
  {
  	a = new Date();
-	año = a.getFullYear()-19;
+	año = a.getFullYear()-18;
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
 	numberOfMonths: 2,
 	maxDate: año+"-12-31",
 	dateFormat:"yy-mm-dd",
-	changeYear: true
+	changeYear: true,
+	yearRange: "-99:+0",
 	});
 });
 
@@ -462,7 +452,6 @@ function codpos_red()
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span> 
 				> <a href="/ov/perfil_red/afiliar?tipo=1">Red</a>
-				> <a href="/ov/perfil_red/nuevo_afilido?id=<?php echo $_GET['id']; ?>">Afiliar</a>
 				> Frontal
 				</span>
 			</h1>
@@ -508,10 +497,6 @@ function codpos_red()
 							<div id="myTabContent1" class="tab-content padding-10">
 								<div class="tab-pane fade in active" id="s1">
 									<div id="uno" class="row fuelux">
-									
-									<?php 
-									if( $contar < $red_frontales[0]->frontal || $red_frontales[0]->frontal == '0')  {   ?>
-	                                    
 	                                	<div id="myWizard" class="wizard">
 		                                	
 											<ul class="steps">
@@ -534,7 +519,7 @@ function codpos_red()
 												<button type="button" class="final btn btn-sm btn-primary btn-prev">
 													<i class="fa fa-arrow-left"></i>Anterior
 												</button>
-												<button type="button" class="final btn btn-sm btn-success btn-next" data-last="Afiliar">
+												<button type="button" class="final btn btn-sm btn-success btn-next" data-last="Afiliar" disabled="disabled">
 													Siguiente<i class="fa fa-arrow-right"></i>
 												</button>
 											</div>
@@ -558,12 +543,12 @@ function codpos_red()
 															</section>
 															<section class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-																	<input id="password" required type="password" name="password" placeholder="Contraseña">
+																	<input id="password" onkeyup="confirm_pass()" required type="password" name="password" placeholder="Contraseña">
 																</label>
 															</section>
-															<section class="col col-6">
+															<section id="confirmar_password" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-																	<input id="confirm_password" required type="password" name="confirm_password" placeholder="Repite contraseña">
+																	<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Repite contraseña">
 																</label>
 															</section>
 														</fieldset>
@@ -657,41 +642,17 @@ function codpos_red()
 														<legend>Dirección del afiliado</legend>
 															<div id="dir" class="row">
 																<section class="col col-2">
-																	País
-																	<label class="select">
-																		<select id="pais" required name="pais">
-																		<?foreach ($pais as $key)
-																		{?>
-																			<option value="<?=$key->Code?>">
-																				<?=$key->Name?>
-																			</option>
-																		<?}?>
+																	<div class="form-group">
+																		<label>País</label>
+																		<select style="width:100%" class="select2" id="pais" required name="pais">
+																			<?foreach ($pais as $key)
+																			{?>
+																				<option value="<?=$key->Code?>">
+																					<?=$key->Name?>
+																				</option>
+																			<?}?>
 																		</select>
-																	</label>
-																</section>
-																<section class="col col-2">
-																	<label class="input">
-																		Código postal
-																		<input required type="text" id="cp" name="cp">
-																	</label>
-																</section>
-																<section class="col col-2">
-																	<label class="input">
-																		Calle
-																		<input required type="text" name="calle">
-																	</label>
-																</section>
-																<section id="colonia" class="col col-2">
-																	<label class="input">
-																		Colonia
-																		<input type="text" name="colonia" >
-																	</label>
-																</section>
-																<section id="municipio" class="col col-2">
-																	<label class="input">
-																		Municipio
-																		<input type="text" name="municipio" >
-																	</label>
+																	</div>
 																</section>
 																<section id="municipio" class="col col-2">
 																	<label class="input">
@@ -699,6 +660,35 @@ function codpos_red()
 																		<input type="text" name="estado" >
 																	</label>
 																</section>
+
+																<section id="municipio" class="col col-2">
+																	<label class="input">
+																		Municipio
+																		<input type="text" name="municipio" >
+																	</label>
+																</section>
+
+																<section id="colonia" class="col col-2">
+																	<label class="input">
+																		Colonia
+																		<input type="text" name="colonia" >
+																	</label>
+																</section>
+
+																<section class="col col-2">
+																	<label class="input">
+																		Dirección de domicilio
+																		<input required type="text" name="calle">
+																	</label>
+																</section>
+																
+																<section class="col col-2">
+																	<label class="input">
+																		Código postal
+																		<input required type="text" id="cp" name="cp">
+																	</label>
+																</section>
+																
 															</div>
 														</fieldset>
 														<fieldset>
@@ -901,9 +891,6 @@ function codpos_red()
 				
 											</div>
 										</div>
-										<? } else {?>
-										<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?> directo, pero puedes afiliar en red"</h1>
-											<?php }?>
 									</div>
 								</div>
 								
@@ -931,6 +918,27 @@ function codpos_red()
 </div>
 <!-- END MAIN CONTENT -->
 <!-- PAGE RELATED PLUGIN(S) -->
+<script>
+var id=0;
+use_username();
+function agregar(tipo)
+{
+	if(tipo==1)
+	{
+		$("#tel").append("<section id='tel_"+id+"' class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label><a style='cursor: pointer;color: red;' onclick='delete_telefono("+id+")'>Eliminar <i class='fa fa-minus'></i></a></section>");
+	}
+	else
+	{
+		$("#tel").append("<section id='tel_"+id+"' class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label><a style='cursor: pointer;color: red;' onclick='delete_telefono("+id+")'>Eliminar <i class='fa fa-minus'></i></a></section>");
+	}
+
+	id++;
+}
+function delete_telefono(id){
+	$("#tel_"+id+"").remove();	
+}
+
+</script>
 <style type="text/css">
 	/*Now the CSS*/
 * {margin: 0; padding: 0;}

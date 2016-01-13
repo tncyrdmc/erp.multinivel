@@ -21,8 +21,7 @@ class perfil_red extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
-
-
+		
 	}
 
 	function index()
@@ -91,7 +90,7 @@ class perfil_red extends CI_Controller
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
 		$frontales= $frontales[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
 		
@@ -148,7 +147,7 @@ class perfil_red extends CI_Controller
 	        	
 			}
 			if($aux > 0){
-				for($i=$aux; $i < $frontales; $i++){
+				for($i=$aux; $i < count($afiliados)+1; $i++){
 					echo "<li>
 								<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
 											</li>";
@@ -161,7 +160,7 @@ class perfil_red extends CI_Controller
 			$nombre=$this->model_perfil_red->get_name($_POST['id']);
 			$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 			echo "<ul>";
-			for($i=0; $i < $frontales; $i++){
+			for($i=0; $i < 1; $i++){
 				echo "<li>
 					<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
 	            </li>";
@@ -175,13 +174,19 @@ class perfil_red extends CI_Controller
 	function subtree()
 	{
 		$id_red=$_POST['red'];
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
-		$frontales= $frontales[0]->frontal;
+		$nivel = $_POST['nivel'];
+		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$frontales= $red[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
+		$frontales=count($afiliados);
 		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 		$aux = 0;
+		if($nivel >= $red[0]->profundidad){
+			return 0;
+		}
+
 		if($afiliados)
 		{
 				
@@ -225,7 +230,7 @@ class perfil_red extends CI_Controller
 					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
 					echo "
 					<li id='t".$afiliado[0]->user_id."'>
-		            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
 		            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
 		            </li>";
 						
@@ -259,9 +264,10 @@ class perfil_red extends CI_Controller
 	}
 	
 	function subtree2()
+	
 	{
 		$id_red=$_POST['red'];
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
 		$frontales= $frontales[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
 	
@@ -297,7 +303,7 @@ class perfil_red extends CI_Controller
 	
 					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
 	
-					for($i=$aux; $i < $frontales; $i++){
+					for($i=$aux; $i < count($afiliados); $i++){
 						echo "
 						<li>
 							<a href='javascript:void(0)'>No tiene afiliado</a>
@@ -319,7 +325,7 @@ class perfil_red extends CI_Controller
 	
 			}
 			if($aux > 0){
-				for($i=$aux; $i < $frontales; $i++){
+				for($i=$aux; $i < count($afiliados); $i++){
 					echo "
 						<li>
 							<a href='javascript:void(0)'>No tiene afiliado</a>
@@ -333,7 +339,7 @@ class perfil_red extends CI_Controller
 			$nombre=$this->model_perfil_red->get_name($_POST['id']);
 			$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 			echo "<ul>";
-			for($i=0; $i < $frontales; $i++){
+			for($i=0; $i < count($afiliados); $i++){
 				echo "
 						<li>
 							<a href='javascript:void(0)'>No tiene afiliado</a>
@@ -341,7 +347,6 @@ class perfil_red extends CI_Controller
 			}
 			echo "</ul>";
 		}
-	
 	}
 	
 	function detalle_usuario()
@@ -463,32 +468,43 @@ class perfil_red extends CI_Controller
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/perfil_red/tipoAfiliar');
 	}
+	
+	
+	
 	function afiliar()
 	{
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
-
-		$id              = $this->tank_auth->get_user_id();
+		
+		$id=$this->tank_auth->get_user_id();
 		
 		if($this->general->isAValidUser($id,"OV") == false)
 		{
 			redirect('/ov/compras/carrito');
 		}
 		
+		$id              = $this->tank_auth->get_user_id();
 		$style           = $this->general->get_style($id);
-		
-		$redes = $this->model_tipo_red->RedesUsuario($id);
-		
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		
+		
+		if(!$this->general->isActived($id)){
+	
+			$this->template->build('website/ov/perfil_red/renovar');
+			return true;
+		}
+
+		$redes = $this->model_tipo_red->RedesUsuario($id);
 		$this->template->set("redes",$redes);
 
-		$this->template->set_theme('desktop');
-        $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/perfil_red/redes');
 	}
 	
@@ -550,11 +566,11 @@ class perfil_red extends CI_Controller
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
 		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
-		$premium         = $red[0]->premium;
-		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+		//$planes 		 = $this->model_planes->Planes();
 		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
 		
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
@@ -577,8 +593,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("ocupacion",$ocupacion);
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
-		$this->template->set("red_frontales",$red_frontales);
-		$this->template->set("premium",$premium);
+		$this->template->set("red_frontales",$red_forntales);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -611,7 +626,7 @@ class perfil_red extends CI_Controller
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		//$planes 		 = $this->model_planes->Planes();
 		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
 	
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
@@ -671,7 +686,7 @@ class perfil_red extends CI_Controller
 		$planes 		 = $this->model_planes->Planes();
 	
 		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
 	
 	
 	
@@ -684,7 +699,6 @@ class perfil_red extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
-		
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("afiliados",$afiliados);
@@ -733,7 +747,7 @@ class perfil_red extends CI_Controller
 		$planes 		 = $this->model_planes->Planes();
 	
 		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
 	
 	
 	
@@ -768,12 +782,61 @@ class perfil_red extends CI_Controller
 		$this->template->build('website/ov/perfil_red/afiliar_red_existente');
 	}
 	
+	function validate_user_data()
+	{
+	
+		$use_mail=$this->model_perfil_red->use_mail();
+		$use_username=$this->model_perfil_red->use_username();
+		
+		$email = preg_match(
+				'/^[A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+		);
+		
+		if(!$_POST['username']||!$_POST['mail']||!$_POST['password']||!$_POST['confirm_password']){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+		
+		else if(!$email){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+		else if($_POST['password']!=$_POST['confirm_password']){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+		
+		else if(!$use_mail&&!$use_username){
+			echo "<script>
+				  $('.btn-next').removeAttr('disabled');
+				  </script>
+				";
+		}
+	}
+	
+	
 	function use_mail()
 	{
 		$use_mail=$this->model_perfil_red->use_mail();
-		if($use_mail)
-		{
-			echo "La cuenta de correo ya no está disponible";
+		if($use_mail){
+			echo "<p style='color: red;'>El email no está disponible.</p>";
+		}else{
+			echo "";
+		}
+	}
+	
+	function confirm_password()
+	{
+		if($_POST['password']!=$_POST['confirm_password']){
+			echo "<p style='color: red;' >Las contraseñas no coinciden. </p>";
+		}else{
+			echo "";
 		}
 	}
 	
@@ -783,7 +846,7 @@ class perfil_red extends CI_Controller
 		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($id);
 		if($use_mail)
 		{
-			echo "La cuenta de correo ya no está disponible";
+			echo "La cuenta de correo ya no está disponible.";
 		}
 	}
 	
@@ -792,7 +855,7 @@ class perfil_red extends CI_Controller
 		$use_mail_modificar = $this->model_perfil_red->use_mail_modificar();
 		if($use_mail_modificar)
 		{
-			echo "La cuenta de correo ya no está disponible";
+			echo "La cuenta de correo ya no está disponible.";
 		}
 	}
 	
@@ -807,8 +870,14 @@ class perfil_red extends CI_Controller
 	function use_username()
 	{
 		$use_username=$this->model_perfil_red->use_username();
-		if($use_username)
-		echo "El usuario no está disponible";
+		if($use_username){
+			echo "<script>
+					$('.btn-next').attr('disabled','disabled');
+				  </script>
+				<p style='color: red;'>El Usuario no está disponible</p>";
+		}else{
+			echo "";
+		}
 	}
 	
 	function use_username_modificar()
@@ -1072,6 +1141,13 @@ class perfil_red extends CI_Controller
 		$id = $_POST['id'];
 		$id_red = $_POST['red'];
 		
+		$nivel = $_POST['nivel'];
+		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		
+		if($nivel >= $red[0]->profundidad){
+			return 0;
+		}
+		
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $id);
 		if($afiliados)
 		{
@@ -1085,7 +1161,7 @@ class perfil_red extends CI_Controller
 			{
 				echo "
 				<li class='parent_li' style='display: list-item;' role='treeitem' id='".$afiliado[0]->user_id."'>
-	            	<span class='quitar'  onclick='subred(".$afiliado[0]->user_id.")'><i class='fa fa-lg fa-plus-circle'></i> ".$afiliado[0]->nombre." ".$afiliado[0]->apellido."</span>
+	            	<span class='quitar'  onclick='subred(".$afiliado[0]->user_id.",".($nivel+1).")'><i class='fa fa-lg fa-plus-circle'></i> ".$afiliado[0]->nombre." ".$afiliado[0]->apellido."</span>
 	            </li>";
 			}
 			echo "</ul>";
