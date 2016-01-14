@@ -908,6 +908,7 @@
 				{
 					if(msg=="si")
 					{
+						alert(msg);
 						window.location.href="DatosEnvio";
 						
 					}

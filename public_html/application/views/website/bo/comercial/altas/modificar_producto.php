@@ -310,7 +310,7 @@ $valor_total_publico=0;
 													<?}?>
 												
 								
-																				<section class="col col-6">Requiere especificación
+																			<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
 																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>

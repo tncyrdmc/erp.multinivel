@@ -58,9 +58,10 @@
 									</section>
 								</fieldset>
 								<fieldset>
+								<?$i1=0?>
 										        <?if ($prods==null) {?>
-										        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-										id="prods">
+										        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
+										        	<div id="<?= $i1=$i1+1?>a">
 										<section class="col col-8" style="width: 50%">
 											Productos <label class="select"> <select
 												class="custom-scroll" name="producto[]">
@@ -84,6 +85,13 @@ foreach ( $producto as $key ) {
 												type="number" min="1" name="n_productos[]" id="prod_qty">
 											</label>
 										</section>
+																				<div class=" text-center row">
+
+										<a class='txt-color-red' onclick="delete_product(<?=$i1?>)" style='cursor: pointer;'>Eliminar
+											producto <i class="fa fa-minus"> </i>
+										</a>
+									</div>
+									</div>
 									</div>
 											        <?
 																		}
@@ -91,6 +99,7 @@ foreach ( $producto as $key ) {
 																			?>
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
 										id="prods">
+										<div id="<?= $i1=$i1+1?>a">
 										<section class="col col-8" style="width: 50%">
 											Productos <label class="select"> <select
 												class="custom-scroll" name="producto[]">
@@ -126,19 +135,27 @@ foreach ( $producto as $key ) {
 												value='<? echo $key_1->cantidad_producto?>'>
 											</label>
 										</section>
+										<div class=" text-center row">
+
+										<a class='txt-color-red' onclick="delete_product(<?=$i1?>)" style='cursor: pointer;'>Eliminar
+											producto <i class="fa fa-minus"> </i>
+										</a>
+									</div>	
+									</div>
 									</div>
 												<?}?>
 
 												<div id="agregar" class=" text-center row">
 
-										<a onclick="new_product()" style='cursor: pointer;'>Agregar
+										<a onclick="new_product(<?=$i1?>)" style='cursor: pointer;'>Agregar
 											producto <i class="fa fa-plus"> </i>
 										</a>
 									</div>		
-
+										<?$i2=0;?>
 												<?if ($servs==null) {?>
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
 										id="servs">
+										<div id="<?= $i2=$i2+1?>b">
 										<section class="col col-8" style="width: 50%">
 											Servicios <label class="select"> <select
 												class="custom-scroll" name="servicio[]">
@@ -157,6 +174,12 @@ foreach ( $producto as $key ) {
 												type="number" min="1" name="n_servicios[]" id="serv_qty">
 											</label>
 										</section>
+												<div  class=" text-center row">
+										<a class='txt-color-red' onclick="delete_service(<?=$i2?>)" style='cursor: pointer;'>Eliminar
+											servicio <i class="fa fa-minus"> </i>
+										</a>
+									</div>
+									</div>
 									</div>
 												<?
 												
@@ -165,6 +188,7 @@ foreach ( $producto as $key ) {
 													?>
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
 										id="servs">
+										<div id="<?= $i2=$i2+1?>b">
 										<section class="col col-8" style="width: 50%">
 											Servicios <label class="select"> <select
 												class="custom-scroll" name="servicio[]">
@@ -199,12 +223,19 @@ foreach ( $servicio as $key ) {
 												value='<? echo $key_1->cantidad_servicio?>'>
 											</label>
 										</section>
+										<div class=" text-center row">
+
+										<a class='txt-color-red' onclick="delete_service(<?=$i2?>)" style='cursor: pointer;'>Eliminar
+											servicio <i class="fa fa-minus"> </i>
+										</a>
+									</div>
+									</div>
 									</div>
 												<?}?>
 												
 												<div id="agregar1" class=" text-center row">
 
-										<a onclick="new_service()" style='cursor: pointer;'>Agregar
+										<a onclick="new_service(<?=$i1?>)" style='cursor: pointer;'>Agregar
 											servicio <i class="fa fa-plus"> </i>
 										</a>
 									</div>
@@ -336,9 +367,11 @@ foreach ( $servicio as $key ) {
 var i = <?= $i?>;
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-function new_product()
+function new_product(i)
 {
-	$('#prods').append('<section class="col col-8" style="width: 50%">Productos'
+	i = parseInt(i) + 1;
+	$('#prods').append('<div id="'+i+'a">'
+		+'<section class="col col-8" style="width: 50%">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<?foreach ($producto as $key){?>'
@@ -352,12 +385,27 @@ function new_product()
 		+'<label class="input">Cantidad de productos'
 		+'<input type="number" min="1" name="n_productos[]" id="prod_qty" >'
 		+'</label>'
-		+'</section>');
+		+'</section>'
+		+'<div  class=" text-center row">'
+		+'<a class="txt-color-red" onclick="delete_product('+i+')" style="cursor: pointer;">Eliminar producto' 
+		+'<i class="fa fa-minus">'
+		+'</i>'
+		+'</a>'  
+		+'</div>'
+		+'</div>');
+	i = parseInt(i) + 1;
 }
 
-function new_service()
+function delete_product(id){
+$("#"+id+"a").remove();
+
+}
+
+function new_service(i)
 {
-	$('#servs').append('<section class="col col-8" style="width: 50%">Servicios'
+	i = parseInt(i) + 1;
+	$('#servs').append('<div id="'+i+'b">'
+		+'<section class="col col-8" style="width: 50%">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<?foreach ($servicio as $key){?>'
@@ -372,7 +420,18 @@ function new_service()
 		+'<label class="input">Cantidad de servicios'
 		+'<input type="number" min="1" name="n_servicios[]" id="serv_qty" >'
 		+'</label>'
-		+'</section>');
+		+'</section>'
+		+'<div  class=" text-center row">'
+		+'<a class="txt-color-red" onclick="delete_service('+i+')" style="cursor: pointer;">Eliminar servicio' 
+		+'<i class="fa fa-minus">'
+		+'</i>'
+		+'</a>'  
+		+'</div>'
+		+'</div>');
+	i = parseInt(i) + 1;
+}
+function delete_service(id){
+$("#"+id+"b").remove();
 }
 
 function add_impuesto()

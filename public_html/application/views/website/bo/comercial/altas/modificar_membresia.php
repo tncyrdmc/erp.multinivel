@@ -189,6 +189,13 @@ $valor_total=0;
 
 
 													<?}?>
+																<div class="row">
+													<section class="col col-6" style="width: 50%">
+													<br>
+													<br>
+														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
+													</div>
 															</div>						
 																<section class="col col-6">Requiere especificación
 																<div class="inline-group">
@@ -210,13 +217,7 @@ $valor_total=0;
 														</label>
 													</section>
 													</div>
-													<div class="row">
-													<section class="col col-6" style="width: 50%">
-													<br>
-													<br>
-														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
-													</div>
+										
 
 												</fieldset>
 											</div>

@@ -1601,10 +1601,13 @@ function index()
 			</div> 
 		</div>";
 	}
-	
+	function add_car(){
+
+	}
 	function add_carrito()
 	{
 		$carrito_item=0;
+
 		foreach ($this->cart->contents() as $items) 
 		{
 			$carrito_item++;
