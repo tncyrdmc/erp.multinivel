@@ -104,7 +104,7 @@ class Rangos extends CI_Controller
 
 	}
 	function set_tipo_rango(){
-$code="";
+	$code="";
 		if(isset($_POST['id'])){
 			$ids=$_POST['id'];
 			$tipo_rango=$this->model_rangos->get_tipo_rango_not_in($ids);

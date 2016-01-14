@@ -1,7 +1,7 @@
 <?php 
 	$select_bonos="";
 	foreach($bonos_plan as $categoria){
-		$select_bonos+="<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
+		$select_bonos=$select_bonos."<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
 	}
 ?>
 
@@ -41,7 +41,7 @@
 						<div class="widget-body no-padding smart-form">
 <div>
     <fieldset id="pswd">
-		<form id="planes" action="/bo/rangos/ingresar_rango/" method="POST" role="form">
+		<form id="planes" action="/bo/planes/ingresar_plan/" method="POST" role="form">
 			<legend>Nuevo Plan</legend><br>
 			
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
@@ -58,39 +58,51 @@
 										<div class="col col-lg-3 col-xs-2">
 										</div>																	
 									</div>
+									
+									<?php if ($bonos_plan) {?>
 
 									<div class="row" id="bono">
-									<div class="row">
-										<div class="col col-lg-3 col-xs-2">
+										<div class="row">
+											<div class="col col-lg-3 col-xs-2">
+											</div>
+											<div class="col col-lg-2 col-xs-2">
+												<a style="cursor: pointer;" onclick="add_bono()"> Agregar Bono <i class="fa fa-plus"></i></a>
+											</div>
+											
 										</div>
-										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_bono()"> Agregar Bono <i class="fa fa-plus"></i></a>
+										<div class="row">
+											<div class="col col-lg-2">
+											</div>
+											<div class="col col-xs-12 col-sm-6 col-lg-3" id="bono_plan">
+												<label class="select">Seleccione Bono
+												<select name="id_bono_plan[]" >
+														<?php	
+															foreach($bonos_plan as $categoria){
+																echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
+															}
+														?>
+												</select>
+												</label>
+											</div>																			
 										</div>
-										
 									</div>
-									<div class="row">
-										<div class="col col-lg-2">
-										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3" id="bono_plan">
-											<label class="select">Seleccione Bono
-											<select name="id_bono_plan[]" >
-													<?php	
-														foreach($bonos_plan as $categoria){
-															echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
-														}
-													?>
-											</select>
-											</label>
-										</div>
-										
-										
-									</div>
-									
-								</div>
+								<?php } else {
+									echo '<div class="row">
+											<div class="col col-lg-3 col-xs-2">
+												
+											</div>
+											<div class="col col-lg-3 col-xs-2">
+												No existen Bonos disponibles
+											</div>
+										</div>';
+								}?>
 								
 								<div id="bono">
 								
 								</div>
+							</div>
+						
+						</div>
 
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Crear</button>
 			
@@ -142,43 +154,42 @@ $('select[name="id_bono_plan[]"]').each(function() {
  }
      return bono_repetido;
 }
+
 function enviar() {
-	var verificar_plan=false;
-	verificar_plan=validar_bonos_repetidos();
-	if(verificar_plan!=true){
-	$.ajax({
-						type: "POST",
-						url: "/bo/planes/ingresar_plan",
-						data: $('#planes').serialize()
-						})
-						.done(function( msg ) {
-							
-							bootbox.dialog({
-						message: "Se ha creado el rango."+msg,
-						title: 'Felicitaciones',
-						buttons: {
-							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
+	var verificar_plan = false;
+	verificar_plan = validar_bonos_repetidos();
+	if(verificar_plan!=true){		
+		$.ajax({
+			type: "POST",
+			url: "/bo/planes/ingresar_plan",
+			data: $('#planes').serialize()
+		}).done(function( msg ) {
+			bootbox.dialog({
+				message: msg,
+				title: 'ATENCION',
+				buttons: {
+					success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
 							//	location.href="/bo/planes/listar";
-								}
-							}
 						}
-					})
-						});//fin Done ajax
+					}
+				}
+			})
+		});//fin Done ajax
 	}else{
-		alert("Ha repetido alguna condición del rango");
+		alert("Ha repetido algun Bono del Plan");
 	}
 }
 
 function add_bono()
 {
 
-	var code=	'<div id="'+i+'" class="row">'
+	var code=	'<br/><div id="'+i+'" class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-3"><hr/><br/>'
 		+'<label class="select">Seleccione Bono'
 		+'<select name="id_bono_plan[]" >'
 		+'<?php	echo $select_bonos; ?>'

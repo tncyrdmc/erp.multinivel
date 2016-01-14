@@ -49,10 +49,10 @@
                   <div class="contenidoBotones">
 										<div class="row">
 											
-											<div class="col-sm-2 link">
+											<div class="col-sm-1 link">
 											</div>
-											<div class="col-sm-8 link">
-												<div class="col-sm-3 link">
+											<div class="col-sm-10 link">
+												<div class="col-sm-2 link">
 												<a href="/bo/configuracion/comisiones">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-money fa-3x"></i>
@@ -60,7 +60,7 @@
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-3 link">
+												<div class="col-sm-2 link">
 												<a href="/bo/rangos">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-graduation-cap fa-3x"></i>
@@ -68,11 +68,19 @@
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-3 link">
+												<div class="col-sm-2 link">
 												<a href="/bo/bonos">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-gift fa-3x"></i>
 														<h1>Bonos </h1>
+													</div>
+												</a>
+												</div>
+												<div class="col-sm-2 link">
+												<a href="/bo/planes">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-gift fa-3x"></i>
+														<h1>Planes</h1>
 													</div>
 												</a>
 												</div>
