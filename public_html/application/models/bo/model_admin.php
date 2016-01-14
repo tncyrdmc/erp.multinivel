@@ -1746,17 +1746,17 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 
 	function get_prod_combinado($id)
 	{
-		$q=$this->db->query("SELECT a.*, b.nombre, c.id 
-FROM cross_combinado a, producto b, mercancia c 
-WHERE a.id_producto<>0 and a.id_producto=b.id and c.id=".$id);
+		$q=$this->db->query("SELECT  p.nombre, b.*, c.id
+FROM mercancia c, combinado d, cross_combinado b, producto p 
+WHERE c.sku=d.id and  b.id_producto=p.id and c.sku=b.id_combinado and c.id=".$id);
 		return $q->result();
 	}
 	
 	function get_serv_combinado($id)
 	{
-		$q=$this->db->query("SELECT a.*, b.nombre, c.id 
-FROM cross_combinado a, servicio b, mercancia c 
-WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
+		$q=$this->db->query("SELECT  p.nombre, b.*, c.id
+FROM mercancia c, combinado d, cross_combinado b, servicio p 
+WHERE c.sku=d.id and  b.id_servicio=p.id and c.sku=b.id_combinado and c.id=".$id);
 		return $q->result();
 	}
 	

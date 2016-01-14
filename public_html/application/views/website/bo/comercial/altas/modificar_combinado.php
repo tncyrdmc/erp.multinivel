@@ -66,8 +66,9 @@
 											</label>
 										</section>
 												
-
+												<? $i=0; ?>
 										        <?if ($prods==null) {?>
+												<div id="<?= $i=$i+1?>">
 										        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
 														<section class="col col-8"  style="width: 50%">Productos
 												           	<label class="select">
@@ -89,10 +90,21 @@
 											                	<input type="number" min="1" name="n_productos[]" id="prod_qty" >
 											            	</label>
 											        	</section>
+											        												        						<div class=" text-center row">
+
+													<a class='txt-color-red' onclick="delete_product(<?=$i?>)" style='cursor: pointer;'>Eliminar producto 
+														<i class="fa fa-minus">
+														</i>
+													</a>  
+												</div>
+											        </div>
 											        </div>
 											        <?
-										        } foreach($prods as $key_1)
+										        }
+										         
+										        foreach($prods as $key_1)
 												{?>
+												<div id="<?= $i=$i+1?>">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
 														<section class="col col-8"  style="width: 50%">Productos
 												           	<label class="select">
@@ -121,18 +133,26 @@
 											                	<input type="number" min="1" name="n_productos[]" id="prod_qty" value= '<? echo $key_1->cantidad_producto?>'>
 											            	</label>
 											        	</section>
+											        						<div class=" text-center row">
+
+													<a class='txt-color-red' onclick="delete_product(<?=$i?>)" style='cursor: pointer;'>Eliminar producto 
+														<i class="fa fa-minus">
+														</i>
+													</a>  
+												</div>
+											        </div>
 											        </div>
 												<?}?>
 
 												<div id="agregar" class=" text-center row">
 
-													<a onclick="new_product()" style='cursor: pointer;'>Agregar producto 
+													<a onclick="new_product(<?=$i?>)" style='cursor: pointer;'>Agregar producto 
 														<i class="fa fa-plus">
 														</i>
 													</a>  
 												</div>		
-
 												<?if ($servs==null) {?>
+													<div id="<?= $i=$i+1?>">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
 												        <section class="col col-8"  style="width: 50%">Servicios
 												            <label class="select">
@@ -152,10 +172,13 @@
 													            <input type="number" min="1" name="n_servicios[]" id="serv_qty" >
 													        </label>
 													    </section>
+
+													</div>
 													</div>
 												<?} 
 												foreach($servs as $key_1)
 												{?>
+													<div id="<?= $i=$i+1?>">
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
 												        <section class="col col-8"  style="width: 50%">Servicios
 												            <label class="select">
@@ -183,6 +206,13 @@
 													            <input type="number" min="1" name="n_servicios[]" id="serv_qty" value='<? echo $key_1->cantidad_servicio?>'>
 													        </label>
 													    </section>
+													<div  class=" text-center row">
+													<a class='txt-color-red' onclick="delete_service(<?=$i?>)" style='cursor: pointer;'>Eliminar servicio 
+														<i class="fa fa-minus">
+														</i>
+													</a>  
+													</div>
+													</div>
 													</div>
 												<?}?>
 												
@@ -347,9 +377,11 @@
 var i = <?= $i?>;
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-function new_product()
+function new_product(i)
 {
-	$('#prods').append('<section class="col col-8" style="width: 50%">Productos'
+i = parseInt(i) + 1;
+	$('#prods').append('<div id="'+i+'">'
+		+'<section class="col col-8" style="width: 50%">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<?foreach ($producto as $key){?>'
@@ -363,7 +395,16 @@ function new_product()
 		+'<label class="input">Cantidad de productos'
 		+'<input type="number" min="1" name="n_productos[]" id="prod_qty" >'
 		+'</label>'
-		+'</section>');
+		+'</section>'
+		+'<div  class=" text-center row">'
+		+'<a class="txt-color-red" onclick="delete_product('+i+')" style="cursor: pointer;">Eliminar producto' 
+		+'<i class="fa fa-minus">'
+		+'</i>'
+		+'</a>'  
+		+'</div>'
+		+'</div>');
+	i = parseInt(i) + 1;
+
 }
 
 function new_service()
@@ -383,7 +424,13 @@ function new_service()
 		+'<label class="input">Cantidad de servicios'
 		+'<input type="number" min="1" name="n_servicios[]" id="serv_qty" >'
 		+'</label>'
-		+'</section>');
+		+'</section>'
+		+'<div  class=" text-center row">'
+		+'<a class="txt-color-red" onclick="" style="cursor: pointer;">Eliminar servicio' 
+		+'<i class="fa fa-minus">'
+		+'</i>'
+		+'</a>'  
+		+'</div>');
 }
 
 function add_impuesto()
@@ -408,6 +455,12 @@ function dell_impuesto(id)
 {	
 	$("#"+id+"").remove();
 	
+}
+function delete_product(id){
+$("#"+id+"").remove();
+}
+function delete_service(id){
+	$("#"+id+"").remove();
 }
 
 function ImpuestosPais(){
