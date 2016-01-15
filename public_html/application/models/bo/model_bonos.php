@@ -232,15 +232,20 @@ function get_membresia_por_id($idMembresia){
 function get_bonos(){
 	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus
 						FROM bono b
-						where b.plan='NO'
-			");
+						
+			"); //where b.plan='NO'
 	return $q->result();
 }
 function get_bono_id($id){
 	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus,b.mes_desde_afiliacion,b.mes_desde_activacion
 						FROM bono b
-						where b.plan='NO' and id=".$id."
-			");
+						where id=".$id."
+			");//b. plan='NO'and
+	return $q->result();
+}
+
+function get_bono_by_id($id){
+	$q=$this->db->query("SELECT * FROM bono WHERE id=".$id);
 	return $q->result();
 }
 
@@ -266,12 +271,12 @@ function get_condiciones_bonos(){
 							bono B,cat_bono_condicion CBC,cat_bono_valor_nivel CBN ,
 							cat_rango CR,cat_tipo_rango CTR,tipo_red TR
 							where(B.id=CBC.id_bono)
-							and(B.plan='NO')
+							
 							and(B.id=CBN.id_bono)
 							and(CBC.id_rango=CR.id_rango)
 							and(CBC.id_tipo_rango=CTR.id)
 							group by CBC.id_bono,CBC.id_rango,CBC.id_tipo_rango");
-	$condiciones_bono=$q->result();
+	$condiciones_bono=$q->result();//and(B.plan='NO')
 	$resultado=array();
 	
 	foreach ($condiciones_bono as $condicion_bono){
