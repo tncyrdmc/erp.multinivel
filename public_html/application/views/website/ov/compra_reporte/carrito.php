@@ -906,9 +906,9 @@
 				})
 				.done(function(msg)
 				{
-					if(msg=="si")
+					if(msg=='si')
 					{
-						alert(msg);
+						
 						window.location.href="DatosEnvio";
 						
 					}

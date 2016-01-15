@@ -238,6 +238,8 @@ $valor_total_publico=0;
 															<input type="number" min="1" max="" value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
+													</fieldset>
+													<fieldset id="impuesto_field">
 													<legend>Impuestos</legend>
 																<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
@@ -310,7 +312,15 @@ $valor_total_publico=0;
 													<?}?>
 												
 								
-																			<section class="col col-6">Requiere especificación
+								
+																	</fieldset>
+																	<fieldset>
+																					<section class="col col-6" style="width: 50%">
+														<br>
+														<br>
+														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
+																	<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
 																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>
@@ -320,12 +330,9 @@ $valor_total_publico=0;
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
-																					<section class="col col-6" style="width: 50%">
-														<br>
-														<br>
-														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
+																	</fieldset>
 																	</div>
+																	<fieldset>
 																	<div class="row">
 																						<section class="col col-6">
 														<label class="input">
@@ -349,6 +356,7 @@ $valor_total_publico=0;
 													</section>
 									
 													</div>
+													</fieldset>
 					
 											</fieldset>
 												
@@ -495,7 +503,7 @@ function add_impuesto()
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
-	$("#moneda_field").append(code);
+	$("#impuesto_field").append(code);
 	ImpuestosPais();
 	i = i + 1
 }
@@ -529,7 +537,6 @@ function ImpuestosPais(){
 			    
 			});
 	    	  
-	        
 	      }
 	});
 }

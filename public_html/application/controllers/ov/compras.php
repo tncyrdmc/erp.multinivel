@@ -1657,6 +1657,7 @@ function index()
 		$id = $data['id'];
 		$cantidad = 0;
 		$cantidad_carrito_temporal =0;
+
 		if ($data['tipo'] == '1'){
 			
 			$cantidad_disp = $this->modelo_compras->get_cantidad_almacen($id);

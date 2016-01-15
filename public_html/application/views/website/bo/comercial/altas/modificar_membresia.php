@@ -127,6 +127,8 @@ $valor_total=0;
 															<input type="number" min="1" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
+													</fieldset>
+													<fieldset id="impuesto_field">
 													<legend>Impuesto</legend>
 													<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
@@ -189,6 +191,8 @@ $valor_total=0;
 
 
 													<?}?>
+													</fieldset>
+													<fieldset>
 																<div class="row">
 													<section class="col col-6" style="width: 50%">
 													<br>
@@ -196,6 +200,7 @@ $valor_total=0;
 														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
 													</div>
+													</fieldset>
 															</div>						
 																<section class="col col-6">Requiere especificación
 																<div class="inline-group">
@@ -217,8 +222,6 @@ $valor_total=0;
 														</label>
 													</section>
 													</div>
-										
-
 												</fieldset>
 											</div>
 										</div>
@@ -286,7 +289,7 @@ function add_impuesto()
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
-	$("#moneda_field").append(code);
+	$("#impuesto_field").append(code);
 	ImpuestosPais();
 	i = i + 1
 }

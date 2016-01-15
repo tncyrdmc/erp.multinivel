@@ -178,8 +178,10 @@ $valor_total_publico=0;
 															<input type="number" min="1" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
+													</fieldset>
+													<fieldset id="impuesto_field">
 													<legend>Impuesto</legend>
-													<div class="row">
+													
 													<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
 															<select id="pais2" required name="pais" onChange="ImpuestosPais()">
@@ -250,11 +252,21 @@ $valor_total_publico=0;
 															
 															
 													<?}?>
-													</div>
-													<fieldset>
-													<div class="row">
+													
+													
+													
 																	
-																					<section class="col col-6">Requiere especificación
+										
+																	
+																	</fieldset>
+																	<fieldset>
+																	<section class="col col-6" style="width: 50%">
+													<br>
+													<br>
+														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
+
+																								<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
 																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>
@@ -264,18 +276,11 @@ $valor_total_publico=0;
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
-																	<section class="col col-6" style="width: 50%">
-													<br>
-													<br>
-														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
-
-													
-																	</div>
+																	</fieldset>
 																	</div>
 																	
 
-																	<div class="row">
+																	<fieldset>
 																	
 													<section class="col col-6">
 														<label class="input">
@@ -289,16 +294,13 @@ $valor_total_publico=0;
 															<input type="text" value="<? echo $valor_total_distribuidores; ?>" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
 														</label>
 													</section>
-													
-													</div>
-													<div class="row">
-													
 													<section class="col col-6">
 														<label class="input">
 															Costo público con IVA
 															<input type="text" value="<? echo $valor_total_publico; ?>" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
+													</fieldset>
 													</fieldset>
 											
 												</fieldset>
@@ -371,7 +373,7 @@ function add_impuesto()
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
-	$("#moneda_field").append(code);
+	$("#impuesto_field").append(code);
 	ImpuestosPais();
 	i = i + 1
 }
