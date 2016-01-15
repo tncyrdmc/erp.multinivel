@@ -175,7 +175,7 @@ function enviar() {
 						label: "Aceptar",
 						className: "btn-success",
 						callback: function() {
-							//	location.href="/bo/planes/listar";
+								location.href="/bo/planes/listar";
 						}
 					}
 				}
