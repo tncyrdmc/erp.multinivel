@@ -469,7 +469,7 @@ $valor_total_publico=0;
 							</fieldset>
 							<section class="col col-12 pull-right" >
 								<button type="submit" class="btn btn-success">
-									Agregar
+									Actualizar
 								</button>
 							</section>
 						</form>

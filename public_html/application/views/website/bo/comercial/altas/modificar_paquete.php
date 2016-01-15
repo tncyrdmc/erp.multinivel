@@ -345,7 +345,7 @@ foreach ( $servicio as $key ) {
 							</fieldset>
 
 							<section class="col col-12 pull-right">
-								<button type="submit" class="btn btn-success">Agregar</button>
+								<button type="submit" class="btn btn-success">Actualizar</button>
 							</section>
 
 						</form>
