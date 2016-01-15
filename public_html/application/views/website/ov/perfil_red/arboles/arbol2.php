@@ -74,7 +74,7 @@
 														$key->img ? $img = $key->img : $img = "/template/img/empresario.jpg";
 														if ($key->debajo_de == $id) {
 																				?>
-																			<li id="tt<?=$key->id_afiliado?>"><a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree2(<?=$key->id_afiliado?>)" href="#"></a>
+																			<li id="tt<?=$key->id_afiliado?>"><a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree2(<?=$key->id_afiliado?>,1)" href="#"></a>
 															<div onclick="detalles2(<?=$key->id_afiliado?>)"
 																class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles
 															</div></li>
@@ -368,7 +368,7 @@ Thanks :)*/
 		});
 	}
 
-	function subtree2(id)
+	function subtree2(id, profundidad)
 	{
 		$("#tt"+id).children(".quitar").attr('onclick','');
 		
@@ -376,8 +376,9 @@ Thanks :)*/
 			type: "POST",
 			url: "/ov/perfil_red/subtree2",
 			data: {
-					id: id,
-				 	red: <?php echo $_GET['id']; ?> 
+				id: id,
+				red: <?php echo $_GET['id']; ?>,
+				nivel: profundidad 
 				 },
 		})
 		.done(function( msg )

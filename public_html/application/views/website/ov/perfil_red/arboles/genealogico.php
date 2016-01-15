@@ -67,7 +67,7 @@
 													if ($key->debajo_de == $id) { ?>
 		                                           <li id="<?=$key->id_afiliado?>" class="parent_li"
 														role="treeitem" style="display: list-item;"><span
-														class="quitar" onclick="subred(<?=$key->id_afiliado?>)"><i
+														class="quitar" onclick="subred('<?=$key->id_afiliado?>','1')"><i
 															class="fa fa-lg fa-plus-circle"></i> <?=$key->afiliado?> <?=$key->afiliado_p?></span>
 													</li>
 		                                          <? } } ?>
@@ -315,7 +315,7 @@ Thanks :)*/
 		    /* END COLUMN FILTER */
 
           })
-	function subred(id)
+	function subred(id,profundidad)
 	{
 		$("#"+id).children(".quitar").attr('onclick','');
 		
@@ -324,6 +324,7 @@ Thanks :)*/
 			url: "/ov/perfil_red/subred",
 			data: {
 				id: id,
+				nivel: profundidad,
 				red: <?php echo $_GET['id']; ?>
 			},
 		})

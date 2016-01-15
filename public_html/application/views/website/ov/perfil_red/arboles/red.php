@@ -23,7 +23,7 @@
 									class="well well-sm txt-color-white text-center link_dashboard"
 									style="background: #60a917">
 									<i class="fa fa-sitemap fa-3x"></i>
-									<h5>Genealogico</h5>
+									<h5>Profundidad de mi red</h5>
 								</div>
 							</a>
 						</div>
@@ -33,7 +33,7 @@
 									class="well well-sm txt-color-white text-center link_dashboard"
 									style="background: #60a917">
 									<i class="fa fa-sitemap fa-3x"></i>
-									<h5>Arbol 1</h5>
+									<h5>Información de mi red</h5>
 								</div>
 							</a>
 						</div>
@@ -43,7 +43,7 @@
 									class="well well-sm txt-color-white text-center link_dashboard"
 									style="background: #60a917">
 									<i class="fa fa-sitemap fa-3x"></i>
-									<h5>Arbol 2</h5>
+									<h5>Comisiones de mi red</h5>
 								</div>
 							</a>
 						</div>

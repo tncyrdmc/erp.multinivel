@@ -72,6 +72,24 @@ class general extends CI_Model
 		}
 		return false;
 	}
+	
+	function isActived($id){
+	
+		if($id==2)
+			return true;
+	
+		$q=$this->db->query('SELECT DATEDIFF(current_date,fecha)as dias FROM venta where id_user='.$id.';');
+		$dias=$q->result();
+	
+		foreach ($dias as $dia){
+			if($dia->dias<=183)
+				return true;
+		}
+			
+		return false;
+	
+	}
+	
 	function get_username($id)
 	{
 		$q=$this->db->query('select * from user_profiles where user_id = '.$id);

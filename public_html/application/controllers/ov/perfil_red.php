@@ -90,7 +90,7 @@ class perfil_red extends CI_Controller
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales= $frontales[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
 		
@@ -267,13 +267,18 @@ class perfil_red extends CI_Controller
 	
 	{
 		$id_red=$_POST['red'];
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
-		$frontales= $frontales[0]->frontal;
+		$nivel = $_POST['nivel'];
+		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$frontales= $red[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
-	
+		$frontales=count($afiliados);
+		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 		$aux = 0;
+		if($nivel >= $red[0]->profundidad){
+			return 0;
+		}
 		if($afiliados)
 		{
 	
@@ -317,7 +322,7 @@ class perfil_red extends CI_Controller
 					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
 					echo "
 					<li id='tt".$afiliado[0]->user_id."'>
-		            	<a class='quitar' onclick='subtree2(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		            	<a class='quitar' onclick='subtree2(".$afiliado[0]->user_id.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
 		            	<div onclick='detalles2(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
 		            </li>";
 	
@@ -495,13 +500,20 @@ class perfil_red extends CI_Controller
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		
-		
+	/*	Codigo para validacion de membresias
 		if(!$this->general->isActived($id)){
 	
 			$this->template->build('website/ov/perfil_red/renovar');
 			return true;
-		}
+		}*/
 
+		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+
+		if(sizeof($cantidadRedes)==0)
+			redirect('/');
+		if(sizeof($cantidadRedes)==1)
+			redirect('/ov/perfil_red/nuevo_afilido?id='.$cantidadRedes[0]->id);
+		
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		$this->template->set("redes",$redes);
 
@@ -686,9 +698,7 @@ class perfil_red extends CI_Controller
 		$planes 		 = $this->model_planes->Planes();
 	
 		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
-	
-	
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
 	
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
@@ -1142,6 +1152,7 @@ class perfil_red extends CI_Controller
 		$id_red = $_POST['red'];
 		
 		$nivel = $_POST['nivel'];
+
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		
 		if($nivel >= $red[0]->profundidad){

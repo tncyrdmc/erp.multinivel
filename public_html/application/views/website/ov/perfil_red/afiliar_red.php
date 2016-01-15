@@ -17,7 +17,7 @@ $(document).ready(function() {
 						"#nombre",
 					 	"#apellido",
 					 	"#datepicker",
-					 	"#cp",
+					 	"#keyword_red",
 					 	"#username",
 					 	"#email",
 					 	"#password",
@@ -28,7 +28,7 @@ $(document).ready(function() {
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa tu código postal",
+					 	"Por favor ingresa el DNI",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",
@@ -173,9 +173,6 @@ function codpos()
 		})
 	}
 }
-function clickme()
-{
-}
 
 function SelecionarFase()
 {
@@ -188,7 +185,7 @@ function SelecionarFase()
 	{
 		bootbox.dialog({
 			message: msg,
-			title: "Informacion Personal",
+			title: "Información Personal",
 			buttons: {
 				success: {
 				label: "Cerrar!",
@@ -243,7 +240,7 @@ function faseCambio(fase){
 
 function use_username()
 {
-	$("#msg_usuario").remove();
+	$('#username').val($('#username').val().replace(" ",""));
 	var username=$("#username").val();
 	$.ajax({
 		type: "POST",
@@ -252,12 +249,13 @@ function use_username()
 	})
 	.done(function( msg )
 	{
-		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
+		$("#msg_usuario").remove();
+		$("#usuario").append("<div id='msg_usuario'>"+msg+"</div>")
 	});
+	validate_user_data();
 }
 function use_mail()
 {
-	$("#msg_correo").remove();
 	var mail=$("#email").val();
 	$.ajax({
 		type: "POST",
@@ -266,38 +264,52 @@ function use_mail()
 	})
 	.done(function( msg )
 	{
-		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
+		$("#msg_correo").remove();
+		$("#correo").append("<div id='msg_correo'>"+msg+"</div>")
 	});
+	validate_user_data()
 }
-function use_username_r()
+
+
+function confirm_pass()
 {
-	$("#msg_usuario_r").remove();
-	var username=$("#username_r").val();
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
 	$.ajax({
 		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
+		url: "/ov/perfil_red/confirm_password",
+		data: {password: password,confirm_password: confirm_password},
 	})
 	.done(function( msg )
 	{
-		$("#usuario_r").append("<p id='msg_usuario_r'>"+msg+"</msg>")
+		$("#msg_confirm_password").remove();
+		$("#confirmar_password").append("<div id='msg_confirm_password'>"+msg+"</div>")
 	});
+	validate_user_data()
 }
-function use_mail_r()
+
+function validate_user_data()
 {
-	$("#msg_correo_r").remove();
-	var mail=$("#email_r").val();
-	$("#mail_important").attr('value',mail);
+	var username=$("#username").val();
+	var mail=$("#email").val();
+
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
+
+	$("#validate_user_data").remove();
+
 	$.ajax({
 		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
+		url: "/ov/perfil_red/validate_user_data",
+		data: {mail: mail,username: username,password: password,confirm_password: confirm_password},
 	})
 	.done(function( msg )
 	{
-		$("#correo_r").append("<p id='msg_correo_r'>"+msg+"</msg>")
+		$("#validate_user_data").remove();
+		$("#register").append("<div id='validate_user_data'>"+msg+"</div>")
 	});
 }
+
 function otra()
 {
 	if($("#otro:checked").val()=="on")
@@ -311,27 +323,23 @@ function otra()
 		$("#afiliado_value").attr("name","");
 	}
 }
-function agregar(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
+var id=0;
+
 function agregar_red(tipo)
 {
 	if(tipo==1)
 	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel_red").append("<section id='tel_red_"+id+"' class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label><a style='cursor: pointer;color: red;' onclick='delete_telefono("+id+")'>Eliminar <i class='fa fa-minus'></i></a></section>");
 	}
 	else
 	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel_red").append("<section id='tel_red_"+id+"' class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label><a style='cursor: pointer;color: red;' onclick='delete_telefono("+id+")'>Eliminar <i class='fa fa-minus'></i></a></section>");
 	}
+
+	id++;
+}
+function delete_telefono(id){
+	$("#tel_red_"+id+"").remove();	
 }
  $(function()
  {
@@ -365,10 +373,10 @@ function botbox(nombre, id, lado)
 {
 	bootbox.dialog({
 		message: '<div class="row fuelux">'
-		+'<div id="myWizard_r" class="wizard wizard_r">'
+		+'<div id="myWizard" class="wizard wizard_r">'
 			+'<ul class="steps">'
 				+'<li data-target="#step1_r" class="active">'
-					+'<span class="badge badge-info">1</span>Datos del registro<span class="chevron"></span>'
+					+'<span class="badge badge-info">1</span>Datos de registro<span class="chevron"></span>'
 				+'</li>'
 				+'<li data-target="#step2_r">'
 					+'<span class="badge">2</span>Datos personales<span class="chevron"></span>'
@@ -379,7 +387,7 @@ function botbox(nombre, id, lado)
 				+'<button type="button" class="final btn btn-sm btn-primary btn-prev">'
 					+'<i class="fa fa-arrow-left"></i>Anterior'
 				+'</button>'
-				+'<button onclick="clickme()" type="button" class="final btn btn-sm btn-success btn-next" data-last="Afiliar">'
+				+'<button type="button" class="final btn btn-sm btn-success btn-next" data-last="Afiliar" disabled="disabled">'
 					+'Siguiente<i class="fa fa-arrow-right"></i>'
 				+'</button>'
 			+'</div>'
@@ -387,25 +395,25 @@ function botbox(nombre, id, lado)
 		+'<div class="step-content">'
 			+'<div class="form-horizontal" id="fuelux-wizard" >'
 				+'<div class="step-pane active" id="step1_r">'
-					+'<form id="register_red" class="smart-form">'
+					+'<form id="register" class="smart-form">'
 						+'<fieldset>'
 							+'<legend>Información de cuenta</legend>'
-							+'<section id="usuario_r" class="col col-6">'
+							+'<section id="usuario" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-								+'<input id="username_r" onkeyup="use_username_r()" required type="text" name="username" placeholder="Usuario">'
+								+'<input id="username" onkeyup="use_username()" required="" name="username" placeholder="Usuario" type="text">'
 								+'</label>'
 							+'</section>'
-							+'<section id="correo_r" class="col col-6">'
+							+'<section id="correo" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-envelope-o"></i>'
-								+'<input id="email_r" onkeyup="use_mail_r()" required type="email" name="email" placeholder="Email">'
+								+'<input id="email" onkeyup="use_mail()" required="" name="email" placeholder="Email" type="email">'
 								+'</label></section><section class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-lock"></i>'
-								+'<input id="password_r" required type="password" name="password" placeholder="Contraseña">'
+								+'<input id="password" onkeyup="confirm_pass()" required type="password" name="password" placeholder="Contraseña">'
 								+'</label>'
 							+'</section>'
-							+'<section class="col col-6">'
+							+'<section id="confirmar_password" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-lock"></i>'
-									+'<input id="confirm_password_r" required type="password" name="confirm_password" placeholder="Repite contraseña">'
+									+'<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Repite contraseña">'
 								+'</label>'
 							+'</section>'
 						+'</fieldset>'
@@ -418,7 +426,7 @@ function botbox(nombre, id, lado)
 							+'<div class="row">'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-									+'<input id="nombre_r" required type="text" name="nombre" placeholder="Nombre">'
+									+'<input id="nombre" required type="text" name="nombre" placeholder="Nombre">'
 									+'<input required type="hidden" id="id" name="afiliados" value="'+id+'">'
 									//+'<input id="mail_important" required type="hidden" name="mail_important" value="">'
 									+'<input id="lado" required type="hidden" name="lado" value="'+lado+'">'
@@ -427,12 +435,12 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-									+'<input id="apellido_r" required type="text" name="apellido" placeholder="Apellido">'
+									+'<input id="apellido" required type="text" name="apellido" placeholder="Apellido">'
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-append fa fa-calendar"></i>'
-									+'<input required id="datepicker_r" type="date"  name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">'
+									+'<input required id="datepicker" type="date"  name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">'
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6" id="key_red">'
@@ -493,26 +501,6 @@ function botbox(nombre, id, lado)
 						+'<fieldset>'
 							+'<legend>Dirección del afiliado</legend>'
 							+'<div id="dir_red" class="row">'
-								+'<section class="col col-6">'
-									+'<label class="input">Dirección de domicilio'
-									+'<input required type="text" name="calle">'
-									+'</label>'
-								+'</section>'
-								+'<section id="colonia_red" class="col col-6">'
-									+'<label class="input">Ciudad'
-									+'<input type="text" name="colonia" >'
-									+'</label>'
-								+'</section>'
-								+'<section id="municipio_red" class="col col-6">'
-									+'<label class="input">Provincia'
-									+'<input type="text" name="municipio" >'
-									+'</label>'
-								+'</section>'
-								+'<section class="col col-6">'
-									+'<label class="input">Código postal'
-										+'<input required type="text" id="cp_red" name="cp">'
-									+'</label>'
-								+'</section>'
 								+'<section class="col col-6">País'
 									+'<label class="select">'
 										+'<select id="pais_red" required name="pais"><?foreach ($pais as $key){?>'
@@ -520,6 +508,36 @@ function botbox(nombre, id, lado)
 										+'</select>'
 									+'</label>'
 								+'</section>'
+								+'<section id="municipio" class="col col-6">'
+									+'<label class="input">'
+									+'Estado'
+										+'<input type="text" name="estado" >'
+									+'</label>'
+								+'</section>'
+								+'<section id="municipio_red" class="col col-6">'
+									+'<label class="input">Municipio'
+									+'<input type="text" name="municipio" >'
+									+'</label>'
+								+'</section>'
+
+								+'<section id="colonia_red" class="col col-6">'
+									+'<label class="input">Colonia'
+									+'<input type="text" name="colonia" >'
+									+'</label>'
+								+'</section>'
+
+								+'<section class="col col-6">'
+									+'<label class="input">Dirección de domicilio'
+									+'<input required type="text" name="calle">'
+									+'</label>'
+								+'</section>'
+								
+								+'<section class="col col-6">'
+									+'<label class="input">Código postal'
+										+'<input required type="text" id="cp_red" name="cp">'
+									+'</label>'
+								+'</section>'
+								
 							+'</div>'
 						+'</fieldset>'
 						+'<fieldset>'
@@ -694,12 +712,12 @@ function botbox(nombre, id, lado)
 			+'</div>'
 		+'</div>'
 		+'</div>'
-		+'<script type="text/javascript">'
+		+'<script>'
 		+' $(function()'
 		+ '{'
 		 +	'a = new Date();'
-			+'año = a.getFullYear()-20;'
-			+'$( "#datepicker_r" ).datepicker({'
+			+'año = a.getFullYear()-19;'
+			+'$( "#datepicker" ).datepicker({'
 			+'changeMonth: true,'
 			+'numberOfMonths: 2,'
 			+'maxDate: año+"-12-31",'
@@ -709,27 +727,24 @@ function botbox(nombre, id, lado)
 		+'});',
 		title: "Afiliar a "+nombre,
 	});
-
-	
-		
 	$('.wizard_r').on('finished.fu.wizard', function (e, data) {
 			
 			  		var ids = new Array( 
-					"#nombre_r",
-				 	"#apellido_r",
-				 	"#datepicker_r",
-				 	"#cp_red",
-				 	"#username_r",
-				 	"#email_r",
-				 	"#password_r",
-				 	"#confirm_password_r"
+					"#nombre",
+				 	"#apellido",
+				 	"#datepicker",
+				 	"#keyword_red",
+				 	"#username",
+				 	"#email",
+				 	"#password",
+				 	"#confirm_password"
 				 	
 					 );
 					var mensajes = new Array( 
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa tu código postal",
+					 	"Por favor ingresa el DNI",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",
@@ -737,7 +752,7 @@ function botbox(nombre, id, lado)
 					 );
 
 					var idss=new Array(
-						"#username_r"
+						"#username"
 					);
 					var mensajess=new Array(
 						"El nombre de usuario no puede contener espacios en blanco"
@@ -749,10 +764,10 @@ function botbox(nombre, id, lado)
 						var id=$("#id").val();
 						$.ajax({
 		                       url:"/auth/register",
-		                       data:$("#register_red").serialize(),
+		                       data:$("#register").serialize(),
 		                       type:"POST" }).done(function( msg1 ) {
 		                       	
-		                       	var email=$("#email_r").val();
+		                       	var email=$("#email").val();
 								$("#afiliar_red").append("<input value='"+email+"' type='hidden' name='mail_important'>");
 								$.ajax({
 			                       url:"/ov/perfil_red/afiliar_nuevo",
@@ -1045,16 +1060,14 @@ function InformarPremio(premio){
 														</li>
 														<?}
 													}
-													for ( $i = $aux ; $i < $red_frontales[0]->frontal ; $i++){?>
+													for ( $i = $aux ; $i < count($red_frontales[0]->frontal)+1 ; $i++){?>
 															<li>
 																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
 												            </li>
-														<? }
-														if($red_frontales[0]->frontal == '0' ){?>
-															<li>
-																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
-													        </li>
-													     <?php } ?>
+														<? } ?>
+														<li>
+															<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
+												        </li>
 													</ul>
 												</li>
 											</ul>

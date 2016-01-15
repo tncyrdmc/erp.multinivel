@@ -39,6 +39,13 @@ class red extends CI_Controller
 		
 		$style         = $this->general->get_style($id);
 		
+		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+		
+		if(sizeof($cantidadRedes)==0)
+			redirect('/');
+		if(sizeof($cantidadRedes)==1)
+			redirect('/ov/red/mi_red?id='.$cantidadRedes[0]->id);
+		
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
 		$this->template->set("id",$id);
@@ -102,16 +109,15 @@ class red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$id_red        = $_GET['id'];
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales = $frontales[0]->frontal;
 		$id            = $this->tank_auth->get_user_id();
 		$style         = $this->general->get_style($id);
-		$id_red        = $_GET['id'];
+
 		
 		$afiliados     = $this->model_perfil_red->get_afiliados($id_red, $id);
 		
-		//$afiliadostree = $this->model_perfil_red->get_afiliados($id_red, $id);
 	
 		$image=$this->model_perfil_red->get_images($id);
 		$user="/template/img/empresario.jpg";
@@ -144,11 +150,11 @@ class red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$id_red        = $_GET['id'];
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales = $frontales[0]->frontal;
 		$id            = $this->tank_auth->get_user_id();
 		$style         = $this->general->get_style($id);
-		$id_red        = $_GET['id'];
 		//$afiliados     = $this->model_perfil_red->get_afiliados_($id_red, $id);
 		$afiliadostree = $this->model_perfil_red->get_afiliados($id_red, $id);
 	
@@ -182,11 +188,11 @@ class red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$id_red        = $_GET['id'];
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales = $frontales[0]->frontal;
 		$id            = $this->tank_auth->get_user_id();
 		$style         = $this->general->get_style($id);
-		$id_red        = $_GET['id'];
 		//$afiliados     = $this->model_perfil_red->get_afiliados_($id_red, $id);
 		$afiliadostree = $this->model_perfil_red->get_afiliados($id_red, $id);
 	
