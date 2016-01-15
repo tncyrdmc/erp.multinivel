@@ -64,10 +64,7 @@
 									<div class="row" id="bono">
 										<div class="row">
 											<div class="col col-lg-3 col-xs-2">
-											</div>
-											<div class="col col-lg-2 col-xs-2">
-												<a style="cursor: pointer;" onclick="add_bono()"> Agregar Bono <i class="fa fa-plus"></i></a>
-											</div>
+											</div>										
 											
 										</div>
 										<div class="row">
@@ -75,7 +72,8 @@
 											</div>
 											<div class="col col-xs-12 col-sm-6 col-lg-3" id="bono_plan">
 												<label class="select">Seleccione Bono
-												<select name="id_bono_plan[]" >
+												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" >
+												<option value='0'>--- Seleccione Bono ---</option>		
 														<?php	
 															foreach($bonos_plan as $categoria){
 																echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
@@ -83,7 +81,12 @@
 														?>
 												</select>
 												</label>
-											</div>																			
+											</div>											
+											<div class="col col-lg-2 col-xs-2">
+												<a style="cursor: pointer;" onclick="add_bono()"> Agregar Bono <i class="fa fa-plus"></i></a>
+											</div>
+											<div id="bono0" class="col col-xs-12 col-sm-6 col-lg-4">
+	        								</div>																			
 										</div>
 									</div>
 								<?php } else {
@@ -131,7 +134,7 @@
 			<!-- END MAIN CONTENT -->
 
 <script type="text/javascript">
-var i=0;
+var i=1;
 
 $( "#planes" ).submit(function( event ) {
 	event.preventDefault();
@@ -183,29 +186,43 @@ function enviar() {
 	}
 }
 
+function set_bono(idBono,idDivBono)
+{	
+	$.ajax({
+		type: "POST",
+		url: "/bo/planes/set_bono",
+		data: {idBono : idBono}
+		})
+		.done(function( msg ) {
+			$('#'+idDivBono+'').html(msg);
+		});
+}
+
 function add_bono()
 {
 
-	var code=	'<br/><div id="'+i+'" class="row">'
+	var code=	'<div id="'+i+'" class="row"><br/>'
 	+'<div class="col col-lg-2">'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-3"><hr/><br/>'
 		+'<label class="select">Seleccione Bono'
-		+'<select name="id_bono_plan[]" >'
+		+'<select name="id_bono_plan[]" onChange="set_bono($(this).val(),\'bono'+i+'\')";>'
+		+'<option value="0">--- Seleccione Bono ---</option>'
 		+'<?php	echo $select_bonos; ?>'
 	+'</select>'
-	+'</label>'
+	+'</label>'	
+	+'</div>'	
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
+		+'<a style="cursor: pointer;color: red;" onclick="delete_bono('+i+')">Suprimir Bono <i class="fa fa-minus"></i></a>'	
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
-		+'<a style="cursor: pointer;" onclick="delete_rango('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
-	+'</label>'
+	+'<div id="bono'+i+'" class="col col-xs-12 col-sm-6 col-lg-4">'
 	+'</div>'	
 	+'</div>';
 	$("#bono").append(code);
 	i = i + 1
 }
 
-function delete_rango(id)
+function delete_bono(id)
 {	
 	$("#"+id+"").remove();
 	

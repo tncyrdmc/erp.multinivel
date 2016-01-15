@@ -14,6 +14,8 @@ class Planes extends CI_Controller
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
 		$this->load->model('bo/model_planes');
+		$this->load->model('bo/model_bonos');
+		$this->load->model('bo/model_rangos');
 	}
 	
 	function index(){
@@ -115,6 +117,54 @@ class Planes extends CI_Controller
 			echo "Se Ha creado el Plan = ".$_POST['nombre'];
 		}		
 		
+	}
+	
+	function get_list_rangos($list_rangos){	
+		
+		$html_rangos = "";
+		
+			foreach ($list_rangos as $list_rango){
+				$rango = $this->model_rangos->get_rangos_id($list_rango->id_rango);
+				$html_rangos.="<li>".$rango[0]->nombre."</li>";
+			}
+			$html_rangos = "<ul>".$html_rangos."</ul>";		
+		
+		return $html_rangos;
+		
+	}  
+	
+	function set_bono(){
+	
+		$bono=$this->model_bonos->get_bono_by_id($_POST['idBono']);
+		$rangos_bono = $this->model_bonos->get_rangos_bono($_POST['idBono']);		
+		$output_rangos = $this->get_list_rangos($rangos_bono);
+		
+	echo ($_POST['idBono']<>0) ?
+		 '<div class="widget-body col col-12">
+					<div id="divRedes" class="widget-body col col-12">
+						<h3 class="semi-bold">Bono <span>( '.$bono[0]->nombre.' )</span></h3>
+						<hr class="simple">
+						<ul id="myTab'.$_POST['idBono'].'_'.$bono[0]->id.'" class="nav nav-tabs bordered">
+							<li class="active">
+								<a href="#s'.$_POST['idBono'].'" data-toggle="tab">'.$bono[0]->nombre.'</a>
+							</li>
+							<li class="">
+								<a href="#s'.$_POST['idBono'].'2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-gear"></i>Rangos
+								<span class="badge bg-color-blue txt-color-white">'.count($rangos_bono).'</span></a>
+							</li>
+						</ul>
+						<div id="myTabContent'.$_POST['idBono'].$bono[0]->id.'" class="tab-content padding-10">
+							<div class="tab-pane fade active in" id="s'.$_POST['idBono'].'">
+								<p>'.$bono[0]->descripcion.'</p>
+							</div>
+							<div class="tab-pane fade" id="s'.$_POST['idBono'].'2">
+								<div class="padding-10">'.$output_rangos.'</div>
+								<input type="hidden" name="idTipoRango[]" value="'.$_POST['idBono'].$bono[0]->id.'"><br>
+							</div>
+						</div>
+					</div>
+			</div>' : '';
+	
 	}
 	
 }
