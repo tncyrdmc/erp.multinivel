@@ -760,7 +760,6 @@ class admin extends CI_Controller
 	
 	function update_mercancia()
 	{		
-	
 		$this->model_admin->update_mercancia();
 		
 		$ruta="/media/carrito/";
