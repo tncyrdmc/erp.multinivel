@@ -93,7 +93,15 @@ class bonos extends CI_Controller
 	function kill_bono(){
 		
 		if(isset($_POST['id'])){
-			$this->model_bonos->kill_bono($_POST['id']);
+			
+			$validar=$this->model_bonos->validar_bono_plan($_POST['id']);
+			if($validar==null){
+				$this->model_bonos->kill_bono($_POST['id']);
+				echo "Se ha eliminado el Bono.";
+			}else{
+				echo "No se ha podido eliminar el Bono, esta asociado a un Plan de Bonos.";
+			}			
+			
 		}
 	}
 	

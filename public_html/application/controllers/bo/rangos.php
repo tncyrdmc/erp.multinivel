@@ -187,9 +187,9 @@ class Rangos extends CI_Controller
 	}
 
 	function kill_rangos(){
-		$id_rango=$_POST['id'];
-		$validar_cat_bono_condicion=$this->model_rangos->validar_rango_bono($id_rango);
-		if($validar_cat_bono_condicion==null){
+	$id_rango=$_POST['id'];
+	$validar_cat_bono_condicion=$this->model_rangos->validar_rango_bono($id_rango);
+	if($validar_cat_bono_condicion==null){
 		$kill_rangos=$this->model_rangos->kill_rangos();
 		$this->model_rangos->kill_cross_rango();
 		echo "Se ha eliminado el rango.";

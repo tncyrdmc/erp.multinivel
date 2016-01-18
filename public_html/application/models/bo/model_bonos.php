@@ -404,4 +404,9 @@ function get__condicioneses_bonos_id_bono($id_bono){
 			return $mercancia[0]->nombre;
 		return "";
 	}
+	
+	function validar_bono_plan($id_bono){
+		$query = $this->db->query('select * from cross_plan_bonos where id_bono='.$id_bono.'');	
+		return $query->result();
+	}
 }

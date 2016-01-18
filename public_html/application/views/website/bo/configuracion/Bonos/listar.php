@@ -297,7 +297,7 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el Bono. "+msg,
+						message: msg,
 						title: 'Felicitaciones',
 						buttons: {
 							success: {
