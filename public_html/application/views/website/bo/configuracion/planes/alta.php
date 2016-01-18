@@ -1,4 +1,5 @@
 <?php 
+	$j=count($bonos_plan);
 	$select_bonos="";
 	foreach($bonos_plan as $categoria){
 		$select_bonos=$select_bonos."<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
@@ -72,8 +73,8 @@
 											</div>
 											<div class="col col-xs-12 col-sm-6 col-lg-3" id="bono_plan">
 												<label class="select">Seleccione Bono
-												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" >
-												<option value='0'>--- Seleccione Bono ---</option>		
+												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" required>
+												<option value=''>--- Seleccione Bono ---</option>		
 														<?php	
 															foreach($bonos_plan as $categoria){
 																echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
@@ -161,26 +162,42 @@ $('select[name="id_bono_plan[]"]').each(function() {
 function enviar() {
 	var verificar_plan = false;
 	verificar_plan = validar_bonos_repetidos();
-	if(verificar_plan!=true){		
+	if(verificar_plan!=true){	
+
 		$.ajax({
 			type: "POST",
-			url: "/bo/planes/ingresar_plan",
+			url: "/bo/planes/validar_bono_minimo",
 			data: $('#planes').serialize()
 		}).done(function( msg ) {
-			bootbox.dialog({
-				message: msg,
-				title: 'ATENCION',
-				buttons: {
-					success: {
-						label: "Aceptar",
-						className: "btn-success",
-						callback: function() {
-								location.href="/bo/planes/listar";
+			if (!msg=="") {
+				
+			$.ajax({
+				type: "POST",
+				url: "/bo/planes/ingresar_plan",
+				data: $('#planes').serialize()
+			}).done(function( msg ) {
+				bootbox.dialog({
+					message: msg,
+					title: 'ATENCION',
+					buttons: {
+						success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+									location.href="/bo/planes/listar";
+							}
 						}
 					}
-				}
-			})
+				})
+			});//fin Done ajax
+
+			}else{
+				alert(msg);
+			}
+			
 		});//fin Done ajax
+			
+		
 	}else{
 		alert("Ha repetido algun Bono del Plan");
 	}
@@ -206,8 +223,7 @@ function add_bono()
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-3"><hr/><br/>'
 		+'<label class="select">Seleccione Bono'
-		+'<select name="id_bono_plan[]" onChange="set_bono($(this).val(),\'bono'+i+'\')";>'
-		+'<option value="0">--- Seleccione Bono ---</option>'
+		+'<select name="id_bono_plan[]" required onChange="set_bono($(this).val(),\'bono'+i+'\')" onmouseenter="set_bono($(this).val(),\'bono'+i+'\')";>'		
 		+'<?php	echo $select_bonos; ?>'
 	+'</select>'
 	+'</label>'	

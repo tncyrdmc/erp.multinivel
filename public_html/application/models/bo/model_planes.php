@@ -55,6 +55,7 @@ class model_planes extends CI_Model
 		foreach ($bonosPlan as $bonoPlan) {
 			$this->db->insert("cross_plan_bonos",$bonoPlan);
 		}
+		return true;
 	}
 	
 	function get_planes_id($id){
@@ -89,8 +90,13 @@ class model_planes extends CI_Model
 		}
 	}
 	
+	function kill_plan(){
+		return $this->db->query("delete from plan where id =".$_POST["id"]) ? true : false;
+		
+	}
+	
 	function kill_cross_plan_bonos(){
-		$this->db->query("delete from cross_plan_bonos where id_plan=".$_POST["id"]);
+		return $this->db->query("delete from cross_plan_bonos where id_plan=".$_POST["id"]) ? true : false;
 	}
 	
 	function actualizar_plan(){
@@ -103,6 +109,10 @@ class model_planes extends CI_Model
 		);
 		$this->db->where('id', $_POST['id']);
 		$this->db->update('plan', $datos);
+		return true;
+	}
+	function cambiar_estado(){
+		$this->db->query("update plan set estatus = '".$_POST['estado']."' where id=".$_POST["id"]);
 		return true;
 	}
 }

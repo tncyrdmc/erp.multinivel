@@ -31,6 +31,11 @@
 								$i=1;
 									foreach ($bonos_plan as $bono_plan) {
 										echo '<div class="row">';
+										echo '<div class="row">';
+										if($i>2){
+											echo '<a style="cursor: pointer; color: red;" onclick="delete_bono('.$i.')">Suprimir bono <i class="fa fa-minus"></i></a>';
+										}
+										echo '</div>';
 										echo '<div id="'.$i.'" class="row">
 										<div class="col col-lg-2">
 										</div>';
@@ -50,11 +55,8 @@
 
 												echo '</select>'.'</label>'.'</div>'.'
 											<div id="bono'.$i.'" class="col col-xs-12 col-sm-6 col-lg-7">	
-	        								</div>	';
-												
-										if($i>2){
-											echo '<a style="cursor: pointer; color: red;" onclick="delete_bono('.$i.')">Suprimir bono <i class="fa fa-minus"></i></a>';
-										}
+	        								</div>	';											
+										
 										
 										echo ''.'</label>'.'</div>';
 										$i++;
@@ -156,7 +158,7 @@ function add_bono(id)
 	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
 		+'<label class="select">Seleccione bono'
 		+'<select id="id_bono_plan[]" name="id_bono_plan[]" onChange="set_bono($(this).val(),\'bono'+id+'\')";>'
-		+'<option value="0">--- Seleccione Bono ---</option>'
+		+'<option value="">--- Seleccione Bono ---</option>'
 		+'<?php	echo $select_bonos; ?>'
 	+'</select>'
 	+'</label>'

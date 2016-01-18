@@ -240,13 +240,13 @@ function eliminar(id) {
 	$.ajax({
 		type: "POST",
 		url: "/auth/show_dialog",
-		data: {message: '¿ Esta seguro que desea Eliminar el plan ?'},
+		data: {message: '¿ Esta seguro que desea Eliminar el Plan ?'},
 	})
 	.done(function( msg )
 	{
 		bootbox.dialog({
 		message: msg,
-		title: 'Eliminar plan',
+		title: 'Eliminar Plan',
 		buttons: {
 			success: {
 			label: "Aceptar",
@@ -294,7 +294,7 @@ function estado(estatus, id)
 		
 	$.ajax({
 		type: "POST",
-		url: "/bo/planes/cambiar_estado_plan",
+		url: "/bo/planes/cambiar_estado",
 		data: {
 			id:id, 
 			estado: estatus
