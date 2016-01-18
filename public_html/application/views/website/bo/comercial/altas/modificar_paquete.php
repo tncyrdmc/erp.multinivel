@@ -58,47 +58,13 @@
 									</section>
 								</fieldset>
 								<fieldset>
-								<?$i1=0?>
-										        <?if ($prods==null) {?>
-										        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
-										        	<div id="<?= $i1=$i1+1?>a">
-										<section class="col col-8" style="width: 50%">
-											Productos <label class="select"> <select
-												class="custom-scroll" name="producto[]">
-												                   	<?
-																			
-foreach ( $producto as $key ) {
-																				?>
-																			<option value='<? echo $key->id?>'>
-												                            	<? echo $key->nombre?>
-												                            </option>
-																		<?
-																			}
-																			?>
-																				
-											                	</select>
-											</label>
-										</section>
-
-										<section class="col col-4" style="width: 50%">
-											<label class="input">Cantidad de productos <input
-												type="number" min="1" name="n_productos[]" id="prod_qty">
-											</label>
-										</section>
-																				<div class=" text-center row">
-
-										<a class='txt-color-red' onclick="delete_product(<?=$i1?>)" style='cursor: pointer;'>Eliminar
-											producto <i class="fa fa-minus"> </i>
-										</a>
-									</div>
-									</div>
-									</div>
-											        <?
-																		}
-																		foreach ( $prods as $key_1 ) {
-																			?>
+								<?$i1=0;?>
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
 										id="prods">
+<?
+																		foreach ( $prods as $key_1 ) {
+																			?>
+								
 										<div id="<?= $i1=$i1+1?>a">
 										<section class="col col-8" style="width: 50%">
 											Productos <label class="select"> <select
@@ -142,8 +108,9 @@ foreach ( $producto as $key ) {
 										</a>
 									</div>	
 									</div>
-									</div>
+									
 												<?}?>
+												</div>
 
 												<div id="agregar" class=" text-center row">
 
@@ -152,42 +119,12 @@ foreach ( $producto as $key ) {
 										</a>
 									</div>		
 										<?$i2=0;?>
-												<?if ($servs==null) {?>
-													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+																			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
 										id="servs">
-										<div id="<?= $i2=$i2+1?>b">
-										<section class="col col-8" style="width: 50%">
-											Servicios <label class="select"> <select
-												class="custom-scroll" name="servicio[]">
-												                        <?foreach ($servicio as $key){?>
-													                    	
-																				<option value='<? echo $key->id?>'>
-													                            	<? echo $key->nombre?>
-													                            </option>
-																		<?}?>
-													            </select>
-											</label>
-										</section>
-
-										<section class="col col-4" style="width: 50%">
-											<label class="input">Cantidad de servicios <input
-												type="number" min="1" name="n_servicios[]" id="serv_qty">
-											</label>
-										</section>
-												<div  class=" text-center row">
-										<a class='txt-color-red' onclick="delete_service(<?=$i2?>)" style='cursor: pointer;'>Eliminar
-											servicio <i class="fa fa-minus"> </i>
-										</a>
-									</div>
-									</div>
-									</div>
-												<?
-												
-}
+<?
 												foreach ( $servs as $key_1 ) {
 													?>
-													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-										id="servs">
+				
 										<div id="<?= $i2=$i2+1?>b">
 										<section class="col col-8" style="width: 50%">
 											Servicios <label class="select"> <select
@@ -230,8 +167,9 @@ foreach ( $servicio as $key ) {
 										</a>
 									</div>
 									</div>
-									</div>
+									
 												<?}?>
+												</div>
 												
 												<div id="agregar1" class=" text-center row">
 
@@ -365,12 +303,14 @@ foreach ( $servicio as $key ) {
 
 <script type="text/javascript">
 var i = <?= $i?>;
+var ia=0;
+var ib=0;
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
 function new_product(i)
 {
-	i = parseInt(i) + 1;
-	$('#prods').append('<div id="'+i+'a">'
+	
+	$('#prods').append('<div id="'+ia+'aj">'
 		+'<section class="col col-8" style="width: 50%">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
@@ -387,24 +327,35 @@ function new_product(i)
 		+'</label>'
 		+'</section>'
 		+'<div  class=" text-center row">'
-		+'<a class="txt-color-red" onclick="delete_product('+i+')" style="cursor: pointer;">Eliminar producto' 
+		+'<a class="txt-color-red" onclick="delete_product_adicional('+ia+')" style="cursor: pointer;">Eliminar producto' 
 		+'<i class="fa fa-minus">'
 		+'</i>'
 		+'</a>'  
 		+'</div>'
 		+'</div>');
-	i = parseInt(i) + 1;
+	ia = parseInt(ia) + 1;
 }
 
 function delete_product(id){
+		if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al paquete.");
+}else{
 $("#"+id+"a").remove();
+}
+}
 
+function delete_product_adicional(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+		alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"aj").remove();
+	}
 }
 
 function new_service(i)
 {
-	i = parseInt(i) + 1;
-	$('#servs').append('<div id="'+i+'b">'
+
+	$('#servs').append('<div id="'+ib+'bj">'
 		+'<section class="col col-8" style="width: 50%">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
@@ -422,16 +373,28 @@ function new_service(i)
 		+'</label>'
 		+'</section>'
 		+'<div  class=" text-center row">'
-		+'<a class="txt-color-red" onclick="delete_service('+i+')" style="cursor: pointer;">Eliminar servicio' 
+		+'<a class="txt-color-red" onclick="delete_service_adicional('+ib+')" style="cursor: pointer;">Eliminar servicio' 
 		+'<i class="fa fa-minus">'
 		+'</i>'
 		+'</a>'  
 		+'</div>'
 		+'</div>');
-	i = parseInt(i) + 1;
+	ib = parseInt(ib) + 1;
 }
 function delete_service(id){
+		if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al paquete.");
+}else{
 $("#"+id+"b").remove();
+}
+}
+
+function delete_service_adicional(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"bj").remove();
+	}
 }
 
 function add_impuesto()
@@ -486,5 +449,24 @@ function ImpuestosPais(){
 	        
 	      }
 	});
+}
+
+function validar_productos(){
+	var  Impuesto = new Array();
+	var contador=0;
+$('select[name="producto[]"]').each(function() {	
+	Impuesto.push($(this).val());
+	contador=contador+1;
+});	
+return contador;
+}
+function validar_servicios(){
+	var  Impuesto = new Array();
+	var contador=0;
+$('select[name="servicio[]"]').each(function() {	
+	Impuesto.push($(this).val());
+	contador=contador+1;
+});	
+return contador;
 }
 </script>

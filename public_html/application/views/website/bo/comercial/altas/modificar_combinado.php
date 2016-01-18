@@ -67,46 +67,12 @@
 										</section>
 												
 												<? $i1=0; ?>
-										        <?if ($prods==null) {?>
-												
-										        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
-										        	<div id="<?= $i1=$i1+1?>b">
-														<section class="col col-8"  style="width: 50%">Productos
-												           	<label class="select">
-												               	<select class="custom-scroll"  name="producto[]">
-												                   	<?foreach ($producto as $key){
-												                    	?>
-																			<option value= '<? echo $key->id?>'>
-												                            	<? echo $key->nombre?>
-												                            </option>
-																		<?
-												                   	}?>
-																				
-											                	</select>
-											            	</label>
-											        	</section>
-											        
-											        	<section class="col col-4"  style="width: 50%">
-											           		<label class="input">Cantidad de productos
-											                	<input type="number" min="1" name="n_productos[]" id="prod_qty" >
-											            	</label>
-											        	</section>
-											        												        						<div class=" text-center row">
-
-													<a class='txt-color-red' onclick="delete_product(<?=$i1?>)" style='cursor: pointer;'>Eliminar producto 
-														<i class="fa fa-minus">
-														</i>
-													</a>  
-												</div>
-											        </div>
-											        </div>
-											        <?
-										        }
-										         
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
+										      <?
 										        foreach($prods as $key_1)
 												{?>
 												
-													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
+													
 													<div id="<?= $i1=$i1+1?>b">
 														<section class="col col-8"  style="width: 50%">Productos
 												           	<label class="select">
@@ -143,9 +109,9 @@
 													</a>  
 												</div>
 											        </div>
-											        </div>
+											        
 												<?}?>
-
+												</div>
 												<div id="agregar" class=" text-center row">
 
 													<a onclick="new_product(<?=$i1?>)" style='cursor: pointer;'>Agregar producto 
@@ -153,42 +119,15 @@
 														</i>
 													</a>  
 												</div>
-												<?$i2=0?>		
-												<?if ($servs==null) {?>
-													
-													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
-													<div id="<?= $i2=$i2+1?>b">
-												        <section class="col col-8"  style="width: 50%">Servicios
-												            <label class="select">
-												                <select class="custom-scroll" name="servicio[]">
-												                        <?foreach ($servicio as $key){?>
-													                    	
-																				<option value='<? echo $key->id?>'>
-													                            	<? echo $key->nombre ?>
-													                            </option>
-																		<?}?>
-													            </select>
-													        </label>
-													    </section>
-													    
-													    <section class="col col-4"  style="width: 50%">
-													       <label class="input">Cantidad de servicios
-													            <input type="number" min="1" name="n_servicios[]" id="serv_qty" >
-													        </label>
-													    </section>
-								<div  class=" text-center row">
-													<a class='txt-color-red' onclick="delete_service(<?=$i2?>)" style='cursor: pointer;'>Eliminar servicio 
-														<i class="fa fa-minus">
-														</i>
-													</a>  
-													</div>
-													</div>
-													</div>
-												<?} 
+												<?$i2=0;?>		
+												
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs"> 
+												<?
+
 												foreach($servs as $key_1)
 												{?>
 													
-													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
+													
 													<div id="<?= $i2=$i2+1?>a">
 												        <section class="col col-8"  style="width: 50%">Servicios
 												            <label class="select">
@@ -223,8 +162,9 @@
 													</a>  
 													</div>
 													</div>
-													</div>
+													
 												<?}?>
+												</div>
 												
 												<div id="agregar1" class=" text-center row">
 
@@ -289,14 +229,15 @@
 											</label>
 										</section>
 										<?$i=0?>
+										<section id="impuesto" name="impuesto">
 										<?foreach($impuestos_merc as $merc)
 													{?>	
 														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
-																
+																<select name="id_impuesto[]">
 																<?foreach ($impuesto as $key){
 																	if($key->id_pais==$mercancia[0]->pais){?>
-																	<select name="id_impuesto[]">
+																	
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
@@ -310,11 +251,12 @@
 																			</option>
 																		<?}?>
 																	
-																</select>
+																
 																<a class='txt-color-red' onclick="dell_impuesto(<?=$i?>)" style='cursor: pointer;'>Eliminar <i class="fa fa-minus"></i></a>
-															<?}}?>	</label>
+															<?}}?>	</select></label>
 														</section>
 													<?}?>
+													</section>
 										
 										<section class="col col-6" style="width: 50%">
 											<br>
@@ -365,7 +307,8 @@
 							</fieldset>
 
 							<section class="col col-12 pull-right" >
-								<button type="submit" class="btn btn-success">Actualizar</button>
+								<button type="submit" class="btn btn-success">
+								Actualizar</button>
 							</section>
 							
 						</form>
@@ -384,13 +327,18 @@
 	<!-- END MAIN CONTENT -->
 
 <script type="text/javascript">
-var i = <?= $i?>;
+
+var i = <?= $i ?>;
+var ia=0;
+var ib=0;
+
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-function new_product(i)
+function new_product(id)
 {
-i = parseInt(i) + 1;
-	$('#prods').append('<div id="'+i+'b">'
+	
+
+	$('#prods').append('<div id="'+ib+'bj">'
 		+'<section class="col col-8" style="width: 50%">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
@@ -407,20 +355,20 @@ i = parseInt(i) + 1;
 		+'</label>'
 		+'</section>'
 		+'<div  class=" text-center row">'
-		+'<a class="txt-color-red" onclick="delete_product('+i+')" style="cursor: pointer;">Eliminar producto' 
+		+'<a class="txt-color-red" onclick="delete_product_adicional('+ib+')" style="cursor: pointer;">Eliminar producto' 
 		+'<i class="fa fa-minus">'
 		+'</i>'
 		+'</a>'  
 		+'</div>'
 		+'</div>');
-	i = parseInt(i) + 1;
+	ib = parseInt(ib) + 1;
 
 }
 
-function new_service(i)
+function new_service(id)
 {
-	i = parseInt(i) + 1;
-	$('#servs').append('<div id="'+i+'a">'
+
+	$('#servs').append('<div id="'+ia+'aj">'
 		+'<section class="col col-8" style="width: 50%">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
@@ -438,13 +386,13 @@ function new_service(i)
 		+'</label>'
 		+'</section>'
 		+'<div  class=" text-center row">'
-		+'<a class="txt-color-red" onclick="delete_service('+i+')" style="cursor: pointer;">Eliminar servicio' 
+		+'<a class="txt-color-red" onclick="delete_service_adicional('+ia+')" style="cursor: pointer;">Eliminar servicio' 
 		+'<i class="fa fa-minus">'
 		+'</i>'
 		+'</a>'  
 		+'</div>'
 		+'</div>');
-	i = parseInt(i) + 1;
+	ia = parseInt(ia) + 1;
 }
 
 function add_impuesto()
@@ -471,10 +419,33 @@ function dell_impuesto(id)
 	
 }
 function delete_product(id){
-$("#"+id+"b").remove();
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+		alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"b").remove();
+	}
+}
+function delete_product_adicional(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+		alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"bj").remove();
+	}
 }
 function delete_service(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
 	$("#"+id+"a").remove();
+	}
+}
+
+function delete_service_adicional(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"aj").remove();
+	}
 }
 
 function ImpuestosPais(){
@@ -503,6 +474,25 @@ function ImpuestosPais(){
 	        
 	      }
 	});
+}
+
+function validar_productos(){
+	var  Impuesto = new Array();
+	var contador=0;
+$('select[name="producto[]"]').each(function() {	
+	Impuesto.push($(this).val());
+	contador=contador+1;
+});	
+return contador;
+}
+function validar_servicios(){
+	var  Impuesto = new Array();
+	var contador=0;
+$('select[name="servicio[]"]').each(function() {	
+	Impuesto.push($(this).val());
+	contador=contador+1;
+});	
+return contador;
 }
 </script>
 	</html>

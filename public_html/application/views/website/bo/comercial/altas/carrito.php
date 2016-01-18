@@ -122,7 +122,7 @@
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
 													<td class="text-center">
-														<a title="Editar"  style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Editar"  style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
 															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
@@ -147,7 +147,7 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
 															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
@@ -173,7 +173,7 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
 															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
@@ -199,7 +199,7 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
 															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
@@ -223,7 +223,7 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
 															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
@@ -347,12 +347,14 @@ $(document).ready(function() {
 
 })
 
-function editar(id_merc)
+function editar(id_merc, code)
 {
+
 	$.ajax({
 		type: "POST",
 		url: "/bo/admin/edit_merc",
-		data: {id: id_merc},
+		data: {id: id_merc,
+			   pais:code}
 	})
 	.done(function( msg )
 	{
