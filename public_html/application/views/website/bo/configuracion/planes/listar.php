@@ -221,7 +221,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/planes/editar_plan/",
+		url: "/bo/planes/editar/",
 		data: {
 			id: id
 			}

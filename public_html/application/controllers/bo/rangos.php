@@ -155,34 +155,29 @@ class Rangos extends CI_Controller
 
 	}
 	function actualizar_rangos(){
-	$noEliminar="";
-	$contador=0;
-if(isset($_POST['id_tipo_condicion'])){
-		$contador=count($_POST['id_tipo_condicion']);
-	$condiciones=$_POST["id_tipo_condicion"];
-	for($i=0;$i<$contador;$i++){
-		$noEliminar.=$condiciones[$i];	
-		if($i!=$contador-1){
-			$noEliminar.=",";
-							}
-								}
-}
-
-if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
-		$this->model_rangos->eliminar_condiciones_rango($noEliminar);
-}
-	if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
-		$this->model_rangos->actualizar_condicion_rango($_POST['id'],$_POST['id_tipo_condicion'],$_POST['valor_rango']);
-	}
-
-
-	$correcto = $this->model_rangos->actualizar_rangos();
-	//if(isset($_POST['id_tipo_condicionAgregar']) && isset($_POST['valor_rangoAgregar'])){
-	//	$this->model_rangos->ingresar_condicion_rango($_POST['id'],$_POST['id_tipo_condicionAgregar'],$_POST['valor_rangoAgregar']);
-	//}	
-
-
-
+		$noEliminar="";
+		$contador=0;
+		if(isset($_POST['id_tipo_condicion'])){
+			$contador=count($_POST['id_tipo_condicion']);
+			$condiciones=$_POST["id_tipo_condicion"];
+			for($i=0;$i<$contador;$i++){
+				$noEliminar.=$condiciones[$i];
+				if($i!=$contador-1){
+					$noEliminar.=",";
+				}
+			}
+		}
+		
+		if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
+			$this->model_rangos->eliminar_condiciones_rango($noEliminar);
+		}
+		if(isset($_POST['id_tipo_condicion']) && isset($_POST['valor_rango'])){
+			$this->model_rangos->actualizar_condicion_rango($_POST['id'],$_POST['id_tipo_condicion'],$_POST['valor_rango']);
+		}
+		$correcto = $this->model_rangos->actualizar_rangos();
+		//if(isset($_POST['id_tipo_condicionAgregar']) && isset($_POST['valor_rangoAgregar'])){
+		//	$this->model_rangos->ingresar_condicion_rango($_POST['id'],$_POST['id_tipo_condicionAgregar'],$_POST['valor_rangoAgregar']);
+		//}	
 		if($correcto){
 			echo "Rango Actualizado";
 		}

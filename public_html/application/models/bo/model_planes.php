@@ -56,4 +56,53 @@ class model_planes extends CI_Model
 			$this->db->insert("cross_plan_bonos",$bonoPlan);
 		}
 	}
+	
+	function get_planes_id($id){
+		$q=$this->db->query('select * from plan where id ='.$id.'');
+		return $q->result();
+	}
+	
+	function get_plan_bonos_by_id($id){
+		$rangos=$this->db->query('select * from cross_plan_bonos where id_plan = '.$id.' order by `order` asc');
+		return $rangos->result();
+	}
+	
+	function eliminar_plan_bonos($condiciones){	
+		$this->db->query('delete from cross_plan_bonos where id_plan='.$_POST["id"].' and id_bono not in ('.$condiciones.')');	
+	}
+	
+	function actualizar_plan_bonos($id_plan,$bonos){
+		$this->kill_cross_plan_bonos();
+		$bonosPlan = array();
+		$i = 0;
+		foreach ($bonos as $condicion){
+				$condicion = array(
+						'id_plan' => $id_plan,
+						'id_bono' => $condicion,
+						'order' => $i
+				);
+				array_push($bonosPlan, $condicion);
+				$i++;
+		}
+		foreach ($bonosPlan as $condicion) {
+			$this->db->insert("cross_plan_bonos",$condicion);
+		}
+	}
+	
+	function kill_cross_plan_bonos(){
+		$this->db->query("delete from cross_plan_bonos where id_plan=".$_POST["id"]);
+	}
+	
+	function actualizar_plan(){
+		
+		//echo "dentro de modelo plan";
+		
+		$datos=array(
+				'nombre' =>$_POST['nombre'] ,
+				'descripcion' =>$_POST['descripcion']
+		);
+		$this->db->where('id', $_POST['id']);
+		$this->db->update('plan', $datos);
+		return true;
+	}
 }

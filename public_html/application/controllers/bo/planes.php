@@ -106,6 +106,57 @@ class Planes extends CI_Controller
 	
 	}
 	
+	function editar(){
+	
+		$id= $this->tank_auth->get_user_id();
+		$style= $this->general->get_style($id);
+		$plan= $this->model_planes->get_planes_id($_POST['id']);
+		$bonos_plan=$this->model_planes->get_plan_bonos_by_id($_POST['id']);
+		$this->template->set("bonos_plan",$bonos_plan);
+		$bonos=$this->model_planes->get_bonos_plan();
+		$this->template->set("bonos",$bonos);
+		$this->template->set("plan",$plan);
+		$this->template->build('website/bo/configuracion/planes/editar');
+	
+	}
+	
+	function actualizar_plan(){
+		
+		$noEliminar = $this->noEliminar();
+	
+		isset($_POST['id_bono_plan']) ? $this->model_planes->eliminar_plan_bonos($noEliminar) : '';
+		
+		isset($_POST['id_bono_plan']) ? $this->model_planes->actualizar_plan_bonos($_POST['id'],$_POST['id_bono_plan']) : '';
+		
+		$correcto = $this->model_planes->actualizar_plan();
+		
+		if($correcto){
+			echo "plan Actualizado";
+		}
+		else{
+			echo "No se logro actualizar el plan";
+		}
+	}	
+	 
+	 function noEliminar() {
+	 
+		$noeliminar="";
+		$contador=0;
+		
+		if(isset($_POST['id_bono_plan'])){
+			$contador=count($_POST['id_bono_plan']);
+			$condiciones=$_POST["id_bono_plan"];
+			for($i=0;$i<$contador;$i++){
+				$noeliminar.=$condiciones[$i];
+				if($i!=$contador-1){
+					$noeliminar.=",";
+				}
+			}
+		}
+		return $noeliminar;
+	}
+
+	
 	function ingresar_plan(){
 		$bonos = $_POST['id_bono_plan'];
 	
@@ -158,8 +209,7 @@ class Planes extends CI_Controller
 								<p>'.$bono[0]->descripcion.'</p>
 							</div>
 							<div class="tab-pane fade" id="s'.$_POST['idBono'].'2">
-								<div class="padding-10">'.$output_rangos.'</div>
-								<input type="hidden" name="idTipoRango[]" value="'.$_POST['idBono'].$bono[0]->id.'"><br>
+								<div class="padding-10">'.$output_rangos.'</div><br>
 							</div>
 						</div>
 					</div>
