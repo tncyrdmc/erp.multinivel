@@ -107,8 +107,8 @@
 										<td><?php echo $proveedor->direccion_web; ?></td>
 										
 										<td class='text-center'>
-											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_proveedor("<?php echo $proveedor->id; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
 											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_proveedor(<?php echo $proveedor->id; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
+											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_proveedor("<?php echo $proveedor->id; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>											
 											<?php if ($proveedor->estatus == 'ACT') {?>
 												<a title="Desactivar" style='cursor: pointer;' onclick="estado_proveedor('DES','<?php echo $proveedor->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>

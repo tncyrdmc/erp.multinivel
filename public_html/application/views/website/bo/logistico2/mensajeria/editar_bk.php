@@ -92,20 +92,20 @@
 							
 								<div class="row">
 									<header>Contacto N° 1</header>
-									<input type="text" name="id_contacto1" class="hide" value="<?php echo $contactos[0]->id; ?>" />
+									<input type="text" name="id_contacto1" class="hide" value="<?php echo $contactos[1]->id; ?>" />
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre
-											<input type="text" class="form-control" name="nommbre_contacto1" placeholder="Nombre de persona de contacto" class="form-control" value="<?php echo $contactos[0]->nombre; ?>" required />
+											<input type="text" class="form-control" name="nommbre_contacto1" placeholder="Nombre de persona de contacto" class="form-control" value="<?php echo $contactos[1]->nombre; ?>" required />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto1" placeholder="Apellido de persona de contacto" class="form-control" value="<?php echo $contactos[0]->apellido; ?>" required />
+											<input type="text" class="form-control" name="apellido_contacto1" placeholder="Apellido de persona de contacto" class="form-control" value="<?php echo $contactos[1]->apellido; ?>" required />
 										</label>
 									</div>
 									
-									<?php $telefono_movil = explode("/",$contactos[0]->telefono_movil); 
+									<?php $telefono_movil = explode("/",$contactos[1]->telefono_movil); 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -115,7 +115,7 @@
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("/",$contactos[0]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",$contactos[1]->telefono_fijo); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -130,12 +130,12 @@
 										Email
 										<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
-											<input type="email" class="form-control" name="email_contacto1" placeholder="Email de la persona de contacto"class="form-control" value="<?php echo $contactos[0]->mail; ?>" required />
+											<input type="email" class="form-control" name="email_contacto1" placeholder="Email de la persona de contacto"class="form-control" value="<?php echo $contactos[1]->mail; ?>" required />
 										</label>
 									</div>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 											<label for="" class="input">Puesto
-											<input type="text" class="form-control" name="puesto_contacto1" placeholder="Puesto de la persona de contacto" class="form-control" value="<?php echo $contactos[0]->puesto; ?>" />
+											<input type="text" class="form-control" name="puesto_contacto1" placeholder="Puesto de la persona de contacto" class="form-control" value="<?php echo $contactos[1]->puesto; ?>" />
 										</label>
 									</div>
 								</div>
@@ -143,19 +143,19 @@
 								<div class="row">
 									<header>Contacto N° 2</header>
 									
-									<input type="text" name="id_contacto2" class="hide" value="<?php echo $contactos[1]->id; ?>" />
+									<input type="text" name="id_contacto2" class="hide" value="<?php echo $contactos[0]->id; ?>" />
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre
-											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" value="<?php echo $contactos[1]->nombre; ?>" />
+											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" value="<?php echo $contactos[0]->nombre; ?>" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo $contactos[1]->apellido; ?>" />
+											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo $contactos[0]->apellido; ?>" />
 										</label>
 									</div>
-									<?php $telefono_movil = explode("/",$contactos[1]->telefono_movil); 
+									<?php $telefono_movil = explode("/",$contactos[0]->telefono_movil); 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -165,7 +165,7 @@
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("/",$contactos[1]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",$contactos[0]->telefono_fijo); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
@@ -179,24 +179,65 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Email<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
-											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto" class="form-control" value="<?php echo $contactos[1]->mail; ?>" />
+											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto" class="form-control" value="<?php echo $contactos[0]->mail; ?>" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Puesto<label for="" class="input">
-											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" value="<?php echo $contactos[1]->puesto; ?>" />
+											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" value="<?php echo $contactos[0]->puesto; ?>" />
 										</label>
 									</div>
 								</div>
 								
-									<?php $i= 0; ?>
+								<div class="row" id="tarifa">
+									<header>Tarifas</header>
+									<div class="col col-lg-3 col-xs-3">
+									</div>
+									<div class="row">
+										<div class="col col-lg-6 col-xs-6">
+											<a style="cursor: pointer;" onclick="add_tarifa()">Agregar Tarifa <i class="fa fa-plus"></i></a>
+										</div>
+										
+									</div>
+									<?php $i= 0;
+									foreach ($tarifas as $tarifa){ ?>
+									<div class="row" id="<?php echo $i; ?>">
+										<div class="col col-xs-12 col-sm-6 col-lg-6"  id="ciudad">
+											<label class="select">Ciudad
+												<select name="ciudad_tarifa[]">
+												<?php foreach ($ciudades as $ciudad){
+													if($ciudad['ID'] == $tarifa->ciudad){ ?>
+													<option value="<?php echo $ciudad['ID']; ?>" selected><?php echo $ciudad['Name']; ?></option>
+													<?php }else {?>
+													<option value="<?php echo $ciudad['ID']; ?>"><?php echo $ciudad['Name']; ?></option>
+													<?php }
+												}?>
+												
+												</select>
+											</label>
+										</div>
+										
+										<div class="col col-xs-12 col-sm-6 col-lg-6">
+											Tarifa<label for="" class="input">
+												<i class="icon-prepend fa fa-dollar"></i>
+												<input type="number" class="form-control" name="valor_tarifa[]" placeholder=""class="form-control" value="<?php echo $tarifa->tarifa; ?>" required />
+											</label>
+											<a style="cursor: pointer;" onclick="delete_tarifa('<?php echo $i; ?>')">Eliminar Tarifa <i class="fa fa-minus"></i></a>
+											<?php $i++; ?>		
+										</div>
+									</div>
+									<?php }?>
+								</div>
 								
+								<div id="tarifas">
 								
-							</fieldset>
+								</div>
+								
+							</filedset>
 							
 							<div class="row">
-								<section  id="div_subir" class="pull-right" style="margin: 2rem">
+								<section  id="div_subir" >
 									<div >
 										<input type="submit" class="btn btn-success" id="boton_subir" value="Actualizar">
 									</div>

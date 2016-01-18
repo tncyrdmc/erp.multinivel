@@ -7,7 +7,7 @@
 			<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> <a href="/bol/"> Logistico </a>
 				> <a href="/bo/logistico2/alta"> Alta </a>
-				> <a href="/bo/proveedor_mensajeria/"> Proveedor de Mensajeria </a>
+				> <a href="/bo/proveedor_software/"> Proveedor de Mensajeria </a>
 				>	Alta
 				</span>
 			</h1>
@@ -65,7 +65,6 @@
 						
 						<form class="smart-form" method="POST" action="/bo/proveedor_mensajeria/crear_proveedor">
 							<fieldset style="padding: 4rem;">
-							
 								<div class="row">
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre de empresa
@@ -138,6 +137,7 @@
 										</label>
 									</div>
 								</div>
+								
 							
 								<div class="row">
 									<header>Contacto N° 1</header>
@@ -280,18 +280,52 @@
 									</div>
 								</div>
 								
-								<div class="row">
-								<br>
-								<section  id="div_subir" class="pull-right"  style="width: 20rem;">
-									<div style="width: 15rem;">
-										<input type="submit" class="btn btn-success" style=" width: 100%;" id="boton_subir" value="Ingresar">
+								<div class="row" id="tarifa">
+									<header>Tarifas</header><br><br>
+									<div class="row">
+										<div class="col col-lg-3 col-xs-2">
+										</div>
+										<div class="col col-lg-2 col-xs-2">
+											<a style="cursor: pointer;" onclick="add_tarifa()"> Agregar Tarifa <i class="fa fa-plus"></i></a>
+										</div>
+										<div class="col col-lg-2 col-xs-2">
+											<a style="cursor: pointer;" onclick="new_ciudad()"> Nueva Ciudad <i class="fa fa-plus"></i></a>
+										</div>
+										
 									</div>
-								</section>
+									<div class="row">
+										<div class="col col-lg-2">
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-3" id="ciudad">
+											<label class="select">Ciudad
+												<select name="ciudad_tarifa[]" >
+												</select>
+											</label>
+										</div>
+										
+										<div class="col col-xs-12 col-sm-5 col-lg-3">
+											Tarifa<label for="" class="input">
+												<i class="icon-prepend fa fa-dollar"></i>
+												<input type="number" class="form-control" name="valor_tarifa[]" placeholder=""class="form-control" required />
+											</label>		
+										</div>
+									</div>
+									
 								</div>
 								
-							</fieldset>
+								<div id="tarifas">
+								
+								</div>
+								
+							</filedset>
 							
-							
+							<div class="row">
+								<section  id="div_subir" style="width: 25rem;">
+									<div style="width: 25rem;">
+										<input type="submit" class="btn btn-success" style=" width: 40%;" id="boton_subir" value="Ingresar">
+									</div>
+								</section>
+							</div>
 						</form>
 
 					</div>
@@ -436,7 +470,7 @@ function new_ciudad(){
 
 							$.ajax({
 								type: "POST",
-								url: "nuevoCiudad",
+								url: "nuevaCiudad",
 								data: $("#form_ciudad").serialize()
 							})
 							.done(function( msg )

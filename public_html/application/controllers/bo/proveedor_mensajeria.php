@@ -123,22 +123,37 @@ class proveedor_mensajeria extends CI_Controller
 				'puesto' => $_POST['puesto_contacto2'],
 		);
 		
-		$ciudades = $_POST['ciudad_tarifa'];
-		$valores = $_POST['valor_tarifa'];
-		
-		$tarifas = $this->CrearTarifas($ciudades, $valores, $id_proveedor);
+		//$tarifas = $this->CrearTarifas_proveedor();
 		
 		if($this->validarContacto($contacto1)){
 			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto1);
 			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto2);
-			foreach ($tarifas as $tarifa){
-				$this->modelo_proveedor_mensajeria->crear_tarifa_mensajeria($tarifa);
-			}
+			//$this->for_tarifas($tarifas);
 		}
 		
 		redirect('/bo/proveedor_mensajeria/listar');
 	}
 	
+	private function CrearTarifas_proveedor() {
+		
+		$ciudades = $_POST['ciudad_tarifa'];
+		$valores = $_POST['valor_tarifa'];
+		
+		$tarifas = $this->CrearTarifas($ciudades, $valores, $id_proveedor);
+		return $tarifas;
+	}
+
+	private function for_tarifas($tarifas){
+		foreach ($tarifas as $tarifa){
+			$this->modelo_proveedor_mensajeria->crear_tarifa_mensajeria($tarifa);
+		}
+	}
+	
+	private function for_tarifas_actualizar($tarifas,$id_proveedor){
+			foreach ($tarifas as $tarifa){
+				$this->modelo_proveedor_mensajeria->actualizar_tarifa_mensajeria($tarifa, $id_proveedor);
+			}
+	}
 	private function CrearTarifas($ciudades, $valores, $id_proveedor){
 		$tarifas = array();
 		$i = 0;
@@ -266,13 +281,15 @@ class proveedor_mensajeria extends CI_Controller
 			$this->modelo_proveedor_mensajeria->eliminar_proveedor_mensajeria($id);
 			echo  'El proveedor de mensajeria a sido eliminado corectamente';
 		}else{
-			echo  'El proveedor de mensajeria no a sido eliminado debido a que tiene un historial con nostros.
+			echo  'El proveedor de mensajeria no a sido eliminado 
+					debido a que tiene un historial con nosotros.
 					Te recomiendo que lo desactives';
 		}
 		
 	}
 	
 	function editar_proveedor(){
+		$_POST['id'] = (!$_POST['id']) ? $_GET['id'] : $_POST['id'];
 		if (!$this->tank_auth->is_logged_in()){																		// logged in
 			redirect('/auth');
 		}
@@ -282,7 +299,7 @@ class proveedor_mensajeria extends CI_Controller
 		$pais = $this->model_admin->get_pais_activo();
 		$proveedor = $this->modelo_proveedor_mensajeria->consultar_proveedor_mensajeria($_POST['id']);
 		$contactos = $this->modelo_proveedor_mensajeria->consultar_contactos_mensajeria($_POST['id']);
-		$tarifas = $this->modelo_proveedor_mensajeria->consultar_tarifas_mensajeria($_POST['id']);
+		//$tarifas = $this->modelo_proveedor_mensajeria->consultar_tarifas_mensajeria($_POST['id']);
 		$departamentos = $this->modelo_proveedor_mensajeria->ObtenerDepartamentosPais($proveedor[0]->id_pais);
 		$ciudades = $this->modelo_proveedor_mensajeria->ObtenerCiudadesPais($proveedor[0]->id_pais);
 		$ciudades2 = $this->modelo_proveedor_mensajeria->ObtenerCiudadesDepartamento($proveedor[0]->estado);
@@ -291,7 +308,7 @@ class proveedor_mensajeria extends CI_Controller
 		$this->template->set("paises",$pais);
 		$this->template->set("proveedor",$proveedor);
 		$this->template->set("contactos",$contactos);
-		$this->template->set("tarifas",$tarifas);
+		//$this->template->set("tarifas",$tarifas);
 		$this->template->set("ciudades",$ciudades);
 		$this->template->set("ciudades2",$ciudades2);
 		$this->template->set("departamentos",$departamentos);
@@ -349,19 +366,13 @@ class proveedor_mensajeria extends CI_Controller
 				'puesto' => $_POST['puesto_contacto2'],
 		);
 	
-		$ciudades = $_POST['ciudad_tarifa'];
-		$valores = $_POST['valor_tarifa'];
-	
-		$tarifas = $this->CrearTarifas($ciudades, $valores, $id_proveedor);
+		//$tarifas = $this->CrearTarifas_proveedor();
 		
 		if($this->validarContacto($contacto1)){
 			$this->modelo_proveedor_mensajeria->actualizar_contacto_mensajeria($contacto1,$_POST['id_contacto1']);
 			$this->modelo_proveedor_mensajeria->actualizar_contacto_mensajeria($contacto2, $_POST['id_contacto2']);
-			$this->modelo_proveedor_mensajeria->eliminar_tarifas($id_proveedor);
-			foreach ($tarifas as $tarifa){
-				$this->modelo_proveedor_mensajeria->actualizar_tarifa_mensajeria($tarifa, $id_proveedor);
-			}
-			
+			//$this->modelo_proveedor_mensajeria->eliminar_tarifas($id_proveedor);
+			//$this->for_tarifas_actualizar($tarifas,$id_proveedor);		
 		}
 		
 		redirect('/bo/proveedor_mensajeria/listar');
