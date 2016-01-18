@@ -31,11 +31,7 @@
 								$i=1;
 									foreach ($bonos_plan as $bono_plan) {
 										echo '<div class="row">';
-										echo '<div class="row">';
-										if($i>2){
-											echo '<a style="cursor: pointer; color: red;" onclick="delete_bono('.$i.')">Suprimir bono <i class="fa fa-minus"></i></a>';
-										}
-										echo '</div>';
+										
 										echo '<div id="'.$i.'" class="row">
 										<div class="col col-lg-2">
 										</div>';
@@ -53,7 +49,11 @@
 											
 										}
 
-												echo '</select>'.'</label>'.'</div>'.'
+												echo '</select>'.'</label>'.'';
+										if($i>2){
+												echo '<a style="cursor: pointer; color: red;" onclick="delete_bono('.$i.')">Suprimir bono <i class="fa fa-minus"></i></a>';
+										}
+										echo '</div>'.'
 											<div id="bono'.$i.'" class="col col-xs-12 col-sm-6 col-lg-7">	
 	        								</div>	';											
 										

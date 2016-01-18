@@ -131,10 +131,10 @@ class Planes extends CI_Controller
 		$correcto = $this->model_planes->actualizar_plan();
 		
 		if($correcto){
-			echo "plan Actualizado";
+			echo "Plan Actualizado";
 		}
 		else{
-			echo "No se logro actualizar el plan";
+			echo "No se logro actualizar el Plan";
 		}
 	}	
 	 
