@@ -13,8 +13,8 @@
 					<div>
 						<div class="widget-body">
 							
-						<form method="POST" enctype="multipart/form-data"
-							action="/bo/admin/update_mercancia" class="smart-form">
+						<form id="combinado" name="combinado" method="POST" enctype="multipart/form-data"
+							action="/bo/admin/update_mercancia" class="smart-form" role="form" validate>
 
 							<section class="col col-6" style="display: none;">
 								<label class="select"> <select id="tipo_merc" required
@@ -46,7 +46,7 @@
 										<section class="col col-2" style="width: 50%;">
 											<label class="input"><span id="labelextra">Descuento del
 													paquete</span> 
-													<input id="precio_promo" type="text" name="descuento" value='<?php echo $data_merc[0]->descuento?>'> 
+													<input id="precio_promo" type="text" name="descuento" value='<?php echo $data_merc[0]->descuento?>' required/> 
 											</label>
 										</section>
 
@@ -98,7 +98,7 @@
 											        
 											        	<section class="col col-4"  style="width: 50%">
 											           		<label class="input">Cantidad de productos
-											                	<input type="number" min="1" name="n_productos[]" id="prod_qty" value= '<? echo $key_1->cantidad_producto?>'>
+											                	<input required type="number" min="1" name="n_productos[]" id="prod_qty" value= '<? echo $key_1->cantidad_producto?>' required>
 											            	</label>
 											        	</section>
 											        						<div class=" text-center row">
@@ -152,7 +152,7 @@
 													    
 													    <section class="col col-4"  style="width: 50%">
 													       <label class="input">Cantidad de servicios
-													            <input type="number" min="1" name="n_servicios[]" id="serv_qty" value='<? echo $key_1->cantidad_servicio?>'>
+													            <input required type="number" min="1" name="n_servicios[]" id="serv_qty" value='<? echo $key_1->cantidad_servicio?>' >
 													        </label>
 													    </section>
 													<div  class=" text-center row">
@@ -332,6 +332,7 @@ var i = <?= $i ?>;
 var ia=0;
 var ib=0;
 
+
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
 function new_product(id)
@@ -409,7 +410,7 @@ function add_impuesto()
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
 	$("#moneda_field").append(code);
-	ImpuestosPais();
+	//ImpuestosPais();
 	i = i + 1
 }
 
@@ -493,6 +494,14 @@ $('select[name="servicio[]"]').each(function() {
 	contador=contador+1;
 });	
 return contador;
+}
+
+function validateForm() {
+    var x = document.forms["combinado"]["descuento"].value;
+    if (x == null || x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
 }
 </script>
 	</html>

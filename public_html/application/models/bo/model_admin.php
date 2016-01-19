@@ -231,13 +231,13 @@ class model_admin extends CI_Model
 	function get_servicio()
 	{
 		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from servicio a, mercancia b where a.id=b.sku 
-			and b.id_tipo_mercancia=2 and b.pais='".$_POST['pais']."'");
+			and b.id_tipo_mercancia=2");
 		return $q->result();
 	}
 	function get_producto()
 	{
 		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from producto a, mercancia b where a.id=b.sku 
-			and b.id_tipo_mercancia=1 and b.pais='".$_POST['pais']."'");
+			and b.id_tipo_mercancia=1");
 		return $q->result();
 	}
 	function get_combinado()

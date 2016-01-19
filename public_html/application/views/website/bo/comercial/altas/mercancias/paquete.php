@@ -164,8 +164,10 @@
 											</fieldset>
 											<fieldset>
 												<div class="row">
+												<? $i1=0; ?>
 														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
 															id="prods">
+															<div id="<?= $i1=$i1+1?>p">
 															<section class="col col-xs-12 col-md-6 col-lg-6">
 																Productos <label class="select"> <select
 																	class="custom-scroll" name="producto[]">
@@ -183,9 +185,13 @@
 																	id="prod_qty">
 																</label>
 															</section>
+															<div class=" text-center row"  ><a onclick="delete_product(<?=$i1?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir producto <i class="fa fa-minus"></i></a></div>
 														</div>
+														</div>
+														<? $i2=0; ?>
 														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
 															id="servs">
+															<div id="<?= $i2=$i2+1?>s">
 															<section class="col col col-xs-12 col-md-6 col-lg-6">
 																Servicios <label class="select"> <select
 																	class="custom-scroll" name="servicio[]">
@@ -203,6 +209,8 @@
 																	id="serv_qty">
 																</label>
 															</section>
+															<div class=" text-center row"  ><a onclick="delete_service(<?=$i2?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir servicio <i class="fa fa-minus"></i></a></div>
+														</div>
 														</div>
 													</div>
 											</fieldset>
@@ -250,6 +258,8 @@
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 var i = 0;
+var ipj=0;
+var isj=0;
 $(document).ready(function() {
 	
 	$("#mymarkdown").markdown({
@@ -544,7 +554,8 @@ $(function()
 
 function new_product()
 {
-	$('#prods').append('<section class="col col-8">Productos'
+	$('#prods').append('<div id="'+ipj+'pj">'
+		+'<section class="col col-8">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<option value="0">Ninguno</option>'
@@ -559,11 +570,15 @@ function new_product()
 		+'<label class="input">Cantidad de productos'
 		+'<input type="number" min="1" name="n_productos[]">'
 		+'</label>'
-		+'</section>');
+		+'</section>'
+		+'<div class=" text-center row"  ><a onclick="delete_product_adicional('+ipj+')" class="txt-color-red" style="cursor: pointer;">Suprimir producto <i class="fa fa-minus"></i></a></div>'
+		+'</div>');
+	ipj = parseInt(ipj) + 1;
 }
 function new_service()
 {
-	$('#servs').append('<section class="col col-8">Servicios'
+	$('#servs').append('<div id="'+isj+'sj">'
+		+'<section class="col col-8">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<option value="0">Ninguno</option>'
@@ -578,7 +593,58 @@ function new_service()
 		+'<label class="input">Cantidad de servicios'
 		+'<input type="number" min="1" name="n_servicios[]">'
 		+'</label>'
-		+'</section>');
+		+'</section>'
+		+'<div class=" text-center row"  ><a onclick="delete_service_adicional('+isj+')" class="txt-color-red" style="cursor: pointer;">Suprimir servicio <i class="fa fa-minus"></i></a></div>'
+		+'</div>');
+	isj = parseInt(isj) + 1;
+}
+
+function delete_product(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+		alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"p").remove();
+	}
+}
+function delete_product_adicional(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+		alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"pj").remove();
+	}
+}
+function delete_service(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"s").remove();
+	}
+}
+
+function delete_service_adicional(id){
+	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
+	alert("Debe haber al menos un producto o servicio asociado al combinado.");
+}else{
+	$("#"+id+"sj").remove();
+	}
+}
+function validar_productos(){
+	var  Impuesto = new Array();
+	var contador=0;
+$('select[name="producto[]"]').each(function() {	
+	Impuesto.push($(this).val());
+	contador=contador+1;
+});	
+return contador;
+}
+function validar_servicios(){
+	var  Impuesto = new Array();
+	var contador=0;
+$('select[name="servicio[]"]').each(function() {	
+	Impuesto.push($(this).val());
+	contador=contador+1;
+});	
+return contador;
 }
 function new_grupo()
 {
