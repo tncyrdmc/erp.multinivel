@@ -73,8 +73,7 @@
 											</div>
 											<div class="col col-xs-12 col-sm-6 col-lg-3" id="bono_plan">
 												<label class="select">Seleccione Bono
-												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" required>
-												<option value=''>--- Seleccione Bono ---</option>		
+												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" onblur="set_bono($(this).val(),'bono0');" required>
 														<?php	
 															foreach($bonos_plan as $categoria){
 																echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
@@ -165,13 +164,6 @@ function enviar() {
 	if(verificar_plan!=true){	
 
 		$.ajax({
-			type: "POST",
-			url: "/bo/planes/validar_bono_minimo",
-			data: $('#planes').serialize()
-		}).done(function( msg ) {
-			if (!msg=="") {
-				
-			$.ajax({
 				type: "POST",
 				url: "/bo/planes/ingresar_plan",
 				data: $('#planes').serialize()
@@ -186,17 +178,17 @@ function enviar() {
 							callback: function() {
 									location.href="/bo/planes/listar";
 							}
-						}
+						},
+						danger: {
+							label: "Cancelar!",
+							className: "btn-danger",
+							callback: function() {
+
+								}
+						}						
 					}
 				})
-			});//fin Done ajax
-
-			}else{
-				alert(msg);
-			}
-			
-		});//fin Done ajax
-			
+			});//fin Done ajax			
 		
 	}else{
 		alert("Ha repetido algun Bono del Plan");
@@ -209,15 +201,14 @@ function set_bono(idBono,idDivBono)
 		type: "POST",
 		url: "/bo/planes/set_bono",
 		data: {idBono : idBono}
-		})
-		.done(function( msg ) {
+		}).done(function( msg ) {
 			$('#'+idDivBono+'').html(msg);
 		});
 }
 
 function add_bono()
 {
-
+i = i + 1;
 	var code=	'<div id="'+i+'" class="row"><br/>'
 	+'<div class="col col-lg-2">'
 	+'</div>'
@@ -235,13 +226,12 @@ function add_bono()
 	+'</div>'	
 	+'</div>';
 	$("#bono").append(code);
-	i = i + 1
+	
 }
 
 function delete_bono(id)
 {	
 	$("#"+id+"").remove();
-	
 }
 
 

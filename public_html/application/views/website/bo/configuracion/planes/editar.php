@@ -7,14 +7,16 @@
 		$select_bonos.="<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
 	}
 ?>
-<form id="planes" name="planes" class="smart-form"  method="POST"  > <!-- action="/bo/planes/actualizar_plan" -->
+<form id="planes" name="planes" class="smart-form"  method="POST" action="/bo/planes/actualizar_plan" role="form" > <!--  -->
 							<fieldset>
 								<input type="text" class="hide" name="id" value="<?php echo $_POST['id']; ?>" id="id">
 								<label class="input"> Nombre
-								<input type="text" name="nombre" required placeholder="Nombre" id="nombre" style="width: 50%;" class="form-control" value="<?php echo $plan[0]->nombre; ?>" required>
+								<input type="text" name="nombre" required placeholder="Nombre" id="nombre" style="width: 50%;" class="form-control" value="<?=$plan[0]->nombre; ?>" required>
+								</label>
 								<label class="input"> Descripcion
-								<textarea type="text" name="descripcion" required placeholder="Descripción" id="descripcion" style="width: 50%;" class="form-control" value="" required><?php echo $plan[0]->descripcion; ?></textarea>
-								<label class="input"> Condiciones
+								<textarea name="descripcion" placeholder="Descripción" id="descripcion" style="width: 50%;" class="form-control" required ><?=$plan[0]->descripcion; ?></textarea>
+								</label>
+								<label class="input"> Bonos
 								<br>
 								</label>
 
@@ -23,7 +25,7 @@
 										<div class="col col-lg-3 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_bono('<?php echo $j+1 ?>')"> Agregar Condición <i class="fa fa-plus"></i></a>
+											<a style="cursor: pointer;" onclick="add_bono('<?php echo $j+1 ?>')"> Agregar Bono <i class="fa fa-plus"></i></a>
 										</div>
 									</div>
 		
@@ -69,11 +71,11 @@
 								</div>
 							</fieldset>
 							<footer>
-<!-- <button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
- -->
-								<a class="btn btn-success" onclick="enviar()">
+<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
+
+							<!-- 	<a class="btn btn-success" onclick="enviar()">
 									Guardar
-								</a>
+								</a> -->
 							</footer>
 
 
@@ -83,7 +85,7 @@
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
-	$( "#nueva" ).submit(function( event ) {
+$( "#planes" ).submit(function( event ) {
 	event.preventDefault();
 	enviar();
 });
@@ -97,7 +99,7 @@ $('select[name="id_bono_plan[]"]').each(function() {
 
    for(i=0;i<(bonos.length-1);i++){
      for(j=i+1;j<(bonos.length);j++){
-          if(bonos[i]==bonos[j]){
+          if(bonos[i]==bonos[j]||!bonos[i]){
           	bono_repetido=true;
           }
  
@@ -157,8 +159,7 @@ function add_bono(id)
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
 		+'<label class="select">Seleccione bono'
-		+'<select id="id_bono_plan[]" name="id_bono_plan[]" onChange="set_bono($(this).val(),\'bono'+id+'\')";>'
-		+'<option value="">--- Seleccione Bono ---</option>'
+		+'<select id="id_bono_plan[]" name="id_bono_plan[]" onmouseenter="set_bono($(this).val(),\'bono'+id+'\');" onChange="set_bono($(this).val(),\'bono'+id+'\');">'		
 		+'<?php	echo $select_bonos; ?>'
 	+'</select>'
 	+'</label>'

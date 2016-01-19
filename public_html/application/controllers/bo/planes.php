@@ -120,7 +120,8 @@ class Planes extends CI_Controller
 	
 	}
 	
-	function actualizar_plan(){
+	function actualizar_plan(){	
+		
 		
 		$noEliminar = $this->noEliminar();
 	
@@ -154,25 +155,26 @@ class Planes extends CI_Controller
 			}
 		}
 		return $noeliminar;
-	}
-
-	function validar_bono_minimo(){
-		$bonos = $_POST['id_bono_plan'];
-		echo (count($bonos)<2) 
-		? "Se Necesita añadir mínimo 2 bonos para Crear el Plan" : "";
-	}
+	}	
 	
 	function ingresar_plan(){
 		
 		$bonos = $_POST['id_bono_plan'];
 		
-		$id_plan=$this->model_planes->ingresar_plan();
-		$id_cross=$this->model_planes->ingresar_plan_bonos($id_plan,$bonos);
+		if (count($bonos)<2){
+			
+			echo "Se necesita al menos 2 bonos para crear el Plan";			
+			
+		}else{
 		
-		echo isset($id_plan)&&($id_cross==true) ?
-		"Se ha creado el Plan = ".$_POST['nombre'] :
-		"No se ha podido crear el Plan";		
-		
+			$id_plan=$this->model_planes->ingresar_plan();
+			$id_cross=$this->model_planes->ingresar_plan_bonos($id_plan,$bonos);
+			
+			echo isset($id_plan)&&($id_cross==true) ?
+			"Se ha creado el Plan = ".$_POST['nombre'] :
+			"No se ha podido crear el Plan";		
+			
+		}
 	}
 	
 	function kill_plan(){
@@ -237,7 +239,7 @@ class Planes extends CI_Controller
 							</div>
 						</div>
 					</div>
-			</div>' : '';
+			</div>' : NULL;
 	
 	}
 	
