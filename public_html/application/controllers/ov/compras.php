@@ -2521,13 +2521,16 @@ function index()
 	}
 	
 	function show_paquetes()
-	{
+	{		
+		
 		$id = $this->tank_auth->get_user_id();
 		$pais = $this->general->get_pais($id);
 		
+		//echo "dentro de show paquetes: ".$pais[0]->pais;
+		
 		$comb=$this->modelo_compras->get_paquetes_inscripcion($pais[0]->pais, $id);
 	
-		for($k=0;$k<sizeof($comb);$k++)
+		for($k=0;$k<sizeof($comb);$k++) 
 		{
 			$imagen=$this->modelo_compras->get_img($comb[$k]->id);
 			if(isset($imagen[0]))
@@ -3596,10 +3599,10 @@ function index()
 		}
 		if($prod>0)		
 		{
-			echo "si";
+			echo 'si';
 		}
 		else {
-			echo "no";
+			echo 'no';
 		}
 	}
 	
@@ -4003,8 +4006,6 @@ function index()
 		
 		$costo_envio = $this->modelo_compras->consultarEnvio($id);
 		
-		
-		
 		$calcular_descuento=1;
 		
 		$costo_total = $costo_envio[0]->costo;
@@ -4077,6 +4078,9 @@ function index()
 	}
 	
 	function DatosEnvio(){
+		
+		//echo "dentro de DatosEnvio";
+		
 		if (!$this->tank_auth->is_logged_in())																	// logged in
 			redirect('/auth');
 		
@@ -4101,7 +4105,6 @@ function index()
 			$datos = array(
 					'id_user' => $id,
 					'id_proveedor' => '0',
-					'id_tarifa' => '0',
 					'costo' => '0',
 					'nombre' => $datos_perfil[0]->nombre,
 					'apellido' => $datos_perfil[0]->apellido,

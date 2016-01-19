@@ -217,7 +217,7 @@ function estado_cobro(venta,historial, usuario)
 										label: "Ok!",
 										className: "btn-success",
 										callback: function() {
-											window.location="/bo/cuentasporcobrar/index";
+											window.location="/bo/cuentasporcobrar/";
 											}
 										}
 									}

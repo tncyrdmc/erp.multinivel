@@ -903,8 +903,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"correo" 	=> $datos_envio[0]->email,
 				"proveedor_mensajeria" 	=> $datos_envio[0]->id_proveedor,
 				"celular" 	=> $datos_envio[0]->telefono,
-				"info_ad"	=> "",
-				"id_tarifa"	=> $datos_envio[0]->id_tarifa
+				"info_ad"	=> ""
 		);
 		
 		

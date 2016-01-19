@@ -11,9 +11,9 @@ class model_afiliado extends CI_Model{
 	function EstiloUsuaio($id){
 		$dato_style=array(
 			"id_usuario"		=> $id,
-			"bg_color"			=> "#2086bf",
-			"btn_1_color"		=> "#2086bf",
-			"btn_2_color"		=> "#60a917"
+			"bg_color"			=> "#41EEEC",
+			"btn_1_color"		=> "#00b4dc",
+			"btn_2_color"		=> "#17222d"
 			);
 		$this->db->insert("estilo_usuario",$dato_style);
 	}

@@ -902,15 +902,14 @@
 				$.ajax({
 					type: "post",
 					url: "verificar_carro",
-					data: "hola=hola"
+					data: {}
 				})
 				.done(function(msg)
 				{
-					if(msg=='si')
-					{
-						
-						window.location.href="DatosEnvio";
-						
+					//alert(msg);
+					if(msg!=='si')
+					{ 
+						window.location.href="DatosEnvio";						
 					}
 					else
 					{
@@ -976,6 +975,21 @@
 				url: "show_paquetes",
 				data: { },
 				}).done(function(msg){
+					
+					/*bootbox.dialog({
+						message: msg,
+						title: "Alerta!",
+						className: "div_info_merc",
+						buttons: {
+							danger: {
+								label: "Aceptar",
+								className: "btn-danger",
+								callback: function() {
+									}
+							}
+						}
+					})*/
+					
 					$("#mercancias").html(msg);
 			
 				
