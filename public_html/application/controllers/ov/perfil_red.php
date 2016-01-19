@@ -490,8 +490,8 @@ class perfil_red extends CI_Controller
 			redirect('/ov/compras/carrito');
 		}
 		
-		$id              = $this->tank_auth->get_user_id();
-		$style           = $this->general->get_style($id);
+		$id = $this->tank_auth->get_user_id();
+		$style = $this->general->get_style($id);
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		

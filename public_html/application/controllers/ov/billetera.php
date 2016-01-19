@@ -14,6 +14,14 @@ class billetera extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/modelo_billetera');
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 	}
 
 	function index()
@@ -24,12 +32,7 @@ class billetera extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-		if($this->general->isAValidUser($id,"OV") == false)
-		{
-			redirect('/ov/compras/carrito');
-		}
 		
-
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 

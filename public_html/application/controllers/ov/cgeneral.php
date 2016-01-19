@@ -143,6 +143,12 @@ class cgeneral extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$style=$this->general->get_style($id);
 
 		$this->template->set("style",$style);
@@ -209,6 +215,12 @@ class cgeneral extends CI_Controller
 		}
 			
 		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$style=$this->general->get_style($id);
 		$this->template->set("style",$style);
 	
@@ -244,7 +256,7 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/chat_social');
 	}
 	
-	function videollamada()
+	/*function videollamada()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
@@ -261,7 +273,7 @@ class cgeneral extends CI_Controller
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/general/videollamada');
-	}
+	}*/
 
 	function web_personal()
 	{
@@ -271,6 +283,12 @@ class cgeneral extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$style=$this->general->get_style($id);
 		$username = 0;
 		
@@ -302,6 +320,12 @@ class cgeneral extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$usuario=$this->general->get_username($id);
 			
 		$trimmed = $_POST['clave'];
@@ -321,7 +345,13 @@ class cgeneral extends CI_Controller
 	{
 		$this->load->library('Email');
 	
-		$id = $this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 		$email = $this->model_cabecera->get_mail($id);
 		$email = $email[0]->email;
 	

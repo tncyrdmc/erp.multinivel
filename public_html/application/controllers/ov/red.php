@@ -20,6 +20,14 @@ class red extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if($this->general->isAValidUser($id,"OV") == false)
+		{
+			redirect('/ov/compras/carrito');
+		}
+		
 
 	}
 

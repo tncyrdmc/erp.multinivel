@@ -546,14 +546,16 @@
                       <?php $permiso=$ci->model_permissions->check($id,'videollamadas');
 											if($permiso){
 											?>
-											<div class="col-sm-12">
-												<a href="cgeneral/videollamada">
+											<!-- cgeneral/videollamada -->
+											<!-- <div class="col-sm-12">
+												<a href="#">
 													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 														<i class="fa fa-video-camera fa-3x"></i>
 														<h5>Vídeollamadas</h5>
 													</div>
 												</a>
-											</div>
+											</div> -->
+											
 											<?php }?>
 								<!--				<?php $permiso=$ci->model_permissions->check($id,'social_network');
 												if($permiso){
