@@ -2,6 +2,8 @@ function valida_vacios(ids,mensajes)
 {
 	var error=true;
 	$.each( ids, function( i, val ) {
+		
+	$(val).parent(".input").parent().remove(".invalid");
   	var contenido=$(val).val();
 	if(contenido=='')
 	{
@@ -23,9 +25,12 @@ function valida_espacios(ids,mensajes)
 	var error          = true;
 	var espacio_blanco = /\s/;
 	$.each( ids, function( i, val ) {
+		
+	$(val).parent(".input").parent().remove(".invalid");
   	var contenido=$(val).val();
 	if(contenido.indexOf(" ") !== -1)
-	{
+	{	
+		
 		$(val).parent( ".input" ).addClass('state-error');
 		$(val).focus();
 		$(val).parent(".input").parent().append('<em class="invalid">'+mensajes[i]+'</em>');

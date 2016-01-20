@@ -157,24 +157,26 @@ class Planes extends CI_Controller
 		return $noeliminar;
 	}	
 	
+	function valida_minimo(){
+		$bonos = $_POST['id_bono_plan'];
+		if (count($bonos)<2) {
+			echo "Se necesita al menos 2 bonos para crear el Plan"; 
+		}else{
+			echo "0";
+		}
+	}
+	
 	function ingresar_plan(){
 		
 		$bonos = $_POST['id_bono_plan'];
 		
-		if (count($bonos)<2){
-			
-			echo "Se necesita al menos 2 bonos para crear el Plan";			
-			
-		}else{
+		$id_plan=$this->model_planes->ingresar_plan();
+		$id_cross=$this->model_planes->ingresar_plan_bonos($id_plan,$bonos);
 		
-			$id_plan=$this->model_planes->ingresar_plan();
-			$id_cross=$this->model_planes->ingresar_plan_bonos($id_plan,$bonos);
+		echo isset($id_plan)&&($id_cross==true) ?
+		"Se ha creado el Plan = ".$_POST['nombre'] :
+		"No se ha podido crear el Plan";	
 			
-			echo isset($id_plan)&&($id_cross==true) ?
-			"Se ha creado el Plan = ".$_POST['nombre'] :
-			"No se ha podido crear el Plan";		
-			
-		}
 	}
 	
 	function kill_plan(){

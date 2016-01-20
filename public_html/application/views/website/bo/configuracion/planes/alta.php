@@ -73,7 +73,7 @@
 											</div>
 											<div class="col col-xs-12 col-sm-6 col-lg-3" id="bono_plan">
 												<label class="select">Seleccione Bono
-												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" onblur="set_bono($(this).val(),'bono0');" required>
+												<select name="id_bono_plan[]" onChange="set_bono($(this).val(),'bono0');" onclick="set_bono($(this).val(),'bono0');" required>
 														<?php	
 															foreach($bonos_plan as $categoria){
 																echo "<option value='".$categoria->id."'>".$categoria->nombre."</option>";
@@ -164,31 +164,34 @@ function enviar() {
 	if(verificar_plan!=true){	
 
 		$.ajax({
-				type: "POST",
-				url: "/bo/planes/ingresar_plan",
-				data: $('#planes').serialize()
-			}).done(function( msg ) {
-				bootbox.dialog({
-					message: msg,
-					title: 'ATENCION',
-					buttons: {
-						success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-									location.href="/bo/planes/listar";
-							}
-						},
-						danger: {
-							label: "Cancelar!",
-							className: "btn-danger",
-							callback: function() {
-
+			type: "POST", 
+			url: "/bo/planes/valida_minimo",
+			data: $('#planes').serialize()
+		}).done(function( msg ) {
+			if(parseInt(msg)==0){
+				$.ajax({
+					type: "POST",
+					url: "/bo/planes/ingresar_plan",
+					data: $('#planes').serialize()
+				}).done(function( msg ) {
+					bootbox.dialog({
+						message: msg,
+						title: 'ATENCION',
+						buttons: {
+							success: {
+								label: "Aceptar",
+								className: "btn-success",
+								callback: function() {
+										location.href="/bo/planes/listar";
 								}
-						}						
-					}
-				})
-			});//fin Done ajax			
+							}					
+						}
+					})
+				});//fin Done ajax
+			}else{			
+				alert(msg);
+			}
+		});//fin Done ajax			
 		
 	}else{
 		alert("Ha repetido algun Bono del Plan");

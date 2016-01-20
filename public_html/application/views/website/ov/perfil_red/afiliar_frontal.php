@@ -14,6 +14,8 @@ $(document).ready(function() {
 
 			  wizard.on('finished', function (e, data) {
 
+				  $( ".invalid" ).remove();
+
 			  	var ids = new Array( 
 						"#nombre",
 					 	"#apellido",

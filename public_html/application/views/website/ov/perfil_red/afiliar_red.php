@@ -13,6 +13,8 @@ $(document).ready(function() {
 
 			  wizard.on('finished', function (e, data) {
 
+				  $( ".invalid" ).remove();
+				  
 			  	var ids = new Array( 
 						"#nombre",
 					 	"#apellido",
@@ -88,7 +90,7 @@ $(document).ready(function() {
 					{
 						$.smallBox({
 					      title: "<h1>Atención</h1>",
-					      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+					      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
 					      color: "#C46A69",
 					      icon : "fa fa-warning fadeInLeft animated",
 					      timeout: 4000
@@ -728,6 +730,8 @@ function botbox(nombre, id, lado)
 		title: "Afiliar a "+nombre,
 	});
 	$('.wizard_r').on('finished.fu.wizard', function (e, data) {
+
+		  $( ".invalid" ).remove();
 			
 			  		var ids = new Array( 
 					"#nombre",
@@ -795,7 +799,7 @@ function botbox(nombre, id, lado)
 				{
 					$.smallBox({
 				      title: "<h1>Atención</h1>",
-				      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+				      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
 				      color: "#C46A69",
 				      icon : "fa fa-warning fadeInLeft animated",
 				      timeout: 4000
