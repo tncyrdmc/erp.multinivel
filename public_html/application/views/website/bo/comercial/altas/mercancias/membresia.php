@@ -296,7 +296,7 @@ function add_impuesto()
 	+'<a class="txt-color-red" style="cursor: pointer;" onclick="dell_impuesto('+i+')">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
 	$("#moneda_field").append(code);
-	ImpuestosPais();
+	//ImpuestosPais();
 	i = i + 1
 }
 

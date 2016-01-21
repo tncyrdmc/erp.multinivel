@@ -467,6 +467,15 @@ if($datos['pais'] == "-"){
 		echo json_encode($impuestos);
 		
 	}
+	function ProductosPorPais(){
+		$impuestos = $this->model_mercancia->ProductoPorPais($_POST['pais']);
+		echo json_encode($impuestos);
+	}
+
+	function ServiciosPorPais(){
+			$impuestos = $this->model_mercancia->ServiciosPorPais($_POST['pais']);
+		    echo json_encode($impuestos);	
+	}
 
 	function ImpuestoPaisPorId(){
 		$PorcentajeImpuesto=$this->model_mercancia->ImpuestoPaisPorId($_POST['impuesto']);

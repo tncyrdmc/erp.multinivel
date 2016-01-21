@@ -50,6 +50,18 @@
 							<form method="POST" enctype="multipart/form-data"  action="/bo/mercancia/CrearCombinado" class="smart-form">
 								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
 								<fieldset>
+									<legend>País</span></legend>
+												<section class="col col-2">País del producto
+												<label class="select">
+													
+													<select id="pais" required name="pais" id="pais" onChange="ProductoPorPaisTodo()">
+														<option value="-" selected>-- Seleciona un pais --</option>
+														<?foreach ($pais as $key){?>
+															<option value="<?=$key->Code?>"><?=$key->Name?></option>
+														<?}?>
+													</select>
+												</label>
+											</section>
 									<legend>Datos del Paquete</span></legend>
 									<div id="form_mercancia">
 										<div class="row">
@@ -80,14 +92,14 @@
 														<? $i1=0; ?>
 											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="prods">
 											<div id="<?= $i1=$i1+1?>p">
-											<section class="col col-8">Productos
+											<section class="col col-8" id="ProductosPais" name="ProductosPais">Productos
 											<label class="select">
 											<select class="custom-scroll"  name="producto[]">
 											<option value="0">Ninguno</option>
-											<?foreach ($producto as $key){?>
-											<option value="<?=$key->id?>">
-											<?=$key->nombre?></option>
-											<?}?>
+											<!--<?//foreach ($producto as $key){?>
+											<option value="<?//=$key->id?>">
+											<?//=$key->nombre?></option>
+											<?//}?>-->
 											</select>
 											</label>
 											</section>
@@ -102,14 +114,14 @@
 											<? $i2=0; ?>
 											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="servs">
 											<div id="<?= $i2=$i2+1?>s">
-											<section class="col col-8">Servicios
+											<section class="col col-8" id="ServicioPais" name="ServicioPais">Servicios
 											<label class="select">
 											<select class="custom-scroll" name="servicio[]">
 											<option value="0">Ninguno</option>
-											<?foreach ($servicio as $key){?>
-											<option value="<?=$key->id?>">
-											<?=$key->nombre?></option>
-											<?}?>
+											<!--<?//foreach ($servicio as $key){?>
+											<option value="<?//=$key->id?>">
+											<?//=$key->nombre?></option>
+											<?//}?>-->
 											</select>
 											</label>
 											</section>
@@ -125,7 +137,7 @@
 											</fieldset>
 											<div id="agregar" class=" text-center row"><a onclick="new_product()">Agregar producto <i class="fa fa-plus"></i></a>  <a  onclick="new_service()">Agregar servicio <i class="fa fa-plus"></i></a></div>
 											<div id="moneda"><fieldset id="moneda_field">
-											<legend>Moneda y país</legend>
+											<legend>Moneda</legend>
 											<section class="col col-2">
 											<label class="input">
 											Costo real
@@ -148,17 +160,7 @@
 											<input placeholder="En días" type="text" name="entrega" id="entrega">
 											</label>
 											</section>
-												<section class="col col-2">País del producto
-												<label class="select">
-													
-													<select id="pais" required name="pais" id="pais" onChange="ImpuestosPais()">
-														<option value="-" selected>-- Seleciona un pais --</option>
-														<?foreach ($pais as $key){?>
-															<option value="<?=$key->Code?>"><?=$key->Name?></option>
-														<?}?>
-													</select>
-												</label>
-											</section>
+
 											
 											
 											<section class="col col-3">
@@ -514,14 +516,14 @@ $(function()
 function new_product()
 {
 	$('#prods').append('<div id="'+ipj+'pj">'
-		+'<section class="col col-8">Productos'
+		+'<section class="col col-8" id="ProductosPais'+ipj+'" name="ProductosPais'+ipj+'">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<option value="0">Ninguno</option>'
-		+'<?foreach ($producto as $key){?>'
-		+'<option value="<?=$key->id?>">'
-		+'<?=$key->nombre?></option>'
-		+'<?}?>'
+		+'<!--<?//foreach ($producto as $key){?>'
+		+'<option value="<?//=$key->id?>">'
+		+'<?//=$key->nombre?></option>'
+		+'<?//}?>-->'
 		+'</select>'
 		+'</label>'
 		+'</section>'
@@ -532,19 +534,21 @@ function new_product()
 		+'</section>'
 		+'<div class=" text-center row"  ><a onclick="delete_product_adicional('+ipj+')" class="txt-color-red" style="cursor: pointer;">Suprimir producto <i class="fa fa-minus"></i></a></div>'
 		+'</div>');
+	ProductoPorPaisAgregado(ipj);
 	ipj = parseInt(ipj) + 1;
+	
 }
 function new_service()
 {
 	$('#servs').append('<div id="'+isj+'sj">'
-		+'<section class="col col-8">Servicios'
+		+'<section class="col col-8" id="ServicioPais'+isj+'" name="ServicioPais'+isj+'">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<option value="0">Ninguno</option>'
-		+'<?foreach ($servicio as $key){?>'
-		+'<option value="<?=$key->id?>">'
-		+'<?=$key->nombre?></option>'
-		+'<?}?>'
+		+'<!--<?//foreach ($servicio as $key){?>'
+		+'<option value="<?//=$key->id?>">'
+		+'<?//=$key->nombre?></option>'
+		+'<?//}?>-->'
 		+'</select>'
 		+'</label>'
 		+'</section>'
@@ -554,7 +558,9 @@ function new_service()
 		+'</label>'
 		+'</section>'
 		+'<div class=" text-center row"  ><a onclick="delete_service_adicional('+isj+')" class="txt-color-red" style="cursor: pointer;">Suprimir servicio <i class="fa fa-minus"></i></a></div>');
+	ServicioPorPaisAgregado(isj);
 	isj = parseInt(isj) + 1;
+
 }
 function delete_product(id){
 	if((validar_productos()==1 && validar_servicios()==0)||(validar_productos()==0 && validar_servicios()==1)){
@@ -1663,6 +1669,209 @@ function ImpuestosPais(){
 		      var impuestos = $('#impuesto');
 		      $('#impuesto select').each(function() {
 				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+}
+
+function validar_rangos_repetidos(){
+		var  rangos = new Array();
+		var rango_repetido=false;
+		var cont=0;
+$('select[name="producto[]"]').each(function() {	
+	rangos.push($(this).val());
+	cont=cont+1;
+});	
+
+
+     return rangos;
+}
+
+function ProductoPorPaisTodo(){
+	var pa = $("#pais").val();
+	var contadorprod=ipj;
+	var h=0;
+	for(h=contadorprod;h>=0;h--){
+		
+if(document.getElementsByTagName("ProductosPais"+h)){
+	
+	$.ajax({
+		async: false, 
+		type: "POST",
+		url: "/bo/mercancia/ProductosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ProductosPais'+h+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ProductosPais = $('#ProductosPais'+h);
+		      $('#ProductosPais'+h+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+
+	}}
+	ServicioPorPaisTodo();
+	ServicioPorPais();
+	ProductoPorPais();
+}
+function ProductoPorPais(){
+	var pa = $("#pais").val();
+
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ProductosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ProductosPais option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ProductosPais = $('#ProductosPais');
+		      $('#ProductosPais select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+	ServicioPorPais();
+}
+function ProductoPorPaisAgregado(id){
+	var pa = $("#pais").val();
+	
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ProductosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ProductosPais'+id+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ProductosPais = $('#ProductosPais'+id);
+		      $('#ProductosPais'+id+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+	ServicioPorPais();
+}
+
+function ServicioPorPaisTodo(){
+	var pa = $("#pais").val();
+	var contadorser=isj;
+	var h=0;
+	for(h=contadorser;h>=0;h--){
+		
+if(document.getElementsByTagName("ServicioPais"+h)){
+	
+	$.ajax({
+		async: false, 
+		type: "POST",
+		url: "/bo/mercancia/ServiciosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ServicioPais'+h+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ServicioPais = $('#ServicioPais'+h);
+		      $('#ServicioPais'+h+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+
+	}}
+	ServicioPorPais();
+	ProductoPorPais();
+}
+function ServicioPorPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ServiciosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ServicioPais option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ServicioPais = $('#ServicioPais');
+		      $('#ServicioPais select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+}
+
+function ServicioPorPaisAgregado(id){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ServiciosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ServicioPais'+id+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ServicioPais = $('#ServicioPais'+id);
+		      $('#ServicioPais'+id+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  

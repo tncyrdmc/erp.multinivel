@@ -401,6 +401,17 @@ class model_mercancia extends CI_Model {
 		$q = $this->db->query ( "SELECT * FROM cat_impuesto where id_pais = '" . $pais . "'" );
 		return $q->result ();
 	}
+	function ProductoPorPais($pais) {
+		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from producto a, mercancia b where a.id=b.sku 
+			and b.id_tipo_mercancia=1 and b.pais='".$pais."'");
+		return $q->result();
+	}
+	function ServiciosPorPais($pais){
+			$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from servicio a, mercancia b where a.id=b.sku 
+			and b.id_tipo_mercancia=2 and b.pais='".$pais."'");
+		return $q->result();
+
+	}
 	function ImpuestoPaisPorId($id_impuesto){
 		$q = $this->db->query ( "SELECT porcentaje FROM cat_impuesto where id_impuesto = " . $id_impuesto . "" );
 		return $q->result ();
