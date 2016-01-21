@@ -30,7 +30,7 @@
 						
 					-->
 					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<span class="widget-icon"> <i class="fa fa-gift"></i> </span>
 						<h2>Bonos</h2>				
 						
 					</header>
@@ -56,16 +56,15 @@
 							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">
 								<div class="tab-pane fade in active" id="s1">
-									<div class="row">
-										<?php foreach ($bonos as $bono){?>
-										<!-- SuperBox -->
-											<article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
-				
+									<div class="row"> 
+										<?php if ($bonos) { foreach ($bonos as $bono){ if($bono){?>
+										<div class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">			
 							<!-- Widget ID (each widget will need unique ID)-->
 							
 							<!-- end widget -->
 				
-						<div role="widget" style="" class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+						<div role="widget" style="" class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-10<?= $bono->id?>" data-widget-editbutton="false"
+data-widget-deletebutton="false">
 								<!-- widget options:
 								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 				
@@ -79,35 +78,10 @@
 								data-widget-sortable="false"
 				
 								-->
-								<header role="heading"><div role="menu" class="jarviswidget-ctrls">  
-								 	<a data-original-title="Collapse" href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom"><i class="fa fa-minus "></i></a> 
-								 	<a data-original-title="Fullscreen" href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom"><i class="fa fa-expand "></i></a> </div>
-								 <div role="menu" class="widget-toolbar">
-								 	<a data-toggle="dropdown" class="dropdown-toggle color-box selector" href="javascript:void(0);"></a>
-								 		<ul class="dropdown-menu arrow-box-up-right color-select pull-right">
-								 			<li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li>
-								 			<li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li>
-								 			<li><span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span></li>
-								 			<li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li>
-								 			<li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li>
-								 			<li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li>
-								 			<li><span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span></li>
-								 			<li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li>
-								 			<li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li>
-								 			<li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li>
-								 			<li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li>
-								 			<li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li>
-								 			<li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li>
-								 			<li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li>
-								 			<li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li>
-								 			<li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li>
-								 			<li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li>
-								 			<li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li>
-								 			<li><a href="javascript:void(0);" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li>
-								 		</ul>
-								 	</div>
-									<span class="widget-icon"> <i class="fa fa-check"></i> </span>
-									<h2> <?= $bono->nombre?> </h2>
+								<header role="heading">
+								
+									<span class="widget-icon"> <i class="fa fa-gift fa-2x"></i> </span>
+									<h2>&nbsp; <?= $bono->nombre?> </h2>
 				
 								<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
 				
@@ -135,31 +109,85 @@
 															<li data-target="#step2">
 																<a href="#bono<?= $bono->id?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Descripcion</span> </a>
 															</li>
-															<li data-target="#step3">
-																<a href="#bono<?= $bono->id?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Condiciones</span> </a>
-															</li>
+															<!--<li data-target="#step3">
+																  <a href="#bono<?= $bono->id?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Condiciones</span> </a>
+															</li>-->
 															<li data-target="#step4">
-																<a href="#bono<?= $bono->id?>tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Valor</span> </a>
+																<a href="#bono<?= $bono->id?>tab4" data-toggle="tab"> <span class="step">3</span> <span class="title">Valor</span> </a>
 															</li>
 														</ul>
 														<div class="clearfix"></div>
 													</div>
 													<div class="tab-content">
 														<div class="tab-pane active" id="bono<?= $bono->id?>tab1">
-															<br>
-															<h3> <?= $bono->nombre?></h3>															
+															<br><br>
+																<div class="jumbotron ">
+																	<div class="row">
+																		<div class="col-md-4">
+																			<h1><i class="fa fa-gift fa-2x"></i></h1>
+																		</div>
+																		<div class="col-md-8">
+																			<h2><strong><?= $bono->nombre?></strong></h2>	
+																			<p>
+																				<?= $bono->descripcion?>
+																			</p>
+																		</div>
+																	</div>
+																	
+																</div>													
 														</div> <!-- step1 -->
 														<div class="tab-pane" id="bono<?= $bono->id?>tab2">
-															<br>
-															<h3> <?= $bono->descripcion?></h3>
+															<br><br>
+																<div class="jumbotron ">
+																	<div class="row">
+															<?php 
+															foreach ($condicionesBono as $condicion){
+																	
+																	if($condicion['id_bono']==$bono->id){
+																		
+																		echo '<div class="alert alert-warning alert-block">
+																		<h4 class="alert-heading">'.$condicion['tipoRango'].'</h4>';
+																		echo "Completar el rango <b>".$condicion['nombreRango']."</b> cuando genera <b>".$condicion['condicionRango']."</b> <b>".$condicion['tipoRango']."</b> ";
+																		echo "en la red <b>".$condicion['nombreRed']."</b> en";
+																		foreach($condicion['condicion1'] as $con){
+																			echo ",<b> ".$con."</b>";
+																		}
+																		foreach($condicion['condicion2'] as $con){
+																			echo ",<b> ".$con."</b>";
+																		}
+																	    echo "<br>";
+																		echo "</div>";
+																		
+																}
+															}
+															?>
+																	</div>
+																	
+																</div>
 														</div><!-- step 2 -->
 														<div class="tab-pane" id="bono<?= $bono->id?>tab3">
 															<br>
 															<h3> condiciones </h3>
 														</div><!-- step 3 -->
 														<div class="tab-pane" id="bono<?= $bono->id?>tab4">
-															<br>
-															<h3> valor </h3>
+															<br><br>
+																	<div class="row">
+																	
+															<?php foreach ($valorNiveles as $valorNivel){
+																		if($valorNivel->id_bono==$bono->id){
+																			echo '<div class="col-md-4">
+																				<div class="alert alert-success alert-block">
+																			<h4 class="alert-heading">Nivel '.$valorNivel->nivel.'</h4>';
+																			
+																			echo "<h2>$ ".$valorNivel->valor."</h2><br>";
+
+																			echo "</div></div>";
+																			
+																		}
+																	}
+																	?>
+																	
+																	</div>
 														</div><!-- step 4 -->
 				
 														</div>
@@ -173,23 +201,32 @@
 								</div>
 								<!-- end widget div -->
 				
-							</div></article>
-										<!-- /SuperBox -->
-										<?php }?>
+							</div></div>
+									<?php } } 
+									}else{
+										echo '<div class="well bg-color-teal ">
+																<div class="jumbotron ">
+																	<div class="row">
+																		<div class="col-md-12 text-center">
+																			<h1>--- No hay Bonos disponibles ---</h1>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>	';}?>
 									</div>
 								</div>
 								<div class="tab-pane fade" id="s2">
 									
 									<div class="row">
-									<?php foreach ($planes as $plan){?>
-										<!-- SuperBox -->
-											<article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
+										<?php if ($planes) { foreach ($planes as $plan){ if($plan){ ?>
+										<div class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
 				
 							<!-- Widget ID (each widget will need unique ID)-->
 							
 							<!-- end widget -->
 				
-						<div role="widget" style="" class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+						<div role="widget" style="" class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-20<?= $plan->id?>" data-widget-editbutton="false" data-widget-deletebutton="false">
 								<!-- widget options:
 								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 				
@@ -204,34 +241,10 @@
 				
 								-->
 								<header role="heading">
-								<div role="menu" class="jarviswidget-ctrls">  
-								 	<a data-original-title="Collapse" href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom"><i class="fa fa-minus "></i></a> 
-								 	<a data-original-title="Fullscreen" href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom"><i class="fa fa-expand "></i></a> </div>
-								 <div role="menu" class="widget-toolbar">
-								 	<a data-toggle="dropdown" class="dropdown-toggle color-box selector" href="javascript:void(0);"></a>
-								 		<ul class="dropdown-menu arrow-box-up-right color-select pull-right">
-								 			<li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li>
-								 			<li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li>
-								 			<li><span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span></li>
-								 			<li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li>
-								 			<li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li>
-								 			<li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li>
-								 			<li><span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span></li>
-								 			<li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li>
-								 			<li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li>
-								 			<li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li>
-								 			<li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li>
-								 			<li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li>
-								 			<li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li>
-								 			<li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li>
-								 			<li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li>
-								 			<li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li>
-								 			<li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li>
-								 			<li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li>
-								 			<li><a href="javascript:void(0);" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li>
-								 		</ul>
-								 	</div>
-									<span class="widget-icon"> <i class="fa fa-check"></i> </span>
+								
+									<span class="widget-icon"> <i class="fa fa-gift"></i> </span>
+									<span class="widget-icon"> <i class="fa fa-gift fa-2x"></i> </span>
+									<span class="widget-icon"> <i class="fa fa-gift"></i> </span>
 									<h2> <?= $plan->nombre?> </h2>
 				
 								<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
@@ -271,8 +284,23 @@
 													</div>
 													<div class="tab-content">
 														<div class="tab-pane active" id="plan<?= $plan->id?>tab1">
-															<br>
-															<h3> <?= $plan->nombre?></h3>															
+															<br><br>
+															<div class="well bg-color-pinkDark">
+																<div class="jumbotron">
+																	<div class="row">
+																		<div class="col-md-4">
+																			<h2><i class="fa fa-gift fa-2x"></i><i class="fa fa-gift fa-3x"></i><i class="fa fa-gift fa-2x"></i></h2>
+																		</div>
+																		<div class="col-md-8">
+																			<h2><strong><?= $plan->nombre?></strong></h2>	
+																			<p>
+																				<?= $plan->descripcion?>
+																			</p>
+																		</div>
+																	</div>																
+																	
+																</div>
+															</div>																	
 														</div> <!-- step1 -->
 														<div class="tab-pane" id="plan<?= $plan->id?>tab2">
 															<br>
@@ -298,11 +326,21 @@
 								</div>
 								<!-- end widget div -->
 				
-							</div></article>
-										<!-- /SuperBox -->
-									<?php }?>
+							</div></div>
+									<?php } }
+										}else{
+										echo '<div class="well bg-color-pinkDark ">
+																<div class="jumbotron ">
+																	<div class="row">
+																		<div class="col-md-12 text-center">
+																			<h1>--- No hay Planes disponibles ---</h1>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>	';}?>
 									</div>
-									
+																		
 								</div>
 							</div>
 						</div>
@@ -337,14 +375,5 @@
 				
 				pageSetUp();
 
-				$('.superbox').SuperBox();
 			});
-function bonos()
-{	
-	$('.superbox').SuperBox();
-}
-function planes()
-{
-	$('.superbox').SuperBox();
-}
 </script>

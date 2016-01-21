@@ -393,6 +393,9 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		$q=$this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id_mercancia."");
 		$idTipoMercancia=$q->result();
 		$mercancia=array();
+		if(!isset($idTipoMercancia[0]))
+			return "";
+		
 			if($idTipoMercancia[0]->id_tipo_mercancia==1){
 				$mercancia=$this->get_producto_por_id($id_mercancia);
 				

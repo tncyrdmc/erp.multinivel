@@ -476,6 +476,12 @@ class escuela_negocios extends CI_Controller
 		$bonos = $this->model_bonos->get_bonos_activos();
 		$planes = $this->model_planes->get_planes_activos();
 		
+		$condicionesBono=$this->model_bonos->get_condiciones_bonos();
+		$this->template->set("condicionesBono",$condicionesBono);
+		
+		$valorNiveles=$this->model_bonos->get_valor_niveles();
+		$this->template->set("valorNiveles",$valorNiveles);
+		
 		$this->template->set("style",$style);
 		$this->template->set("bonos",$bonos);
 		$this->template->set("planes",$planes);
