@@ -236,6 +236,13 @@ function get_bonos(){
 			"); //where b.plan='NO'
 	return $q->result();
 }
+
+function get_bonos_activos(){
+	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus
+						FROM bono b where b.estatus = 'ACT'");
+	return $q->result();
+}
+
 function get_bono_id($id){
 	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus,b.mes_desde_afiliacion,b.mes_desde_activacion
 						FROM bono b

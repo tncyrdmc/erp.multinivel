@@ -13,8 +13,6 @@ class escuela_negocios extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/modelo_escuela_negocios');
-		$this->load->model('bo/model_bonos');
-		$this->load->model('bo/model_planes');
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 		redirect('/auth');
@@ -463,7 +461,7 @@ class escuela_negocios extends CI_Controller
 		$coment=$data['comentario'];
 		$this->db->query('insert into comentario (comentario,id_video,autor) values ("'.$coment.'"," '.$id.'","'.$id_user.'")');
 	}
-	function bonos()//promociones
+	function promociones()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
@@ -472,19 +470,27 @@ class escuela_negocios extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
-		
-		$bonos = $this->model_bonos->get_bonos_activos();
-		$planes = $this->model_planes->get_planes_activos();
-		
+		$promo_mes=$this->modelo_escuela_negocios->get_promo_mes();
+		for($i=0;$i<sizeof($promo_mes);$i++)
+		{
+			$img_prmo=$this->modelo_escuela_negocios->get_img_prom($promo_mes[$i]->id_promocion);
+			$promo_mes[$i]->img=$img_prmo[0]->url;
+		}
+		$promo_historico=$this->modelo_escuela_negocios->get_promo_historico();
+		for($j=0;$j<sizeof($promo_historico);$j++)
+		{
+			$img_prmo=$this->modelo_escuela_negocios->get_img_prom($promo_historico[$j]->id_promocion);
+			$promo_historico[$j]->img=$img_prmo[0]->url;
+		}
 		$this->template->set("style",$style);
-		$this->template->set("bonos",$bonos);
-		$this->template->set("planes",$planes);
+		$this->template->set("promo_mes",$promo_mes);
+		$this->template->set("promo_historico",$promo_historico);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/escuela_negocios/bonos');//promociones
+		$this->template->build('website/ov/escuela_negocios/promociones');
 	}
 	function reconocimientos()
 	{
