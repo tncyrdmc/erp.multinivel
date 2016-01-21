@@ -15,13 +15,13 @@
 	<legend>Red</legend>
 		<div class="row">
 			<? foreach ($redes as $red ) { ?>
-				<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 					<?php if($_GET['tipo'] == 1){?>
 							<a href="/ov/perfil_red/nuevo_afilido?id=<?= $red->id ?>">
 						<?php } else if($_GET['tipo'] == 2) {?>
 							<a href="/ov/perfil_red/afiliarExistente?id=<?= $red->id ?>">
 						<?php } ?>
-						<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+						<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 						<i class="fa fa-sitemap fa-3x"></i>
 						<h5><?= $red->nombre;?></h5>
 						</div>	

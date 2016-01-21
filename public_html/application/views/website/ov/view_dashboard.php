@@ -403,10 +403,10 @@
 												if($permiso){
 												?>
 												<div class="col-sm-2">
-													<a href="escuela_negocios/promociones">
+													<a href="#"><!-- escuela_negocios/promociones -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-gift  fa-3x"></i>
-															<h5>Promociones</h5>
+															<h5>Bonos</h5>
 														</div>
 													</a>
 												</div>

@@ -14,22 +14,22 @@
 				<fieldset>
 					<legend>Nuevo Afiliado</legend>
 					<div class="row">
-						<div class="col-lg-1 col-sm-1 col-md-1 col-xs-12"></div>
-						<div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
+						<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12"></div>
+						<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 							<a href="/ov/perfil_red/afiliar_frontal?id=<?php echo $_GET['id']; ?>">
 								<div
 									class="well well-sm txt-color-white text-center link_dashboard"
-									style="background: #60a917">
+									style="background: <?=$style[0]->btn_1_color?>">
 									<i class="fa fa-sitemap fa-3x"></i>
 									<h5>Afiliar en Frontal</h5>
 								</div>
 							</a>
 						</div>
-						<div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
+						<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 							<a href="/ov/perfil_red/afiliar_red?id=<?php echo $_GET['id']; ?>">
 								<div
 									class="well well-sm txt-color-white text-center link_dashboard"
-									style="background: #60a917">
+									style="background: <?=$style[0]->btn_1_color?>">
 									<i class="fa fa-sitemap fa-3x"></i>
 									<h5>Afiliar en Red</h5>
 								</div>
