@@ -9,14 +9,24 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function EstiloUsuaio($id){
+		
+		$estilo = $this->getEstiloUsuario();
+		
 		$dato_style=array(
-			"id_usuario"		=> $id,
-			"bg_color"			=> "#41EEEC",
-			"btn_1_color"		=> "#00b4dc",
-			"btn_2_color"		=> "#17222d"
-			);
+				"id_usuario"		=> $id,
+				"bg_color"			=> $estilo[0]->bg_color,
+				"btn_1_color"		=> $estilo[0]->btn_1_color,
+				"btn_2_color"		=> $estilo[0]->btn_2_color
+		);
 		$this->db->insert("estilo_usuario",$dato_style);
 	}
+	
+	function getEstiloUsuario() {
+		
+		$q = $this->db->query("SELECT * FROM estilo_usuario where id_usuario = 1");		
+		return $q->result();
+	}
+
 	
 	function CrearPerfil($id){
 		$_POST['tipo_afiliado'] = 2;

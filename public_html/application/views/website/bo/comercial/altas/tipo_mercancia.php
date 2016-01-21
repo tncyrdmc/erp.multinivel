@@ -52,7 +52,7 @@
                 <fieldset>
                   <div class="contenidoBotones">
 						<div class="row">
-								<div class="col-sm-12 link">
+								<div class="col-sm-11 link">
 									<div class="col-sm-1 link">
 									</div>
 									<div class="col-sm-2 link">
@@ -68,8 +68,7 @@
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[1]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[1]->descripcion;?><br>&nbsp</h1>
-											
+											<h1><?php echo $tipos[1]->descripcion;?><br>&nbsp</h1>											
 										</div>
 									</a>
 								</div>
@@ -86,7 +85,7 @@
 									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[3]->id; ?>" style="height: 10rem;">
 										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[3]->descripcion;?></h1>
+											<h4><?php echo $tipos[3]->descripcion;?></h4>
 										</div>
 									</a>
 								</div>

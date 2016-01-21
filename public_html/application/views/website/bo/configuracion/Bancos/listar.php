@@ -7,6 +7,7 @@
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
 					<span>
 						> <a href="/bo/configuracion/"> Configuracion</a>
+						> <a href="/bo/configuracion/formaspago"> Formas de Pago</a> 
 						> <a href="/bo/bancos/index"> Bancos </a>
 						> listar
 					</span>

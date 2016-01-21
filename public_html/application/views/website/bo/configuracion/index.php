@@ -68,7 +68,7 @@
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
 												   <a href="/bo/configuracion/retenciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-credit-card fa-3x"></i>
+															<i class="fa fa-minus-square-o fa-3x"></i>
 															<h1>Retenciones<br><br></h1>
 														</div>
 													</a>
@@ -82,18 +82,18 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="/bo/bancos/index">
+													<a href="/bo/configuracion/formaspago"><!-- bancos/index -->
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-bank fa-3x"></i>
-															<h1>Bancos <br><br></h1>
+															<i class="fa fa-credit-card fa-3x"></i>
+															<h1>Formas de Pago <br></h1>
 														</div>
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="premios">
+													<a href="/bo/configuracion/tablero"><!-- # -->
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-gift fa-3x"></i>
-															<h1>Premios <br><br></h1>
+															<i class="fa fa-cogs fa-3x"></i>
+															<h1>Tablero <br><br></h1>
 														</div>
 													</a>
 												</div>

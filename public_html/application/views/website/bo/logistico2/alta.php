@@ -68,7 +68,7 @@
 												</div>
 												<div class="col-sm-4 link">
 													<a href="/bo/inventario/documento">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#2086bf;">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-file-text-o fa-3x"></i>
 															<h1>Documentos / Logistica</h1>
 														</div>

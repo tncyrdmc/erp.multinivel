@@ -3,11 +3,9 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> <a href="/bo/configuracion/"> Configuracion</a> 
-								> <a href="/bo/configuracion/formaspago"> Formas de Pago</a> 
-								> Banco
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>>
+								<a href="/bo/configuracion/">Configuracion</a> > Formas de Pago
 							</span>
 						</h1>
 					</div>
@@ -38,18 +36,18 @@
 											</div>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
-												<a href="/bo/bancos/alta">
+												<a href="/bo/bancos">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-edit fa-3x"></i>
-														<h1>Alta</h1>
+														<i class="fa fa-bank fa-3x"></i>
+														<h1>Bancos</h1>
 													</div>
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="/bo/bancos/listar">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-list-alt fa-3x"></i>
-														<h1>Listar</h1>
+												<a href="#"><!-- /bo/payulatam -->
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-globe fa-3x"></i>
+														<h1>Payulatam</h1>
 													</div>
 												</a>
 												</div>
