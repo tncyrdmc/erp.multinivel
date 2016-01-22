@@ -35,12 +35,14 @@ class dashboard extends CI_Controller
 		}
 
 		$style=$this->modelo_dashboard->get_style($id);
+		$afiliados=$this->general->totalAfiliados();
 
 		$this->template->set("id",$id);
 		$this->template->set("nombre",$nombre);
 		$this->template->set("sesion",$sesion);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		$this->template->set("afiliados",$afiliados);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

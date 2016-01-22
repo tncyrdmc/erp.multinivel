@@ -64,4 +64,9 @@ class general extends CI_Model
 		$q=$this->db->query('select * from estilo_usuario where id_usuario = '.$id);
 		return $q->result();
 	}
+	function totalAfiliados()
+	{
+		$q=$this->db->query('SELECT count(*)as total FROM users;');
+		return $q->result();
+	}
 }

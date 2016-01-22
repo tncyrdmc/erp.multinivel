@@ -319,6 +319,12 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query("select Code, Name, Code2 from Country where Code !='AAA'");
 		return $q->result();
 	}
+	function get_pais_Afiliado($id)
+	{
+		/*7= español 3=inglés*/
+		$q=$this->db->query("SELECT pais as codigoPais FROM cross_dir_user where id_user='".$id."'");
+		return $q->result();
+	}
 	/*function get_afiliados_($id, $id_afiliado)
 	{
 		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
@@ -476,7 +482,7 @@ order by (U.id);");
 		$q=$this->db->query("select * from cat_edo_civil");
 		return $q->result();
 	}
-	function actualizar($id)
+	function actualizar($id,$pais)
 	{
 		$this->db->query("delete from cross_tel_user where id_user=".$id);
 		$this->db->query("delete from cross_dir_user where id_user=".$id);
@@ -514,7 +520,7 @@ order by (U.id);");
 				"colonia"   =>$_POST['colonia'],
 				"municipio" =>$_POST['municipio'],
 				"estado"    =>$_POST['estado'],
-				"pais"      =>$_POST['pais']
+				"pais"      =>$pais
             );
             $this->db->insert("cross_dir_user",$dato_dir);
 
