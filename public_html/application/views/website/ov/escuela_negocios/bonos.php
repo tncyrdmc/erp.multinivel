@@ -306,30 +306,107 @@ data-widget-deletebutton="false">
 														</div> <!-- step1 -->
 														<div class="tab-pane" id="plan<?= $plan->id?>tab2">
 															<br><br>
-															<div class="jumbotron ">
+															
+																	<div class="row">
+																	
+																	<div class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+				
+							<!-- Widget ID (each widget will need unique ID)-->
+							<div role="widget" class="jarviswidget jarviswidget-color-teal" id="wid-id-30<?= $plan->id ?>" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-sortable="false">
+								<!-- widget options:
+								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				
+								data-widget-colorbutton="false"
+								data-widget-editbutton="false"
+								data-widget-togglebutton="false"
+								data-widget-deletebutton="false"
+								data-widget-fullscreenbutton="false"
+								data-widget-custombutton="false"
+								data-widget-collapsed="true"
+								data-widget-sortable="false"
+				
+								-->
+								<header role="heading">
+									<span class="widget-icon"> <i class="fa fa-list-alt"></i> </span>
+									<h2>Bonos del plan</h2>			
+									
+				
+								<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+				
+								<!-- widget div-->
+								<div role="content">
+				
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+				
+									</div>
+									<!-- end widget edit box -->
+				
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+				
+										<div class="panel-group smart-accordion-default" id="accordion-1">
+											<?php foreach ($cross_plan_bonos as $cross){ if($cross->id_plan == $plan->id){?>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="collapsed" data-toggle="collapse" data-parent="#accordion-1" href="#collapseOne-<?= $plan->id."0".$cross->id_bono; ?>"> 
+															<i class="fa fa-fw fa-plus-circle txt-color-green"></i>
+															<i class="fa fa-fw fa-minus-circle txt-color-red"></i> 
+															<span class="widget-icon"> <i class="fa fa-gift"></i> </span>
+																				<?php foreach ($bonos as $bono){ ?>
+																					<?= ($bono->id == $cross->id_bono) ? $bono->nombre : ''?>
+																				<?php }?> 
+														</a>
+													</h4>
+												</div>
+												<div style="height: 0px;" id="collapseOne-<?= $plan->id."0".$cross->id_bono ?>" class="panel-collapse collapse">
+													<div class="panel-body">
+														<div class="jumbotron ">
 																	<div class="row">
 															<?php 
-															/**foreach ($condicionesBono as $condicion){
+															foreach ($plan_bonos as $plan_bono){
 																	
-																	if($condicion['id_bono']==$bono->id){
+																	if($plan_bono['id_plan']==$cross->id_plan&&$plan_bono['id_bono']==$cross->id_bono){
 																		
 																		echo '<div class="alert alert-warning alert-block">
-																		<h4 class="alert-heading">'.$condicion['tipoRango'].'</h4>';
-																		echo "Completar el rango <b>".$condicion['nombreRango']."</b> cuando genera <b>".$condicion['condicionRango']."</b> <b>".$condicion['tipoRango']."</b> ";
-																		echo "en la red <b>".$condicion['nombreRed']."</b> en";
-																		foreach($condicion['condicion1'] as $con){
+																		<h4 class="alert-heading">'.$plan_bono['tipoRango'].'</h4>';
+																		echo "Completar el rango <b>".$plan_bono['nombreRango']."</b> cuando genera <b>".$plan_bono['condicionRango']."</b> <b>".$plan_bono['tipoRango']."</b> ";
+																		echo "en la red <b>".$plan_bono['nombreRed']."</b> en";
+																		foreach($plan_bono['condicion1'] as $con){
 																			echo ",<b> ".$con."</b>";
 																		}
-																		foreach($condicion['condicion2'] as $con){
+																		foreach($plan_bono['condicion2'] as $con){
 																			echo ",<b> ".$con."</b>";
 																		}
 																	    echo "<br>";
 																		echo "</div>";
 																		
 																}
-															}*/
+															}
 															?>
 																	</div>
+																	
+																</div>
+													</div>
+												</div>
+											</div>
+											<?php } } ?>
+										</div>
+				
+									</div>
+									<!-- end widget content -->
+				
+								</div>
+								<!-- end widget div -->
+				
+							</div>
+							<!-- end widget -->
+				
+						</div>
+															
+																	
 																	
 																</div>
 														</div><!-- step 2 -->
@@ -341,8 +418,65 @@ data-widget-deletebutton="false">
 															<br><br>
 																	<div class="row">
 																	
-															<?php /**foreach ($valorNiveles as $valorNivel){
-																		if($valorNivel->id_bono==$bono->id){
+																	<div class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+				
+							<!-- Widget ID (each widget will need unique ID)-->
+							<div role="widget" class="jarviswidget jarviswidget-color-teal" id="wid-id-40<?= $plan->id ?>" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-sortable="false">
+								<!-- widget options:
+								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				
+								data-widget-colorbutton="false"
+								data-widget-editbutton="false"
+								data-widget-togglebutton="false"
+								data-widget-deletebutton="false"
+								data-widget-fullscreenbutton="false"
+								data-widget-custombutton="false"
+								data-widget-collapsed="true"
+								data-widget-sortable="false"
+				
+								-->
+								<header role="heading">
+									<span class="widget-icon"> <i class="fa fa-list-alt"></i> </span>
+									<h2>Valores del plan</h2>			
+									
+				
+								<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+				
+								<!-- widget div-->
+								<div role="content">
+				
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+				
+									</div>
+									<!-- end widget edit box -->
+				
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+				
+										<div class="panel-group smart-accordion-default" id="accordion-2">
+											<?php foreach ($cross_plan_bonos as $cross){ if($cross->id_plan == $plan->id){ ?>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="collapsed" data-toggle="collapse" data-parent="#accordion-2" href="#collapseTwo-<?= $plan->id."0".$cross->id_bono; ?>"> 
+															<i class="fa fa-fw fa-plus-circle txt-color-green"></i>
+															<i class="fa fa-fw fa-minus-circle txt-color-red"></i>
+															<span class="widget-icon"> <i class="fa fa-gift"></i> </span>
+																				<?php foreach ($bonos as $bono){ ?>
+																					<?= ($bono->id == $cross->id_bono) ? $bono->nombre : ''?>
+																				<?php }?> 
+														</a>
+													</h4>
+												</div>
+												<div style="height: 0px;" id="collapseTwo-<?= $plan->id."0".$cross->id_bono; ?>" class="panel-collapse collapse">
+													<div class="panel-body">
+													<div class="jumbotron ">
+														<div class="row">
+																	
+															<?php foreach ($valorNiveles as $valorNivel){
+																		if($valorNivel->id_bono==$cross->id_bono){
 																			echo '<div class="col-md-4">
 																				<div class="alert alert-success alert-block">
 																			<h4 class="alert-heading">Nivel '.$valorNivel->nivel.'</h4>';
@@ -352,8 +486,26 @@ data-widget-deletebutton="false">
 																			echo "</div></div>";
 																			
 																		}
-																	}*/
+																	}
 																	?>
+																</div>	
+														</div>
+													</div>
+												</div>
+											</div>
+											<?php } } ?>
+										</div>
+				
+									</div>
+									<!-- end widget content -->
+				
+								</div>
+								<!-- end widget div -->
+				
+							</div>
+							<!-- end widget -->
+				
+						</div>
 																	
 																	</div>
 														</div><!-- step 4 -->

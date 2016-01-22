@@ -469,14 +469,16 @@ class escuela_negocios extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
+		//echo "dentro de bonos";
+		
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
 		
 		$bonos = $this->model_bonos->get_bonos_activos();
 		$planes = $this->model_planes->get_planes_activos();
+		$plan_bonos=$this->model_planes->get_planes_bonos();		
 		$cross_plan_bonos=$this->model_planes->get_cross_plan_bonos();
-		
 		
 		$condicionesBono=$this->model_bonos->get_condiciones_bonos();
 		$this->template->set("condicionesBono",$condicionesBono);		
@@ -487,6 +489,7 @@ class escuela_negocios extends CI_Controller
 		$this->template->set("style",$style);
 		$this->template->set("bonos",$bonos);
 		$this->template->set("planes",$planes);
+		$this->template->set("plan_bonos",$plan_bonos);
 		$this->template->set("cross_plan_bonos",$cross_plan_bonos);
 
 		$this->template->set_theme('desktop');

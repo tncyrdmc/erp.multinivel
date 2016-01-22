@@ -3,7 +3,7 @@
 class model_bonos extends CI_Model
 {
 
-public function setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$estatus,$plan){
+function setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$estatus,$plan){
 
 	$bono = array(
 			'nombre' => $nombre,
@@ -19,7 +19,7 @@ public function setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$m
 	return $bono;
 }
 
-public function setUpValoresBones($idBono,$nivel,$valor){
+function setUpValoresBones($idBono,$nivel,$valor){
 
 	$bono_valores = array(
 			'id_bono' => $idBono,
@@ -29,7 +29,7 @@ public function setUpValoresBones($idBono,$nivel,$valor){
 	return $bono_valores;
 }
 
-public function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicion2){
+function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicion2){
 	$rango=$this->get_rangos_id_tipo($idRango, $idTipoRango);
 	$bonoCondiciones = array(
 			'id_bono' => $idBono,
@@ -319,13 +319,13 @@ function get__condicioneses_bonos_id_bono($id_bono){
 	return $q->result();
 }
 
-	private function get_nombre_rango($id_rango){
+	function get_nombre_rango($id_rango){
 		$q=$this->db->query("SELECT nombre FROM cat_rango where id_rango='".$id_rango."'");
 		$nombreRango=$q->result();
 		return $nombreRango[0]->nombre;
 	}
 	
-	private function get_nombre_red_bono($id_red) {
+	function get_nombre_red_bono($id_red) {
 		$nombreRed="";
 		if($id_red==0){
 			$nombreRed="Todas";
@@ -337,7 +337,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $nombreRed;
 	}
 	
-	private function get_nombre_tipo_rango($id_tipo_rango) {
+	function get_nombre_tipo_rango($id_tipo_rango) {
 		$tipoRango="";
 		
 		if($id_tipo_rango==1)
@@ -350,7 +350,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $tipoRango;
 	}
 
-	private function get_nombre_condicion_bono($id_tipo_rango,$condiciones,$tipoCondicion){
+	function get_nombre_condicion_bono($id_tipo_rango,$condiciones,$tipoCondicion){
 		$condiciones = explode(',', $condiciones);
 		
 		$nombreCondicion=array();
@@ -380,7 +380,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $nombreCondicion;
 	}
 	
-	private function get_nombre_tipo_mercancia($id_tipo_mercancia){
+	function get_nombre_tipo_mercancia($id_tipo_mercancia){
 		$q=$this->db->query("SELECT * FROM cat_tipo_mercancia where id=".$id_tipo_mercancia."");
 		$nombre=$q->result();
 		if(isset($nombre[0]->descripcion))
@@ -388,7 +388,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return "";
 	}
 	
-	private function get_mercancia_por_id($id_mercancia){
+	function get_mercancia_por_id($id_mercancia){
 		
 		$q=$this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id_mercancia."");
 		$idTipoMercancia=$q->result();
