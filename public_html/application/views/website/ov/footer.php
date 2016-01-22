@@ -1,8 +1,10 @@
 <!-- PAGE FOOTER -->
-		<div class="page-footer">
+		<div class="page-footer" style="height: 6rem;margin-bottom: -4rem;">
 			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<span class="txt-color-white">NetworkSoft© 2015</span>
+				<div class="col-xs-12 col-sm-12">
+					<span class="txt-color-white">
+			Copyright © 2016 Networksoft S.A.S Todos los derechos reservados.
+		<a href="http://www.networksoft.com.co/" target="_BLANK">Networksoft S.A.S</a></span>
 				</div>
 			</div>
 		</div>

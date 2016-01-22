@@ -155,7 +155,100 @@
 											</div>
   									</div>
 									</div>
-                <div class="col-sm-12 col-md-12 col-lg-6">
+                				<div class="col-sm-12 col-md-12 col-lg-6">
+									<!--Inica la secciion de la perfil y red-->
+									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
+										<fieldset>
+											<legend><b>Muro</b></legend>
+											<div class="row">
+												<div role="widget" class="jarviswidget jarviswidget-color-blueDark jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
+												<header role="heading"><div role="menu"><a data-toggle="dropdown" href="javascript:void(0);"></a><ul class="dropdown-menu arrow-box-up-right color-select pull-right"><li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li><li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li><li><span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span></li><li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li><li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li><li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li><li><span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span></li><li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li><li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li><li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li><li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li><li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li><li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li><li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li><li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li><li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li><li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li><li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li><li><a href="javascript:void(0);" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li></ul></div>
+													<span class="widget-icon"> <i class="fa fa-comments txt-color-white"></i> </span>
+													<h2>Notificaciones </h2>
+													<div role="menu">
+														<!-- add: non-hidden - to disable auto hide -->
+														<div>
+															
+															<ul class="dropdown-menu pull-right js-status-update">
+																<li>
+																	<a href="javascript:void(0);"><i class="fa fa-circle txt-color-green"></i> Online</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0);"><i class="fa fa-circle txt-color-red"></i> Busy</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0);"><i class="fa fa-circle txt-color-orange"></i> Away</a>
+																</li>
+																<li class="divider"></li>
+																<li>
+																	<a href="javascript:void(0);"><i class="fa fa-power-off"></i> Log Off</a>
+																</li>
+															</ul>
+														</div>
+													</div>
+												<span style="display: none;" class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+												<!-- widget div-->
+													<div style="display: block;" role="content">
+														<!-- widget edit box -->
+														<div class="jarviswidget-editbox">
+															<div>
+																<label>Title:</label>
+																<input type="text">
+															</div>
+														</div>
+														<!-- end widget edit box -->
+														<div class="widget-body widget-hide-overflow no-padding">
+															<!-- content goes here -->
+															<!-- CHAT CONTAINER -->
+															<div id="chat-container">
+																<span><i class="fa fa-user"></i><b>!</b></span>
+																<div class="chat-list-footer">
+																	<div class="control-group">
+																		<form class="smart-form">
+																			<section>
+																				<label class="input">
+																					<input id="filter-chat-list" placeholder="Filter" type="text">
+																				</label>
+																			</section>
+																		</form>
+																	</div>
+																</div>
+															</div>
+															<!-- CHAT BODY -->
+															<div id="chat-body" class="chat-body custom-scroll">
+																<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados Nuevos en el Mes 
+																<b class="badge bg-color-red bounceIn animated"> 21 </b> </span>
+																<ul>
+																	<li class="message">
+																		<img src="/template/img/avatars/5.png" style="width: 5rem;" class="online" alt="">
+																		<div class="message-text">
+																			<time>
+																				2016-01-01
+																			</time> 
+																				<a href="javascript:void(0);" class="username">Bienvenido</a> 
+																				Te damos la invitacion a nuestra empresa , para que conozcas nuestra oficina virtual.
+																		</div>
+																	</li>
+																</ul>
+															</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												</div>
+									</fieldset>
+									<!--Termina la secciion de perfil y red-->
+								</div>
+						    </div>
+				      </div>
+          </div>
+        </div>
+				<!-- end row -->
+				<div>
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<div class="row">
+							   <div class="col-sm-12 col-md-12 col-lg-4">
 									<!--Inica la secciion de la perfil y red-->
 									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
 										<fieldset>
@@ -216,16 +309,7 @@
 									</fieldset>
 									<!--Termina la secciion de perfil y red-->
 								</div>
-						    </div>
-				      </div>
-          </div>
-        </div>
-				<!-- end row -->
-				<div>
-					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-10">
-							<div class="row">
-								<div class="col-sm-12 col-md-12 col-lg-6">
+								<div class="col-sm-12 col-md-12 col-lg-4">
 									<!--Inica la secciion de compras y reportes-->
 									<div class="well">
 										<fieldset>
@@ -286,7 +370,7 @@
 									</div>
 								  <!--Termina la secciion de compras y reportes-->
 								</div>
-                <div class="col-sm-12 col-md-12 col-lg-6">
+                				<div class="col-sm-12 col-md-12 col-lg-4">
 									<!--Inica la secciion de compras y reportes-->
 									<div class="well">
 															<fieldset>
@@ -344,6 +428,112 @@
 										</fieldset>
 									</div>
 								  <!--Termina la secciion de compras y reportes-->
+								</div>
+							</div>
+														<div class="row">
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<!--Inicia la secciion de escuela y negocios-->
+									<div class="well">
+										<div class="row">
+											<fieldset>
+												<legend><b>Comunicación</b></legend>
+												<div class="col-sm-1">
+												</div>	
+												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
+												if($permiso){
+												?>
+												<div class="col-sm-2">
+													<a href="cgeneral/web_personal">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-globe fa-3x"></i>
+															<h5>Web Personal</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'chat');
+												if($permiso){
+												?>
+												<div class="col-sm-2">
+													<a href="cgeneral/chat">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-weixin fa-3x"></i>
+															<h5>Chat Mi Red</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'e_mail');
+												if($permiso){
+												?>
+												<div class="col-sm-2">
+													<a href="cabecera/email">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-envelope fa-3x"></i>
+															<h5>E-mail</h5>
+														</div>
+													</a>
+												</div>
+												<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
+												if($permiso){
+												?>
+												<div class="col-sm-2">
+													<a href="cgeneral/soporte_tecnico_ver_redes">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-support fa-3x"></i>
+															<h5>Soporte Técnico</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+												<div class="col-sm-2">
+													<a href="cabecera/email">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-send fa-3x"></i>
+															<h5>Sugerencias</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+											<div class="row">
+                      <?php $permiso=$ci->model_permissions->check($id,'videollamadas');
+											if($permiso){
+											?>
+											<!-- cgeneral/videollamada -->
+											<!-- <div class="col-sm-12">
+												<a href="#">
+													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-video-camera fa-3x"></i>
+														<h5>Vídeollamadas</h5>
+													</div>
+												</a>
+											</div> -->
+											
+											<?php }?>
+								<!--				<?php $permiso=$ci->model_permissions->check($id,'social_network');
+												if($permiso){
+												?>
+												<div class="col-sm-12">
+													<a href="cgeneral/social_network">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<div class="row">
+																<i class="fa fa-facebook fa-1x"></i>
+																<i class="fa fa-twitter fa-1x"></i>
+															</div>
+															<div class="row">
+																<i class="fa fa-skype fa-1x"></i>
+																<i class="fa fa-youtube fa-1x"></i>
+															</div>
+															<h5>Social network</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>	 -->
+											</div>
+											</fieldset>
+										</div>
+										</div>
+									<!--Termina la secciion de escuela y negocios-->
 								</div>
 							</div>
 							<div class="row">
@@ -479,110 +669,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-2 col-sm-12 col-md-12">
-							<div class="row">
-								<div class="col-sm-12 col-md-12 col-lg-12">
-									<!--Inicia la secciion general-->
-									<div class="well">
-										<fieldset>
-											<legend><b>Comunicación</b></legend>
-											<div class="row">
-											<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
-												if($permiso){
-												?>
-												<div class="col-sm-12">
-													<a href="cgeneral/soporte_tecnico_ver_redes">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-support fa-3x"></i>
-															<h5>Soporte Técnico</h5>
-														</div>
-													</a>
-												</div>
-												<?php }?>
-											</div>
-											<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
-												if($permiso){
-												?>
-												<div class="col-sm-12">
-													<a href="cgeneral/web_personal">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-globe fa-3x"></i>
-															<h5>Web Personal</h5>
-														</div>
-													</a>
-												</div>
-												<?php }?>
-											</div>
-											<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'chat');
-												if($permiso){
-												?>
-												<div class="col-sm-12">
-													<a href="cgeneral/chat">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-weixin fa-3x"></i>
-															<h5>Chat</h5>
-														</div>
-													</a>
-												</div>
-												<?php }?>
-											</div>
-											<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'e_mail');
-												if($permiso){
-												?>
-												<div class="col-sm-12">
-													<a href="cabecera/email">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-envelope fa-3x"></i>
-															<h5>E-mail</h5>
-														</div>
-													</a>
-												</div>
-												<?php }?>
-											</div>
-											<div class="row">
-                      <?php $permiso=$ci->model_permissions->check($id,'videollamadas');
-											if($permiso){
-											?>
-											<!-- cgeneral/videollamada -->
-											<!-- <div class="col-sm-12">
-												<a href="#">
-													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-video-camera fa-3x"></i>
-														<h5>Vídeollamadas</h5>
-													</div>
-												</a>
-											</div> -->
-											
-											<?php }?>
-								<!--				<?php $permiso=$ci->model_permissions->check($id,'social_network');
-												if($permiso){
-												?>
-												<div class="col-sm-12">
-													<a href="cgeneral/social_network">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<div class="row">
-																<i class="fa fa-facebook fa-1x"></i>
-																<i class="fa fa-twitter fa-1x"></i>
-															</div>
-															<div class="row">
-																<i class="fa fa-skype fa-1x"></i>
-																<i class="fa fa-youtube fa-1x"></i>
-															</div>
-															<h5>Social network</h5>
-														</div>
-													</a>
-												</div>
-												<?php }?>	 -->
-											</div>
-										</fieldset>
-									</div>
-									<!--Termina la secciion general-->
-								</div>
-							</div>
-						</div>
+
 					</div>
 				</div>
 				<div class="row">

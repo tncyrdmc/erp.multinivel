@@ -1,12 +1,14 @@
 <!-- PAGE FOOTER -->
-		<div class="page-footer">
+		<div class="page-footer" style="height: 6rem;margin-bottom: -4rem;">
 			<div class="row">
-				<div class="col-xs-12">
-					<span class="txt-color-white">NetworkSoft© 2015</span>
+				<div class="col-xs-12 col-sm-12">
 					<?if(isset($nombre))
 					{?>
 					<span class="pull-right txt-color-white">Hola: <?=$nombre?> tu última sesión fue: <?=$sesion?></span>
 					<?}?>
+					<span class="txt-color-white">
+			Copyright © 2016 Networksoft S.A.S Todos los derechos reservados.
+		<a href="http://www.networksoft.com.co/" target="_BLANK">Networksoft S.A.S</a></span>
 				</div>
 			</div>
 		</div>
@@ -49,7 +51,7 @@
 		<script src="/template/js/app.config.js"></script>
 
 		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
-		<script src="/template/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> 
+		<script src="/template/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
 
 		<!-- BOOTSTRAP JS -->
 		<script src="/template/js/bootstrap/bootstrap.min.js"></script>
@@ -100,5 +102,5 @@
 		<!-- Voice command : plugin -->
 		<script src="/template/js/speech/voicecommand.min.js"></script>
 
-		<!-- Bootboxmin.js -->
-		<script src="/plugins/bootbox.min.js"></script>
+		<!-- BOOTBOX.MIN.JS-->
+		<script src="/template/js/plugin/bootbox/bootbox.min.js"></script>
