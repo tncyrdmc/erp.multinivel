@@ -107,7 +107,7 @@ data-widget-deletebutton="false">
 																<a href="#bono<?= $bono->id?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">General</span> </a>
 															</li>
 															<li data-target="#step2">
-																<a href="#bono<?= $bono->id?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Descripcion</span> </a>
+																<a href="#bono<?= $bono->id?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Condiciones</span> </a>
 															</li>
 															<!--<li data-target="#step3">
 																  <a href="#bono<?= $bono->id?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Condiciones</span> </a>
@@ -121,6 +121,7 @@ data-widget-deletebutton="false">
 													<div class="tab-content">
 														<div class="tab-pane active" id="bono<?= $bono->id?>tab1">
 															<br><br>
+															<div class="well bg-color-teal">
 																<div class="jumbotron ">
 																	<div class="row">
 																		<div class="col-md-4">
@@ -133,11 +134,12 @@ data-widget-deletebutton="false">
 																			</p>
 																		</div>
 																	</div>
-																	
+																	</div>	
 																</div>													
 														</div> <!-- step1 -->
 														<div class="tab-pane" id="bono<?= $bono->id?>tab2">
 															<br><br>
+															
 																<div class="jumbotron ">
 																	<div class="row">
 															<?php 
@@ -271,13 +273,13 @@ data-widget-deletebutton="false">
 																<a href="#plan<?= $plan->id?>tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">General</span> </a>
 															</li>
 															<li data-target="#step2">
-																<a href="#plan<?= $plan->id?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Descripcion</span> </a>
+																<a href="#plan<?= $plan->id?>tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Bonos</span> </a>
 															</li>
-															<li data-target="#step3">
+															<!--  <li data-target="#step3">
 																<a href="#plan<?= $plan->id?>tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Bonos</span> </a>
-															</li>
+															</li>-->
 															<li data-target="#step4">
-																<a href="#plan<?= $plan->id?>tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Valor</span> </a>
+																<a href="#plan<?= $plan->id?>tab4" data-toggle="tab"> <span class="step">3</span> <span class="title">Valor</span> </a>
 															</li>
 														</ul>
 														<div class="clearfix"></div>
@@ -303,16 +305,57 @@ data-widget-deletebutton="false">
 															</div>																	
 														</div> <!-- step1 -->
 														<div class="tab-pane" id="plan<?= $plan->id?>tab2">
-															<br>
-															<h3> <?= $plan->descripcion?></h3>
+															<br><br>
+															<div class="jumbotron ">
+																	<div class="row">
+															<?php 
+															/**foreach ($condicionesBono as $condicion){
+																	
+																	if($condicion['id_bono']==$bono->id){
+																		
+																		echo '<div class="alert alert-warning alert-block">
+																		<h4 class="alert-heading">'.$condicion['tipoRango'].'</h4>';
+																		echo "Completar el rango <b>".$condicion['nombreRango']."</b> cuando genera <b>".$condicion['condicionRango']."</b> <b>".$condicion['tipoRango']."</b> ";
+																		echo "en la red <b>".$condicion['nombreRed']."</b> en";
+																		foreach($condicion['condicion1'] as $con){
+																			echo ",<b> ".$con."</b>";
+																		}
+																		foreach($condicion['condicion2'] as $con){
+																			echo ",<b> ".$con."</b>";
+																		}
+																	    echo "<br>";
+																		echo "</div>";
+																		
+																}
+															}*/
+															?>
+																	</div>
+																	
+																</div>
 														</div><!-- step 2 -->
 														<div class="tab-pane" id="plan<?= $plan->id?>tab3">
 															<br>
 															<h3> bonos </h3>
 														</div><!-- step 3 -->
 														<div class="tab-pane" id="plan<?= $plan->id?>tab4">
-															<br>
-															<h3> valor </h3>
+															<br><br>
+																	<div class="row">
+																	
+															<?php /**foreach ($valorNiveles as $valorNivel){
+																		if($valorNivel->id_bono==$bono->id){
+																			echo '<div class="col-md-4">
+																				<div class="alert alert-success alert-block">
+																			<h4 class="alert-heading">Nivel '.$valorNivel->nivel.'</h4>';
+																			
+																			echo "<h2>$ ".$valorNivel->valor."</h2><br>";
+
+																			echo "</div></div>";
+																			
+																		}
+																	}*/
+																	?>
+																	
+																	</div>
 														</div><!-- step 4 -->
 				
 														</div>
