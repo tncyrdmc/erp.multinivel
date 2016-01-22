@@ -100,7 +100,7 @@
 									</fieldset>
 									<!--Termina la secciion de perfil y red-->
 									<footer>
-										<h3><b><i class="fa fa-group fa-3x"></i> Total Afiliados :</b><i> 20</i></h3>
+										<h3><b><i class="fa fa-group fa-3x"></i> Total Afiliados :</b><i> <?php echo $afiliados[0]->total;?></i></h3>
 									</footer>
 						</div>
 						</div>

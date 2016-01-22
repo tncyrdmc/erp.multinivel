@@ -66,14 +66,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento1" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[0]->nombre)){echo "";}else{echo $datos_departamentos[0]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento1" value="Pagos" required disabled></input>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email1" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[0]->email)){echo "";}else{echo $datos_departamentos[0]->email;}?>'>
+						<input type="email" class="form-control" name="email1" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[0]->email)){echo "";}else{echo $datos_departamentos[0]->email;}?>' required>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -85,14 +85,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento2" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[1]->nombre)){echo "";}else{echo $datos_departamentos[1]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento2" value="Contacto" required disabled>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email2" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[1]->email)){echo ""; }else{echo $datos_departamentos[1]->email;}?>'>
+						<input type="email" class="form-control" name="email2" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[1]->email)){echo ""; }else{echo $datos_departamentos[1]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -104,14 +104,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento3" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[2]->nombre)){echo "";}else{echo $datos_departamentos[2]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento3" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[2]->nombre)){echo "";}else{echo $datos_departamentos[2]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email3" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[2]->email)){echo ""; }else{echo $datos_departamentos[2]->email;}?>'>
+						<input type="email" class="form-control" name="email3" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[2]->email)){echo ""; }else{echo $datos_departamentos[2]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -123,14 +123,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento4" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[3]->nombre)){echo "";}else{echo $datos_departamentos[3]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento4" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[3]->nombre)){echo "";}else{echo $datos_departamentos[3]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email4" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[3]->email)){echo ""; }else{echo $datos_departamentos[3]->email;}?>'>
+						<input type="email" class="form-control" name="email4" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[3]->email)){echo ""; }else{echo $datos_departamentos[3]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -142,14 +142,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento5" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[4]->nombre)){echo "";}else{echo $datos_departamentos[4]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento5" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[4]->nombre)){echo "";}else{echo $datos_departamentos[4]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email5" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[4]->email)){echo ""; }else{echo $datos_departamentos[4]->email;}?>'>
+						<input type="email" class="form-control" name="email5" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[4]->email)){echo ""; }else{echo $datos_departamentos[4]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -161,14 +161,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento6" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[5]->nombre)){echo "";}else{echo $datos_departamentos[5]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento6" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[5]->nombre)){echo "";}else{echo $datos_departamentos[5]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email6" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[5]->email)){echo ""; }else{echo $datos_departamentos[5]->email;}?>'>
+						<input type="email" class="form-control" name="email6" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[5]->email)){echo ""; }else{echo $datos_departamentos[5]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -180,14 +180,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento7" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[6]->nombre)){echo "";}else{echo $datos_departamentos[6]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento7" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[6]->nombre)){echo "";}else{echo $datos_departamentos[6]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email7" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[6]->email)){echo ""; }else{echo $datos_departamentos[6]->email;}?>'>
+						<input type="email" class="form-control" name="email7" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[6]->email)){echo ""; }else{echo $datos_departamentos[6]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -199,14 +199,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento8" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[7]->nombre)){echo "";}else{echo $datos_departamentos[7]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento8" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[7]->nombre)){echo "";}else{echo $datos_departamentos[7]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1">
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email8" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[7]->email)){echo ""; }else{echo $datos_departamentos[7]->email;}?>'>
+						<input type="email" class="form-control" name="email8" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[7]->email)){echo ""; }else{echo $datos_departamentos[7]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -218,14 +218,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento9" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[8]->nombre)){echo "";}else{echo $datos_departamentos[8]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento9" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[8]->nombre)){echo "";}else{echo $datos_departamentos[8]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1" >
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email9" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[8]->email)){echo ""; }else{echo $datos_departamentos[8]->email;}?>'>
+						<input type="email" class="form-control" name="email9" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[8]->email)){echo ""; }else{echo $datos_departamentos[8]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        <br><br><br>
@@ -237,14 +237,14 @@
 						<b>Nombre del Departamento</b>
 			        </label>
 					<label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="text" class="form-control " name="departamento10" placeholder="escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[9]->nombre)){echo "";}else{echo $datos_departamentos[9]->nombre;}?>'>
+						<input type="text" class="form-control " name="departamento10" placeholder="Escribe el nombre del departamento" value='<?php if(!isset($datos_departamentos[9]->nombre)){echo "";}else{echo $datos_departamentos[9]->nombre;}?>'>
 			        </label>
 			        
 			        <label  class="input col-xs-12 col-sm-9 col-md-1 col-lg-1" >
-						<b><br>&nbsp;&nbsp;e-mail</b>
+						<b><br>&nbsp;&nbsp;E-mail</b>
 			        </label>
 			        <label class="input col-xs-12 col-sm-9 col-md-3 col-lg-3">
-						<input type="email" class="form-control" name="email10" placeholder="correo electronico" value='<?php if(!isset($datos_departamentos[9]->email)){echo ""; }else{echo $datos_departamentos[9]->email;}?>'>
+						<input type="email" class="form-control" name="email10" placeholder="Correo electronico" value='<?php if(!isset($datos_departamentos[9]->email)){echo ""; }else{echo $datos_departamentos[9]->email;}?>'>
 			        </label>
 			        <label class="input col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			        </label>

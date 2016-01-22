@@ -83,25 +83,33 @@
 									<div class="row">
 									<div id="tel" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 										<?php
+									$telFijo=0;
+									$telMovil=0;
 									foreach ($telefonos as $num)
 									{
 										if($num->tipo=="Fijo")
 										{?>
-										<section class="col col-3">
+										<section id='tel_default_<?php echo $telFijo?>' class="col col-3">
 											<label class="input"> <i class="icon-prepend fa fa-phone"></i>
 												<input value="<?=$num->numero?>" id="fijo" type="tel" name="fijo[]" placeholder="(99) 99-99-99-99" >
 												<b class="tooltip tooltip-top-left"> Teléfono fijo</b>
+												<?php if($telFijo>0){?>
+												<a style="cursor: pointer;color: red;" onclick="delete_telefono('default_<?php echo $telFijo?>')">Eliminar <i class="fa fa-minus"></i></a>
+												<?php }?>
 											</label>
 										</section>
-									<?php }else{?>
-										<section class="col col-3">
+									<?php $telFijo++;}else{?>
+										<section id='tel_default_<?php echo $telMovil?>' class="col col-3">
 											<label class="input"> <i class="icon-prepend fa fa-mobile"></i>
 												<input value="<?=$num->numero?>" id="movil" type="tel" name="movil[]" placeholder="(999) 99-99-99-99-99">
 												<b class="tooltip tooltip-top-left"> Teléfono móvil</b>
+												<?php if($telMovil>0){?>
+												<a style="cursor: pointer;color: red;" onclick="delete_telefono('default_<?php echo $telMovil?>')">Eliminar <i class="fa fa-minus"></i></a>
+												<?php }?>
 											</label>
 										</section>
 
-									<?php }}?>
+									<?php $telMovil++;}}?>
 									</div>
 									<section class="col col-3">
 										<button type="button" onclick="agregar('1')" class="btn btn-primary">
@@ -142,39 +150,10 @@
 								<fieldset>
 								<legend>Dirección</legend>
 									<div id="dir" class="row">
-										<section class="col col-2">
-											País
-											<label class="select">
-												<select id="pais" required name="pais">
-												<?php foreach ($pais as $key){if($dir[0]->pais==$key->Code){?>
-
-													<option selected value="<?=$key->Code?>">
-														<?=$key->Name?>
-													</option>
-													<?php }else{?>
-													<option value="<?=$key->Code?>">
-														<?=$key->Name?>
-													</option>
-												<?php }}?>
-												</select>
-											</label>
-										</section>
-										<section class="col col-2">
+										<section id="estado" class="col col-2">
 											<label class="input">
-												Código postal
-												<input required type="text" id="cp" name="cp" value="<?=$dir[0]->cp?>">
-											</label>
-										</section>
-										<section class="col col-2">
-											<label class="input">
-												Calle
-												<input required type="text" name="calle" value="<?=$dir[0]->calle?>">
-											</label>
-										</section>
-										<section id="colonia" class="col col-2">
-											<label class="input">
-												Colonia
-												<input type="text" name="colonia" value="<?=$dir[0]->colonia?>">
+												Estado
+												<input type="text" name="estado" value="<?=$dir[0]->estado?>">
 											</label>
 										</section>
 										<section id="municipio" class="col col-2">
@@ -183,10 +162,22 @@
 												<input type="text" name="municipio" value="<?=$dir[0]->municipio?>">
 											</label>
 										</section>
-										<section id="estado" class="col col-2">
+										<section id="colonia" class="col col-2">
 											<label class="input">
-												Estado
-												<input type="text" name="estado" value="<?=$dir[0]->estado?>">
+												Colonia
+												<input type="text" name="colonia" value="<?=$dir[0]->colonia?>">
+											</label>
+										</section>
+										<section class="col col-2">
+											<label class="input">
+												Dirección de domicilio
+												<input required type="text" name="calle" value="<?=$dir[0]->calle?>">
+											</label>
+										</section>
+										<section class="col col-2">
+											<label class="input">
+												Código postal
+												<input required type="text" id="cp" name="cp" value="<?=$dir[0]->cp?>">
 											</label>
 										</section>
 									</div>
@@ -444,17 +435,24 @@ function codpos()
 		})
 	}
 }
+var id=0;
 function agregar(tipo)
 {
 	if(tipo==1)
 	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel").append("<section id='tel_"+id+"' class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label><a style='cursor: pointer;color: red;' onclick='delete_telefono("+id+")'>Eliminar <i class='fa fa-minus'></i></a></section>");
 	}
 	else
 	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel").append("<section id='tel_"+id+"' class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label><a style='cursor: pointer;color: red;' onclick='delete_telefono("+id+")'>Eliminar <i class='fa fa-minus'></i></a></section>");
 	}
+
+	id++;
 }
+function delete_telefono(id){
+	$("#tel_"+id+"").remove();	
+}
+
  $(function()
  {
 	$( "#datepicker" ).datepicker({

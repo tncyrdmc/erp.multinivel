@@ -47,7 +47,7 @@
 			<div id="logo-group">
 
 				<!-- PLACE YOUR LOGO HERE-->
-				<span id="logo"> <a href="/"><img style="width: 25rem; height: auto;" src="/logo.png" alt="Networksoft"> </a></span>
+				<span id="logo"> <a href="/"><img style="width: 20rem; height: auto;" src="/logo.png" alt="Networksoft"> </a></span>
 				<!--END LOGO PLACEHOLDER -->
 			</div>
 			<!-- #TOGGLE LAYOUT BUTTONS -->

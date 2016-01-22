@@ -391,6 +391,9 @@ function index()
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
+		$this->preOrden($id);
+		$this->template->set("afiliadosRed",count($this->afiliados));
+		
 		$this->preOrdenEstadisticas($id);
 		$cantidad_hombres = 0;
 		$cantidad_mujeres = 0;
@@ -586,8 +589,7 @@ function index()
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/compra_reporte/estadisticas');
-	}
+		$this->template->build('website/ov/compra_reporte/estadisticas');	}
 	
 	function reportes()
 	{
@@ -1688,9 +1690,7 @@ function index()
 				$calcular_descuento=1;
 			}
 			
-			//var_dump($calcular_descuento);
-			//exit();
-	
+
 				switch($data['tipo'])
 				{
 					case 1:
@@ -4054,6 +4054,7 @@ function index()
 		$this->cart->destroy();
 		
 		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo_total+$impuestos));
+		$emailPagos = $this->general->emailPagos();
 		
 		if(isset($banco[0]->id_banco)){
 			$respuesta = "<div class='alert alert-success alert-block'>
@@ -4061,7 +4062,7 @@ function index()
 								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
 			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
 			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
-			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al depertamento de Pagos(venta@networksoft.mx)</p></div>";
+			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al departamento de Pagos(".$emailPagos[0]->email.")</p></div>";
 			echo $respuesta;
 		}else{
 			echo "La venta se a registrado";

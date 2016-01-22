@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	function Enviar(banco){
 		bootbox.dialog({
-			message: "Estas Seguro(a) <br> Para terminar tu compra debes enviar un email con el comprobante de pago al departamento de Pagos(venta@networksoft.mx)",
+			message: "Estas Seguro(a) <br> El pago tendra un plazo de 24 horas para ser realizado de lo contrarió debera realizar de nuevo la peticion.",
 			title: "Pago",
 			className: "",
 			buttons: {

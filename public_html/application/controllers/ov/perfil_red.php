@@ -56,7 +56,7 @@ class perfil_red extends CI_Controller
 		$edad            = $this->model_perfil_red->edad($id);
 		$sexo            = $this->model_perfil_red->sexo();
 		$style           = $this->general->get_style($id);
-		$pais            = $this->model_perfil_red->get_pais();
+		
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
 		$dir             = $this->model_perfil_red->dir($id);
 		$civil           = $this->model_perfil_red->edo_civil();
@@ -72,7 +72,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("telefonos",$telefonos);
 		$this->template->set("edad",$edad[0]->edad);
 		$this->template->set("sexo",$sexo);
-		$this->template->set("pais",$pais);
+
 		$this->template->set("tipo_fiscal",$tipo_fiscal);
 		$this->template->set("civil",$civil);
 		$this->template->set("estudios",$estudios);
@@ -989,13 +989,14 @@ class perfil_red extends CI_Controller
 		$id = $this->tank_auth->get_user_id();
 		$_POST['mail']=$_POST['email'];
 		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($id);
+		$pais = $this->model_perfil_red->get_pais_Afiliado($id);
 
 		if($use_mail){
 			echo "El Email ya existe , ingrese otro no existente";
 			exit();
 		}
 		$id=$this->tank_auth->get_user_id();
-		$this->model_perfil_red->actualizar($id);
+		$this->model_perfil_red->actualizar($id,$pais[0]->codigoPais);
 		echo "Felicitaciones <br> Se han actualizado los datos";
 	}
 	

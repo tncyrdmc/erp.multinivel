@@ -33,12 +33,12 @@ class red extends CI_Controller
 
 	function index()
 	{
-			if (!$this->tank_auth->is_logged_in())
-			{																		// logged in
-				redirect('/auth');
-			}
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
 
-		$id            = $this->tank_auth->get_user_id();
+		$id = $this->tank_auth->get_user_id();
 		
 		if($this->general->isAValidUser($id,"OV") == false)
 		{
@@ -47,7 +47,7 @@ class red extends CI_Controller
 		
 		$style         = $this->general->get_style($id);
 		
-		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+		$cantidadRedes = $this->model_tipo_red->RedesUsuario($id);
 		
 		if(sizeof($cantidadRedes)==0)
 			redirect('/');

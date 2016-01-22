@@ -118,4 +118,9 @@ class general extends CI_Model
 		$q=$this->db->query('select username from users where id = '.$id);
 		return $q->result();
 	}
+	function emailPagos()
+	{
+		$q=$this->db->query(' SELECT email FROM emails_departamentos LIMIT 0 , 1');
+		return $q->result();
+	}
 }

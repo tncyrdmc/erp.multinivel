@@ -74,6 +74,9 @@ class administracion extends CI_Controller
 	
 	function actualizar_emails_departamentos()
 	{
+		$_POST['departamento1']="Pagos";
+		$_POST['departamento2']="Contacto";
+
 		$nombre = array($_POST['departamento1'],$_POST['departamento2'],$_POST['departamento3'],$_POST['departamento4']
 					   ,$_POST['departamento5'],$_POST['departamento6'],$_POST['departamento7'],$_POST['departamento8']
 					   ,$_POST['departamento9'],$_POST['departamento10']);
