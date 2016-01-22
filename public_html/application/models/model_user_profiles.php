@@ -26,6 +26,16 @@ class Model_user_profiles extends CI_Model{
 
 		$this->db->update("user_profiles",$datos,"user_id = ".$user_id);
 	}
+	
+	function actualizar_nombres($user_id, $nombre, $apellido){
+	
+				$datos = array(						
+						'nombre' => $nombre,
+						'apellido' => $apellido
+				);
+	
+				$this->db->update("user_profiles",$datos,"user_id = ".$user_id);
+	}
 
 	function cambiar_estado($user_id, $estatus){
 
@@ -40,6 +50,14 @@ class Model_user_profiles extends CI_Model{
 		$q = $this->db->query("select id_estatus from user_profiles where user_id=".$id);
 		$id_padre = $q->result();
 		return $id_padre[0]->id_estatus;
+	}
+	
+	function actualizar_pais($id,$pais){
+		$datos = array(
+				'pais' => $pais
+		);
+		
+		$this->db->update("cross_dir_user",$datos,"id_user = ".$id);
 	}
 
 }

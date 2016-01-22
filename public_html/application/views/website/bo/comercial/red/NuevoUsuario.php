@@ -86,7 +86,7 @@
 												<button type="button" class="final btn btn-sm btn-primary btn-prev">
 													<i class="fa fa-arrow-left"></i>Anterior
 												</button>
-												<button type="button" class="final btn btn-sm btn-success btn-next" data-last="Afiliar">
+												<button type="button" class="final btn btn-sm btn-success btn-next" data-last="Afiliar" disabled="disabled">
 													Siguiente<i class="fa fa-arrow-right"></i>
 												</button>
 											</div>
@@ -110,12 +110,12 @@
 															</section>
 															<section class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-																	<input id="password" required type="password" name="password" placeholder="Contraseña">
+																	<input id="password"  onkeyup="confirm_pass()" required type="password" name="password" placeholder="Contraseña">
 																</label>
 															</section>
-															<section class="col col-6">
+															<section id="confirmar_password" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-																	<input id="confirm_password" required type="password" name="confirm_password" placeholder="Repite contraseña">
+																	<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Repite contraseña">
 																</label>
 															</section>
 															
@@ -125,7 +125,8 @@
 												<div class="step-pane" id="step2">
 													<form method="POST" action="/perfil_red/afiliar_nuevo" id="checkout-form" class="smart-form" novalidate="novalidate">
 														<fieldset>
-															<legend>Datos personales del afiliado</legend>
+														<legend>Datos personales del afiliado</legend>
+															<div class="row">
 															<section class="col col-3">
 																<label class="input">RED
 																	<select class="form-control input-sm" name="red">
@@ -135,7 +136,7 @@
 																	</select>
 																</label>
 															</section>
-															<div class="row">
+															
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-user"></i>
 																		<input id="nombre" required type="text" name="nombre" placeholder="Nombre">
@@ -617,6 +618,8 @@ $(document).ready(function() {
 
 			  wizard.on('finished', function (e, data) {
 
+				  $( ".invalid" ).remove();
+
 			  	var ids = new Array( 
 						"#nombre",
 					 	"#apellido",
@@ -693,7 +696,7 @@ $(document).ready(function() {
 					{
 						$.smallBox({
 					      title: "<h1>Atención</h1>",
-					      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+					      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
 					      color: "#C46A69",
 					      icon : "fa fa-warning fadeInLeft animated",
 					      timeout: 4000
@@ -779,7 +782,7 @@ function clickme()
 }
 function use_username()
 {
-	$("#msg_usuario").remove();
+	$('#username').val($('#username').val().replace(" ",""));
 	var username=$("#username").val();
 	$.ajax({
 		type: "POST",
@@ -788,12 +791,13 @@ function use_username()
 	})
 	.done(function( msg )
 	{
-		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
+		$("#msg_usuario").remove();
+		$("#usuario").append("<div id='msg_usuario'>"+msg+"</div>")
 	});
+	validate_user_data();
 }
 function use_mail()
 {
-	$("#msg_correo").remove();
 	var mail=$("#email").val();
 	$.ajax({
 		type: "POST",
@@ -802,7 +806,49 @@ function use_mail()
 	})
 	.done(function( msg )
 	{
-		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
+		$("#msg_correo").remove();
+		$("#correo").append("<div id='msg_correo'>"+msg+"</div>")
+	});
+	validate_user_data()
+}
+
+
+function confirm_pass()
+{
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/confirm_password",
+		data: {password: password,confirm_password: confirm_password},
+	})
+	.done(function( msg )
+	{
+		$("#msg_confirm_password").remove();
+		$("#confirmar_password").append("<div id='msg_confirm_password'>"+msg+"</div>")
+	});
+	validate_user_data()
+}
+
+function validate_user_data()
+{
+	var username=$("#username").val();
+	var mail=$("#email").val();
+
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
+
+	$("#validate_user_data").remove();
+
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/validate_user_data",
+		data: {mail: mail,username: username,password: password,confirm_password: confirm_password},
+	})
+	.done(function( msg )
+	{
+		$("#validate_user_data").remove();
+		$("#register").append("<div id='validate_user_data'>"+msg+"</div>")
 	});
 }
 function use_username_r()

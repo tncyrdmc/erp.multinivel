@@ -1,26 +1,16 @@
 <div style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; margin-right: 0px; margin-left: 0px; padding-bottom: 3rem;" class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-		<form action="/bo/comercial/actualizar_afiliado" method="POST" role="form" class="smart-form">
+		<form action="/bo/comercial/actualizar_afiliado" onmouseenter="validate_user_data()" method="POST" id="edit" role="form" class="smart-form">
 			<legend>Modificar Datos del Afiliado</legend>
 
+			<br><br>
 
 			<div class="form-group">
 
 				<input type="text" class="hide" name="id" id="id" value = '<?= $detalle[0]->id; ?>' >
 					<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-12">
 					
-						<section style="width: 50%;" class="col col-2">
-							<label style="width: 100%">Nombre <br>
-								<input type="text" class="form-control" name="nombre" id="nombre"  value = '<?= $detalle[0]->nombre; ?>'>
-							</label>
-						</section>
-						
-						<section style="width: 50%;" class="col col-2">
-							<label for="">Apellido</label>
-							<input type="text" class="form-control" name="apellido" id="apellido" value = '<?= $detalle[0]->apellido; ?>'>
-						</section>
-						
 						<section id="usuario" style="width: 50%;" class="col col-2">
 							<label for="">Usuario</label>
 							<input onkeyup="use_username()" type="text" class="form-control" name="username" id="username" value = '<?= $detalle[0]->username; ?>'>
@@ -30,254 +20,44 @@
 							<label for="">e-mail</label>
 							<input onkeyup="use_mail()" type="text" class="form-control" name="mail" id="mail" value = '<?= $detalle[0]->email; ?>'>
 						</section>
-					
-				
-						<section style="width: 50%;" class="col col-2">
-							Sexo
-		
-							<label class="select">
-								<select id="sexo" required name="sexo">
-									
-									<?	foreach ($tiposDeSexo as $key)
-										{
-											if ($key->descripcion == $detalle[0]->sexo) {
-		
-											?>
-											
-												<option value="<?=$key->id_sexo?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_sexo?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}
-									?>
-		
-								</select>
-							</label>
+						
+						<section id="password_" style="width: 50%;" class="col col-2">
+							<label for="">Contraseña</label>
+							<input onkeyup="confirm_pass()" type="password" class="form-control" name="password" id="password" >
 						</section>
-
+						
+						<section id="confirmar_password" style="width: 50%;" class="col col-2">
+							<label for="">Repita Contraseña</label>
+							<input onkeyup="confirm_pass()" type="password" class="form-control" name="confirm_password" id="confirm_password" >
+						</section>
 						
 						
 						<section style="width: 50%;" class="col col-2">
-						Fecha de nacimiento
-							<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-								<input required readonly id="datepicker" type="text" name="nacimiento" value="<?=$detalle[0]->fecha_nacimiento?>" >
-							</label>
-						</section>
-		
-						<section style="width: 50%;" class="col col-2">
-							Estado Civil
-		
-							<label class="select">
-								<select id="estadoCivil"  name="estadoCivil">
-		
-									<?	foreach ($tiposDeEstadoCivil as $key)
-										{
-											if ($key->descripcion == $detalle[0]->estado_civil) {
-		
-											?>
-											
-												<option value="<?=$key->id_edo_civil?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_edo_civil?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}
-									?>
-		
-								</select>
-							</label>
-						</section>
-		
-						<section style="width: 50%;" class="col col-2 hide">
-							Tipo de Usuario
-						
-							<label class="hide">
-								<select id="tipoUsuario"  name="tipoUsuario">
-									
-									<?/*	foreach ($tiposDeUsuario as $key)
-										{
-											if ($key->descripcion == $detalle[0]->tipo_usuario) {
-		
-											?>
-											
-												<option value="<?=$key->id_tipo_usuario?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_tipo_usuario?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}*/
-									?>
-		
-								</select>
-							</label>
-						</section>
-		
-		
-						<section style="width: 50%;" class="col col-2">
-							Nivel de Estudios
-						
-							<label class="select">
-								<select id="estudio"  name="estudio">
-									
-									<?	foreach ($tiposDeEstudio as $key)
-										{
-											if ($key->descripcion == $detalle[0]->estudio) {
-		
-											?>
-											
-												<option value="<?=$key->id_estudio?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_estudio?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}
-									?>
-		
-								</select>
-							</label>
-						</section>
-		
-						<section style="width: 50%;" class="col col-2">
-							Ocupación
-						
-							<label class="select">
-								<select id="ocupacion"  name="ocupacion">
-									
-									<?	foreach ($tiposDeOcupacion as $key)
-										{
-											if ($key->descripcion == $detalle[0]->ocupacion) {
-		
-											?>
-											
-												<option value="<?=$key->id_ocupacion?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_ocupacion?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}
-									?>
-		
-								</select>
-							</label>
-						</section>
-		
-						<section style="width: 50%;" class="col col-2">
-							Tiempo de Dedicación
-						
-							<label class="select">
-								<select id="tiempoDedicado"  name="tiempoDedicado">
-									
-									<?	foreach ($tiposDeTiempoDedicacion as $key)
-										{
-											if ($key->descripcion == $detalle[0]->tiempo_dedicado) {
-		
-											?>
-											
-												<option value="<?=$key->id_tiempo_dedicado?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_tiempo_dedicado?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}
-									?>
-		
-								</select>
-							</label>
-						</section>
-		
-						<section style="width: 50%;" class="col col-2">
-							Estado de Afiliado
-						
-							<label class="select">
-								<select id="estadoAfiliado" name="estadoAfiliado">
-									
-									<?	foreach ($tiposDeEstadosAfiliado as $key)
-										{
-											if ($key->descripcion == $detalle[0]->estatus_afiliado) {
-		
-											?>
-											
-												<option value="<?=$key->id_estatus?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
-												<option value="<?=$key->id_estatus?>" >
-													<?= $key->descripcion;?>	
-												</option>
-										<?  }
-										}
-									?>
-		
-								</select>
+							<label style="width: 100%">Nombre <br>
+								<input type="text" class="form-control" name="nombre" id="nombre" required value = '<?= $detalle[0]->nombre; ?>'>
 							</label>
 						</section>
 						
 						<section style="width: 50%;" class="col col-2">
-							<label for="">Nombre del Co-aplicante</label>
-							<input type="text" class="form-control" name="nombreCo" id="nombreCo"  value = '<?= $detalle[0]->nombre_co; ?>'>
+							<label for="">Apellido</label>
+							<input type="text" class="form-control" name="apellido" id="apellido" value = '<?= $detalle[0]->apellido; ?>'>
 						</section>
 						
 						<section style="width: 50%;" class="col col-2">
-							<label for="">Apellido del Co-aplicante</label>
-							<input type="text" class="form-control" name="apellidoCo" id="apellidoCo" value = '<?= $detalle[0]->apellido_co; ?>'>
+							<label class="select" for="">Pais
+							<select name="pais" >
+								<?php foreach ($pais as $c){
+									echo ($c->Code ==$detalle[0]->pais) 
+										? '<option selected value="'.$c->Code.'">'.$c->Name.'</option>' 
+										: '<option value="'.$c->Code.'">'.$c->Name.'</option>';
+								}?>
+							</select></label>
 						</section>
+						
+						
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success pull-right ">Actualizar</button>
+			<button type="submit" class="btn btn-success pull-right btn-next"  disabled="disabled">Actualizar</button>
 		</form>
 		
 	</div>
@@ -333,6 +113,7 @@ function use_username()
 	{
 		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
 	});
+	validate_user_data()
 }
 function use_mail()
 {
@@ -347,6 +128,48 @@ function use_mail()
 	.done(function( msg )
 	{
 		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
+	});
+	validate_user_data()
+}
+
+function confirm_pass()
+{
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/confirm_password",
+		data: {password: password,confirm_password: confirm_password},
+	})
+	.done(function( msg )
+	{
+		$("#msg_confirm_password").remove();
+		$("#confirmar_password").append("<div id='msg_confirm_password'>"+msg+"</div>")
+	});
+	validate_user_data()
+}
+
+function validate_user_data()
+{
+	var id=$("#id").val();
+	var nombre=$("#nombre").val();
+	var mail=$("#mail").val();
+	var username=$("#username").val();
+
+	var password=$("#password").val();
+	var confirm_password=$("#confirm_password").val();
+
+	$("#validate_user_data").remove();
+
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/validate_user_data2",
+		data: {id: id,nombre: nombre,mail: mail,username: username,password: password,confirm_password: confirm_password},
+	})
+	.done(function( msg )
+	{
+		$("#validate_user_data").remove();
+		$("#edit").append("<div id='validate_user_data'>"+msg+"</div>")
 	});
 }
 
