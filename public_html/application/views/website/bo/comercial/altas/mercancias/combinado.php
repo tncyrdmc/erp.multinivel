@@ -521,7 +521,7 @@ function new_product()
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<option value="0">Ninguno</option>'
 		+'<!--<?//foreach ($producto as $key){?>'
-		+'<option value="<?//=$key->id?>">'
+		+'<option value="<?//=$key->id_mercancia?>">'
 		+'<?//=$key->nombre?></option>'
 		+'<?//}?>-->'
 		+'</select>'
@@ -546,7 +546,7 @@ function new_service()
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<option value="0">Ninguno</option>'
 		+'<!--<?//foreach ($servicio as $key){?>'
-		+'<option value="<?//=$key->id?>">'
+		+'<option value="<?//=$key->id_mercancia?>">'
 		+'<?//=$key->nombre?></option>'
 		+'<?//}?>-->'
 		+'</select>'
@@ -1715,7 +1715,7 @@ if(document.getElementsByTagName("ProductosPais"+h)){
 	      for(var i in datos){
 		      var ProductosPais = $('#ProductosPais'+h);
 		      $('#ProductosPais'+h+' select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  
@@ -1748,7 +1748,7 @@ function ProductoPorPais(){
 	      for(var i in datos){
 		      var ProductosPais = $('#ProductosPais');
 		      $('#ProductosPais select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  
@@ -1777,7 +1777,7 @@ function ProductoPorPaisAgregado(id){
 	      for(var i in datos){
 		      var ProductosPais = $('#ProductosPais'+id);
 		      $('#ProductosPais'+id+' select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  
@@ -1812,7 +1812,7 @@ if(document.getElementsByTagName("ServicioPais"+h)){
 	      for(var i in datos){
 		      var ServicioPais = $('#ServicioPais'+h);
 		      $('#ServicioPais'+h+' select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  
@@ -1843,7 +1843,7 @@ function ServicioPorPais(){
 	      for(var i in datos){
 		      var ServicioPais = $('#ServicioPais');
 		      $('#ServicioPais select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  
@@ -1871,7 +1871,7 @@ function ServicioPorPaisAgregado(id){
 	      for(var i in datos){
 		      var ServicioPais = $('#ServicioPais'+id);
 		      $('#ServicioPais'+id+' select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
 			    
 			});
 	    	  

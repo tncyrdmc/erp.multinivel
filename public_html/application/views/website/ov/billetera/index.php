@@ -13,17 +13,19 @@
  <fieldset>
 	<legend>Billetera</legend>
 						
-					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
+					<div class="col-lg-2 col-sm-4 col-md-4 col-xs-12">
+					</div>
+					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 						<a href="pedir_pago">
-							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 								<i class="fa fa-money fa-3x"></i>
 								<h5>Pedir Plata</h5> 
 							</div>	
 						</a>
 					</div>
-					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
+					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 						<a href="/ov/billetera2/historial">
-							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 								<i class="fa fa-calendar fa-3x"></i>
 								<h5>Historial Pedir Plata</h5>
 							</div>	

@@ -50,7 +50,7 @@ class dashboard extends CI_Controller
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bol/view_dashboard');
+		$this->template->build('website/bo/logistico/main_dashboard');//website/bol/view_dashboard
 	}
 	
 }

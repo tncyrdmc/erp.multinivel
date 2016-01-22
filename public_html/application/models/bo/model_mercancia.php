@@ -127,8 +127,59 @@ class model_mercancia extends CI_Model {
 		$n_servicios = $_POST ['n_servicios'];
 		$producto = sizeof ( $_POST ['producto'] );
 		$servicio = sizeof ( $_POST ['servicio'] );
+		if (isset ( $_POST ['producto'] )){
+		foreach ( $productos as $key ) {
+			if($n_productos [$n]!=""){
+					$dato_cross_combinado = array (
+							"id_combinado" => $combinado,
+							"id_mercancia" => $key,
+							"cantidad" => $n_productos [$n],
+							"id_red" => $_POST ['red'],
+							"id_tipo_mercancia" => '1',
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+					
+				}else{
+					$dato_cross_combinado = array (
+							"id_combinado" => $combinado,
+							"id_mercancia" => $key,
+							"cantidad" => '0',
+							"id_red" => $_POST ['red'],
+							"id_tipo_mercancia" => '1'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+				}
+				$n ++;
+			}
+			}
+				$n = 0;
+				if (isset ( $_POST ['servicio'] )){
+				foreach ( $servicios as $key ) {
+					if($n_servicios [$n]!=""){
+					$dato_cross_combinado = array (
+							"id_combinado" => $combinado,
+							"id_mercancia" => $key,
+							"cantidad" => $n_servicios [$n],
+							"id_red" => $_POST ['red'],
+							"id_tipo_mercancia" => '2'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+					}else{
+					$dato_cross_combinado = array (
+							"id_combinado" => $combinado,
+							"id_mercancia" => $key,
+							"cantidad" => '0',
+							"id_red" => $_POST ['red'],
+							"id_tipo_mercancia" => '2'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+					}
+					$n ++;
+				}
+			}
+
 		
-		if ($producto < $servicio) {
+		/*if ($producto < $servicio) {
 			if ($n_productos [0] == 0) {
 				foreach ( $servicios as $key ) {
 					$dato_cross_combinado = array (
@@ -198,7 +249,7 @@ class model_mercancia extends CI_Model {
 				$this->db->insert ( "cross_combinado", $dato_cross_combinado );
 				$n ++;
 			}
-		}
+		}*/
 		
 		$sku = $combinado;
 		

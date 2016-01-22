@@ -61,7 +61,7 @@
 									<a href="#s1" data-toggle="tab">Encuestas Abiertas</a>
 								</li>
 								<li>
-									<a href="#s2" data-toggle="tab">Historico de Encuestas contestatadas</a>
+									<a href="#s2" data-toggle="tab">Historico de Encuestas contestadas</a>
 								</li>
 							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">

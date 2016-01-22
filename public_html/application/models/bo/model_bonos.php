@@ -236,6 +236,13 @@ function get_bonos(){
 			"); //where b.plan='NO'
 	return $q->result();
 }
+
+function get_bonos_activos(){
+	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus
+						FROM bono b where b.estatus = 'ACT'");
+	return $q->result();
+}
+
 function get_bono_id($id){
 	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus,b.mes_desde_afiliacion,b.mes_desde_activacion
 						FROM bono b
@@ -386,6 +393,9 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		$q=$this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id_mercancia."");
 		$idTipoMercancia=$q->result();
 		$mercancia=array();
+		if(!isset($idTipoMercancia[0]))
+			return "";
+		
 			if($idTipoMercancia[0]->id_tipo_mercancia==1){
 				$mercancia=$this->get_producto_por_id($id_mercancia);
 				

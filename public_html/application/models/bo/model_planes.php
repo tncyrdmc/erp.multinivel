@@ -15,6 +15,12 @@ class model_planes extends CI_Model
 		return $q->result();
 	}
 	
+	function get_planes_activos(){
+	
+		$q=$this->db->query("select * from plan where estatus = 'ACT'");
+		return $q->result();
+	}
+	
 	function get_cross_plan_bonos(){
 	
 		$q=$this->db->query("select * from cross_plan_bonos order by id_plan , `order` asc");
