@@ -48,7 +48,7 @@
 													<a href="configuracion/">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-wrench fa-3x"></i>
-															<h5>Configuracion</h5>
+															<h5>Configuración</h5>
 														</div>
 													</a>
 												</div>
