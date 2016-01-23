@@ -558,7 +558,60 @@ where(a.id_pais=b.Code)");
 			$producto    = sizeof($_POST['producto']);
 			$servicio    = sizeof($_POST['servicio']);
 
-			if($productos<$servicios)
+			$n = 0;
+
+		if (isset ( $_POST ['producto'] )){
+		foreach ( $productos as $key ) {
+			if($n_productos [$n]!=""){
+					$dato_cross_combinado = array (
+							"id_combinado" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => $n_productos [$n],
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '1'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+					
+				}else{
+					$dato_cross_combinado = array (
+							"id_combinado" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => '0',
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '1'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+				}
+				$n ++;
+			}
+			}
+				$n = 0;
+				if (isset ( $_POST ['servicio'] )){
+				foreach ( $servicios as $key ) {
+					if($n_servicios [$n]!=""){
+					$dato_cross_combinado = array (
+							"id_combinado" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => $n_servicios [$n],
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '2'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+					}else{
+					$dato_cross_combinado = array (
+							"id_combinado" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => '0',
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '2'
+					);
+					$this->db->insert ( "cross_combinado", $dato_cross_combinado );
+					}
+					$n ++;
+				}
+			}
+
+			/*if($productos<$servicios)
 			{
 				if ($n_productos[0]==0)
 				{
@@ -644,7 +697,7 @@ where(a.id_pais=b.Code)");
 					$this->db->insert("cross_combinado",$dato_cross_combinado);
 					$n++;
 				}
-			}
+			}*/
 			//////////////////////////////////////////////////////////////////////////////////////////////
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
@@ -695,8 +748,60 @@ where(a.id_pais=b.Code)");
 			$n_servicios = $_POST['n_servicios'];
 			$producto    = sizeof($_POST['producto']);
 			$servicio    = sizeof($_POST['servicio']);
+
+			if (isset ( $_POST ['producto'] )){
+		foreach ( $productos as $key ) {
+			if($n_productos [$n]!=""){
+					$dato_cross_paquete = array (
+							"id_paquete" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => $n_productos [$n],
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '1'
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_paquete );
+					
+				}else{
+					$dato_cross_paquete = array (
+							"id_paquete" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => $n_productos [$n],
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '1'
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_paquete );
+				}
+				$n ++;
+			}
+			}
+				$n = 0;
+				if (isset ( $_POST ['servicio'] )){
+				foreach ( $servicios as $key ) {
+					if($n_servicios [$n]!=""){
+					$dato_cross_paquete = array (
+							"id_paquete" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => $n_servicios [$n],
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '2'
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_paquete );
+					}else{
+					$dato_cross_paquete = array (
+							"id_paquete" => $sku,
+							"id_mercancia" => $key,
+							"cantidad" => $n_servicios [$n],
+							"id_red" => $_POST['red'],
+							"id_tipo_mercancia" => '2'
+					);
+					$this->db->insert ( "cross_paquete", $dato_cross_paquete );
+					}
+					$n ++;
+				}
+			}
+
 		
-			if($productos<$servicios)
+			/*if($productos<$servicios)
 			{
 				if ($n_productos[0]==0)
 				{
@@ -782,7 +887,7 @@ where(a.id_pais=b.Code)");
 					$this->db->insert("cross_paquete",$dato_cross_combinado);
 					$n++;
 				}
-			}
+			}*/
 			//////////////////////////////////////////////////////////////////////////////////////////////
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
@@ -1746,33 +1851,27 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 
 	function get_prod_combinado($id)
 	{
-		$q=$this->db->query("SELECT  p.nombre, b.*, c.id
-FROM mercancia c, combinado d, cross_combinado b, producto p 
-WHERE c.sku=d.id and  b.id_producto=p.id and c.sku=b.id_combinado and c.id=".$id);
+
+		$q=$this->db->query("select p.id, p.nombre, c.cantidad from producto p, mercancia m, cross_combinado c where m.sku=p.id and c.id_mercancia=m.id and c.id_tipo_mercancia='1' and c.id_combinado=(select c.id from combinado c where c.id=(select m.sku from mercancia m where m.id=".$id."))");
 		return $q->result();
 	}
+
 	
 	function get_serv_combinado($id)
 	{
-		$q=$this->db->query("SELECT  p.nombre, b.*, c.id
-FROM mercancia c, combinado d, cross_combinado b, servicio p 
-WHERE c.sku=d.id and  b.id_servicio=p.id and c.sku=b.id_combinado and c.id=".$id);
+		$q=$this->db->query("select s.id, s.nombre, c.cantidad from servicio s, mercancia m, cross_combinado c where m.sku=s.id and c.id_mercancia=m.id and c.id_tipo_mercancia='2' and c.id_combinado=(select c.id from combinado c where c.id=(select m.sku from mercancia m where m.id=".$id."))");
 		return $q->result();
 	}
 	
 	function get_prod_paquete($id)
 	{
-		$q=$this->db->query("SELECT a.*, b.nombre, c.id
-FROM cross_paquete a, producto b, mercancia c, paquete_inscripcion p
-WHERE a.id_producto <> 0 and a.id_producto= b.id and p.id_paquete = c.sku and p.id_paquete = a.id_paquete and c.id = ".$id);
+		$q=$this->db->query("select p.id, p.nombre, c.cantidad from producto p, mercancia m, cross_paquete c where m.sku=p.id and c.id_mercancia=m.id and c.id_tipo_mercancia='1' and c.id_paquete=(select c.id_paquete from paquete_inscripcion c where c.id_paquete=(select m.sku from mercancia m where m.id=".$id."))");
 		return $q->result();
 	}
 	
 	function get_serv_paquete($id)
 	{
-		$q=$this->db->query("SELECT a.*, b.nombre, c.id
-FROM cross_paquete a, servicio b, mercancia c, paquete_inscripcion p
-WHERE a.id_servicio<>0 and a.id_servicio=b.id and p.id_paquete = c.sku and p.id_paquete = a.id_paquete and c.id=".$id);
+		$q=$this->db->query("select s.id, s.nombre, c.cantidad from servicio s, mercancia m, cross_paquete c where m.sku=s.id and c.id_mercancia=m.id and c.id_tipo_mercancia='2' and c.id_paquete=(select c.id_paquete from paquete_inscripcion c where c.id_paquete=(select m.sku from mercancia m where m.id=".$id."))");
 		return $q->result();
 	}
 	
