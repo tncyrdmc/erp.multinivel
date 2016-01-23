@@ -107,6 +107,7 @@ function index()
 		}
 		
 		$id = $this->tank_auth->get_user_id();
+
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
@@ -1603,9 +1604,7 @@ function index()
 			</div> 
 		</div>";
 	}
-	function add_car(){
 
-	}
 	function add_carrito()
 	{
 		$carrito_item=0;
@@ -2390,18 +2389,28 @@ function index()
 		redirect('/auth');
 		}
 		$id_user=$this->tank_auth->get_user_id();
-		
+		/*
 		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id_user);
 		if ($descuento_por_nivel_actual!=null){
 			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
 		}else{
 			$calcular_descuento=1;
 		}
+		*/
+		$calcular_descuento=1;
 		
 		$idRed = $_GET['id'];
 		$pais = $this->general->get_pais($id);
+		$paisUsuario=$pais[0]->pais;
+		$idCategoriaRed = $_GET['id'];
+		$idUsuario=$this->tank_auth->get_user_id();
+		$tipoProducto=1;
+		$tipoServicios=2;
+		$tipoCombinado=3;
+		$tipoPaqueteIncripcion=4;
+		$tipoMembresia=5;
 		
-		$prod=$this->modelo_compras->get_productos_red($idRed, $pais[0]->pais, $id);
+		$prod=$this->getMercanciaPorTipoDeRed($tipoProducto,$idCategoriaRed,$paisUsuario, $idUsuario);
 		
 		for($i=0;$i<sizeof($prod);$i++)
 		{
@@ -2520,6 +2529,25 @@ function index()
 		}
 	}
 	
+	function getMercanciaPorTipoDeRed($id_tipo_mercancia,$id_tipo_red){
+		
+		if($id_tipo_mercancia==1)
+			$mercancia=$this->modelo_compras->get_productos_red($idRed, $pais[0]->pais, $id);
+		
+		for($i=0;$i<sizeof($mercancia);$i++)
+		{
+			$imagen=$this->modelo_compras->get_img($mercancia[$i]->id);
+			if(isset($imagen[0]))
+			{
+				$mercancia[$i]->img=$imagen[0]->url;
+			}
+			else
+			{
+				$mercancia[$i]->img="";
+			}
+		}
+	}
+
 	function show_paquetes()
 	{		
 		

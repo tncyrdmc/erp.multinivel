@@ -23,30 +23,11 @@
 <![endif]-->
 
 <!-- include pace script for automatic web page progress bar  -->
-
-<script>
-    paceOptions = {
-      elements: true
-    };
-</script>
-<script src="/cart/HTML/assets/js/pace.min.js"></script>
-<div class="row">         
-         <!-- a blank row to get started -->
-    	<div class="col-sm-12">
-        	<br />
-        	<br />
-            <br />
-        	<br />
-        </div>
-        <div class="col-sm-12">
-        </div>
-</div>
-
- <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation" id="cart_cont">
+<div>
+ <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation" id="cart_cont" style="background: #2980b9 ! important;">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite fa-2x"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
-      <a style="color :#263569; margin-left:3rem;" class="navbar-brand titulo_carrito" href="/ov/dashboard" > <i class="fa fa-home"></i> Menu &nbsp;</a> 
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i style="color : #fff;" class="fa fa-shopping-cart fa-2x"> </i> <span style="color : #fff;" class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
+      <a style="color : #fff;margin-left:4rem;" class="navbar-brand titulo_carrito" href="/ov/dashboard" > <i class="fa fa-arrow-circle-left"></i> Atras &nbsp;</a> 
       
       <!-- this part for mobile -
       <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
@@ -102,19 +83,16 @@
     <!--/.navbar-cart-->
     
     <div class="navbar-collapse collapse">
-   <!--   <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav">
         <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prod()"> Productos </a></li>
-        
-        change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width 
         <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_serv()"> Servicios </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_comb()"> Combinados </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prom()"> Promociones </a></li>
       </ul>
-      -->
       <!--- this part will be hidden for mobile version -->
       <div class="nav navbar-nav navbar-right hidden-xs">
-        <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart fa-2x"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
+        <div class="dropdown  cartMenu " style="background: rgb(57, 167, 241) none repeat scroll 0% 0%;"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart fa-2x"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
           <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 ">
             <div class="w100 miniCartTable scroll-pane">
               <table> 
@@ -164,39 +142,21 @@
           
         </div>
         <!--/.search-box -->
-        <div class=" transparent pull-right" id="logout">
-			<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/auth/logout" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
-				<i style="font-size: 3rem;" class="fa fa-sign-out"></i>
-					</a>
-			</span>
-		</div>
       </div>
       <!--/.navbar-nav hidden-xs--> 
     </div>
     <!--/.nav-collapse --> 
 </div>
+</div>
+<div class="container main-container" style="background-color: #fff;min-height: auto ! important;padding-top: 10rem;padding-bottom: 10rem;"> 
 <div class="row">
-	
-	<div class="container main-container" style="background-color: #fff;"> 
-	  	
-	  <!-- Main component call to action -->
-	  <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
-	      <div class="panel-group" id="accordionNo"> 
-	       
-	        <div class="panel panel-default">
-	          <div class="panel-heading">
-	            <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseCategory" class="collapseWill"> <span class="pull-left"> <i class="fa fa-caret-right"></i></span> Mas vendidos </a> </h4>
-	          </div>
-	          <div id="collapseCategory" class="panel-collapse collapse in">
-	            <div class="panel-body">
-	              
-	            </div>
-	          </div>
-	        </div>
-	       
-	      </div>
-	  </div>-->
-	  <article class="col-lg-12 col-sm-4 col-md-3 col-lg-3">
+	<div class="breadcrumbDiv col-lg-12">
+      <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i> Inicio</a> </li>
+        <li class="active"><i class="fa fa-shopping-cart"></i> Carrito de Compras </li>
+      </ul>
+    </div>
+<article class="col-lg-12 col-sm-4 col-md-3 col-lg-3">
 	  			<div class="carousel-inner">
 				<!-- Slide 1 -->
 				<div class="item active" style="height: 100%; margin-bottom: 2rem;">
@@ -221,28 +181,22 @@
 						
 						<!-- widget content -->
 						<div class="widget-body">
-							<?php if($todas_categorias){?>
 							<? foreach ($redes as $red) {?>
+								<label><?= $red->nombre;?></label>
 								<div class="dropdown">
-											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#"> <?= $red->nombre;?></a>
-											<ul class="dropdown-menu " role="menu">
-												<?php foreach ($grupos as $grupo) {
-													if ($red->nombre == $grupo->red ){
-													?>
-												<li class="btn btn-lg">
-													<a onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
-												</li>
-												<?php } }?>
-												
-											</ul>
-										</div>
-										<br>
+										<?php foreach ($grupos as $grupo) {
+												if ($red->nombre == $grupo->red ){
+										?>
+											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#" onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
+										<?php } }?>
+
+								</div>
+								<br>
 								
 							<? } ?>
-							<?php } ?>
-							<div class="dropdown">
+						<!-- <div class="dropdown">
 								<a id="dLabel" role="button" class="btn btn-primary btn-block" onClick="paquetes()"> Paquetes de inscripción</a>
-							</div>
+							</div> -->
 						</div>
 						<!-- end widget content -->
 						
@@ -251,15 +205,24 @@
 					
 				</div>
 				<!-- end widget -->
-			</article>
-	 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+				<div class="paymentMethodImg"> 
+				<h3>Métodos de pago</h3>
+					<img src="/template/img/payment/payu.jpg" alt="img" height="50"> 
+					<img src="/template/img/payment/master_card.png" alt="img" height="30"> 
+					<img src="/template/img/payment/paypal.png" alt="img" height="30"> 
+					<img src="/template/img/payment/american_express_card.png" alt="img" height="30"> 
+					<img src="/template/img/payment/discover_network_card.png" alt="img" height="30">  
+				</div>
+</article>
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 	    	<h3 class="section-title style2 text-center"><span>NUESTROS PRODUCTOS</span></h3>
 	    		<div class="">
 	      			<div class="row xsResponse" id="mercancias">
 	      									<!-- start row -->
 					<div class="row">
-	
-						<div class="col-sm-12">
+						<div class="col-sm-3">
+						</div>
+						<div class="col-sm-6">
 				
 							<div class="row">
 				
@@ -344,17 +307,20 @@
 	  
 	</div>
 </div>
-	<div class="row">         
-         <!-- a blank row to get started -->
-    	<div class="col-sm-12">
-        	<br />
-        	<br />
-        </div>
-    </div>
-    <!--<script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> -->
-    <script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-    <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-	<script type="text/javascript">
+</div>
+</div>
+
+
+<script>
+    paceOptions = {
+      elements: true
+    };
+</script>
+<script src="/cart/HTML/assets/js/pace.min.js"></script>
+<!--<script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> -->
+<script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
 			function detalles(id,tipo)
 			{
 				var datos={'id':id,'tipo':tipo};
@@ -976,23 +942,8 @@
 				data: { },
 				}).done(function(msg){
 					
-					/*bootbox.dialog({
-						message: msg,
-						title: "Alerta!",
-						className: "div_info_merc",
-						buttons: {
-							danger: {
-								label: "Aceptar",
-								className: "btn-danger",
-								callback: function() {
-									}
-							}
-						}
-					})*/
-					
-					$("#mercancias").html(msg);
-			
-				
+				$("#mercancias").html(msg);
+
 			});
 		}
 		</script>

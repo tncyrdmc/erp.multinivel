@@ -46,7 +46,7 @@
 								<i style="font-size: 2rem;" class="fa fa-credit-card"></i> Compras y Comisiones <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li>
-										<a href="/ov/compras/carrito?tipo=1">Carrito</a>
+										<a href="/ov/compras/carrito">Carrito</a>
 									</li>
 									<li class="divider"></li>
 									<li>

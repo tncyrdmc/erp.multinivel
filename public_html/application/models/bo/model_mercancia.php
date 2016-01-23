@@ -14,7 +14,7 @@ class model_mercancia extends CI_Model {
 	}
 	
 	function CategoriasMercancia() {
-		$categorias = $this->db->query ( "SELECT ctg.id_grupo, ctg.descripcion, tr.nombre as red  FROM cat_grupo_producto ctg, tipo_red tr where ctg.id_red = tr.id and estatus = 'ACT' " );
+		$categorias = $this->db->query ( "SELECT ctg.id_grupo, ctg.descripcion, tr.nombre as red  FROM cat_grupo_producto ctg, tipo_red tr where ctg.id_red = tr.id and ctg.estatus = 'ACT' and tr.estatus = 'ACT' " );
 		return $categorias->result ();
 	}
 	
