@@ -160,7 +160,7 @@ class usuarios extends CI_Controller
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
-		$redes 			 = $this->model_tipo_red->listarTodos();
+		$redes 			 = $this->model_tipo_red->listarActivos();
 		$tipos 			 = $this->model_tipo_usuario->listarTodos();
 		
 		$image 			 = $this->model_perfil_red->get_images($id);

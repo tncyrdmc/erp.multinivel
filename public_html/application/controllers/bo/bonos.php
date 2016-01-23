@@ -222,7 +222,7 @@ class bonos extends CI_Controller
 	function set_Rango_Redes($idRango,$idTipoRango,$nombreMetodo){
 	
 		
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		$todasLasredes="";
 		foreach($redes as $red){
 			$todasLasredes=$todasLasredes."<option value='".$red->id."'>".$red->nombre."</option>";

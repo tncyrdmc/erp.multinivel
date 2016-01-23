@@ -9,7 +9,7 @@
 					> <a href="/bo/comercial">Comercial</a> 
 					> <a href="/bo/comercial/red">Red</a>
 					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
-					> Afiliar
+					> Afiliar Existente
 				</span>
 			</h1>
 		</div>

@@ -47,6 +47,10 @@
 		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
 		<script data-pace-options='{ "restartOnRequestAfter": true }' src="/template/js/plugin/pace/pace.min.js"></script>
 
+		<!-- spinner lib -->
+		<script src="/template/js/spin.js"></script>
+		<script src="/template/js/spinner-loader.js"></script>
+
 		<!-- IMPORTANT: APP CONFIG -->
 		<script src="/template/js/app.config.js"></script>
 

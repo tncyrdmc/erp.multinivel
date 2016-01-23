@@ -23,6 +23,8 @@ class Model_tipo_red extends CI_Model{
 		$this->db->insert("afiliar",$datos);
 		$datos = array('id_red' => $id_red,'id_usuario' => 2,'profundidad' => 0,'estatus' => 'ACT','premium' => 2);
 		$this->db->insert("red",$datos);
+		
+		return true;
 	}
 
 	function listarTodos()
@@ -31,9 +33,15 @@ class Model_tipo_red extends CI_Model{
 		return $q->result();
 	}
 	
+	function listarActivos()
+	{
+		$q=$this->db->query("select * from tipo_red where estatus = 'ACT' group by id");
+		return $q->result();
+	}
+	
 	function RedesUsuario($id)
 	{
-		$q=$this->db->query('select tr.id, tr.nombre, tr.descripcion, tr.profundidad from tipo_red tr, afiliar a where tr.id = a.id_red and a.id_afiliado = '.$id." group by tr.id");
+		$q=$this->db->query("select tr.id, tr.nombre, tr.descripcion, tr.profundidad from tipo_red tr, afiliar a where tr.id = a.id_red and a.id_afiliado = ".$id." and tr.estatus = 'ACT' group by tr.id");
 		return $q->result();
 	}
 	
@@ -90,6 +98,11 @@ class Model_tipo_red extends CI_Model{
 		$this->db->update("tipo_red",$datos,"id = ".$id);
 	}
 	
+	function cambiar_estado(){
+		$this->db->query("update tipo_red set estatus = '".$_POST['estado']."' where id=".$_POST["id"]);
+		return true;
+	}
+	
 	function CapacidadRed($id_red)
 	{
 		$q = $this->db->query('select id,frontal,profundidad from tipo_red where id = '.$id_red);
@@ -99,7 +112,7 @@ class Model_tipo_red extends CI_Model{
 	
 	function cantidadRedes()
 	{
-		$q=$this->db->query('SELECT id FROM tipo_red');
+		$q=$this->db->query("SELECT id FROM tipo_red where estatus = 'ACT' ");
 		return $q->result();
 	}
 }

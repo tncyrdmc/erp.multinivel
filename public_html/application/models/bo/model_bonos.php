@@ -419,4 +419,9 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		$query = $this->db->query('select * from cross_plan_bonos where id_bono='.$id_bono.'');	
 		return $query->result();
 	}
+	
+	function validar_bono_red($id_red){
+		$query = $this->db->query('select * from cat_bono_condicion where id_red='.$id_red.'');
+		return $query->result();
+	}
 }

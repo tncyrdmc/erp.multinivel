@@ -44,6 +44,14 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
+													<a href="/bo/comercial/categorias">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-th fa-3x"></i>
+															<h1>Categorias<br>&nbsp</h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-3 link">
 													<a href="/bo/comercial/carrito_de_compras?co=c">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-shopping-cart fa-3x"></i>
@@ -63,7 +71,7 @@
 													<a href="/bo/reportes">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-book fa-3x"></i>
-															<h1>Reportes</h1>
+															<h1>Reportes<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>
@@ -71,7 +79,7 @@
 													<a href="/bo/CuentasPagar/Archivero">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder fa-3x"></i>
-															<h1>Archivero</h1>
+															<h1>Archivero<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>

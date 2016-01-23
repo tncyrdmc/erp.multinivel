@@ -13,6 +13,7 @@ class admin extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/general');
 	}
@@ -744,13 +745,17 @@ class admin extends CI_Controller
 		
 		$esta = $this->model_admin->ver_si_red_tiene_categorias($id);
 		$afiliados = $this->model_admin->ver_afiliados_red($id);
-		if ($esta == NULL && $afiliados == 0){
+		$validar=$this->model_bonos->validar_bono_red($id);
+		
+		if ($validar == null && $esta == NULL && $afiliados == 0){
 			
 			$this->model_admin->kill_tipo_red($id);
 			echo "Se ha eliminado la red.";
 		}
 		else if($afiliados == 1){
 			echo "Ha ocurrido un error eliminando la red, debido a que tiene afiliados.";
+		}else if($validar){
+			echo "Ha ocurrido un error eliminando la red, debido a que tiene bonos asociados.";
 		}else{
 			echo "Ha ocurrido un error eliminando la red, debido a que tiene categorias creadas.
 					<br> Lo mas recomendable es que elimine las categorias.";

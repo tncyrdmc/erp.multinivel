@@ -70,6 +70,11 @@
 						<i class="txt-color-red fa fa-trash-o fa-3x "></i>
 						</i>
 					</a>
+					<?php if($red->estatus == 'ACT'){ ?>
+						<a style="cursor: pointer" title="Desactivar" onclick="estado('DES','<?php echo $red->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+					<?php } else {?>
+						<a style="cursor: pointer" title="Activar" onclick="estado('ACT','<?php echo $red->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+					<?php } ?>
 					</td>
 				</tr>
 			<? } ?>
@@ -153,4 +158,33 @@ function eliminar(id) {
 	})
 	});
 }
+
+function estado(estatus, id)
+{
+		
+	$.ajax({
+		type: "POST",
+		url: "/bo/tipo_red/cambiar_estado",
+		data: {
+			id:id, 
+			estado: estatus
+		},
+		}).done(function( msg ){
+			bootbox.dialog({
+				message: msg,
+				title: 'Atención !!!',
+				buttons: {
+					success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+						location.href="/bo/tipo_red/mostrar_redes";
+						}
+					}
+				}
+			})
+				
+		})// Done ajax
+	}
+
 </script>

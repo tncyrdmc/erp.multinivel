@@ -6,8 +6,8 @@
 					<a href="/ov/cgeneral/chat">Menu chat</a>
 				</span>
 				<span>>
-					chat
-					<a href="/cometchat/admin/index.php" >HOme</a>	
+					
+					<a href="/cometchat/admin/index.php" > Chat Social</a>	
 				</span>
 			</h1>
 		</div>
