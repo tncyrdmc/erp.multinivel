@@ -1312,7 +1312,45 @@ function add_impuesto()
 	//ImpuestosPais();
 	i = i + 1
 }
+/*function add_impuesto(){
+		var code=	'<section id="'+i+'imp"><div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
+	+'<label class="select">'
+	+'<select name="id_impuesto[]">'
+	+'</select>'
+	+'</label>'
+	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
+	+'</section></div></section>';
+	$("#moneda_field").append(code);
 
+
+		var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#'+i+'imp option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var g in datos){
+		      var impuestos = $('#'+i);
+		      $('#'+i+'imp select').each(function() {
+				  $(this).append('<option value="'+datos[g]['id_impuesto']+'">'+datos[g]['descripcion']+' '+datos[g]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+	//ImpuestosPais();
+	i = i + 1
+}*/
 function dell_impuesto(id)
 {	
 	$("#"+id+"").remove();

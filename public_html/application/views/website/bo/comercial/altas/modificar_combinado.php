@@ -37,7 +37,7 @@
 							<fieldset>
 							<section class="col col-12" style="width: 50%;">País de la mercancía
 											<label class="select">
-												<select id="pais2" required name="pais" onChange="ImpuestosPais()">
+												<select id="pais2" required name="pais" onChange="ProductoPorPaisTodo()">
 													<?foreach ($pais as $key)
 													{	if ($mercancia[0]->pais == $key->Code){?>
 															<option selected value="<?=$key->Code?>">
@@ -94,7 +94,7 @@
 												
 													
 													<div id="<?= $i1=$i1+1?>b">
-														<section class="col col-8"  style="width: 50%">Productos
+														<section class="col col-8"  style="width: 50%" id="ProductosPais" name="ProductosPais">Productos
 												           	<label class="select">
 												               	<select class="custom-scroll"  name="producto[]">
 												                   	<?foreach ($producto as $key){
@@ -149,7 +149,7 @@
 													
 													
 													<div id="<?= $i2=$i2+1?>a">
-												        <section class="col col-8"  style="width: 50%">Servicios
+												        <section class="col col-8"  style="width: 50%" id="ServicioPais" name="ServicioPais">Servicios
 												            <label class="select">
 												                <select class="custom-scroll" name="servicio[]">
 												                        <?foreach ($servicio as $key){
@@ -344,13 +344,13 @@ function new_product(id)
 	
 
 	$('#prods').append('<div id="'+ib+'bj">'
-		+'<section class="col col-8" style="width: 50%">Productos'
+		+'<section class="col col-8" style="width: 50%" id="ProductosPais'+ib+'" name="ProductosPais'+ib+'">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
-		+'<?foreach ($producto as $key){?>'
-		+'<option value="<? echo $key->id_mercancia?>">'
-		+'<? echo $key->nombre?></option>'
-		+'<?}?>'
+		+'<!--<?//foreach ($producto as $key){?>'
+		+'<option value="<?// echo $key->id_mercancia?>">'
+		+'<? //echo $key->nombre?></option>'
+		+'<?//}?>-->'
 		+'</select>'
 		+'</label>'
 		+'</section>'
@@ -366,7 +366,7 @@ function new_product(id)
 		+'</a>'  
 		+'</div>'
 		+'</div>');
-	//ProductoPorPaisAgregado(ib);
+	ProductoPorPaisAgregado(ib);
 	ib = parseInt(ib) + 1;
 
 }
@@ -375,13 +375,13 @@ function new_service(id)
 {
 
 	$('#servs').append('<div id="'+ia+'aj" >'
-		+'<section class="col col-8" style="width: 50%">Servicios'
+		+'<section class="col col-8" style="width: 50%" id="ServicioPais'+ia+'" name="ServicioPais'+ia+'">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
-		+'<?foreach ($servicio as $key){?>'
-		+'<option value="<?=$key->id_mercancia?>">'
-		+'<?=$key->nombre?></option>'
-		+'<?}?>'
+		+'<!--<?//foreach ($servicio as $key){?>'
+		+'<option value="<?//=$key->id_mercancia?>">'
+		+'<?//=$key->nombre?></option>'
+		+'<?//}?>-->'
 		+'</select>'
 		+'</label>'
 		+'</section>'
@@ -398,7 +398,7 @@ function new_service(id)
 		+'</a>'  
 		+'</div>'
 		+'</div>');
-	//ServicioPorPaisAgregado(ia);
+	ServicioPorPaisAgregado(ia);
 	ia = parseInt(ia) + 1;
 }
 
@@ -510,6 +510,194 @@ function validateForm() {
     }
 }
 
+function ProductoPorPaisTodo(){
+	var pa = $("#pais2").val();
+	var contadorprod=ib;
+	var h=0;
+	for(h=contadorprod;h>=0;h--){
+		
+if(document.getElementsByTagName("ProductosPais"+h)){
+	
+	$.ajax({
+		async: false, 
+		type: "POST",
+		url: "/bo/mercancia/ProductosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ProductosPais'+h+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ProductosPais = $('#ProductosPais'+h);
+		      $('#ProductosPais'+h+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 
+	}}
+	ServicioPorPaisTodo();
+	ServicioPorPais();
+	ProductoPorPais();
+}
+function ProductoPorPais(){
+	var pa = $("#pais2").val();
+
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ProductosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ProductosPais option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ProductosPais = $('#ProductosPais');
+		      $('#ProductosPais select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+	ServicioPorPais();
+}
+function ProductoPorPaisAgregado(id){
+	var pa = $("#pais2").val();
+	
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ProductosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ProductosPais'+id+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ProductosPais = $('#ProductosPais'+id);
+		      $('#ProductosPais'+id+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+	//ServicioPorPais();
+}
+
+function ServicioPorPaisTodo(){
+	var pa = $("#pais2").val();
+	var contadorser=ia;
+	var h=0;
+	for(h=contadorser;h>=0;h--){
+		
+if(document.getElementsByTagName("ServicioPais"+h)){
+	
+	$.ajax({
+		async: false, 
+		type: "POST",
+		url: "/bo/mercancia/ServiciosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ServicioPais'+h+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ServicioPais = $('#ServicioPais'+h);
+		      $('#ServicioPais'+h+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+
+	}}
+	ServicioPorPais();
+	ProductoPorPais();
+}
+function ServicioPorPais(){
+	var pa = $("#pais2").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ServiciosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ServicioPais option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ServicioPais = $('#ServicioPais');
+		      $('#ServicioPais select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+}
+
+function ServicioPorPaisAgregado(id){
+	var pa = $("#pais2").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ServiciosPorPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#ServicioPais'+id+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var ServicioPais = $('#ServicioPais'+id);
+		      $('#ServicioPais'+id+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_mercancia']+'">'+datos[i]['nombre']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+}
 </script>
 	</html>
