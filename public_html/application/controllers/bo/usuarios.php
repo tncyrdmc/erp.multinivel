@@ -48,7 +48,95 @@ class usuarios extends CI_Controller
 		$this->template->build('website/bo/comercial/altas/usuarios/index');
 	}
 	
-	function alta(){
+	function afiliar_red()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		
+		$id = 2;
+		$style = $this->general->get_style($id);
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+	
+		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+	
+		if(sizeof($cantidadRedes)==0)
+			redirect('/');
+			if(sizeof($cantidadRedes)==1)
+				redirect('/bo/usuarios/alta_red?id='.$cantidadRedes[0]->id);
+	
+				$redes = $this->model_tipo_red->RedesUsuario($id);
+				$this->template->set("redes",$redes);
+	
+				$this->template->build('website/bo/comercial/red/redes');
+	}
+	
+	function alta_red()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id_red          = $_GET['id'];
+		$id              = 2;
+		$usuario         = $this->model_perfil_red->datos_perfil($id);
+		$telefonos       = $this->model_perfil_red->telefonos($id);
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$style           = $this->general->get_style($id);
+		$dir             = $this->model_perfil_red->dir($id);
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
+		$premium         = $red[0]->premium;
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+	
+		$image 			 = $this->model_perfil_red->get_images($id);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
+	
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("pais",$pais);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("red_frontales",$red_forntales);
+		$this->template->set("premium",$premium);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/red/afiliar_red');
+	}
+	
+	function alta_frontal(){
 		
 		if (!$this->tank_auth->is_logged_in()){																		// logged in
 		redirect('/auth');
@@ -64,14 +152,6 @@ class usuarios extends CI_Controller
 		
 		$id              =  2;
 		
-		$id_red          =  6;
-		$usuario         = $this->model_perfil_red->datos_perfil($id);
-		$telefonos       = $this->model_perfil_red->telefonos($id);
-		$dir             = $this->model_perfil_red->dir($id);
-		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
-		$premium         = $red[0]->premium;
-		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
-		
 		$sexo            = $this->model_perfil_red->sexo();
 		$pais            = $this->model_perfil_red->get_pais();
 		$style           = $this->general->get_style(1);
@@ -85,7 +165,6 @@ class usuarios extends CI_Controller
 		
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
-		$red_forntalesRed 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
 		
 		
 		
@@ -97,13 +176,8 @@ class usuarios extends CI_Controller
 			{
 				$img_perfil=$img->url;
 			}
-		}
+		}		
 		
-		$this->template->set("id",$id);
-		$this->template->set("afiliados",$afiliados);
-		$this->template->set("img_perfil",$img_perfil);
-		$this->template->set("red_frontalesRed",$red_forntalesRed);
-		$this->template->set("premium",$premium);
 		
 		$this->template->set("sexo",$sexo);
 		$this->template->set("civil",$civil);
@@ -142,8 +216,8 @@ class usuarios extends CI_Controller
 		$this->template->set_theme('desktop');
 		$this->template->set("style",$style);
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/tipoAfiliacion');
 	}
 	
