@@ -33,6 +33,25 @@
 							</section>
 
 							<fieldset>
+							<legend>País</legend>
+											<section class="col col-12" style="width: 50%;">
+											País de la mercancía <label class="select"> <select
+												id="pais2" required name="pais">
+													<? foreach ( $pais as $key ) {
+														if ($mercancia [0]->pais == $key->Code) {
+															?>
+															<option selected value="<?=$key->Code?>">
+																<?=$key->Name?>
+															</option>
+														<?}else{?>
+															<option value="<?=$key->Code?>">
+																<?=$key->Name?>
+															</option>
+														<?}?>
+													<?}?>
+												</select>
+											</label>
+										</section>
 								<legend>Datos del Paquete de inscripcion</legend>
 								<fieldset>
 
@@ -72,17 +91,17 @@
 												                   	<?
 																			
 foreach ( $producto as $key ) {
-																				if ($key_1->id_producto == $key->id) {
+																				if ($key_1->id == $key->id) {
 																					?>
 												                        	<option selected
-														value='<? echo $key->id?>'>
+														value='<? echo $key->id_mercancia?>'>
 												                            	<? echo $key->nombre?> (ACTIVO)
 												                            </option>
 												                        <?
 																				
 } else {
 																					?>
-																			<option value='<? echo $key->id?>'>
+																			<option value='<? echo $key->id_mercancia?>'>
 												                            	<? echo $key->nombre?>
 												                            </option>
 																		<?
@@ -98,7 +117,7 @@ foreach ( $producto as $key ) {
 										<section class="col col-4" style="width: 50%">
 											<label class="input">Cantidad de productos <input
 												type="number" min="1" name="n_productos[]" id="prod_qty"
-												value='<? echo $key_1->cantidad_producto?>'>
+												value='<? echo $key_1->cantidad?>'>
 											</label>
 										</section>
 										<div class=" text-center row">
@@ -132,17 +151,17 @@ foreach ( $producto as $key ) {
 												                        <?
 													
 foreach ( $servicio as $key ) {
-														if ($key_1->id_servicio == $key->id) {
+														if ($key_1->id == $key->id) {
 															?>
 														                        <option selected
-														value='<? echo $key->id?>'>
+														value='<? echo $key->id_mercancia?>'>
 														                            <? echo $key->nombre?> (ACTIVO)
 														                        </option>
 													                        <?
 														
 } else {
 															?>
-																				<option value='<? echo $key->id?>'>
+																				<option value='<? echo $key->id_mercancia?>'>
 													                            	<? echo $key->nombre?>
 													                            </option>
 																			<?
@@ -157,7 +176,7 @@ foreach ( $servicio as $key ) {
 										<section class="col col-4" style="width: 50%">
 											<label class="input">Cantidad de servicios <input
 												type="number" min="1" name="n_servicios[]" id="serv_qty"
-												value='<? echo $key_1->cantidad_servicio?>'>
+												value='<? echo $key_1->cantidad?>'>
 											</label>
 										</section>
 										<div class=" text-center row">
@@ -183,7 +202,7 @@ foreach ( $servicio as $key ) {
 								<div id="moneda">
 									<fieldset id="moneda_field">
 
-										<legend>Moneda y país</legend>
+										<legend>Moneda</legend>
 
 										<section class="col col-2" style="width: 50%;">
 											<label class="input"> Costo real <input type="text"
@@ -212,24 +231,7 @@ foreach ( $servicio as $key ) {
 											</label>
 										</section>
 
-										<section class="col col-12" style="width: 50%;">
-											País de la mercancía <label class="select"> <select
-												id="pais2" required name="pais">
-													<? foreach ( $pais as $key ) {
-														if ($mercancia [0]->pais == $key->Code) {
-															?>
-															<option selected value="<?=$key->Code?>">
-																<?=$key->Name?>
-															</option>
-														<?}else{?>
-															<option value="<?=$key->Code?>">
-																<?=$key->Name?>
-															</option>
-														<?}?>
-													<?}?>
-												</select>
-											</label>
-										</section>
+		
 
 										<section class="col col-3" style="width: 50%;">
 											<label class="input"> Puntos comisionables <input
@@ -315,7 +317,7 @@ function new_product(i)
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<?foreach ($producto as $key){?>'
-		+'<option value="<? echo $key->id?>">'
+		+'<option value="<? echo $key->id_mercancia?>">'
 		+'<? echo $key->nombre?></option>'
 		+'<?}?>'
 		+'</select>'
@@ -360,7 +362,7 @@ function new_service(i)
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<?foreach ($servicio as $key){?>'
-		+'<option value="<?=$key->id?>">'
+		+'<option value="<?=$key->id_mercancia?>">'
 		+'<?=$key->nombre?></option>'
 		+'<?}?>'
 		+'</select>'

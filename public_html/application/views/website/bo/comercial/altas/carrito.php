@@ -349,7 +349,6 @@ $(document).ready(function() {
 
 function editar(id_merc, code)
 {
-
 	$.ajax({
 		type: "POST",
 		url: "/bo/admin/edit_merc",

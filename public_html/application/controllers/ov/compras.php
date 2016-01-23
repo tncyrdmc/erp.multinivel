@@ -107,6 +107,8 @@ function index()
 		}
 		
 		$id = $this->tank_auth->get_user_id();
+		$style           = $this->general->get_style($id);
+
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
