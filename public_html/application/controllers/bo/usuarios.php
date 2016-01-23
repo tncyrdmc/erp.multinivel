@@ -63,6 +63,15 @@ class usuarios extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		
 		$id              =  2;
+		
+		$id_red          =  6;
+		$usuario         = $this->model_perfil_red->datos_perfil($id);
+		$telefonos       = $this->model_perfil_red->telefonos($id);
+		$dir             = $this->model_perfil_red->dir($id);
+		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
+		$premium         = $red[0]->premium;
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+		
 		$sexo            = $this->model_perfil_red->sexo();
 		$pais            = $this->model_perfil_red->get_pais();
 		$style           = $this->general->get_style(1);
@@ -76,6 +85,7 @@ class usuarios extends CI_Controller
 		
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$red_forntalesRed 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
 		
 		
 		
@@ -88,6 +98,12 @@ class usuarios extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
+		
+		$this->template->set("id",$id);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("red_frontalesRed",$red_forntalesRed);
+		$this->template->set("premium",$premium);
 		
 		$this->template->set("sexo",$sexo);
 		$this->template->set("civil",$civil);
@@ -102,8 +118,8 @@ class usuarios extends CI_Controller
 		$this->template->set_theme('desktop');
 		$this->template->set("style",$style);
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/NuevoUsuario');
 	}
 	
@@ -178,8 +194,8 @@ class usuarios extends CI_Controller
 		$this->template->set_theme('desktop');
 		$this->template->set("style",$style);
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/AfiliarExistente');
 	}
 	

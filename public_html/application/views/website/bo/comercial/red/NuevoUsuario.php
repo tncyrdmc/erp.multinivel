@@ -55,7 +55,9 @@
 								<li id="tab1" class="active">
 									<a href="#s1" data-toggle="tab">Frontal</a>
 								</li>
-								
+								<li id="tab2">
+									<a href="#s2" data-toggle="tab">Red</a>
+								</li>
 							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">
 								<div class="tab-pane fade in active" id="s1">
@@ -162,7 +164,7 @@
 																	<label class="select">
 																		<select id="tipo_fiscal" required name="fiscal">
 																		<?foreach ($tipo_fiscal as $key)
-																		{?>
+																		{?>contenedor
 																			<option value="<?=$key->id?>">
 																				<?=$key->descripcion?>
 																			</option>
@@ -465,8 +467,50 @@
 										
 									</div>
 								</div>
-								
-							</div>
+								<div class="tab-pane fade" id="s2">
+									
+									<div id="dos" class="row fuelux">
+
+										<!--
+										We will create a family tree1 using just CSS(3)
+										The markup will be simple nested lists
+										-->
+										<div class="tree1" style="width: 10000rem;">
+											<ul>
+												<li>
+													<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
+													<ul>
+													<?
+													$aux =0;
+													foreach ($afiliados as $key) 
+                                                    {
+                                                    	$aux++;
+                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
+                                                        if($key->debajo_de==$id)
+                                                        {?>
+														<li id="<?=$key->id_afiliado?>">
+															<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>)" href="#"></a>
+															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
+														</li>
+														<?}
+													}
+													for ( $i = $aux ; $i < count($red_frontalesRed[0]->frontal)+1 ; $i++){?>
+															<li>
+																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
+												            </li>
+														<? } ?>
+														<li>
+															<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
+												        </li>
+													</ul>
+												</li>
+											</ul>
+										</div>		
+																	
+									</div>
+								</div>
+							</div><!-- s1 -->
+							
 						</div>
 						<!-- end widget content -->
 						

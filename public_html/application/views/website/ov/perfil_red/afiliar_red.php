@@ -1078,7 +1078,7 @@ function InformarPremio(premio){
 										</div>
 									</div>
 								
-								</div>
+								</div><!-- end tree -->
 							</div>
 						</div>
 						<!-- end widget content -->
