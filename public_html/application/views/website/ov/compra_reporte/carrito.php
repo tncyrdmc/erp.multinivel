@@ -83,16 +83,13 @@
     <!--/.navbar-cart-->
     
     <div class="navbar-collapse collapse">
-   <!--   <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav">
         <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prod()"> Productos </a></li>
-        
-        change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width 
         <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_serv()"> Servicios </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_comb()"> Combinados </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prom()"> Promociones </a></li>
       </ul>
-      -->
       <!--- this part will be hidden for mobile version -->
       <div class="nav navbar-nav navbar-right hidden-xs">
         <div class="dropdown  cartMenu " style="background: rgb(57, 167, 241) none repeat scroll 0% 0%;"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart fa-2x"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
@@ -184,28 +181,22 @@
 						
 						<!-- widget content -->
 						<div class="widget-body">
-							<?php if($todas_categorias){?>
 							<? foreach ($redes as $red) {?>
+								<label><?= $red->nombre;?></label>
 								<div class="dropdown">
-											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#"> <?= $red->nombre;?></a>
-											<ul class="dropdown-menu " role="menu">
-												<?php foreach ($grupos as $grupo) {
-													if ($red->nombre == $grupo->red ){
-													?>
-												<li class="btn btn-lg">
-													<a onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
-												</li>
-												<?php } }?>
-												
-											</ul>
-										</div>
-										<br>
+										<?php foreach ($grupos as $grupo) {
+												if ($red->nombre == $grupo->red ){
+										?>
+											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#" onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
+										<?php } }?>
+
+								</div>
+								<br>
 								
 							<? } ?>
-							<?php } ?>
-							<div class="dropdown">
+						<!-- <div class="dropdown">
 								<a id="dLabel" role="button" class="btn btn-primary btn-block" onClick="paquetes()"> Paquetes de inscripción</a>
-							</div>
+							</div> -->
 						</div>
 						<!-- end widget content -->
 						
@@ -951,23 +942,8 @@
 				data: { },
 				}).done(function(msg){
 					
-					/*bootbox.dialog({
-						message: msg,
-						title: "Alerta!",
-						className: "div_info_merc",
-						buttons: {
-							danger: {
-								label: "Aceptar",
-								className: "btn-danger",
-								callback: function() {
-									}
-							}
-						}
-					})*/
-					
-					$("#mercancias").html(msg);
-			
-				
+				$("#mercancias").html(msg);
+
 			});
 		}
 		</script>

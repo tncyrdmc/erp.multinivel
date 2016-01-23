@@ -117,7 +117,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		
 		$productos = array();
 		foreach ($produc as $producto){
-			if(!$this->ComprovarCompraMercancia($id_usuario, $producto->id)){
+			if(!$this->ComprobarCompraMercancia($id_usuario, $producto->id)){
 				array_push($productos, $producto);
 			}
 		}
@@ -180,7 +180,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$servicios_bd =  $q->result();
 		$servicios = array();
 		foreach ($servicios_bd as $servico){
-			if(!$this->ComprovarCompraMercancia($id_usuario, $servico->id)){
+			if(!$this->ComprobarCompraMercancia($id_usuario, $servico->id)){
 				array_push($servicios, $servico);
 			}
 		}
@@ -207,7 +207,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$combinados_bd =  $q->result();
 		$combinados = array();
 		foreach ($combinados_bd as $combinado){
-			if(!$this->ComprovarCompraMercancia($id_usuario, $combinado->id)){
+			if(!$this->ComprobarCompraMercancia($id_usuario, $combinado->id)){
 				array_push($combinados, $combinado);
 			}
 		}
@@ -218,11 +218,11 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.Descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red 
 from paquete_inscripcion a, mercancia d, cross_paquete e, afiliar af
-where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" and af.id_red = a.id_red and d.id_tipo_mercancia= 4  and d.pais = "'.$pais.'" group by (d.id)');
+where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" and af.id_red = a.id_red and d.id_tipo_mercancia= 4  and (d.pais = "'.$pais.'" or d.pais="AAA") group by (d.id)');
 		$combinados_bd =  $q->result();
 		$combinados = array();
 		foreach ($combinados_bd as $combinado){
-			if(!$this->ComprovarCompraMercancia($id_usuario, $combinado->id)){
+			if(!$this->ComprobarCompraMercancia($id_usuario, $combinado->id)){
 				array_push($combinados, $combinado);
 			}
 		}
@@ -1228,7 +1228,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return false;
 	}
 	
-	function ComprovarCompraMercancia($id_usuario, $id_mercancia){
+	function ComprobarCompraMercancia($id_usuario, $id_mercancia){
 		$mes = date("m");
 		$q = $this->db->query("select count(*) as cantidad 
 			from venta v, cross_venta_mercancia cvm, mercancia m

@@ -8,35 +8,6 @@
 				<br /><br /><br />
 				</div>
 				<!-- end row -->
-<?php
-	   	if($hayPremios==true){
-	   	?>
-	   				<script type="text/javascript">
-	   				window.onload = function() {
-	   					$.ajax({
-	   						type: "POST",
-	   						url: "/ov/dashboard/ConsultarPremio",
-	   						data: {}
-	   					}).done(function( msg )
-	   							{
-	   						bootbox.dialog({
-	   							message: msg,
-	   							title: "Felicitaciones",
-	   							buttons: {
-	   								success: {
-	   								label: "Cerrar!",
-	   								className: "btn btn-danger",
-	   								callback: function() {
-	   									//location.href="";
-	   									}
-	   								}
-	   							}
-	   						});
-	   					});
-	   				}
-	   				</script>
-	   			<?php 
-	   	}?>
       <div class="row">
 					<div class="col-sm-12">
 							<div class="well well-sm">
@@ -120,35 +91,6 @@
 															<br>
 														</div>
 														<div class="col-sm-3">
-                           <!--
-															<h1><small>Connections</small></h1>
-															<ul class="list-inline friends-list">
-																<li><img src="img/avatars/1.png" alt="friend-1">
-																</li>
-																<li><img src="img/avatars/2.png" alt="friend-2">
-																</li>
-																<li><img src="img/avatars/3.png" alt="friend-3">
-																</li>
-																<li><img src="img/avatars/4.png" alt="friend-4">
-																</li>
-																<li><img src="img/avatars/5.png" alt="friend-5">
-																</li>
-																<li><img src="img/avatars/male.png" alt="friend-6">
-																</li>
-																<li>
-																	<a href="javascript:void(0);">413 more</a>
-																</li>
-															</ul>
-
-															<h1><small>Recent visitors</small></h1>
-															<ul class="list-inline friends-list">
-																<li><img src="img/avatars/male.png" alt="friend-1">
-																</li>
-																<li><img src="img/avatars/female.png" alt="friend-2">
-																</li>
-																<li><img src="img/avatars/female.png" alt="friend-3">
-																</li>
-															</ul> -->
 														</div>
 													</div>
 												</div>
@@ -319,7 +261,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="/ov/compras/carrito?tipo=1">
+													<a href="/ov/compras/carrito">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-shopping-cart fa-3x"></i>
 															<h5>Carrito</h5>
