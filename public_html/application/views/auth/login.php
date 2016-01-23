@@ -147,7 +147,7 @@
 		<div id="footer" class="fade in">
 		<br />
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<small>Todos los derechos reservados </small>
+				<small>Copyright © 2016 Networksoft S.A.S Todos los derechos reservados. Networksoft S.A.S</small>
 			</div>
 		</div>
 		<!--================================================== -->	
