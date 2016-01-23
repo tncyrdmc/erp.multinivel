@@ -9,7 +9,7 @@
 					> <a href="/bo/comercial">Comercial</a> 
 					> <a href="/bo/comercial/red">Red</a>
 					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
-					> Afiliar Nuevo
+					> Afiliar Frontal
 				</span>
 			</h1>
 		</div>
@@ -55,7 +55,6 @@
 								<li id="tab1" class="active">
 									<a href="#s1" data-toggle="tab">Frontal</a>
 								</li>
-								
 							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">
 								<div class="tab-pane fade in active" id="s1">
@@ -162,7 +161,7 @@
 																	<label class="select">
 																		<select id="tipo_fiscal" required name="fiscal">
 																		<?foreach ($tipo_fiscal as $key)
-																		{?>
+																		{?>contenedor
 																			<option value="<?=$key->id?>">
 																				<?=$key->descripcion?>
 																			</option>
@@ -466,7 +465,8 @@
 									</div>
 								</div>
 								
-							</div>
+							</div><!-- s1 -->
+							
 						</div>
 						<!-- end widget content -->
 						
@@ -1040,4 +1040,6 @@ function detalles(id)
 		});
 	});
 }
+
+
 </script>
