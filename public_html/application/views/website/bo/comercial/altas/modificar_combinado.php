@@ -34,6 +34,7 @@
 
 							<fieldset>
 							<legend>País</legend>
+							<fieldset>
 							<section class="col col-12" style="width: 50%;">País de la mercancía
 											<label class="select">
 												<select id="pais2" required name="pais" onChange="ImpuestosPais()">
@@ -51,7 +52,7 @@
 												</select>
 											</label>
 										</section>
-
+								</fieldset>
 								<legend>Datos del Paquete</legend>
 								<fieldset>
 
@@ -365,6 +366,7 @@ function new_product(id)
 		+'</a>'  
 		+'</div>'
 		+'</div>');
+	//ProductoPorPaisAgregado(ib);
 	ib = parseInt(ib) + 1;
 
 }
@@ -372,7 +374,7 @@ function new_product(id)
 function new_service(id)
 {
 
-	$('#servs').append('<div id="'+ia+'aj">'
+	$('#servs').append('<div id="'+ia+'aj" >'
 		+'<section class="col col-8" style="width: 50%">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
@@ -396,6 +398,7 @@ function new_service(id)
 		+'</a>'  
 		+'</div>'
 		+'</div>');
+	//ServicioPorPaisAgregado(ia);
 	ia = parseInt(ia) + 1;
 }
 
@@ -506,5 +509,7 @@ function validateForm() {
         return false;
     }
 }
+
+
 </script>
 	</html>

@@ -33,7 +33,8 @@
 							</section>
 
 							<fieldset>
-							<legend>País</legend>
+							<legend>País</span></legend>
+							<fieldset>
 											<section class="col col-12" style="width: 50%;">
 											País de la mercancía <label class="select"> <select
 												id="pais2" required name="pais">
@@ -52,14 +53,24 @@
 												</select>
 											</label>
 										</section>
+										</fieldset>
 								<legend>Datos del Paquete de inscripcion</legend>
 								<fieldset>
 
-									<section class="col col-12" style="width: 50%">
+									<section class="col col-6" style="width: 50%">
 										<label class="input">Nombre <input type="text" name="nombre"
 											id="nombre_pr" value='<?php echo $data_merc[0]->nombre?>'>
 										</label>
 									</section>
+													<section class="col col-6" style="width: 50%">
+														<label class="input">Tiempo de caducidad
+															<input required placeholder="En días" type="text" id="caducidad" name="caducidad" value='<?php echo $data_merc[0]->caducidad?>'>
+														</label>
+														<p class="note">
+															<strong>Nota:</strong>
+															Si no tiene tiempo de caducidad, por favor coloque un 0 (cero)
+														</p>
+													</section>
 
 									<section class="col col-12" style="width: 50%">
 										RED <label class="select"> <select name="red">

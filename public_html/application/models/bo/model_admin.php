@@ -240,6 +240,18 @@ class model_admin extends CI_Model
 			and b.id_tipo_mercancia=1");
 		return $q->result();
 	}
+	function get_servicio_pais($pais)
+	{
+		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from servicio a, mercancia b where a.id=b.sku 
+			and b.id_tipo_mercancia=2 and b.pais='".$pais."'");
+		return $q->result();
+	}
+	function get_producto_pais($pais)
+	{
+		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from producto a, mercancia b where a.id=b.sku 
+			and b.id_tipo_mercancia=1 and b.pais='".$pais."'");
+		return $q->result();
+	}
 	function get_combinado()
 	{
 		$q=$this->db->query("Select a.nombre, b.id id_mercancia from combinado a, mercancia b where a.id=b.sku 
@@ -731,7 +743,8 @@ where(a.id_pais=b.Code)");
 				"precio" => $_POST ['costo'],
 				"puntos" => $_POST ['puntos_com'],
 				"estatus" => 'ACT',
-				"id_red" => $_POST ['red']
+				"id_red" => $_POST ['red'],
+				"caducidad" => $_POST['caducidad'] 
 			);
 		
 			$this->db->where('id_paquete', $sku);

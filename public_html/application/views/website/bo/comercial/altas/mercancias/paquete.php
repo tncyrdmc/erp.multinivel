@@ -59,6 +59,7 @@
 																	<legend>
 										País</span>
 									</legend>
+									<fieldset>
 													<section class="col col-xs-12 col-md-6 col-lg-3">
 																País del producto <label class="select"> <select
 																	id="pais" required name="pais" id="pais"
@@ -70,22 +71,32 @@
 														</select>
 																</label>
 															</section>
+															</fieldset>
 									<legend>
 										Datos del Paquete de Inscripcion</span>
 									</legend>
 									<div id="form_mercancia">
 										<div class="row">
 											<fieldset>
-
-												<section class="col col-xs-12 col-md-6 col-lg-6">
+												<fieldset>
+												<section class="col col-xs-12 col-md-3 col-lg-3">
 													<label class="input">Nombre <input type="text"
 														name="nombre" id="nombre_pr">
 													</label>
 												</section>
+																								<section class="col col-3">
+														<label class="input">Tiempo de caducidad
+															<input required placeholder="En días" type="text" id="caducidad" name="caducidad">
+														</label>
+														<p class="note">
+															<strong>Nota:</strong>
+															Si no tiene tiempo de caducidad, por favor coloque un 0 (cero)
+														</p>
+													</section>
 												
 												<div id="tipo_promo">
 
-													<section class="col col-xs-12 col-md-6 col-lg-6">
+													<section class="col col-xs-12 col-md-3 col-lg-3">
 														Categoria <label class="select"> <select name="red">
 																<?foreach ($grupos as $grupo){?>
 																	<option value="<?=$grupo->id_grupo?>">
@@ -95,6 +106,8 @@
 														</select>
 														</label>
 													</section>
+													
+														</fieldset>
 													<div id="moneda">
 														<fieldset id="moneda_field">
 															<legend>Moneda</legend>
