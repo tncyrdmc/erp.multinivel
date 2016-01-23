@@ -353,7 +353,7 @@ class model_perfil_red extends CI_Model
 
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
 
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and U.id=0 order by (U.id)");
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus order by (U.id) limit 1000");
 		return  $q->result();
 		}
 		
@@ -455,6 +455,11 @@ order by (U.id);");
 	{
 		$q=$this->db->query("select * from users where username like '".$_POST['username']."' and id!= '".$_POST['id']."'");
 		return $q->result();
+	}
+	
+	function use_password_modificar()
+	{
+		return ($_POST['password']==$_POST['confirm_password']) ? false : true;
 	}
 	
 	function use_keyword()
@@ -634,4 +639,6 @@ order by (U.id);");
 		$retencion = $q->result();
 		return $retencion[0]->porcentaje;
 	}
+	
+	
 }

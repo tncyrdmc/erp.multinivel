@@ -123,7 +123,7 @@ class comercial extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/comercial/red/tabla');
+		$this->template->build('website/bo/comercial/red/tabla_');
 	}
 	
 	function actualizar_tabla()
@@ -696,24 +696,11 @@ class comercial extends CI_Controller
 	function get_detalle_usuario()
 	{
 		$detalle = $this->modelo_comercial->get_detalle_usuario($_POST['id']);
-		$tiposDeUsuario = $this->model_cat_tipo_usuario->listarTodos();
-		$tiposDeSexo = $this->model_cat_sexo->listarTodos();
-		$tiposDeEstadoCivil = $this->model_cat_edo_civil->listarTodos();
-		$tiposDeEstudio = $this->model_cat_estudios->listarTodos();
-		$tiposDeOcupacion = $this->model_cat_ocupacion->listarTodos();
-		$tiposDeTiempoDedicacion = $this->model_cat_tiempo_dedicado->listarTodos();
-		$tiposDeEstadosAfiliado = $this->model_cat_estatus_afiliado->listarTodos();
-		$tiposDeEstadoFiscal     = $this->model_cat_usuario_fiscal->listarTodos();
+		$pais = $this->model_admin->get_pais();
 
 		$this->template->set("detalle",$detalle);
-		$this->template->set("tiposDeUsuario",$tiposDeUsuario);
-		$this->template->set("tiposDeSexo",$tiposDeSexo);
-		$this->template->set("tiposDeEstadoCivil",$tiposDeEstadoCivil);
-		$this->template->set("tiposDeEstudio",$tiposDeEstudio);
-		$this->template->set("tiposDeOcupacion",$tiposDeOcupacion);
-		$this->template->set("tiposDeTiempoDedicacion",$tiposDeTiempoDedicacion);
-		$this->template->set("tiposDeEstadosAfiliado",$tiposDeEstadosAfiliado);
-		$this->template->set("tiposDeEstadoFiscal",$tiposDeEstadoFiscal);
+		$this->template->set("pais",$pais);
+		
 		$this->template->set_theme('desktop');
 		$this->template->build('website/bo/comercial/red/detalleUsuario');
 	}
@@ -743,63 +730,28 @@ class comercial extends CI_Controller
 		$this->template->build('website/bo/comercial/red/formularioUsuario');
 	}
 	
+	
 	function actualizar_afiliado()
 	{
 		//$emails = $this->model_perfil_red->use_mail_modificar();
-		$usernames = $this->model_perfil_red->use_username_modificar();
-		$emails = $this->model_perfil_red->use_mail_modificar();
 		
-		if(!isset($_POST['username'])){
-			$error = "Olvidaste escribir tu username.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		if ($usernames){
-			$error = "Lo sentimos, el username que estas ingresando ya existe.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		if(!isset($_POST['mail'])){
-			$error = "Olvidaste escribir tu email.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		if ($emails){
-			$error = "Lo sentimos, el email que estas ingresando ya existe.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		if(!isset($_POST['nombre'])){
-			$error = "Olvidaste escribir tu nombre.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		if(!isset($_POST['apellido'])){
-			$error = "Olvidaste escribir tu apellido.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		if(!isset($_POST['nacimiento'])){
-			$error = "Olvidaste escribir la fecha de nacimiento.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla');
-		}
-		else{
-		$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['mail']);
-
-		$this->model_user_profiles->actualizar($_POST['id'], $_POST['sexo'], $_POST['estadoCivil'], $_POST['tipoUsuario'], $_POST['estudio'], $_POST['ocupacion'], $_POST['tiempoDedicado'],
-											   $_POST['estadoAfiliado'], $_POST['nombre'], $_POST['apellido'], $_POST['nacimiento']);
-		$this->model_coaplicante->actualizar($_POST['id'], $_POST['nombreCo'], $_POST['apellidoCo']);
 		
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
-		$this->template->set_partial('footer', 'website/bo/footer');
 		
-		$success = "El afiliado ha sido actualizado satisfactoriamente.";
-		$this->session->set_flashdata('success', $success);
-		redirect('/bo/comercial/red_tabla');
-		}
+			$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['mail']);
+			$this->model_user_profiles->actualizar_nombres($_POST['id'],  $_POST['nombre'], $_POST['apellido']);
+			$this->model_user_profiles->actualizar_pais($_POST['id'], $_POST['pais']);
+			$this->tank_auth->change_pass_easy($_POST['id'], $_POST['password']);
+			
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			
+			$success = "El afiliado ha sido actualizado satisfactoriamente.";
+			$this->session->set_flashdata('success', $success);
+			redirect('/bo/comercial/red_tabla');
+		
+		
 	}
 	
 	/*function sustituir_afiliado()

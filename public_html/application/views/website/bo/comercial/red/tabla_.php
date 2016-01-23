@@ -62,12 +62,12 @@
 					</center>
 				</div>
 				
-				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+			<!-- <div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
 					<a title="Sustituir" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
 					<br>Sustituir
 					</center>
-				</div>
+				</div> -->	
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
@@ -87,6 +87,13 @@
 					<center>
 						<a title="Arbol 2" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
 						<br>Arbol 2
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Eliminar" style="cursor: pointer;" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+						<br>Eliminar
 					</center>
 				</div>
 				
@@ -198,10 +205,11 @@
 							<?}?>
 							
 					        <a title="Editar" style='cursor: pointer;' onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-					        <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
+					        <!-- <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a> -->
 					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
 					        <a title="Arbol 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a>
 					        <a title="Arbol 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
+					        <a title="Eliminar" style='cursor: pointer;' onclick="eliminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 						</td>
 				        
 				    </tr>
@@ -289,6 +297,10 @@ $.ajax({
 	  }
 	})
 });//Fin callback bootbox
+}
+
+function eliminar_afiliado(){
+	
 }
 
 $(document).ready(function() {

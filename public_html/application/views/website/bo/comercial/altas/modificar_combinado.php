@@ -33,6 +33,25 @@
 							</section>
 
 							<fieldset>
+							<legend>País</legend>
+							<section class="col col-12" style="width: 50%;">País de la mercancía
+											<label class="select">
+												<select id="pais2" required name="pais" onChange="ImpuestosPais()">
+													<?foreach ($pais as $key)
+													{	if ($mercancia[0]->pais == $key->Code){?>
+															<option selected value="<?=$key->Code?>">
+																<?=$key->Name?>
+															</option>
+														<?}else{?>
+															<option value="<?=$key->Code?>">
+																<?=$key->Name?>
+															</option>
+														<?}?>
+													<?}?>
+												</select>
+											</label>
+										</section>
+
 								<legend>Datos del Paquete</legend>
 								<fieldset>
 
@@ -78,15 +97,15 @@
 												           	<label class="select">
 												               	<select class="custom-scroll"  name="producto[]">
 												                   	<?foreach ($producto as $key){
-												                    	if($key_1->id_producto == $key->id)
+												                    	if($key_1->id == $key->id)
 																		{?>
-												                        	<option selected value= '<? echo $key->id?>' >
+												                        	<option selected value= '<? echo $key->id_mercancia?>' >
 												                            	<? echo $key->nombre?> (ACTIVO)
 												                            </option>
 												                        <?}
 																		else
 																		{?>
-																			<option value= '<? echo $key->id?>'>
+																			<option value= '<? echo $key->id_mercancia?>'>
 												                            	<? echo $key->nombre?>
 												                            </option>
 																		<?}
@@ -98,7 +117,7 @@
 											        
 											        	<section class="col col-4"  style="width: 50%">
 											           		<label class="input">Cantidad de productos
-											                	<input required type="number" min="1" name="n_productos[]" id="prod_qty" value= '<? echo $key_1->cantidad_producto?>' required>
+											                	<input required type="number" min="1" name="n_productos[]" id="prod_qty" value= '<? echo $key_1->cantidad?>' required>
 											            	</label>
 											        	</section>
 											        						<div class=" text-center row">
@@ -133,15 +152,15 @@
 												            <label class="select">
 												                <select class="custom-scroll" name="servicio[]">
 												                        <?foreach ($servicio as $key){
-													                    	if($key_1->id_servicio==$key->id)
+													                    	if($key_1->id==$key->id)
 																			{?>
-														                        <option selected value='<? echo $key->id?>'>
+														                        <option selected value='<? echo $key->id_mercancia?>'>
 														                            <? echo $key->nombre?> (ACTIVO)
 														                        </option>
 													                        <?}
 																			else 
 																			{?>
-																				<option value='<? echo $key->id?>'>
+																				<option value='<? echo $key->id_mercancia?>'>
 													                            	<? echo $key->nombre ?>
 													                            </option>
 																			<?}
@@ -152,7 +171,7 @@
 													    
 													    <section class="col col-4"  style="width: 50%">
 													       <label class="input">Cantidad de servicios
-													            <input required type="number" min="1" name="n_servicios[]" id="serv_qty" value='<? echo $key_1->cantidad_servicio?>' >
+													            <input required type="number" min="1" name="n_servicios[]" id="serv_qty" value='<? echo $key_1->cantidad?>' >
 													        </label>
 													    </section>
 													<div  class=" text-center row">
@@ -179,7 +198,7 @@
 								<div id="moneda">
 									<fieldset id="moneda_field">
 
-										<legend>Moneda y país</legend>
+										<legend>Moneda</legend>
 
 										<section class="col col-2" style="width: 50%;">
 											<label class="input"> Costo real 
@@ -205,23 +224,7 @@
 											</label>
 										</section>
 													
-										<section class="col col-12" style="width: 50%;">País de la mercancía
-											<label class="select">
-												<select id="pais2" required name="pais" onChange="ImpuestosPais()">
-													<?foreach ($pais as $key)
-													{	if ($mercancia[0]->pais == $key->Code){?>
-															<option selected value="<?=$key->Code?>">
-																<?=$key->Name?>
-															</option>
-														<?}else{?>
-															<option value="<?=$key->Code?>">
-																<?=$key->Name?>
-															</option>
-														<?}?>
-													<?}?>
-												</select>
-											</label>
-										</section>
+										
 
 										<section class="col col-3" style="width: 50%;">
 											<label class="input"> Puntos comisionables 
@@ -258,11 +261,11 @@
 													<?}?>
 													</section>
 										
-										<section class="col col-6" style="width: 50%">
+										<!--<section class="col col-6" style="width: 50%">
 											<br>
 											<br>
 											<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
-										</section>
+										</section>-->
 
 									</fieldset>
 								</div>
@@ -344,7 +347,7 @@ function new_product(id)
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<?foreach ($producto as $key){?>'
-		+'<option value="<? echo $key->id?>">'
+		+'<option value="<? echo $key->id_mercancia?>">'
 		+'<? echo $key->nombre?></option>'
 		+'<?}?>'
 		+'</select>'
@@ -374,7 +377,7 @@ function new_service(id)
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<?foreach ($servicio as $key){?>'
-		+'<option value="<?=$key->id?>">'
+		+'<option value="<?=$key->id_mercancia?>">'
 		+'<?=$key->nombre?></option>'
 		+'<?}?>'
 		+'</select>'

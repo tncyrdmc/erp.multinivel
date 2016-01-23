@@ -70,8 +70,8 @@ class admin extends CI_Controller
 		$proveedores	 = $this->model_admin->get_proveedor();
 		$promo			 = $this->model_admin->get_promo();
 		$grupo			 = $this->model_admin->get_grupo();
-		$servicio		 = $this->model_admin->get_servicio();
-		$producto		 = $this->model_admin->get_producto();
+		//$servicio		 = $this->model_admin->get_servicio();
+		//$producto		 = $this->model_admin->get_producto();
 		$combinado		 = $this->model_admin->get_combinado();
 		$impuesto		 = $this->model_admin->get_impuesto();
 		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
@@ -382,7 +382,7 @@ class admin extends CI_Controller
 				$prods=$this->model_admin->get_prod_combinado($_POST['id']);
 				$servs=$this->model_admin->get_serv_combinado($_POST['id']);
 				$proveedores    = $this->model_admin->get_proveedor2(3);
-				
+				//$prods=0;
 				$id_mercancia = $_POST['id'];
 				
 				

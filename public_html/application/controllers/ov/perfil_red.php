@@ -830,6 +830,43 @@ class perfil_red extends CI_Controller
 		}
 	}
 	
+	function validate_user_data2()
+	{
+	
+		$use_mail=$this->model_perfil_red->use_mail_modificar();
+		$use_username=$this->model_perfil_red->use_username_modificar();
+	
+		$email = preg_match(
+				'/^[A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				);
+	
+		if(!$_POST['username']||!$_POST['mail']){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+	
+		else if(!$email){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+		else if($_POST['password']!=$_POST['confirm_password']){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+	
+		else if(!$use_mail&&!$use_username){
+			echo "<script>
+				  $('.btn-next').removeAttr('disabled');
+				  </script>
+				";
+		}
+	}
 	
 	function use_mail()
 	{

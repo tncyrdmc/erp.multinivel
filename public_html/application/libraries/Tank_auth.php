@@ -395,6 +395,24 @@ class Tank_auth
 		return FALSE;
 	}
 
+	function change_pass_easy($id, $new_pass)
+	{
+		
+			$hasher = new PasswordHash(
+					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+					// success
+	
+				// Hash new password using phpass
+				$hashed_password = $hasher->HashPassword($new_pass);
+	
+				// Replace old password with new one
+				$this->ci->users->change_password($id, $hashed_password);
+				return TRUE;
+				
+		return FALSE;
+	}
+	
 	/**
 	 * Change user email (only when user is logged in) and return some data about user:
 	 * user_id, username, new_email, new_email_key.
