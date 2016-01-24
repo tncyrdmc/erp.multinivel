@@ -108,19 +108,13 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		and b.estatus like "ACT" order by d.descripcion');
 		return $q->result();
 	}
-	function get_productos_red($idRed, $pais, $id_usuario)
+	function get_productos_red($idCategoriaRed, $pais)
 	{
 		$q=$this->db->query('Select a.nombre, a.descripcion, b.id , b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red 
 from producto a, mercancia b, cat_grupo_producto d
-where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.estatus like "ACT" and b.pais = "'.$pais.'" and a.id_grupo='.$idRed.' order by d.descripcion');
+where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.estatus like "ACT" and (b.pais = "'.$pais.'" or b.pais = "AAA") and a.id_grupo='.$idCategoriaRed.' order by d.descripcion');
 		$produc =  $q->result();
-		
-		$productos = array();
-		foreach ($produc as $producto){
-			if(!$this->ComprobarCompraMercancia($id_usuario, $producto->id)){
-				array_push($productos, $producto);
-			}
-		}
+
 		return $produc;
 	}
 	function get_grupo_prod()
@@ -172,18 +166,13 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		return $q->result();
 	}
 	
-	function get_servicios_red($idRed,$idPais, $id_usuario)
+	function get_servicios_red($idCategoriaRed,$pais)
 	{
 		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red 
 		from servicio a, mercancia b
-		where a.id=b.sku and b.id_tipo_mercancia= 2 and b.estatus like "ACT" and a.id_red= '.$idRed.' and b.pais = "'.$idPais.'"');
+		where a.id=b.sku and b.id_tipo_mercancia= 2 and b.estatus like "ACT" and a.id_red= '.$idCategoriaRed.' and (b.pais = "'.$pais.'" or b.pais = "AAA")');
 		$servicios_bd =  $q->result();
-		$servicios = array();
-		foreach ($servicios_bd as $servico){
-			if(!$this->ComprobarCompraMercancia($id_usuario, $servico->id)){
-				array_push($servicios, $servico);
-			}
-		}
+
 		return $servicios_bd;
 	}
 	function get_servicio_espec($busqueda)
@@ -200,18 +189,37 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3');
 		return $q->result();
 	}
-	function get_combinados_red($idRed, $pais, $id_usuario)
+	function get_combinados_red($idCategoriaRed,$pais)
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
-		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.' and d.pais = "'.$pais.'" group by (d.id)');
+		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idCategoriaRed.' and (d.pais = "'.$pais.'" or d.pais = "AAA") group by (d.id)');
 		$combinados_bd =  $q->result();
-		$combinados = array();
-		foreach ($combinados_bd as $combinado){
-			if(!$this->ComprobarCompraMercancia($id_usuario, $combinado->id)){
-				array_push($combinados, $combinado);
-			}
-		}
+
 		return $combinados_bd;
+	}
+	
+	function get_paquetes_inscripcion_red($idCategoriaRed,$pais)
+	{
+		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red 
+								from paquete_inscripcion a, mercancia d, cross_paquete
+								e where a.id_paquete=e.id_paquete 
+								and d.sku=a.id_paquete 
+								and d.estatus="ACT" 
+								and d.id_tipo_mercancia=4 and a.id_red='.$idCategoriaRed.' 
+								and (d.pais = "'.$pais.'" or d.pais = "AAA") group by (d.id)');
+		$paquete_bd =  $q->result();
+
+		return $paquete_bd;
+	}
+	
+	function get_membresias_red($idCategoriaRed,$pais)
+	{
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red
+		from membresia a, mercancia b
+		where a.id=b.sku and b.id_tipo_mercancia= 5 and b.estatus like "ACT" and a.id_red= '.$idCategoriaRed.' and (b.pais = "'.$pais.'" or b.pais = "AAA")');
+		$membresia_bd =  $q->result();
+	
+		return $membresia_bd;
 	}
 	
 	function get_paquetes_inscripcion($pais, $id_usuario)
@@ -224,9 +232,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		foreach ($combinados_bd as $combinado){
 			if(!$this->ComprobarCompraMercancia($id_usuario, $combinado->id)){
 				array_push($combinados, $combinado);
-			}
+
 		}
 		return $combinados_bd;
+	}
 	}
 	
 	function get_combinado_espec($busqueda)
@@ -237,27 +246,21 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		(a.nombre like "'.$busqueda.'%" or a.nombre like "%'.$busqueda.'" or a.nombre like "%'.$busqueda.'%")');
 		return $q->result();
 	}
-	function detalles_productos($i)
-	{
-		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.peso, a.alto, a.ancho, a.profundidad, a.diametro, b.costo, b.costo_publico 
-		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
-		return $q->result();
-	}
 	
-	function detalles_productos_red($i)
+	function detalles_productos($i)
 	{
 		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables
 		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
 	
-	function detalles_servicios($i)
+	function detalles_membresia($i)
 	{
-		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.fecha_inicio, a.fecha_fin, b.costo, b.costo_publico from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
+		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from membresia a, mercancia b where a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
 	
-	function detalles_servicios_red($i)
+	function detalles_servicios($i)
 	{
 		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
 		return $q->result();
@@ -283,70 +286,78 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function detalles_combinados($i)
 	{
-		$q_sku=$this->db->query('SELECT sku FROM mercancia where id='.$i);
-		$sku_res=$q_sku->result();
-		$sku=$sku_res[0]->sku;
-		$q1=$this->db->query('SELECT * FROM cross_combinado where id_combinado='.$sku);
-		$combinados=$q1->result();
-		$combinado=array();
-		$arr_el=array("merc"=> "","qty"=>"");
-		$j=0;
-		foreach($combinados as $comb)
+		$combinado=$this->db->query('SELECT e.id_combinado as id_combinado,a.nombre, a.descripcion,d.costo, d.costo_publico,d.puntos_comisionables from combinado a, mercancia d, cross_combinado
+		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and d.id='.$i.' group by (d.id)');
+		$combinado=$combinado->result();
+
+		$q1=$this->db->query('SELECT * FROM cross_combinado where id_combinado='.$combinado[0]->id_combinado);
+		$mercanciaCombinado=$q1->result();
+		$descripcionMercancias="";
+
+		foreach($mercanciaCombinado as $mercancia)
 		{
-			if($comb->id_producto!=0)
+	
+			if($mercancia->id_tipo_mercancia==1)
 			{
-				$qp=$this->db->query('SELECT nombre FROM producto where id='.$comb->id_producto);
+				$qp=$this->db->query('SELECT a.nombre as nombre
+										FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$mercancia->id_mercancia);
 				$prod=$qp->result();
-				$arr_el["merc"]=$prod[0]->nombre;
-				$arr_el["qty"]=$comb->cantidad_producto;
-				$combinado[$j]=$arr_el;
-				$j++;
+				$descripcionMercancias.=$descripcionMercancias."✓ ".$mercancia->cantidad." ".$prod[0]->nombre."";
 			}
-			if($comb->id_servicio!=0)
+			
+			if($mercancia->id_tipo_mercancia==2)
 			{
-				$qp=$this->db->query('SELECT nombre FROM servicio where id='.$comb->id_servicio);
-				$serv=$qp->result();
-				$arr_el["merc"]=$serv[0]->nombre;
-				$arr_el["qty"]=$comb->cantidad_servicio;
-				$combinado[$j]=$arr_el;
-				$j++;
+				$qp=$this->db->query('SELECT a.nombre as nombre 
+										from servicio a, mercancia b where a.id=b.sku and b.id='.$mercancia->id_mercancia);
+				$prod=$qp->result();
+				$descripcionMercancias.=" ✓ ".$mercancia->cantidad." ".$prod[0]->nombre."";
 			}
+
 		}
+
+		$descripcionMercancias="(".$descripcionMercancias.")</p><p>".$combinado[0]->descripcion;
+		$combinado[0]->descripcion=$descripcionMercancias;
 		return $combinado;
 	}
 	
 	function detalles_paquete($i)
 	{
-		$q_sku=$this->db->query('SELECT sku FROM mercancia where id='.$i);
-		$sku_res=$q_sku->result();
-		$sku=$sku_res[0]->sku;
-		$q1=$this->db->query('SELECT * FROM cross_paquete where id_paquete='.$sku);
-		$combinados=$q1->result();
-		$combinado=array();
-		$arr_el=array("merc"=> "","qty"=>"");
-		$j=0;
-		foreach($combinados as $comb)
+		$paquete=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red 
+								from paquete_inscripcion a, mercancia d, cross_paquete
+								e where a.id_paquete=e.id_paquete 
+								and d.sku=a.id_paquete 
+								and d.estatus="ACT" 
+								and d.id_tipo_mercancia=4 and d.id='.$i.' group by (d.id)');
+		$paquete=$paquete->result();
+
+		$q1=$this->db->query('SELECT * FROM cross_paquete where id_paquete='.$paquete[0]->id_paquete);
+		$mercanciaPaquete=$q1->result();
+		$descripcionMercancias="";
+
+		foreach($mercanciaPaquete as $mercancia)
 		{
-			if($comb->id_producto!=0)
+	
+			if($mercancia->id_tipo_mercancia==1)
 			{
-				$qp=$this->db->query('SELECT nombre FROM producto where id='.$comb->id_producto);
+				$qp=$this->db->query('SELECT a.nombre as nombre
+										FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$mercancia->id_mercancia);
 				$prod=$qp->result();
-				$arr_el["merc"]=$prod[0]->nombre;
-				$arr_el["qty"]=$comb->cantidad_producto;
-				$combinado[$j]=$arr_el;
-				$j++;
+				$descripcionMercancias.=$descripcionMercancias."✓ ".$mercancia->cantidad." ".$prod[0]->nombre."";
 			}
-			if($comb->id_servicio!=0)
+			
+			if($mercancia->id_tipo_mercancia==2)
 			{
-				$qp=$this->db->query('SELECT nombre FROM servicio where id='.$comb->id_servicio);
-				$serv=$qp->result();
-				$arr_el["merc"]=$serv[0]->nombre;
-				$arr_el["qty"]=$comb->cantidad_servicio;
-				$combinado[$j]=$arr_el;
-				$j++;
+				$qp=$this->db->query('SELECT a.nombre as nombre 
+										from servicio a, mercancia b where a.id=b.sku and b.id='.$mercancia->id_mercancia);
+				$prod=$qp->result();
+				$descripcionMercancias.=" ✓ ".$mercancia->cantidad." ".$prod[0]->nombre."";
 			}
+
 		}
-		return $combinado;
+
+		$descripcionMercancias="(".$descripcionMercancias.")</p><p>".$paquete[0]->descripcion;
+		$paquete[0]->descripcion=$descripcionMercancias;
+		return $paquete;
 	}
 
 	function costo_merc($id)
@@ -404,10 +415,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		and b.id_promocion='.$i.' limit 1');
 		return $q->result();
 	}
-	function get_limite_prod($i)
+	function get_limite_compras($tipoMercancia,$i)
 	{
-		$q=$this->db->query("select a.min_venta, a.max_venta from producto a, mercancia b where a.id=b.sku and b.id=".$i);
-		return $q->result();
+			$q=$this->db->query("select a.min_venta, a.max_venta from producto a, mercancia b where a.id=b.sku and b.id=".$i);
+			return $q->result();
 	}
 	function get_costo($i)
 	{
@@ -824,6 +835,65 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return $mercancia[0]->costo_publico;
 	}
 	
+	function getCostosImpuestos($id_pais_usuario,$id_mercancia){
+		$costos = $this->db->query("SELECT m.id,m.costo,m.costo_publico,m.iva,ci.descripcion as tipoImpuesto,
+									m.costo*(ci.porcentaje/100)as costoImpuesto,
+									m.pais,CONCAT(ci.porcentaje,'% de ',ci.descripcion) as nombreImpuesto FROM mercancia m ,cat_impuesto ci ,cross_merc_impuesto cmi
+									where(m.id=cmi.id_mercancia)
+									and (ci.id_impuesto=cmi.id_impuesto)
+									and(m.id=".$id_mercancia.")
+									group by ci.id_impuesto,ci.descripcion");
+		
+		$costosImpuestos=$costos->result();
+		
+		
+		
+		if($costosImpuestos==null)
+			return $this->setNoImpuestoMercancia($id_mercancia);
+		
+		
+		if($costosImpuestos[0]->tipoImpuesto=="IVA"&&$costosImpuestos[0]->pais=="AAA"){
+	
+			return $this->getImpuestoMercanciaPorPaisUsuario($id_mercancia,$id_pais_usuario);
+		}
+		
+		return $costos->result();
+
+	}
+	
+	private function setNoImpuestoMercancia($id_mercancia) {
+		$costos = $this->db->query("SELECT m.id,m.costo,m.costo_publico,'MAS' as iva,
+									0 as costoImpuesto,' ' as nombreImpuesto,
+									'AAA' as pais,'' as nombreIMpuesto,'' as id_impuesto FROM mercancia m
+									where(m.id=".$id_mercancia.")
+									");
+		return $costos->result();
+	}
+
+	 private function getImpuestoMercanciaPorPaisUsuario($id_mercancia,$id_pais_usuario) {
+	
+		 $costos = $this->db->query("SELECT m.id,m.costo,m.costo_publico,m.iva,ci.descripcion as nombreImpuesto,
+										m.costo*(ci.porcentaje/100)as costoImpuesto,
+										ci.id_pais,CONCAT(ci.porcentaje,'% de ',ci.descripcion) as nombreImpuesto,
+										ci.id_impuesto FROM mercancia m ,cat_impuesto ci ,cross_merc_impuesto cmi
+										where(m.id=cmi.id_mercancia)
+										and(m.id=".$id_mercancia.")
+										and ci.id_pais='".$id_pais_usuario."' and ci.descripcion='IVA'
+										group by ci.id_impuesto,ci.descripcion");
+	 	return $costos->result();
+	}
+	
+	
+/*	function getCostosNoImpuestos($id_mercancia){
+		$costos = $this->db->query("SELECT m.id,m.costo,m.costo_publico,'MAS' as iva,
+									0 as costoImpuesto,
+									'AAA' as pais,'' as nombreIMpuesto,'' as id_impuesto FROM mercancia m
+									where(m.id=".$id_mercancia.")
+									");
+		return $costos->result();
+	}*/
+	
+/*	
 	function ImpuestoMercancia($id_mercancia, $costo){
 		$total = 0;
 		$mercancia = $this->db->query("select id_tipo_mercancia as id_tipo,costo from mercancia where id =".$id_mercancia);
@@ -868,7 +938,9 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		}
 		return $total;
 	}
-	
+	*/
+
+
 	
 	function registrar_venta($id_usuario, $costo, $id_metodo, $transacion, $firma, $fecha, $impuesto)
 	{

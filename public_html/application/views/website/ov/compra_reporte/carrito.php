@@ -43,11 +43,12 @@
     <div class="navbar-cart  collapse">
       <div class="cartMenu  hidden-lg col-xs-12 hidden-md hidden-sm">
         <div class="w100 miniCartTable scroll-pane">
-          <table  >
-            <tbody>
+          <table>
+            <tbody class="cartButton">
             	  <?php
                   	if($this->cart->contents())
 					{
+						
 						$cantidad=0; 
 						foreach ($this->cart->contents() as $items) 
 						{
@@ -56,11 +57,11 @@
 									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$compras[$cantidad]['imagen'].'" alt="img"> </a> </div></td>
 									<td style="width:40%"><div class="miniCartDescription">
 				                        <h4> <a href=""> '.$compras[$cantidad]['nombre'].'</a> </h4>
-				                        <div class="price"> <span> '.$items['price'].' </span> </div>
+				                        <span> '.$items['price'].' </span>
 				                      </div></td>
 				                    <td  style="width:10%" class="miniCartQuantity"><a > X '.$items['qty'].' </a></td>
-				                    <td  style="width:15%" class="miniCartSubtotal"><span>'.$total.'</span></td>
-				                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> x </a></td>
+				                    <td  style="width:15%" class="miniCartSubtotal"><div class="price"><span>$ '.$total.'</span></div></td>
+				                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="txt-color-red fa fa-trash-o fa-2x "></i> </a></td>
 								</tr>';
 								$cantidad++; 
 						} 
@@ -74,7 +75,7 @@
         
         <div class="miniCartFooter  miniCartFooterInMobile text-right">
           <h3 class="text-right subtotal"> Subtotal: $<?php echo $this->cart->total(); ?> </h3>
-          <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="a_comprar()"> COMPRAR! </a> </div>
+          <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="a_comprar()"> <i class="fa fa-money fa"></i> PAGAR!  </a> </div>
         <!--/.miniCartFooter--> 
         
       </div>
@@ -85,10 +86,11 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
-        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prod()"> Productos </a></li>
-        <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_serv()"> Servicios </a></li>
-        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_comb()"> Combinados </a></li>
-        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prom()"> Promociones </a></li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(1)"> Productos </a></li>
+        <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(2)"> Servicios </a></li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(3)"> Combinados </a></li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(5)"> Membresia </a></li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(4)"> Paquetes de Inscripción </a></li>
       </ul>
       <!--- this part will be hidden for mobile version -->
       <div class="nav navbar-nav navbar-right hidden-xs">
@@ -96,7 +98,7 @@
           <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 ">
             <div class="w100 miniCartTable scroll-pane">
               <table> 
-                <tbody>
+                <tbody class="cartButton">
                   <?php
                   	if($this->cart->contents())
 					{
@@ -108,11 +110,11 @@
 									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$compras[$cantidad]['imagen'].'" alt="img"> </a> </div></td>
 									<td style="width:40%"><div class="miniCartDescription">
 				                        <h4> <a href=""> '.$compras[$cantidad]['nombre'].'</a> </h4>
-				                        <div class="price"> <span> '.$items['price'].' </span> </div>
+				                        <span>$ '.$items['price'].' </span>
 				                      </div></td>
 				                    <td  style="width:10%" class="miniCartQuantity"><a > X '.$items['qty'].' </a></td>
-				                    <td  style="width:15%" class="miniCartSubtotal"><span>'.$total.'</span></td>
-				                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> x </a></td>
+				                    <td  style="width:15%" class="miniCartSubtotal"><div class="price"><span>$ '.$total.'</span></div></td>
+				                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="txt-color-red fa fa-trash-o fa-3x "></i> </a></td>
 								</tr>'; 
 								$cantidad++;
 						} 
@@ -126,7 +128,7 @@
             
             <div class="miniCartFooter text-right">
               <h3 class="text-right subtotal"> Subtotal: $<?php echo $this->cart->total(); ?> </h3>
-              <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="a_comprar()"> COMPRAR! </a> </div>
+              <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="a_comprar()"> <i class="fa fa-money fa"></i> PAGAR!  </a> </div>
             <!--/.miniCartFooter--> 
             
           </div>
@@ -166,7 +168,7 @@
 				<div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-arrows-v"></i> </span>
-						<h2 class="font-md"><i>Categoria de los productos</i></h2>				
+						<h2 class="font-md"><i>Categorias</i></h2>				
 					</header>
 
 					<!-- widget div-->
@@ -182,12 +184,12 @@
 						<!-- widget content -->
 						<div class="widget-body">
 							<? foreach ($redes as $red) {?>
-								<label><?= $red->nombre;?></label>
+								<h3><?= $red->nombre;?></h3>
 								<div class="dropdown">
 										<?php foreach ($grupos as $grupo) {
 												if ($red->nombre == $grupo->red ){
 										?>
-											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#" onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
+											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#" onclick="show_todos_categoria('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
 										<?php } }?>
 
 								</div>
@@ -318,7 +320,7 @@
 </script>
 <script src="/cart/HTML/assets/js/pace.min.js"></script>
 <!--<script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> -->
-<script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<!--<script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>  -->
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
 			function detalles(id,tipo)
@@ -332,12 +334,12 @@
 				             
 				             bootbox.dialog({
 								message: msg,
-								title: "Descripcion",
+								title: "Descripción",
 								className: "div_info_merc",
 								buttons: {
 									success: {
-										label: "Ok",
-										className: "btn-success",
+										label: "Cerrar",
+										className: "btn-danger",
 										callback: function() {
 											}
 									}
@@ -374,7 +376,7 @@
 			}
 		</script>
 		<script type="text/javascript">
-			function show_prod()
+/*			function show_prod()
 			{
 				$.ajax({
 					type: "get",
@@ -385,7 +387,8 @@
 					}
 				});
 			}
-			function show_serv()
+*/
+/*			function show_serv()
 			{
 				$.ajax({
 					type: "get",
@@ -396,7 +399,8 @@
 					}
 				});
 			}
-			function show_prom()
+*/			
+/*			function show_prom()
 			{
 				$.ajax({
 					type: "get",
@@ -407,8 +411,8 @@
 
 					}
 				});
-			}
-			function show_comb()
+			}*/
+/*			function show_comb()
 			{
 				$.ajax({
 					type: "get",
@@ -419,7 +423,20 @@
 
 					}
 				});
+			}*/
+			function show_todos_categoria(idTipoRed)
+			{
+				$.ajax({
+					type: "get",
+					url: "show_todos_categoria",
+					data: { id: idTipoRed},
+					success:function(msg){
+						$("#mercancias").html(msg);
+				
+					}
+				});
 			}
+					
 			function show_todos(idTipoRed)
 			{
 				$.ajax({
@@ -432,6 +449,20 @@
 					}
 				});
 			}
+
+			function show_todos_tipo_mercancia(tipoMercancia)
+			{
+				$.ajax({
+					type: "get",
+					url: "show_todos_tipo_mercancia",
+					data: { tipoMercancia: tipoMercancia},
+					success:function(msg){
+						$("#mercancias").html(msg);
+				
+					}
+				});
+			}
+/*			
 			function busqueda_merc(tipo)
 			{
 				
@@ -484,32 +515,15 @@
 					default:
 						
 				}
-			}
+			}*/
 		</script>
 		<script>
-			function comprar(id,tipo,desc,min,max)
+			function comprar(id,tipo)
 			{
 				
 				var qty=$("#cantidad").val();
-				if(qty>max||qty<min)
-				{
-					bootbox.dialog({
-						message: 'La cantidad solicitada de está mercancia debe estar entre '+min+' y '+max,
-						title: "Error",
-						className: "",
-						buttons: {
-							danger: {
-							label: "Ok!",
-							className: "btn-danger",
-							callback: function() {
-								}
-							}
-						}
-					});
-				}
-				else
-				{
-					var datos={'id':id,'tipo':tipo,'qty':qty,'desc':desc};
+
+					var datos={'id':id,'tipo':tipo,'qty':qty};
 					$.ajax({
 						data:{info:JSON.stringify(datos)},
 						type: 'get',
@@ -547,12 +561,10 @@
 										}
 									}
 								});
-								$("#cart_cont").html(msg);
+								update_cart_button();
 							}			
 						}
 					});
-					
-				}
 			}
 			function ver_cart()
 			{
@@ -576,24 +588,21 @@
 					}
 				});
 			}
+
+			function update_cart_button()
+			{
+				$.ajax({
+					type: "get",
+					url: "printContentCartButton",
+					success:function(msg){
+						$(".cartButton").html(msg);
+						
+					}
+				});
+			}
+/*			
 			function to_buy()
 			{
-				<?php 
-					if(isset($_GET['tipo']))
-					{
-						if($_GET['tipo']==3)
-						{
-							echo 'var tipo=3;';
-						}
-						else {
-							echo 'var tipo=1;';
-						}
-					}
-					else
-					{
-						echo 'var tipo=1;';
-					}
-				?>
 				$.ajax({
 					type: "get",
 					data: "tipo="+tipo,
@@ -634,211 +643,52 @@
 				
 				});
 			}
-			function completar_compra(id)
-			{
-				switch(id)
-				{
-					case 1:
-						var banco=$("#banco_taj").val();
-						var tipo=$("#tipo_taj").val();
-						var numero=$("#numero_taj").val();
-						var titular=$("#titular_taj").val();
-						var mes=$("#mes_taj").val();
-						var ano=$("#ano_taj").val();
-						var codigo=$("#code_taj").val();
-							var fecha=0;
-						<?php 
-							if(isset($_GET['usr']))
-							{
-								echo 'var comprador='.$_GET['usr'].';';
-							}
-							else {
-								echo 'var comprador=0;';
-							}
-						?>
-						if($('#saveInfoid').prop('checked'))
-						{
-							var salvar=1
-						}
-						else
-						{
-							var salvar=0
-						}
-						if(!banco)
-						{
-							alert('Seleccione una empresa bancaria');
-						}
-						else
-						{
-							if(!tipo)
-							{
-								alert('Seleccione una tipo de tarjeta');
-							}
-							else
-							{
-								if(!numero)
-								{
-									alert('El campo numero es obligatorio');
-								}
-								else
-								{
-									if(!titular)
-									{
-										alert('El nombre del titular es obligatorio');
-									}
-									else
-									{
-										if(!mes)
-										{
-											alert('Seleccione un mes');
-										}
-										else
-										{
-											if(!ano)
-											{
-												alert('Seleccione un año');
-											}
-											else
-											{
-												if(!codigo)
-												{
-													alert('El codigo de seguridad es obligatorio');
-												}
-												else
-												{
-													var datos={'id':id,'fecha':fecha,'banco':banco,'tipo':tipo,'numero':numero,'titular':titular,'mes':mes,'ano':ano,'codigo':codigo,'salvar':salvar,'comprador':comprador};
-													$.ajax({
-														data:{info:JSON.stringify(datos)},
-														type: 'get',
-														url: 'completar_compra',
-														success: function(){
-															alert("La compra fue un exito!");
-															window.location.href='/ov/compras/carrito_menu'
-														}
-													});
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					case 5:
-						var banco=$("#banco_taj").val();
-						var tipo=$("#tipo_taj").val();
-						var numero=$("#numero_taj").val();
-						var titular=$("#titular_taj").val();
-						var mes=$("#mes_taj").val();
-						var ano=$("#ano_taj").val();
-						var codigo=$("#code_taj").val();
-						
-							var fecha=$("#startdate").val();
-						<?php 
-							if(isset($_GET['usr']))
-							{
-								echo 'var comprador='.$_GET['usr'].';';
-							}
-							else {
-								echo 'var comprador=0;';
-							}
-						?>
-						if($('#saveInfoid').prop('checked'))
-						{
-							var salvar=1
-						}
-						else
-						{
-							var salvar=0
-						}
-						if(!banco)
-						{
-							alert('Seleccione una empresa bancaria');
-						}
-						else
-						{
-							if(!tipo)
-							{
-								alert('Seleccione una tipo de tarjeta');
-							}
-							else
-							{
-								if(!numero)
-								{
-									alert('El campo numero es obligatorio');
-								}
-								else
-								{
-									if(!titular)
-									{
-										alert('El nombre del titular es obligatorio');
-									}
-									else
-									{
-										if(!mes)
-										{
-											alert('Seleccione un mes');
-										}
-										else
-										{
-											if(!ano)
-											{
-												alert('Seleccione un año');
-											}
-											else
-											{
-												if(!codigo)
-												{
-													alert('El codigo de seguridad es obligatorio');
-												}
-												else
-												{
-													var datos={'id':id,'fecha':fecha,'banco':banco,'tipo':tipo,'numero':numero,'titular':titular,'mes':mes,'ano':ano,'codigo':codigo,'salvar':salvar,'comprador':comprador};
-													$.ajax({
-														data:{info:JSON.stringify(datos)},
-														type: 'get',
-														url: 'completar_compra',
-														success: function(){
-															alert("La compra fue un exito!");
-															window.location.href='/ov/compras/carrito_menu'
-														}
-													});
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					default:
-						break;
-				}
-			}
+*/			
+
 			function quitar_producto(id)
 			{
+				
 				$.ajax({
-					data:'id='+id,
-					type:"get",
-					url:"quitar_producto",
-					success: function(msg){
-						$("#contenido_carro").html(msg);
-						$.ajax({
+					type: "POST",
+					url: "/auth/show_dialog",
+					data: {message: '¿ Esta seguro que desea Eliminar la mercancia ?'},
+				})
+				.done(function( msg )
+				{
+					bootbox.dialog({
+						message: msg,
+						title: 'Eliminar Mercancia',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								
+									$.ajax({
+										type: "POST",
+										url: "/ov/compras/quitar_producto",
+										data: {id:id}
+									})
+									.done(function( msg )
+									{
+										window.location.href='/ov/compras/carrito'
+									});//Fin callback bootbox
+								}
 					
-							type:"get",
-							url:"actualizar_nav",
-							success: function(msg){
-								javascript:location.reload();
-								//$("#cart_cont").html(msg);
+							},
+								danger: {
+								label: "Cancelar!",
+								className: "btn-danger",
+								callback: function() {
+
+									}
 							}
-						});
-						
-						
-						alert('La mercancia se ha borrado del carrito');
-					}
+						}
+					})
 				});
 				
 			}
+/*			
 			function muestra_afiliados()
 			{
 				if($('#comprar_otro').prop('checked'))
@@ -851,7 +701,8 @@
 
 				}
 			}
-			function show_grupo_prod()
+*/			
+/*			function show_grupo_prod()
 			{
 				var grupo=$("#grupo_prod").val();
 				$.ajax({
@@ -862,48 +713,20 @@
 						$("#mercancias").html(msg);
 					}
 				});
-			}
+			}*/
 			function a_comprar()
 			{
-				$.ajax({
-					type: "post",
-					url: "verificar_carro",
-					data: {}
-				})
-				.done(function(msg)
-				{
-					//alert(msg);
-					if(msg!=='si')
-					{ 
-						window.location.href="DatosEnvio";						
-					}
-					else
-					{
-			            bootbox.dialog({
-							message: "No tiene productos en el carrito",
-							title: "Alerta!",
-							className: "div_info_merc",
-							buttons: {
-								danger: {
-									label: "Aceptar",
-									className: "btn-danger",
-									callback: function() {
-										}
-								}
-							}
-						})
-					}
-				});
+				window.location.href="DatosEnvio";						
 			}
 		</script>
 		<script>
-			$(document).ready(function(){
+		/*	$(document).ready(function(){
 			    var wizard = $('.wizard').wizard();
 	
 			  wizard.on('finished', function (e, data) {
 			  });
 			  
-});
+			});*/
 			
 		</script>
 		<script type="text/javascript">
@@ -935,7 +758,7 @@
 				
 		})
 
-		function paquetes(){
+/*		function paquetes(){
 			$.ajax({
 				type: "get",
 				url: "show_paquetes",
@@ -945,5 +768,5 @@
 				$("#mercancias").html(msg);
 
 			});
-		}
+		} */
 		</script>
