@@ -11,6 +11,7 @@ class tipo_red extends CI_Controller{
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('model_tipo_red');
 	}
 
@@ -77,12 +78,35 @@ class tipo_red extends CI_Controller{
 		redirect("/bo/tipo_red/mostrar_redes");
 	}
 	
-	public function guardar_red(){
-			$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
+	function cambiar_estado(){
+		
+		$validar = null;
+		
+		if($_POST['estado']=='DES'){
+			$validar=$this->model_bonos->validar_bono_red($_POST['id']);
+		}		
+		
+		if(isset($_POST['id'])){				
 			
-			$this->model_tipo_red->insertar($_POST['nombre'],$_POST['descripcion'],$capacidadRed[0]->frontal,$capacidadRed[0]->profundidad);
-			$this->session->set_flashdata('error', 'Recuerda que debes crear una categoria por defecto para tu red.');
-			redirect("/bo/categorias/nueva_categoria");
+			if($validar==null){
+				echo $this->model_tipo_red->cambiar_estado() ?
+				"Se ha cambiado el estado de la Red" :
+				"No se ha podido cambiar el estado de la Red";
+			}else{
+				echo "No se ha podido desactivar la red, esta asociado a un Bono.";
+			}
+				
+		}
+	
+	}
+	
+	public function guardar_red(){
+			//$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
+			
+			echo ($this->model_tipo_red->insertar($_POST['nombre'],$_POST['descripcion'],$_POST['frontal'],$_POST['profundidad']))
+			? "La red se ha creado correctamente" : "No se pudo crear la red" ;
+			
+			
 	}
 
 	public function mostrar_redes()

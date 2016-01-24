@@ -36,7 +36,7 @@ class cgeneral extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
 		
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);

@@ -57,10 +57,10 @@
 													</a>
 												</div>
 												<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 link">	
-													<a href="/bo/configuracion/categorias">
+													<a href="/bo/capacidadRed/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;  padding-bottom: 19%;">
-															<i class="fa fa-th fa-3x"></i>
-															<h1>Categorias Productos, Servicios </h1>
+															<i class="fa fa-sort-numeric-asc fa-3x"></i>
+															<h1>Frontalidad / Profundidad</h1>
 														</div>
 													</a>
 												</div>

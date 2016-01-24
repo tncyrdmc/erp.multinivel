@@ -179,6 +179,10 @@
 		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
 		<script src="/template/js/plugin/pace/pace.min.js"></script>
 
+		<!-- spinner lib -->
+		<script src="/template/js/spin.js"></script>
+		<script src="/template/js/spinner-loader.js"></script>
+
 	    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script> if (!window.jQuery) { document.write('<script src="/template/js/libs/jquery-2.0.2.min.js"><\/script>');} </script>

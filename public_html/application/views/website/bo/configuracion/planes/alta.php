@@ -169,6 +169,7 @@ function enviar() {
 			data: $('#planes').serialize()
 		}).done(function( msg ) {
 			if(parseInt(msg)==0){
+				iniciarSpinner();
 				$.ajax({
 					type: "POST",
 					url: "/bo/planes/ingresar_plan",
@@ -182,6 +183,7 @@ function enviar() {
 								label: "Aceptar",
 								className: "btn-success",
 								callback: function() {
+										FinalizarSpinner();
 										location.href="/bo/planes/listar";
 								}
 							}					

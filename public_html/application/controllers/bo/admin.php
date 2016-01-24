@@ -13,6 +13,7 @@ class admin extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/general');
 	}
@@ -382,6 +383,8 @@ class admin extends CI_Controller
 				$prods=$this->model_admin->get_prod_combinado($_POST['id']);
 				$servs=$this->model_admin->get_serv_combinado($_POST['id']);
 				$proveedores    = $this->model_admin->get_proveedor2(3);
+				$servicioPorPais= $this->model_admin->get_servicio_pais($_POST['pais']);
+				$productoPorPais=$this->model_admin->get_producto_pais($_POST['pais']);
 				//$prods=0;
 				$id_mercancia = $_POST['id'];
 				
@@ -397,15 +400,16 @@ class admin extends CI_Controller
 				$this->template->set("impuesto",$impuesto);
 				$this->template->set("prods",$prods);
 				$this->template->set("servs",$servs);
-				$this->template->set("producto",$producto);
-				$this->template->set("servicio",$servicio);
+				$this->template->set("producto",$productoPorPais);
+				$this->template->set("servicio",$servicioPorPais);
 				//$this->template->set("style",$style);
 				$this->template->build('website/bo/comercial/altas/modificar_combinado');	
 		}elseif($id_merc==4)
 		{
 				$prods=$this->model_admin->get_prod_paquete($_POST['id']);
 				$servs=$this->model_admin->get_serv_paquete($_POST['id']);
-				
+				$servicioPorPais= $this->model_admin->get_servicio_pais($_POST['pais']);
+				$productoPorPais=$this->model_admin->get_producto_pais($_POST['pais']);
 				$id_mercancia = $_POST['id'];
 				
 				
@@ -419,8 +423,8 @@ class admin extends CI_Controller
 				$this->template->set("impuesto",$impuesto);
 				$this->template->set("prods",$prods);
 				$this->template->set("servs",$servs);
-				$this->template->set("producto",$producto);
-				$this->template->set("servicio",$servicio);
+				$this->template->set("producto",$productoPorPais);
+				$this->template->set("servicio",$servicioPorPais);
 				//$this->template->set("style",$style);
 				$this->template->build('website/bo/comercial/altas/modificar_paquete');	
 		}elseif($id_merc==5){
@@ -744,13 +748,17 @@ class admin extends CI_Controller
 		
 		$esta = $this->model_admin->ver_si_red_tiene_categorias($id);
 		$afiliados = $this->model_admin->ver_afiliados_red($id);
-		if ($esta == NULL && $afiliados == 0){
+		$validar=$this->model_bonos->validar_bono_red($id);
+		
+		if ($validar == null && $esta == NULL && $afiliados == 0){
 			
 			$this->model_admin->kill_tipo_red($id);
 			echo "Se ha eliminado la red.";
 		}
 		else if($afiliados == 1){
 			echo "Ha ocurrido un error eliminando la red, debido a que tiene afiliados.";
+		}else if($validar){
+			echo "Ha ocurrido un error eliminando la red, debido a que tiene bonos asociados.";
 		}else{
 			echo "Ha ocurrido un error eliminando la red, debido a que tiene categorias creadas.
 					<br> Lo mas recomendable es que elimine las categorias.";

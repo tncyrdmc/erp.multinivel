@@ -35,15 +35,23 @@
 					<!-- widget div-->
 	<div>
     <fieldset id="pswd">
-		<form class="smart-form" action="/bo/tipo_red/guardar_red" method="POST" role="form">
+		<form class="smart-form" action="" method="POST" role="form" id="nueva"><!-- /bo/tipo_red/guardar_red -->
 			<legend>Nuevo Tipo de Red </legend><br>
 			<div class="form-group" style="width: 20rem;">
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
-				<input type="text" class="form-control" name="nombre" size="30" placeholder="Nombre">
+				<input type="text" class="form-control" name="nombre" size="30" placeholder="Nombre" required>
 	        </label>
 	        <label class="textarea"> 										
-				<textarea style="margin-left: 1rem;" rows="6" class="custom-scroll" name="descripcion" size="30" placeholder="Descripcion"></textarea> 
+				<textarea style="margin-left: 1rem;" rows="6" class="custom-scroll" name="descripcion" size="30" required placeholder="Descripcion"></textarea> 
 			</label>
+			<br>
+			<p>Nota: Si tu red es de frontalidad o prufundidad es infinita, en la configuracion ponle 0.</p><br>
+			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
+				<input type="text" class="form-control" name="frontal" size="30" placeholder="frontalidad" required>
+	        </label>
+	        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
+				<input type="text" class="form-control" name="profundidad" size="30" placeholder="profundidad" required>
+	        </label>
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Crear</button>
 			</div>
 		</form>
@@ -55,3 +63,33 @@
 </div>
 </section>
 </div>
+
+<script type="text/javascript">
+$( "#nueva" ).submit(function( event ) {
+	event.preventDefault();
+	enviar();
+});
+
+function enviar(){
+	$.ajax({
+		type: "POST",
+		url: "/bo/tipo_red/guardar_red",
+		data: $('#nueva').serialize()
+	}).done(function( msg ) {
+		bootbox.dialog({
+			message: msg,
+			title: 'ATENCION',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							location.href="/bo/tipo_red/mostrar_redes";
+					}
+				}					
+			}
+		})
+	});//fin Done ajax
+
+}
+</script>

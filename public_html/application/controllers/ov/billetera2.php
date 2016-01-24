@@ -181,7 +181,7 @@ class billetera2 extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		$ganancias=array();
 		foreach ($redes as $red){
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
@@ -271,7 +271,7 @@ class billetera2 extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		$ganancias=array();
 		foreach ($redes as $red){
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
