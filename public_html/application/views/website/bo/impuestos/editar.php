@@ -1,5 +1,5 @@
-
-<form id="nueva" class="smart-form"  novalidate="novalidate" >
+<div id="spinner-div"></div>
+<form id="nueva" action="/bo/configuracion/actualizar_impuesto" class="smart-form" role="form" >
 							<fieldset>
 								<label class="select"> Selecione Pais
 									<select style="width: 25rem;" name="pais" required>
@@ -19,9 +19,7 @@
 								<input type="number" name="porcentaje" required placeholder="porcentaje" style="width: 50%;" class="form-control" value="<?php echo $impuesto[0]->porcentaje; ?>" required>
 							</fieldset>
 							<footer>
-								<a class="btn btn-success" onclick="enviar()">
-									Guardar
-								</a>
+								<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
 							</footer>
 						</form>
 
@@ -29,8 +27,14 @@
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
+
+$( "#nueva" ).submit(function( event ) {
+	event.preventDefault();
+	setiniciarSpinner();
+	enviar();
+});
+
 function enviar() {
-	
 	 $.ajax({
 							type: "POST",
 							url: "/bo/configuracion/actualizar_impuesto",
@@ -47,6 +51,7 @@ function enviar() {
 											className: "btn-success",
 											callback: function() {
 												location.href="/bo/configuracion/listar_impuestos";
+												FinalizarSpinner();
 												}
 											}
 										}

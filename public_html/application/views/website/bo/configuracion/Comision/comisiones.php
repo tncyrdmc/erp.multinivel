@@ -6,7 +6,7 @@
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>>
 					<a href="/bo/configuracion/"> Configuracion </a> >
-					<a href="/bo/configuracion/comisiones"> Categoria </a> > Comision
+					<a href="/bo/configuracion/comisiones"> Comisiones </a> > Configurar 
 					
 				</span>
 			</h1>
@@ -44,7 +44,7 @@
 						<div class="widget-body no-padding smart-form">
 							<form class="smart-form"
 								action="/bo/comisiones/actualizar_comisiones" method="POST"
-								role="form">
+								role="form" id="comision">
 								<input type="text" name="categoria" value="<?php echo $_GET['id']; ?>" class="hide">
 								<header> Red <?php echo $categoria[0]->id.". ".$categoria[0]->nombre; ?> </header>
 								<?php if (isset($configuracion[0]->valor)) { ?>
@@ -118,6 +118,41 @@
 	</div>
 </div>
 <!-- END MAIN CONTENT -->
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
+
+$( "#comision" ).submit(function( event ) {
+	event.preventDefault();
+	iniciarSpinner();
+	enviar();
+});
+
+function enviar(){
+	$.ajax({
+		type: "POST",
+		url: "/bo/comisiones/actualizar_comisiones",
+		data: $('#comision').serialize()
+	}).done(function( msg ) {				
+		bootbox.dialog({
+			message: msg,
+			title: 'ATENCION',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							location.href="";
+							FinalizarSpinner();
+					}
+				}
+			}
+		})
+	});//fin Done ajax
+}
+
+</script>
 <style>
 .link {
 	margin: 0.5rem;
