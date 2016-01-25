@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	function Enviar(banco){
 		bootbox.dialog({
-			message: "Estas Seguro(a) <br> El pago tendra un plazo de 24 horas para ser realizado de lo contrarió debera realizar de nuevo la peticion.",
+			message: "Estas Seguro(a) <br> El pago tendrá un plazo de 24 horas para ser realizado de lo contrarió deberá realizar de nuevo la petición.",
 			title: "Pago",
 			className: "",
 			buttons: {

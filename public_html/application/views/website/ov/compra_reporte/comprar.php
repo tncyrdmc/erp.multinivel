@@ -118,7 +118,7 @@
 														{
 														
 															
-															$contoImpuesto=0;
+															$costoImpuesto=0;
 															$nombreImpuestos="";
 															$precioUnidad=0;
 															$cantidad=$items['qty'];
@@ -126,12 +126,12 @@
 															$precioUnidad=$compras[$contador]['costos'][0]->costo;
 															
 															foreach ($compras[$contador]['costos'] as $impuesto){
-																$contoImpuesto+=$impuesto->costoImpuesto;
+																$costoImpuesto+=$impuesto->costoImpuesto;
 																$nombreImpuestos.="".$impuesto->nombreImpuesto."<br>";
 															}
 															
 															if($compras[$contador]['costos'][0]->iva!='MAS'){
-																$precioUnidad-=$contoImpuesto;
+																$precioUnidad-=$costoImpuesto;
 															}
 															
 															echo '<tr> 
@@ -142,14 +142,14 @@
 												                        <span>$ '.($precioUnidad*$cantidad).' </span>
 																	</td>
 																	<td>
-																	$ '.($contoImpuesto*$cantidad).'
+																	$ '.($costoImpuesto*$cantidad).'
         															<br>'.$nombreImpuestos.'
       																<br>
 																	</td>
-																	<td><strong>$ '.(($precioUnidad*$cantidad)+($contoImpuesto*$cantidad)).'</strong></td>
+																	<td><strong>$ '.(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad)).'</strong></td>
 												                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="txt-color-red fa fa-trash-o fa-3x "></i> </a></td>
 																</tr>'; 
-														$total+=(($precioUnidad*$cantidad)+($contoImpuesto*$cantidad));
+														$total+=(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad));
 														$contador++;
 														} 
 														
@@ -180,10 +180,15 @@
 													<div class="col-sm-7">
 														<div class="payment-methods">
 															<h1 class="font-300">Metodos de Pago</h1>
-															<img src="img/invoice/paypal.png" alt="paypal" height="64" width="64">
-															<img src="img/invoice/americanexpress.png" alt="american express" height="64" width="64">
-															<img src="img/invoice/mastercard.png" alt="mastercard" height="64" width="64">
-															<img src="img/invoice/visa.png" alt="visa" height="64" width="64">
+															<a onclick="consignacion()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
+																<img src="/template/img/payment/deposito-bancario.jpg" alt="paypal" height="60" width="240">
+															</a>
+															<a style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight" href="javascript:void(0);">
+																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
+															</a>
+															<a style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight" href="javascript:void(0);">
+																<img src="/template/img/payment/payu.jpg" alt="american express" height="60" width="100">
+															</a>
 														</div>
 													</div>
 													<div class="col-sm-4">
@@ -252,6 +257,35 @@
 		});
 		
 	}
-    
+
+	function consignacion(){
+		
+		$.ajax({
+				data:{
+					/*id_mercancia : id,
+					cantidad : cant*/
+				},
+					type:"post",
+					url:"/ov/compras/SelecioneBanco",
+					success: function(msg){
+							
+							bootbox.dialog({
+								message: msg,
+								title: "Seleccione Banco",
+								className: "",
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "hide",
+									callback: function() {
+										 window.location="/ov/dashboard";
+										}
+									}
+								}
+							})
+						}
+					});
+					
+	}
 </script>
 
