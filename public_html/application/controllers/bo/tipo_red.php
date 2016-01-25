@@ -36,8 +36,8 @@ class tipo_red extends CI_Controller{
 		$this->template->set("style",$style);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/TipoRed/nuevo');	
 	}
 
@@ -71,11 +71,12 @@ class tipo_red extends CI_Controller{
 		$id_red = $_POST['id'];
 		$nombre_red = $_POST['nombre'];
 		$descripcion_red = $_POST['descripcion'];
-		$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
+		$capacidadRed = $this->model_tipo_red->getCapacidadRed($id_red);
 
 		$this->model_tipo_red->actualizar($_POST['id'],$_POST['nombre'],$_POST['descripcion'],$capacidadRed[0]->frontal,$capacidadRed[0]->profundidad);
-		$this->session->set_flashdata('exito', 'Se han Actualizado los datos');
-		redirect("/bo/tipo_red/mostrar_redes");
+		//$this->session->set_flashdata('exito', 'Se han Actualizado los datos');
+		echo "Se han Actualizado los datos";
+		//redirect("/bo/tipo_red/mostrar_redes");
 	}
 	
 	function cambiar_estado(){
@@ -133,8 +134,8 @@ class tipo_red extends CI_Controller{
 		$this->template->set("style",$style);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
         $this->template->build('website/bo/TipoRed/mostrarRedes');
 	}
 

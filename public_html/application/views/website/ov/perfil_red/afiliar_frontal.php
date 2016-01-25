@@ -48,6 +48,7 @@ $(document).ready(function() {
 					var validacion=valida_vacios(ids,mensajes);
 					if(validacion&&validacion_)
 					{
+						iniciarSpinner();
 						$( ".steps" ).slideUp();
 						$( ".steps" ).remove();
 						$( ".actions" ).slideUp();
@@ -80,6 +81,7 @@ $(document).ready(function() {
 											className: "btn-success",
 											callback: function() {
 												location.href="/ov/red/red_arbol1?id="+<?php echo $_GET['id']; ?>;
+												FinalizarSpinner();
 												}
 											}
 										}

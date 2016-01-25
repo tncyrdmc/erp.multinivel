@@ -275,6 +275,7 @@ function CalcularSaldo(evt){
 function cobrar() {
 
 	if(validarCampos()){
+		iniciarSpinner();
 	$.ajax({
 		type: "POST",
 		url: "/auth/show_dialog",
@@ -307,6 +308,7 @@ function cobrar() {
 							className: "btn-success",
 							callback: function() {
 								location.href='historial';
+								FinalizarSpinner();
 								}
 							}
 						}
@@ -319,7 +321,7 @@ function cobrar() {
 				label: "Cancelar!",
 				className: "btn-danger",
 				callback: function() {
-
+					FinalizarSpinner();
 					}
 			}
 		}

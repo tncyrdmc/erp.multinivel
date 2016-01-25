@@ -273,6 +273,7 @@ function Crear() {
 				var validacion=valida_vacios(ids,mensajes);
 				if(validacion&&validacion_)
 				{
+					iniciarSpinner();
 					$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
 					$.ajax({
 						type: "POST",
@@ -291,6 +292,7 @@ function Crear() {
 								className: "btn-success",
 								callback: function() {
 									location.href="";
+									FinalizarSpinner();
 									}
 								}
 							}

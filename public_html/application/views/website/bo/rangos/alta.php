@@ -151,6 +151,7 @@ function enviar() {
 	var verificar_rango=false;
 	verificar_rango=validar_rangos_repetidos();
 	if(verificar_rango!=true){
+		iniciarSpinner();
 	$.ajax({
 						type: "POST",
 						url: "/bo/rangos/ingresar_rango",
@@ -167,6 +168,7 @@ function enviar() {
 							className: "btn-success",
 							callback: function() {
 								location.href="/bo/rangos/listar";
+								FinalizarSpinner();
 								}
 							}
 						}

@@ -6,7 +6,13 @@ function iniciarSpinner(){
 	
 	var code='<div id="spinner-div"></div>';
 	
-	$("#content").append(code);
+	$("#content").append(code)
+	
+	setiniciarSpinner();
+			
+	}
+
+function setiniciarSpinner(){
 	
 	var opts = {
 			  lines: 12 // The number of lines to draw

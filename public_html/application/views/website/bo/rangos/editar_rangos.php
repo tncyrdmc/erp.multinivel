@@ -7,6 +7,7 @@
 		$rangos1=$rangos1."<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
 	}
 ?>
+<div id="spinner-div"></div>
 <form id="nueva" name="nueva" class="smart-form" action="/bo/rangos/actualizar_rangos" method="POST"  >
 							<fieldset>
 								<input type="text" class="hide" name="id" value="<?php echo $_POST['id']; ?>" id="id">
@@ -81,6 +82,7 @@
 <script type="text/javascript">
 	$( "#nueva" ).submit(function( event ) {
 	event.preventDefault();
+	setiniciarSpinner();
 	enviar();
 });
 
@@ -121,6 +123,7 @@ function enviar() {
 											className: "btn-success",
 											callback: function() {
 												location.href="/bo/rangos/listar";
+												FinalizarSpinner();
 												}
 											}
 										}

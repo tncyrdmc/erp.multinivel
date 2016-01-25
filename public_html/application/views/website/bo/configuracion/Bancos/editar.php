@@ -1,3 +1,4 @@
+<div id="spinner-div"></div>
 <section id="widget-grid" class="">
 	<!-- START ROW -->
 	<div class="row">
@@ -42,7 +43,7 @@
 			</fieldset>
 
 			<button style="margin-left: 3rem;" class="btn btn-success"
-				type="button" id="new_evento" onclick="actualizar_banco()">Actualizar
+				type="submit" id="new_evento" >Actualizar
 				Banco</button>
 		</form>
 	</div>
@@ -61,6 +62,12 @@
 }
 </style>
 <script type="text/javascript">
+$( "#add-event-form" ).submit(function( event ) {
+	event.preventDefault();
+	setiniciarSpinner();
+	enviar();
+});
+
 function validarSiNumero(numero){
     if (!/^([0-9])*$/.test(numero)){
       alert("El valor " + numero + " no es un número");
@@ -82,6 +89,48 @@ function ValidarVacio(banco, pais, cuenta){
 		return true;
 	}
 	
+}
+
+function enviar()
+{
+	var id_banco = $("#id_banco").val();
+	var banco = $("#banco").val();
+	var cuenta = $("#cuenta").val();
+	var pais = $("#pais").val();
+	var clabe = $("#clabe").val();
+	
+	
+	if(ValidarVacio(banco, pais, cuenta)){
+		iniciarSpinner();
+		$.ajax({
+			 data:{
+				 id: id_banco,
+				 banco: banco,
+				 pais: pais,
+				 cuenta: cuenta,
+				 clabe: clabe
+				},
+	         type: "post",
+	         url: "actualizar_banco",
+	         success: function(msg){
+	        	 bootbox.dialog({
+						message: msg,
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href="listar";
+								FinalizarSpinner();
+								}
+							}
+						}
+					})//fin done ajax
+	             
+	         }
+		});
+	}
 }
 
 </script>

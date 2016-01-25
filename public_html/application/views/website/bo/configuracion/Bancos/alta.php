@@ -139,6 +139,7 @@ function agregar_banco()
 	
 	
 	if(ValidarVacio(banco, pais, cuenta)){
+		iniciarSpinner();
 		$.ajax({
 			 data:{
 				 banco: banco,
@@ -158,6 +159,7 @@ function agregar_banco()
 							className: "btn-success",
 							callback: function() {
 								location.href="listar";
+								FinalizarSpinner();
 								}
 							}
 						}

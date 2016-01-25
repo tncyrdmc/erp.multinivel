@@ -33,7 +33,7 @@
 						<div class="widget-body no-padding smart-form">
 <div>
     <fieldset id="pswd">
-		<form class="smart-form" action="/bo/admin/new_impuestos" method="POST" role="form">
+		<form class="smart-form" action="/bo/admin/new_impuestos" method="POST" id="impuesto" role="form">
 			<legend>Nuevo Impuesto </legend><br>
 			<div class="form-group" style="width: 20rem;">
 				<label class="select" style="margin-left: 1rem;"> Selecione Pais
@@ -74,6 +74,40 @@
 		        </div>
 			</div>
 			<!-- END MAIN CONTENT -->
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
+$( "#impuesto" ).submit(function( event ) {
+	event.preventDefault();
+	iniciarSpinner();
+	enviar();
+});		
+
+function enviar(){
+	$.ajax({
+		type: "POST",
+		url: "/bo/admin/new_impuestos",
+		data: $('#impuesto').serialize()
+	}).done(function( msg ) {				
+		bootbox.dialog({
+			message: msg,
+			title: 'ATENCION',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							location.href="/bo/configuracion/listar_impuestos";
+							FinalizarSpinner();
+					}
+				}
+			}
+		})
+	});//fin Done ajax	
+}
+
+</script>	
 <style>
 .link
 {

@@ -7,6 +7,7 @@
 		$select_bonos.="<option value=\'".$categoria->id."\'>".$categoria->nombre."</option>";
 	}
 ?>
+<div id="spinner-div"></div>
 <form id="planes" name="planes" class="smart-form"  method="POST" action="/bo/planes/actualizar_plan" role="form" > <!--  -->
 							<fieldset>
 								<input type="text" class="hide" name="id" value="<?php echo $_POST['id']; ?>" id="id">
@@ -87,6 +88,7 @@
 <script type="text/javascript">
 $( "#planes" ).submit(function( event ) {
 	event.preventDefault();
+	setiniciarSpinner();
 	enviar();
 });
 
@@ -127,6 +129,7 @@ function enviar() {
 							className: "btn-success",
 							callback: function() {
 									location.href="/bo/planes/listar";
+									FinalizarSpinner();
 							}
 						}
 					}

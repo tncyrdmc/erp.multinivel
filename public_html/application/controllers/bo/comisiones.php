@@ -18,6 +18,7 @@ class comisiones extends CI_Controller
 		$this->load->model('bo/model_comisiones');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_admin');
+		$this->load->model('model_tipo_red');
 		$this->load->model('bo/general');
 	}
 	function index()
@@ -1237,7 +1238,7 @@ BONO AUTOCOMPRA
 		$style=$this->modelo_dashboard->get_style($id);
 		$profundidad  = $this->model_admin->get_Profundidad_tipo_red($_GET['id']) + 1;
 		$configuracion_red = $this->model_admin->get_config_red_comision($_GET['id']);
-		$categoria = $this->model_mercancia->CategoriaMercancia($_GET['id']);
+		$categoria = $this->model_tipo_red->traerRed($_GET['id']);
 		
 		$this->template->set("style",$style);
 		$this->template->set("profundidad",$profundidad);
@@ -1258,20 +1259,20 @@ BONO AUTOCOMPRA
 				$porcentaje = $porcentaje + $valor;
 			}
 			if($porcentaje > 100){
-				$error = "La Configuracion no se ha podido actualizar, debido a que la suma de los porcentajes es mayor al 100%";
-				$this->session->set_flashdata('error', $error);
+				echo "La Configuracion no se ha podido actualizar, debido a que la suma de los porcentajes es mayor al 100%";
+				//$this->session->set_flashdata('error', $error);
 			}else{
 				$id_categoria = $_POST['categoria'];
 				
 				$this->model_admin->new_Config_Comision($id_categoria);
-				$correcto = "La configuracion ha sido actualizada.";
-				$this->session->set_flashdata('correcto', $correcto);
+				echo "La configuracion ha sido actualizada.";
+				//$this->session->set_flashdata('correcto', $correcto);
 			}
 		}else{
-			$error = "La Configuracion no se ha podido actualizar";
-			$this->session->set_flashdata('error', $error);
+			echo "La Configuracion no se ha podido actualizar";
+			//$this->session->set_flashdata('error', $error);
 		}
 		
-		redirect('bo/configuracion/comisiones');
+		//redirect('bo/configuracion/comisiones');
 	}
 }

@@ -33,7 +33,7 @@
 						<div class="widget-body no-padding smart-form">
 <div>
     <fieldset id="pswd">
-		<form class="smart-form" action="/bo/admin/new_retencion" method="POST" role="form">
+		<form class="smart-form" action="/bo/admin/new_retencion" method="POST" id="retencion" role="form">
 			<legend>Nueva Retencion </legend><br>
 			<div class="form-group" style="width: 20rem;">
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
@@ -84,6 +84,40 @@
 		        </div>
 			</div>
 			<!-- END MAIN CONTENT -->
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
+$( "#retencion" ).submit(function( event ) {
+	event.preventDefault();
+	iniciarSpinner();
+	enviar();
+});
+
+function enviar(){
+	$.ajax({
+		type: "POST",
+		url: "/bo/admin/new_retencion",
+		data: $('#retencion').serialize()
+	}).done(function( msg ) {				
+		bootbox.dialog({
+			message: msg,
+			title: 'ATENCION',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							location.href="/bo/configuracion/listar_retenciones";
+							FinalizarSpinner();
+					}
+				}
+			}
+		})
+	});//fin Done ajax
+}
+
+</script>
 <style>
 .link
 {

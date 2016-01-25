@@ -374,7 +374,7 @@ function subred(id)
 function botbox(nombre, id, lado)
 {
 	bootbox.dialog({
-		message: '<div class="row fuelux">'
+		message: '<div id="spinner-div"></div><div class="row fuelux">'
 		+'<div id="myWizard" class="wizard wizard_r">'
 			+'<ul class="steps">'
 				+'<li data-target="#step1_r" class="active">'
@@ -765,6 +765,7 @@ function botbox(nombre, id, lado)
 					var validacion=valida_vacios(ids,mensajes);
 					if(validacion&&validacion_)
 					{
+						setiniciarSpinner();
 						var id=$("#id").val();
 						$.ajax({
 		                       url:"/auth/register",
@@ -786,6 +787,7 @@ function botbox(nombre, id, lado)
 												className: "btn-success",
 												callback: function() {
 													location.href="";
+													FinalizarSpinner();
 													}
 												}
 											}

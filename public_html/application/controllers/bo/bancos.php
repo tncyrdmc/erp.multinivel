@@ -77,7 +77,7 @@ class bancos extends CI_Controller
 			if($this->ValidarDatos($banco,$pais,$cuenta, $clabe)){
 				
 				$this->modelo_bancos->crear_banco($banco, $cuenta, $pais, $clabe);
-				echo "El Banco a sido añadido";
+				echo "El Banco ha sido añadido";
 			}
 			
 			

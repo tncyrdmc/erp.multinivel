@@ -1896,7 +1896,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 	function get_Profundidad_tipo_red($id_categoria)
 	{
-		$q=$this->db->query("SELECT profundidad FROM tipo_red, cat_grupo_producto where id_red = id and id_grupo = ".$id_categoria);
+		$q=$this->db->query("SELECT profundidad FROM tipo_red, cat_grupo_producto where id_red = id and id_red = ".$id_categoria);
 		$profundidad = $q->result();
 		return $profundidad[0]->profundidad;
 	}
@@ -1914,7 +1914,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	}
 	
 	function get_config_red_comision($id_categoria){
-		$q=$this->db->query("SELECT * FROM valor_comisiones where id_grupo = ".$id_categoria." order by profundidad");
+		$q=$this->db->query("SELECT * FROM valor_comisiones where id_red = ".$id_categoria." order by profundidad");
 		return $q->result();
 	}
 	
@@ -1948,13 +1948,13 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 	function new_Config_Comision($id_grupo)
 	{
-		$q=$this->db->query('delete from valor_comisiones where id_grupo = '.$id_grupo);
+		$q=$this->db->query('delete from valor_comisiones where id_red = '.$id_grupo);
 		$i = 1;
 		
 			foreach( $_POST['configuracion'] as $profundidad ) {
 				$datos = array(
 						'profundidad' => $i,
-						'id_grupo' => $id_grupo,
+						'id_red' => $id_grupo,
 						'valor'	=> $profundidad
 				);
 				$this->db->insert("valor_comisiones",$datos);

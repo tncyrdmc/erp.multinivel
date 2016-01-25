@@ -1,5 +1,5 @@
-
-<form id="nueva" class="smart-form"  novalidate="novalidate" >
+<div id="spinner-div"></div>
+<form id="nueva" action="/bo/configuracion/actualizar_retencion" class="smart-form"  role="form" >
 							<fieldset>
 								<input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
 								<label class="input"> Nombre
@@ -31,9 +31,8 @@
 
 							</fieldset>
 							<footer>
-								<a class="btn btn-success" onclick="enviar()">
-									Guardar
-								</a>
+								<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
+								
 							</footer>
 						</form>
 
@@ -41,8 +40,14 @@
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
+
+$( "#nueva" ).submit(function( event ) {
+	event.preventDefault();
+	setiniciarSpinner();
+	enviar();
+});
+
 function enviar() {
-	
 	 $.ajax({
 							type: "POST",
 							url: "/bo/configuracion/actualizar_retencion",
@@ -59,6 +64,7 @@ function enviar() {
 											className: "btn-success",
 											callback: function() {
 												location.href="/bo/configuracion/listar_retenciones";
+												FinalizarSpinner();
 												}
 											}
 										}

@@ -244,7 +244,7 @@ function get_bonos_activos(){
 }
 
 function get_bono_id($id){
-	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.estatus,b.mes_desde_afiliacion,b.mes_desde_activacion
+	$q=$this->db->query("SELECT b.id,b.nombre,b.descripcion,b.inicio,b.fin,b.frecuencia,b.plan,b.estatus,b.mes_desde_afiliacion,b.mes_desde_activacion
 						FROM bono b
 						where id=".$id."
 			");//b. plan='NO'and

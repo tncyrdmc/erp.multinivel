@@ -717,13 +717,15 @@ class admin extends CI_Controller
 	function new_retencion()
 	{
 		$this->model_admin->new_retencion($_POST['desc'],$_POST['porc'],$_POST['duracion']);
-		redirect('/bo/configuracion/listar_retenciones');
+		echo "Se ha creado la Retencion";
+		//redirect('/bo/configuracion/listar_retenciones');
 	}
 	
 	function new_impuestos()
 	{
 		$this->model_admin->new_impuestos($_POST['desc'],$_POST['porc'],$_POST['pais']);
-		redirect('/bo/configuracion/listar_impuestos');
+		echo "Se ha creado el Impuesto";
+		//redirect('/bo/configuracion/listar_impuestos');
 	}
 	
 	function kill_impuesto()

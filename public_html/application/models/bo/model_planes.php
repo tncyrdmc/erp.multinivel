@@ -22,13 +22,21 @@ class model_planes extends CI_Model
 	
 	function get_planes_activos(){
 	
-		$q=$this->db->query("select * from plan where estatus = 'ACT'");
+		$q=$this->db->query("select p.*, c.id_bono, b.estatus 
+								from plan p, cross_plan_bonos c, bono b 
+								where p.id = c.id_plan and b.id = c.id_bono and p.estatus = 'ACT' and b.estatus = 'ACT' group by p.id");
 		return $q->result();
 	}
 	
 	function get_cross_plan_bonos(){
 	
 		$q=$this->db->query("select * from cross_plan_bonos order by id_plan , `order` asc");
+		return $q->result();
+	}
+	
+	function get_cross_plan_bonos_activos(){
+	
+		$q=$this->db->query("select c.* , b.estatus from cross_plan_bonos c, bono b where b.id = c.id_bono and b.estatus = 'ACT' order by id_plan , `order` asc");
 		return $q->result();
 	}
 	
@@ -145,6 +153,8 @@ class model_planes extends CI_Model
 								and(CBN.id_bono=PL.id_bono)
 								and(CBC.id_rango=CR.id_rango)
 								and(CBC.id_tipo_rango=CTR.id)
+								and B.estatus = 'ACT'
+								and B.plan = 'SI'
 							GROUP BY 					
 								B.id,PL.id_plan,CBC.id_rango,CBC.id_tipo_rango
 							ORDER BY					
