@@ -67,6 +67,7 @@
 <script type="text/javascript">
 $( "#nueva" ).submit(function( event ) {
 	event.preventDefault();
+	iniciarSpinner();
 	enviar();
 });
 
@@ -85,6 +86,7 @@ function enviar(){
 					className: "btn-success",
 					callback: function() {
 							location.href="/bo/tipo_red/mostrar_redes";
+							FinalizarSpinner();
 					}
 				}					
 			}

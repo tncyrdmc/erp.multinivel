@@ -182,9 +182,9 @@ function enviar() {
 							success: {
 								label: "Aceptar",
 								className: "btn-success",
-								callback: function() {
-										FinalizarSpinner();
+								callback: function() {										
 										location.href="/bo/planes/listar";
+										FinalizarSpinner();
 								}
 							}					
 						}

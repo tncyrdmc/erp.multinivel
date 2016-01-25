@@ -8,6 +8,7 @@
 var i=1;
 var j=0;
 </script>
+		<div id="spinner-div"></div>
 			<form id="bonos" action="/bo/bonos/nuevo_bono" method="POST" role="form" class="widget-body no-padding smart-form">
 			<input id="id" class="form-control" name="id" style="width:200px; height:30px;" required="" type="hidden" value="<?php echo $bono[0]->id;?>">
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
@@ -17,7 +18,7 @@ var j=0;
 				<textarea id="mymarkdown" name="descripcion" class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required=""><?php echo $bono[0]->descripcion;?></textarea>
 	        </label>
 		<div style="margin: 1rem;">
-		<h4>Frecencia</h4>
+		<h4>Frecuencia</h4>
 	        		<label class="radio">
 						<input value="UNI" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'UNI') echo 'checked=""';?>>
 					<i></i>Unica</label>
@@ -39,7 +40,7 @@ var j=0;
 		<br><br>
 		<label class="toggle" style="width: 4rem;">
 			<input name="plan" type="checkbox">
-			<i data-swchon-text="SI" data-swchoff-text="NO"></i>Plan
+			<i data-swchoff-text="<?= $bono[0]->plan;?>" data-swchon-text="<?= ($bono[0]->plan == "SI") ? "NO" :"SI";?>"></i>Plan
 		</label>
 		</div>
 		<div class="form-group">
@@ -223,8 +224,10 @@ $("#mymarkdown").markdown({
 
 $( "#bonos" ).submit(function( event ) {
 	event.preventDefault();
-	if(validarRedes())
+	if(validarRedes()){
+		setiniciarSpinner();
 		enviar();
+	}
 });
 
 function validarRedes(){
@@ -254,6 +257,7 @@ function enviar() {
 							callback: function() {
 								
 								location.href="/bo/bonos/listar";
+								FinalizarSpinner();
 								}
 							}
 						}

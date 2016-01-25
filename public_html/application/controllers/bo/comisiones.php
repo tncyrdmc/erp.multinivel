@@ -18,6 +18,7 @@ class comisiones extends CI_Controller
 		$this->load->model('bo/model_comisiones');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_admin');
+		$this->load->model('model_tipo_red');
 		$this->load->model('bo/general');
 	}
 	function index()
@@ -1237,7 +1238,7 @@ BONO AUTOCOMPRA
 		$style=$this->modelo_dashboard->get_style($id);
 		$profundidad  = $this->model_admin->get_Profundidad_tipo_red($_GET['id']) + 1;
 		$configuracion_red = $this->model_admin->get_config_red_comision($_GET['id']);
-		$categoria = $this->model_mercancia->CategoriaMercancia($_GET['id']);
+		$categoria = $this->model_tipo_red->traerRed($_GET['id']);
 		
 		$this->template->set("style",$style);
 		$this->template->set("profundidad",$profundidad);

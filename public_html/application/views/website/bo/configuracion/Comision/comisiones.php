@@ -46,7 +46,7 @@
 								action="/bo/comisiones/actualizar_comisiones" method="POST"
 								role="form">
 								<input type="text" name="categoria" value="<?php echo $_GET['id']; ?>" class="hide">
-								<header> Categoria <?php echo $categoria[0]->id_grupo.". ".$categoria[0]->descripcion." ( ".$categoria[0]->red." )"; ?> </header>
+								<header> Red <?php echo $categoria[0]->id.". ".$categoria[0]->nombre; ?> </header>
 								<?php if (isset($configuracion[0]->valor)) { ?>
 								<div class="col col-xs-12 col-sm-6 col-md-4 col-lg-2">
 									<fieldset>

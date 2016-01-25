@@ -59,7 +59,7 @@ class Model_tipo_red extends CI_Model{
 	
 	function ObtenerFrontales()
 	{
-		$q=$this->db->query('select frontal from tipo_red where id=1');
+		$q=$this->db->query('select frontal from tipo_red where 1');
 		return $q->result();
 	}
 	
@@ -71,7 +71,7 @@ class Model_tipo_red extends CI_Model{
 				
 	function traerCapacidadRed()
 	{
-		$q = $this->db->query('select frontal,profundidad from tipo_red where id = 1');
+		$q = $this->db->query('select frontal,profundidad from tipo_red where 1');
 		
 		return $q->result();
 	}
