@@ -109,7 +109,8 @@ class general extends CI_Model
 	
 	function get_pais($id)
 	{
-		$q=$this->db->query("select cu.pais as pais,c.Name as nombrePais,c.Code2 as codigo,concat(cu.calle,' ',cu.colonia,' ',cu.municipio,' ',cu.estado)as direccion 
+		$q=$this->db->query("select cu.pais as pais,c.Name as nombrePais,c.Code2 as codigo,concat(cu.calle,' ',cu.colonia,' ',cu.municipio,' ',cu.estado)as direccion
+								,cu.cp as codigo_postal,cu.estado as estado,cu.municipio as municipio,cu.colonia as colonia,cu.calle as calle
 								from cross_dir_user cu,Country c
 								where c.Code=cu.pais and cu.id_user = ".$id."");
 		return $q->result();

@@ -346,6 +346,160 @@ function index()
 
 	}
 	
+	function RegistrarVentaConsignacion(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+		
+		$contenidoCarrito=$this->get_content_carrito ();
+		
+		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
+		
+		$time = time();
+		$firma = md5("consignacion~".$time."~".$totalCarrito."~USD");
+		$id_transacion = $firma;
+		$fecha = date("Y-m-d");
+			
+		
+		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id, $id_transacion, $firma, $fecha);
+		
+		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
+		
+		$this->registrarFacturaMercancia ( $contenidoCarrito ,$id_venta);
+		
+		$this->cart->destroy();
+
+		$banco = $this->modelo_compras->RegistrarPagoBanco($id, $_POST['banco'],$id_venta,$totalCarrito);
+		$emailPagos = $this->general->emailPagos();
+		
+		if(isset($banco[0]->id_banco)){
+		echo '<div class="jumbotron">
+				<h1>Felicitaciones!</h1>
+				<p>La transacción ha finalizado con éxito.</p>
+				<p class="text-danger">
+					Para terminar tu compra debes enviar un correo electrónico con el comprobante de pago al departamento de 
+					Pagos(<b>'.$emailPagos[0]->email.'</b>)
+				</p>
+				<p>
+				</p><div class="alert alert-success alert-block">
+		 		<p> Nombre de Banco : '.$banco[0]->descripcion.'</p>
+				<p> Numero de Cuenta: '.$banco[0]->cuenta.'</p>
+			';
+		
+			if($banco[0]->clave){
+			echo '
+				<p> CLABE(Solo en Mexico): '.$banco[0]->clave.'</p></div>
+				<p>
+				</p>
+			</div>
+				';	
+			}
+		}	
+	}
+	/**
+	 * @param contenidoCarrito
+	 */private function registrarFacturaMercancia($contenidoCarrito,$id_venta) {
+		$contador=0;
+		
+		foreach ($this->cart->contents() as $items)
+		{
+			$costoImpuesto=0;
+			$nombreImpuestos="";
+			$precioUnidad=0;
+			$cantidad=$items['qty'];
+			$id_mercancia=$contenidoCarrito['compras'][$contador]['costos'][0]->id;	
+			$precioUnidad=$contenidoCarrito['compras'][$contador]['costos'][0]->costo;
+			
+			foreach ($contenidoCarrito['compras'][$contador]['costos'] as $impuesto){
+				$costoImpuesto+=$impuesto->costoImpuesto;
+				$nombreImpuestos.="".$impuesto->nombreImpuesto."\n";
+			}
+				
+			if($contenidoCarrito['compras'][$contador]['costos'][0]->iva!='MAS'){
+				$precioUnidad-=$costoImpuesto;
+			}
+
+			$this->modelo_compras->registrar_venta_mercancia($id_mercancia,$id_venta,$cantidad,$precioUnidad,$costoImpuesto,$nombreImpuestos);
+			$contador++;
+		}
+
+	}
+
+		
+	private function get_valor_total_contenido_carrito($contenidoCarrito){
+		
+		$contador=0;
+		$total=0;
+		
+		foreach ($this->cart->contents() as $items)
+		{
+		
+		
+			$costoImpuesto=0;
+			$precioUnidad=0;
+			$cantidad=$items['qty'];
+		
+			$precioUnidad=$contenidoCarrito['compras'][$contador]['costos'][0]->costo;
+		
+			foreach ($contenidoCarrito['compras'][$contador]['costos'] as $impuesto){
+				$costoImpuesto+=$impuesto->costoImpuesto;
+			}
+		
+			if($contenidoCarrito['compras'][$contador]['costos'][0]->iva!='MAS'){
+				$precioUnidad-=$costoImpuesto;
+			}
+
+			 $total+=(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad));
+			 $contador++;
+		}
+		return $total;
+	}
+	
+	private function registrarFacturaDatosDefaultAfiliado($id,$id_venta) {
+
+		$datos_afiliado = $this->model_perfil_red->datos_perfil($id);
+		$direccion = $this->general->get_pais($id);
+		$telefonos = $this->model_perfil_red->telefonos($id);
+		$tel="";
+		foreach ($telefonos as $telefono){
+			$tel.="-Numero ".$telefono->tipo."[".$telefono->numero."]\n";
+		}
+			  
+		$this->modelo_compras->registrar_factura_datos_usuario
+			  						($id_venta,$datos_afiliado[0]->nombre,$datos_afiliado[0]->apellido,$datos_afiliado[0]->keyword,
+			  						 $direccion[0]->codigo_postal,$direccion[0]->pais,$direccion[0]->estado,$direccion[0]->municipio,
+			  						 $direccion[0]->colonia,$direccion[0]->calle,$datos_afiliado[0]->email,"",$tel);
+	}
+
+
+	function SelecioneBanco(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+		$id = $this->tank_auth->get_user_id();
+	
+		$data['bancos'] = $this->modelo_compras->BancosPagoUsuario($id);
+	
+		$this->template->set_theme('desktop');
+		$this->template->build('website/ov/compra_reporte/bancos',$data);
+	}
+	
 	function billetera()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -1671,7 +1825,7 @@ function index()
 			echo "	<div class='row'>
 						<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 							<p class='font-md'><strong>Cantidad</strong></p><br>
-							<input type='number' id='cantidad' name='cantidad' min='".$min."' max='".$max."' value='".$min."'><br><br>
+							<input type='number' id='cantidad' name='cantidad' min='".$min."' max='".$max."' value='".$min."' onkeydown='return false'><br><br>
 						</div>
 					</div>";
 		}
@@ -2151,7 +2305,7 @@ function index()
 							
 		}
 	}
-	function show_prod_grup()
+/*	function show_prod_grup()
 	{
 		$prod=$this->modelo_compras->get_grupo_productos($_GET['grupo']);
 		for($i=0;$i<sizeof($prod);$i++)
@@ -2213,7 +2367,7 @@ function index()
 
 							
 		}
-	}
+	}*//*
 	function show_servicios()
 	{
 		$serv=$this->modelo_compras->get_servicios();
@@ -2365,7 +2519,7 @@ function index()
 			';
 		}
 	}
-	
+/*	
 	function show_combinados()
 	{
 		$comb=$this->modelo_compras->get_combinados();
@@ -2405,7 +2559,7 @@ function index()
 		}
 	}
 	
-	
+*/	
 	function show_todos()
 	{
 		$id = 2;
@@ -2597,6 +2751,7 @@ function index()
 		$mercancia=$this->getMercanciaPorTipoDeRed($tipoMercancia,$idCategoriaRed,$paisUsuario);
 		$this->printMercanciaPorTipoDeRed($mercancia,$tipoMercancia);
 	}
+	/*
 	function show_paquetes()
 	{		
 		
@@ -2642,7 +2797,8 @@ function index()
 								';
 		}
 	}
-		
+	*/	
+	/*
 	function buscar_servicio()
 	{
 		$buscar=$_GET['buscar'];
@@ -2880,6 +3036,8 @@ function index()
 			echo'<p>NO HAY DATOS EN LA BUSQUEDA</p>';
 		}
 	}
+*/
+/*	
 	function por_comprar()
 	{
 		echo '<div class="row userInfo">';
@@ -3078,7 +3236,7 @@ function index()
 						      }
 						    }
 						  });
-						</script>";*/
+						</script>";
 											
 			  		
 						
@@ -3271,7 +3429,7 @@ function index()
               </div>
             </div>';
             }
-	}
+	}*/
 	function completar_compra()
 	{
 		$data=$_GET["info"];
@@ -3355,9 +3513,10 @@ function index()
            'qty'   => 0
         );
 		$this->cart->update($data);
-		if($this->cart->contents())
-		{
-/*			echo '
+		if(!$this->cart->contents())
+			echo 'NO HAY PRODUCTOS EN EL CARRITO';
+/*		{
+		echo '
 					<div class="col-lg-12 col-md-12 col-sm-12">
 				      <div class="row userInfo">
 				        <div class="col-xs-12 col-sm-12">
@@ -3439,12 +3598,12 @@ function index()
 						      
 						    </div>
 						   ';
-				*/
+				
 			}						
 		else
 		{
-			echo 'NO HAY PRODUCTOS EN EL CARRITO';	
-		}
+				
+		}*/
 	}
 	function actualizar_nav()
 	{
@@ -4022,23 +4181,7 @@ function index()
 		}
 		
 	}
-	
-	function SelecioneBanco(){
-		if(!$this->cart->contents()){
-			echo "La compra no puedo ser registrada";
-			return 0;
-		}
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-		$id = $this->tank_auth->get_user_id();
-		
-		$data['bancos'] = $this->modelo_compras->BancosPagoUsuario($id);
-		
-		$this->template->set_theme('desktop');
-		$this->template->build('website/ov/compra_reporte/bancos',$data);
-	}
+
 	
 	function SelecioneBancoWebPersonal(){
 		
@@ -4065,87 +4208,6 @@ function index()
 		$this->template->set_theme('desktop');
 		$this->template->build('website/ov/compra_reporte/bancosWebPersonal',$data);
 	}
-	
-	
-	function RegistrarVentaConsignacion(){
-		
-		if(!$this->cart->contents()){
-			echo "La compra no puedo ser registrada";
-			return 0;
-		}
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-		redirect('/auth');
-		}
-		
-		$productos = $this->cart->contents();
-		$id = $this->tank_auth->get_user_id();
-		
-		$costo_envio = $this->modelo_compras->consultarEnvio($id);
-		
-		$calcular_descuento=1;
-		
-		$costo_total = $costo_envio[0]->costo;
-		$impuestos = 0;
-		foreach ($productos as $producto){
-				
-			$traer_tipo=$this->modelo_compras->get_tipo_mercancia_atual($producto['id']);
-				
-				
-			if($traer_tipo[0]->id_tipo_mercancia!='4'){
-		
-				$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-				if ($descuento_por_nivel_actual!=null){
-					$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
-				}else{
-					$calcular_descuento=1;
-				}
-			}
-				
-			$costo_total = $costo_total + (($producto['qty'] * ($this->modelo_compras->CostoMercancia($producto['id'])))*$calcular_descuento);
-			$impuestos = $impuestos + ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
-		}
-		
-		
-		$time = time();
-		$firma = md5("consignacion~".$time."~".$costo_total."~USD");
-		$id_transacion = $firma;
-		$fecha = date("Y-m-d");
-		
-		$venta = $this->modelo_compras->registrar_ventaConsignacion($id, $costo_total , $id_transacion, $firma, $fecha, $impuestos);
-		
-		$envio = $this->modelo_compras->registrar_envio($venta, $id, $costo_envio);
-		
-		$this->modelo_compras->registrar_factura($venta, $id, $costo_envio);
-		
-		foreach ($productos as $producto){
-			$puntos = $this->modelo_compras->registrar_venta_mercancia($producto['id'], $venta, $producto['qty']);
-			$impuesto = ($producto['qty'] * $this->modelo_compras->ImpuestoMercancia($producto['id'], $producto['price']));
-				
-			$total = $this->modelo_compras->registrar_impuestos($producto['id']);
-			$this->modelo_compras->registrar_movimiento($id, $producto['id'], $producto['qty'], $producto['price']+$impuesto, $producto['qty']*$total, $venta, $puntos);
-				
-		}
-		$this->modelo_compras->EliminarEnvioHistorial($id);
-		
-		$this->cart->destroy();
-		
-		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo_total+$impuestos));
-		$emailPagos = $this->general->emailPagos();
-		
-		if(isset($banco[0]->id_banco)){
-			$respuesta = "<div class='alert alert-success alert-block'>
-								<a class='close' data-dismiss='alert' href='#'></a>
-								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
-			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
-			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
-			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al departamento de Pagos(".$emailPagos[0]->email.")</p></div>";
-			echo $respuesta;
-		}else{
-			echo "La venta se a registrado";
-		}
-	}
-	
 	
 	
 	function Cambiar_estado_enviar(){

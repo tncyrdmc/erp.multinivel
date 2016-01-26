@@ -249,20 +249,20 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function detalles_productos($i)
 	{
-		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables
+		$q=$this->db->query('SELECT b.id,a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables
 		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
 	
 	function detalles_membresia($i)
 	{
-		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from membresia a, mercancia b where a.id=b.sku and b.id='.$i);
+		$q=$this->db->query('SELECT b.id,a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from membresia a, mercancia b where a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
 	
 	function detalles_servicios($i)
 	{
-		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
+		$q=$this->db->query('SELECT b.id,a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
 	
@@ -286,7 +286,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function detalles_combinados($i)
 	{
-		$combinado=$this->db->query('SELECT e.id_combinado as id_combinado,a.nombre, a.descripcion,d.costo, d.costo_publico,d.puntos_comisionables from combinado a, mercancia d, cross_combinado
+		$combinado=$this->db->query('SELECT d.id,e.id_combinado as id_combinado,a.nombre, a.descripcion,d.costo, d.costo_publico,d.puntos_comisionables from combinado a, mercancia d, cross_combinado
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and d.id='.$i.' group by (d.id)');
 		$combinado=$combinado->result();
 
@@ -626,6 +626,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function hacer_compra()
 	{
+/*
 		if(!isset($_GET["usr"]))
 		{
 			$id_user=$this->tank_auth->get_user_id();
@@ -815,7 +816,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				break;
 		}
 		$this->cart->destroy();
-		
+	*/	
 	}
 	
 	function CostoMercancia($id){
@@ -944,7 +945,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function registrar_venta($id_usuario, $costo, $id_metodo, $transacion, $firma, $fecha, $impuesto)
 	{
-		
+	/*	
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
 				"id_estatus"		=> 2,
@@ -957,7 +958,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		);
 		$this->db->insert("venta",$dato_venta);
 		$venta = mysql_insert_id();
-		return $venta;
+		return $venta;*/
 	}
 	
 	function registrar_envio($venta, $id_usuario, $datos_envio){
@@ -984,8 +985,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return mysql_error();
 	}
 	
-	function registrar_factura($venta, $id_usuario, $datos_envio){
-		
+/*	function registrar_factura($venta, $id_usuario, $datos_envio){	
 		$usuario =$this->model_perfil_red->datos_perfil($id_usuario);
 		
 		$dato_fact=array(
@@ -1005,20 +1005,41 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		);
 		$this->db->insert("cross_venta_factura",$dato_fact);
 		
+	}*/
+	
+	function registrar_factura_datos_usuario($venta, $nombre,$apellido,$rfc,$codigoPostal,$pais,
+											 $estado,$municipio,$colonia,$calle,$correo,$compania,$celular){
+	
+	$dato_fact=array(
+				"id_venta"	=> $venta,
+				"nombre" 	=> $nombre,
+				"apellido" 	=> $apellido,
+				"rfc"		=> $rfc,
+				"cp" 		=> $codigoPostal,
+				"id_pais" 	=> $pais,
+				"estado" 	=> $estado,
+				"municipio"	=> $municipio,
+				"colonia" 	=> $colonia,
+				"calle" 	=> $calle,
+				"correo" 	=> $correo,
+				"compania" 	=> $compania,
+				"celular" 	=> $celular
+		);
+		$this->db->insert("factura",$dato_fact);
 	}
 	
-	function registrar_venta_mercancia($id_mercancia, $venta, $cantidad){
+	
+	function registrar_venta_mercancia($id_mercancia, $venta, $cantidad,$costo,$impuesto,$nombreImpuesto){
 		$dato_cross_venta=array(
 				"id_mercancia" 	=> $id_mercancia,
 				"id_venta"		=> $venta,
 				"cantidad"		=> $cantidad,
-				"id_promocion"	=> 0
+				"costo_unidad"		=> $costo,
+				"impuesto_unidad"		=> $impuesto,
+				"costo_total"		=> (($costo+$impuesto)*$cantidad),
+				"nombreImpuesto"	=> $nombreImpuesto
 		);
 		$this->db->insert("cross_venta_mercancia",$dato_cross_venta);
-		$puntos_q =$this->db->query("select mercancia.costo from mercancia where id= ".$id_mercancia);
-		$puntos_res = $puntos_q->result();
-		$puntos= ($puntos_res[0]->costo*$cantidad);
-		return $puntos;
 	}
 	
 	function insertar_comision_web_personal($id_afiliado, $id_venta, $id_comprador, $valor){
@@ -1031,12 +1052,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$this->db->insert("comision_web_personal",$dato_cross_venta);
 	}
 	
-	function registrar_ventaConsignacion($id_usuario, $costo , $id_transacion, $firma, $fecha, $impuesto){
+	function registrar_ventaConsignacion($id_usuario, $id_transacion, $firma, $fecha){
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
 				"id_estatus"		=> 3,
-				"costo" 			=> $costo,
-				"impuesto"			=> $impuesto,
 				"id_metodo_pago" 	=> 11,
 				"id_transacion"     => $id_transacion,
 				"firma"				=> $firma,
@@ -1057,7 +1076,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$this->db->insert("cross_comprador_venta",$dato_venta);
 	}
 	
-	function registrar_impuestos($id_mercancia){
+	/*function registrar_impuestos($id_mercancia){
 		$q = $this->db->query("SELECT costo from mercancia where id=".$id_mercancia);
 		$mercancia=$q->result();
 		$costo = $mercancia[0]->costo;
@@ -1073,11 +1092,11 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			$total=$total+$mas;
 		}
 		return $total;
-	}
+	}*/
 	
 	function registrar_movimiento($id_usuario, $id_mercancia, $cantidad, $subtotal, $total, $venta, $puntos)
 	{
-		
+	/*	
 		//$q_alm=$this->db->query("SELECT id_almacen from almacen where web=1");
 		//$alm_res = $q_alm->result();
 		//$origen = $alm_res[0]->id_almacen;
@@ -1110,7 +1129,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 						"estatus"			=> 1,
 						"id_venta"			=> $venta
 				);
-				$this->db->insert("surtido",$dato_surtido);
+				$this->db->insert("surtido",$dato_surtido);*/
 	}
 	
 	function ObtenerCategoriaMercancia($id_mercancia){
@@ -1152,13 +1171,13 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return $q->result();
 	}
 	
-	function RegsitrarPagoBanco($id_usuario, $id_banco, $id_venta, $valor){
+	function RegistrarPagoBanco($id_usuario, $id_banco, $id_venta, $valor){
 		$datos = array(
 				'id_usuario' => $id_usuario,
 				'id_banco'	=> $id_banco,
 				'id_venta' 	=> $id_venta,
 				'valor'		=> $valor,
-				'estatus'	=> 3
+				'estatus'	=> 'DES'
 		);
 		$this->db->insert('cuenta_pagar_banco_historial', $datos);
 		
