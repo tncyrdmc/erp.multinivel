@@ -633,6 +633,21 @@ order by (U.id);");
 		$id_padre = $q->result();
 		return $id_padre[0]->id_red;
 	}
+	
+	function ConsultarRedAfiliado($id){
+		$q = $this->db->query("select id_red from afiliar where id_afiliado=".$id);		
+		return $q->result();
+	}
+	
+	function ConsultarRedDebajo($id,$red){
+		$q = $this->db->query("select group_concat(id_afiliado) from afiliar where debajo_de=".$id." and id_red = ".$red);
+		return $q->result();
+	}
+	
+	function ConsultarHijos($id,$red){
+		$q = $this->db->query("select id_afiliado from afiliar where debajo_de=".$id." and id_red = ".$red);
+		return $q->result();
+	}
 
 	function ObtenerRetencioFase(){
 		$q = $this->db->query("select porcentaje from cat_retencion where duracion= 'UNI'");
@@ -640,5 +655,21 @@ order by (U.id);");
 		return $retencion[0]->porcentaje;
 	}
 	
+	function actualizarHijos($espacio,$setHijos,$red,$hijos){
+		echo "dentro de actualizarHijos	";
+		/*$i = count($this->ConsultarHijos($id,$red));
+		$this->db->query("update afiliar set debajo_de = ".$espacio." where id_afiliado in (".$setHijos.") and id_red = ".$red);
+		foreach($hijos as $hijo){
+			$this->db->query("update afiliar set lado = ".$i." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);
+			$i++;
+		}
+		return true;*/
+	}
+	
+	function kill_afiliado($id){
+		$this->db->query("delete from afiliar where id_afiliado = ".$id);
+		$this->db->query("delete from user_profiles where user_id = ".$id);
+		$this->db->query("delete from users where id = ".$id);
+	}
 	
 }

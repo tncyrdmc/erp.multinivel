@@ -4,6 +4,14 @@
 //header('Content-Type: text/html; charset=ISO-8859-1');
 class model_admin extends CI_Model
 {
+	
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('ov/model_perfil_red');
+		$this->load->model('model_tipo_red');
+	}	
+	
 	function get_regimen()
 	{
 		$q=$this->db->query("select * from cat_regimen");
@@ -95,9 +103,55 @@ class model_admin extends CI_Model
 	}
 	function kill_proveedor($id){
 		$q=$this->db->query("SELECT id_proveedor FROM mercancia where id_proveedor=".$id);
-	    return $q->result();	
+	    return $q->result();		
+	}
+	
+	function kill_afiliado($id){
+		//echo "dentro de admin kill "; 
+		$i=0;
+		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);		
+		foreach($redes_afiliado as $red_afiliado){
+			if (!$this->flowCompress($id,$red_afiliado->id_red)){ 
+				$i++;
+			}
+		}
+		if ($i==0){
+			$this->model_perfil_red->kill_afiliado($id);
+			return true;
+		}else{
+			return false;
+		}		
 		
 	}
+	
+	function flowCompress($id,$red){
+		
+		$hijos = $this->model_perfil_red->ConsultarHijos($id,$red);
+		$lados = $this->model_tipo_red->ObtenerFrontalesRed($red);
+		$espacio = $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos));
+		echo "padre: ".$espacio."	";
+		$setHijos = $this->model_perfil_red->ConsultarRedDebajo($id,$red);
+		$failure = $this->model_perfil_red->actualizarHijos($espacio,$setHijos,$red,$hijos);
+		return $failure;
+		
+	}
+	
+	function buscarEspacios($id,$red,$espacios,$cupos){
+		//echo "dentro de buscar espacios	";
+		$padre = $this->model_perfil_red->ConsultarIdPadre($id , $red);
+		$frontales = count($this->model_perfil_red->ConsultarHijos($padre[0]->debajo_de,$red))+$cupos;
+		
+		if($padre[0]->debajo_de==2||$espacios==0){
+			return $padre[0]->debajo_de;
+		}else{
+			while ($frontales>$espacios||$padre[0]->debajo_de!==2){
+				$padre = $this->model_perfil_red->ConsultarIdPadre($padre[0]->debajo_de , $red);
+				$frontales = $this->model_perfil_red->ConsultarHijos($padre[0]->debajo_de,$red)+$cupos;
+			}
+		}
+		return $padre[0]->debajo_de;
+	}
+	
 	function get_datosProveedor(){
 		
 	$q=$this->db->query("select * from proveedor p,
