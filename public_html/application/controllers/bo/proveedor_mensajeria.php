@@ -126,11 +126,14 @@ class proveedor_mensajeria extends CI_Controller
 		//$tarifas = $this->CrearTarifas_proveedor();
 		
 		if($this->validarContacto($contacto1)){
-			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto1);
-			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto2);
+			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto1);			
 			//$this->for_tarifas($tarifas);
 		}
 		
+		if($this->validarContacto2($contacto2)){
+			$this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto2);		
+			//$this->for_tarifas($tarifas);
+		}
 		redirect('/bo/proveedor_mensajeria/listar');
 	}
 	
@@ -227,6 +230,27 @@ class proveedor_mensajeria extends CI_Controller
 		}else{
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/proveedor_mensajeria/alta');
+			return false;
+		}
+	}
+	
+	private function validarContacto2($contacto){
+		$error = '';
+		if($contacto['nombre'] == ''){
+			$error = "El nombre del contacto es obligatorio";
+		}elseif ($contacto['apellido'] == ''){
+			$error = "El apellido del contacto es obligatoria";
+		}elseif ($contacto['telefono_movil'] == ''){
+			$error = "Debe tener minimo un telefono de contacto";
+		}elseif ($contacto['telefono_fijo'] == ''){
+			$error = "Debe tener minimo un telefono fijo de contacto";
+		}elseif ($contacto['mail'] == ''){
+			$error = "El email de contacto es obligatoria";
+		}
+	
+		if($error == ''){
+			return true;
+		}else{			
 			return false;
 		}
 	}
@@ -358,6 +382,7 @@ class proveedor_mensajeria extends CI_Controller
 		);
 	
 		$contacto2 = array(
+				'id_proveedor' => $id_proveedor,
 				'nombre' => $_POST['nommbre_contacto2'],
 				'apellido' => $_POST['apellido_contacto2'],
 				'telefono_movil' => $this->ConcaternarTelefonos($_POST['telefonomovil2']),
@@ -370,11 +395,16 @@ class proveedor_mensajeria extends CI_Controller
 		
 		if($this->validarContacto($contacto1)){
 			$this->modelo_proveedor_mensajeria->actualizar_contacto_mensajeria($contacto1,$_POST['id_contacto1']);
-			$this->modelo_proveedor_mensajeria->actualizar_contacto_mensajeria($contacto2, $_POST['id_contacto2']);
 			//$this->modelo_proveedor_mensajeria->eliminar_tarifas($id_proveedor);
 			//$this->for_tarifas_actualizar($tarifas,$id_proveedor);		
 		}
-		
+		if($this->validarContacto2($contacto2)){
+			$_POST['id_contacto2'] 
+			? $this->modelo_proveedor_mensajeria->actualizar_contacto_mensajeria($contacto1,$_POST['id_contacto2'])
+			: $this->modelo_proveedor_mensajeria->crear_contacto_mensajeria($contacto2);
+			//$this->modelo_proveedor_mensajeria->eliminar_tarifas($id_proveedor);
+			//$this->for_tarifas_actualizar($tarifas,$id_proveedor);		
+		}
 		redirect('/bo/proveedor_mensajeria/listar');
 	}
 	

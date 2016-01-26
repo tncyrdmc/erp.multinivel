@@ -143,35 +143,35 @@
 								<div class="row">
 									<header>Contacto N° 2</header>
 									
-									<input type="text" name="id_contacto2" class="hide" value="<?php echo $contactos[1]->id; ?>" />
+									<input type="text" name="id_contacto2" class="hide" value="<?php echo count($contactos)==2 ? $contactos[1]->id : ''; ?>" />
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Nombre
-											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" value="<?php echo $contactos[1]->nombre; ?>" />
+											<input type="text" class="form-control" name="nommbre_contacto2" placeholder="Nombre de persona de contacto"class="form-control" value="<?php echo count($contactos)==2 ? $contactos[1]->nombre : ''; ?>" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										<label for="" class="input">Apellido
-											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo $contactos[1]->apellido; ?>" />
+											<input type="text" class="form-control" name="apellido_contacto2" placeholder="Apellido de persona de contacto"class="form-control" value="<?php echo count($contactos)==2 ? $contactos[1]->apellido : ''; ?>" />
 										</label>
 									</div>
-									<?php $telefono_movil = explode("/",$contactos[1]->telefono_movil); 
+									<?php $telefono_movil = explode("/",count($contactos)==2 ? $contactos[1]->telefono_movil : '0/0/0') ; 
 										foreach ($telefono_movil as $telefono){
 									?>
 										<div class="col col-xs-12 col-sm-6 col-lg-6">
 											Telefono Movil<label for="" class="input">
 												<i class="icon-prepend fa fa-phone"></i>
-												<input name="telefonomovil2[]" placeholder="Telefono Movil" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" value="<?php echo $telefono; ?>">
+												<input name="telefonomovil2[]" placeholder="Telefono Movil" data-mask="999 999-9999" type="tel" pattern="[0-9]{7,50}" value="<?php echo $telefono==0  ? '' : $telefono; ?>">
 											</label>
 										</div>
 									<?php } ?>
-									<?php $telefono_movil = explode("/",$contactos[1]->telefono_fijo); 
+									<?php $telefono_movil = explode("/",count($contactos)==2 ? $contactos[1]->telefono_fijo : '0/0/0'); 
 										foreach ($telefono_movil as $telefono){
 									?>
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Telefono Fijo<label for="" class="input">
 											<i class="icon-prepend fa fa-phone"></i>
-											<input name="telefonofijo2[]" placeholder="Telefono Fijo" data-mask=" (999) 999-9999" type="tel" pattern="[0-9]{7,50}" value="<?php echo $telefono; ?>">
+											<input name="telefonofijo2[]" placeholder="Telefono Fijo" data-mask=" (999) 999-9999" type="tel" pattern="[0-9]{7,50}" value="<?php echo $telefono==0  ? '' : $telefono;  ?>">
 										</label>
 									</div>
 									<?php } ?>
@@ -179,13 +179,13 @@
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Email<label for="" class="input">
 											<i class="icon-prepend fa fa-envelope-o"></i>
-											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto" class="form-control" value="<?php echo $contactos[1]->mail; ?>" />
+											<input type="email" class="form-control" name="email_contacto2" placeholder="Email de la persona de contacto" class="form-control" value="<?php echo count($contactos)==2 ? $contactos[1]->mail : ''; ?>" />
 										</label>
 									</div>
 									
 									<div class="col col-xs-12 col-sm-6 col-lg-6">
 										Puesto<label for="" class="input">
-											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" value="<?php echo $contactos[1]->puesto; ?>" />
+											<input type="text" class="form-control" name="puesto_contacto2" placeholder="Puesto de la persona de contacto"class="form-control" value="<?php echo count($contactos)==2 ? $contactos[1]->puesto : ''; ?>" />
 										</label>
 									</div>
 								</div>

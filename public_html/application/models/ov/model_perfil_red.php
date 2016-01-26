@@ -640,7 +640,7 @@ order by (U.id);");
 	}
 	
 	function ConsultarRedDebajo($id,$red){
-		$q = $this->db->query("select group_concat(id_afiliado) from afiliar where debajo_de=".$id." and id_red = ".$red);
+		$q = $this->db->query("select group_concat(id_afiliado) as hijos from afiliar where debajo_de=".$id." and id_red = ".$red);
 		return $q->result();
 	}
 	
@@ -655,21 +655,43 @@ order by (U.id);");
 		return $retencion[0]->porcentaje;
 	}
 	
-	function actualizarHijos($espacio,$setHijos,$red,$hijos){
-		echo "dentro de actualizarHijos	";
-		/*$i = count($this->ConsultarHijos($id,$red));
+	function ConsultarFrontales($id,$red){
+		$q = $this->db->query("select lado from afiliar where debajo_de = ".$id." and id_red = ".$red);
+		return $q->result();
+	}
+	
+	function consultarVacio($id,$espacio,$red,$i){
+		$debajo = $this->ConsultarIdPadre($id , $red);
+		if($debajo[0]->debajo_de==$espacio){
+			return $debajo[0]->lado;
+		}else{
+			return $i;
+		}
+	}
+	
+	function actualizarHijos($id,$espacio,$setHijos,$red,$hijos){
+		
+		$i = count($this->ConsultarHijos($espacio,$red));		
+		$j = $this->consultarVacio($id,$espacio,$red,$i);
+		//echo "dentro de actualizarHijos	:".$i."	cupos: ".$j." setHijos: ".$setHijos."	";
 		$this->db->query("update afiliar set debajo_de = ".$espacio." where id_afiliado in (".$setHijos.") and id_red = ".$red);
 		foreach($hijos as $hijo){
-			$this->db->query("update afiliar set lado = ".$i." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);
-			$i++;
+			if($j==$i){				
+				$this->db->query("update afiliar set lado = ".$i." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);		
+			}else{
+				$this->db->query("update afiliar set lado = ".$j." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);	
+			}							
+			$j=$i;	
+			$i++;		
 		}
-		return true;*/
+		return true;
 	}
 	
 	function kill_afiliado($id){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id);
 		$this->db->query("delete from user_profiles where user_id = ".$id);
 		$this->db->query("delete from users where id = ".$id);
+		$this->db->query("delete from red where id_usuario = ".$id);
 	}
 	
 }

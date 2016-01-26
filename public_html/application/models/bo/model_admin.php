@@ -129,9 +129,9 @@ class model_admin extends CI_Model
 		$hijos = $this->model_perfil_red->ConsultarHijos($id,$red);
 		$lados = $this->model_tipo_red->ObtenerFrontalesRed($red);
 		$espacio = $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos));
-		echo "padre: ".$espacio."	";
+		//echo "padre: ".$espacio."	";
 		$setHijos = $this->model_perfil_red->ConsultarRedDebajo($id,$red);
-		$failure = $this->model_perfil_red->actualizarHijos($espacio,$setHijos,$red,$hijos);
+		$failure = $this->model_perfil_red->actualizarHijos($id,$espacio,$setHijos[0]->hijos,$red,$hijos);
 		return $failure;
 		
 	}
