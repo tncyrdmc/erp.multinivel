@@ -54,7 +54,7 @@
 												<section class="col col-2">País del producto
 												<label class="select">
 													
-													<select id="pais" required name="pais" id="pais" onChange="ProductoPorPaisTodo()">
+													<select id="pais" required name="pais" id="pais" onChange="select_pais()">
 														<option value="-" selected>-- Seleciona un pais --</option>
 														<?foreach ($pais as $key){?>
 															<option value="<?=$key->Code?>"><?=$key->Name?></option>
@@ -141,17 +141,17 @@
 											<section class="col col-2">
 											<label class="input">
 											Costo real
-											<input type="text" name="real" id="real">
+											<input type="text" name="real" id="real" onchange="calcular_precio_total()">
 											</label>
 											</section>
 											<section class="col col-2">
 											<label class="input">Costo distribuidores
-											<input type="text" name="costo" id="costo">
+											<input type="text" name="costo" id="costo" onchange="calcular_precio_total()">
 											</label>
 											</section>
 											<section class="col col-2">
 											<label class="input">Costo publico
-											<input type="text" name="costo_publico" id="costo_publico">
+											<input type="text" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 											</label>
 											</section>
 											<section class="col col-2">
@@ -169,9 +169,64 @@
 												<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
 											</label>
 											</section>
+											
+												
 
 											</fieldset></div>
+											
+											<fieldset>
+											<legend>Impuestos</legend>
+											<fieldset>
+											<div class="row" id="impuesto_agregar">
+											
+																										<section class="col col-2">Requiere especificación
+																<div class="inline-group">
+																	<label class="radio">
+																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" checked="">
+																		<i></i>con IVA</label>
+																		<label class="radio">
+																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva">
+																			<i></i>más IVA</label>
+																		</div>
+																	</section>
+														<section class="col col-2" id="impuesto">Impuesto
+														<label class="select">
+															<select id="id_impuesto[]" name="id_impuesto[]" onclick="calcular_precio_total()">
+																
+															</select>
+														</label>
+														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
+													
+
+																														</div>
+																														<div class="row">
+																										
+													<section class="col col-2">
+														<label class="input">
+															Costo real con IVA
+															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="input">
+															Costo distribuidores con IVA
+															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="input">
+															Costo público con IVA
+															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+														</label>
+													</section>
+													
+													</div>
+													</fieldset>
+													</fieldset>
 											<div>
+											<fieldset>
+											<legend>Descripción e imagen</legend>
 											<section style="padding-left: 0px;" class="col col-6">Descripcion
 											<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
 											</section>
@@ -183,6 +238,7 @@
 															</div>
 															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
 														</section>
+														</fieldset>
 											</div>
 											</fieldset>
 											
@@ -1233,25 +1289,25 @@ function use_mail1()
 }
 function add_impuesto()
 {
-	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
+	var code=	'<div id="'+i+'"><section class="col col-2" id="impuesto">Impuesto'
 	+'<label class="select">'
-	+'<select name="id_impuesto[]">'
-	<?foreach ($impuesto as $key)
-	{
-		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
-	}?>
+	+'<select name="id_impuesto[]" onclick="calcular_precio_total()">'
 	+'</select>'
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
-	$("#moneda_field").append(code);
-	ImpuestosPais();
+	$("#impuesto_agregar").append(code);
+	ImpuestosPais2(i);
+	calcular_precio_total();
 	i = i + 1
 }
 
 function dell_impuesto(id)
 {	
+	
 	$("#"+id+"").remove();
+	calcular_precio_total();
+	
 	
 }
 function add_impuesto_boot()
@@ -1677,6 +1733,32 @@ function ImpuestosPais(){
 	});
 }
 
+function ImpuestosPais2(id){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#'+id+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#'+id);
+		      $('#'+id+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});  
+	      }
+	});
+}
+
 function validar_rangos_repetidos(){
 		var  rangos = new Array();
 		var rango_repetido=false;
@@ -1879,6 +1961,99 @@ function ServicioPorPaisAgregado(id){
 	      }
 	});
 }
+function validar_impuesto(){
+	var  Impuesto = new Array();
+$('select[name="id_impuesto[]"]').each(function() {	
+	Impuesto.push($(this).val());
+});	
+return Impuesto;
+}
+function validar_tipo_iva(porcentaje, tipo, valor){
+	var valor_iva=0;
+	valor_iva=((valor)*parseFloat(porcentaje))/(100);
+if(tipo=="1"){
+	precio_con_iva=valor-valor_iva;
+	return precio_con_iva;
+}
+if(tipo=="0"){
+	precio_con_iva=parseFloat(valor)+valor_iva;
+	return precio_con_iva;
+}
+}
 
+
+function calcular_porcentaje_total(){
+		var  Impuesto=validar_impuesto();
+		var resultado=0;
+		var porcentaje=0;
+		if(Impuesto){
+		for(i=0;i<Impuesto.length;i++){
+	
+	$.ajax({
+		async: false,
+		type: "POST",
+		url: "/bo/mercancia/ImpuestoPaisPorId",
+		data: {impuesto: Impuesto[i]}
+	})
+	.done(function( msg )
+	{
+		recibir=$.parseJSON(msg);
+		porcentaje+=parseInt(recibir[0]["porcentaje"]);
+	});
+}
+
+return porcentaje;
+}else{
+	return false;
+}
+}
+function calcular_precio_total(){
+var tipo_iva=$("input:radio[name=iva]:checked").val();
+var porcentaje=calcular_porcentaje_total();
+var Resultado_Final=0;
+	var valor_real=$("#real").val();
+	var valor_distribuidor=$("#costo").val();
+	var valor_publico=$("#costo_publico").val();
+	var validar_real=validar_campos_vacios(valor_real);
+	var validar_distribuidor=validar_campos_vacios(valor_distribuidor);
+	var validar_publico=validar_campos_vacios(valor_publico);
+	if(porcentaje!=false || porcentaje==0){
+	if(validar_real==true){
+	Resultado_Final=validar_tipo_iva(porcentaje, tipo_iva, valor_real);
+	$("#real_iva").val(Resultado_Final);	
+		}
+		else{$("#real_iva").val("falta algun dato");}
+	if(validar_distribuidor==true){
+	Resultado_Final=validar_tipo_iva(porcentaje, tipo_iva, valor_distribuidor);
+	$("#distribuidores_iva").val(Resultado_Final);
+						}
+			else{$("#distribuidores_iva").val("falta algun dato");}
+	if(validar_publico==true){
+	Resultado_Final=validar_tipo_iva(porcentaje, tipo_iva, valor_publico);
+	$("#publico_iva").val(Resultado_Final);
+						}
+		else{$("#publico_iva").val("falta algun dato");}
+	}else{
+		$("#real_iva").val("falta un dato");
+		$("#distribuidores_iva").val("falta un dato");
+		$("#publico_iva").val("falta un dato");
+	}
+}
+function validar_campos_vacios(campo){
+if(campo=="undefined"){
+return false;
+}
+if(campo==null){
+return false;
+}
+if(campo==""){
+return false;
+}
+return true;
+}
+function select_pais(){
+calcular_precio_total();
+ImpuestosPais();	
+}
 
 </script>

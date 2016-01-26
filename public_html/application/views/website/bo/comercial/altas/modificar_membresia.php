@@ -5,6 +5,7 @@
 <?
 $valor_iva=0;
 $valor_total=0;
+$porcentajeContador=0;
 ?>
 <div id="content">
 	
@@ -159,20 +160,11 @@ $valor_total=0;
 																		if($key->id_pais==$mercancia[0]->pais){?>
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{
-																			
-																			$valor_iva=($mercancia[0]->costo*$key->porcentaje)/100;
-
-																			if($mercancia[0]->iva=="CON"){  
-																			$valor_total=	$mercancia[0]->costo-$valor_iva;
-																		}
-																			if($mercancia[0]->iva=="MAS"){
-																			$valor_total=$mercancia[0]->costo+$valor_iva;
-																		}
-																			?>
+																								?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
-																		<?}
+																		<?$porcentajeContador+=$key->porcentaje;}
 																		else
 																		{?>
 																			<option value='<?php echo $key->id_impuesto?>'>
@@ -201,7 +193,22 @@ $valor_total=0;
 													</section>
 													</div>
 													</fieldset>
-															</div>						
+															</div>	
+															<?
+																	if($porcentajeContador!=0){
+																		$valor_iva=($mercancia[0]->costo*$porcentajeContador)/100;
+
+																			if($mercancia[0]->iva=="CON"){  
+																			$valor_total=	$mercancia[0]->costo-$valor_iva;
+																		}
+																			if($mercancia[0]->iva=="MAS"){
+																			$valor_total=$mercancia[0]->costo+$valor_iva;
+																		}
+																		}else{
+																			$valor_total=$mercancia[0]->costo;
+																		}
+																
+															?>					
 																<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
