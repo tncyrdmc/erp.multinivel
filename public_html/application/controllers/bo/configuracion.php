@@ -113,6 +113,41 @@ class configuracion extends CI_Controller
 		redirect('bo/configuracion/comisiones');
 	}
 	
+	function empresa()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$pais = $this->model_admin->get_pais_activo();
+		$this->template->set("pais",$pais);
+		
+		$regimen = $this->model_admin->get_regimen();
+		$this->template->set("regimen",$regimen);
+		
+		$this->template->set("style",$style);
+	
+		$empresa  = $this->model_admin->val_empresa_multinivel();	
+		$this->template->set("empresa",$empresa);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/empresa');
+	}
+	
 	function tipoRed()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

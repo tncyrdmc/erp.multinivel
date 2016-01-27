@@ -53,6 +53,27 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from empresa");
 		return $q->result();
 	}
+	
+	function val_empresa_multinivel()
+	{
+		$empresa=$this->get_empresa_multinivel();
+		if(!$empresa){ 
+			$dato=array(
+					"id_tributaria" =>	"00000000-3"
+			);
+			$this->db->insert("empresa_multinivel",$dato);
+			$empresa=$this->get_empresa_multinivel();
+		}
+		return $empresa;
+	}
+	
+	function get_empresa_multinivel()
+	{
+		$q=$this->db->query("select * from empresa_multinivel");
+		$empresa = $q->result();
+		return $empresa;
+	}
+	
 	function get_tipo_mercancia()
 	{
 		$q=$this->db->query("select * from cat_tipo_mercancia");
@@ -500,6 +521,29 @@ where(a.id_pais=b.Code)");
         $empresa = array('id' => $id_nuevo, 'nombre' => $_POST['nombre']);
         return $empresa;
 	}
+	
+	function empresa_multinivel()
+	{
+		$dato=array(
+				"id_tributaria"     => $_POST['id_tributaria'],
+				"regimen"   		=> $_POST['regimen'],
+				"nombre"     		=> $_POST['nombre'],
+				"web"       		=> $_POST['web'],
+				"postal"         	=> $_POST['postal'],
+				"direccion"      	=> $_POST['direccion'],
+				"ciudad"         	=> $_POST['ciudad'] ? $_POST['ciudad'] : "No define",
+				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
+				"pais"          	=> $_POST['pais'],
+				"fijo" 				=> $_POST['fijo'],
+				"movil" 			=> $_POST['movil']
+		);
+	
+		$this->db->where('id_tributaria', $_POST['id']);
+		$this->db->update('empresa_multinivel', $dato); 	
+		
+		return true;
+	}
+	
 	function update_mercancia()
 	{
 		if($_POST['tipo_merc']==1)

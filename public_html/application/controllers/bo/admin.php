@@ -214,6 +214,7 @@ class admin extends CI_Controller
 				echo '</section></div></form>';
 				echo "<hr />";
 			}
+			
 		}
 	}
 	
@@ -239,6 +240,14 @@ class admin extends CI_Controller
 		
 		$empresa = $this->model_admin->new_empresa();
 		echo json_encode($empresa);
+	}
+	
+	function empresa_multinivel()
+	{	
+		$empresa = $this->model_admin->empresa_multinivel();
+		echo $empresa 
+		? "Se ha actualizado los datos de la Empresa Multinivel" 
+		: "No se ha podido actualizar los datos de la Empresa Multinivel";
 	}
 
 	function new_proveedor()
