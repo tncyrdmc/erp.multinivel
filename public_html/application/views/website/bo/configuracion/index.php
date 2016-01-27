@@ -42,10 +42,10 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="#">
+													<a href="/bo/configuracion/empresa">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-users fa-3x"></i>
-															<h1>Empresas<br><br></h1>
+															<i class="fa fa-bookmark fa-3x"></i>
+															<h1>Empresa<br><br></h1>
 														</div>
 													</a>
 												</div>

@@ -2,6 +2,14 @@
 
 class model_perfil_red extends CI_Model
 {
+	
+	function __construct() {
+		parent::__construct();
+	
+		$this->load->model('ov/model_afiliado');
+	}
+	
+	
 	function datos_perfil($id)
 	{
 		$q=$this->db->query('
@@ -89,13 +97,8 @@ class model_perfil_red extends CI_Model
 				$_POST['afiliados']=$id;
 				$directo=1;
 			}
-			$dato_style=array(
-		                "id_usuario"		=> $id_nuevo,
-		                "bg_color"			=> "#EEEEEE",
-		                "btn_1_color"		=> "#93C83F",
-		                "btn_2_color"		=> "#3DB2E5"
-		            );
-			$this->db->insert("estilo_usuario",$dato_style);
+			
+			$this->model_afiliado->EstiloUsuaio($id_nuevo);
 
 			if(!isset($_POST['tipo_afiliado']))
 			{
@@ -615,6 +618,12 @@ order by (U.id);");
 		return $id_padre;
 	}
 	
+	function ConsultarPadre($id , $id_red_padre){
+		$q = $this->db->query("select debajo_de from afiliar where id_afiliado=".$id." and id_red = ".$id_red_padre);
+		$id_padre = $q->result();
+		return $id_padre[0]->debajo_de;
+	}
+	
 
 	function Consultar_nivel_red($id_user){
 		$q = $this->db->query("select u.user_id,u.nivel_en_red from user_profiles u
@@ -640,7 +649,7 @@ order by (U.id);");
 	}
 	
 	function ConsultarRedDebajo($id,$red){
-		$q = $this->db->query("select group_concat(id_afiliado) from afiliar where debajo_de=".$id." and id_red = ".$red);
+		$q = $this->db->query("select group_concat(id_afiliado) as hijos from afiliar where debajo_de=".$id." and id_red = ".$red);
 		return $q->result();
 	}
 	
@@ -655,21 +664,43 @@ order by (U.id);");
 		return $retencion[0]->porcentaje;
 	}
 	
-	function actualizarHijos($espacio,$setHijos,$red,$hijos){
-		echo "dentro de actualizarHijos	";
-		/*$i = count($this->ConsultarHijos($id,$red));
+	function ConsultarFrontales($id,$red){
+		$q = $this->db->query("select lado from afiliar where debajo_de = ".$id." and id_red = ".$red);
+		return $q->result();
+	}
+	
+	function consultarVacio($id,$espacio,$red,$i){
+		$debajo = $this->ConsultarIdPadre($id , $red);
+		if($debajo[0]->debajo_de==$espacio){
+			return $debajo[0]->lado;
+		}else{
+			return $i;
+		}
+	}
+	
+	function actualizarHijos($id,$espacio,$setHijos,$red,$hijos){
+		
+		$i = count($this->ConsultarHijos($espacio,$red));		
+		$j = $this->consultarVacio($id,$espacio,$red,$i);
+		//echo "dentro de actualizarHijos	:".$i."	cupos: ".$j." setHijos: ".$setHijos."	";
 		$this->db->query("update afiliar set debajo_de = ".$espacio." where id_afiliado in (".$setHijos.") and id_red = ".$red);
 		foreach($hijos as $hijo){
-			$this->db->query("update afiliar set lado = ".$i." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);
-			$i++;
+			if($j==$i){				
+				$this->db->query("update afiliar set lado = ".$i." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);		
+			}else{
+				$this->db->query("update afiliar set lado = ".$j." where id_afiliado = ".$hijo->id_afiliado." and id_red = ".$red);	
+			}							
+			$j=$i;	
+			$i++;		
 		}
-		return true;*/
+		return true;
 	}
 	
 	function kill_afiliado($id){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id);
 		$this->db->query("delete from user_profiles where user_id = ".$id);
 		$this->db->query("delete from users where id = ".$id);
+		$this->db->query("delete from red where id_usuario = ".$id);
 	}
 	
 }

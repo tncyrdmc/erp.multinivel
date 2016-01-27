@@ -53,6 +53,27 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from empresa");
 		return $q->result();
 	}
+	
+	function val_empresa_multinivel()
+	{
+		$empresa=$this->get_empresa_multinivel();
+		if(!$empresa){ 
+			$dato=array(
+					"id_tributaria" =>	"00000000-3"
+			);
+			$this->db->insert("empresa_multinivel",$dato);
+			$empresa=$this->get_empresa_multinivel();
+		}
+		return $empresa;
+	}
+	
+	function get_empresa_multinivel()
+	{
+		$q=$this->db->query("select * from empresa_multinivel");
+		$empresa = $q->result();
+		return $empresa;
+	}
+	
 	function get_tipo_mercancia()
 	{
 		$q=$this->db->query("select * from cat_tipo_mercancia");
@@ -107,10 +128,11 @@ class model_admin extends CI_Model
 	}
 	
 	function kill_afiliado($id){
-		//echo "dentro de admin kill "; 
+		//echo "dentro de admin kill ";
 		$i=0;
 		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);		
 		foreach($redes_afiliado as $red_afiliado){
+			//echo "red: ".$red_afiliado->id_red." ";
 			if (!$this->flowCompress($id,$red_afiliado->id_red)){ 
 				$i++;
 			}
@@ -126,30 +148,41 @@ class model_admin extends CI_Model
 	
 	function flowCompress($id,$red){
 		
+		//echo "dentro de flow compress ";
 		$hijos = $this->model_perfil_red->ConsultarHijos($id,$red);
 		$lados = $this->model_tipo_red->ObtenerFrontalesRed($red);
-		$espacio = $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos));
-		echo "padre: ".$espacio."	";
+		$espacio = ($hijos) ? $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos)) : 2;
+		//echo "padre: ".$espacio."	";
 		$setHijos = $this->model_perfil_red->ConsultarRedDebajo($id,$red);
-		$failure = $this->model_perfil_red->actualizarHijos($espacio,$setHijos,$red,$hijos);
+		$failure = ($hijos) ? $this->model_perfil_red->actualizarHijos($id,$espacio,$setHijos[0]->hijos,$red,$hijos) : true;
 		return $failure;
 		
 	}
 	
 	function buscarEspacios($id,$red,$espacios,$cupos){
-		//echo "dentro de buscar espacios	";
-		$padre = $this->model_perfil_red->ConsultarIdPadre($id , $red);
-		$frontales = count($this->model_perfil_red->ConsultarHijos($padre[0]->debajo_de,$red))+$cupos;
+		//echo "dentro de buscar espacios	";		
+		$padre = $this->model_perfil_red->ConsultarPadre($id , $red);
+		$frontales = (count($this->model_perfil_red->ConsultarHijos($padre,$red))-1);	
 		
-		if($padre[0]->debajo_de==2||$espacios==0){
-			return $padre[0]->debajo_de;
-		}else{
-			while ($frontales>$espacios||$padre[0]->debajo_de!==2){
-				$padre = $this->model_perfil_red->ConsultarIdPadre($padre[0]->debajo_de , $red);
-				$frontales = $this->model_perfil_red->ConsultarHijos($padre[0]->debajo_de,$red)+$cupos;
+		if($espacios<>0){
+			$padre = $this->rotarPadres($espacios,$padre,$frontales,$cupos,$red);
+		}
+		return $padre;
+	}
+	
+	function rotarPadres($espacios,$padre,$frontales,$cupos,$red){
+		//echo "dentro de rotar padres";
+		while ($padre<>2){
+			//echo "padre: ".$padre." ";
+			if (($frontales + $cupos)<= $espacios){			
+				return $padre;
+			}else{
+				$padre = $this->model_perfil_red->ConsultarPadre($padre , $red);
+				$frontales = count($this->model_perfil_red->ConsultarHijos($p,$red));
 			}
 		}
-		return $padre[0]->debajo_de;
+		//echo "padre : ".$padre." ";
+		return $padre;
 	}
 	
 	function get_datosProveedor(){
@@ -488,6 +521,29 @@ where(a.id_pais=b.Code)");
         $empresa = array('id' => $id_nuevo, 'nombre' => $_POST['nombre']);
         return $empresa;
 	}
+	
+	function empresa_multinivel()
+	{
+		$dato=array(
+				"id_tributaria"     => $_POST['id_tributaria'],
+				"regimen"   		=> $_POST['regimen'],
+				"nombre"     		=> $_POST['nombre'],
+				"web"       		=> $_POST['web'],
+				"postal"         	=> $_POST['postal'],
+				"direccion"      	=> $_POST['direccion'],
+				"ciudad"         	=> $_POST['ciudad'] ? $_POST['ciudad'] : "No define",
+				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
+				"pais"          	=> $_POST['pais'],
+				"fijo" 				=> $_POST['fijo'],
+				"movil" 			=> $_POST['movil']
+		);
+	
+		$this->db->where('id_tributaria', $_POST['id']);
+		$this->db->update('empresa_multinivel', $dato); 	
+		
+		return true;
+	}
+	
 	function update_mercancia()
 	{
 		if($_POST['tipo_merc']==1)

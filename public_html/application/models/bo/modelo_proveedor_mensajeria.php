@@ -84,7 +84,7 @@ class modelo_proveedor_mensajeria extends CI_Model
 	}
 	
 	function consultar_contactos_mensajeria($id){
-		$q = $this->db->query('select * from proveedor_contacto where id_proveedor ='.$id);
+		$q = $this->db->query('select * from proveedor_contacto where id_proveedor = '.$id.' order by id asc');
 		$contactos = $q->result();
 		return $contactos;
 	}

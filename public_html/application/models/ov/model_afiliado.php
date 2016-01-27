@@ -630,9 +630,9 @@ class model_afiliado extends CI_Model{
 			if(isset($afiliado[0]->id)){
 				$q = $this->db->query("select id_red from afiliar where id_afiliado = ".$afiliado[0]->id." and id_red = ".$red);
 				$afiliado1 = $q->result();
-				if(!isset($afiliado1[0]->id_red))
+				if(!isset($afiliado1[0]->id_red)){
 					return true;
-				else{
+				}else{
 					echo "<div id='msg_usuario' class='alert alert-danger fade in'>
 							 UPS¡ lo sentimos, los datos ingresados pertenecen a un afiliado que ya pertenece a esta red
 						</div>";
