@@ -2,6 +2,14 @@
 
 class model_perfil_red extends CI_Model
 {
+	
+	function __construct() {
+		parent::__construct();
+	
+		$this->load->model('ov/model_afiliado');
+	}
+	
+	
 	function datos_perfil($id)
 	{
 		$q=$this->db->query('
@@ -89,13 +97,8 @@ class model_perfil_red extends CI_Model
 				$_POST['afiliados']=$id;
 				$directo=1;
 			}
-			$dato_style=array(
-		                "id_usuario"		=> $id_nuevo,
-		                "bg_color"			=> "#EEEEEE",
-		                "btn_1_color"		=> "#93C83F",
-		                "btn_2_color"		=> "#3DB2E5"
-		            );
-			$this->db->insert("estilo_usuario",$dato_style);
+			
+			$this->model_afiliado->EstiloUsuaio($id_nuevo);
 
 			if(!isset($_POST['tipo_afiliado']))
 			{

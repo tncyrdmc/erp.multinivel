@@ -152,7 +152,7 @@ class model_admin extends CI_Model
 	function rotarPadres($espacios,$padre,$frontales,$cupos,$red){
 		//echo "dentro de rotar padres";
 		while ($padre<>2){
-			echo "padre: ".$padre." ";
+			//echo "padre: ".$padre." ";
 			if (($frontales + $cupos)<= $espacios){			
 				return $padre;
 			}else{
@@ -160,7 +160,7 @@ class model_admin extends CI_Model
 				$frontales = count($this->model_perfil_red->ConsultarHijos($p,$red));
 			}
 		}
-		echo "padre : ".$padre." ";
+		//echo "padre : ".$padre." ";
 		return $padre;
 	}
 	

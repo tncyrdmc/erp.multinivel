@@ -174,7 +174,7 @@ class perfil_red extends CI_Controller
 	function subtree()
 	{
 		$id_red=$_POST['red'];
-		$nivel = $_POST['nivel'];
+		$nivel = ($this->tank_auth->get_user_id()==2) ? 0 : $_POST['nivel'];
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales= $red[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
@@ -267,7 +267,7 @@ class perfil_red extends CI_Controller
 	
 	{
 		$id_red=$_POST['red'];
-		$nivel = $_POST['nivel'];
+		$nivel = ($this->tank_auth->get_user_id()==2) ? 0 : $_POST['nivel'];
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales= $red[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
@@ -1190,7 +1190,7 @@ class perfil_red extends CI_Controller
 		$id = $_POST['id'];
 		$id_red = $_POST['red'];
 		
-		$nivel = $_POST['nivel'];
+		$nivel = ($this->tank_auth->get_user_id()==2) ? 0 : $_POST['nivel'];
 
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		
