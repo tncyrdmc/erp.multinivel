@@ -20,11 +20,11 @@ $porcentajeContador=0;
 									<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form">
+							<form id="modprod" method="POST" action="/bo/admin/update_mercancia"  role="form">
 								
 									<section class="col col-6" style="display:none;">
 										<label class="select"> 
-											<select id="tipo_merc" required name="tipo_merc">
+											<select id="tipo_merc" required="" name="tipo_merc">
 										             	<option value="1">merc</option>
 										        </select>
 										</label>
@@ -46,7 +46,7 @@ $porcentajeContador=0;
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Nombre
-														<input required type="text" value='<?php echo $data_merc[0]->nombre?>' id="nombre_p" name="nombre">
+														<input type="text" value='<?php echo $data_merc[0]->nombre?>' id="nombre_p" name="nombre" required="">
 													</label>
 												</section>
 												
@@ -60,18 +60,18 @@ $porcentajeContador=0;
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Marca
-														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca">
+														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca" required>
 													</label>
 												</section>
 												
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Código de barras
-														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras">
+														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras" required>
 													</label>
 												</section>
 												
-												<section class="col col-12" style="width: 100%;">GRUPO
+												<section class="col col-12" style="width: 50%;">Categoría
 															<label class="select">
 																<select name="grupo">
 																<?foreach ($grupos as $key){
@@ -89,12 +89,18 @@ $porcentajeContador=0;
 																</select>
 															</label>
 												</section>
+											<section class="col col-2" style="width: 50%;">
+											<label class="input"><span id="labelextra">Descuento del
+													producto</span> 
+													<input id="precio_promo" type="number" name="descuento" value='<? echo $mercancia[0]->descuento;?>' required> 
+											</label>
+											</section>
 												
 												<div>
 													<section style="padding-left: 15px; width: 100%;" class="col col-12">
 														Descripcion
 														<label class="textarea"> 										
-															<textarea name="descripcion" rows="3" class="custom-scroll"><?php echo $data_merc[0]->descripcion?></textarea> 
+															<textarea name="descripcion" rows="3" class="custom-scroll" required><?php echo $data_merc[0]->descripcion?></textarea> 
 														</label>
 													</section>
 													
@@ -141,28 +147,28 @@ $porcentajeContador=0;
 													<section id="colonia" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Alto
-															<input type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
+															<input required type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Ancho
-															<input type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
+															<input  required type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Profundidad
-															<input type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
+															<input required type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Diametro
-															<input type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
+															<input required type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
 														</label>
 													</section>
 											</fieldset>
@@ -174,42 +180,42 @@ $porcentajeContador=0;
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Cantidad mínima de venta
-															<input type="text" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
+															<input required type="number" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
 														</label>
 													</section>
 													
-													<section class="col col-12" style="width: 50%;">
-														<label class="input">
+													<section  class="col col-12" style="width: 50%;">
+														<label  class="input">
 															Cantidad máxima de venta
-															 <input type="text" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
+															 <input required type="number" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo real
-															<input type="text" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
+															<input required type="number" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
+															<input required type="number" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo publico
-															<input type="text" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
+															<input required type="number" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Tiempo mínimo de entrega
-															<input placeholder="En días" type="text" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
+															<input required placeholder="En días" type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
 														</label>
 													</section>
 													
@@ -265,15 +271,13 @@ $porcentajeContador=0;
 													<section id="impuesto" name="impuesto">
 														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
-																<select name="id_impuesto[]" onclick="calcular_precio_total()">
+																<select name="id_impuesto[]" onchange="calcular_precio_total()">
 																	<?foreach ($impuesto as $key){
 																		if($key->id_pais==$mercancia[0]->pais){
 																			?>
-																		
-																		
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
-																			<option selected value='<?php echo $key->id_impuesto?>'>
+																			<option selected value='<?php echo $key->id_impuesto?>' onclick="calcular_precio_total()">
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
 																				<?
@@ -281,14 +285,11 @@ $porcentajeContador=0;
 																			}
 																		else 
 																		{?>
-																			<option value='<?php echo $key->id_impuesto?>'>
+																			<option value='<?php echo $key->id_impuesto?>' onclick="calcular_precio_total()">
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
 																			</option>
-																		<?}?>
-																		
-																	
-																
-														<?}
+																		<?}?>		
+																		<?}
 																	}?>	
 
 																	</select>
@@ -346,7 +347,7 @@ $porcentajeContador=0;
 																						<section class="col col-6">
 														<label class="input">
 															Costo real con IVA
-															<input type="text" value="<? echo $valor_total_real ?>" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+															<input type="text" value="<? echo $valor_total_real ?>" min="1" max="" name="real_iva" id="real_iva" disabled>
 														</label>
 													</section>
 													<section class="col col-6">
@@ -473,18 +474,17 @@ $porcentajeContador=0;
 													</section>
 											</fieldset>
 													
-										</div>
-								</div>
-							</fieldset>
+
 							<section class="col col-12 pull-right" >
-								<button type="submit" class="btn btn-success">
+								<button type="input" class="btn btn-success">
 									Actualizar
 								</button>
 							</section>
-						</form>
+							</div>
+						</form>	
 					</div>
 				</div>
-																<!-- end widget div -->
+															<!-- end widget div -->
 			</article>
 														<!-- END COL -->
 		</div>
@@ -501,20 +501,17 @@ var i = <?= $i?>;
 function add_impuesto()
 {
 	i=i+1;
-	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
+	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto" style="width: 50%;">Impuesto'
 	+'<label class="select">'
-	+'<select name="id_impuesto[]">'
-	<?foreach ($impuesto as $key)
-	{
-		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
-	}?>
+	+'<select name="id_impuesto[]" onChange="calcular_precio_total()">'
 	+'</select>'
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
 	$("#impuesto_field").append(code);
 	ImpuestosPais2(i);
-	i = i + 1
+	calcular_precio_total();
+	//i = i + 1
 }
 
 function dell_impuesto(id)
@@ -543,7 +540,7 @@ function ImpuestosPais(){
 	      for(var i in datos){
 		      var impuestos = $('#impuesto');
 		      $('#impuesto select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'" onclick="calcular_precio_total()">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
 			    
 			});
 	    	  
@@ -570,7 +567,7 @@ function ImpuestosPais2(id){
 	      for(var i in datos){
 		      var impuestos = $('#'+id);
 		      $('#'+id+' select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'" onclick="calcular_precio_total()">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
 			    
 			});  
 	      }
@@ -671,6 +668,40 @@ function select_pais(){
 calcular_precio_total();
 ImpuestosPais();	
 }
+$( "#update_merc" ).submit(function( event ) {
+	event.preventDefault();
+		enviar();
+});
+
+function enviar() {
+	//iniciarSpinner();
+	$.ajax({
+						type: "POST",
+						url: "/bo/admin/update_mercancia",
+						data: $('#update_merc').serialize()
+						})
+						.done(function( msg ) {
+
+							bootbox.dialog({
+						message: "Se ha modificado el producto.",
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								
+								location.href="/bo/comercial/carrito";
+								//FinalizarSpinner();
+								}
+							}
+						}
+					})
+					
+						});//fin Done ajax
+	
+}
+
 
 </script>
 	</html>

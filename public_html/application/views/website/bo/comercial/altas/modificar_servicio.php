@@ -65,10 +65,10 @@ $porcentajeContador=0;
 													
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">Fecha de termino
-														<input name="fecha_fin" id="finishdate" readonly="readonly" type="text" value='<?php echo $data_merc[0]->fecha_fin?>'> </label>
+														<input name="fecha_fin" required id="finishdate" readonly="readonly" type="text" value='<?php echo $data_merc[0]->fecha_fin?>'> </label>
 													</section>
 													
-													<section class="col col-12" style="width: 100%;">RED
+													<section class="col col-12" style="width: 50%;">Categoría
 														<label class="select">
 															<select name="red">
 																<?foreach ($grupos as $key){
@@ -86,7 +86,12 @@ $porcentajeContador=0;
 															</select>
 														</label>
 													</section>
-														
+											<section class="col col-2" style="width: 50%;">
+											<label class="input"><span id="labelextra">Descuento del
+													servicio</span> 
+													<input id="precio_promo" type="number" name="descuento" value='<? echo $mercancia[0]->descuento;?>' required/> 
+											</label>
+											</section>
 													<div>
 														<section style="padding-left: 15px; width: 100%;" class="col col-12">
 															Descripcion
@@ -131,25 +136,25 @@ $porcentajeContador=0;
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">
 														Costo real
-														<input type="text" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real" >
+														<input type="number" required value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real" >
 														</label>
 													</section>
 													
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">Costo distribuidores
-														<input type="text" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
+														<input type="number" required value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">Costo publico
-														<input type="text" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
+														<input type="number" required value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">
 														Tiempo mínimo de entrega
-															<input placeholder="En días" type="text" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
+															<input placeholder="En días" required type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
 														</label>
 													</section>
 													
@@ -206,7 +211,7 @@ $porcentajeContador=0;
 														<section id="impuesto">
 														<section class="col col-6"  id="<?= $i=$i+1?>" >Impuesto
 														<label class="select">
-															<select name="id_impuesto[]" onclick="calcular_precio_total()">
+															<select name="id_impuesto[]" onchange="calcular_precio_total()">
 															
 																
 																	<?foreach ($impuesto as $key){
@@ -216,13 +221,13 @@ $porcentajeContador=0;
 																	
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
-																			<option selected value='<?php echo $key->id_impuesto?>'>
+																			<option selected value='<?php echo $key->id_impuesto?>' onclick="calcular_precio_total()">
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
 																		<?$porcentajeContador+=$key->porcentaje;}
 																		else
 																		{?>
-																			<option value='<?php echo $key->id_impuesto?>'>
+																			<option value='<?php echo $key->id_impuesto?>' onclick="calcular_precio_total()">
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
 																			</option>
 																		<?}?>
@@ -370,9 +375,9 @@ $(document).ready(function() {
 function add_impuesto()
 {
 	i=i+1;
-	var code=	'<div id="'+(i)+'"><section class="col col-3" id="impuesto">Impuesto'
+	var code=	'<div id="'+(i)+'"><section class="col col-3" id="impuesto" style="width: 50%;">Impuesto'
 	+'<label class="select">'
-	+'<select name="id_impuesto[]" onclick="calcular_precio_total()">'
+	+'<select name="id_impuesto[]" onChange="calcular_precio_total()">'
 	+'</select>'
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
@@ -380,7 +385,7 @@ function add_impuesto()
 	$("#impuesto_field").append(code);
 	ImpuestosPais2(i);
 	calcular_precio_total();
-	i = i + 1
+	//i = i + 1
 }
 
 function dell_impuesto(id)
@@ -408,13 +413,14 @@ function ImpuestosPais(){
 	      for(var i in datos){
 		      var impuestos = $('#impuesto');
 		      $('#impuesto select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'" onclick="calcular_precio_total()">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
 			    
 			});
 	    	  
 	        
 	      }
 	});
+	calcular_precio_total();
 }
 
 function ImpuestosPais2(id){
@@ -436,11 +442,12 @@ function ImpuestosPais2(id){
 	      for(var i in datos){
 		      var impuestos = $('#'+id);
 		      $('#'+id+' select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'" onclick="calcular_precio_total()">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
 			    
 			});  
 	      }
 	});
+	calcular_precio_total();
 }
 
 function validar_impuesto(){
@@ -536,6 +543,40 @@ return true;
 function select_pais(){
 calcular_precio_total();
 ImpuestosPais();	
+}
+
+$( "#update_merc" ).submit(function( event ) {
+	event.preventDefault();
+		enviar();
+});
+
+function enviar() {
+	//iniciarSpinner();
+	$.ajax({
+						type: "POST",
+						url: "/bo/admin/update_mercancia",
+						data: $('#update_merc').serialize()
+						})
+						.done(function( msg ) {
+
+							bootbox.dialog({
+						message: "Se ha modificado el servicio.",
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								
+								location.href="/bo/comercial/carrito";
+								//FinalizarSpinner();
+								}
+							}
+						}
+					})
+					
+						});//fin Done ajax
+	
 }
 
 </script>

@@ -40,7 +40,7 @@ class model_mercancia extends CI_Model {
 		$iva=$this->validar_iva();
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		
-		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva );
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva, $_POST['descuento'] );
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
@@ -59,7 +59,7 @@ class model_mercancia extends CI_Model {
 		$iva=$this->validar_iva();
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		
-		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, 0, $_POST ['costo'], '0', 0, $_POST ['puntos_com'], $iva );
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, 0, $_POST ['costo'], '0', 0, $_POST ['puntos_com'], $iva, $_POST['descuento'] );
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;	
 	}
@@ -93,7 +93,7 @@ class model_mercancia extends CI_Model {
 		
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		$iva=$this->validar_iva();
-		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva );
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva, $_POST['descuento'] );
 		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
@@ -256,9 +256,9 @@ class model_mercancia extends CI_Model {
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		//$iva=$this->validar_iva();
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
-		
-		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'],"" );
-		//$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		$iva=$this->validar_iva();
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'],$iva, $_POST['descuento'] );
+		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
 	
@@ -417,12 +417,13 @@ class model_mercancia extends CI_Model {
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 	
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
-	
-		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], "" );
+		$iva=$this->validar_iva();
+		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva, $_POST['descuento'] );
+		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
 		return $mercancia;
 	}
 	
-	function CrearMercancia($sku, $sku2, $tipo, $pais, $proveedor, $real, $costo, $entrega, $costo_prublico, $puntos,$iva) {
+	function CrearMercancia($sku, $sku2, $tipo, $pais, $proveedor, $real, $costo, $entrega, $costo_prublico, $puntos,$iva,$descuento) {
 		
 		$dato_mercancia = array (
 				"sku" => $sku,
@@ -436,7 +437,8 @@ class model_mercancia extends CI_Model {
 				"entrega" => $entrega,
 				"costo_publico" => $costo_prublico,
 				"puntos_comisionables" => $puntos,
-				"iva" => $iva 
+				"iva" => $iva,
+				"descuento" => $descuento 
 		);
 		$this->db->insert ( "mercancia", $dato_mercancia );
 		return mysql_insert_id ();

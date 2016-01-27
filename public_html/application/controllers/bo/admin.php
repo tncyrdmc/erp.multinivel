@@ -341,7 +341,7 @@ class admin extends CI_Controller
 		
 		$this->template->set("grupos",$grupos);
 		echo '<div class="row">
-				<form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" novalidate="novalidate">  
+				<form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" >  
 			<h3><center><b>Editar mercancía '.$data_merc[0]->nombre.'</b></center></h3>';
 		if($id_merc==1)
 		{
@@ -806,7 +806,7 @@ class admin extends CI_Controller
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->img_merc($sku,$data["upload_data"]);
 		}
-		redirect("/bo/comercial/carrito");
+		//redirect("/bo/comercial/carrito");
 	}
 	
 	function detalle_paquete()
