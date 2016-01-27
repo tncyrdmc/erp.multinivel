@@ -323,7 +323,7 @@ class comercial extends CI_Controller
 	
 		$style         = $this->general->get_style(1);
 	
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		
 		$id_afiliado = $_GET['id_afiliado'];
 		
@@ -357,7 +357,7 @@ class comercial extends CI_Controller
 	
 		$style         = $this->general->get_style(1);
 	
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		
 		$id_afiliado = $_GET['id_afiliado'];
 		
@@ -391,7 +391,7 @@ class comercial extends CI_Controller
 	
 		$style         = $this->general->get_style(1);
 	
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarActivos();
 		
 		$id_afiliado = $_GET['id_afiliado'];
 		
@@ -2039,7 +2039,7 @@ class comercial extends CI_Controller
  	//echo "dentro de kill controller ";
  	$q=$this->model_admin->kill_afiliado($_POST['id']);
  	if($q){
- 		echo "El Afiliado eliminado con exito";
+ 		echo "El Afiliado ha sido eliminado con exito";
  	}else{
  		echo "El Afiliado no pudo ser eliminado";
  	}

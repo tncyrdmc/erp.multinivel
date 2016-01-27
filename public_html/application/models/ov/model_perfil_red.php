@@ -615,6 +615,12 @@ order by (U.id);");
 		return $id_padre;
 	}
 	
+	function ConsultarPadre($id , $id_red_padre){
+		$q = $this->db->query("select debajo_de from afiliar where id_afiliado=".$id." and id_red = ".$id_red_padre);
+		$id_padre = $q->result();
+		return $id_padre[0]->debajo_de;
+	}
+	
 
 	function Consultar_nivel_red($id_user){
 		$q = $this->db->query("select u.user_id,u.nivel_en_red from user_profiles u

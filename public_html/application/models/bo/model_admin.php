@@ -107,10 +107,11 @@ class model_admin extends CI_Model
 	}
 	
 	function kill_afiliado($id){
-		//echo "dentro de admin kill "; 
+		//echo "dentro de admin kill ";
 		$i=0;
 		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);		
 		foreach($redes_afiliado as $red_afiliado){
+			//echo "red: ".$red_afiliado->id_red." ";
 			if (!$this->flowCompress($id,$red_afiliado->id_red)){ 
 				$i++;
 			}
@@ -126,30 +127,41 @@ class model_admin extends CI_Model
 	
 	function flowCompress($id,$red){
 		
+		//echo "dentro de flow compress ";
 		$hijos = $this->model_perfil_red->ConsultarHijos($id,$red);
 		$lados = $this->model_tipo_red->ObtenerFrontalesRed($red);
-		$espacio = $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos));
+		$espacio = ($hijos) ? $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos)) : 2;
 		//echo "padre: ".$espacio."	";
 		$setHijos = $this->model_perfil_red->ConsultarRedDebajo($id,$red);
-		$failure = $this->model_perfil_red->actualizarHijos($id,$espacio,$setHijos[0]->hijos,$red,$hijos);
+		$failure = ($hijos) ? $this->model_perfil_red->actualizarHijos($id,$espacio,$setHijos[0]->hijos,$red,$hijos) : true;
 		return $failure;
 		
 	}
 	
 	function buscarEspacios($id,$red,$espacios,$cupos){
-		//echo "dentro de buscar espacios	";
-		$padre = $this->model_perfil_red->ConsultarIdPadre($id , $red);
-		$frontales = count($this->model_perfil_red->ConsultarHijos($padre[0]->debajo_de,$red))+$cupos;
+		//echo "dentro de buscar espacios	";		
+		$padre = $this->model_perfil_red->ConsultarPadre($id , $red);
+		$frontales = (count($this->model_perfil_red->ConsultarHijos($padre,$red))-1);	
 		
-		if($padre[0]->debajo_de==2||$espacios==0){
-			return $padre[0]->debajo_de;
-		}else{
-			while ($frontales>$espacios||$padre[0]->debajo_de!==2){
-				$padre = $this->model_perfil_red->ConsultarIdPadre($padre[0]->debajo_de , $red);
-				$frontales = $this->model_perfil_red->ConsultarHijos($padre[0]->debajo_de,$red)+$cupos;
+		if($espacios<>0){
+			$padre = $this->rotarPadres($espacios,$padre,$frontales,$cupos,$red);
+		}
+		return $padre;
+	}
+	
+	function rotarPadres($espacios,$padre,$frontales,$cupos,$red){
+		//echo "dentro de rotar padres";
+		while ($padre<>2){
+			echo "padre: ".$padre." ";
+			if (($frontales + $cupos)<= $espacios){			
+				return $padre;
+			}else{
+				$padre = $this->model_perfil_red->ConsultarPadre($padre , $red);
+				$frontales = count($this->model_perfil_red->ConsultarHijos($p,$red));
 			}
 		}
-		return $padre[0]->debajo_de;
+		echo "padre : ".$padre." ";
+		return $padre;
 	}
 	
 	function get_datosProveedor(){

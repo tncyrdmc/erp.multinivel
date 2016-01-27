@@ -951,6 +951,7 @@ class perfil_red extends CI_Controller
 		}
 	}
 	function AgregarUsuarioRed(){
+		//echo "dentro de agregar";
 		$id = $_POST['id'];
 		$red = $_POST['red'];
 		$email = $_POST['email'];

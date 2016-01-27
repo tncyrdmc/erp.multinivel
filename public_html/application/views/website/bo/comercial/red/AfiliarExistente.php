@@ -307,7 +307,7 @@ function Crear() {
 				{
 					$.smallBox({
 				      title: "<h1>Atención</h1>",
-				      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+				      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
 				      color: "#C46A69",
 				      icon : "fa fa-warning fadeInLeft animated",
 				      timeout: 4000
@@ -319,7 +319,7 @@ function Crear() {
 pageSetUp();
 }
 
-$(document).ready(function() {
+/**$(document).ready(function() {
 
 	// fuelux 
 
@@ -403,7 +403,7 @@ $(document).ready(function() {
 					{
 						$.smallBox({
 					      title: "<h1>Atención</h1>",
-					      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+					      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
 					      color: "#C46A69",
 					      icon : "fa fa-warning fadeInLeft animated",
 					      timeout: 4000
@@ -413,7 +413,7 @@ $(document).ready(function() {
 			  });
 	
 	pageSetUp();
-})
+})*/
 $("#remove_step").click(function() {
 	$("#tipo_plan").attr("name","tipo_plan");
 	$('.wizard').wizard('selectedItem', {
