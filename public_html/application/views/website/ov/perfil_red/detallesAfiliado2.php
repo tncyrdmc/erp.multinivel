@@ -20,9 +20,6 @@
 				Apellido: <b><?php echo $usuario[0]->apellido; ?></b>
 			</div>
 			<div class="row">
-				Nivel Alcanzado: <b>Diamante</b>
-			</div>
-			<div class="row">
 				Compras: <b>$ <?php echo number_format($compras,2); ?></b>
 			</div>
 			<div class="row">

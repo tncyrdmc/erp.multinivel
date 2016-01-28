@@ -29,7 +29,8 @@
 										<option value="1" >Ventas por Oficinas Virtuales</option>
 										<option value="7" >Afiliados</option>
 										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
-										<option value="9" onclick="tipo_reporte()">Cobros por Pagar</option>
+										<option value="9" onclick="tipo_reporte()">Cuentas Por Cobrar</option>
+										<option value="12">Cuentas Pagadas</option>
 										<option value="10" >Cobros Pagados</option>
 										<option value="11" >Cobros Pagados y Por Pagar</option>
 										<!--  	
@@ -563,7 +564,21 @@
 						break;
 					case '11':
 						break;
-					case '12':
+					case "12" :{
+						//	iniciarSpinner();
+						var inicio=$("#startdate").val();
+						var fin=$("#finishdate").val();
+							$.ajax({
+								type: "POST",
+								url: "/bo/reportes/reporte_cobros_pagados",
+								data: {startdate:inicio,finishdate:fin}
+							})
+							.done(function( msg ) {
+								FinalizarSpinner();
+								$("#reporte_div").html(msg);
+								
+							});
+						}
 						break;
 					case '13':
 						break;
@@ -1049,7 +1064,7 @@
 					data: {startdate:startdate,finishdate:finishdate}
 				});
 				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();*/
-				iniciarSpinner();
+				//iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
@@ -1076,7 +1091,7 @@
 			case "6" : //alert("Facturacion / Pedidos cobrados");
 			break;
 			case "7" :{
-				iniciarSpinner();
+				//iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
@@ -1094,7 +1109,7 @@
 			}
 			break;
 			case "8" :{
-				iniciarSpinner();
+				//iniciarSpinner();
 				$.ajax({
 					type: "POST",
 					url: "/bo/reportes/reporte_afiliados_mes"
@@ -1106,7 +1121,7 @@
 			}
 			break;
 			case "9" :{
-				iniciarSpinner();
+			//	iniciarSpinner();
 				$.ajax({
 					type: "POST",
 					url: "/bo/reportes/reporte_cobros_pendientes"
@@ -1118,7 +1133,7 @@
 			}
 			break;
 			case "10" :{
-				iniciarSpinner();
+				//iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
@@ -1137,7 +1152,7 @@
 			break;
 
 			case "11" :{
-				iniciarSpinner();
+				//iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				

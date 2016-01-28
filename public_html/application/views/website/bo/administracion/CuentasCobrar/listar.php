@@ -43,16 +43,28 @@
 					<!-- widget content -->
 					<div class="widget-body">
 						<div class="tab-pane">
+						<div style="margin-top: 1rem; margin-bottom: 1rem;" class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
+										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+											<center>
+											<a title="Pagado" class="txt-color-green" href="#"><i class="fa fa-check fa-3x"></i></a>
+											<br>Confirmar Pago</center>
+										</div>
+										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+										<center>	
+											<a title="Eliminar" href="#" class="txt-color-red"><i class="fa fa-times fa-3x"></i></a>
+											<br>Cancelar Pago</center>
+										</div>
+							</div>
 							<table  id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 								<thead>
 									<tr>
-										<th data-hide="phone">ID</th>
-										<th data-hide="phone,tablet">Fecha</th>
+										<th data-hide="phone">ID Venta</th>
 										<th data-class="expand">Afiliado</th>
 										<th data-hide="phone">Email</th>	
 										<th data-hide="phone">Banco</th>
 										<th data-hide="phone,tablet">N° Cuenta</th>
 										<th data-hide="phone,tablet">Valor</th>
+										<th data-hide="phone,tablet">Fecha</th>
 										<th data-hide="phone,tablet">Estado</th>
 										<th>Acciones</th>
 
@@ -61,17 +73,17 @@
 								<tbody>
 									<?php foreach ($cobros as $cobro) {?>
 									<tr>
-										<td><?php echo $cobro->id; ?></td>
-										<td><?php echo $cobro->fecha; ?></td>
+										<td><?php echo $cobro->id_venta; ?></td>
 										<td><?php echo $cobro->usuario; ?></td>
 										<td><?php echo $cobro->email; ?></td>
 										<td><?php echo $cobro->banco; ?></td>
 										<td><?php echo $cobro->cuenta; ?></td>
 										<td>$ <?php echo number_format($cobro->valor,2); ?></td>
+										<td><?php echo $cobro->fecha; ?></td>
 										<td><?php echo $cobro->estado; ?></td>
 										<td class='text-center'>
-											<a  style='cursor: pointer;' onclick="estado_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>','<?php echo $cobro->id_usuario; ?>')"  title = "Cambiar a Pago" class="txt-color-green"><i class="fa fa-check fa-3x"></i></a>
-											<a  style='cursor: pointer;' onclick="cancelar_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>','<?php echo $cobro->id_usuario; ?>')" title = "Cancelar Pago" class="txt-color-red"><i class="fa fa-times fa-3x"></i></a>
+											<a  style='cursor: pointer;' onclick="estado_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>')"  title = "Cambiar a Pago" class="txt-color-green"><i class="fa fa-check fa-3x"></i></a>
+											<a  style='cursor: pointer;' onclick="cancelar_cobro('<?php echo $cobro->id_venta; ?>')" title = "Cancelar Pago" class="txt-color-red"><i class="fa fa-times fa-3x"></i></a>
 										</td>
 									</tr>
 									<?php } ?>
@@ -198,25 +210,26 @@ function estado_cobro(venta,historial, usuario)
 			label: "Aceptar",
 			className: "btn-success",
 			callback: function() {
-				
+				iniciarSpinner();
 				$.ajax({
 					type: "POST",
 					url: "/bo/cuentasporcobrar/cambiar_estado",
 					data: {
 						id_venta:venta, 
-						id_historial: historial,
-						id_usuario: usuario
+						id_historial: historial
 					},
 					}).done(function( msg )
 							{
+						FinalizarSpinner();
 								bootbox.dialog({
 									message: msg,
-									title: "Atención",
+									title: "Felicitaciones",
 									buttons: {
 										success: {
 										label: "Ok!",
 										className: "btn-success",
 										callback: function() {
+											
 											window.location="/bo/cuentasporcobrar/";
 											}
 										}
@@ -240,10 +253,10 @@ function estado_cobro(venta,historial, usuario)
 	
 	}
 
-function cancelar_cobro(venta,historial, usuario)
+function cancelar_cobro(venta)
 {
-	var msg = "¿Esta seguro de cancelar el movimiento?";
-	var	titulo = "Confirmación de pago";
+	var msg = "¿Esta seguro de eliminar los datos de la venta?";
+	var	titulo = "Eliminar Cobro";
 
 	bootbox.dialog({
 		message: msg,
@@ -253,20 +266,19 @@ function cancelar_cobro(venta,historial, usuario)
 			label: "Aceptar",
 			className: "btn-success",
 			callback: function() {
-				
+				iniciarSpinner();
 				$.ajax({
 					type: "POST",
 					url: "/bo/cuentasporcobrar/cambiar_estado_cancelado",
 					data: {
 						id_venta:venta, 
-						id_historial: historial,
-						id_usuario: usuario
 					},
 					}).done(function( msg )
 							{
+							FinalizarSpinner();
 								bootbox.dialog({
 									message: msg,
-									title: "Atención",
+									title: "Felicitaciones",
 									buttons: {
 										success: {
 										label: "Ok!",

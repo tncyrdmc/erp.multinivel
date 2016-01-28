@@ -565,7 +565,11 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function ComprasUsuario($id){
-		$q = $this->db->query("SELECT sum(costo) as compras FROM venta where id_user = ".$id);
+		$q = $this->db->query("SELECT sum(cvm.costo_unidad*cvm.cantidad) as compras 
+								FROM cross_venta_mercancia cvm , venta v
+								where v.id_user=".$id."
+								and cvm.id_venta=v.id_venta
+								and v.id_estatus='ACT'");
 		$costos = $q->result();
 		return $costos[0]->compras;
 	}

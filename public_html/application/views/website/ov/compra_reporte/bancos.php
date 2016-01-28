@@ -1,3 +1,4 @@
+<div id="spinner-div"></div>
 <div class="well">
 	<fieldset>
 		<div class="row">
@@ -25,6 +26,7 @@
 				label: "Aceptar",
 				className: "btn-success",
 				callback: function() {
+						iniciarSpinner();
 						Registrar(banco);
 					}
 				},
@@ -45,6 +47,7 @@
 			type:"post",
 			url:"RegistrarVentaConsignacion",
 			success: function(msg){
+				FinalizarSpinner();
 				bootbox.dialog({
 					message: msg,
 					title: "Pago",

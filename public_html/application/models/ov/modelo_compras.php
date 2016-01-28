@@ -848,18 +848,27 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$costosImpuestos=$costos->result();
 		
 		
-		
+		// No existen impuestos en la mercancia
 		if($costosImpuestos==null)
 			return $this->setNoImpuestoMercancia($id_mercancia);
 		
+		// Existen impuestos en la mercancia pero no existen impuesto en el pais
+		if(!$this->getImpuestosPais($id_pais_usuario))
+			return $this->setNoImpuestoMercancia($id_mercancia);
 		
+		// Coge los impuesto dependiendo el pais del afiliado
 		if($costosImpuestos[0]->tipoImpuesto=="IVA"&&$costosImpuestos[0]->pais=="AAA"){
-	
+			
 			return $this->getImpuestoMercanciaPorPaisUsuario($id_mercancia,$id_pais_usuario);
 		}
 		
 		return $costos->result();
 
+	}
+	
+	private function getImpuestosPais($id_pais){
+		$q = $this->db->query("SELECT * FROM cat_impuesto where id_pais='".$id_pais."'");
+		return  $q->result();
 	}
 	
 	private function setNoImpuestoMercancia($id_mercancia) {
@@ -1055,7 +1064,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function registrar_ventaConsignacion($id_usuario, $id_transacion, $firma, $fecha){
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
-				"id_estatus"		=> 3,
+				"id_estatus"		=> 'DES',
 				"id_metodo_pago" 	=> 11,
 				"id_transacion"     => $id_transacion,
 				"firma"				=> $firma,
@@ -1136,16 +1145,19 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
 		$mercancia = $q->result();
 		if($mercancia[0]->id_tipo_mercancia == 1){
-			$q = $this->db->query("SELECT id_grupo as id_red FROM producto where id =".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_grupo FROM producto where id =".$mercancia[0]->sku);
 		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
-			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_grupo FROM servicio where id=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 3) {
-			$q = $this->db->query("SELECT id_red FROM combinado where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_grupo FROM combinado where id=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 4) {
-			$q = $this->db->query("SELECT id_red FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_grupo FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
+		}elseif($mercancia[0]->id_tipo_mercancia == 5) {
+			$q = $this->db->query("SELECT id_grupo FROM membresia where id=".$mercancia[0]->sku);
 		}
-		$red = $q->result();
-		return $red[0]->id_red; 
+		$categoria = $q->result();
+		$red=$this->ConsultarIdRedMercancia($categoria[0]->id_grupo);
+		return $red; 
 	}
 	
 	function Red($id){
@@ -1166,8 +1178,8 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$this->db->insert('comision', $datos);
 	}
 	
-	function ValorComision($id_grupo){
-		$q = $this->db->query("SELECT * FROM valor_comisiones where id_grupo =".$id_grupo);
+	function ValorComision($id_red){
+		$q = $this->db->query("SELECT * FROM valor_comisiones where id_red =".$id_red." group by profundidad order by profundidad");
 		return $q->result();
 	}
 	
@@ -1226,8 +1238,16 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	
 	function consultarMercancia($id_venta){
-		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CVM.cantidad, M.puntos_comisionables, M.id_tipo_mercancia
+		$q = $this->db->query("select M.id, CVM.costo_total as costo,CVM.costo_unidad as costo_unidad, M.costo_publico, CVM.cantidad, M.puntos_comisionables, M.id_tipo_mercancia
 							from cross_venta_mercancia CVM, mercancia M 
+							where CVM.id_venta = ".$id_venta."  and CVM.id_mercancia=M.id;");
+		$mercancia = $q->result();
+		return $mercancia;
+	}
+	
+	function consultarMercanciaTotalVenta($id_venta){
+		$q = $this->db->query("select M.id, CVM.costo_total as costo,(CVM.costo_unidad*CVM.cantidad) as costo_unidad_total,CVM.costo_unidad as costo_unidad, M.costo_publico, CVM.cantidad, M.puntos_comisionables, M.id_tipo_mercancia
+							from cross_venta_mercancia CVM, mercancia M
 							where CVM.id_venta = ".$id_venta."  and CVM.id_mercancia=M.id;");
 		$mercancia = $q->result();
 		return $mercancia;
@@ -1246,15 +1266,16 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$puntos = $q->result();
 		return $puntos;
 	}
-	function set_comision_bono_afiliacion($id_venta,$id_afiliado,$id_red,$puntos,$valor){
+	function set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado,$valor_comision){
 		$dato=array(
 				"id_venta"       => $id_venta ,
 				"id_afiliado"    => $id_afiliado,
-				"id_red"         => $id_red ,
-				"puntos"         => $puntos,
-				"valor"          => $valor,
+				"id_red"         => $id_red_mercancia ,
+				"puntos"         => 0,
+				"valor"          => $valor_comision,
 		
 		);
+		
 		$this->db->insert("comision",$dato);
 	}
 	

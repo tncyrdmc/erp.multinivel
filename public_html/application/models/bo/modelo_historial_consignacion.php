@@ -7,28 +7,56 @@ class Modelo_historial_consignacion extends CI_Model{
 	}
 	
 	function ListarHistorialPendiente(){
-		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.cuenta, cpb.valor, cpb.id_venta, cs.descripcion as estado, cpb.id_usuario
-FROM cuenta_pagar_banco_historial cpb, user_profiles up, users u, cat_banco cb, cat_estatus cs
-where cpb.id_banco = cb.id_banco and cpb.id_usuario = u.id and up.user_id = u.id and cs.id_estatus = cpb.estatus and cpb.estatus = 3");
+		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.cuenta, cpb.valor, cpb.id_venta,'Pendiente' as estado, cpb.id_usuario
+								FROM cuenta_pagar_banco_historial cpb, user_profiles up, users u, cat_banco cb
+								where cpb.id_banco = cb.id_banco 
+								and cpb.id_usuario = u.id 
+								and up.user_id = u.id 
+								and cpb.estatus = 'DES'");
+		$historial = $q->result();
+		return $historial;
+	}
+	
+	function ListarHistorialPagados($inicio,$fin){
+		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.cuenta, cpb.valor, cpb.id_venta,'Pendiente' as estado, cpb.id_usuario
+								FROM cuenta_pagar_banco_historial cpb, user_profiles up, users u, cat_banco cb
+								where cpb.id_banco = cb.id_banco
+								and cpb.id_usuario = u.id
+								and up.user_id = u.id and cpb.fecha BETWEEN '".$inicio."' AND '".$fin."'
+								and cpb.estatus = 'ACT'");
 		$historial = $q->result();
 		return $historial;
 	}
 	
 	function CambiarEstadoPago($id_venta, $id_historial){
-		$q = $this->db->query("update venta set id_estatus = 2 where id_venta = ".$id_venta);
-		$q = $this->db->query("update cuenta_pagar_banco_historial set estatus = 2 where id = ".$id_historial);
+		$q = $this->db->query("update venta set id_estatus = 'ACT' where id_venta = ".$id_venta);
+		$q = $this->db->query("update cuenta_pagar_banco_historial set estatus = 'ACT' where id = ".$id_historial);
 		return true;
 	}
 	
-	function CambiarEstadoCancelado($id_venta, $id_historial){
-		$q = $this->db->query("update venta set id_estatus = 6 where id_venta = ".$id_venta);
-		$q = $this->db->query("update cuenta_pagar_banco_historial set estatus = 6 where id = ".$id_historial);
-		$q = $this->db->query("delete from carrito_temporal where id_venta = ".$id_venta);
+	function CambiarEstadoCancelado($id_venta){
+		$q = $this->db->query("delete from cuenta_pagar_banco_historial where id_venta = ".$id_venta);
+		$q = $this->db->query("delete from cross_venta_mercancia where id_venta = ".$id_venta);
+		$q = $this->db->query("delete from factura where id_venta = ".$id_venta);
+		$q = $this->db->query("delete from venta where id_venta = ".$id_venta);
 		return true;
+	}
+	
+	function getEstadoPagoBanco($id_venta){
+		$q = $this->db->query("SELECT * FROM cuenta_pagar_banco_historial 
+								where id_venta=".$id_venta." 
+								and estatus ='DES'");
+		return  $q->result();
 	}
 	
 	function PagoBanco($id){
 		$q = $this->db->query("SELECT * FROM cuenta_pagar_banco_historial where id = ".$id);
+		$historial = $q->result();
+		return $historial;
+	}
+	
+	function getDatosPagoBanco($id_venta){
+		$q = $this->db->query("SELECT * FROM cuenta_pagar_banco_historial where id_venta = ".$id_venta." and estatus='DES'");
 		$historial = $q->result();
 		return $historial;
 	}
