@@ -299,7 +299,36 @@ $.ajax({
 });//Fin callback bootbox
 }
 
-function eliminar_afiliado(){
+function eliminar_afiliado(id){
+
+	if(id>2){
+
+		$.ajax({
+			type: "POST",
+			url: "/bo/comercial/kill_afiliado",
+			data: {
+				id:id
+			},
+		})
+		.done(function( msg )
+		{
+			
+			bootbox.dialog({
+			  message: msg,
+			  title: "Eliminar afiliado",
+			  buttons: {
+			    success: {
+			      label: "Ok",
+			      className: "btn-success",
+			      callback: function() {
+			    	  location.href="/bo/comercial/red_tabla";
+			      }
+			    }
+			  }
+			})
+		});//Fin callback bootbox
+		
+	}
 	
 }
 

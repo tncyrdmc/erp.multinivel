@@ -82,7 +82,6 @@
 <script type="text/javascript">
 	$( "#nueva" ).submit(function( event ) {
 	event.preventDefault();
-	setiniciarSpinner();
 	enviar();
 });
 
@@ -107,6 +106,8 @@ function enviar() {
 	var verificar_rango=false;
 	verificar_rango=validar_rangos_repetidos();
 	if(verificar_rango!=true){
+
+		setiniciarSpinner();
 	 $.ajax({
 							type: "POST",
 							url: "/bo/rangos/actualizar_rangos",

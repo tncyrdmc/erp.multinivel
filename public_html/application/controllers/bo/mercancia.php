@@ -363,6 +363,13 @@ if($datos['pais'] == "-"){
 		{																		// logged in
 			redirect('/auth');
 		}
+
+		if(!isset($_POST['servicio']) && !isset($_POST['producto'])){
+			$error = "No existe servicios o productos para ese pais, debe darlo de alta primero.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=3');
+		}
+
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
@@ -409,12 +416,19 @@ if($datos['pais'] == "-"){
 		}
 		redirect('/bo/comercial/carrito');
 	}
+
 	
 	function CrearPaquete(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
+		if(!isset($_POST['servicio']) && !isset($_POST['producto'])){
+			$error = "No existe servicios o productos para ese pais, debe darlo de alta primero.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=4');
+		}
+
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);

@@ -4,6 +4,14 @@
 //header('Content-Type: text/html; charset=ISO-8859-1');
 class model_admin extends CI_Model
 {
+	
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('ov/model_perfil_red');
+		$this->load->model('model_tipo_red');
+	}	
+	
 	function get_regimen()
 	{
 		$q=$this->db->query("select * from cat_regimen");
@@ -45,6 +53,27 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from empresa");
 		return $q->result();
 	}
+	
+	function val_empresa_multinivel()
+	{
+		$empresa=$this->get_empresa_multinivel();
+		if(!$empresa){ 
+			$dato=array(
+					"id_tributaria" =>	"00000000-3"
+			);
+			$this->db->insert("empresa_multinivel",$dato);
+			$empresa=$this->get_empresa_multinivel();
+		}
+		return $empresa;
+	}
+	
+	function get_empresa_multinivel()
+	{
+		$q=$this->db->query("select * from empresa_multinivel");
+		$empresa = $q->result();
+		return $empresa;
+	}
+	
 	function get_tipo_mercancia()
 	{
 		$q=$this->db->query("select * from cat_tipo_mercancia");
@@ -95,9 +124,67 @@ class model_admin extends CI_Model
 	}
 	function kill_proveedor($id){
 		$q=$this->db->query("SELECT id_proveedor FROM mercancia where id_proveedor=".$id);
-	    return $q->result();	
+	    return $q->result();		
+	}
+	
+	function kill_afiliado($id){
+		//echo "dentro de admin kill ";
+		$i=0;
+		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);		
+		foreach($redes_afiliado as $red_afiliado){
+			//echo "red: ".$red_afiliado->id_red." ";
+			if (!$this->flowCompress($id,$red_afiliado->id_red)){ 
+				$i++;
+			}
+		}
+		if ($i==0){
+			$this->model_perfil_red->kill_afiliado($id);
+			return true;
+		}else{
+			return false;
+		}		
 		
 	}
+	
+	function flowCompress($id,$red){
+		
+		//echo "dentro de flow compress ";
+		$hijos = $this->model_perfil_red->ConsultarHijos($id,$red);
+		$lados = $this->model_tipo_red->ObtenerFrontalesRed($red);
+		$espacio = ($hijos) ? $this->buscarEspacios($id,$red,$lados[0]->frontal,count($hijos)) : 2;
+		//echo "padre: ".$espacio."	";
+		$setHijos = $this->model_perfil_red->ConsultarRedDebajo($id,$red);
+		$failure = ($hijos) ? $this->model_perfil_red->actualizarHijos($id,$espacio,$setHijos[0]->hijos,$red,$hijos) : true;
+		return $failure;
+		
+	}
+	
+	function buscarEspacios($id,$red,$espacios,$cupos){
+		//echo "dentro de buscar espacios	";		
+		$padre = $this->model_perfil_red->ConsultarPadre($id , $red);
+		$frontales = (count($this->model_perfil_red->ConsultarHijos($padre,$red))-1);	
+		
+		if($espacios<>0){
+			$padre = $this->rotarPadres($espacios,$padre,$frontales,$cupos,$red);
+		}
+		return $padre;
+	}
+	
+	function rotarPadres($espacios,$padre,$frontales,$cupos,$red){
+		//echo "dentro de rotar padres";
+		while ($padre<>2){
+			//echo "padre: ".$padre." ";
+			if (($frontales + $cupos)<= $espacios){			
+				return $padre;
+			}else{
+				$padre = $this->model_perfil_red->ConsultarPadre($padre , $red);
+				$frontales = count($this->model_perfil_red->ConsultarHijos($p,$red));
+			}
+		}
+		//echo "padre : ".$padre." ";
+		return $padre;
+	}
+	
 	function get_datosProveedor(){
 		
 	$q=$this->db->query("select * from proveedor p,
@@ -434,6 +521,29 @@ where(a.id_pais=b.Code)");
         $empresa = array('id' => $id_nuevo, 'nombre' => $_POST['nombre']);
         return $empresa;
 	}
+	
+	function empresa_multinivel()
+	{
+		$dato=array(
+				"id_tributaria"     => $_POST['id_tributaria'],
+				"regimen"   		=> $_POST['regimen'],
+				"nombre"     		=> $_POST['nombre'],
+				"web"       		=> $_POST['web'],
+				"postal"         	=> $_POST['postal'],
+				"direccion"      	=> $_POST['direccion'],
+				"ciudad"         	=> $_POST['ciudad'] ? $_POST['ciudad'] : "No define",
+				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
+				"pais"          	=> $_POST['pais'],
+				"fijo" 				=> $_POST['fijo'],
+				"movil" 			=> $_POST['movil']
+		);
+	
+		$this->db->where('id_tributaria', $_POST['id']);
+		$this->db->update('empresa_multinivel', $dato); 	
+		
+		return true;
+	}
+	
 	function update_mercancia()
 	{
 		if($_POST['tipo_merc']==1)
@@ -476,7 +586,8 @@ where(a.id_pais=b.Code)");
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
 					"puntos_comisionables"	=> $_POST['puntos_com'],
-					"iva"					=> $iva
+					"iva"					=> $iva,
+					"descuento"				=> $_POST['descuento']
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
@@ -522,7 +633,8 @@ where(a.id_pais=b.Code)");
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
 					"puntos_comisionables"	=> $_POST['puntos_com'],
-					"iva"					=> $iva
+					"iva"					=> $iva,
+					"descuento"				=> $_POST['descuento']
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
@@ -711,13 +823,18 @@ where(a.id_pais=b.Code)");
 				}
 			}*/
 			//////////////////////////////////////////////////////////////////////////////////////////////
+			$iva="";
+			if($_POST['iva']=="1"){$iva="CON";}
+			if($_POST['iva']=="0"){$iva="MAS";}
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
 					"real"              	=> $_POST['real'],
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
-					"puntos_comisionables"	=> $_POST['puntos_com']
+					"puntos_comisionables"	=> $_POST['puntos_com'],
+					"iva"					=> $iva,
+					"descuento"				=> $_POST['descuento']
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
@@ -902,13 +1019,18 @@ where(a.id_pais=b.Code)");
 				}
 			}*/
 			//////////////////////////////////////////////////////////////////////////////////////////////
+			$iva="";
+			if($_POST['iva']=="1"){$iva="CON";}
+			if($_POST['iva']=="0"){$iva="MAS";}
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
 					"real"              	=> $_POST['real'],
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
-					"puntos_comisionables"	=> $_POST['puntos_com']
+					"puntos_comisionables"	=> $_POST['puntos_com'],
+					"iva"					=> $iva,
+					"descuento"				=> $_POST['descuento']
 			);
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia);
@@ -938,7 +1060,8 @@ where(a.id_pais=b.Code)");
 					"entrega"           	=> "0",
 					"costo_publico"    		=> 0,
 					"puntos_comisionables"	=> $_POST['puntos_com'],
-					"iva"					=> $iva
+					"iva"					=> $iva,
+					"descuento"				=> $_POST['descuento']
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 

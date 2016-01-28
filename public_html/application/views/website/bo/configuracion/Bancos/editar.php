@@ -63,8 +63,7 @@
 </style>
 <script type="text/javascript">
 $( "#add-event-form" ).submit(function( event ) {
-	event.preventDefault();
-	setiniciarSpinner();
+	event.preventDefault();	
 	enviar();
 });
 
@@ -101,7 +100,7 @@ function enviar()
 	
 	
 	if(ValidarVacio(banco, pais, cuenta)){
-		iniciarSpinner();
+		setiniciarSpinner();
 		$.ajax({
 			 data:{
 				 id: id_banco,

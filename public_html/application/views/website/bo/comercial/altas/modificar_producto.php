@@ -7,6 +7,7 @@ $valor_iva_publico=0;
 $valor_total_real=0;
 $valor_total_distribuidores=0;
 $valor_total_publico=0;
+$porcentajeContador=0;
 ?>
 <div id="content">
 	
@@ -19,11 +20,11 @@ $valor_total_publico=0;
 									<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form">
+							<form id="modprod" method="POST" action="/bo/admin/update_mercancia"  role="form">
 								
 									<section class="col col-6" style="display:none;">
 										<label class="select"> 
-											<select id="tipo_merc" required name="tipo_merc">
+											<select id="tipo_merc" required="" name="tipo_merc">
 										             	<option value="1">merc</option>
 										        </select>
 										</label>
@@ -45,7 +46,7 @@ $valor_total_publico=0;
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Nombre
-														<input required type="text" value='<?php echo $data_merc[0]->nombre?>' id="nombre_p" name="nombre">
+														<input type="text" value='<?php echo $data_merc[0]->nombre?>' id="nombre_p" name="nombre" required="">
 													</label>
 												</section>
 												
@@ -59,18 +60,18 @@ $valor_total_publico=0;
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Marca
-														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca">
+														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca" required>
 													</label>
 												</section>
 												
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Código de barras
-														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras">
+														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras" required>
 													</label>
 												</section>
 												
-												<section class="col col-12" style="width: 100%;">GRUPO
+												<section class="col col-12" style="width: 50%;">Categoría
 															<label class="select">
 																<select name="grupo">
 																<?foreach ($grupos as $key){
@@ -88,12 +89,18 @@ $valor_total_publico=0;
 																</select>
 															</label>
 												</section>
+											<section class="col col-2" style="width: 50%;">
+											<label class="input"><span id="labelextra">Descuento del
+													producto</span> 
+													<input id="precio_promo" type="number" name="descuento" value='<? echo $mercancia[0]->descuento;?>' required> 
+											</label>
+											</section>
 												
 												<div>
 													<section style="padding-left: 15px; width: 100%;" class="col col-12">
 														Descripcion
 														<label class="textarea"> 										
-															<textarea name="descripcion" rows="3" class="custom-scroll"><?php echo $data_merc[0]->descripcion?></textarea> 
+															<textarea name="descripcion" rows="3" class="custom-scroll" required><?php echo $data_merc[0]->descripcion?></textarea> 
 														</label>
 													</section>
 													
@@ -140,28 +147,28 @@ $valor_total_publico=0;
 													<section id="colonia" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Alto
-															<input type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
+															<input required type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Ancho
-															<input type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
+															<input  required type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Profundidad
-															<input type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
+															<input required type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Diametro
-															<input type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
+															<input required type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
 														</label>
 													</section>
 											</fieldset>
@@ -173,42 +180,42 @@ $valor_total_publico=0;
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Cantidad mínima de venta
-															<input type="text" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
+															<input required type="number" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
 														</label>
 													</section>
 													
-													<section class="col col-12" style="width: 50%;">
-														<label class="input">
+													<section  class="col col-12" style="width: 50%;">
+														<label  class="input">
 															Cantidad máxima de venta
-															 <input type="text" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
+															 <input required type="number" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo real
-															<input type="text" value='<?php echo $mercancia[0]->real?>' onchange="Resultado_ConSin_iva('real','real_iva')" name="real" id="real">
+															<input required type="number" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="Resultado_ConSin_iva('costo','distribuidores_iva')">
+															<input required type="number" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo publico
-															<input type="text" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="Resultado_ConSin_iva('costo_publico','publico_iva')">
+															<input required type="number" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Tiempo mínimo de entrega
-															<input placeholder="En días" type="text" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
+															<input required placeholder="En días" type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
 														</label>
 													</section>
 													
@@ -243,7 +250,7 @@ $valor_total_publico=0;
 													<legend>Impuestos</legend>
 																<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
-															<select id="pais2" required name="pais" onChange="ImpuestosPais()">
+															<select id="pais2" required name="pais" onChange="select_pais()">
 																<?foreach ($pais as $key)
 																{	if ($mercancia[0]->pais == $key->Code){?>
 																		<option selected value="<?=$key->Code?>">
@@ -264,43 +271,25 @@ $valor_total_publico=0;
 													<section id="impuesto" name="impuesto">
 														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
-																<select name="id_impuesto[]" onclick="Resultado_ConSin_iva('real','real_iva'); Resultado_ConSin_iva('costo','distribuidores_iva'); Resultado_ConSin_iva('costo_publico','publico_iva');">
+																<select name="id_impuesto[]" onchange="calcular_precio_total()">
 																	<?foreach ($impuesto as $key){
 																		if($key->id_pais==$mercancia[0]->pais){
-
-																			$valor_iva_real=($mercancia[0]->real*$key->porcentaje)/100;
-																			$valor_iva_distribuidores=($mercancia[0]->costo*$key->porcentaje)/100;
-																			$valor_iva_publico=($mercancia[0]->costo_publico*$key->porcentaje)/100;
-
-																		if($mercancia[0]->iva=="CON"){  
-																			$valor_total_real=	$mercancia[0]->real-$valor_iva_real;
-																			$valor_total_distribuidores= $mercancia[0]->costo-$valor_iva_distribuidores;
-																			$valor_total_publico=	$mercancia[0]->costo_publico-$valor_iva_publico;
-																		}
-																			if($mercancia[0]->iva=="MAS"){
-																			$valor_total_real=	$mercancia[0]->real+$valor_iva_real;
-																			$valor_total_distribuidores=$mercancia[0]->costo+$valor_iva_distribuidores;
-																			$valor_total_publico=	$mercancia[0]->costo_publico+$valor_iva_publico;
-																		}
 																			?>
-																		
-																		
 																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
-																			<option selected value='<?php echo $key->id_impuesto?>'>
+																			<option selected value='<?php echo $key->id_impuesto?>' onclick="calcular_precio_total()">
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
-																				<?}
+																				<?
+																						$porcentajeContador+=$key->porcentaje;
+																			}
 																		else 
 																		{?>
-																			<option value='<?php echo $key->id_impuesto?>'>
+																			<option value='<?php echo $key->id_impuesto?>' onclick="calcular_precio_total()">
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
 																			</option>
-																		<?}?>
-																		
-																	
-																
-														<?}
+																		<?}?>		
+																		<?}
 																	}?>	
 
 																	</select>
@@ -320,13 +309,34 @@ $valor_total_publico=0;
 														<br>
 														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
+													<?
+													if($porcentajeContador!=0){
+																		$valor_iva_real=($mercancia[0]->real*$porcentajeContador)/100;
+																			$valor_iva_distribuidores=($mercancia[0]->costo*$porcentajeContador)/100;
+																			$valor_iva_publico=($mercancia[0]->costo_publico*$porcentajeContador)/100;
+
+																		if($mercancia[0]->iva=="CON"){  
+																			$valor_total_real=	$mercancia[0]->real-$valor_iva_real;
+																			$valor_total_distribuidores= $mercancia[0]->costo-$valor_iva_distribuidores;
+																			$valor_total_publico=	$mercancia[0]->costo_publico-$valor_iva_publico;
+																		}
+																			if($mercancia[0]->iva=="MAS"){
+																			$valor_total_real=	$mercancia[0]->real+$valor_iva_real;
+																			$valor_total_distribuidores=$mercancia[0]->costo+$valor_iva_distribuidores;
+																			$valor_total_publico=	$mercancia[0]->costo_publico+$valor_iva_publico;
+																		}}else{
+																			$valor_total_real=$mercancia[0]->real;
+																			$valor_total_distribuidores=$mercancia[0]->costo;
+																			$valor_total_publico=$mercancia[0]->costo_publico;
+																		}
+													?>
 																	<section class="col col-6">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_iva_real_radio()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>
+																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" <?if($mercancia[0]->iva=="CON"){ echo "checked"; }?>>
 																		<i></i>con IVA</label>
 																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_iva_real_radio()" name="iva" <?if($mercancia[0]->iva=="MAS"){ echo "checked"; }?>>
+																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva" <?if($mercancia[0]->iva=="MAS"){ echo "checked"; }?>>
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
@@ -337,7 +347,7 @@ $valor_total_publico=0;
 																						<section class="col col-6">
 														<label class="input">
 															Costo real con IVA
-															<input type="text" value="<? echo $valor_total_real ?>" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+															<input type="text" value="<? echo $valor_total_real ?>" min="1" max="" name="real_iva" id="real_iva" disabled>
 														</label>
 													</section>
 													<section class="col col-6">
@@ -464,18 +474,17 @@ $valor_total_publico=0;
 													</section>
 											</fieldset>
 													
-										</div>
-								</div>
-							</fieldset>
+
 							<section class="col col-12 pull-right" >
-								<button type="submit" class="btn btn-success">
+								<button type="input" class="btn btn-success">
 									Actualizar
 								</button>
 							</section>
-						</form>
+							</div>
+						</form>	
 					</div>
 				</div>
-																<!-- end widget div -->
+															<!-- end widget div -->
 			</article>
 														<!-- END COL -->
 		</div>
@@ -492,25 +501,23 @@ var i = <?= $i?>;
 function add_impuesto()
 {
 	i=i+1;
-	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
+	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto" style="width: 50%;">Impuesto'
 	+'<label class="select">'
-	+'<select name="id_impuesto[]">'
-	<?foreach ($impuesto as $key)
-	{
-		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
-	}?>
+	+'<select name="id_impuesto[]" onChange="calcular_precio_total()">'
 	+'</select>'
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
 	$("#impuesto_field").append(code);
-	//ImpuestosPais();
-	i = i + 1
+	ImpuestosPais2(i);
+	calcular_precio_total();
+	//i = i + 1
 }
 
 function dell_impuesto(id)
 {	
 	$("#"+id+"").remove();
+	calcular_precio_total();
 	
 }
 
@@ -533,10 +540,36 @@ function ImpuestosPais(){
 	      for(var i in datos){
 		      var impuestos = $('#impuesto');
 		      $('#impuesto select').each(function() {
-				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'" onclick="calcular_precio_total()">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
 			    
 			});
 	    	  
+	      }
+	});
+}
+
+function ImpuestosPais2(id){
+	var pa = $("#pais2").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#'+id+' option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#'+id);
+		      $('#'+id+' select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'" onclick="calcular_precio_total()">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});  
 	      }
 	});
 }
@@ -546,7 +579,7 @@ function validar_impuesto(){
 $('select[name="id_impuesto[]"]').each(function() {	
 	Impuesto.push($(this).val());
 });	
-return Impuesto[0];
+return Impuesto;
 }
 function validar_tipo_iva(porcentaje, tipo, valor){
 	var valor_iva=0;
@@ -562,51 +595,113 @@ if(tipo=="0"){
 }
 
 
-function calcular_dependiendo_tipo_iva(tipo,valor){
+function calcular_porcentaje_total(){
 		var  Impuesto=validar_impuesto();
 		var resultado=0;
 		var porcentaje=0;
-		var recibir="";
-		var precio_con_iva=0;
-	if( ( typeof(Impuesto) != "undefined" && typeof(valor) != "undefined" && typeof(tipo) != "undefined") && (Impuesto != "" && valor!="" && tipo!="") && (Impuesto!=null && tipo!=null && valor!=null)){	
+		if(Impuesto){
+		for(i=0;i<Impuesto.length;i++){
+	
 	$.ajax({
 		async: false,
 		type: "POST",
 		url: "/bo/mercancia/ImpuestoPaisPorId",
-		data: {impuesto: Impuesto}
+		data: {impuesto: Impuesto[i]}
 	})
 	.done(function( msg )
 	{
 		recibir=$.parseJSON(msg);
-		porcentaje=recibir[0]["porcentaje"];
+		porcentaje+=parseInt(recibir[0]["porcentaje"]);
 	});
-resultado=validar_tipo_iva(porcentaje,tipo,valor);
-return resultado;
-}else{
-	return "Falta algun dato";
 }
-}
-function calcular_iva_real_radio(){
 
-	var tipo_iva=$("input:radio[name=iva]:checked").val();
+return porcentaje;
+}else{
+	return false;
+}
+}
+function calcular_precio_total(){
+var tipo_iva=$("input:radio[name=iva]:checked").val();
+var porcentaje=calcular_porcentaje_total();
+var Resultado_Final=0;
 	var valor_real=$("#real").val();
 	var valor_distribuidor=$("#costo").val();
 	var valor_publico=$("#costo_publico").val();
-	var Resultado_Final=0;
-        	Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor_real);
-        	$("#real_iva").val(Resultado_Final);
-        	Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor_distribuidor);
-        	$("#distribuidores_iva").val(Resultado_Final);
-        	Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor_publico);
-        	$("#publico_iva").val(Resultado_Final);
+	var validar_real=validar_campos_vacios(valor_real);
+	var validar_distribuidor=validar_campos_vacios(valor_distribuidor);
+	var validar_publico=validar_campos_vacios(valor_publico);
+	if(porcentaje!=false || porcentaje==0){
+	if(validar_real==true){
+	Resultado_Final=validar_tipo_iva(porcentaje, tipo_iva, valor_real);
+	$("#real_iva").val(Resultado_Final);	
+		}
+		else{$("#real_iva").val("falta algun dato");}
+	if(validar_distribuidor==true){
+	Resultado_Final=validar_tipo_iva(porcentaje, tipo_iva, valor_distribuidor);
+	$("#distribuidores_iva").val(Resultado_Final);
+						}
+			else{$("#distribuidores_iva").val("falta algun dato");}
+	if(validar_publico==true){
+	Resultado_Final=validar_tipo_iva(porcentaje, tipo_iva, valor_publico);
+	$("#publico_iva").val(Resultado_Final);
+						}
+		else{$("#publico_iva").val("falta algun dato");}
+	}else{
+		$("#real_iva").val("falta algun dato dato");
+		$("#distribuidores_iva").val("falta un dato");
+		$("#publico_iva").val("falta un dato");
+	}
+}
+function validar_campos_vacios(campo){
+if(campo=="undefined"){
+return false;
+}
+if(campo==null){
+return false;
+}
+if(campo==""){
+return false;
+}
+return true;
+}
+function select_pais(){
+calcular_precio_total();
+ImpuestosPais();	
+}
+$( "#update_merc" ).submit(function( event ) {
+	event.preventDefault();
+		enviar();
+});
+
+function enviar() {
+	//iniciarSpinner();
+	$.ajax({
+						type: "POST",
+						url: "/bo/admin/update_mercancia",
+						data: $('#update_merc').serialize()
+						})
+						.done(function( msg ) {
+
+							bootbox.dialog({
+						message: "Se ha modificado el producto.",
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								
+								location.href="/bo/comercial/carrito";
+								//FinalizarSpinner();
+								}
+							}
+						}
+					})
+					
+						});//fin Done ajax
+	
 }
 
-function Resultado_ConSin_iva(id_dato,id_modificar){
-var tipo_iva = $("input:radio[name=iva]:checked").val();
-var valor=$("#"+id_dato).val();
-Resultado_Final= calcular_dependiendo_tipo_iva(tipo_iva,valor);
-$("#"+id_modificar).val(Resultado_Final);
-}
 
 </script>
 	</html>

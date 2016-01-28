@@ -87,8 +87,7 @@
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
 $( "#planes" ).submit(function( event ) {
-	event.preventDefault();
-	setiniciarSpinner();
+	event.preventDefault();	
 	enviar();
 });
 
@@ -114,7 +113,8 @@ function enviar() {
 
 		var verificar_plan = false;
 		verificar_plan = validar_bonos_repetidos();
-		if(verificar_plan!=true){		
+		if(verificar_plan!=true){	
+			setiniciarSpinner();	
 			$.ajax({
 				type: "POST",
 				url: "/bo/planes/actualizar_plan",
