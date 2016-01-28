@@ -5,7 +5,13 @@
 						<h1 class="page-title txt-color-blueDark">
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/"> Configuracion</a> > Emails-departamentos
+								<a href="/bo/configuracion/"> Configuracion</a>  
+							</span>
+							<span>>
+								<a href="/bo/configuracion/empresa"> Empresa</a> 
+							</span>
+							<span>> 
+							Emails-departamentos
 							</span>
 						</h1>
 					</div>

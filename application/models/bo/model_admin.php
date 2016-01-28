@@ -544,6 +544,20 @@ where(a.id_pais=b.Code)");
 		return true;
 	}
 	
+	function entorno_empresa()
+	{
+		$dato=array(
+				"membresia"     => isset($_POST['membresia']) ? "ACT" : "DES",
+				"paquete"   	=> isset($_POST['paquete']) ? "ACT" : "DES",
+				"item"     		=> isset($_POST['item']) ? "ACT" : "DES"
+		);
+	
+		$this->db->where('id_tributaria', $_POST['id']);
+		$this->db->update('empresa_multinivel', $dato);
+	
+		return true;
+	}
+	
 	function update_mercancia()
 	{
 		if($_POST['tipo_merc']==1)
