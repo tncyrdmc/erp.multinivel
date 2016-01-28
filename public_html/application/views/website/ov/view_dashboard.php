@@ -171,12 +171,35 @@
 																				Te damos la invitacion a nuestra empresa , para que conozcas nuestra oficina virtual.
 																		</div>
 																	</li>
+																	
+
+																	<?php 
+																	foreach ($cuentasPorPagar as $cuenta){
+																		echo '<li class="message">
+																		<img src="/template/img/notificaciones/icon-deuda.png" style="width: 5rem;" class="online" alt="">
+																		<div class="message-text">
+																			<time>
+																				'.$cuenta->fecha.'
+																			</time> 
+																				<a href="/ov/cabecera/email" class="username">Enviar Comprobante de Pago</a>
+																				<br>
+																				<span>Realizar la consignacion bancaria a </span>
+																				<span>Banco  : <b>'.$cuenta->nombreBanco.'</b>,</span> 
+																				<span>Cuenta : <b>'.$cuenta->cuenta.'</b>,</span> 
+																		';
+																		if($cuenta->clabe)
+																		   echo'<span>Clabe  :<b>'.$cuenta->cuenta.'</b>,</span>';
+																		   echo'<span>Valor  :<b> $ '.$cuenta->valor.'</b>,</span>
+																		</div>
+																	</li>';
+																		}
+																	?>
 																</ul>
 															</div>
 															</div>
 														</div>
 													</div>
-												</div>
+												</div>                                                                                      
 												</div>
 									</fieldset>
 									<!--Termina la secciion de perfil y red-->

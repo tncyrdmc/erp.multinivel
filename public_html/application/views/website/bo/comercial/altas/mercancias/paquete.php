@@ -81,9 +81,10 @@
 												<fieldset>
 												<section class="col col-xs-12 col-md-3 col-lg-3">
 													<label class="input">Nombre <input type="text"
-														name="nombre" id="nombre_pr">
+														required name="nombre" id="nombre_pr">
 													</label>
 												</section>
+
 																								<section class="col col-3">
 														<label class="input">Tiempo de caducidad
 															<input required placeholder="En días" type="text" id="caducidad" name="caducidad">
@@ -106,24 +107,29 @@
 														</select>
 														</label>
 													</section>
+											<section class="col col-3">
+											<label class="input"><span id="labelextra">Descuento del paquete</span>
+												<input required id="precio_promo" type="number" name="descuento">
+											</label>
+											</section>
 													
 														</fieldset>
 													<div id="moneda">
 														<fieldset id="moneda_field">
 															<legend>Moneda</legend>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input"> Costo real <input type="text"
-																	name="real" id="real" onchange="calcular_precio_total()">
+																<label class="input"> Costo real <input type="number"
+																	required name="real" id="real" onchange="calcular_precio_total()">
 																</label>
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Costo distribuidores <input
-																	type="text" name="costo" id="costo" onchange="calcular_precio_total()">
+																	required type="number" name="costo" id="costo" onchange="calcular_precio_total()">
 																</label>
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input">Costo publico <input type="text"
-																	name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
+																<label class="input">Costo publico <input type="number"
+																	required name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 																</label>
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
@@ -158,14 +164,14 @@
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
-														<section class="col col-2" id="impuesto">Impuesto
+														<!--<section class="col col-2" id="impuesto">Impuesto
 														<label class="select">
 															<select id="id_impuesto[]" name="id_impuesto[]" onclick="calcular_precio_total()">
 																
 															</select>
-														</label>
+														</label>-->
 														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
+													<!--</section>-->
 													
 
 																														</div>
@@ -254,7 +260,7 @@
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-6" >
 																<label class="input">Cantidad de productos <input
-																	type="number" min="1" name="n_productos[]"
+																	required type="number" min="1" name="n_productos[]"
 																	id="prod_qty">
 																</label>
 															</section>
@@ -278,7 +284,7 @@
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-6">
 																<label class="input">Cantidad de servicios <input
-																	type="number" min="1" name="n_servicios[]"
+																	required type="number" min="1" name="n_servicios[]"
 																	id="serv_qty">
 																</label>
 															</section>
@@ -642,7 +648,7 @@ function new_product()
 		+'</section>'
 		+'<section class="col col-4">'
 		+'<label class="input">Cantidad de productos'
-		+'<input type="number" min="1" name="n_productos[]">'
+		+'<input required type="number" min="1" name="n_productos[]">'
 		+'</label>'
 		+'</section>'
 		+'<div class=" text-center row"  ><a onclick="delete_product_adicional('+ipj+')" class="txt-color-red" style="cursor: pointer;">Suprimir producto <i class="fa fa-minus"></i></a></div>'
@@ -666,7 +672,7 @@ function new_service()
 		+'</section>'
 		+'<section class="col col-4">'
 		+'<label class="input">Cantidad de servicios'
-		+'<input type="number" min="1" name="n_servicios[]">'
+		+'<input required type="number" min="1" name="n_servicios[]">'
 		+'</label>'
 		+'</section>'
 		+'<div class=" text-center row"  ><a onclick="delete_service_adicional('+isj+')" class="txt-color-red" style="cursor: pointer;">Suprimir servicio <i class="fa fa-minus"></i></a></div>'

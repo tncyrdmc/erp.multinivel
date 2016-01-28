@@ -34,8 +34,8 @@ class cuentasporcobrar extends compras{
 		
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/ov/header' );
-		$this->template->set_partial ( 'footer', 'website/ov/footer' );
+		$this->template->set_partial ( 'header', 'website/bo/header' );
+		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/administracion/CuentasCobrar/listar' );
 	}
 	
@@ -51,89 +51,103 @@ class cuentasporcobrar extends compras{
 		{
 			redirect('/auth/logout');
 		}
-		
-		$usuario = $this->general->get_username($id);
-		
-		$style = $this->modelo_dashboard->get_style(1);
-		
-		if(isset($_POST['id_venta']) && isset($_POST['id_historial'])){
-			$id_venta = $_POST['id_venta'];
-			$id_historial = $_POST['id_historial'];
-			
-			
-			$mercancia = $this->modelo_compras->consultarMercancia($id_venta);	
-			$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia[0]->id);
-			$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
-			$cliente_venta = $this->modelo_compras->consultar_Afiliado($id_venta);
-			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $cliente_venta[0]->id_user, $id_red);		
-			$puntos_valor=$this->modelo_compras->consultar_tipo_mercancia($id_venta);
-		    
-		    $comision=0;
-		    
-		    if(isset($puntos_valor[0]->id_tipo_mercancia)){
-		    	
-		    	if ($puntos_valor[0]->id_tipo_mercancia=='4'){
-		    		$puntos_paquete=$this->modelo_compras->consultar_puntos_paquete($puntos_valor[0]->sku);
-		    		
-					if( $puntos_paquete[0]->tipo=="1"){
-						$comision=100;
-					}elseif($puntos_paquete[0]->tipo=="2"){
-						$comision=1200;
-					}
-					elseif($puntos_paquete[0]->tipo=="3"){
-						$comision=3000;
-					}
-					
-				
-				    $this->modelo_compras->set_comision_bono_afiliacion(
-				    $id_venta,$id_afiliado[0]->debajo_de,$id_red,
-				    $puntos_valor[0]->puntos_comisionables,$comision);
-				  
-				   
-				    $this->modelo_compras->set_puntos_padre($id_afiliado[0]->debajo_de,$puntos_paquete[0]->puntos);
-				    $this->modelo_compras->set_nivel_red_actual($cliente_venta[0]->id_user,$puntos_paquete[0]->tipo);
-					
-				
-				}
-		    }		
-			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $id_historial);
-			$historico = $this->modelo_historial_consignacion->PagoBanco($id_historial);
-			$this->ComisionBanco($historico);
-			$this->EnvarMail($id_historial);
-			
 
-	
+		
+		if(isset($_POST['id_venta'])){
+			$id_venta = $_POST['id_venta'];
 			
-			//$this->session->set_flashdata('correcto', $correcto);
-			echo  "La peticion se ha cambiado de estado a pago";
+	
+			$datosCuentaPagar = $this->modelo_historial_consignacion->getDatosPagoBanco($id_venta);
+
+			if(!$datosCuentaPagar)
+				echo  "No se ha podido realizar el cambio de estado de la peticion.";
+			
+			$id_afiliado_comprador=$datosCuentaPagar[0]->id_usuario;
+
+			$this->pagarComisionVenta($id_venta,$id_afiliado_comprador);
+			
+			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $datosCuentaPagar[0]->id);
+		
+			echo  "La petición se ha cambiado de estado a pago y ha calculado las comisiones.";
+		
 		}else{
 			echo  "No se ha podido realizar el cambio de estado de la peticion.";
-			//$this->session->set_flashdata('error', $error);
+		
 		}
 		
 	}
 	
 	function cambiar_estado_cancelado(){
 		$id_venta = $_POST['id_venta'];
-		$id_historial = $_POST['id_historial'];
-		$this->modelo_historial_consignacion->CambiarEstadoCancelado($id_venta, $id_historial);
+		
+		$estadoCuenta=$this->modelo_historial_consignacion->getEstadoPagoBanco($id_venta);
+		
+		if(!$estadoCuenta){
+			echo "Ya se han eliminado todos los datos de la venta";
+			return false;
+		}
+
+		$this->modelo_historial_consignacion->CambiarEstadoCancelado($id_venta);
+		echo  "Se han eliminado todos los datos de la venta.";
 	}
 	
-	private function ComisionBanco($historico){
-		$venta_mercancia = $this->modelo_historial_consignacion->MercanciaPago($historico[0]->id_venta);
+	private function pagarComisionVenta($id_venta,$id_afiliado_comprador){
+		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
+		
+		foreach ($mercancias as $mercancia){
+			
+			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
+			$costoVenta=$mercancia->costo_unidad_total;
+			$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
+				
+		}
+
+	}
+	
+	private function calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado){
+		
+		$valor_comision_por_nivel = $this->modelo_compras->ValorComision($id_red_mercancia);
+		$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red_mercancia);
+		$profundidadRed=$capacidad_red[0]->profundidad;
+
+		
+		for($i=0;$i<$profundidadRed;$i++){
+			
+			$afiliado_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado,$id_red_mercancia);
+			
+			if(!$afiliado_padre)
+				return false;
+			
+			$id_afiliado_padre=$afiliado_padre[0]->debajo_de;
+			
+			$valor_comision=($valor_comision_por_nivel[$i]->valor*$costoVenta)/100;
+			
+			$this->modelo_compras->set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado_padre,$valor_comision);
+			
+			$id_afiliado=$id_afiliado_padre;
+		}
+		
+	}
+	
+							//	   $historico
+	private function ComisionBanco($datosCuentaPagar,$id_red_mercancia){
+	/*	$venta_mercancia = $this->modelo_historial_consignacion->MercanciaPago($datosCuentaPagar[0]->id_venta);
 		
 		$id_mercancia = $venta_mercancia[0]->id_mercancia;
 		
 		$costo = $venta_mercancia[0]->cantidad * $this->modelo_compras->CostoMercancia($id_mercancia);
 		
-		$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
-		$costo_comision = $this->modelo_compras->ValorComision($id_categoria_mercancia);
-		 
-		$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
-		$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red);
-		$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $historico[0]->id_usuario, $id_red);
 		
-		$this->CalcularComision2($id_afiliado, $historico[0]->id_venta, $id_categoria_mercancia,$costo_comision, $capacidad_red ,1, $costo);
+		$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
+	*/	
+		
+		
+/*
+	//	$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
+		
+		*/
+		//$id_padre_afiliado = $this->model_perfil_red->ConsultarIdPadre( $datosCuentaPagar[0]->id_usuario, $id_red_mercancia);
+		$this->CalcularComision2($datosCuentaPagar[0]->id_venta, $id_red_mercancia,$valor_comision_por_nivel, $capacidad_red ,1,$datosCuentaPagar[0]->costo_unidad);
 		
 	}
 	

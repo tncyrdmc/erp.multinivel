@@ -613,7 +613,7 @@ order by (U.id);");
 	}
 	
 	function ConsultarIdPadre($id , $id_red_padre){
-		$q = $this->db->query("select debajo_de,lado from afiliar where id_afiliado=".$id." and id_red = ".$id_red_padre);
+		$q = $this->db->query("select debajo_de,lado from afiliar where id_afiliado=".$id." and id_red = ".$id_red_padre." group by debajo_de");
 		$id_padre = $q->result();
 		return $id_padre;
 	}

@@ -158,7 +158,7 @@ function index()
 			$detalles=$this->modelo_compras->detalles_membresia($items['id']);
 		
 		$costosImpuestos=$this->modelo_compras->getCostosImpuestos($pais[0]->pais,$items['id']);
-
+		
 		$info_compras[$contador]=Array(
 				"imagen" => $imagenes[0]->url,
 				"nombre" => $detalles[0]->nombre,
@@ -170,6 +170,7 @@ function index()
 		}
 
 		$data['compras']= $info_compras;
+
 		return $data;
 	}
 
@@ -273,76 +274,6 @@ function index()
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/comprar',$contenidoCarrito);
-		
-/*		
-		$direccion=$this->modelo_compras->get_direccion_comprador($id);
-		$pais=$this->modelo_compras->get_pais();
-		$costo_envio = $this->modelo_compras->consultarCostoEnvio($id);
-		
-		$info_compras=Array();
-		$producto=0;
-		if($this->cart->contents())
-		{ 
-			foreach ($this->cart->contents() as $items) 
-			{	
-				$imgn=$this->modelo_compras->get_img($items['id']);
-				if(isset($imgn[0]->url))
-				{
-					$imagen=$imgn[0]->url;
-				}
-				else
-				{
-					$imagen="";
-				}
-				switch($items['name'])
-				{
-					case 1:
-						$detalles=$this->modelo_compras->detalles_productos($items['id']);
-						break;
-					case 2:
-						$detalles=$this->modelo_compras->detalles_servicios($items['id']);
-						break;
-					case 3:
-						$detalles=$this->modelo_compras->comb_espec($items['id']);
-						break;
-					case 4:
-						$detalles=$this->modelo_compras->comb_paquete($items['id']);
-						break;
-					case 5:
-						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
-						break;
-					case 6:
-						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
-						break;
-				}
-				$info_compras[$producto]=Array(
-					"imagen" => $imagen,
-					"nombre" => $detalles[0]->nombre
-				);
-				$producto++;
-			} 
-		}
-		
-		$data=array();
-		$data["direccion"]=$direccion;
-		$data["compras"]=$info_compras;
-		$data["pais"]=$pais;
-		$data['id'] = $id;
-		$data['costo_envio'] = $costo_envio;
-		
-		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		if ($descuento_por_nivel_actual!=null){
-			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
-			$descuento=$descuento_por_nivel_actual[0]->porcentage_venta;
-		}else{
-			$calcular_descuento=1;
-			$descuento=0;
-		}
-		
-		
-		$this->template->set("calcular_descuento",$calcular_descuento);
-		$this->template->set("descuento",$descuento);
-	*/
 
 	}
 	
@@ -432,7 +363,6 @@ function index()
 			$this->modelo_compras->registrar_venta_mercancia($id_mercancia,$id_venta,$cantidad,$precioUnidad,$costoImpuesto,$nombreImpuestos);
 			$contador++;
 		}
-
 	}
 
 		
@@ -4098,9 +4028,12 @@ function index()
 	}
 
 	
-	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
+	function CalcularComision2($id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		
-	   $this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
+		
+		
+		$this->DarComision($id_venta, $id_afiliado, $valor_comision, $porcentaje, $id_categoria_mercancia);
+	/*   $this->bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia);
 		$productos_venta=$this->modelo_compras->get_productos_venta($id_venta);
 		$consultar_user_venta=$this->modelo_compras->get_user_venta($id_venta);
 		$id_padre_nivel_tres=$this->Encontrar_a_padre_niveltres($consultar_user_venta[0]->id_user,$capacidad_red[0]->id);
@@ -4123,7 +4056,7 @@ function index()
 				}
 			}
 	    
-		return 0;
+		return 0;*/
 	}
 	
 	function Encontrar_a_padre_niveltres($user,$id_red){
@@ -4143,6 +4076,7 @@ function index()
 	function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
 		$this->modelo_compras->CalcularComisionVenta ( $id_venta, $id_afiliado[0]->debajo_de, $porcentaje_comision, $costo_comision, $id_categoria_mercancia);
 	} 
+	/*
 	
 	function bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		$mercancias = $this->modelo_compras->consultarMercancia($id_venta);
@@ -4182,7 +4116,7 @@ function index()
 		
 	}
 
-	
+	*/
 	function SelecioneBancoWebPersonal(){
 		
 		if(!isset($_POST['id_mercancia'])){

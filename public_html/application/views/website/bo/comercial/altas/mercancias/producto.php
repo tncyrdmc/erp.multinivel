@@ -63,6 +63,7 @@
 														<input required type="text" id="nombre_p" name="nombre">
 													</label>
 												</section>
+
 												<section class="col col-2">
 													<label class="input">
 														Concepto
@@ -92,6 +93,15 @@
 																</select>
 															</label>
 														</section>
+											<div class="row">
+											<fieldset>
+											<section class="col col-2">
+											<label class="input"><span id="labelextra">Descuento del producto</span>
+												<input required id="precio_promo" type="number" name="descuento">
+											</label>
+											</section>
+											</fieldset>
+											</div>
 												<div>
 													<section style="padding-left: 0px;" class="col col-6">Descripcion
 														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
@@ -198,6 +208,7 @@
 													</section>
 													
 													<legend>Impuestos</legend>
+													<fieldset>
 													<div class="row" id="impuesto_agregar">
 														
 
@@ -214,14 +225,14 @@
 															</select>
 														</label>
 													</section>
-													<section class="col col-2" id="impuesto">Impuesto
+													<!--<section class="col col-2" id="impuesto">Impuesto
 														<label class="select">
 															<select id="id_impuesto[]" name="id_impuesto[]" onclick="calcular_precio_total()">
 																
 															</select>
-														</label>
+														</label>-->
 														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
+													<!--</section>-->
 															<section class="col col-2">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
@@ -253,6 +264,7 @@
 														</label>
 													</section>
 																										</div>
+																										</fieldset>
 												</fieldset>
 												<fieldset>
 													<legend>Extra</legend>

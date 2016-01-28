@@ -77,7 +77,12 @@
 																<?}?>
 																</select>
 															</label>
-														</section>
+													</section>
+													<section class="col col-2">
+														<label class="input"><span id="labelextra">Descuento de la membresía</span>
+														<input required id="precio_promo" type="number" name="descuento">
+														</label>
+													</section>
 													<div>
 														<section style="padding-left: 0px;" class="col col-6">Descripcion
 															<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
@@ -99,7 +104,7 @@
 													<section class="col col-2">
 														<label class="input">
 														Costo distribuidores
-														<input type="text" name="costo" id="costo" onchange="calcular_precio_total()" required >
+														<input required type="number" name="costo" id="costo" onchange="calcular_precio_total()" required >
 														</label>
 													</section>			
 													<section class="col col-3">
@@ -110,8 +115,8 @@
 													</section>
 													<legend>Impuestos</legend>
 
-													
-													<div class="row">
+													<fieldset>
+													<div class="row" id="impuesto_agregar">
 														<section class="col col-2">País del servicio
 														<label class="select">
 															<select id="pais" required name="pais" onChange="select_pais()">
@@ -123,16 +128,7 @@
 															</select>
 														</label>
 													</section>
-																	<section class="col col-2" id="impuesto">Impuesto
-														<label class="select">
-															<select name="id_impuesto[]" onclick="calcular_precio_total()">
-															
-															</select>
-															
-														</label>
-														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
-															<section class="col col-2">Requiere especificación
+																<section class="col col-2">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
 																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" checked="">
@@ -142,6 +138,15 @@
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>
+																	<!--<section class="col col-2" id="impuesto">Impuesto
+														<label class="select">
+															<select name="id_impuesto[]" onclick="calcular_precio_total()">
+															
+															</select>
+															
+														</label>-->
+														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+													<!--</section>-->
 																	</div>
 																	<div class="row">
 
@@ -152,6 +157,7 @@
 														</label>
 													</section>
 													</div>
+													</fieldset>
 												</fieldset>
 											</div>
 										</div>
@@ -291,7 +297,7 @@ function add_impuesto()
 	+'</label>'
 	+'<a class="txt-color-red" style="cursor: pointer;" onclick="dell_impuesto('+i+')">Eliminar <i class="fa fa-minus"></i></a>'
 	+'</section></div>';
-	$("#moneda_field").append(code);
+	$("#impuesto_agregar").append(code);
 	ImpuestosPais2(i);
 	calcular_precio_total();
 	i = i + 1
