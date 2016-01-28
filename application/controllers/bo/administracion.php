@@ -43,34 +43,6 @@ class administracion extends CI_Controller
 		$this->template->build('website/bo/administracion/index');
 	}
 	
-	function emails_departamentos()
-	{
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if(!$this->general->isAValidUser($id,"administracion"))
-		{
-			redirect('/auth/logout');
-		}
-	
-		$style=$this->modelo_dashboard->get_style(1);
-		
-		$datos_departamentos = $this->model_emails_departamentos->buscar();
-		
-		$this->template->set("usuario",$usuario);
-		$this->template->set("style",$style);
-		$this->template->set("datos_departamentos",$datos_departamentos);
-		
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
-		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/administracion/emails_departamentos');
-	}
 	
 	function actualizar_emails_departamentos()
 	{

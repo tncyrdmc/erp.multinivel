@@ -20,6 +20,7 @@ class configuracion extends CI_Controller
 		$this->load->model('model_datos_generales_soporte_tecnico');
 		$this->load->model('model_cat_grupo_soporte_tecnico');		
 		$this->load->model('bo/model_soporte_tecnico');
+		$this->load->model('model_emails_departamentos');
 
 	}
 	 
@@ -129,6 +130,32 @@ class configuracion extends CI_Controller
 		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
+		$this->template->set("style",$style);
+		
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/empresa');
+	}
+	
+	function datos_empresa()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
 	
 		$pais = $this->model_admin->get_pais_activo();
 		$this->template->set("pais",$pais);
@@ -145,7 +172,95 @@ class configuracion extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/configuracion/empresa');
+		$this->template->build('website/bo/empresa/datos');
+	}
+	
+	function banner()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+			
+		$this->template->set("style",$style);
+	
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/empresa/banner');
+	}
+	
+	function entorno()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);	
+			
+		$this->template->set("style",$style);
+	
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/empresa/entorno');
+	}
+	
+	function emails_departamentos()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$datos_departamentos = $this->model_emails_departamentos->buscar();
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("datos_departamentos",$datos_departamentos);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/administracion/emails_departamentos');
 	}
 	
 	function tipoRed()

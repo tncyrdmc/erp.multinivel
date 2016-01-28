@@ -249,6 +249,14 @@ class admin extends CI_Controller
 		? "Se ha actualizado los datos de la Empresa Multinivel" 
 		: "No se ha podido actualizar los datos de la Empresa Multinivel";
 	}
+	
+	function entorno_empresa()
+	{
+		$empresa = $this->model_admin->entorno_empresa();
+		echo $empresa
+		? "Se ha actualizado los datos de configuración"
+		: "No se ha podido actualizar los datos de configuración";
+	}
 
 	function new_proveedor()
 	{
