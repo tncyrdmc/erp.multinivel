@@ -14,7 +14,7 @@ class Model_emails_departamentos extends CI_Model{
 		return $dpto[0]->email;
 	}
 	
-	function get_departamento_email($id){
+	function get_tema($id){
 		$q = $this->db->query("select nombre from mails where id = ".$id);
 		$dpto = $q->result();
 		return $dpto[0]->nombre;

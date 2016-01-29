@@ -740,7 +740,7 @@ class comercial extends CI_Controller
 			$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['mail']);
 			$this->model_user_profiles->actualizar_nombres($_POST['id'],  $_POST['nombre'], $_POST['apellido']);
 			$this->model_user_profiles->actualizar_pais($_POST['id'], $_POST['pais']);
-			$this->tank_auth->change_pass_easy($_POST['id'], $_POST['password']);
+			(strlen($_POST['password'])>0) ? $this->tank_auth->change_pass_easy($_POST['id'], $_POST['password']) : '';
 			
 			$this->template->set_theme('desktop');
 			$this->template->set_layout('website/main');
