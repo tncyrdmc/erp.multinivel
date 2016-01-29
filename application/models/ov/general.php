@@ -75,20 +75,72 @@ class general extends CI_Model
 	
 	function isActived($id){
 	
-		if($id==2)
-			return true;
+		$membresia=1;
+		$paqueteDeInscripcion=2;
+		$item=3;
+		
+		$this->compraObligatoria ($item);
+		$this->hayTipoDeMercancia ($item);
+		var_dump();exit();
+
+
+
+		/*	if($id==2)
+		 return true;
+		
+		 $q=$this->db->query('SELECT DATEDIFF(current_date,fecha)as dias FROM venta where id_user='.$id.';');
+		 $dias=$q->result();
+		
+		 foreach ($dias as $dia){
+		 if($dia->dias<=183)
+		 	return true;
+		 	}
+		 		
+		 	return false;*/
+	}
 	
-		$q=$this->db->query('SELECT DATEDIFF(current_date,fecha)as dias FROM venta where id_user='.$id.';');
-		$dias=$q->result();
-	
-		foreach ($dias as $dia){
-			if($dia->dias<=183)
-				return true;
+	private function compraObligatoria($id_tipo_mercancia) {
+	 
+		if($id_tipo_mercancia == 1){
+			$q = $this->db->query("SELECT membresia as estado FROM empresa_multinivel;");
+		}elseif ($id_tipo_mercancia == 2){
+			$q = $this->db->query("SELECT paquete as estado FROM empresa_multinivel;");
+		}elseif($id_tipo_mercancia == 3) {
+			$q = $this->db->query("SELECT item as estado FROM empresa_multinivel;");
+		}else{
+			return false;
 		}
-			
+		$estado=$q->result();
+		
+		if($estado[0]->estado=='ACT')
+			return true;
+		
+		
+		return false;
+
+	}
+	
+	private function hayTipoDeMercancia($id_tipo_mercancia) {
+	
+		if($id_tipo_mercancia == 1){
+			$q = $this->db->query("SELECT * FROM mercancia where id_tipo_mercancia=5");
+		}elseif ($id_tipo_mercancia == 2){
+			$q = $this->db->query("SELECT * FROM mercancia where id_tipo_mercancia=4");
+		}elseif($id_tipo_mercancia == 3) {
+			$q = $this->db->query("SELECT * FROM mercancia where id_tipo_mercancia=1 or id_tipo_mercancia=2 or id_tipo_mercancia=3");
+		}else{
+			return false;
+		}
+
+		$mercancia=$q->result();
+		
+		if($mercancia)
+			return true;
+
 		return false;
 	
 	}
+
 	
 	function get_username($id)
 	{

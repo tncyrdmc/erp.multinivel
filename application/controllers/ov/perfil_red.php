@@ -485,6 +485,14 @@ class perfil_red extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
+	
+		 if(!$this->general->isActived($id)){
+		
+		 $this->template->build('/ov/compras/carrito');
+		 return true;
+		 }
+		
+		
 	/*	if($this->general->isAValidUser($id,"OV") == false)
 		{
 			redirect('/ov/compras/carrito');
@@ -500,12 +508,6 @@ class perfil_red extends CI_Controller
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		
-	/*	Codigo para validacion de membresias
-		if(!$this->general->isActived($id)){
-	
-			$this->template->build('website/ov/perfil_red/renovar');
-			return true;
-		}*/
 
 		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
 
