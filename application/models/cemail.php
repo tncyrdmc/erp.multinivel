@@ -23,12 +23,13 @@ class Cemail extends CI_Model
 	
 	function send_email($type, $email, $data)
 	{
+		$type--;
 		$message = $this->setMessage($type,$data);
 		$tema = $message['tema'];
 		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
 		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
 		$this->email->to($email);
-		$this->email->subject(sprintf($this->lang->line('auth_subject_'.$tema), $this->config->item('website_name', 'tank_auth')));
+		$this->email->subject($tema);
 		$this->email->message($this->load->view('email/template-html', $message, TRUE));
 		$this->email->set_alt_message($this->load->view('email/template-txt', $message, TRUE));
 		$this->email->send();
@@ -100,91 +101,129 @@ class Cemail extends CI_Model
 	}
 	
 	function Contenidos ($type,$data){
-		$q = array(			//welcome
-						'<p class="callout">
-								Para ingresar al sitio de clic <a class="btn" href="'.site_url('/auth/login/').'">Aqui!</a>
+		
+		$sitios = array(
+				site_url(''),
+				site_url('/auth/login/'),
+				site_url('/auth/activate/'.$data['user_id'].'/'.$data['new_email_key']),
+				site_url('/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key']),
+				site_url('/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'])
+		);
+		
+		$validar = array (
+				'username' 	=>(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "",
+				'password' 	=>($data['password']) ? "Contraseña: ".$data['password'] : "",
+				'id_cobro'	=>($data['id_cobro']) ? "ID de Cobro: ".$data['id_cobro'] : "",
+				'id_venta'	=>($data['id_venta']) ? "ID venta: ".$data['id_venta'] : "",
+				'fecha'		=>($data['fecha']) ? "Fecha de Solicitud: ".$data['fecha'] : "",
+				'nombres'	=>($data['nombre']) &&  ($data['apellido'])  ? "Nombre y apellido: ".$data['nombre']." ".$data['apellido'] : "",
+				'banco'		=>($data['banco']) ? "Banco: ".$data['banco'] : "",
+				'cuenta'	=>($data['cuenta']) ? "Numero de Cuenta: ".$data['cuenta'] : "",
+				'titular'	=>($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "",
+				'clave'		=>($data['clave']) ? "CLABE: ".$data['clave'] : "",
+				'monto'		=>($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
+				'valor'		=>($data['valor']) ? "Valor de pago: $ ".$data['valor'] : ""
+		);
+		
+		$welcome = '<p class="callout">
+								Para ingresar al sitio de clic <a class="btn" href="'.$sitios[1].'">Aqui!</a>
 						</p><!-- /Callout Panel -->						
 						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador 
-						<a href="'.site_url('/auth/login/').'"></a>'.site_url('/auth/login/').'</p>						
-						<p>'.(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "".'<br /></p>
+						<a href="'.$sitios[1].'"></a>'.$sitios[1].'</p>						
+						<p>'.$validar['username'].'<br /></p>
 						<p>Correo: '.$data['email'].'</p>
-						<p>'.isset($data['password']) ? "Contraseña: ".$data['password'] : "".'<br /></p>
-						<p>Id del Usuario: '.$data['lst_id'][0]->id.'</p>', 
-							//activate
-						'<p class="callout">
+						<p>'.$validar['password'].'<br /></p>
+						<p>Id del Usuario: '.$data['lst_id'][0]->id.'</p>';
+		
+		$activate = '<p class="callout">
 							Para completar tu registro ingresa a este link 
-						<a class="btn" href="'.site_url('/auth/activate/'.$data['user_id'].'/'.$data['new_email_key']).'"><h3>Aqui!</h3></a>
+						<a class="btn" href="'.$sitios[2].'"><h3>Aqui!</h3></a>
 						</p><!-- /Callout Panel -->						
 						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador 
-							<a href="'.site_url('/auth/activate/'.$data['user_id'].'/'.$data['new_email_key']).'"></a>
-						'.site_url('/auth/activate/'.$data['user_id'].'/'.$data['new_email_key']).'</p>						
+							<a href="'.$sitios[2].'"></a>
+						'.$sitios[2].'</p>						
 						<p class="callout">El link funcionara durante '.$data['activation_period'].' horas, 
 						de no ser activada su cuenta tu registro sera invalido y deberas ser afiliado por otro usuario nuevamente.</p>
-						<p>'.(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "".'<br/></p>
+						<p>'.$validar['username'].'<br/></p>
 						<p>Correo: '.$data['email'].'</p><br />
-						<p>'.isset($data['password']) ? "Contraseña: ".$data['password'] : "".'<br/></p>',
-							//change-email
-						'You have changed your email address for ',$data['site_name'].'<br />
+						<p>'.$validar['password'].'<br/></p>';
+		
+		$change_email = 'You have changed your email address for '.$data['site_name'].'<br />
 						Follow this link to confirm your new email address:<br />
 						<br />
 						<big style="font: 16px/18px Arial, Helvetica, sans-serif;"><b>
-						<a href="'.site_url('/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key']).'" >
+						<a href="'.$sitios[3].'" >
 						Confirm your new email</a></b></big><br />
 						<br />
 						Link doesn`t work? Copy the following link to your browser address bar:<br />
-						<nobr><a href="'.site_url('/auth/reset_email/'.$user_id.'/'.$new_email_key).'">
-						'.site_url('/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key']).'</a></nobr><br />
+						<nobr><a href="'.$sitios[3].'">
+						'.$sitios[3].'</a></nobr><br />
 						<br />
 						<br />
 						Your email address: '.$data['new_email'].'<br />
 						<br />
 						<br />
-						You received this email, because it was requested by a <a href="'.site_url('').'" >'.$data['site_name'].'
+						You received this email, because it was requested by a <a href="'.$sitios[0].'" >'.$data['site_name'].'
 						</a> user. If you have received this by mistake, please DO NOT click the confirmation link, and simply delete this email. 
-						After a short time,the request will be removed from the system.<br />', 
-							//cobros
-						'<p class="callout">
+						After a short time,the request will be removed from the system.<br />';
+		
+		$cobros = '<p class="callout">
 							El pago se realizara en las proximas 24 horas con los siguientes datos:
 						</p><!-- /Callout Panel -->						
-						<p>'.isset($data['id_cobro']) ? "ID de Cobro: ".$data['id_cobro'] : "".'<br /></p>
-						<p>'.isset($data['fecha']) ? "Fecha de Solicitud: ".$data['fecha'] : "".'<br /></p>
-						<p>'.(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "".'<br /></p>
+						<p>'. $validar['id_cobro'].'<br /></p>
+						<p>'. $validar['fecha'].'<br /></p>
+						<p>'. $validar['username'].'<br /></p>
 						<p>Correo: '.$data['email'].'</p><br/>
-						<p>'.isset($data['nombre']) && isset($data['apellido'])  ? "Nombre y apellido: ".$data['nombre']." ".$data['apellido'] : "".'<br /></p>	
-						<p>'.isset($data['banco']) ? "Banco: ".$data['banco'] : "".'<br /></p>
-						<p>'.isset($data['cuenta']) ? "Numero de Cuenta: ".$data['cuenta'] : "".'<br /></p>
-						<p>'.isset($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "".'<br /></p>
-						<p>'.isset($data['clave']) ? "CLABE: ".$data['clave'] : "".'<br /></p><br/>
-						<p>'.isset($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "".'<br /></p>', 
-							//cuentas-cobrar
-						'<p class="callout">
+						<p>'. $validar['nombres'].'<br /></p>	
+						<p>'. $validar['banco'].'<br /></p>
+						<p>'. $validar['cuenta'].'<br /></p>
+						<p>'. $validar['titular'].'<br /></p>
+						<p>'. $validar['clave'].'<br /></p><br/>
+						<p>'. $validar['monto'].'<br /></p>';
+		
+		$cuentas_cobrar = '<p class="callout">
 							Recibimos su confirmacion sobre la transacion con los siguientes datos:
 						</p><!-- /Callout Panel -->						
-						<p>'.isset($data['id_venta']) ? "ID venta: ".$data['id_venta'] : "".'<br /></p>
-						<p>'.isset($data['fecha']) ? "Fecha de Solicitud: ".$data['fecha'] : "".'<br /></p>
-						<p>'.(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "".'<br /></p>
+						<p>'. $validar['id_venta'].'<br /></p>
+						<p>'. $validar['fecha'].'<br /></p>
+						<p>'. $validar['username'].'<br /></p>
 						<p>Correo: '.$data['email'].'</p><br/>
-						<p>'.isset($data['nombre']) && isset($data['apellido'])  ? "Nombre y apellido: ".$data['nombre']." ".$data['apellido'] : "".'<br /></p>	
-						<p>'.isset($data['banco']) ? "Banco: ".$data['banco'] : "".'<br /></p>
-						<p>'.isset($data['cuenta']) ? "Numero de Cuenta: ".$data['cuenta'] : "".'<br /></p>
-						<p>'.isset($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "".'<br /></p> ',
-							//forgot password 
-						'<a href="'.site_url('/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key']).'" >
+						<p>'. $validar['nombres'].'<br /></p>	
+						<p>'. $validar['banco'].'<br /></p>
+						<p>'. $validar['cuenta'].'<br /></p>
+						<p>'. $validar['valor'].'<br /></p> ';
+		
+		$forgot_password = '<a href="'.$sitios[4].'" >
 						<h5>Da click aquí para recuperar tu contraseña</h5></a><br />
 						<br />
 						¿El link no funciona? Copia y pega en la barra de direcciones de tu navegador el siguiente link.<br />
 						El link solo funciona una sola vez.<br />
-						<nobr><a href="'.site_url('/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key']).'">
-						'.site_url('/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key']).'></a></nobr><br />
-						Has recibido este correo desde <a href="'.site_url('').'" >
-						'.$data['site_name'].'</a> como solicitud de una recuperación de contraseña, si no has sido tú, puedes ignorarlo.<br />', 
-							//reset password
-						'<p>Has cambiado tu contraseña.<br />
+						<nobr><a href="'.$sitios[4].'">
+						'.$sitios[4].'></a></nobr><br />
+						Has recibido este correo desde <a href="'.$sitios[0].'" >
+						'.$data['site_name'].'</a> como solicitud de una recuperación de contraseña, si no has sido tú, puedes ignorarlo.<br />';
+		
+		$reset_password = '<p>Has cambiado tu contraseña.<br />
 						Por favor , mantenga en sus registros para que no se olvide.<br />
 						<br />
-						'.(strlen($data['username']) > 0) ? "Tu usuario: ".$data['username'] : "".'
+						'.$validar['username'].'
 						Tu correo: '.$data['email'].'<br />
-						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>' 
+						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>';
+		
+		$q = array(			//welcome
+						$welcome, 
+							//activate
+						$activate,
+							//change-email
+						$change_email, 
+							//cobros
+						$cobros, 
+							//cuentas-cobrar
+						$cuentas_cobrar,
+							//forgot password 
+						$forgot_password, 
+							//reset password
+						$reset_password
 		);
 	
 		return $q[$type];
