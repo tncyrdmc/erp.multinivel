@@ -57,9 +57,10 @@
 										<a href="/ov/billetera2/index">Billetera</a>
 									</li>
 									<li class="divider"></li>
-									<li>
+								<!-- <li>
 										<a href="/ov/compras/reportes">Reportes</a>
 									</li>
+									 -->	
 								</ul>
 							</li>
 							<li class="dropdown">

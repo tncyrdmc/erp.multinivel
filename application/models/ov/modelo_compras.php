@@ -13,11 +13,11 @@ class modelo_compras extends CI_Model
 		$q=$this->db->query("SELECT id_red FROM red WHERE estatus like 'ACT' and id_usuario=".$id);
 		return $q->result();
 	}
-	function reporte_afiliados($red)
+	function reporte_afiliados($id_usuario)
 	{
-		$q=$this->db->query('SELECT a.id, a.username usuario, a.created creacion, b.nombre nombre, b.apellido apellido, b.fecha_nacimiento nacimiento, 
-		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e WHERE a.created>=NOW() - INTERVAL 1 WEEK 
-		and a.id=b.user_id and b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and e.id_red='.$red);
+		$q=$this->db->query('SELECT a.id,tr.nombre as nombreRed, a.username usuario, a.created creacion, b.nombre nombre, b.apellido apellido, a.email email, 
+		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e, tipo_red tr WHERE a.created>=NOW() - INTERVAL 1 MONTH 
+		and a.id=b.user_id and b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and tr.id=e.id_red and e.debajo_de='.$id_usuario.'');
 		return $q->result();
 	}
 	
@@ -26,6 +26,7 @@ class modelo_compras extends CI_Model
 		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
 from afiliar A, user_profiles UP, users U
 where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id group by(U.id)');
+		
 		return $q->result();
 	}
 	
