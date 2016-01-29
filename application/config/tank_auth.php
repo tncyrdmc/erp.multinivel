@@ -8,7 +8,7 @@
 |--------------------------------------------------------------------------
 */
 $config['website_name'] = 'NetworkSoft';
-$config['webmaster_email'] = 'contact@networsoft.mx';
+$config['webmaster_email'] = 'contact@networksoft.mx';
 
 /*
 |--------------------------------------------------------------------------

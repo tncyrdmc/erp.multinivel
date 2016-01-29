@@ -31,6 +31,7 @@ class CuentasPagar extends CI_Controller
 		$this->load->model('ov/modelo_compras');
 		$this->load->model('modelo_cobros');
 		$this->load->model('model_excel');
+		$this->load->model('cemail');
 	}
 
 	function index(){
@@ -220,14 +221,7 @@ class CuentasPagar extends CI_Controller
 		$cobro['email'] = $usuario[0]->email;
 		$cobro['fecha'] = $usuario[0]->fecha;
 		
-		$this->load->library('email');
-		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->to($email);
-		$this->email->subject('Pago de Comision');
-		$this->email->message($this->load->view('email/Cobros-html', $cobro, TRUE));
-		//$this->email->set_alt_message($this->load->view('email/activate-txt', $data, TRUE));
-		$this->email->send();
+		$this->cemail->send_email(4, $email, $cobro);
 	}
 	
 	function Archivero(){

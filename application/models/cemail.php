@@ -12,6 +12,7 @@ class Cemail extends CI_Model
 		$this->load->library('form_validation');
 		$this->load->library('security');
 		$this->load->library('tank_auth');
+		$this->load->library('config');
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
 		$this->load->model('bo/model_admin');
@@ -23,7 +24,6 @@ class Cemail extends CI_Model
 	
 	function send_email($type, $email, $data)
 	{
-		$type--;
 		$message = $this->setMessage($type,$data);
 		$tema = $message['tema'];
 		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
@@ -58,7 +58,8 @@ class Cemail extends CI_Model
 	
 	function get_cuerpo_mensaje($type,$data){		
 		
-		
+		$type--;
+		 
 		$asunto = $this->Asuntos($type);
 		$contenido = $this->Contenidos($type,$data);
 		$sumario = $this->Sumarios($type,$data);
@@ -100,14 +101,14 @@ class Cemail extends CI_Model
 		return $q[$type];
 	}
 	
-	function Contenidos ($type,$data){
+	function Contenidos ($type,$data){		
 		
 		$sitios = array(
 				site_url(''),
 				site_url('/auth/login/'),
-				site_url('/auth/activate/'.$data['user_id'].'/'.$data['new_email_key']),
-				site_url('/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key']),
-				site_url('/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'])
+				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
+				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
+				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : '')
 		);
 		
 		$validar = array (

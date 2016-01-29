@@ -1,3 +1,4 @@
+<div id="spinner-div"></div>
 <div style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; margin-right: 0px; margin-left: 0px; padding-bottom: 3rem;" class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -69,6 +70,34 @@
 
 <script type="text/javascript">
 
+$( "#edit" ).submit(function( event ) {
+	event.preventDefault();	
+	enviar();
+});
+
+function enviar(){
+	setiniciarSpinner();	
+	$.ajax({
+		type: "POST",
+		url: "/bo/comercial/actualizar_afiliado",
+		data: $('#edit').serialize()
+	}).done(function( msg ) {				
+		bootbox.dialog({
+			message: msg,
+			title: 'ATENCION',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							location.href="/bo/comercial/red_tabla";
+							FinalizarSpinner();
+					}
+				}
+			}
+		})
+	});//fin Done ajax	
+}
 
 $(function()
 {

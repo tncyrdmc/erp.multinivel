@@ -151,13 +151,6 @@ class cuentasporcobrar extends compras{
 		$cobro['email'] = $datos[0]->email;
 		$cobro['fecha'] = $datos[0]->fecha;
 		
-		$this->load->library('email');
-		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->to($datos[0]->email);
-		$this->email->subject('Confirmacion de pago por Banco');
-		$this->email->message($this->load->view('email/CuentasCobrar-html', $cobro, TRUE));
-		//$this->email->set_alt_message($this->load->view('email/activate-txt', $data, TRUE));
-		$this->email->send();
+		$this->cemail->send_email(5, $cobro['email'], $cobro);
 	}
 }

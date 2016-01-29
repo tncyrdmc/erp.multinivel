@@ -733,9 +733,7 @@ class comercial extends CI_Controller
 	
 	function actualizar_afiliado()
 	{
-		//$emails = $this->model_perfil_red->use_mail_modificar();
-		
-		
+		//$emails = $this->model_perfil_red->use_mail_modificar();	
 		
 			$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['mail']);
 			$this->model_user_profiles->actualizar_nombres($_POST['id'],  $_POST['nombre'], $_POST['apellido']);
@@ -747,9 +745,10 @@ class comercial extends CI_Controller
 			$this->template->set_partial('header', 'website/bo/header');
 			$this->template->set_partial('footer', 'website/bo/footer');
 			
-			$success = "El afiliado ha sido actualizado satisfactoriamente.";
-			$this->session->set_flashdata('success', $success);
-			redirect('/bo/comercial/red_tabla');
+			echo "El afiliado ha sido actualizado satisfactoriamente.";
+			//$success = "El afiliado ha sido actualizado satisfactoriamente.";
+			//$this->session->set_flashdata('success', $success);
+			//redirect('/bo/comercial/red_tabla');
 		
 		
 	}
