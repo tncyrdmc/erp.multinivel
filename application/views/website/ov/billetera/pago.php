@@ -54,6 +54,7 @@
 													
 													<div class="table-responsive">
 													<table class="table">
+													<table class="table">
 													<thead>
 														<tr>
 															<th> <i class="fa fa-sitemap"></i> Red</th>
@@ -63,27 +64,40 @@
 													<tbody>
 												<?php 
 													$total = 0; 
+													$i = 0;
 													foreach ($ganancias as $gred){
-														if($gred[0]->puntos){
+														if($gred[0]->valor!=0){
+														echo '<tr class="success" >
+																<td colspan="2">'.$gred[0]->nombre.'</td>
+															</tr>'; 
+
 														echo '<tr class="success">
-																<td>'.$gred[0]->nombre.'</td>
+															<td>Comisiones Directas</td>
+																<td>$ '.number_format($comisiones_directos[$i][0]->valor,2).'</td>
+															</tr>'; 
+														
+														echo '<tr class="success">
+															<td>Comisiones Indirectas</td>
+																<td>$ '.number_format($gred[0]->valor - $comisiones_directos[$i][0]->valor,2).'</td>
+															</tr>'; 
+
+														if($gred[0]->valor){
+														echo '<tr class="warning">
+																<td>Total</td>
 																<td>$ '.number_format($gred[0]->valor,2).'</td>
 															</tr>';
 														$total += $gred[0]->valor;
 														}else {
 															echo '<tr class="warning">
-																<td>'.$gred[0]->nombre.'</td>
+																<td> Total </td>
 																<td>$ 0</td>
 															</tr>';
 														}
-													} if($comision_web_personal){ ?>  
-														<tr class="success">
-															<td>Comision Web Personal</td>
-															<td>$ <?php echo number_format($comision_web_personal,2);?></td>
-														</tr>
-													<?php 
-														$total += $comision_web_personal;
-													} ?>
+														$i++;
+													}
+													}
+
+													?>  
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
 														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
@@ -154,7 +168,7 @@
 																	<section class="col col-10">
 																		<label class="label "><b>Saldo Disponible</b></label>
 																		<label class="input input state-success">
-																			<input type="text" name="saldo" class="from-control" id="saldo" value="<?php echo ($total-($cobro+$retenciones_total+$cobroPendientes)); ?>" readonly />
+																			<input type="text" name="saldo" class="from-control" id="saldo" value="<?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)), 2, '.', ''); ?>" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-10">
@@ -275,7 +289,6 @@ function CalcularSaldo(evt){
 function cobrar() {
 
 	if(validarCampos()){
-		iniciarSpinner();
 	$.ajax({
 		type: "POST",
 		url: "/auth/show_dialog",
@@ -299,6 +312,7 @@ function cobrar() {
 					})
 					.done(function( msg )
 					{
+						
 						bootbox.dialog({
 						message: msg,
 						title: '',
@@ -308,7 +322,6 @@ function cobrar() {
 							className: "btn-success",
 							callback: function() {
 								location.href='historial';
-								FinalizarSpinner();
 								}
 							}
 						}
@@ -321,7 +334,7 @@ function cobrar() {
 				label: "Cancelar!",
 				className: "btn-danger",
 				callback: function() {
-					FinalizarSpinner();
+
 					}
 			}
 		}

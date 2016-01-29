@@ -55,8 +55,8 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function get_comisiones($id,$id_red){
-		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,nombre as nombre FROM comision c,tipo_red t , cat_grupo_producto cp where(c.id_red=cp.id_grupo) 
-		and (cp.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.'');
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t 
+		where (c.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.'');
 		return $q->result();
 	}
 	
@@ -68,8 +68,8 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function get_comisiones_mes($id,$id_red,$fecha){
-		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t ,cat_grupo_producto cp where(c.id_red=cp.id_grupo) 
-		and (cp.id_red=t.id) and(t.id='.$id_red.') and MONTH("'.$fecha.'")=MONTH(fecha) and c.id_afiliado='.$id.'');
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t 
+		where (c.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.' and MONTH("'.$fecha.'")=MONTH(fecha)');
 		return $q->result();
 	}
 	
@@ -108,7 +108,8 @@ class modelo_billetera extends CI_Model
 	function get_cobros_afiliado_mes_pendientes($id,$fecha)
 	{
 		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus!=2 and month("'.$fecha.'")=month(fecha_pago) and id_user='.$id);
-		return $q->result();
+		$cobros=$q->result();
+		return $cobros[0]->monto;
 	}
 	
 	function get_cobros_afiliado_mes_actual($id)
@@ -147,7 +148,7 @@ class modelo_billetera extends CI_Model
 		
 	}
 	
-	function añosCobro($id){
+	function anosCobro($id){
 		$q = $this->db->query("select YEAR(fecha) as año from cobro where id_user='$id' group by año");
 		return $q->result();
 	}
@@ -260,6 +261,23 @@ class modelo_billetera extends CI_Model
 	function get_historial_cuenta_web_personal($id)
 	{
 		$q=$this->db->query('SELECT  DATE_FORMAT(fecha,"%Y-%m-01") as fecha, sum(valor) as valor FROM comision_web_personal where id_afiliado = "'.$id.'" group by MONTH(fecha)');
+		return $q->result();
+	}
+	
+	function getComisionDirectos($id_afiliado, $id_red)
+	{
+		$q = $this->db->query("select sum(c.puntos) as puntos, sum(c.valor) as valor
+		from afiliar a, comision c, venta v
+		where v.id_user = a.id_afiliado and v.id_venta = c.id_venta  and a.id_red = ".$id_red." and c.id_red = ".$id_red." and  c.id_afiliado = ".$id_afiliado." and  a.debajo_de = ".$id_afiliado);
+	
+		return $q->result();
+	}
+	
+	function getComisionDirectosMes($id_afiliado, $id_red, $fecha)
+	{
+		$q = $this->db->query("select sum(c.puntos) as puntos, sum(c.valor) as valor
+		from afiliar a, comision c, venta v
+		where v.id_user = a.id_afiliado and v.id_venta = c.id_venta  and a.id_red = ".$id_red." and c.id_red = ".$id_red." and  c.id_afiliado = ".$id_afiliado." and  a.debajo_de = ".$id_afiliado." and (MONTH('".$fecha."') = MONTH(c.fecha))");
 		return $q->result();
 	}
 }

@@ -7,7 +7,7 @@
 										<th data-hide="phone">Banco</th>
 										<th data-hide="phone">Cuenta</th>
 										<th data-hide="phone">Titular</th>
-										<th data-hide="phone">Clave</th>
+										<th data-hide="phone">Clabe</th>
 										<th data-hide="phone,tablet">Metodo</th>
 										<th data-hide="phone,tablet">Valor</th>
 										<th data-hide="phone,tablet">Estado</th>

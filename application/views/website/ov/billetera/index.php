@@ -19,7 +19,7 @@
 						<a href="pedir_pago">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 								<i class="fa fa-money fa-3x"></i>
-								<h5>Pedir Plata</h5> 
+								<h5>Pedir Dinero</h5> 
 							</div>	
 						</a>
 					</div>
@@ -27,7 +27,7 @@
 						<a href="/ov/billetera2/historial">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 								<i class="fa fa-calendar fa-3x"></i>
-								<h5>Historial Pedir Plata</h5>
+								<h5>Historial Pedir Dinero</h5>
 							</div>	
 						</a>
 					</div>

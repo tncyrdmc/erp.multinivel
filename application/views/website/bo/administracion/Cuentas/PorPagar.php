@@ -331,8 +331,26 @@
 								}
 								else
 								{
-									window.location="reporte_cobros_excel?inicio="+inicio+"&&fin="+fin;
-									
+									//window.location="/bo/reportes/reporte_ventas_oficinas_virtuales_excel?inicio="+startdate+"&&fin="+finishdate;
+									iniciarSpinner();
+									window.location="/bo/CuentasPagar/reporte_cobros_excel?inicio="+inicio+"&&fin="+fin;
+									//window.location="report	e_cobros_excel?inicio="+inicio+"&&fin="+fin;
+									/*var datos={'inicio':inicio,'fin':fin};
+									$.ajax({
+								         type: "get",
+								         url: "reporte_cobros_excel/"+inicio+fin,
+									});*/
+								/*	$.ajax({
+										type: "POST",
+										url: "reporte_cobros_excel",
+										data: {inicio:inicio,fin:fin}
+										
+									})
+									.done(function( msg ) {
+										
+										$("#reporte_div").html(msg);
+										
+									});*/
 								}
 							}	
 							

@@ -33,11 +33,11 @@
 									<label class="select">
 										<select id="tipo-reporte">
 											<option value="0" selected="" disabled="">Tipo de reporte</option>
-											<option value="1">Afliados nuevos</option>
-											<option value="4">Ventas web personal</option>
+											<!--<option value="6">Ver consecutivo de mi red</option>-->
+											<option value="1">Afiados nuevos</option>
+											<!--<option value="7">Ver compras de mi red</option>-->
+											<!--  <option value="4">Ventas web personal</option>-->
 											<option value="5">Compras por Banco</option>
-											<option value="6">Ver consecutivo de mi red</option>
-											<option value="7">Ver compras de mi red</option>
 											<option value="8">Ver mis compras</option>
 										</select> <i></i> </label>
 								</section>
@@ -174,12 +174,12 @@
 									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
 										
 									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									 <section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
 											<a id="imprimir-2" href="reporte_afiliados_excel" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
 										</label>
-									</section>
+									</section> 
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
@@ -293,7 +293,7 @@
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 		<script src="/template/js/spin.js"></script>
 		<script type="text/javascript">
-		function Enviar(id)
+/*		function Enviar(id)
 		{
 			bootbox.dialog({
 				message: "¿Desea enviar este registro ahora?",
@@ -338,7 +338,7 @@
 		});
 					
 		}
-
+*/
 		</script>
 		
 		<script type="text/javascript">
@@ -357,12 +357,6 @@
 				}
 			});
 		</script>
-		<script type="text/javascript" id="script_fila">
-			function nueva_fila()
-			{
-				alert("hola");
-			}
-		</script>
 		
 		<script type="text/javascript">
 		
@@ -379,63 +373,7 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-							            
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-						    // custom toolbar
-								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-										$("#remplazar").html(obj);
-										$("#row-print-red").show();
+								setTableConfig();
 							}
 						});
 						
@@ -455,7 +393,7 @@
 							}
 							else
 							{
-								$("#nuevos_afiliados").show();
+							/*	$("#nuevos_afiliados").show();
 								var datos={'inicio':inicio,'fin':fin};
 								$.ajax({
 									 data: {info:JSON.stringify(datos)},
@@ -463,65 +401,6 @@
 							         url: "reporte_compras_usr",
 									success: function( msg )
 									{
-										$("#reporte_div").html(msg);
-										var responsiveHelper_dt_basic = undefined;
-										var responsiveHelper_datatable_fixed_column = undefined;
-										var responsiveHelper_datatable_col_reorder = undefined;
-										var responsiveHelper_datatable_tabletools = undefined;
-										
-										var breakpointDefinition = {
-											tablet : 1024,
-											phone : 480
-										};
-													var otable = $('#datatable_fixed_column2').DataTable({
-								    	//"bFilter": false,
-								    	//"bInfo": false,
-								    	//"bLengthChange": false
-								    	//"bAutoWidth": false,
-								    	//"bPaginate": false,
-								    	//"bStateSave": true // saves sort state using localStorage
-										"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-												"t"+
-												"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-										"autoWidth" : true,
-										"preDrawCallback" : function() {
-											// Initialize the responsive datatables helper once.
-											if (!responsiveHelper_datatable_fixed_column) {
-												responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column2'), breakpointDefinition);
-											}
-										},
-										"rowCallback" : function(nRow) {
-											responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-										},
-										"drawCallback" : function(oSettings) {
-											responsiveHelper_datatable_fixed_column.respond();
-										}		
-										
-									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-								    	   
-									    // Apply the filter
-									    $("#datatable_fixed_column2 thead th input[type=text]").on( 'keyup change', function () {
-									    	
-									        otable
-									            .column( $(this).parent().index()+':visible' )
-									            .search( this.value )
-									            .draw();
-									            
-									    } );
-									    $("#well-print-red").hide();
-										$("#row-print-red").hide();
-										$("#well-print-af").hide();
-										$("#row-print-af").hide();
-										$("#well-print-web").hide();
-										$("#row-print-web").hide();
-									    $("#well-print-usr").show();
-										$("#row-print-usr").show();
-								    // custom toolbar
-										 var obj = '<a onclick="" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-												$("#remplazar").html(obj);
-												$("#row-print-red").show();
-									}
 								});
 								$.ajax({
 									 data: {info:JSON.stringify(datos)},
@@ -532,8 +411,9 @@
 										$("#well-print-usr").html(msg);
 									}
 								});
-							}
+							}*/
 						}	
+						}
 						
 						
 						break;
@@ -561,60 +441,6 @@
 									success: function( msg )
 									{
 										$("#reporte_div").html(msg);
-										var responsiveHelper_dt_basic = undefined;
-										var responsiveHelper_datatable_fixed_column = undefined;
-										var responsiveHelper_datatable_col_reorder = undefined;
-										var responsiveHelper_datatable_tabletools = undefined;
-										
-										var breakpointDefinition = {
-											tablet : 1024,
-											phone : 480
-										};
-													var otable = $('#datatable_fixed_column3').DataTable({
-								    	//"bFilter": false,
-								    	//"bInfo": false,
-								    	//"bLengthChange": false
-								    	//"bAutoWidth": false,
-								    	//"bPaginate": false,
-								    	//"bStateSave": true // saves sort state using localStorage
-										"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-												"t"+
-												"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-										"autoWidth" : true,
-										"preDrawCallback" : function() {
-											// Initialize the responsive datatables helper once.
-											if (!responsiveHelper_datatable_fixed_column) {
-												responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column3'), breakpointDefinition);
-											}
-										},
-										"rowCallback" : function(nRow) {
-											responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-										},
-										"drawCallback" : function(oSettings) {
-											responsiveHelper_datatable_fixed_column.respond();
-										}		
-										
-									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-								    	   
-									    // Apply the filter
-									    $("#datatable_fixed_column3 thead th input[type=text]").on( 'keyup change', function () {
-									    	
-									        otable
-									            .column( $(this).parent().index()+':visible' )
-									            .search( this.value )
-									            .draw();
-									            
-									    } );
-									    $("#well-print-usr").hide();
-										$("#row-print-usr").hide();
-										$("#well-print-af").hide();
-										$("#row-print-af").hide();
-										$("#well-print-web").hide();
-										$("#row-print-web").hide();
-									    $("#well-print-red").show();
-										$("#row-print-red").show();
-								    // custom toolbar
 								    
 									}
 								});
@@ -647,63 +473,6 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-							            
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-						    // custom toolbar
-								 var obj = '<a onclick="Reporte_Exel_web_personal()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-										$("#remplazar").html(obj);
-										$("#row-print-red").show();
 							}
 						});
 						break;
@@ -730,55 +499,7 @@
 							
 							FinalizarSpinner();
 							$("#reporte_div").html(msg);
-							var responsiveHelper_dt_basic = undefined;
-							var responsiveHelper_datatable_fixed_column = undefined;
-							var responsiveHelper_datatable_col_reorder = undefined;
-							var responsiveHelper_datatable_tabletools = undefined;
-							
-							var breakpointDefinition = {
-								tablet : 1024,
-								phone : 480
-							};
-										var otable = $('#datatable_fixed_column1').DataTable({
-					    	//"bFilter": false,
-					    	//"bInfo": false,
-					    	//"bLengthChange": false
-					    	//"bAutoWidth": false,
-					    	//"bPaginate": false,
-					    	//"bStateSave": true // saves sort state using localStorage
-							"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-									"t"+
-									"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-							"autoWidth" : true,
-							"preDrawCallback" : function() {
-								// Initialize the responsive datatables helper once.
-								if (!responsiveHelper_datatable_fixed_column) {
-									responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-								}
-							},
-							"rowCallback" : function(nRow) {
-								responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-							},
-							"drawCallback" : function(oSettings) {
-								responsiveHelper_datatable_fixed_column.respond();
-							}		
-							
-						    });
-					    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-					    	   
-						    // Apply the filter
-						    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-						    	
-						        otable
-						            .column( $(this).parent().index()+':visible' )
-						            .search( this.value )
-						            .draw();
 
-						       
-						    } );
-							var obj = '<a onclick="ReportePagoBancoExcel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-								$("#remplazar").html(obj);
-								$("#row-print-red").show();
 							});
 						}
 					break;
@@ -790,69 +511,10 @@
 					         url: "reporte_afiliados_todos",
 							success: function( msg )
 							{
-								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
+							$("#reporte_div").html(msg);
 
-							       
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-								
-						    // custom toolbar
-								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-										$("#remplazar").html(obj);
-										$("#row-print-red").show();
 							}
 						});
-						
 						break;
 
 					case '7':
@@ -870,65 +532,7 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-
-							       
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-								
-						    // custom toolbar
-								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-										$("#remplazar").html(obj);
-										$("#row-print-red").show();
+								setTableConfig();
 							}
 						});
 						
@@ -949,56 +553,7 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#dt_basic').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_dt_basic) {
-										responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_dt_basic.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_dt_basic.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							   
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-								
-						    // custom toolbar
-								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-										$("#remplazar").html(obj);
-										$("#row-print-red").show();
+
 							}
 						});
 						
@@ -1033,7 +588,7 @@
 			}
 		
 		function reporte_excel(){
-			
+	/*		
 			var inicio=$("#startdate").val();
 			var fin=$("#finishdate").val();
 			
@@ -1051,7 +606,7 @@
 				window.location="/ov/compras/reporte_compras_personales_excel?inicio="+inicio+"&fin="+fin;
 			}
 			break;
-			}
+			}*/
 		}
 		</script>
 		<script>
@@ -1295,4 +850,63 @@
 		
 		})
 
+		function setTableConfig(){
+			var responsiveHelper_dt_basic = undefined;
+			var responsiveHelper_datatable_fixed_column = undefined;
+			var responsiveHelper_datatable_col_reorder = undefined;
+			var responsiveHelper_datatable_tabletools = undefined;
+			
+			var breakpointDefinition = {
+				tablet : 1024,
+				phone : 480
+			};
+			var otable = $('#datatable_fixed_column1').DataTable({
+	    	//"bFilter": false,
+	    	//"bInfo": false,
+	    	//"bLengthChange": false
+	    	//"bAutoWidth": false,
+	    	//"bPaginate": false,
+	    	//"bStateSave": true // saves sort state using localStorage
+			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+					"t"+
+					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"autoWidth" : true,
+			"preDrawCallback" : function() {
+				// Initialize the responsive datatables helper once.
+				if (!responsiveHelper_datatable_fixed_column) {
+					responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+				}
+			},
+			"rowCallback" : function(nRow) {
+				responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+			},
+			"drawCallback" : function(oSettings) {
+				responsiveHelper_datatable_fixed_column.respond();
+			}		
+			
+		    });
+	    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+	    	   
+		    // Apply the filter
+		    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+		    	
+		        otable
+		            .column( $(this).parent().index()+':visible' )
+		            .search( this.value )
+		            .draw();
+		            
+		    } );
+		    $("#well-print-usr").hide();
+			$("#row-print-usr").hide();
+			$("#well-print-red").hide();
+			$("#row-print-red").hide();
+			$("#well-print-web").hide();
+			$("#row-print-web").hide();
+		    $("#well-print-af").show();
+			$("#row-print-af").show();
+	    // custom toolbar
+			 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+					$("#remplazar").html(obj);
+					$("#row-print-red").show();
+		}
 		</script>
