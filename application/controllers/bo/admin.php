@@ -356,6 +356,7 @@ class admin extends CI_Controller
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
 		$impuestos_merc	= $this->model_admin->get_impuestos_mercancia($_POST['id']);
 		
+		
 		$this->template->set("grupos",$grupos);
 		echo '<div class="row">
 				<form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" >  

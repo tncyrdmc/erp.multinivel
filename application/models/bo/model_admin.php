@@ -492,6 +492,10 @@ where(a.id_pais=b.Code)");
 
 		return $q->result();
 	}
+	function impuestos_por_mercancia(){
+		$q=$this->db->query('SELECT CMI.id_mercancia, CI.descripcion, CI.porcentaje  FROM cross_merc_impuesto CMI, cat_impuesto CI where CMI.id_impuesto=CI.id_impuesto');
+		return $q->result();
+	}
 	function new_empresa()
 	{
 		$dato_empresa=array(
@@ -853,6 +857,7 @@ where(a.id_pais=b.Code)");
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
 			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
+			if (isset($_POST['id_impuesto'])){
 			foreach($_POST['id_impuesto'] as $impuesto)
 			{
 				$dato_impuesto=array(
@@ -860,7 +865,7 @@ where(a.id_pais=b.Code)");
 					"id_impuesto"	=> $impuesto
 				);
 				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
-			}
+			}}
 		}
 		
 		if($_POST["tipo_merc"]==4)
@@ -1048,6 +1053,16 @@ where(a.id_pais=b.Code)");
 			);
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia);
+			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
+			if (isset($_POST['id_impuesto'])){
+			foreach($_POST['id_impuesto'] as $impuesto)
+			{
+				$dato_impuesto=array(
+					"id_mercancia"	=> $_POST['id_merc'],
+					"id_impuesto"	=> $impuesto
+				);
+				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
+			}}
 		}
 		if($_POST["tipo_merc"]==5)
 		{

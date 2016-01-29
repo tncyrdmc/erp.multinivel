@@ -106,6 +106,7 @@
 												</tr>
 											</thead>
 											<tbody>
+											<?$contadorImpuestos=0;?>
 												<?foreach ($productos as $key) {?>
 												<tr>
 													<td><?=$key->id?></td>
@@ -117,7 +118,18 @@
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
-													<td><?=$key->fecha_alta?></td>
+													<td><?
+													foreach ($imp_merc as $key_1) {
+														if($key->id==$key_1->id_mercancia){
+																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
+																$contadorImpuestos++;		
+														}
+													}
+														if($contadorImpuestos==0){
+															echo "No hay ningun impuesto en esta mercancia";
+														}
+														$contadorImpuestos=0;
+													?></td>
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
@@ -143,7 +155,20 @@
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
-													<td><?=$key->fecha_alta?></td>
+													<td>
+														<?
+													foreach ($imp_merc as $key_1) {
+														if($key->id==$key_1->id_mercancia){
+																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
+																$contadorImpuestos++;		
+														}
+													}
+														if($contadorImpuestos==0){
+															echo "No hay ningun impuesto en esta mercancia";
+														}
+														$contadorImpuestos=0;
+													?>
+													</td>
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
@@ -169,7 +194,20 @@
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
-													<td><?=$key->fecha_alta?></td>
+													<td>
+														<?
+													foreach ($imp_merc as $key_1) {
+														if($key->id==$key_1->id_mercancia){
+																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
+																$contadorImpuestos++;		
+														}
+													}
+														if($contadorImpuestos==0){
+															echo "No hay ningun impuesto en esta mercancia";
+														}
+														$contadorImpuestos=0;
+													?>
+													</td>
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
@@ -195,7 +233,20 @@
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
-													<td><?=$key->fecha_alta?></td>
+													<td>
+														<?
+													foreach ($imp_merc as $key_1) {
+														if($key->id==$key_1->id_mercancia){
+																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
+																$contadorImpuestos++;		
+														}
+													}
+														if($contadorImpuestos==0){
+															echo "No hay ningun impuesto en esta mercancia";
+														}
+														$contadorImpuestos=0;
+													?>
+													</td>
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
@@ -219,7 +270,20 @@
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
-													<td><?=$key->fecha_alta?></td>
+													<td>
+														<?
+													foreach ($imp_merc as $key_1) {
+														if($key->id==$key_1->id_mercancia){
+																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
+																$contadorImpuestos++;		
+														}
+													}
+														if($contadorImpuestos==0){
+															echo "No hay ningun impuesto en esta mercancia";
+														}
+														$contadorImpuestos=0;
+													?>
+													</td>
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
