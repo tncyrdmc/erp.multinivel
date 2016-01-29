@@ -23,7 +23,6 @@ class Cemail extends CI_Model
 	
 	function send_email($type, $email, $data)
 	{
-		$type--;
 		$message = $this->setMessage($type,$data);
 		$tema = $message['tema'];
 		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
@@ -58,7 +57,8 @@ class Cemail extends CI_Model
 	
 	function get_cuerpo_mensaje($type,$data){		
 		
-		
+		$type--;
+		 
 		$asunto = $this->Asuntos($type);
 		$contenido = $this->Contenidos($type,$data);
 		$sumario = $this->Sumarios($type,$data);
