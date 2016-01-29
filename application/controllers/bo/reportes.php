@@ -18,6 +18,7 @@ class reportes extends CI_Controller
 		$this->load->model('general');
 		$this->load->model('modelo_cobros');
 		$this->load->model('bo/modelo_historial_consignacion');
+		$this->load->model('model_excel');
 		
 	}
 
@@ -373,11 +374,11 @@ class reportes extends CI_Controller
 			<td>".$venta->username."</td>
 			<td>".$venta->name."</td>
 			<td>".$venta->lastname."</td>		
-			<td> $	".($venta->costo-$venta->impuestos)."</td>
-			<td> $	".$venta->impuestos."</td>
-			<td> $	".$venta->costo."</td>
-			<td> $	".$venta->comision."</td>
-			<td> $	".(($venta->costo)-($venta->impuestos+$venta->comision))."</td>
+			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>
+			<td> $	".number_format($venta->impuestos, 2, '.', '')."</td>
+			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
+			<td> $	".number_format($venta->comision, 2, '.', '')."</td>
+			<td> $	".number_format((($venta->costo)-($venta->impuestos+$venta->comision)), 2, '.', '')."</td>
 			</tr>";
 			
 			$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
@@ -387,7 +388,7 @@ class reportes extends CI_Controller
 			$total_neto = $total_neto + (($venta->costo)-($venta->impuestos+$venta->comision));
 			
 				}
-	
+
 				echo "<tr>
 			<td class='sorting_1'></td>
 			<td></td>
@@ -405,11 +406,11 @@ class reportes extends CI_Controller
 			<td></td>
 			<td></td>
 			<td></td>
-			<td><b> $	".$total_costo."</b></td>
-			<td><b> $	".$total_impuesto."</b></td>
-			<td><b> $	".$total_venta."</b></td>
-			<td><b> $	".$total_comision."</b></td>
-			<td><b> $	".$total_neto."</b></td>
+			<td><b> $	".number_format($total_costo, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_impuesto, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_venta, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_comision, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_neto, 2, '.', '')."</b></td>
 			</tr>";
 		}
 			echo "</tbody>
@@ -468,7 +469,7 @@ class reportes extends CI_Controller
 				
 				$subtitulos	=array("ID Venta","Username","Nombre","Apellido","Subtotal","Impuestos","Total Venta","Total Comisiones","Total Neto");
 				
-				$this->setTemplateExcelReport ("Ventas Oficina Virtual",$subtitulos,$contador_filas);
+				$this->model_excel->setTemplateExcelReport ("Ventas Oficina Virtual",$subtitulos,$contador_filas,$this->excel);
 				
 				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+10), "TOTALES");
 				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+10), "");
@@ -586,36 +587,7 @@ class reportes extends CI_Controller
 			*/
 			
 	}
-	/**
-	 * 
-	 */private function setTemplateExcelReport($titulo,$subtitulos,$filas) {
 
-	 	$letters = array_combine(range(1,26), range('A', 'Z'));
-
-	
-	 	$filasConfiguracion='A5:'.$letters[count($subtitulos)].'6';
-
-		$this->excel->getActiveSheet()->mergeCells($filasConfiguracion);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0,(5),$titulo);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getFont()->setSize(16);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00B4DC');
-
-		
-		$this->excel->getActiveSheet()->getStyle('A7:I7')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('F4F2F3');
-		$this->excel->getActiveSheet()->getStyle('A7:I7')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A7:I7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		
-		$i=0;
-		foreach ($subtitulos as $subtitulo){
-		
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($i,(7),$subtitulo);
-			$i++;
-		}
-
-		$this->excel->getActiveSheet()->getStyle('A7:I'.($filas+10))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-	}
 
 	
 	function reporte_proveedores()

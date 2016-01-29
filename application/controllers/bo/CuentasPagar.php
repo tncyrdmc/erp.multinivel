@@ -30,6 +30,7 @@ class CuentasPagar extends CI_Controller
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('ov/modelo_compras');
 		$this->load->model('modelo_cobros');
+		$this->load->model('model_excel');
 	}
 
 	function index(){
@@ -103,7 +104,6 @@ class CuentasPagar extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		
 		$style=$this->modelo_dashboard->get_style(1);
-		$años = $this->modelo_cobros->añosCobros();
 	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -134,13 +134,20 @@ class CuentasPagar extends CI_Controller
 		
 		$cobros = $this->modelo_cobros->ConsultarCobrosFecha($fecha_inicio, $fecha_fin);
 		
-		$this->load->library('excel');
-		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-cobros.xls");
+		if(!$cobros){
+			redirect('/bo/CuentasPagar/PorPagar');
+		}
+			
 		
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		
+		$contador_filas = 0;
 		$total = 0;
 		$ultima_fila = 0;
 		for($i = 0;$i < sizeof($cobros);$i++)
 		{
+			$contador_filas = $contador_filas+1;
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->fecha);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->usuario);
@@ -156,20 +163,29 @@ class CuentasPagar extends CI_Controller
 			$this->enviar_email($usuario[0]->email, $usuario);
 		}
 		
+		$subtitulos	=array("ID Solicitud","Fecha","Usuario","Banco","Cuenta","Titular","CLABE","Metodo","Valor","Estado");
+		
+		$this->model_excel->setTemplateExcelReport ("Cuentas Por Pagar",$subtitulos,$contador_filas,$this->excel);
+		
+		
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($ultima_fila+1), "Total");
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+1), $total);
 		
-		$filename='CuentasPorPagar de '.$fecha_inicio.' al '.$fecha_fin.'.xls'; //save our workbook as this file name
-		header('Content-Type: application/vnd.ms-excel'); //mime type
+		$date = new \Datetime('now');
+
+		$filename='CuentasPorPagar_de_'.$fecha_inicio.'_al_'.$fecha_fin.'_'.$date->format('Y-m-d H:i:s').'.xls'; //save our workbook as this file name
+	/*	header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0'); //no cache
-		 
+		 */
 		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
 		//if you want to save it as .XLSX Excel 2007 format
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save(getcwd()."/media/reportes/".$filename);
-		$objWriter->save('php://output');
+	//	$objWriter->save('php://output');
+
+		redirect('/bo/CuentasPagar/Archivos');
 	}
 	
 	function Email(){

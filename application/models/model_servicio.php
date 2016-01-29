@@ -23,16 +23,13 @@ class Model_servicio extends CI_Model{
 	function listar_todos_por_venta_y_fecha($inicio, $fin)
 	{
 		
-		$q=$this->db->query('select V.id_venta,U.username,UP.nombre as name,UP.apellido as lastname,CVM.costo_total as costo
-							,CVM.impuesto_unidad*CVM.cantidad as impuestos,sum(C.valor) as comision
-							from venta V, cross_venta_mercancia CVM, mercancia M, comision C ,users U , user_profiles UP
+		$q=$this->db->query('select V.id_venta,U.username,UP.nombre as name,UP.apellido as lastname,sum(CVM.costo_total) as costo
+							,sum(CVM.impuesto_unidad*CVM.cantidad) as impuestos,(select sum(valor) from comision where id_venta=V.id_venta)as comision
+							from venta V, cross_venta_mercancia CVM, mercancia M,users U , user_profiles UP
 							where M.id = CVM.id_mercancia 
 							and CVM.id_venta = V.id_venta
-							and C.id_venta = V.id_venta 
 							and UP.user_id = U.id 
 							and V.id_user = U.id 
-							and C.id_venta = V.id_venta 
-							and (C.id_afiliado != 0) and (C.id_afiliado != 1) 
 							and(V.id_estatus="ACT")
 							and DATE(V.fecha) BETWEEN "'.$inicio.'" AND "'.$fin.'"
 							group by (V.id_venta)

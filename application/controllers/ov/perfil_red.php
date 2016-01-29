@@ -485,10 +485,10 @@ class perfil_red extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if($this->general->isAValidUser($id,"OV") == false)
+	/*	if($this->general->isAValidUser($id,"OV") == false)
 		{
 			redirect('/ov/compras/carrito');
-		}
+		}*/
 		
 		$id = $this->tank_auth->get_user_id();
 		$style = $this->general->get_style($id);
