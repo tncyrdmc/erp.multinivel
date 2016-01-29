@@ -12,6 +12,7 @@ class Cemail extends CI_Model
 		$this->load->library('form_validation');
 		$this->load->library('security');
 		$this->load->library('tank_auth');
+		$this->load->library('config');
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
 		$this->load->model('bo/model_admin');
@@ -101,13 +102,14 @@ class Cemail extends CI_Model
 	}
 	
 	function Contenidos ($type,$data){
+		$uri = $this->config->item('base_url', 'config');		
 		
 		$sitios = array(
-				site_url(''),
-				site_url('/auth/login/'),
-				site_url('/auth/activate/'.$data['user_id'].'/'.$data['new_email_key']),
-				site_url('/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key']),
-				site_url('/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'])
+				$uri,
+				$uri.'auth/login/',
+				$uri.($data['user_id']&&$data['new_email_key']) ? 'auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : '',
+				$uri.($data['user_id']&&$data['new_email_key']) ? 'auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : '',
+				$uri.($data['user_id']&&$data['new_pass_key']) ? 'auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''
 		);
 		
 		$validar = array (
