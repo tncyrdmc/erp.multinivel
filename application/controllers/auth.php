@@ -248,7 +248,6 @@ class Auth extends CI_Controller
 
 						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
 							
-
 							//$this->_send_email('welcome', $data['email'], $data);
 							$this->cemail->send_email(1, $data['email'], $data);
 						}
