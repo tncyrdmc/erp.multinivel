@@ -249,6 +249,14 @@ class admin extends CI_Controller
 		? "Se ha actualizado los datos de la Empresa Multinivel" 
 		: "No se ha podido actualizar los datos de la Empresa Multinivel";
 	}
+	
+	function entorno_empresa()
+	{
+		$empresa = $this->model_admin->entorno_empresa();
+		echo $empresa
+		? "Se ha actualizado los datos de configuración"
+		: "No se ha podido actualizar los datos de configuración";
+	}
 
 	function new_proveedor()
 	{
@@ -347,6 +355,7 @@ class admin extends CI_Controller
 		$img       		= $this->model_admin->get_img_merc();
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
 		$impuestos_merc	= $this->model_admin->get_impuestos_mercancia($_POST['id']);
+		
 		
 		$this->template->set("grupos",$grupos);
 		echo '<div class="row">

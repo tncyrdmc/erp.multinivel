@@ -8,9 +8,14 @@
 			
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-							<a href="/bo/configuracion">Configuracion</a>>Empresa 
+							<a href="/bo/configuracion">Configuracion</a>
 							</span>
-						
+							<span>>
+							<a href="/bo/configuracion/empresa">Empresa</a>
+							</span>
+							<span>>
+							Actualizar Banner 
+							</span>
 							</h1>
 		</div>
 	</div>

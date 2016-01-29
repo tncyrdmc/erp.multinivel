@@ -2255,8 +2255,9 @@ class comercial extends CI_Controller
 		$combinados		 = $this->model_admin->get_combinados();
 		$paquete		 = $this->model_admin->get_paquetes();
 		$membresias      = $this->model_admin->get_membresias();
-		
-		
+		$imp_merc=$this->model_admin->impuestos_por_mercancia();
+
+		$this->template->set("imp_merc",$imp_merc);
 		$this->template->set("pais",$pais);
 		$this->template->set("productos",$productos);
 		$this->template->set("usuario",$usuario);
