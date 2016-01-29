@@ -14,17 +14,17 @@ class Cemail extends CI_Model
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
-		$this->load->model('model_admin');
+		$this->load->model('bo/model_admin');
 		$this->load->model('model_emails_departamentos');
 		
 		$this->load->library('email');		
 		
 	}
 	
-	function send_email($type, $email, &$data)
+	function send_email($type, $email, $data)
 	{
-		$tema = $this->model_emails_departamentos->get_tema($type);
 		$message = $this->setMessage($type,$data);
+		$tema = $message['tema'];
 		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
 		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
 		$this->email->to($email);

@@ -1,4 +1,3 @@
-
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 //header('Content-Type: text/html; charset-utf-8');
 //header('Content-Type: text/html; charset=ISO-8859-1');
