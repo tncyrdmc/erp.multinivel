@@ -81,7 +81,7 @@ table.social div[class="column"]{width:auto !important}}
 						<h3><?=$asunto ? $asunto : "asunto"?></h3>
 						<?php echo $sumario ? '<p class="lead">'.$sumario.'</p>' : '<p class="lead">sumario</p>'?>
 						<div class="col-md-12"><?=$contenido ? $contenido : "contenido"?></div>
-										
+						<br /><br />				
 												
 						<!-- social & contact -->
 						<table class="social" width="100%">
