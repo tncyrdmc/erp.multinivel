@@ -8,6 +8,18 @@ class Model_emails_departamentos extends CI_Model{
 
 	}
 	
+	function get_departamento_email($id){
+		$q = $this->db->query("select e.email from emails_departamentos e, mails d where e.id = d.id_emails and d.id = ".$id);
+		$dpto = $q->result();
+		return $dpto[0]->email;
+	}
+	
+	function get_departamento_email($id){
+		$q = $this->db->query("select nombre from mails where id = ".$id);
+		$dpto = $q->result();
+		return $dpto[0]->nombre;
+	}
+	
 	function buscar(){
 		$q = $this->db->query("select * from emails_departamentos");
 		return $q->result();
