@@ -101,15 +101,14 @@ class Cemail extends CI_Model
 		return $q[$type];
 	}
 	
-	function Contenidos ($type,$data){
-		$uri = $this->config->item('base_url', 'config');		
+	function Contenidos ($type,$data){		
 		
 		$sitios = array(
-				$uri,
-				$uri.'auth/login/',
-				$uri.($data['user_id']&&$data['new_email_key']) ? 'auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : '',
-				$uri.($data['user_id']&&$data['new_email_key']) ? 'auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : '',
-				$uri.($data['user_id']&&$data['new_pass_key']) ? 'auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''
+				site_url(''),
+				site_url('/auth/login/'),
+				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
+				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
+				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : '')
 		);
 		
 		$validar = array (
