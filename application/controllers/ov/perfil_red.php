@@ -485,18 +485,9 @@ class perfil_red extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-	
-		 if(!$this->general->isActived($id)){
-		
-		 $this->template->build('/ov/compras/carrito');
-		 return true;
-		 }
-		
-		
-	/*	if($this->general->isAValidUser($id,"OV") == false)
-		{
-			redirect('/ov/compras/carrito');
-		}*/
+		 if($this->general->isActived($id)!=0){
+		 	redirect('/ov/compras/carrito');
+		 } 
 		
 		$id = $this->tank_auth->get_user_id();
 		$style = $this->general->get_style($id);
@@ -548,6 +539,12 @@ class perfil_red extends CI_Controller
 		}
 	
 		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
+		
+	
 		$style           = $this->general->get_style($id);
 
 		$this->template->set("id",$id);
@@ -566,8 +563,14 @@ class perfil_red extends CI_Controller
 		redirect('/auth');
 		}
 		
-		$id_red          = $_GET['id'];
 		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
+		
+		$id_red          = $_GET['id'];
+		
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
@@ -680,9 +683,15 @@ class perfil_red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 	
 		$id_red          = $_GET['id'];
-		$id              = $this->tank_auth->get_user_id();
+		
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();

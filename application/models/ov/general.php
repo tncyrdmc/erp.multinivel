@@ -75,29 +75,64 @@ class general extends CI_Model
 	
 	function isActived($id){
 	
-		$membresia=1;
-		$paqueteDeInscripcion=2;
-		$item=3;
-		
-		$this->compraObligatoria ($item);
-		$this->hayTipoDeMercancia ($item);
-		var_dump();exit();
+		return $this->validarMembresias($id);
 
-
-
-		/*	if($id==2)
-		 return true;
-		
-		 $q=$this->db->query('SELECT DATEDIFF(current_date,fecha)as dias FROM venta where id_user='.$id.';');
-		 $dias=$q->result();
-		
-		 foreach ($dias as $dia){
-		 if($dia->dias<=183)
-		 	return true;
-		 	}
-		 		
-		 	return false;*/
 	}
+	
+	private function validarMembresias($id){
+		$membresia=1;
+		
+		if($this->compraObligatoria ($membresia)&&$this->hayTipoDeMercancia ($membresia)){
+			if($this->compraDeUsuarioEstaActiva($membresia,$id)){
+				// validar Paquetes
+				return $this->validarPaqueteInscripcion($id);
+			}
+			else{
+				//Mostrar Membresias
+				return 1;
+			}
+		}else {
+			//validarPaquetes
+			return $this->validarPaqueteInscripcion($id);
+		}
+	}
+	
+	private function validarPaqueteInscripcion($id){
+		$paqueteDeInscripcion=2;
+	
+		if($this->compraObligatoria ($paqueteDeInscripcion)&&$this->hayTipoDeMercancia ($paqueteDeInscripcion)){
+			if($this->compraDeUsuarioEstaActiva($paqueteDeInscripcion,$id)){
+					// validar Items
+				return $this->validarItems($id);
+			}
+			else{
+				//Mostrar Paquetes
+				return 2;
+			}
+		}else {
+			// validar Items
+			return $this->validarItems($id);
+		}
+	}
+	
+	private function validarItems($id){
+		$item=3;
+	
+		if($this->compraObligatoria ($item)&&$this->hayTipoDeMercancia ($item)){
+			if($this->compraDeUsuarioEstaActiva($item,$id)){
+				// Acceso
+				return 0;
+			}
+			else{
+				//Mostrar Item
+				return 3;
+			}
+		}else {
+			// Acceso
+			return 0;
+		}
+	}
+	
 	
 	private function compraObligatoria($id_tipo_mercancia) {
 	 
@@ -141,6 +176,47 @@ class general extends CI_Model
 	
 	}
 
+	
+	private function compraDeUsuarioEstaActiva($id_tipo_mercancia,$id) {
+	
+		if($id_tipo_mercancia == 1){
+			$q = $this->db->query("SELECT v.id_venta,v.fecha,me.caducidad,DATEDIFF(now(),v.fecha)as dias_activacion FROM venta v,cross_venta_mercancia cvm,mercancia m,membresia me
+									where v.id_estatus='ACT'
+									and v.id_venta=cvm.id_venta
+									and m.id=cvm.id_mercancia
+									and m.id_tipo_mercancia=5
+									and v.id_user='".$id."'
+									and m.sku=me.id
+									and DATEDIFF(now(),v.fecha)<=me.caducidad");
+		}elseif ($id_tipo_mercancia == 2){
+			$q = $this->db->query("SELECT v.id_venta,v.fecha,pa.caducidad,DATEDIFF(now(),v.fecha)as dias_activacion FROM venta v,cross_venta_mercancia cvm,mercancia m,paquete_inscripcion pa
+									where v.id_estatus='ACT'
+									and v.id_venta=cvm.id_venta
+									and m.id=cvm.id_mercancia
+									and m.id_tipo_mercancia=4
+									and v.id_user='".$id."'
+									and m.sku=pa.id_paquete
+									and DATEDIFF(now(),v.fecha)<=pa.caducidad");
+		}elseif($id_tipo_mercancia == 3) {
+			$q = $this->db->query("SELECT v.id_venta,v.fecha FROM venta v,cross_venta_mercancia cvm,mercancia m
+									where v.id_estatus='ACT'
+									and v.id_venta=cvm.id_venta
+									and m.id=cvm.id_mercancia
+									and (m.id_tipo_mercancia!=4)
+									and (m.id_tipo_mercancia!=5)
+									and v.id_user='".$id."'");
+		}else{
+			return false;
+		}
+	
+		$activacion=$q->result();
+	
+		if($activacion)
+			return true;
+	
+		return false;
+	
+	}
 	
 	function get_username($id)
 	{

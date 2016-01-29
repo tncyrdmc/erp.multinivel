@@ -1145,18 +1145,20 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function ObtenerCategoriaMercancia($id_mercancia){
 		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
 		$mercancia = $q->result();
+		
 		if($mercancia[0]->id_tipo_mercancia == 1){
 			$q = $this->db->query("SELECT id_grupo FROM producto where id =".$mercancia[0]->sku);
 		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
-			$q = $this->db->query("SELECT id_grupo FROM servicio where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 3) {
-			$q = $this->db->query("SELECT id_grupo FROM combinado where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red as id_grupo FROM combinado where id=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 4) {
-			$q = $this->db->query("SELECT id_grupo FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red as id_grupo FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 5) {
-			$q = $this->db->query("SELECT id_grupo FROM membresia where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red as id_grupo FROM membresia where id=".$mercancia[0]->sku);
 		}
 		$categoria = $q->result();
+	
 		$red=$this->ConsultarIdRedMercancia($categoria[0]->id_grupo);
 		return $red; 
 	}

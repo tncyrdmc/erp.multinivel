@@ -97,6 +97,7 @@ class cuentasporcobrar extends compras{
 		foreach ($mercancias as $mercancia){
 			
 			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
+
 			$costoVenta=$mercancia->costo_unidad_total;
 
 			$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
