@@ -21,7 +21,7 @@ class Cemail extends CI_Model
 		
 	}
 	
-	function _send_email($type, $email, &$data)
+	function send_email($type, $email, &$data)
 	{
 		$tema = $this->model_emails_departamentos->get_tema($type);
 		$message = $this->setMessage($type,$data);

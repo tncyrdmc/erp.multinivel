@@ -305,28 +305,55 @@ function eliminar_afiliado(id){
 
 		$.ajax({
 			type: "POST",
-			url: "/bo/comercial/kill_afiliado",
-			data: {
-				id:id
-			},
+			url: "/auth/show_dialog",
+			data: {message: '¿ Esta seguro que desea Eliminar el Afiliado ?'},
 		})
 		.done(function( msg )
 		{
-			
 			bootbox.dialog({
-			  message: msg,
-			  title: "Eliminar afiliado",
-			  buttons: {
-			    success: {
-			      label: "Ok",
-			      className: "btn-success",
-			      callback: function() {
-			    	  location.href="/bo/comercial/red_tabla";
-			      }
-			    }
-			  }
+			message: msg,
+			title: 'Eliminar Afiliado',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							iniciarSpinner();
+							$.ajax({
+								type: "POST",
+								url: "/bo/comercial/kill_afiliado",
+								data: {id: id}
+							})
+							.done(function( msg )
+							{
+								bootbox.dialog({
+								message: msg,
+								title: 'Eliminar Afiliado',
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "btn-success",
+									callback: function() {
+											location.href="/bo/comercial/red_tabla";
+											FinalizarSpinner();
+											}
+										}
+									}
+								})//fin done ajax
+							});//Fin callback bootbox
+
+						}
+					},
+					danger: {
+						label: "Cancelar!",
+						className: "btn-danger",
+						callback: function() {
+
+							}
+					}
+				}
 			})
-		});//Fin callback bootbox
+		});
 		
 	}
 	

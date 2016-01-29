@@ -12,6 +12,7 @@ class Auth extends CI_Controller
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
+		$this->load->model('cemail');
 	}
 
 	function index()
@@ -236,8 +237,8 @@ class Auth extends CI_Controller
 						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 						$id_nuevo_usr=$this->db->query("select id from users order by id desc limit 1");
 						$data['id']=$id_nuevo_usr[0]->id;
-						$this->send_email_activate( $data['email'], $data);
-
+						//$this->send_email_activate( $data['email'], $data);
+						$this->cemail->send_email(2, $data['email'], $data);
 						unset($data['password']); // Clear password (just for any case)
 
 						$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
@@ -246,7 +247,8 @@ class Auth extends CI_Controller
 
 						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
 
-							$this->_send_email('welcome', $data['email'], $data);
+							//$this->_send_email('welcome', $data['email'], $data);
+							$this->cemail->send_email(1, $data['email'], $data);
 						}
 						unset($data['password']); // Clear password (just for any case)
 
