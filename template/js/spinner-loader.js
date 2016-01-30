@@ -17,8 +17,8 @@ function setiniciarSpinner(){
 	var opts = {
 			  lines: 12 // The number of lines to draw
 			, length: 5 // The length of each line
-			, width: 5 // The line thickness
-			, radius: 10 // The radius of the inner circle
+			, width: 20 // The line thickness
+			, radius: 40 // The radius of the inner circle
 			, scale: 1 // Scales overall size of the spinner
 			, corners: 1 // Corner roundness (0..1)
 			, color: '#00b4dc' // #rgb or #rrggbb or array of colors
