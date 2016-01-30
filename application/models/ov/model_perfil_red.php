@@ -352,11 +352,13 @@ class model_perfil_red extends CI_Model
 	
 	function get_tabla()
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus 
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
 
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus order by (U.id) limit 1000");
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 order by (U.id) limit 1000");
 		return  $q->result();
 		}
 		

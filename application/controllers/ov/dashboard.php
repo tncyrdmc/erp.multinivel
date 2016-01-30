@@ -16,6 +16,7 @@ class dashboard extends CI_Controller
 		$this->load->model('ov/modelo_compras');
 		$this->load->model('modelo_premios');
 		$this->load->model('model_tipo_red');
+		$this->load->model('bo/model_admin');
 	}
 
 	private $afiliados = array();
@@ -132,6 +133,7 @@ class dashboard extends CI_Controller
 	    $pais=$this->modelo_dashboard->get_user_country_code($id);
 	    
 	    $cuentasPorPagar=$this->modelo_dashboard->get_cuentas_por_pagar_banco($id);
+	    $notifies = $this->model_admin->get_notify_activos();
 
 		$name_sponsor=$this->general->get_username($id_sponsor[0]->id_usuario);
 
@@ -182,7 +184,8 @@ class dashboard extends CI_Controller
 		$this->template->set("name_sponsor",$name_sponsor);
 		$this->template->set("ultima",$ultima);
 		$this->template->set("cuentasPorPagar",$cuentasPorPagar);
-
+		$this->template->set("notifies",$notifies);
+		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
