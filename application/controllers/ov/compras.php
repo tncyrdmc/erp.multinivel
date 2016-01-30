@@ -110,8 +110,13 @@ function index()
 		
 		$id = $this->tank_auth->get_user_id();
 		
-		$this->modelo_compras->VerificarCompraPaquete($id);
 		
+		$validacionCompraMercancia=$this->general->isActived($id);
+		if($validacionCompraMercancia>0){
+			$this->carritoTipoMercancia($validacionCompraMercancia);
+			return true;
+		}
+			
 		
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
@@ -130,6 +135,48 @@ function index()
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
+	
+	function carritoTipoMercancia($id_tipo_mercancia)
+	{
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		if(!isset($id_tipo_mercancia)){
+			redirect('/ov/compras/carrito');
+		}
+	
+		$mostrarMercanciaTipo=0;
+		
+		if($id_tipo_mercancia==1)
+			$mostrarMercanciaTipo=1;
+		else if($id_tipo_mercancia==2)
+			$mostrarMercanciaTipo=2;
+		else if($id_tipo_mercancia==3)
+			$mostrarMercanciaTipo=3;
+
+
+		$id = $this->tank_auth->get_user_id();
+	
+	
+		$usuario = $this->general->get_username($id);
+
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("mostrarMercancia",$mostrarMercanciaTipo);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+	
+	
+		$data=$this->get_content_carrito ();
+	
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/carrito',$data);
+	}
+	
 	/**
 	 * @param detalles
 	 */private function get_content_carrito() {
