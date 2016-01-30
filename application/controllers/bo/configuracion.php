@@ -235,6 +235,7 @@ class configuracion extends CI_Controller
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->modificar_banner($data["upload_data"]);
 			redirect('/bo/configuracion/banner');
+			//$this->template->build('website/bo/configuracion/vista_previa');
 		}
 	}
 	
