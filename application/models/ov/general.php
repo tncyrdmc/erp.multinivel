@@ -75,6 +75,9 @@ class general extends CI_Model
 	
 	function isActived($id){
 	
+		if($id==2)
+			return 0;
+		
 		return $this->validarMembresias($id);
 
 	}

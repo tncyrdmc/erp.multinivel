@@ -66,7 +66,10 @@ class general extends CI_Model
 	}
 	function totalAfiliados()
 	{
-		$q=$this->db->query('SELECT count(*)as total FROM users;');
+		$q=$this->db->query('SELECT count(*)as total FROM users u , user_profiles up
+								where u.id=up.user_id 
+								and up.id_tipo_usuario=2
+								and u.id!=2;');
 		return $q->result();
 	}
 }
