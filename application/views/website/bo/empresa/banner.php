@@ -61,7 +61,7 @@
 					<!-- widget div-->
 					<div>
 					<div class="widget-body">
-						<form id="form_banner" method="post" action="/bo/configuracion/crear_banner" role="form" class="smart-form">
+						<form  class="smart-form" name="form_banner"  method="post" action="/bo/configuracion/crear_banner" enctype="multipart/form-data">
 						<fieldset>
 							<legend>Titulo del banner</legend>
 							<div class="row">
@@ -99,23 +99,24 @@
 												           	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="/media/Empresa/'.$img[0]->nombre_banner.'"></div>';
 												           }else{
 												           	echo "No hay imagen";
-												           }
-												                	
-												                
-												                
-												                
+												           }   
 												            ?>
 									
 										            </section>
 													
-													<section id="imagenes" class="col col-6">
-														<label class="label">Imágen</label>
+													<section id="imagenes" class="col col-12">
+														<label class="label"> Imágen </label>
 														<div class="input input-file">
-															<span class="button">
-																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" value="<?=$img[0]->nombre_banner?>"  multiple>Buscar</span><input value="<?=$img[0]->nombre_banner?>" id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
-															</div>
-															<small><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
-														</section>
+															<span class="button"> <input id="img" name="img[]"
+																onchange="this.parentNode.nextSibling.value = this.value"
+																type="file" multiple>Buscar
+															</span><input id="imagen_mr"
+																placeholder="Agregar alguna imágen" type="text">
+														</div>
+														<small><cite
+															title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite>
+														</small>
+													</section>
 							</div>
 						</fieldset>
 						<fieldset>
@@ -153,96 +154,21 @@
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-	$("#mymarkdown").markdown({
-		autofocus:false,
-		savable:false
-	})
 
 
-	/* BASIC ;*/
-	var responsiveHelper_dt_basic = undefined;
-	var responsiveHelper_datatable_fixed_column = undefined;
-	var responsiveHelper_datatable_col_reorder = undefined;
-	var responsiveHelper_datatable_tabletools = undefined;
-
-	var breakpointDefinition = {
-		tablet : 1024,
-		phone : 480
-	};
-
-	$('#dt_basic').dataTable({
-		"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-		"t"+
-		"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-		"autoWidth" : true,
-		"preDrawCallback" : function() {
-				// Initialize the responsive datatables helper once.
-				if (!responsiveHelper_dt_basic) {
-					responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-				}
-			},
-			"rowCallback" : function(nRow) {
-				responsiveHelper_dt_basic.createExpandIcon(nRow);
-			},
-			"drawCallback" : function(oSettings) {
-				responsiveHelper_dt_basic.respond();
-			}
-		});
-
-	/* END BASIC */
-
-	/* BASIC ;*/
-	var responsiveHelper_dt_basic = undefined;
-	var responsiveHelper_datatable_fixed_column = undefined;
-	var responsiveHelper_datatable_col_reorder = undefined;
-	var responsiveHelper_datatable_tabletools = undefined;
-
-	var breakpointDefinition = {
-		tablet : 1024,
-		phone : 480
-	};
-
-	$('#dt_basic_paquete').dataTable({
-		"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-		"t"+
-		"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-		"autoWidth" : true,
-		"preDrawCallback" : function() {
-				// Initialize the responsive datatables helper once.
-				if (!responsiveHelper_dt_basic) {
-					responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-				}
-			},
-			"rowCallback" : function(nRow) {
-				responsiveHelper_dt_basic.createExpandIcon(nRow);
-			},
-			"drawCallback" : function(oSettings) {
-				responsiveHelper_dt_basic.respond();
-			}
-		});
-
-	/* END BASIC */
-
-	pageSetUp();
-
-})
-
-$( "#form_banner" ).submit(function( event ) {
+/*$( "#form_banner" ).submit(function( event ) {
 	event.preventDefault();	
-	iniciarSpinner();
+	//iniciarSpinner();
 	enviar();
 });
 
 function enviar()
-{
-	
+{	
 
 				$.ajax({
 					type: "POST",
 					url: "/bo/configuracion/crear_banner",
-					data: $("#form_banner").serialize()
+					data: $("form_banner").serialize()
 				})
 				.done(function( msg )
 		{
@@ -255,13 +181,13 @@ function enviar()
 				className: "btn-success",
 				callback: function() {
 					location.href="/bo/configuracion/banner";
-					FinalizarSpinner();
+					//FinalizarSpinner();
 				}
 			}
 			}
-			});//fin done ajax
-	})
-}
+			})//fin done ajax
+	});
+}*/
 </script>
 
 
