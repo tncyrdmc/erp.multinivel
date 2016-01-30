@@ -222,6 +222,7 @@ class configuracion extends CI_Controller
 		$config['max_height']   	= '3112';
 	
 		//Cargamos la libreria con las configuraciones de arriba
+		
 		$this->load->library('upload', $config);
 
 				if (!$this->upload->do_multi_upload('img'))
