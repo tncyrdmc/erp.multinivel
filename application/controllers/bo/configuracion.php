@@ -205,14 +205,8 @@ class configuracion extends CI_Controller
 		$this->template->build('website/bo/empresa/banner');
 	}
 	function crear_banner(){
-				if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-		
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-		$id = $this->tank_auth->get_user_id();
+
+		unlink('/media/Empresa/');
 		$ruta="/media/Empresa/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
