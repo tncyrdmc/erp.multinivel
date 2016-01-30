@@ -19,6 +19,16 @@
 							</h1>
 		</div>
 	</div>
+		<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+	?>	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -45,107 +55,81 @@
 					<header>
 						<span class="widget-icon"> <i class="fa fa-bookmark"></i>
 						</span>
-						<h2>Datos de la Empresa Multinivel</h2>
+						<h2>Datos del banner</h2>
 					</header>
 
 					<!-- widget div-->
 					<div>
-						<form id="form_empresa" method="post" action="/bo/admin/empresa_multinivel" role="form" class="smart-form">
+					<div class="widget-body">
+						<form id="form_empresa" enctype="multipart/form-data" method="post" action="/bo/configuracion/crear_banner" role="form" class="smart-form">
+						<fieldset>
+							<legend>Titulo del banner</legend>
+							<div class="row">
+								<section class="col col-3">
+									 <label class="input">
+										 Titulo
+										 <input required  type="text" id="titulo" name="titulo" value"<?=$img[0]->titulo?>" required>
+									 </label>
+								 </section>
+								 </div>
+						</fieldset>
 					 <fieldset>
-						 <legend>Información de la Empresa</legend>
-						 <input type="hidden" value="<?=$empresa[0]->id_tributaria;?>" name="id" >
-						 <section id="usuario" class="col col-3">
-							 <label class="input">Identificacion Tributaria
-								 <input required type="text" name="id_tributaria" pattern="[0-9]+[-]{1}[0-9]{1}" placeholder="Empresa" value="<?=$empresa[0]->id_tributaria;?>" > 
-							 </label>
-						 </section>
-						 <section id="usuario" class="col col-3">
-							 <label class="input">Razon Social
-								 <input required type="text" name="nombre" value="<?=$empresa[0]->nombre;?>">
-							 </label> 
-						 </section>
-						 <section id="usuario" class="col col-3">
-							 <label class="input">Sítio web
-								 <input required type="url" name="web" value="<?=$empresa[0]->web;?>">
-							 </label>
-						 </section>
-						 <section class="col col-3">Regimen fiscal
-				             <label class="select">
-				                 <select class="custom-scroll" name="regimen">
-				                     <?foreach ($regimen as $key){?>
-				                     	<?php if($key->id_regimen == $empresa[0]->regimen){?>
-				                         <option selected value="<?=$key->id_regimen?>">
-				                             <?=$key->abreviatura." ".$key->descripcion?></option>
-				                              <?php }else{?>
-											<option value="<?=$key->id_regimen?>">
-				                             <?=$key->abreviatura." ".$key->descripcion?></option>
-				                         <?}}?>
-				                 </select>
-				             </label>
-				         </section>
+						 <legend>Descripción del banner</legend>
+						 <div class="row">
+						 													<section style="padding-left: 0px;" class="col col-6">Descripcion
+														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown" value"<?=$img[0]->descripcion?>" required></textarea>
+													</section>
+														<!--<section class="col col-3">
+														<label class="textarea"> 	
+														Descripción									
+															<textarea id="descripcion" name="descripcion" rows="3" class="custom-scroll" required></textarea> 
+														</label>
+														</section>-->
+														</div>
 					 </fieldset>
 					 <fieldset>
-						 <legend>Dirección de la empresa</legend>
+						 <legend>Imagen del banner</legend>
 							 <div id="dir" class="row">
-								 <section class="col col-3">
-									 País
-									 <label class="select">
-										 <select id="pais" required name="pais">
-										 <?foreach ($pais as $key){?>
-										 <?php if($key->Code == $empresa[0]->pais){?>
-											 <option selected value="<?=$key->Code?>">
-												 <?=$key->Name?>
-											 </option>
-											  <?php }else{?>
-											 <option value="<?=$key->Code?>">
-												 <?=$key->Name?>
-											 </option>
-										 <?} }?>
-										 </select>
-									 </label>
-								 </section>
-								 <section class="col col-3">
-									 <label class="input">
-										 Código postal
-										 <input required  type="text" id="postal" name="postal" value="<?=$empresa[0]->postal;?>">
-									 </label>
-								 </section>
-								 <section class="col col-3">
-									 <label class="input">
-										 Dirección domicilio
-										 <input required type="text" name="direccion" value="<?=$empresa[0]->direccion;?>">
-									 </label>
-								</section>
-								<section class="col col-3">
-									<label class="input">
-										Telefono Fijo
-										<input required type="text" name="fijo" value="<?=$empresa[0]->fijo;?>">
-									</label>'
-								</section>
-								<section class="col col-3">
-									<label class="input">
-										Telefono Movil
-										<input required type="text" name="movil" value="<?=$empresa[0]->movil;?>">
-									</label>
-								</section>
-								<section id="colonia" class="col col-3">
-									<label class="input">
-										Ciudad
-										<input type="text" name="ciudad" value="<?=$empresa[0]->ciudad;?>">
-									</label>
-								</section>
-								<section id="municipio" class="col col-3">
-									<label class="input">
-										Provincia
-										<input type="text" name="provincia" value="<?=$empresa[0]->provincia;?>">
-									</label>
-								</section>
+																					<section id="imagenes2" class="col col-12">
+											        	<label class="label">
+											        		Imágen actual
+											        	</label>
+															<?
+												            if($img){
+												           	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="/media/Empresa/'.$img[0]->nombre_banner.'"></div>';
+												           }else{
+												           	echo "No hay imagen";
+												           }
+												                	
+												                
+												                
+												                
+												            ?>
+									
+										            </section>
+													
+													<section id="imagenes" class="col col-6">
+														<label class="label">Imágen</label>
+														<div class="input input-file">
+															<span class="button">
+																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
+															</div>
+															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
+														</section>
 							</div>
+						</fieldset>
+						<fieldset>
+						<legend>Vista previa del banner</legend>
+							<div class="row">
+								
+							</div>
+
 						</fieldset>
 						<footer>
 <button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
 							</footer>
 				</form>
+					</div>
 					</div>
 					<!-- end widget div -->
 				</div>
@@ -162,13 +146,96 @@
 		<!-- END ROW -->
 	</section>
 </div>
-
+											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+											<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+											<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+											<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+											<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+											<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+											<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+											<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#mymarkdown").markdown({
+		autofocus:false,
+		savable:false
+	})
 
-$( "#form_empresa" ).submit(function( event ) {
+
+	/* BASIC ;*/
+	var responsiveHelper_dt_basic = undefined;
+	var responsiveHelper_datatable_fixed_column = undefined;
+	var responsiveHelper_datatable_col_reorder = undefined;
+	var responsiveHelper_datatable_tabletools = undefined;
+
+	var breakpointDefinition = {
+		tablet : 1024,
+		phone : 480
+	};
+
+	$('#dt_basic').dataTable({
+		"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+		"t"+
+		"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+		"autoWidth" : true,
+		"preDrawCallback" : function() {
+				// Initialize the responsive datatables helper once.
+				if (!responsiveHelper_dt_basic) {
+					responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+				}
+			},
+			"rowCallback" : function(nRow) {
+				responsiveHelper_dt_basic.createExpandIcon(nRow);
+			},
+			"drawCallback" : function(oSettings) {
+				responsiveHelper_dt_basic.respond();
+			}
+		});
+
+	/* END BASIC */
+
+	/* BASIC ;*/
+	var responsiveHelper_dt_basic = undefined;
+	var responsiveHelper_datatable_fixed_column = undefined;
+	var responsiveHelper_datatable_col_reorder = undefined;
+	var responsiveHelper_datatable_tabletools = undefined;
+
+	var breakpointDefinition = {
+		tablet : 1024,
+		phone : 480
+	};
+
+	$('#dt_basic_paquete').dataTable({
+		"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+		"t"+
+		"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+		"autoWidth" : true,
+		"preDrawCallback" : function() {
+				// Initialize the responsive datatables helper once.
+				if (!responsiveHelper_dt_basic) {
+					responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+				}
+			},
+			"rowCallback" : function(nRow) {
+				responsiveHelper_dt_basic.createExpandIcon(nRow);
+			},
+			"drawCallback" : function(oSettings) {
+				responsiveHelper_dt_basic.respond();
+			}
+		});
+
+	/* END BASIC */
+
+	pageSetUp();
+
+})
+
+/*$( "#form_empresa" ).submit(function( event ) {
 	event.preventDefault();	
 	iniciarSpinner();
 	enviar();
@@ -180,7 +247,7 @@ function enviar()
 
 					$.ajax({
 						type: "POST",
-						url: "/bo/admin/empresa_multinivel",
+						url: "/bo/configuracion/crear_banner",
 						data: $("#form_empresa").serialize()
 					})
 					.done(function( msg )
@@ -193,7 +260,7 @@ function enviar()
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/configuracion/empresa";
+								location.href="/bo/configuracion/banner";
 								FinalizarSpinner();
 							}
 						}
@@ -201,7 +268,7 @@ function enviar()
 				})//fin done ajax
 
 					});//Fin callback bootbox
-}
+}*/
 
 
 </script>

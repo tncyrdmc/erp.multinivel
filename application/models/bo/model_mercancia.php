@@ -480,6 +480,8 @@ class model_mercancia extends CI_Model {
 			$this->db->insert ( "cross_merc_img", $dato_cross_img );
 		}
 	}
+
+
 	function img_merc_promo($id, $data) {
 		foreach ( $data as $key ) {
 			$explode = explode ( ".", $key ["file_name"] );

@@ -191,18 +191,51 @@ class configuracion extends CI_Controller
 		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
-	
-			
+		//$datos_banner=$this->model_admin->datos_banner();
+			$img = $this->model_admin->img_banner();
 		$this->template->set("style",$style);
 	
 		$empresa  = $this->model_admin->val_empresa_multinivel();
 		$this->template->set("empresa",$empresa);
-	
+		$this->template->set("img",$img);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/empresa/banner');
+	}
+	function crear_banner(){
+				if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$id = $this->tank_auth->get_user_id();
+		$ruta="/media/Empresa/";
+		//definimos la ruta para subir la imagen
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
+		$config['max_width']  		= '4096';
+		$config['max_height']   	= '3112';
+	
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+
+				if (!$this->upload->do_multi_upload('img'))
+		{
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el producto.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/configuracion/banner');
+		}
+		else
+		{
+			
+			$data = array('upload_data' => $this->upload->get_multi_upload_data());
+			$this->model_admin->modificar_banner($data["upload_data"]);
+			redirect('/bo/configuracion/banner');
+		}
 	}
 	
 	function entorno()

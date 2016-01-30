@@ -116,6 +116,27 @@ class model_admin extends CI_Model
 		}
 		return $imgs;
 	}
+		function modificar_banner($data){
+		$nombre_imagen="";
+			foreach ( $data as $key ) {
+			$nombre_imagen=$key ["file_name"];
+			}
+			$this->db->query('delete from banner where id=1');
+			$dato_banner= array(
+				"id"=>1,
+				"titulo"=>$_POST['titulo'],
+				"descripcion"=>$_POST['descripcion'],
+				"nombre_banner"=>$nombre_imagen
+				);
+			$this->db->insert("banner",$dato_banner);
+	}
+	function img_banner(){
+		$q2=$this->db->query("select * from banner where id=1");
+			return $q2->result();
+
+	}
+
+
 	function get_tipo_proveedor()
 	{
 		$q=$this->db->query("select * from cat_tipo_proveedor where estatus ='ACT'");
