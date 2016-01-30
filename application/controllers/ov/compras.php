@@ -24,6 +24,7 @@ class compras extends CI_Controller
 		$this->load->model('model_user_webs_personales');
 		$this->load->model('model_comprador');
 		$this->load->model('model_carrito_temporal');
+		$this->load->model('model_servicio');
 			
 		$this->load->model('ov/model_web_personal_reporte');
 	}
@@ -109,8 +110,13 @@ function index()
 		
 		$id = $this->tank_auth->get_user_id();
 		
-		$this->modelo_compras->VerificarCompraPaquete($id);
 		
+		$validacionCompraMercancia=$this->general->isActived($id);
+		if($validacionCompraMercancia>0){
+			$this->carritoTipoMercancia($validacionCompraMercancia);
+			return true;
+		}
+			
 		
 		$usuario = $this->general->get_username($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
@@ -129,6 +135,48 @@ function index()
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
+	
+	function carritoTipoMercancia($id_tipo_mercancia)
+	{
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		if(!isset($id_tipo_mercancia)){
+			redirect('/ov/compras/carrito');
+		}
+	
+		$mostrarMercanciaTipo=0;
+		
+		if($id_tipo_mercancia==1)
+			$mostrarMercanciaTipo=1;
+		else if($id_tipo_mercancia==2)
+			$mostrarMercanciaTipo=2;
+		else if($id_tipo_mercancia==3)
+			$mostrarMercanciaTipo=3;
+
+
+		$id = $this->tank_auth->get_user_id();
+	
+	
+		$usuario = $this->general->get_username($id);
+
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("mostrarMercancia",$mostrarMercanciaTipo);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+	
+	
+		$data=$this->get_content_carrito ();
+	
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/carrito',$data);
+	}
+	
 	/**
 	 * @param detalles
 	 */private function get_content_carrito() {
@@ -915,6 +963,83 @@ function index()
 		$inicio = $_POST['inicio'];
 		$fin = $_POST['fin'];
 		
+	/*	
+		$total_venta = 0;
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		$total_neto = 0;
+		
+		$id=$this->tank_auth->get_user_id();
+		$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha_por_red_usuario($inicio,$fin,$id);
+		
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Usuario</th>
+					<th data-class='expand'>ID Venta</th>
+					<th data-hide='phone,tablet'>Username</th>
+					<th data-hide='phone,tablet'>Nombre</th>
+					<th data-hide='phone,tablet'>Apellido</th>
+					<th data-hide='phone,tablet'>Subtotal</th>
+					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Total Venta</th>
+					<th data-hide='phone,tablet'>Total Comisiones</th>
+				</thead>
+				<tbody>";
+		
+		if ($inicio!=""){
+			foreach($ventas as $venta)
+			{
+				echo "<tr>
+			<td class='sorting_1'>".$venta->id_usuario."</td>
+			<td >".$venta->id_venta."</td>
+			<td>".$venta->username."</td>
+			<td>".$venta->name."</td>
+			<td>".$venta->lastname."</td>
+			<td> $	".($venta->costo-$venta->impuestos)."</td>
+			<td> $	".$venta->impuestos."</td>
+			<td> $	".$venta->costo."</td>
+			<td> $	".$venta->comision."</td>
+			</tr>";
+					
+				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
+				$total_impuesto = $total_impuesto + $venta->impuestos;
+				$total_venta = $total_venta  + $venta->costo;
+				$total_comision = $total_comision + $venta->comision;
+				$total_neto = $total_neto + (($venta->costo)-($venta->impuestos+$venta->comision));
+					
+			}
+		
+			echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+				
+			echo "<tr>
+			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b> $	".$total_costo."</b></td>
+			<td><b> $	".$total_impuesto."</b></td>
+			<td><b> $	".$total_venta."</b></td>
+			<td><b> $	".$total_comision."</b></td>
+			</tr>";
+		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+*/		
+		
 		$this->preOrden($id);
 		$fotos = $this->modelo_compras->traer_fotos();
 	
@@ -956,7 +1081,7 @@ function index()
 			if ($telefonos_usuario==""){
 				$telefonos_usuario = "El afiliado no tiene números inscritos.";
 			}
-			
+	/*		
 			$compras = 0;
 			$compras = $this->modelo_compras->traer_compras($afiliado->id_afiliado, $inicio, $fin);
 			
@@ -974,21 +1099,20 @@ function index()
 			if ($impuestos[0]->impuestos==NULL){
 				$impuestos_impresion = "$ 0.00";
 			}
-			
+			*/ 
 			echo "<tr>
 					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
 					<td><img src=".$foto." style='height: 10rem; width: 10rem;'></img></td>
 					<td>".$afiliado->nombre."</td>
 					<td>".$afiliado->email."</td>
 					<td>".$telefonos_usuario."</td>
-					<td>".$compras_impresion."</td>
+			
 				</tr>";
 		}
 	
 			
 		echo "</tbody>
 			</table><tr class='odd' role='row'>";
-	
 	
 	}
 	
@@ -1208,17 +1332,17 @@ function index()
 	function reporte_afiliados()
 	{
 		$id=$this->tank_auth->get_user_id();
-		$red=$this->modelo_compras->get_red($id);
-		$afiliados=$this->modelo_compras->reporte_afiliados($red[0]->id_red);
+		$afiliados=$this->modelo_compras->reporte_afiliados($id);
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th data-class='expand'>ID</th>
-					<th data-hide='phone,tablet'>Fecha de Registro</th>
+					<th data-hide='phone,tablet'>Red</th>
+					<th >Fecha de Registro</th>
 					<th >Usuario</th>
 					<th >Nombre</th>
 					<th >Apellido</th>
-					<th data-hide='phone,tablet'>Fecha de Nacimiento</th>
+					<th data-hide='phone,tablet'>Email</th>
 					<th data-hide='phone,tablet'>Sexo</th>
 					<th data-hide='phone,tablet'>Estado Civil</th>
 				</thead>
@@ -1226,12 +1350,13 @@ function index()
 		for($i=0;$i<sizeof($afiliados);$i++)
 		{
 		echo "<tr>
-		<td class='sorting_1'>".($i+1)."</td>
+		<td class='sorting_1'>".$afiliados[$i]->id."</td>
+		<td >".$afiliados[$i]->nombreRed."</td>
 		<td>".$afiliados[$i]->creacion."</td>
 		<td>".$afiliados[$i]->usuario."</td>
 		<td>".$afiliados[$i]->nombre."</td>
 		<td>".$afiliados[$i]->apellido."</td>
-		<td>".$afiliados[$i]->nacimiento."</td>
+		<td>".$afiliados[$i]->email."</td>
 		<td>".$afiliados[$i]->sexo."</td>
 		<td>".$afiliados[$i]->edo_civil."</td>
 		</tr>";
@@ -1249,8 +1374,7 @@ function index()
 		$this->load->library('excel');
 		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-af.xls");
 		$id=$this->tank_auth->get_user_id();
-		$red=$this->modelo_compras->get_red($id);
-		$afiliados=$this->modelo_compras->reporte_afiliados($red[0]->id_red);
+		$afiliados=$this->modelo_compras->reporte_afiliados($id);
 		for($i=0;$i<sizeof($afiliados);$i++)
 		{
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), ($i+1));

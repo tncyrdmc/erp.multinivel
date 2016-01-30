@@ -485,10 +485,9 @@ class perfil_red extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if($this->general->isAValidUser($id,"OV") == false)
-		{
-			redirect('/ov/compras/carrito');
-		}
+		 if($this->general->isActived($id)!=0){
+		 	redirect('/ov/compras/carrito');
+		 } 
 		
 		$id = $this->tank_auth->get_user_id();
 		$style = $this->general->get_style($id);
@@ -500,12 +499,6 @@ class perfil_red extends CI_Controller
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		
-	/*	Codigo para validacion de membresias
-		if(!$this->general->isActived($id)){
-	
-			$this->template->build('website/ov/perfil_red/renovar');
-			return true;
-		}*/
 
 		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
 
@@ -546,6 +539,12 @@ class perfil_red extends CI_Controller
 		}
 	
 		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
+		
+	
 		$style           = $this->general->get_style($id);
 
 		$this->template->set("id",$id);
@@ -564,8 +563,14 @@ class perfil_red extends CI_Controller
 		redirect('/auth');
 		}
 		
-		$id_red          = $_GET['id'];
 		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
+		
+		$id_red          = $_GET['id'];
+		
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
@@ -678,9 +683,15 @@ class perfil_red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 	
 		$id_red          = $_GET['id'];
-		$id              = $this->tank_auth->get_user_id();
+		
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
@@ -799,7 +810,7 @@ class perfil_red extends CI_Controller
 		$use_username=$this->model_perfil_red->use_username();
 		
 		$email = preg_match(
-				'/^[A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				'/^[A-z0-9_\-.]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 		);
 		
 		if(!$_POST['username']||!$_POST['mail']||!$_POST['password']||!$_POST['confirm_password']){
@@ -837,7 +848,7 @@ class perfil_red extends CI_Controller
 		$use_username=$this->model_perfil_red->use_username_modificar();
 	
 		$email = preg_match(
-				'/^[A-z0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 				);
 	
 		if(!$_POST['username']||!$_POST['mail']){

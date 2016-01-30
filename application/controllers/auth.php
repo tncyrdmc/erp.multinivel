@@ -12,6 +12,7 @@ class Auth extends CI_Controller
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
+		$this->load->model('cemail');
 	}
 
 	function index()
@@ -236,8 +237,9 @@ class Auth extends CI_Controller
 						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 						$id_nuevo_usr=$this->db->query("select id from users order by id desc limit 1");
 						$data['id']=$id_nuevo_usr[0]->id;
-						$this->send_email_activate( $data['email'], $data);
-
+						
+						//$this->send_email_activate( $data['email'], $data);
+						$this->cemail->send_email(2, $data['email'], $data);
 						unset($data['password']); // Clear password (just for any case)
 
 						$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
@@ -245,8 +247,9 @@ class Auth extends CI_Controller
 					} else {
 
 						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
-
-							$this->_send_email('welcome', $data['email'], $data);
+							
+							//$this->_send_email('welcome', $data['email'], $data);
+							$this->cemail->send_email(1, $data['email'], $data);
 						}
 						unset($data['password']); // Clear password (just for any case)
 
@@ -347,8 +350,9 @@ class Auth extends CI_Controller
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 
 					// Send email with password activation link
-					$this->_send_email('forgot_password', $data['email'], $data);
-
+					//$this->_send_email('forgot_password', $data['email'], $data);
+					$this->cemail->send_email(6, $data['new_email'], $data);
+					
 					redirect('/auth/login/');
 
 				} else {
@@ -386,8 +390,9 @@ class Auth extends CI_Controller
 				$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 
 				// Send email with new password
-				$this->_send_email('reset_password', $data['email'], $data);
-
+				//$this->_send_email('reset_password', $data['email'], $data);
+				$this->cemail->send_email(7, $data['new_email'], $data);
+				
 				$this->_show_message($this->lang->line('Has cambiado tu contraseña exitosamente').' '.anchor('/auth/login/', 'Login'));
 
 			} else {														// fail
@@ -471,8 +476,8 @@ class Auth extends CI_Controller
 					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
 
 					// Send email with new email address and its activation link
-					$this->_send_email('change_email', $data['new_email'], $data);
-
+					//$this->_send_email('change_email', $data['new_email'], $data);
+					$this->cemail->send_email(3, $data['new_email'], $data);
 					$this->_show_message(sprintf($this->lang->line('auth_message_new_email_sent'), $data['new_email']));
 
 				} else {

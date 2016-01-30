@@ -85,12 +85,24 @@
     
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+      <?php if(isset($mostrarMercancia)){
+		      	if($mostrarMercancia==1)
+		      		echo ' <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(5)"> Membresia </a></li>';
+		      	if($mostrarMercancia==2)
+		      		echo '<li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(4)"> Paquetes de Inscripción </a></li>';
+		        if($mostrarMercancia==3){
+		        	echo '<li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(1)"> Productos </a></li>
+						  <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(2)"> Servicios </a></li>
+						  <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(3)"> Combinados </a></li>';
+		        }
+      	} else {?>
         <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(1)"> Productos </a></li>
         <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(2)"> Servicios </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(3)"> Combinados </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(5)"> Membresia </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(4)"> Paquetes de Inscripción </a></li>
+     	<?php }?>
       </ul>
       <!--- this part will be hidden for mobile version -->
       <div class="nav navbar-nav navbar-right hidden-xs">
@@ -183,6 +195,7 @@
 						
 						<!-- widget content -->
 						<div class="widget-body">
+							<? if(isset($redes)){?>
 							<? foreach ($redes as $red) {?>
 								<h3><?= $red->nombre;?></h3>
 								<div class="dropdown">
@@ -196,9 +209,55 @@
 								<br>
 								
 							<? } ?>
-						<!-- <div class="dropdown">
-								<a id="dLabel" role="button" class="btn btn-primary btn-block" onClick="paquetes()"> Paquetes de inscripción</a>
-							</div> -->
+							<? } ?>
+
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>
+				<div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-arrows-v"></i> </span>
+						<h2 class="font-md"><i>Tipos de Mercancia</i></h2>				
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+
+						</div>
+						<!-- end widget edit box -->
+						
+						<!-- widget content -->
+						<div class="widget-body">
+								<h3>Tipos Mercancia</h3>
+								<div class="dropdown">
+								<?php if(isset($mostrarMercancia)){
+		      					if($mostrarMercancia==1)
+		      						echo ' <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(5)"> Membresia </a>';
+		      					if($mostrarMercancia==2)
+		      						echo '<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(4)"> Paquetes de Inscripción </a>';
+		        				if($mostrarMercancia==3){
+		        					echo '<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(1)"> Productos </a>
+						  				  <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(2)"> Servicios </a>
+						  				  <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(3)"> Combinados </a>';
+		        				}
+      							} else {?>
+									<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" onclick="show_todos()"> Todos </a> </li>
+       								<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(1)"> Productos </a>
+        							<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(2)"> Servicios </a>
+        							<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(3)"> Combinados </a>
+        							<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(5)"> Membresia </a>
+        							<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-toggle="dropdown" class="dropdown-toggle" onclick="show_todos_tipo_mercancia(4)"> Paquetes de Inscripción </a>
+								<?php }?>
+								</div>
+								<br>
 						</div>
 						<!-- end widget content -->
 						

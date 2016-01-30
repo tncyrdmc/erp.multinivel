@@ -13,11 +13,11 @@ class modelo_compras extends CI_Model
 		$q=$this->db->query("SELECT id_red FROM red WHERE estatus like 'ACT' and id_usuario=".$id);
 		return $q->result();
 	}
-	function reporte_afiliados($red)
+	function reporte_afiliados($id_usuario)
 	{
-		$q=$this->db->query('SELECT a.id, a.username usuario, a.created creacion, b.nombre nombre, b.apellido apellido, b.fecha_nacimiento nacimiento, 
-		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e WHERE a.created>=NOW() - INTERVAL 1 WEEK 
-		and a.id=b.user_id and b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and e.id_red='.$red);
+		$q=$this->db->query('SELECT a.id,tr.nombre as nombreRed, a.username usuario, a.created creacion, b.nombre nombre, b.apellido apellido, a.email email, 
+		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e, tipo_red tr WHERE a.created>=NOW() - INTERVAL 1 MONTH 
+		and a.id=b.user_id and b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and tr.id=e.id_red and e.debajo_de='.$id_usuario.'');
 		return $q->result();
 	}
 	
@@ -26,6 +26,7 @@ class modelo_compras extends CI_Model
 		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
 from afiliar A, user_profiles UP, users U
 where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id group by(U.id)');
+		
 		return $q->result();
 	}
 	
@@ -1144,18 +1145,20 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function ObtenerCategoriaMercancia($id_mercancia){
 		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
 		$mercancia = $q->result();
+		
 		if($mercancia[0]->id_tipo_mercancia == 1){
 			$q = $this->db->query("SELECT id_grupo FROM producto where id =".$mercancia[0]->sku);
 		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
-			$q = $this->db->query("SELECT id_grupo FROM servicio where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 3) {
-			$q = $this->db->query("SELECT id_grupo FROM combinado where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red as id_grupo FROM combinado where id=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 4) {
-			$q = $this->db->query("SELECT id_grupo FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red as id_grupo FROM paquete_inscripcion where id_paquete=".$mercancia[0]->sku);
 		}elseif($mercancia[0]->id_tipo_mercancia == 5) {
-			$q = $this->db->query("SELECT id_grupo FROM membresia where id=".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_red as id_grupo FROM membresia where id=".$mercancia[0]->sku);
 		}
 		$categoria = $q->result();
+	
 		$red=$this->ConsultarIdRedMercancia($categoria[0]->id_grupo);
 		return $red; 
 	}

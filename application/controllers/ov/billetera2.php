@@ -24,10 +24,10 @@ class billetera2 extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		if($this->general->isAValidUser($id,"OV") == false)
+	/*	if($this->general->isAValidUser($id,"OV") == false)
 		{
 			redirect('/ov/compras/carrito');
-		}
+		}*/
 	}
 
 	function index()
@@ -37,7 +37,11 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 
 
 		$usuario=$this->general->get_username($id);
@@ -61,8 +65,12 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
-	
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
+	 
 	
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
@@ -85,7 +93,11 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 	
 	
 		$usuario=$this->general->get_username($id);
@@ -94,28 +106,14 @@ class billetera2 extends CI_Controller
 		$historial=$this->modelo_billetera->get_historial_cuenta($id);
 		$ganancias=$this->modelo_billetera->get_monto($id);
 		$ganancias=$ganancias[0]->monto;
-		$comision_web_personal_mes = $this->modelo_billetera->get_historial_cuenta_web_personal($id);		
-		$años = $this->modelo_billetera->añosCobro($id);
+		$años = $this->modelo_billetera->anosCobro($id);
 
-		if(count($comision_web_personal_mes) < count($historial)){
-			foreach ($historial as $mes){
-				foreach ($comision_web_personal_mes as $comision){
-					if($comision->fecha == $mes->fecha){
-						$mes->valor+=$comision->valor;
-					}
+	/*	foreach ($historial as $comision){
+				if($comision->fecha == $mes->fecha){
+					$mes->valor+=$comision->valor;
 				}
-			}
-			$this->template->set("historial",$historial);
-		}else{
-			foreach ($comision_web_personal_mes as $mes){
-				foreach ($historial as $comision){
-					if($comision->fecha == $mes->fecha){
-						$mes->valor+=$comision->valor;
-					}
-				}
-			}
-			$this->template->set("historial",$comision_web_personal_mes);
-		}
+		}*/
+		$this->template->set("historial",$historial);
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
@@ -138,7 +136,11 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 	
 	
 		$usuario=$this->general->get_username($id);
@@ -150,7 +152,7 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobro($id);
 		$metodo_cobro=$this->modelo_billetera->get_metodo();
 		$datatable=$this->modelo_billetera->datable($id);
-		$años = $this->modelo_billetera->añosCobro($id);
+		$años = $this->modelo_billetera->anosCobro($id);
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
@@ -175,27 +177,34 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 	
 	
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
-		$redes = $this->model_tipo_red->listarActivos();
+		$redes = $this->model_tipo_red->listarTodos();
 		$ganancias=array();
+		$comision_directos = array();
 		foreach ($redes as $red){
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
+			array_push($comision_directos, $this->modelo_billetera->getComisionDirectos($id, $red->id));
 		}
 		
+		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
-		$comision_web_personal = $this->modelo_billetera->get_comisiones_web_personal($id);
 		
 		$this->template->set("style",$style);
-		$this->template->set("comision_web_personal",$comision_web_personal[0]->valor);
+		$this->template->set("comisiones",$comisiones);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("comisiones_directos",$comision_directos);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);
 		$this->template->set("retenciones",$retenciones);
@@ -215,45 +224,43 @@ class billetera2 extends CI_Controller
 		}
 		
 		if(intval($_POST['cobro'])<=0){
-			echo "ERROR <br>Valor del cobro invalido";
+			echo "ERROR <br>Valor del cobro invalido.";
 			exit();
 		}
 	
 		if($_POST['ctitular']==""){
-			echo "ERROR <br>Falta ingresar el nombre del titular de la cuenta";
+			echo "ERROR <br>Falta ingresar el nombre del titular de la cuenta.";
 			exit();
 		}
 		
 		if(is_numeric($_POST['ctitular'])){
-			echo "ERROR <br>El titular de la cuenta no debe contener valores numericos";
+			echo "ERROR <br>El titular de la cuenta no debe contener valores numericos.";
 			exit();
 		}
 		
 		if($_POST['cbanco']==""){
-			echo "ERROR <br>Falta ingresar el banco de la cuenta";
+			echo "ERROR <br>Falta ingresar el banco de la cuenta.";
 			exit();
 		}
 		
 		if(intval($_POST['ncuenta'])==0){
-			echo "ERROR <br>El numero de la cuenta debe ser un numero valido";
+			echo "ERROR <br>El numero de la cuenta debe ser un numero valido.";
 			exit();
 		}
 	
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		$comision_web_personal = $this->modelo_billetera->get_comisiones_web_personal($id);
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
-		$comisiones +=$comision_web_personal[0]->valor;
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotalesAfiliado();
 		$cobrosPagos=$this->modelo_billetera->get_cobros_total_afiliado($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 
 		if(($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))>0){
-			$estado = $this->modelo_billetera->cobrar($id,$_POST['ncuenta'],$_POST['ctitular'],$_POST['cbanco'],$_POST['cclabe']);
-			echo "Felicitaciones<br> Tu cobro se esta procesando";
+			$this->modelo_billetera->cobrar($id,$_POST['ncuenta'],$_POST['ctitular'],$_POST['cbanco'],$_POST['cclabe']);
+			echo "Felicitaciones<br> Tu cobro se esta procesando.";
 		}else {
-			echo "ERROR <br>No cuentas con suficientes recursos para realizar el cobro";
+			echo "ERROR <br>No hay saldo para realizar el cobro.";
 		}
 
 	}
@@ -265,29 +272,34 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
 	
 	
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
-		$redes = $this->model_tipo_red->listarActivos();
+		$redes = $this->model_tipo_red->listarTodos();
 		$ganancias=array();
+		$comision_directos = array();
 		foreach ($redes as $red){
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
+			array_push($comision_directos, $this->modelo_billetera->getComisionDirectos($id, $red->id));
 		}
 		
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
-		$comision_web_personal = $this->modelo_billetera->get_comisiones_web_personal($id);
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
-		$this->template->set("comision_web_personal",$comision_web_personal[0]->valor);
-		$this->template->set("comisiones",$comisiones+$comision_web_personal[0]->valor);
+		$this->template->set("comisiones",$comisiones);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("comisiones_directos",$comision_directos);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);
 		$this->template->set("retenciones",$retenciones);
@@ -314,11 +326,12 @@ class billetera2 extends CI_Controller
 	
 		$redes = $this->model_tipo_red->listarTodos();
 		$ganancias=array();
+		$comision_directos = array();
 		foreach ($redes as $red){
 			array_push($ganancias,$this->modelo_billetera->get_comisiones_mes($id,$red->id,$_GET['fecha']));
+			array_push($comision_directos, $this->modelo_billetera->getComisionDirectosMes($id, $red->id, $_GET['fecha']));
 		}
-	
-		$comision_web_personal = $this->modelo_billetera->comisionWebPersonal($id, $_GET['fecha']);
+
 		$retenciones = $this->modelo_billetera->ValorRetenciones_historial($_GET['fecha'],$id);
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
@@ -326,10 +339,10 @@ class billetera2 extends CI_Controller
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
-		$this->template->set("comision_web_personal",$comision_web_personal[0]->valor);
 		$this->template->set("retenciones",$retenciones);
 		$this->template->set("cobro",$cobro);
-		$this->template->set("cobroPendiente",$cobroPendiente);
+		$this->template->set("cobroPendientes",$cobroPendiente);
+		$this->template->set("comisiones_directos",$comision_directos);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

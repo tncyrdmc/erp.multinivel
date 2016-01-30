@@ -68,29 +68,40 @@
 													<tbody>
 												<?php 
 													$total = 0; 
+													$i = 0;
 													foreach ($ganancias as $gred){
-														if($gred[0]->puntos){
+														if($gred[0]->valor!=0){
+														echo '<tr class="success" >
+																<td colspan="2">'.$gred[0]->nombre.'</td>
+															</tr>'; 
+
 														echo '<tr class="success">
-																<td>'.$gred[0]->nombre.'</td>
+															<td>Comisiones Directas</td>
+																<td>$ '.number_format($comisiones_directos[$i][0]->valor,2).'</td>
+															</tr>'; 
+														
+														echo '<tr class="success">
+															<td>Comisiones Indirectas</td>
+																<td>$ '.number_format($gred[0]->valor - $comisiones_directos[$i][0]->valor,2).'</td>
+															</tr>'; 
+
+														if($gred[0]->valor){
+														echo '<tr class="warning">
+																<td>Total</td>
 																<td>$ '.number_format($gred[0]->valor,2).'</td>
 															</tr>';
 														$total += $gred[0]->valor;
 														}else {
 															echo '<tr class="warning">
-																<td>'.$gred[0]->nombre.'</td>
+																<td> Total </td>
 																<td>$ 0</td>
 															</tr>';
 														}
+														$i++;
 													}
-													if($comision_web_personal){
+													}
+
 													?>  
-														<tr class="success">
-															<td>Comision Web Personal</td>
-															<td>$ <?php echo number_format($comision_web_personal,2);?></td>
-														</tr>
-													<?php 
-														$total += $comision_web_personal;
-													} ?>
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
 														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>

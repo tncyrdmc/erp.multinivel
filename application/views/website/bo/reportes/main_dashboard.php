@@ -29,10 +29,11 @@
 										<option value="1" >Ventas por Oficinas Virtuales</option>
 										<option value="7" >Afiliados</option>
 										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
-										<option value="9" onclick="tipo_reporte()">Cuentas Por Cobrar</option>
-										<option value="12">Cuentas Pagadas</option>
-										<option value="10" >Cobros Pagados</option>
-										<option value="11" >Cobros Pagados y Por Pagar</option>
+										<option value="9" onclick="tipo_reporte()">Ventas Por Cobrar</option>
+										<option value="12">Ventas Pagadas</option>
+										<option value="13" >Comisiones Por Pagar</option>
+										<option value="10" >Comisiones Pagadas</option>
+										<option value="11" >Comisiones Pagadas y Por Pagar</option>
 										<!--  	
 											<option value="6" >Facturacion / Pedidos cobrados</option>
 											<option value="0" >Ventas empresa</option>
@@ -318,61 +319,7 @@
 									success: function( msg )
 									{
 										$("#reporte_div").html(msg);
-										var responsiveHelper_dt_basic = undefined;
-										var responsiveHelper_datatable_fixed_column = undefined;
-										var responsiveHelper_datatable_col_reorder = undefined;
-										var responsiveHelper_datatable_tabletools = undefined;
-										
-										var breakpointDefinition = {
-											tablet : 1024,
-											phone : 480
-										};
-													var otable = $('#datatable_fixed_column2').DataTable({
-								    	//"bFilter": false,
-								    	//"bInfo": false,
-								    	//"bLengthChange": false
-								    	//"bAutoWidth": false,
-								    	//"bPaginate": false,
-								    	//"bStateSave": true // saves sort state using localStorage
-										"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-												"t"+
-												"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-										"autoWidth" : true,
-										"preDrawCallback" : function() {
-											// Initialize the responsive datatables helper once.
-											if (!responsiveHelper_datatable_fixed_column) {
-												responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column2'), breakpointDefinition);
-											}
-										},
-										"rowCallback" : function(nRow) {
-											responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-										},
-										"drawCallback" : function(oSettings) {
-											responsiveHelper_datatable_fixed_column.respond();
-										}		
-										
-									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-								    	   
-									    // Apply the filter
-									    $("#datatable_fixed_column2 thead th input[type=text]").on( 'keyup change', function () {
-									    	
-									        otable
-									            .column( $(this).parent().index()+':visible' )
-									            .search( this.value )
-									            .draw();
-									            
-									    } );
-									    $("#well-print-red").hide();
-										$("#row-print-red").hide();
-										$("#well-print-af").hide();
-										$("#row-print-af").hide();
-										$("#well-print-web").hide();
-										$("#row-print-web").hide();
-									    $("#well-print-usr").show();
-										$("#row-print-usr").show();
-								    // custom toolbar
-								    
+			    
 									}
 								});
 								$.ajax({
@@ -413,60 +360,6 @@
 									success: function( msg )
 									{
 										$("#reporte_div").html(msg);
-										var responsiveHelper_dt_basic = undefined;
-										var responsiveHelper_datatable_fixed_column = undefined;
-										var responsiveHelper_datatable_col_reorder = undefined;
-										var responsiveHelper_datatable_tabletools = undefined;
-										
-										var breakpointDefinition = {
-											tablet : 1024,
-											phone : 480
-										};
-													var otable = $('#datatable_fixed_column3').DataTable({
-								    	//"bFilter": false,
-								    	//"bInfo": false,
-								    	//"bLengthChange": false
-								    	//"bAutoWidth": false,
-								    	//"bPaginate": false,
-								    	//"bStateSave": true // saves sort state using localStorage
-										"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-												"t"+
-												"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-										"autoWidth" : true,
-										"preDrawCallback" : function() {
-											// Initialize the responsive datatables helper once.
-											if (!responsiveHelper_datatable_fixed_column) {
-												responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column3'), breakpointDefinition);
-											}
-										},
-										"rowCallback" : function(nRow) {
-											responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-										},
-										"drawCallback" : function(oSettings) {
-											responsiveHelper_datatable_fixed_column.respond();
-										}		
-										
-									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-								    	   
-									    // Apply the filter
-									    $("#datatable_fixed_column3 thead th input[type=text]").on( 'keyup change', function () {
-									    	
-									        otable
-									            .column( $(this).parent().index()+':visible' )
-									            .search( this.value )
-									            .draw();
-									            
-									    } );
-									    $("#well-print-usr").hide();
-										$("#row-print-usr").hide();
-										$("#well-print-af").hide();
-										$("#row-print-af").hide();
-										$("#well-print-web").hide();
-										$("#row-print-web").hide();
-									    $("#well-print-red").show();
-										$("#row-print-red").show();
-								    // custom toolbar
 								    
 									}
 								});
@@ -492,80 +385,13 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-							            
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-						    // custom toolbar
-						    
+					    
 							}
 						});
 						break;
-					case '5':
-						break;
-					case '6':
-						break;
-					case '7':
-						break;
-					case '8':
-						break;
-					case '9':
-						break;
-					case '10':
-						break;
-					case '11':
-						break;
 					case "12" :{
 						//	iniciarSpinner();
+						// Ventas Pagadas
 						var inicio=$("#startdate").val();
 						var fin=$("#finishdate").val();
 							$.ajax({
@@ -580,14 +406,6 @@
 							});
 						}
 						break;
-					case '13':
-						break;
-					case '14':
-						break;
-					case '15':
-						break;
-					case '16':
-						break;
 					case '17':
 						$("#nuevos-afiliados").show();
 						$.ajax({
@@ -596,77 +414,9 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-							            
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-						    // custom toolbar
 						    
 							}
 						});
-						break;
-					case '18':
-						break;
-					case '19':
-						break;
-					case '20':
-						break;
-					case '21':
-						break;
-					case '22':
-						break;
-					case '23':
-						break;
-					case '24':
 						break;
 					case '25':
 						$("#nuevos-afiliados").show();
@@ -676,60 +426,6 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-							            
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-						    // custom toolbar
 						    
 							}
 						});
@@ -742,60 +438,6 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-								var responsiveHelper_dt_basic = undefined;
-								var responsiveHelper_datatable_fixed_column = undefined;
-								var responsiveHelper_datatable_col_reorder = undefined;
-								var responsiveHelper_datatable_tabletools = undefined;
-								
-								var breakpointDefinition = {
-									tablet : 1024,
-									phone : 480
-								};
-											var otable = $('#datatable_fixed_column1').DataTable({
-						    	//"bFilter": false,
-						    	//"bInfo": false,
-						    	//"bLengthChange": false
-						    	//"bAutoWidth": false,
-						    	//"bPaginate": false,
-						    	//"bStateSave": true // saves sort state using localStorage
-								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-										"t"+
-										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-								"autoWidth" : true,
-								"preDrawCallback" : function() {
-									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
-									}
-								},
-								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-								},
-								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
-								}		
-								
-							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-							            
-							    } );
-							    $("#well-print-usr").hide();
-								$("#row-print-usr").hide();
-								$("#well-print-red").hide();
-								$("#row-print-red").hide();
-								$("#well-print-web").hide();
-								$("#row-print-web").hide();
-							    $("#well-print-af").show();
-								$("#row-print-af").show();
-						    // custom toolbar
 						    
 							}
 						});
@@ -1080,17 +722,8 @@
 					
 				});
 			break;
-			case "2" : //alert("Ventas por telemarketing");
-			break;
-			case "3" : //alert("Ventas por CEDIs");
-			break;
-			case "4" : //alert("Ventas web personales");
-			break;
-			case "5" : //alert("Pedidos / Ctas x cobrar");
-			break;
-			case "6" : //alert("Facturacion / Pedidos cobrados");
-			break;
 			case "7" :{
+				//AFILIADOS
 				//iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
@@ -1110,6 +743,7 @@
 			break;
 			case "8" :{
 				//iniciarSpinner();
+				// Afiliados en el mes
 				$.ajax({
 					type: "POST",
 					url: "/bo/reportes/reporte_afiliados_mes"
@@ -1122,6 +756,7 @@
 			break;
 			case "9" :{
 			//	iniciarSpinner();
+			//Ventas por combrar
 				$.ajax({
 					type: "POST",
 					url: "/bo/reportes/reporte_cobros_pendientes"
@@ -1134,12 +769,32 @@
 			break;
 			case "10" :{
 				//iniciarSpinner();
+				// Comisiones pagadas
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
 				$.ajax({
 					type: "POST",
-					url: "/bo/reportes/reporte_cobros_historial",
+					url: "/bo/reportes/reporte_comisiones_pagadas",
+					data: {inicio:startdate,fin:finishdate}
+					
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+					
+				});
+			}
+			break;
+			case "13" :{
+				// Comisiones por pagar
+				//iniciarSpinner();
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_comisiones_por_pagar",
 					data: {inicio:startdate,fin:finishdate}
 					
 				})
@@ -1152,6 +807,7 @@
 			break;
 
 			case "11" :{
+				// Comisiones por pagar y pagadas
 				//iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
@@ -1184,23 +840,15 @@
 				window.location="/bo/reportes/reporte_ventas_oficinas_virtuales_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
-			case "2" : //alert("Ventas por telemarketing");
-			break;
-			case "3" : //alert("Ventas por CEDIs");
-			break;
-			case "4" : //alert("Ventas web personales");
-			break;
-			case "5" : //alert("Pedidos / Ctas x cobrar");
-			break;
-			case "6" : //alert("Facturacion / Pedidos cobrados");
-			break;
 			case "7" :{
+				//Afiliados
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				window.location="/bo/reportes/reporte_afiliados_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 			case "8" :{
+				//Afiliados en el mes
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				window.location="/bo/reportes/reporte_afiliados_mes_excel?inicio="+startdate+"&&fin="+finishdate;
@@ -1208,19 +856,36 @@
 			break;
 
 			case "9" :{
+				// ventas por cobrar
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
-				window.location="/bo/reportes/reporte_cobros_pendientes_excel?inicio="+startdate+"&&fin="+finishdate;
+				window.location="/bo/reportes/reporte_cobros_pendientes_excel";
 			}
 			break;
 
 			case "10" :{
+				// Comisiones pagadas
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
-				window.location="/bo/reportes/reporte_cobros_pagos_excel?inicio="+startdate+"&&fin="+finishdate;
+				window.location="/bo/reportes/reporte_comisiones_pagadas_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+			case "12" :{
+				// Ventas Pagadas
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_cobros_pagados_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+			case "13" :{
+				// Comisiones Por pagar
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_comisiones_por_pagar_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 			case "11" :{
+				// Comisiones por pagar y pagadas
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				window.location="/bo/reportes/reporte_cobros_todos_excel?inicio="+startdate+"&&fin="+finishdate;

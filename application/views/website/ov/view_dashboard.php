@@ -310,7 +310,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="compras/reportes">
+													<a> <!--href="compras/reportes"  -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-table fa-3x"></i>
 															<h5>Reportes</h5>

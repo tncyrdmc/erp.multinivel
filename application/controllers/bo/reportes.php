@@ -18,6 +18,7 @@ class reportes extends CI_Controller
 		$this->load->model('general');
 		$this->load->model('modelo_cobros');
 		$this->load->model('bo/modelo_historial_consignacion');
+		$this->load->model('model_excel');
 		
 	}
 
@@ -226,7 +227,9 @@ class reportes extends CI_Controller
 		$afiliados=$this->modelo_reportes->reporte_afiliados($inicio,$fin);
 		
 		$this->load->library('excel');
-		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_afiliados.xls");
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
 		for($i = 0;$i < count($afiliados);$i++)
 		{
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
@@ -234,7 +237,12 @@ class reportes extends CI_Controller
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+			$contador_filas++;
 		}
+		
+		$subtitulos	=array("ID","Usuario","Nombre","Apellido","Email");
+		$this->model_excel->setTemplateExcelReport ("Afiliados",$subtitulos,$contador_filas,$this->excel);
+		
 		
 		$filename='Afiliados.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -302,7 +310,9 @@ class reportes extends CI_Controller
 		$afiliados= $this->modelo_reportes->reporte_afiliados_mes();
 	
 		$this->load->library('excel');
-		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_afiliados.xls");
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
 		for($i = 0;$i < count($afiliados);$i++)
 		{
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
@@ -310,7 +320,11 @@ class reportes extends CI_Controller
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+		$contador_filas++;
 		}
+		
+		$subtitulos	=array("ID","Usuario","Nombre","Apellido","Email");
+		$this->model_excel->setTemplateExcelReport ("Afiliados",$subtitulos,$contador_filas,$this->excel);
 	
 		$filename='AfiliadosMes.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -373,11 +387,11 @@ class reportes extends CI_Controller
 			<td>".$venta->username."</td>
 			<td>".$venta->name."</td>
 			<td>".$venta->lastname."</td>		
-			<td> $	".($venta->costo-$venta->impuestos)."</td>
-			<td> $	".$venta->impuestos."</td>
-			<td> $	".$venta->costo."</td>
-			<td> $	".$venta->comision."</td>
-			<td> $	".(($venta->costo)-($venta->impuestos+$venta->comision))."</td>
+			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>
+			<td> $	".number_format($venta->impuestos, 2, '.', '')."</td>
+			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
+			<td> $	".number_format($venta->comision, 2, '.', '')."</td>
+			<td> $	".number_format((($venta->costo)-($venta->impuestos+$venta->comision)), 2, '.', '')."</td>
 			</tr>";
 			
 			$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
@@ -387,7 +401,7 @@ class reportes extends CI_Controller
 			$total_neto = $total_neto + (($venta->costo)-($venta->impuestos+$venta->comision));
 			
 				}
-	
+
 				echo "<tr>
 			<td class='sorting_1'></td>
 			<td></td>
@@ -405,11 +419,11 @@ class reportes extends CI_Controller
 			<td></td>
 			<td></td>
 			<td></td>
-			<td><b> $	".$total_costo."</b></td>
-			<td><b> $	".$total_impuesto."</b></td>
-			<td><b> $	".$total_venta."</b></td>
-			<td><b> $	".$total_comision."</b></td>
-			<td><b> $	".$total_neto."</b></td>
+			<td><b> $	".number_format($total_costo, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_impuesto, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_venta, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_comision, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_neto, 2, '.', '')."</b></td>
 			</tr>";
 		}
 			echo "</tbody>
@@ -468,7 +482,7 @@ class reportes extends CI_Controller
 				
 				$subtitulos	=array("ID Venta","Username","Nombre","Apellido","Subtotal","Impuestos","Total Venta","Total Comisiones","Total Neto");
 				
-				$this->setTemplateExcelReport ("Ventas Oficina Virtual",$subtitulos,$contador_filas);
+				$this->model_excel->setTemplateExcelReport ("Ventas Oficina Virtual",$subtitulos,$contador_filas,$this->excel);
 				
 				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+10), "TOTALES");
 				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+10), "");
@@ -586,36 +600,7 @@ class reportes extends CI_Controller
 			*/
 			
 	}
-	/**
-	 * 
-	 */private function setTemplateExcelReport($titulo,$subtitulos,$filas) {
 
-	 	$letters = array_combine(range(1,26), range('A', 'Z'));
-
-	
-	 	$filasConfiguracion='A5:'.$letters[count($subtitulos)].'6';
-
-		$this->excel->getActiveSheet()->mergeCells($filasConfiguracion);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0,(5),$titulo);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getFont()->setSize(16);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$this->excel->getActiveSheet()->getStyle($filasConfiguracion)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00B4DC');
-
-		
-		$this->excel->getActiveSheet()->getStyle('A7:I7')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('F4F2F3');
-		$this->excel->getActiveSheet()->getStyle('A7:I7')->getFont()->setBold(true);
-		$this->excel->getActiveSheet()->getStyle('A7:I7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		
-		$i=0;
-		foreach ($subtitulos as $subtitulo){
-		
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow($i,(7),$subtitulo);
-			$i++;
-		}
-
-		$this->excel->getActiveSheet()->getStyle('A7:I'.($filas+10))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-	}
 
 	
 	function reporte_proveedores()
@@ -767,6 +752,8 @@ class reportes extends CI_Controller
 
 		$cobros=$this->modelo_historial_consignacion->ListarHistorialPendiente ();
 
+		$totalCobros=0;
+		
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
@@ -792,7 +779,31 @@ class reportes extends CI_Controller
 			<td>".$cobros[$i]->fecha."</td>
 			<td>Pendiente</td>
 			</tr>";
+			$totalCobros = $totalCobros + $cobros[$i]->valor;
 		}
+		
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+		
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b></b></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			</tr>";
 		
 		
 			echo "</tbody> </table> <tr class='odd' role='row'>";
@@ -801,6 +812,8 @@ class reportes extends CI_Controller
 	function reporte_cobros_pagados(){
 
 		$cobros=$this->modelo_historial_consignacion->ListarHistorialPagados($_POST['startdate'],$_POST['finishdate']);
+	
+		$totalCobros=0;
 	echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
@@ -814,6 +827,7 @@ class reportes extends CI_Controller
 					<th>Estado</th>
 				</thead>
 				<tbody>";
+		
 		for($i=0;$i < sizeof($cobros);$i++)
 		{
 			echo "<tr>
@@ -826,41 +840,70 @@ class reportes extends CI_Controller
 			<td>".$cobros[$i]->fecha."</td>
 			<td>Pagado</td>
 			</tr>";
+			$totalCobros = $totalCobros + $cobros[$i]->valor;
 		}
 	
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+		
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b></b></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			</tr>";
 	
 		echo "</tbody> </table> <tr class='odd' role='row'>";
 	}
 	
+
 	function reporte_cobros_pendientes_excel()
 	{
-		$cobros = $this->modelo_cobros->ConsultarCobrosPendientes();
-	
+		$cobros=$this->modelo_historial_consignacion->ListarHistorialPendiente ();
+
 		$this->load->library('excel');
-		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-cobros.xls");
-	
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
 		$total = 0;
 		$ultima_fila = 0;
 		for($i = 0;$i < sizeof($cobros);$i++)
 		{
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->fecha);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_venta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->email);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->banco);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->cuenta);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->titular);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->clabe);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->metodo_pago);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->monto);
-			$total = $total + $cobros[$i]->monto;
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->valor);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->fecha);
+			$total = $total + $cobros[$i]->valor;
 			$ultima_fila = $i+8;
+			$contador_filas++;
 			
 		}
+		
+		$subtitulos	=array("ID Venta","Afiliado","Email","Banco","N° Cuenta","Valor","Fecha");
+		$this->model_excel->setTemplateExcelReport ("Cuentas Por Cobrar",$subtitulos,$contador_filas,$this->excel);
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($ultima_fila+2), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($ultima_fila+2), $total);
 	
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($ultima_fila+1), "Total");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+1), $total);
-	
-		$filename='Cuentas Por Pagar.xls'; //save our workbook as this file name
+
+		
+		$filename='Cuentas Por Cobrar.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0'); //no cache
@@ -872,7 +915,54 @@ class reportes extends CI_Controller
 		$objWriter->save('php://output');
 	}
 	
-	function reporte_cobros_historial(){
+	function reporte_cobros_pagados_excel()
+	{
+		$cobros=$this->modelo_historial_consignacion->ListarHistorialPagados($_GET['inicio'],$_GET['fin']);
+	
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+	
+		$total = 0;
+		$ultima_fila = 0;
+		for($i = 0;$i < sizeof($cobros);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_venta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->email);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->banco);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->cuenta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->valor);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->fecha);
+			$total = $total + $cobros[$i]->valor;
+			$ultima_fila = $i+8;
+			$contador_filas++;
+				
+		}
+	
+		$subtitulos	=array("ID Venta","Afiliado","Email","Banco","N° Cuenta","Valor","Fecha");
+		$this->model_excel->setTemplateExcelReport ("Cuentas Pagadas",$subtitulos,$contador_filas,$this->excel);
+	
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($ultima_fila+2), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($ultima_fila+2), $total);
+	
+	
+	
+		$filename='Cuentas Pagadas .xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+	}
+	/*
+	function reporte_cobros_pagos_excel(){
+
 		$inicio = '2000-01-01';
 		if(isset($_POST['inicio'])){
 			$inicio = $_POST['inicio'];
@@ -882,7 +972,9 @@ class reportes extends CI_Controller
 			$fin = $_POST['fin'];
 		}
 		
-		$cobros = $this->modelo_cobros->listarCobrosPagos($inicio, $fin);
+		$cobros = $this->modelo_cobros->listarCobrosPagados($inicio, $fin);
+		$totalCobros=0;
+		
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
@@ -894,7 +986,7 @@ class reportes extends CI_Controller
 					<th>Banco</th>
 					<th>N° Cuenta</th>
 					<th>Titular</th>
-					<th>Clave</th>
+					<th>CLABE</th>
 					<th>Monto</th>
 					<th>Estado</th>
 				</thead>
@@ -914,13 +1006,259 @@ class reportes extends CI_Controller
 			<td>$ ".number_format($cobros[$i]->monto,2)."</td>
 			<td>".$cobros[$i]->estado."</td>
 			</tr>";
+		$totalCobros = $totalCobros + $cobros[$i]->monto;
 		}
 		
+		
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+		
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b></b></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td><b></b></td>
+			<td></td>
+			<td><b></b></td>
+			</tr>";
 		
 		echo "</tbody> </table> <tr class='odd' role='row'>";
 	}
 	
-	function reporte_cobros_pagos_excel()
+	*/
+	function reporte_comisiones_por_pagar(){
+
+		$inicio = '2000-01-01';
+		if(isset($_POST['inicio'])){
+			$inicio = $_POST['inicio'];
+		}
+		$fin = '3000-12-12';
+		if(isset($_POST['fin'])){
+			$fin = $_POST['fin'];
+		}
+	
+		$cobros = $this->modelo_cobros->listarCobrosPendientesPorPagar($inicio, $fin);
+		$totalCobros=0;
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Fecha Solicitud</th>
+					<th>Metodo de Pago</th>
+					<th>Banco</th>
+					<th>N° Cuenta</th>
+					<th>Titular</th>
+					<th>CLABE</th>
+					<th>Monto</th>
+					<th>Estado</th>
+				</thead>
+				<tbody>";
+		for($i=0;$i < sizeof($cobros);$i++)
+		{
+			echo "<tr>
+			<td class='sorting_1'>".$cobros[$i]->id_cobro."</td>
+			<td>".$cobros[$i]->usuario."</td>
+			<td>".$cobros[$i]->fecha."</td>
+			<td>".$cobros[$i]->metodo_pago."</td>
+			<td>".$cobros[$i]->banco."</td>
+			<td>".$cobros[$i]->cuenta."</td>
+			<td>".$cobros[$i]->titular."</td>
+			<td>".$cobros[$i]->clabe."</td>
+			<td>$ ".number_format($cobros[$i]->monto,2)."</td>
+			<td>".$cobros[$i]->estado."</td>
+			</tr>";
+			$totalCobros = $totalCobros + $cobros[$i]->monto;
+		}
+		
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+		
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td><b></b></td>
+			<td></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td></td>
+			<td></td>
+			</tr>";
+	
+		echo "</tbody> </table> <tr class='odd' role='row'>";
+	}
+	function reporte_comisiones_por_pagar_excel()
+	{
+		$inicio = '2000-01-01';
+		if($_GET['inicio'] != null){
+			$inicio = $_GET['inicio'];
+		}
+		$fin = '3000-12-12';
+		if($_GET['fin'] != null){
+			$fin = $_GET['fin'];
+		}
+	
+		$cobros = $this->modelo_cobros->listarCobrosPendientesPorPagar($inicio, $fin);
+		$totalCobros=0;
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
+		$total = 0;
+		$ultima_fila = 0;
+		for($i = 0;$i < sizeof($cobros);$i++)
+		{
+
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->fecha);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->metodo_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->banco);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->cuenta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->titular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->clabe);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->monto);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $cobros[$i]->estado);
+			$total = $total + $cobros[$i]->monto;
+			$ultima_fila = $i+8;
+			$totalCobros++;
+			$contador_filas++;
+				
+		}
+	
+		
+		$subtitulos	=array("ID","Usuario","Fecha de Solicitud","Metodo","Banco","N° Cuenta","Titular","CLABE","Valor","Estado");
+		$this->model_excel->setTemplateExcelReport ("Cuentas Por Cobrar",$subtitulos,$contador_filas,$this->excel);
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($ultima_fila+2), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+2), $total);
+	
+	
+		$filename='Comisiones por Pagar de '.$inicio.' al '.$fin.'.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+	}
+	
+	function reporte_comisiones_pagadas(){
+		$inicio = '2000-01-01';
+		if(isset($_POST['inicio'])){
+			$inicio = $_POST['inicio'];
+		}
+		$fin = '3000-12-12';
+		if(isset($_POST['fin'])){
+			$fin = $_POST['fin'];
+		}
+	
+		$totalCobros=0;
+	
+		$cobros = $this->modelo_cobros->listarCobrosPagados($inicio, $fin);
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Fecha Solicitud</th>
+					<th>Fecha Pago</th>
+					<th>Metodo de Pago</th>
+					<th>Banco</th>
+					<th>N° Cuenta</th>
+					<th>Titular</th>
+					<th>CLABE</th>
+					<th>Monto</th>
+					<th>Estado</th>
+				</thead>
+				<tbody>";
+		for($i=0;$i < sizeof($cobros);$i++)
+		{
+			echo "<tr>
+			<td class='sorting_1'>".$cobros[$i]->id_cobro."</td>
+			<td>".$cobros[$i]->usuario."</td>
+			<td>".$cobros[$i]->fecha."</td>
+			<td>".$cobros[$i]->fecha_pago."</td>
+			<td>".$cobros[$i]->metodo_pago."</td>
+			<td>".$cobros[$i]->banco."</td>
+			<td>".$cobros[$i]->cuenta."</td>
+			<td>".$cobros[$i]->titular."</td>
+			<td>".$cobros[$i]->clabe."</td>
+			<td>$ ".number_format($cobros[$i]->monto,2)."</td>
+			<td>".$cobros[$i]->estado."</td>
+			</tr>";
+			$totalCobros = $totalCobros + $cobros[$i]->monto;
+		}
+	
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+	
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b></b></td>
+			<td></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			</tr>";
+	
+		echo "</tbody> </table> <tr class='odd' role='row'>";
+	}
+	
+	function reporte_comisiones_pagadas_excel()
 	{
 		$inicio = '2000-01-01';
 		if($_GET['inicio'] != null){
@@ -931,35 +1269,39 @@ class reportes extends CI_Controller
 			$fin = $_GET['fin'];
 		}
 		
-		$cobros = $this->modelo_cobros->listarCobrosPagos($inicio, $fin);
+		$cobros = $this->modelo_cobros->listarCobrosPagados($inicio, $fin);
 		
 		$this->load->library('excel');
-		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-cobros_pagos.xls");
-	
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
 		$total = 0;
 		$ultima_fila = 0;
 		for($i = 0;$i < sizeof($cobros);$i++)
 		{
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->fecha);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->fecha_pago);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->usuario);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->banco);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->cuenta);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->titular);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->clabe);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->metodo_pago);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $cobros[$i]->estado);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($i+8), $cobros[$i]->monto);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->fecha);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->fecha_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->metodo_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->banco);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->cuenta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->titular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->clabe);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $cobros[$i]->monto);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($i+8), $cobros[$i]->estado);
 			$total = $total + $cobros[$i]->monto;
 			$ultima_fila = $i+8;
+			$contador_filas++;
 			
 		}
 	
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($ultima_fila+1), "Total");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($ultima_fila+1), $total);
+		$subtitulos	=array("ID","Usuario","Fecha Solicitud","Fecha Pago","Metodo de Pago","Banco","N° Cuenta","Titular","CLABE","Monto","Estado");
+		$this->model_excel->setTemplateExcelReport ("Comisiones Pagadas",$subtitulos,$contador_filas,$this->excel);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+2), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($ultima_fila+2), $total);
 	
-		$filename='CuentasPagadas de '.$inicio.' al '.$fin.'.xls'; //save our workbook as this file name
+		$filename='Comisiones Pagadas de '.$inicio.' al '.$fin.'.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 		header('Cache-Control: max-age=0'); //no cache
@@ -981,6 +1323,8 @@ class reportes extends CI_Controller
 			$fin = $_POST['fin'];
 		}
 		
+		$totalCobros=0;
+		
 		$cobros = $this->modelo_cobros->listarTodos($inicio, $fin);
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
@@ -993,7 +1337,7 @@ class reportes extends CI_Controller
 					<th>Banco</th>
 					<th>N° Cuenta</th>
 					<th>Titular</th>
-					<th>Clave</th>
+					<th>CLABE</th>
 					<th>Monto</th>
 					<th>Estado</th>
 				</thead>
@@ -1013,8 +1357,37 @@ class reportes extends CI_Controller
 			<td>$ ".number_format($cobros[$i]->monto,2)."</td>
 			<td>".$cobros[$i]->estado."</td>
 			</tr>";
+		$totalCobros = $totalCobros + $cobros[$i]->monto;
 		}
 		
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+		
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b></b></td>
+			<td></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			</tr>";
 		
 		echo "</tbody> </table> <tr class='odd' role='row'>";
 	}
@@ -1033,30 +1406,34 @@ class reportes extends CI_Controller
 		$cobros = $this->modelo_cobros->listarTodos($inicio, $fin);
 	
 		$this->load->library('excel');
-		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-cobros_pagos.xls");
-	
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
 		$total = 0;
 		$ultima_fila = 0;
 		for($i = 0;$i < sizeof($cobros);$i++)
 		{
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->fecha);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->fecha_pago);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->usuario);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->banco);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->cuenta);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->titular);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->clabe);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->metodo_pago);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $cobros[$i]->estado);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($i+8), $cobros[$i]->monto);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->fecha);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->fecha_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->metodo_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->banco);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->cuenta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->titular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->clabe);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $cobros[$i]->monto);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($i+8), $cobros[$i]->estado);
 		$total = $total + $cobros[$i]->monto;
 		$ultima_fila = $i+8;
+		$contador_filas++;
 			
 		}
 	
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($ultima_fila+1), "Total");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($ultima_fila+1), $total);
+		$subtitulos	=array("ID","Usuario","Fecha Solicitud","Fecha Pago","Metodo de Pago","Banco","N° Cuenta","Titular","CLABE","Monto","Estado");
+		$this->model_excel->setTemplateExcelReport ("Comisiones Pagadas y Por pagar",$subtitulos,$contador_filas,$this->excel);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+2), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($ultima_fila+2), $total);
 	
 		$filename='CuentasPagadas de '.$inicio.' al '.$fin.'.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type

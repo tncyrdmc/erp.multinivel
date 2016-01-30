@@ -97,10 +97,13 @@ class cuentasporcobrar extends compras{
 		foreach ($mercancias as $mercancia){
 			
 			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
+
 			$costoVenta=$mercancia->costo_unidad_total;
+
 			$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
 				
 		}
+		
 
 	}
 	
@@ -115,42 +118,26 @@ class cuentasporcobrar extends compras{
 			
 			$afiliado_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado,$id_red_mercancia);
 			
-			if(!$afiliado_padre)
+			if(!$afiliado_padre||$afiliado_padre[0]->debajo_de==1)
 				return false;
 			
 			$id_afiliado_padre=$afiliado_padre[0]->debajo_de;
 			
-			$valor_comision=($valor_comision_por_nivel[$i]->valor*$costoVenta)/100;
+			$valor_comision=(($valor_comision_por_nivel[$i]->valor*$costoVenta)/100);
 			
 			$this->modelo_compras->set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado_padre,$valor_comision);
 			
 			$id_afiliado=$id_afiliado_padre;
 		}
-		
+
 	}
 	
-							//	   $historico
+/*							//	   $historico
 	private function ComisionBanco($datosCuentaPagar,$id_red_mercancia){
-	/*	$venta_mercancia = $this->modelo_historial_consignacion->MercanciaPago($datosCuentaPagar[0]->id_venta);
-		
-		$id_mercancia = $venta_mercancia[0]->id_mercancia;
-		
-		$costo = $venta_mercancia[0]->cantidad * $this->modelo_compras->CostoMercancia($id_mercancia);
-		
-		
-		$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
-	*/	
-		
-		
-/*
-	//	$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
-		
-		*/
-		//$id_padre_afiliado = $this->model_perfil_red->ConsultarIdPadre( $datosCuentaPagar[0]->id_usuario, $id_red_mercancia);
 		$this->CalcularComision2($datosCuentaPagar[0]->id_venta, $id_red_mercancia,$valor_comision_por_nivel, $capacidad_red ,1,$datosCuentaPagar[0]->costo_unidad);
 		
 	}
-	
+	*/
 	private function EnvarMail($id_historial){
 		$datos = $this->modelo_historial_consignacion->Datos_Email($id_historial);
 		
@@ -164,13 +151,6 @@ class cuentasporcobrar extends compras{
 		$cobro['email'] = $datos[0]->email;
 		$cobro['fecha'] = $datos[0]->fecha;
 		
-		$this->load->library('email');
-		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
-		$this->email->to($datos[0]->email);
-		$this->email->subject('Confirmacion de pago por Banco');
-		$this->email->message($this->load->view('email/CuentasCobrar-html', $cobro, TRUE));
-		//$this->email->set_alt_message($this->load->view('email/activate-txt', $data, TRUE));
-		$this->email->send();
+		$this->cemail->send_email(5, $cobro['email'], $cobro);
 	}
 }

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Basic</title>
+<title><?=$tema?></title>
 	
 <style>
 *{margin:0;padding:0}*{font-family:"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif}img{max-width:100%}
@@ -26,9 +26,9 @@ table.footer-wrap{width:100%;clear:both !important}.footer-wrap .container td.co
 h1,h2,h3,h4,h5,h6{font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 	line-height:1.1;margin-bottom:15px;color:#000}
 h1 small,h2 small,h3 small,h4 small,h5 small,h6 small{font-size:60%;color:#6f6f6f;line-height:0;text-transform:none}
-h1{font-weight:200;font-size:44px}h2{font-weight:200;font-size:37px}h3{font-weight:500;font-size:27px}h4{font-weight:500;font-size:23px}
+h1{font-weight:200;font-size:44px}h2{font-weight:200;font-size:37px}h3{font-weight:500;font-size:27px;color:#00b4dc;}h4{font-weight:500;font-size:23px}
 h5{font-weight:900;font-size:17px}h6{font-weight:900;font-size:14px;text-transform:uppercase;color:#444}.collapse{margin:0 !important}
-p,ul{margin-bottom:10px;font-weight:normal;font-size:14px;line-height:1.6}p.lead{font-size:17px}p.last{margin-bottom:0}
+p,ul{margin-bottom:10px;font-weight:normal;font-size:14px;line-height:1.6}p.lead{font-size:17px; color: #17222d; font-style: italic}p.last{margin-bottom:0}
 ul li{margin-left:5px;list-style-position:inside}ul.sidebar{background:#ebebeb;display:block;list-style-type:none}
 ul.sidebar li{display:block;margin:0}
 ul.sidebar li a{text-decoration:none;color:#666;padding:10px 16px;margin-right:10px;cursor:pointer;border-bottom:1px solid #777;
@@ -56,8 +56,8 @@ table.social div[class="column"]{width:auto !important}}
 				<div class="content">
 					<table>
 						<tr>
-							<td><img src="/logo.png" height="30" width="142" /></td>
-							<td align="right"><h6 class="collapse">TEMA</h6></td>
+							<td><img src="<?=site_url('')?>/logo.png" height="30" width="142" /></td>
+							<td align="right"><h6 class="collapse"><?=$tema ? $tema : "TEMA"?></h6></td>
 						</tr>
 					</table>
 				</div>
@@ -78,13 +78,10 @@ table.social div[class="column"]{width:auto !important}}
 			<table>
 				<tr>
 					<td>
-						<h3>Sr@, Afiliado</h3>
-						<p class="lead">Asunto</p>
-						<p>Contenido</p>
-						<!-- Callout Panel -->
-						<p class="callout">
-							Nota: opcional <a href="#">Link opcional! &raquo;</a>
-						</p><!-- /Callout Panel -->					
+						<h3><?=$asunto ? $asunto : "asunto"?></h3>
+						<?php echo $sumario ? '<p class="lead">'.$sumario.'</p>' : '<p class="lead">sumario</p>'?>
+						<div class="col-md-12"><?=$contenido ? $contenido : "contenido"?></div>
+						<br /><br />				
 												
 						<!-- social & contact -->
 						<table class="social" width="100%">
@@ -96,7 +93,7 @@ table.social div[class="column"]{width:auto !important}}
 										<tr>
 											<td>				
 												
-												<img src="/logo.png"  width="100%" />
+												<img src="<?=site_url('')?>/logo.png"  width="100%" />
 													
 												
 											</td>
@@ -109,8 +106,11 @@ table.social div[class="column"]{width:auto !important}}
 											<td>				
 																			
 																								
-												<p>Phone: <strong>871 71 64</strong><br/>
-                Email: <strong><a href="emailto:info@smartadmin.com">contact@networksoft.mx</a></strong></p>
+												<p>
+												Telefono fijo: <strong><?=$fijo ? $fijo : "000 00 00"?></strong><br/>
+												Telefono movil: <strong><?=$movil ? $movil : "000 000 00 00"?></strong><br/>
+                								Email: <strong><a href="mailto:<?=$email ? $email : "you@domain.com"?>">
+                								<?=$email ? $email : "you@domain.com"?></a></strong></p>
                 
 											</td>
 										</tr>
@@ -144,7 +144,7 @@ table.social div[class="column"]{width:auto !important}}
 				<tr>
 					<td align="center">
 						<p>
-							<a style="color: white; text-decoration: none;" href="http://www.networksoft.mx">www.networksoft.mx</a>
+							<a style="color: white; text-decoration: none;" href="<?=$web ? $web : "#"?>">Visita nuestra página web</a>
 						</p>
 					</td>
 				</tr>
