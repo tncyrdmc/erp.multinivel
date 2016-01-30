@@ -61,14 +61,14 @@
 					<!-- widget div-->
 					<div>
 					<div class="widget-body">
-						<form id="form_empresa" enctype="multipart/form-data" method="post" action="/bo/configuracion/crear_banner" role="form" class="smart-form">
+						<form id="form_banner" method="post" action="/bo/configuracion/crear_banner" role="form" class="smart-form">
 						<fieldset>
 							<legend>Titulo del banner</legend>
 							<div class="row">
 								<section class="col col-3">
 									 <label class="input">
 										 Titulo
-										 <input required  type="text" id="titulo" name="titulo" value"<?=$img[0]->titulo?>" required>
+										 <input required  type="text" id="titulo" name="titulo" value="<?echo $img[0]->titulo?>" required>
 									 </label>
 								 </section>
 								 </div>
@@ -76,15 +76,15 @@
 					 <fieldset>
 						 <legend>Descripción del banner</legend>
 						 <div class="row">
-						 													<section style="padding-left: 0px;" class="col col-6">Descripcion
-														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown" value"<?=$img[0]->descripcion?>" required></textarea>
-													</section>
-														<!--<section class="col col-3">
+						 													<!--<section style="padding-left: 0px;" class="col col-6">Descripcion
+														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown" value="" required><?//echo $img[0]->descripcion?></textarea>
+													</section>-->
+														<section class="col col-3">
 														<label class="textarea"> 	
 														Descripción									
-															<textarea id="descripcion" name="descripcion" rows="3" class="custom-scroll" required></textarea> 
+															<textarea id="descripcion" name="descripcion" rows="3" class="custom-scroll" required><?echo $img[0]->descripcion?></textarea> 
 														</label>
-														</section>-->
+														</section>
 														</div>
 					 </fieldset>
 					 <fieldset>
@@ -95,7 +95,7 @@
 											        		Imágen actual
 											        	</label>
 															<?
-												            if($img){
+												            if($img[0]->nombre_banner!=""){
 												           	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="/media/Empresa/'.$img[0]->nombre_banner.'"></div>';
 												           }else{
 												           	echo "No hay imagen";
@@ -112,19 +112,13 @@
 														<label class="label">Imágen</label>
 														<div class="input input-file">
 															<span class="button">
-																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
+																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" value="<?=$img[0]->nombre_banner?>"  multiple>Buscar</span><input value="<?=$img[0]->nombre_banner?>" id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
 															</div>
-															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
+															<small><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
 														</section>
 							</div>
 						</fieldset>
 						<fieldset>
-						<legend>Vista previa del banner</legend>
-							<div class="row">
-								
-							</div>
-
-						</fieldset>
 						<footer>
 <button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
 							</footer>
@@ -235,7 +229,7 @@ $(document).ready(function() {
 
 })
 
-/*$( "#form_empresa" ).submit(function( event ) {
+$( "#form_banner" ).submit(function( event ) {
 	event.preventDefault();	
 	iniciarSpinner();
 	enviar();
@@ -245,30 +239,30 @@ function enviar()
 {
 	
 
-					$.ajax({
-						type: "POST",
-						url: "/bo/configuracion/crear_banner",
-						data: $("#form_empresa").serialize()
-					})
-					.done(function( msg )
-					{
-						bootbox.dialog({
-						message: msg,
-						title: 'Empresa',
-						buttons: {
-							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-								location.href="/bo/configuracion/banner";
-								FinalizarSpinner();
-							}
-						}
-					}
-				})//fin done ajax
-
-					});//Fin callback bootbox
-}*/
-
-
+				$.ajax({
+					type: "POST",
+					url: "/bo/configuracion/crear_banner",
+					data: $("#form_banner").serialize()
+				})
+				.done(function( msg )
+		{
+			bootbox.dialog({
+			message: msg,
+			title: 'Atención !!!',
+			buttons: {
+				success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+					location.href="/bo/configuracion/banner";
+					FinalizarSpinner();
+				}
+			}
+			}
+			});//fin done ajax
+	})
+}
 </script>
+
+
+

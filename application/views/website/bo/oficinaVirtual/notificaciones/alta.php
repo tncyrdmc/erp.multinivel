@@ -6,7 +6,7 @@
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
 							<span>>
 								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> 
-								> <a href="/bo/oficinaVirtual/notificaciones"> Notificaciones</a> > Alta
+								> <a href="/bo/notificaciones"> Notificaciones</a> > Alta
 							</span>
 						</h1>
 					</div>
@@ -23,7 +23,7 @@
 ?>				
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
-		<div class="row">
+		<div class="row"> 
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
@@ -45,14 +45,14 @@
 										<div class="row">
 <div class="row">
 	
-	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-6" id="reporte-form" method="POST"  action="/bo/notificaciones/ingresar_notify" enctype="multipart/form-data">
+	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-6" method="POST" id="nueva" action="/bo/notificaciones/ingresar_notify" role="form" >
 		
 		<div class="row">
 			<section class="col col-lg-1 col-md-12 col-sm-12 col-xs-12" id="" style="padding-right: 100px ! important;">
 				
 			</section>
 			<section class="col col-lg-10 col-md-12 col-sm-12 col-xs-12" id="" style="padding-right: 100px ! important;">
-				<legend>Nueva Notificación</legend><br>
+				<legend><i class="fa fa-comments fa-1x"></i> &nbsp;Nueva Notificación</legend><br>
 			</section>
 		</div>
 		
@@ -163,5 +163,62 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 
 <script type="text/javascript">	
-	
+
+$(function()
+		 {
+		 	a = new Date();
+			año = a.getFullYear()+20;
+			$( "#fecha_inicio" ).datepicker({
+			changeMonth: true,
+			numberOfMonths: 2,
+			maxDate: año+"-12-31",
+			dateFormat:"yy-mm-dd",
+			changeYear: true,
+			yearRange: "-0:+99",
+			});
+		});
+
+$(function()
+		 {
+		 	a = new Date();
+			año = a.getFullYear()+20;
+			$( "#fecha_fin" ).datepicker({
+			changeMonth: true,
+			numberOfMonths: 2,
+			maxDate: año+"-12-31",
+			dateFormat:"yy-mm-dd",
+			changeYear: true,
+			yearRange: "-0:+99",
+			});
+		});
+
+$( "#nueva" ).submit(function( event ) {
+	event.preventDefault();
+	enviar();
+});
+
+function enviar(){
+	iniciarSpinner();
+	$.ajax({
+		type: "POST",
+		url: "/bo/notificaciones/ingresar_notify",
+		data: $('#nueva').serialize()
+	}).done(function( msg ) {
+		bootbox.dialog({
+			message: msg,
+			title: 'ATENCION',
+			buttons: {
+				success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {										
+							location.href="/bo/notificaciones/listar";
+							FinalizarSpinner();
+					}
+				}					
+			}
+		})
+	});//fin Done ajax
+}
+
 </script>

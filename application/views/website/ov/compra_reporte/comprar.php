@@ -44,12 +44,12 @@
 												<img style="width: 18rem; height: auto; padding: 1rem;" src="/logo.png" alt="">
 				
 												<address>
-													<h4 class="semi-bold">Nombre Empresa.</h4>
-													Direccion Empresa
+													<h4 class="semi-bold"><?=$empresa[0]->nombre?></h4>
+													<?=$empresa[0]->direccion?>
 													<br>
-													Ciudad Empresa
+													<?=$empresa[0]->ciudad?>
 													<br>
-													<abbr title="Phone">Tel:</abbr> (123) 871-7164
+													<abbr title="Phone">Tel:</abbr>&nbsp;<?=$empresa[0]->fijo?>
 												</address>
 											</div>
 											<div class="pull-right">

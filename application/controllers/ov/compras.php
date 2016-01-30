@@ -313,6 +313,9 @@ function index()
 		$pais = $this->general->get_pais($id);
 		$this->template->set("pais_afiliado",$pais);
 		
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+		
 		$contenidoCarrito=$this->get_content_carrito ();
 
 		if(!$contenidoCarrito['compras'])

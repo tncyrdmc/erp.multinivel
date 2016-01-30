@@ -98,10 +98,10 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="/bo/oficinaVirtual/cupones">
+													<a href="/bo/notificaciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-ticket fa-3x"></i>
-															<h5>Cupones/Boletos</h5>
+															<i class="fa fa-comments fa-3x"></i>
+															<h5>Notificaciones</h5>
 														</div>
 													</a>
 												</div>

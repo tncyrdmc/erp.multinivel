@@ -65,8 +65,8 @@ class Notificaciones extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style(1);
 	
-		$notify=$this->model_admin->get_notify();
-		$this->template->set("notify",$notify);	
+		$notifies=$this->model_admin->get_notify();
+		$this->template->set("notifies",$notifies);	
 	
 		$this->template->set("style",$style);
 	
@@ -80,10 +80,10 @@ class Notificaciones extends CI_Controller
 	function kill_notify(){
 				
 			$validar=$this->model_admin->kill_notify($_POST['id']);
-			if($validar==null){				
-				echo "Se ha eliminado el Bono.";
+			if($validar){				
+				echo "Se ha eliminado la Notificación.";
 			}else{
-				echo "No se ha podido eliminar el Bono, esta asociado a un Plan de Bonos.";
+				echo "No se ha podido eliminar la Notificación.";
 			}
 			
 	}
@@ -106,6 +106,7 @@ class Notificaciones extends CI_Controller
 		$this->template->set("notify",$notify);
 	
 		$this->template->build('website/bo/oficinaVirtual/notificaciones/editar');
+		
 	
 	}
 	

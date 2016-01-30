@@ -81,7 +81,7 @@ class administracion extends CI_Controller
 			$success = "El cambio se ha efectuado satisfactoriamente.";
 			$this->session->set_flashdata('success', $success);
 		}
-			redirect("/bo/administracion/emails_departamentos");
+			redirect("/bo/configuracion/emails_departamentos");
 	}
 
 	

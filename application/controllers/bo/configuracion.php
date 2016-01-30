@@ -205,7 +205,8 @@ class configuracion extends CI_Controller
 		$this->template->build('website/bo/empresa/banner');
 	}
 	function crear_banner(){
-				if (!$this->tank_auth->is_logged_in())
+		
+		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
@@ -216,11 +217,12 @@ class configuracion extends CI_Controller
 		$ruta="/media/Empresa/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg';
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';
 	
 		//Cargamos la libreria con las configuraciones de arriba
+		
 		$this->load->library('upload', $config);
 
 				if (!$this->upload->do_multi_upload('img'))
@@ -234,7 +236,14 @@ class configuracion extends CI_Controller
 			
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->modificar_banner($data["upload_data"]);
-			redirect('/bo/configuracion/banner');
+			//redirect('/bo/configuracion/banner');
+			
+			$img = $this->model_admin->img_banner();
+			$empresa  = $this->model_admin->val_empresa_multinivel();
+			$this->template->set("empresa",$empresa);
+			$this->template->set("img",$img);
+			
+			$this->template->build('website/bo/configuracion/vista_previa');
 		}
 	}
 	

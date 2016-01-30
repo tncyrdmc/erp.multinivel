@@ -45,12 +45,12 @@
 				<textarea style="margin-left: 1rem;" rows="6" class="custom-scroll" name="descripcion" size="30" required placeholder="Descripcion"></textarea> 
 			</label>
 			<br>
-			<p>Nota: Si tu red es de frontalidad o prufundidad es infinita, en la configuracion ponle 0.</p><br>
+			<p>Nota: Si tu red es de frontalidad o profundidad es infinita, en la configuracion ponle 0.</p><br>
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
-				<input type="text" class="form-control" name="frontal" size="30" placeholder="frontalidad" required>
+				<input type="number" class="form-control" name="frontal" size="30" placeholder="frontalidad" required>
 	        </label>
 	        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
-				<input type="text" class="form-control" name="profundidad" size="30" placeholder="profundidad" required>
+				<input type="number" class="form-control" name="profundidad" size="30" placeholder="profundidad" required>
 	        </label>
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Crear</button>
 			</div>

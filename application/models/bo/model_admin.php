@@ -53,6 +53,35 @@ class model_admin extends CI_Model
 		return $q->result();
 	}
 	
+	function get_notify()
+	{
+		$q=$this->db->query("select * from notificacion");
+		return $q->result();
+	}
+	
+	function get_notify_activos()
+	{
+		$q=$this->db->query("select * from notificacion where estatus = 'ACT'");
+		return $q->result();
+	}
+	
+	function get_notify_id($id)
+	{
+		$q=$this->db->query("select * from notificacion where id = ".$id);
+		return $q->result();
+	}
+	
+	function kill_notify($id)
+	{
+		$this->db->query("delete from notificacion where id = ".$id);
+		return true;
+	}
+	
+	function estado_notify(){
+		$this->db->query("update notificacion set estatus = '".$_POST['estado']."' where id=".$_POST["id"]);
+		return true;
+	}
+	
 	function val_empresa_multinivel()
 	{
 		$empresa=$this->get_empresa_multinivel();
@@ -578,6 +607,36 @@ where(a.id_pais=b.Code)");
 	
 		$this->db->where('id_tributaria', $_POST['id']);
 		$this->db->update('empresa_multinivel', $dato);
+	
+		return true;
+	}
+	
+	function insert_notify()
+	{
+		$dato=array(
+				"fecha_inicio"     	=> $_POST['fecha_inicio'],
+				"fecha_fin"   		=> $_POST['fecha_fin'],
+				"nombre"     		=> $_POST['nombre'],
+				"descripcion"       => $_POST['descripcion']
+		);
+	
+		$this->db->insert('notificacion', $dato); 
+	
+		return true;
+	}
+	
+	function actualizar_notify()
+	{
+		$dato=array(
+				"id"     			=> $_POST['id'],
+				"fecha_inicio"     	=> $_POST['fecha_inicio'],
+				"fecha_fin"   		=> $_POST['fecha_fin'],
+				"nombre"     		=> $_POST['nombre'],
+				"descripcion"       => $_POST['descripcion']
+		);
+	
+		$this->db->where('id', $_POST['id']);
+		$this->db->update('notificacion', $dato);
 	
 		return true;
 	}
