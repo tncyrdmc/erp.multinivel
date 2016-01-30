@@ -353,6 +353,7 @@ function delete_telefono(id){
 	maxDate: año+"-12-31",
 	dateFormat:"yy-mm-dd",
 	changeYear: true
+	yearRange: "-99:+0",
 	});
 });
 

@@ -42,12 +42,12 @@
 							<form class="smart-form" action="/bo/capacidadRed/actualizar_capacidad_de_la_red" method="POST" role="form">
 
 								<legend>Capacidad de la Red </legend>
-								<spam>Nota: Si tu red es de frontalidad o prufundidad es infinita, en la configuracion ponle 0.</spam>
+								<spam>Nota: Si tu red es de frontalidad o profundidad es infinita, en la configuracion ponle 0.</spam>
 								<div class="form-group" style="width: 5rem; margin-top: 2rem;">
 									<label>Frontales</label> <input style="padding-left: 3rem;"
-										type="text" class="form-control" name="frontal"
+										type="number" class="form-control" name="frontal"
 										value='<?=$capacidadRed [0]->frontal;?>'> <label>Profundidad</label> <input style="padding-left: 3rem;"
-										type="text" class="form-control" name="profundidad"
+										type="number" class="form-control" name="profundidad"
 										value='<?=$capacidadRed [0]->profundidad;?>'>
 										<input type="hidden" value="<?php echo $_GET['id']; ?>" name="red">
 								</div>
