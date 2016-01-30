@@ -61,7 +61,7 @@
 					<!-- widget div-->
 					<div>
 					<div class="widget-body">
-						<form id="form_banner" enctype="multipart/form-data" method="post" action="/bo/configuracion/crear_banner" role="form" class="smart-form">
+						<form id="form_banner" method="post" action="/bo/configuracion/crear_banner" role="form" class="smart-form">
 						<fieldset>
 							<legend>Titulo del banner</legend>
 							<div class="row">
@@ -229,9 +229,9 @@ $(document).ready(function() {
 
 })
 
-/*$( "#form_banner" ).submit(function( event ) {
+$( "#form_banner" ).submit(function( event ) {
 	event.preventDefault();	
-	//iniciarSpinner();
+	iniciarSpinner();
 	enviar();
 });
 
@@ -245,32 +245,24 @@ function enviar()
 					data: $("#form_banner").serialize()
 				})
 				.done(function( msg )
-	{
-		bootbox.dialog({
-		message: msg,
-		title: 'Atención !!!',
-	})//fin done ajax
-	});
-}*/
-
-
-/*done(function( msg )
-					{
-						bootbox.dialog({
-						message: msg,
-						title: 'Empresa',
-						buttons: {
-							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-								location.href="/bo/configuracion/banner";
-								FinalizarSpinner();
-							}
-						}
-					}
-				})//fin done ajax
-
-					});*///Fin callback bootbox
-
+		{
+			bootbox.dialog({
+			message: msg,
+			title: 'Atención !!!',
+			buttons: {
+				success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+					location.href="/bo/configuracion/banner";
+					FinalizarSpinner();
+				}
+			}
+			}
+			});//fin done ajax
+	})
+}
 </script>
+
+
+
