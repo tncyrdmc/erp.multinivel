@@ -452,7 +452,7 @@
 												</div>
 												<?php }?>
 												<div class="col-sm-2">
-													<a href="cabecera/email">
+													<a href="cabecera/sugerencia">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-send fa-3x"></i>
 															<h5>Sugerencias</h5>

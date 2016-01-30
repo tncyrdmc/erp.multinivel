@@ -152,6 +152,29 @@ class cabecera extends CI_Controller
 		
 		
 	}
+	
+	function sugerencia()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->general->get_style($id);
+	
+		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/cabecera/view_sugerencia');
+	
+	
+	}
+	
 	function envia_mail()
 	{
 		$this->load->library('Email');
@@ -195,6 +218,33 @@ class cabecera extends CI_Controller
 			echo "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
 		}
 	}
+	
+	function envia_mail_sugerencia()
+	{
+		$this->load->library('Email');
+	
+		$id=$this->tank_auth->get_user_id();
+		$email=$this->model_cabecera->get_mail($id);
+		$email=$email[0]->email;
+	
+		$usuario=$this->general->get_username($id);
+		$nombre=$usuario[0]->nombre." ".$usuario[0]->apellido;
+	
+		$this->email->from($email, $nombre);
+			
+		$this->email->to($_POST['departamento']);
+		$mensaje=$_POST['mensaje'];
+		$this->email->message($mensaje);
+		$this->email->subject($_POST['subject']);
+
+	
+		if($this->email->send()){
+			echo "Se ha enviado el email Exitosamente .";
+		}else{
+			echo "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
+		}
+	}
+	
 	function send_mail(){
 		
 			$email=$_POST['emaild'];
