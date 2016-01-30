@@ -161,16 +161,24 @@
 																<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados Nuevos en el Mes 
 																<b class="badge bg-color-red bounceIn animated"> 21 </b> </span>
 																<ul>
-																	<li class="message">
+																    <?php 
+																    
+																	foreach ($notifies as $notify){
+																		$fecha_inicio = substr($notify->fecha_inicio, 0 , 10);
+																		$fecha_fin = substr($notify->fecha_fin, 0 , 10);
+																		if (date("Y-m-d") >= $fecha_inicio && date("Y-m-d") <= $fecha_fin){
+																		echo '<li class="message">
 																		<img src="/template/img/avatars/5.png" style="width: 5rem;" class="online" alt="">
 																		<div class="message-text">
 																			<time>
-																				2016-01-01
+																				'.$fecha_inicio.'
 																			</time> 
-																				<a href="javascript:void(0);" class="username">Bienvenido</a> 
-																				Te damos la invitacion a nuestra empresa , para que conozcas nuestra oficina virtual.
+																				<a href="javascript:void(0);" class="username">'.$notify->nombre.'</a> 
+																				'.$notify->descripcion.'
 																		</div>
-																	</li>
+																	</li>';
+																		}}
+																	?>		
 																	
 
 																	<?php 
@@ -193,7 +201,9 @@
 																		</div>
 																	</li>';
 																		}
-																	?>
+																	?>																
+																	
+																	
 																</ul>
 															</div>
 															</div>

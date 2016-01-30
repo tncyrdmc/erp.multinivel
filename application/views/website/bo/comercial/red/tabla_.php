@@ -168,7 +168,7 @@
 			            <th data-hide="phone,tablet">Nombre</th>
 			            <th data-hide="phone,tablet">Apellido</th>
 				        <th data-hide="phone,tablet">e-mail</th>
-				        <th data-hide="phone">Tipo usuario</th>
+				        <th data-hide="phone">Redes</th>
 				        <th>Accion</th>
 			        </tr>
 			    </thead>
@@ -195,7 +195,7 @@
 			            <td><?php echo $afiliado->nombre?></td>
 			            <td><?php echo $afiliado->apellido?></td>
 				        <td><?php echo $afiliado->email?></td>
-				        <td><?php echo $afiliado->descripcion?></td>
+				        <td><?php echo $afiliado->redes?></td>
 				        <td>
 				        	
 				        	<?if($afiliado->estatus=='Desactivado'){?>

@@ -59,6 +59,12 @@ class model_admin extends CI_Model
 		return $q->result();
 	}
 	
+	function get_notify_activos()
+	{
+		$q=$this->db->query("select * from notificacion where estatus = 'ACT'");
+		return $q->result();
+	}
+	
 	function get_notify_id($id)
 	{
 		$q=$this->db->query("select * from notificacion where id = ".$id);

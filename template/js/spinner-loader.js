@@ -28,7 +28,7 @@ function setiniciarSpinner(){
 			, speed: 1 // Rounds per second
 			, trail: 60 // Afterglow percentage
 			, fps: 10 // Frames per second when using setTimeout() as a fallback for CSS
-			, zIndex: 2e9 // The z-index (defaults to 2000000000)
+			, zIndex: 1 // The z-index (defaults to 2000000000)
 			, className: 'spinner' // The CSS class to assign to the spinner
 			, top: '50%' // Top position relative to parent
 			, left: '50%' // Left position relative to parent
@@ -38,7 +38,7 @@ function setiniciarSpinner(){
 			}
 			
 			var spinner = new Spinner(opts).spin(document.getElementById('spinner-div'));
-		//	$('#spinner-div').attr('class', "modal-backdrop fade in");
+			$('#spinner-div').attr('class', "div-fade");
 			
 	}
 

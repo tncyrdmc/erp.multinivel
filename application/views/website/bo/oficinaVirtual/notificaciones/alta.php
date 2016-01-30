@@ -6,7 +6,7 @@
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
 							<span>>
 								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> 
-								> <a href="/bo/oficinaVirtual/notificaciones"> Notificaciones</a> > Alta
+								> <a href="/bo/notificaciones"> Notificaciones</a> > Alta
 							</span>
 						</h1>
 					</div>
