@@ -168,19 +168,20 @@
 																	<section class="col col-10">
 																		<label class="label "><b>Saldo Disponible</b></label>
 																		<label class="input input state-success">
-																			<input type="text" name="saldo" class="from-control" id="saldo" value="<?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)), 2, '.', ''); ?>" readonly />
+																			<input type="text" name="saldo"  class="from-control" id="saldo" value="<?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)), 2, '.', ''); ?>" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-10">
 																		<label class="label"><b>Pedir Dinero</b></label>
 																		<label class="input">
+																			<i class="icon-prepend fa fa-money"></i>
 																			<input name="cobro" type="number" class="from-control" id="cobro"/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
 																		<label class="label"><b>Saldo Final</b></label>
-																		<label class="input input state-error">
-																			<input value="" type="number" name="neto" id="neto" class="from-control" readonly />
+																		<label class="input state-disabled state-error">
+																			<input value="" type="number" disabled="disabled" name="neto" id="neto" class="from-control" readonly />
 																		</label>
 																	</section>
 																</fieldset>	
@@ -188,31 +189,36 @@
 																	<section class="col col-10">
 																		<label class="label"><b>Titular Cuenta</b></label>
 																		<label class="input">
+																		<i class="icon-prepend fa fa-user"></i>
 																			<input name="ctitular" type="text" class="from-control" id="ctitular"/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
 																		<label class="label "><b>Numero de la cuenta</b></label>
 																		<label class="input input">
+																		<i class="icon-prepend fa fa-credit-card"></i>
 																			<input type="number" name="ncuenta" class="from-control" id="ncuenta" value="" required/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
 																		<label class="label"><b>Banco</b></label>
 																		<label class="input">
+																			<i class="icon-prepend fa fa-bank"></i>
 																			<input name="cbanco" type="text" class="from-control" id="cbanco"/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
 																		<label class="label"><b>CLABE (Solo en Mexico)</b></label>
 																		<label class="input input">
+																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
 																			<input value="" type="number" name="cclabe" id="cclabe" class="from-control" />
 																		</label>
 																	</section>
 																</fieldset>	
 																
 																<footer>
-																	<button type="button" onclick="cobrar()" class="btn btn-primary" id="enviar">
+																	<button type="button" onclick="cobrar()" class="btn btn-success" id="enviar">
+																	<i class="glyphicon glyphicon-ok"></i>
 																		Cobrar
 																	</button>
 																</footer>
@@ -296,6 +302,7 @@ function cobrar() {
 	})
 	.done(function( msg )
 	{
+		
 		bootbox.dialog({
 		message: msg,
 		title: 'Transacion',
@@ -304,7 +311,7 @@ function cobrar() {
 			label: "Aceptar",
 			className: "btn-success",
 			callback: function() {
-
+					iniciarSpinner();
 					$.ajax({
 						type: "POST",
 						url: "/ov/billetera2/cobrar",
@@ -312,7 +319,7 @@ function cobrar() {
 					})
 					.done(function( msg )
 					{
-						
+						FinalizarSpinner();
 						bootbox.dialog({
 						message: msg,
 						title: '',

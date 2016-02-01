@@ -99,10 +99,10 @@ $(document).ready(function() {
 			    
 			  });
 	
-	pageSetUp();
+	pageSetUp(); 
 });
 
-
+/*
 $("#remove_step").click(function() {
 	$("#tipo_plan").attr("name","tipo_plan");
 	$('.wizard').wizard('selectedItem', {
@@ -146,7 +146,7 @@ $("#plan4").click(function(event) {
 	$("#plancuatro").addClass('packselected');
 });
 
-
+*/
 
 /*
 CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
@@ -175,7 +175,7 @@ function codpos()
 		})
 	}
 }
-
+/*
 function SelecionarFase()
 {
 	$.ajax({
@@ -200,7 +200,7 @@ function SelecionarFase()
 		});
 	});
 }
-
+*//*
 function faseCambio(fase){
 	
 	bootbox.dialog({
@@ -239,7 +239,7 @@ function faseCambio(fase){
 	});
 	
 }
-
+*/
 function use_username()
 {
 	$('#username').val($('#username').val().replace(" ",""));
@@ -342,7 +342,7 @@ function agregar_red(tipo)
 }
 function delete_telefono(id){
 	$("#tel_red_"+id+"").remove();	
-}
+}/*
  $(function()
  {
  	a = new Date();
@@ -356,7 +356,7 @@ function delete_telefono(id){
 	yearRange: "-99:+0",
 	});
 });
-
+*/
 function subred(id)
 {
 	$("#"+id).children(".quitar").attr('onclick','');
@@ -730,6 +730,7 @@ function botbox(nombre, id, lado)
 		+'});',
 		title: "Afiliar a "+nombre,
 	});
+	
 	$('.wizard_r').on('finished.fu.wizard', function (e, data) {
 
 		  $( ".invalid" ).remove();
@@ -767,6 +768,8 @@ function botbox(nombre, id, lado)
 					if(validacion&&validacion_)
 					{
 						setiniciarSpinner();
+						$('.btn-next').attr('disabled','disabled');
+						$('.btn-prev').attr('disabled','disabled');
 						var id=$("#id").val();
 						$.ajax({
 		                       url:"/auth/register",
@@ -811,7 +814,7 @@ function botbox(nombre, id, lado)
 			    
 			  });
 
-		$("#remove_step_r").click(function(event) {
+	/*	$("#remove_step_r").click(function(event) {
 
 			$("#tipo_plan_r").attr("name","tipo_plan");
 			$('.wizard_r').wizard('selectedItem', {
@@ -851,7 +854,7 @@ function botbox(nombre, id, lado)
 			$("#plandos_r").removeClass('packselected');
 			$("#plantres_r").removeClass('packselected');
 			$("#plancuatro_r").addClass('packselected');
-		});
+		});*/
 }
 function check_keyword()
 {
@@ -965,7 +968,7 @@ function detalles(id)
 		});
 	});
 }
-function InformarPremio(premio){
+/*function InformarPremio(premio){
 	$.ajax({
 		type: "POST",
 		url: "ConsultarPremio",
@@ -987,7 +990,7 @@ function InformarPremio(premio){
 			}
 		});
 	});
-}
+}*/
 </script>
 <!-- MAIN CONTENT -->
 <div id="content">

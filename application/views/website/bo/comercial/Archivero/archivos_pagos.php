@@ -59,7 +59,7 @@
 							<table  id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 								<thead>
 									<tr>
-										<th data-hide="phone">ID</th>
+										<th aria-sort="descending" class="sorting_desc" data-hide="phone">ID</th>
 										<th data-hide="phone">Nombre</th>
 										<th data-class="expand">Fecha</th>
 										<th></th>

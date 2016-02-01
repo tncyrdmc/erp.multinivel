@@ -267,7 +267,7 @@ class CuentasPagar extends CI_Controller
 		$style = $this->modelo_dashboard->get_style(1);
 	
 		$archivos = array();
-		$ruta = $_SERVER['DOCUMENT_ROOT']."/media/reportes/";
+		$ruta = getcwd()."/media/reportes/";
 		if(is_dir($ruta)){
 			if($aux = opendir($ruta)){
 				while (($archivo = readdir($aux)) != false){

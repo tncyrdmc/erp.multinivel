@@ -343,6 +343,7 @@ function agregar_red(tipo)
 function delete_telefono(id){
 	$("#tel_red_"+id+"").remove();	
 }
+/*
  $(function()
  {
  	a = new Date();
@@ -356,7 +357,7 @@ function delete_telefono(id){
 	yearRange: "-99:+0",
 	});
 });
-
+*/
 function subred(id)
 {
 	$("#"+id).children(".quitar").attr('onclick','');
@@ -767,6 +768,8 @@ function botbox(nombre, id, lado)
 					if(validacion&&validacion_)
 					{
 						setiniciarSpinner();
+						$('.btn-next').attr('disabled','disabled');
+						$('.btn-prev').attr('disabled','disabled');
 						var id=$("#id").val();
 						$.ajax({
 		                       url:"/auth/register",
@@ -811,7 +814,7 @@ function botbox(nombre, id, lado)
 			    
 			  });
 
-		$("#remove_step_r").click(function(event) {
+	/*	$("#remove_step_r").click(function(event) {
 
 			$("#tipo_plan_r").attr("name","tipo_plan");
 			$('.wizard_r').wizard('selectedItem', {
@@ -851,7 +854,7 @@ function botbox(nombre, id, lado)
 			$("#plandos_r").removeClass('packselected');
 			$("#plantres_r").removeClass('packselected');
 			$("#plancuatro_r").addClass('packselected');
-		});
+		});*/
 }
 function check_keyword()
 {

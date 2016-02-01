@@ -96,7 +96,9 @@ class general extends CI_Model
 			}
 		}else {
 			//validarPaquetes
+			
 			return $this->validarPaqueteInscripcion($id);
+		
 		}
 	}
 	
@@ -190,7 +192,7 @@ class general extends CI_Model
 									and m.id_tipo_mercancia=5
 									and v.id_user='".$id."'
 									and m.sku=me.id
-									and DATEDIFF(now(),v.fecha)<=me.caducidad");
+									and (DATEDIFF(now(),v.fecha)<=me.caducidad or me.caducidad=0)");
 		}elseif ($id_tipo_mercancia == 2){
 			$q = $this->db->query("SELECT v.id_venta,v.fecha,pa.caducidad,DATEDIFF(now(),v.fecha)as dias_activacion FROM venta v,cross_venta_mercancia cvm,mercancia m,paquete_inscripcion pa
 									where v.id_estatus='ACT'
@@ -199,7 +201,7 @@ class general extends CI_Model
 									and m.id_tipo_mercancia=4
 									and v.id_user='".$id."'
 									and m.sku=pa.id_paquete
-									and DATEDIFF(now(),v.fecha)<=pa.caducidad");
+									and (DATEDIFF(now(),v.fecha)<=pa.caducidad or pa.caducidad=0)");
 		}elseif($id_tipo_mercancia == 3) {
 			$q = $this->db->query("SELECT v.id_venta,v.fecha FROM venta v,cross_venta_mercancia cvm,mercancia m
 									where v.id_estatus='ACT'
