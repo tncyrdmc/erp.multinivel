@@ -205,19 +205,11 @@ class configuracion extends CI_Controller
 		$this->template->build('website/bo/empresa/banner');
 	}
 	function crear_banner(){
-		
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-		
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-		$id = $this->tank_auth->get_user_id();
-		$ruta="/media/Empresa/";
+
+		/*$ruta="/media/Empresa/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png|jpeg';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';
 	
@@ -227,7 +219,7 @@ class configuracion extends CI_Controller
 
 				if (!$this->upload->do_multi_upload('img'))
 		{
-			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el producto.";
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el banner.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/configuracion/banner');
 		}
@@ -237,6 +229,36 @@ class configuracion extends CI_Controller
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->modificar_banner($data["upload_data"]);
 			//redirect('/bo/configuracion/banner');
+			
+			$img = $this->model_admin->img_banner();
+			$empresa  = $this->model_admin->val_empresa_multinivel();
+			$this->template->set("empresa",$empresa);
+			$this->template->set("img",$img);
+			
+			$this->template->build('website/bo/configuracion/vista_previa');
+		}*/
+
+		$ruta="/media/Empresa/";
+		//definimos la ruta para subir la imagen
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
+		$config['max_width']  		= '4096';
+		$config['max_height']   	= '3112';
+	
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+	
+		if (!$this->upload->do_multi_upload('img'))
+		{
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el banner.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/configuracion/banner');
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->get_multi_upload_data());
+			$this->model_admin->modificar_banner($data["upload_data"]);
 			
 			$img = $this->model_admin->img_banner();
 			$empresa  = $this->model_admin->val_empresa_multinivel();
