@@ -357,14 +357,14 @@ function delete_telefono(id){
 	});
 });
 */
-function subred(id)
+function subred(id,profundidad)
 {
 	$("#"+id).children(".quitar").attr('onclick','');
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/get_red_afiliar",
 		data: {id: id,
-				red: <?php echo $_GET['id']; ?>},
+				red: <?php echo $_GET['id']; ?>,profundidad: profundidad,},
 	})
 	.done(function( msg )
 	{
@@ -1065,19 +1065,16 @@ function detalles(id)
                                                         if($key->debajo_de==$id)
                                                         {?>
 														<li id="<?=$key->id_afiliado?>">
-															<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>)" href="#"></a>
+															<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>, 1)" href="#"></a>
 															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
 														</li>
 														<?}
 													}
-													for ( $i = $aux ; $i < count($red_frontales[0]->frontal)+1 ; $i++){?>
+													for ( $i = $aux ; $i < $red_frontales[0]->frontal ; $i++){?>
 															<li>
 																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
 												            </li>
 														<? } ?>
-														<li>
-															<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
-												        </li>
 													</ul>
 												</li>
 											</ul>

@@ -90,9 +90,14 @@ class perfil_red extends CI_Controller
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
-		$frontales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
-		$frontales= $frontales[0]->frontal;
+		$nivel=$_POST['profundidad'];
+		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$frontales= $red[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
+		
+		if($nivel >= $red[0]->profundidad){
+			return 0;
+		}
 		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
@@ -139,18 +144,19 @@ class perfil_red extends CI_Controller
 					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
 					echo "
 					<li id='".$afiliado[0]->user_id."'>
-		            	<a class='quitar' onclick='subred(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		            	<a class='quitar' onclick='subred(".$afiliado[0]->user_id.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
 		            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
 		            </li>";
 					
 	        	}
 	        	
 			}
+
 			if($aux > 0){
-				for($i=$aux; $i < count($afiliados)+1; $i++){
+				for($i=$aux; $i < $frontales; $i++){
 					echo "<li>
 								<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
-											</li>";
+						  </li>";
 				}
 			}
 			echo "</ul>";
@@ -703,14 +709,18 @@ class perfil_red extends CI_Controller
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		
 		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
+		if(!$red)
+			redirect('/ov/perfil_red/afiliar?tipo=1');
+		
 		$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		$planes 		 = $this->model_planes->Planes();
 	
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
-	
+
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
 		{
