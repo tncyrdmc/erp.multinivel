@@ -457,7 +457,7 @@ class model_mercancia extends CI_Model {
 		}
 	}
 	function img_merc($id, $data) {
-		foreach ( $data as $key ) {
+		/*foreach ( $data as $key ) {
 			$explode = explode ( ".", $key ["file_name"] );
 			$nombre = $explode [0];
 			$extencion = $explode [1];
@@ -467,8 +467,17 @@ class model_mercancia extends CI_Model {
 					"nombre" => $nombre,
 					"extencion" => $extencion,
 					"estatus" => "ACT" 
+			);*/
+			$explode = explode ( ".", $data );
+			$nombre = $explode [0];
+			$extencion = $explode [1];
+			$dato_img = array (
+					"url" => "/media/carrito/" . $data,
+					"nombre_completo" => $data,
+					"nombre" => $nombre,
+					"extencion" => $extencion,
+					"estatus" => "ACT" 
 			);
-			
 			$this->db->insert ( "cat_img", $dato_img );
 			
 			$id_foto = mysql_insert_id ();
@@ -478,7 +487,7 @@ class model_mercancia extends CI_Model {
 					"id_cat_imagen" => $id_foto 
 			);
 			$this->db->insert ( "cross_merc_img", $dato_cross_img );
-		}
+		//}
 	}
 
 

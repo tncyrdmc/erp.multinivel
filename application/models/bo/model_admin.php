@@ -148,7 +148,7 @@ class model_admin extends CI_Model
 		function modificar_banner($data){
 		$nombre_imagen="";
 			foreach ( $data as $key ) {
-			$nombre_imagen=$key ["file_name"];
+			$nombre_imagen=$key['file_name'];
 			}
 			$this->db->query('delete from banner where id=1');
 			$dato_banner= array(
@@ -293,6 +293,7 @@ class model_admin extends CI_Model
 								where CI.id_img = CMI.id_cat_imagen and CMI.id_mercancia = M.id and M.id = '.$id);
 		
 		$q=$this->db->query('delete from mercancia where id = '.$id);
+		$u=$this->db->query('delete from cross_merc_impuesto where id_mercancia = '.$id);
 		
 		return $datos->result();
 	}

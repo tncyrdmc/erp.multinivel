@@ -205,40 +205,11 @@ class configuracion extends CI_Controller
 		$this->template->build('website/bo/empresa/banner');
 	}
 	function crear_banner(){
-
-		/*$ruta="/media/Empresa/";
-		//definimos la ruta para subir la imagen
-		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
-		$config['max_width']  		= '4096';
-		$config['max_height']   	= '3112';
-	
-		//Cargamos la libreria con las configuraciones de arriba
-		
-		$this->load->library('upload', $config);
-
-				if (!$this->upload->do_multi_upload('img'))
-		{
-			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el banner.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/configuracion/banner');
-		}
-		else
-		{
-			
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_admin->modificar_banner($data["upload_data"]);
-			//redirect('/bo/configuracion/banner');
-			
-			$img = $this->model_admin->img_banner();
-			$empresa  = $this->model_admin->val_empresa_multinivel();
-			$this->template->set("empresa",$empresa);
-			$this->template->set("img",$img);
-			
-			$this->template->build('website/bo/configuracion/vista_previa');
-		}*/
-
+		$id = $this->tank_auth->get_user_id();
 		$ruta="/media/Empresa/";
+		$consulta_img=$this->model_admin->img_banner();
+		unlink(getcwd().$ruta.$consulta_img[0]->nombre_banner);
+		
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
 		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
@@ -248,7 +219,7 @@ class configuracion extends CI_Controller
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
-	
+
 		if (!$this->upload->do_multi_upload('img'))
 		{
 			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el banner.";
@@ -257,15 +228,13 @@ class configuracion extends CI_Controller
 		}
 		else
 		{
+			
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_admin->modificar_banner($data["upload_data"]);
-			
-			$img = $this->model_admin->img_banner();
-			$empresa  = $this->model_admin->val_empresa_multinivel();
-			$this->template->set("empresa",$empresa);
-			$this->template->set("img",$img);
-			
-			$this->template->build('website/bo/configuracion/vista_previa');
+			$sku = $this->model_admin->modificar_banner($data["upload_data"]);
+			//$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			$error = "Se ha modificado el banner.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/configuracion/banner');
 		}
 	}
 	

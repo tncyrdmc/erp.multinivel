@@ -20,6 +20,7 @@
 		</div>
 	</div>
 		<?php if($this->session->flashdata('error')) {
+			if($this->session->flashdata('error')!="Se ha modificado el banner."){
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
 									×
@@ -27,6 +28,15 @@
 								<i class="fa-fw fa fa-check"></i>
 								<strong>Error </strong> '.$this->session->flashdata('error').'
 			</div>'; 
+			}else{
+				echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>completado </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+			}
 	}
 	?>	
 	<section id="widget-grid" class="">
@@ -68,7 +78,7 @@
 								<section class="col col-3">
 									 <label class="input">
 										 Titulo
-										 <input required  type="text" id="titulo" name="titulo" value="<?echo $img[0]->titulo?>" required>
+										 <input required  type="text" id="titulo" name="titulo" value="<?=$img[0]->titulo?>" required>
 									 </label>
 								 </section>
 								 </div>
@@ -82,7 +92,7 @@
 														<section class="col col-3">
 														<label class="textarea"> 	
 														Descripción									
-															<textarea id="descripcion" name="descripcion" rows="3" class="custom-scroll" required><?echo $img[0]->descripcion?></textarea> 
+															<textarea id="descripcion" name="descripcion" rows="3" class="custom-scroll" required><?=$img[0]->descripcion?></textarea> 
 														</label>
 														</section>
 														</div>
@@ -109,9 +119,9 @@
 														<div class="input input-file">
 															<span class="button"> <input id="img" name="img[]"
 																onchange="this.parentNode.nextSibling.value = this.value"
-																type="file" multiple>Buscar
-															</span><input id="imagen_mr"
-																placeholder="Agregar alguna imágen" type="text">
+																type="file" value="<?$img[0]->nombre_banner?>" multiple>Buscar
+															</span><?$img[0]->nombre_banner?><input id="imagen_mr"
+																placeholder="Agregar alguna imágen" value="<?$img[0]->nombre_banner?>" type="text">
 														</div>
 														<small><cite
 															title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite>

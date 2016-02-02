@@ -359,7 +359,7 @@ class admin extends CI_Controller
 		
 		$this->template->set("grupos",$grupos);
 		echo '<div class="row">
-				<form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" >  
+				<form class="smart-form" id="update_merc" name="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" >  
 			<h3><center><b>Editar mercancía '.$data_merc[0]->nombre.'</b></center></h3>';
 		if($id_merc==1)
 		{
@@ -812,10 +812,11 @@ class admin extends CI_Controller
 			$id_img = $this->model_admin->traer_id_imagen_merc($sku);
 			
 			$datos = $this->model_admin->traer_foto($sku);
-				
+			
 			if(unlink($_SERVER['DOCUMENT_ROOT'].$datos[0]->url)){
 				//echo "File Deleted.";
 			}
+			
 			
 			$this->model_admin->del_imagen($id_img[0]->id_cat_imagen);
 			
@@ -824,7 +825,9 @@ class admin extends CI_Controller
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->img_merc($sku,$data["upload_data"]);
 		}
-		//redirect("/bo/comercial/carrito");
+			$msj = "Se ha modificado la mercancia.";
+			$this->session->set_flashdata('msj', $msj);
+		redirect("/bo/comercial/carrito");
 	}
 	
 	function detalle_paquete()

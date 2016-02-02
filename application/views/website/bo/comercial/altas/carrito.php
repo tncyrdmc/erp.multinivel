@@ -53,6 +53,26 @@
 							<!-- This area used as dropdown edit box -->
 							
 						</div>
+								<?php if($this->session->flashdata('msj')) {
+			if($this->session->flashdata('msj')!="Se ha modificado la mercancia."){
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('msj').'
+			</div>'; 
+			}else{
+				echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>completado </strong> '.$this->session->flashdata('msj').'
+			</div>'; 
+			}
+	}
+	?>	
 						<!-- end widget edit box -->
 						<!-- widget content -->
 						<div class="widget-body">

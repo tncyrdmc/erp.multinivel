@@ -901,7 +901,7 @@ calcular_precio_total();
 ProductoPorPaisTodo()
 ImpuestosPais();	
 }
-$( "#update_merc" ).submit(function( event ) {
+/*$( "#update_merc" ).submit(function( event ) {
 	event.preventDefault();
 	if(contar_producto() || contar_servicio()){
 		enviar();
@@ -910,7 +910,7 @@ $( "#update_merc" ).submit(function( event ) {
 		alert("No hay ningun producto o servicio para este pais, debe darlo de alta primero");
 	}
 
-});
+});*/
 function contar_producto(){
 	var contador=0;
 $('select[name="producto[]"]').each(function() {	

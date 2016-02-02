@@ -232,7 +232,7 @@ if($datos['pais'] == "-"){
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		
-		if (!$this->upload->do_multi_upload('img'))
+		if (!$this->upload->do_upload('img'))
 		{
 			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
 			$this->session->set_flashdata('error', $error);
@@ -241,8 +241,8 @@ if($datos['pais'] == "-"){
 		else
 		{
 			$sku = $this->model_mercancia->nuevo_servicio();
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			$data = array('upload_data' => $this->upload->data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 			redirect('/bo/comercial/carrito');
 			
 		}
@@ -285,7 +285,7 @@ if($datos['pais'] == "-"){
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		
-		if (!$this->upload->do_multi_upload('img'))
+		if (!$this->upload->do_upload('img'))
 		{
 			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
 			$this->session->set_flashdata('error', $error);
@@ -294,8 +294,8 @@ if($datos['pais'] == "-"){
 		else
 		{
 			$sku = $this->model_mercancia->nueva_membresia();
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			$data = array('upload_data' => $this->upload->data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 			redirect('/bo/comercial/carrito');
 			
 		}
@@ -342,7 +342,7 @@ if($datos['pais'] == "-"){
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 	
-		if (!$this->upload->do_multi_upload('img'))
+		if (!$this->upload->do_upload('img'))
 		{
 			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el producto.";
 			$this->session->set_flashdata('error', $error);
@@ -351,8 +351,8 @@ if($datos['pais'] == "-"){
 		else
 		{
 			$sku = $this->model_mercancia->nuevo_producto();
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			$data = array('upload_data' => $this->upload->data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 			redirect('/bo/comercial/carrito');
 		}
 		
@@ -402,7 +402,7 @@ if($datos['pais'] == "-"){
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		
-		if (!$this->upload->do_multi_upload('img'))
+		if (!$this->upload->do_upload('img'))
 		{
 			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
 			$this->session->set_flashdata('error', $error);
@@ -411,8 +411,8 @@ if($datos['pais'] == "-"){
 		else
 		{
 			$sku = $this->model_mercancia->nuevo_combinado();
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			$data = array('upload_data' => $this->upload->data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 		}
 		redirect('/bo/comercial/carrito');
 	}
@@ -461,7 +461,7 @@ if($datos['pais'] == "-"){
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 	
-		if (!$this->upload->do_multi_upload('img'))
+		if (!$this->upload->do_upload('img'))
 		{
 			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
 			$this->session->set_flashdata('error', $error);
@@ -470,8 +470,8 @@ if($datos['pais'] == "-"){
 		else
 		{
 			$sku = $this->model_mercancia->nuevo_paquete();
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			$data = array('upload_data' => $this->upload->data());
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 		}
 		redirect('/bo/comercial/carrito');
 	}
