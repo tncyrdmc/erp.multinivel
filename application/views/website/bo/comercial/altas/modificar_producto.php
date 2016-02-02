@@ -668,7 +668,7 @@ function select_pais(){
 calcular_precio_total();
 ImpuestosPais();	
 }
-$( "#update_merc" ).submit(function( event ) {
+/*$( "#update_merc" ).submit(function( event ) {
 	event.preventDefault();
 		enviar();
 });
@@ -700,7 +700,7 @@ function enviar() {
 					
 						});//fin Done ajax
 	
-}
+}*/
 
 
 </script>
