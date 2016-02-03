@@ -91,47 +91,6 @@ class cuentasporcobrar extends compras{
 		echo  "Se han eliminado todos los datos de la venta.";
 	}
 	
-	private function pagarComisionVenta($id_venta,$id_afiliado_comprador){
-		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
-		
-		foreach ($mercancias as $mercancia){
-			
-			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
-
-			$costoVenta=$mercancia->costo_unidad_total;
-
-			$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
-				
-		}
-		
-
-	}
-	
-	private function calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado){
-		
-		$valor_comision_por_nivel = $this->modelo_compras->ValorComision($id_red_mercancia);
-		$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red_mercancia);
-		$profundidadRed=$capacidad_red[0]->profundidad;
-
-		
-		for($i=0;$i<$profundidadRed;$i++){
-			
-			$afiliado_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado,$id_red_mercancia);
-			
-			if(!$afiliado_padre||$afiliado_padre[0]->debajo_de==1)
-				return false;
-			
-			$id_afiliado_padre=$afiliado_padre[0]->debajo_de;
-			
-			$valor_comision=(($valor_comision_por_nivel[$i]->valor*$costoVenta)/100);
-			
-			$this->modelo_compras->set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado_padre,$valor_comision);
-			
-			$id_afiliado=$id_afiliado_padre;
-		}
-
-	}
-	
 /*							//	   $historico
 	private function ComisionBanco($datosCuentaPagar,$id_red_mercancia){
 		$this->CalcularComision2($datosCuentaPagar[0]->id_venta, $id_red_mercancia,$valor_comision_por_nivel, $capacidad_red ,1,$datosCuentaPagar[0]->costo_unidad);

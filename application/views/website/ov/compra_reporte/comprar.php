@@ -186,7 +186,7 @@
 															<a style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight" href="javascript:void(0);">
 																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
 															</a>
-															<a style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight" href="javascript:void(0);">
+															<a onclick="payuLatam()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/payu.jpg" alt="american express" height="60" width="100">
 															</a>
 														</div>
@@ -286,6 +286,30 @@
 						}
 					});
 					
+	}
+
+	function payuLatam(){
+		$.ajax({
+			type:"post",
+			url:"pagarVentaPayuLatam",
+			success: function(msg){
+
+				bootbox.dialog({
+					message: msg,
+					title: "Pago PayuLatam",
+					className: "",
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							 window.location="/ov/dashboard";
+							}
+						}
+					}
+				})
+			}
+		});	
 	}
 </script>
 

@@ -1070,18 +1070,62 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$this->db->insert("comision_web_personal",$dato_cross_venta);
 	}
 	
-	function registrar_ventaConsignacion($id_usuario, $id_transacion, $firma, $fecha){
+	function registrar_ventaConsignacion($id_usuario, $fecha){
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
-				"id_estatus"		=> 'DES',
-				"id_metodo_pago" 	=> 11,
-				"id_transacion"     => $id_transacion,
-				"firma"				=> $firma,
+				"id_estatus"		=> 'ACT',
+				"id_metodo_pago" 	=> 'BANCO',
 				"fecha" 			=> $fecha
 		);
 		$this->db->insert("venta",$dato_venta);
 		$venta = mysql_insert_id();
 		return $venta;
+	}
+	
+	function registrar_venta_pago_online($id_usuario, $tipo,$fecha){
+		$dato_venta=array(
+				"id_user" 			=> $id_usuario,
+				"id_estatus"		=> 'ACT',
+				"id_metodo_pago" 	=> $tipo,
+				"fecha" 			=> $fecha
+		);
+		$this->db->insert("venta",$dato_venta);
+		$venta = mysql_insert_id();
+		return $venta;
+	}
+	
+	function  registrar_pago_payulatam ($id,$identificado_transacion,$fecha,$referencia,
+									 	$metodo_pago,$estado,$respuesta,$moneda,$medio_pago){
+		$dato_venta=array(
+				"id_usuario" => $id,
+				"transaction_id"=> $identificado_transacion,
+				"fecha" => $fecha,
+				"reference_sale" => $referencia,
+				"payment_method_id" => $metodo_pago,
+				"state_pol" => $estado,
+				"response_code_pol" => $respuesta,
+				"currency" => $moneda,
+				"payment_method_name" => $medio_pago
+		);
+		$this->db->insert("pago_por_payulatam",$dato_venta);
+		$venta = mysql_insert_id();
+		return $venta;
+	}
+	
+	function registrar_pago_online_proceso($id_usuario, $contenido_carrito,$carrito){
+		$dato_venta=array(
+				"id_usuario" 			=> $id_usuario,
+				"contenido_carrito"		=> $contenido_carrito,
+				"carrito"		=> $carrito
+		);
+		$this->db->insert("pago_online_proceso",$dato_venta);
+		$id_pago_proceso = mysql_insert_id();
+		return $id_pago_proceso;
+	}
+	
+	function getContenidoCarritoPagoOnlineProceso($id){
+		$q = $this->db->query("SELECT contenido_carrito as contenido,carrito as carrito FROM pago_online_proceso where id=".$id.";");
+		return $q->result();
 	}
 	
 	function registrar_cross_comprador_ventaConsignacion($id_comprador, $id_venta , $id_afiliado){

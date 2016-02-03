@@ -346,14 +346,11 @@ function index()
 		$contenidoCarrito=$this->get_content_carrito ();
 		
 		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
-		
-		$time = time();
-		$firma = md5("consignacion~".$time."~".$totalCarrito."~USD");
-		$id_transacion = $firma;
+
 		$fecha = date("Y-m-d");
 			
 		
-		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id, $id_transacion, $firma, $fecha);
+		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id,$fecha);
 		
 		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
 		
@@ -388,6 +385,114 @@ function index()
 			}
 		}	
 	}
+	
+	function RegistrarVentaPayuLatam(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $_POST['extra1'];
+		$id_pago = $_POST['extra2'];
+		$identificado_transacion = $_POST['transaction_id'];
+		$fecha=$_POST['transaction_date'];
+		$referencia = $_POST['reference_sale'];
+		$metodo_pago = $_POST['payment_method_id'];
+		$estado = $_POST['state_pol'];
+		$respuesta = $_POST['response_code_pol'];
+		$moneda = $_POST['currency'];
+		$medio_pago = $_POST['payment_method_name'];
+		$fecha=$_POST['transaction_date'];
+		
+		if($estado==4){
+			$this->modelo_compras->registrar_pago_payulatam
+			($id,$identificado_transacion,$fecha,$referencia,
+					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
+			
+			
+			$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProceso($id_pago);
+			
+			$contenidoCarrito=json_decode($contenido_carrito_proceso[0]->contenido,true);
+			$carrito=json_decode($contenido_carrito_proceso[0]->carrito,true);
+			
+			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYULATAM',$fecha);
+			
+			$this->registrarFacturaDatosDefaultAfiliado($id,$id_venta);
+			$this->registrarFacturaMercanciaPagoOnline ( $contenidoCarrito,$carrito ,$id_venta);
+			$this->pagarComisionVenta($id_venta,$id);
+		}
+
+	}
+	
+	function pagarVentaPayuLatam(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$actual_link = "http://$_SERVER[HTTP_HOST]";
+		// merchantId: Cuenta
+		//Api Key cuenta
+		//referenceCode: IDventa
+
+		$id = $this->tank_auth->get_user_id();
+		
+		
+		
+		$contenidoCarrito=$this->get_content_carrito ();
+		$carritoCompras=$this->cart->contents();
+		
+		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
+		
+		$descripcion="";
+		foreach ($contenidoCarrito["compras"] as $mercancia){
+			$descripcion.=" ".$mercancia["nombre"];
+		}
+		
+		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
+		
+		$time = time();
+		$firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~NetSoft".$time."~".$totalCarrito."~USD");
+		$id_transacion = $firma; 
+		
+		echo' <form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
+			  <input name="merchantId"    type="hidden"  value="500238"   >
+			  <input name="accountId"     type="hidden"  value="509171" >
+			  <input name="description"   type="hidden"  value="'.$descripcion.'"  >
+			  <input name="referenceCode" type="hidden"  value="NetSoft'.$time.'" >
+			  <input name="amount"        type="hidden"  value="'.$totalCarrito.'"   >
+			  <input name="tax"           type="hidden"  value="0"  >
+			  <input name="taxReturnBase" type="hidden"  value="0" >
+			  <input name="currency"      type="hidden"  value="USD" >
+			  <input name="signature"     type="hidden"  value="'.$id_transacion.'"  >
+			  <input name="test"          type="hidden"  value="1" >
+			  <input name="extra1" type="hidden" value="'.$id.'" > 
+			  <input name="extra2" type="hidden" value="'.$id_pago_proceso.'" >
+			  <input name="buyerEmail"    type="hidden"  value="test@test.com" >
+			  <input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaPayuLatam" >
+			  <input name="confirmationUrl"  type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaPayuLatam" >
+			  <input name="Submit"        type="submit"  value="Pago PayuLatam" >
+			</form>';
+/*	
+		
+	
+		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id, $id_transacion, $firma, $fecha);
+	
+		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
+	
+		$this->registrarFacturaMercancia ( $contenidoCarrito ,$id_venta);
+	
+		$this->cart->destroy();
+*/
+	}
 	/**
 	 * @param contenidoCarrito
 	 */private function registrarFacturaMercancia($contenidoCarrito,$id_venta) {
@@ -416,6 +521,32 @@ function index()
 		}
 	}
 
+	private function registrarFacturaMercanciaPagoOnline($contenidoCarrito,$carrito,$id_venta) {
+		$contador=0;
+	
+		foreach ($carrito as $items)
+		{
+
+			$costoImpuesto=0;
+			$nombreImpuestos="";
+			$precioUnidad=0;
+			$cantidad=$items['qty'];
+			$id_mercancia=$contenidoCarrito['compras'][$contador]['costos'][0]['id'];
+			$precioUnidad=$contenidoCarrito['compras'][$contador]['costos'][0]['costo'];
+				
+			foreach ($contenidoCarrito['compras'][$contador]['costos'] as $impuesto){
+				$costoImpuesto+=$impuesto['costoImpuesto'];
+				$nombreImpuestos.="".$impuesto['nombreImpuesto']."\n";
+			}
+	
+			if($contenidoCarrito['compras'][$contador]['costos'][0]['iva']!='MAS'){
+				$precioUnidad-=$costoImpuesto;
+			}
+	
+			$this->modelo_compras->registrar_venta_mercancia($id_mercancia,$id_venta,$cantidad,$precioUnidad,$costoImpuesto,$nombreImpuestos);
+			$contador++;
+		}
+	}
 		
 	private function get_valor_total_contenido_carrito($contenidoCarrito){
 		
@@ -3352,4 +3483,47 @@ function index()
 	function datos_comprador_web_personal(){
 		$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
 	}
+	
+
+	public function pagarComisionVenta($id_venta,$id_afiliado_comprador){
+		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
+	
+		foreach ($mercancias as $mercancia){
+				
+			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
+	
+			$costoVenta=$mercancia->costo_unidad_total;
+	
+			$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
+	
+		}
+	
+	
+	}
+	
+	public function calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado){
+	
+		$valor_comision_por_nivel = $this->modelo_compras->ValorComision($id_red_mercancia);
+		$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red_mercancia);
+		$profundidadRed=$capacidad_red[0]->profundidad;
+	
+	
+		for($i=0;$i<$profundidadRed;$i++){
+				
+			$afiliado_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado,$id_red_mercancia);
+				
+			if(!$afiliado_padre||$afiliado_padre[0]->debajo_de==1)
+				return false;
+				
+			$id_afiliado_padre=$afiliado_padre[0]->debajo_de;
+				
+			$valor_comision=(($valor_comision_por_nivel[$i]->valor*$costoVenta)/100);
+				
+			$this->modelo_compras->set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado_padre,$valor_comision);
+				
+			$id_afiliado=$id_afiliado_padre;
+		}
+	
+	}
+	
 }
