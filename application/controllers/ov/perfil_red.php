@@ -90,13 +90,21 @@ class perfil_red extends CI_Controller
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
-		$nivel=$_POST['profundidad'];
+		
+		if($this->tank_auth->get_user_id()>2){
+			$nivel=$_POST['profundidad'];
+		}else {
+			$nivel=0;
+		}
+		
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		$frontales= $red[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
 		
-		if($nivel >= $red[0]->profundidad){
-			return 0;
+		if($red[0]->profundidad>0){
+			if($nivel >= $red[0]->profundidad){
+				return 0;
+			}
 		}
 		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
@@ -189,8 +197,11 @@ class perfil_red extends CI_Controller
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 		$aux = 0;
-		if($nivel >= $red[0]->profundidad){
-			return 0;
+		
+		if($red[0]->profundidad>0){
+			if($nivel >= $red[0]->profundidad){
+				return 0;
+			}
 		}
 
 		if($afiliados)
@@ -282,8 +293,11 @@ class perfil_red extends CI_Controller
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 		$aux = 0;
-		if($nivel >= $red[0]->profundidad){
-			return 0;
+		
+		if($red[0]->profundidad>0){
+			if($nivel >= $red[0]->profundidad){
+				return 0;
+			}
 		}
 		if($afiliados)
 		{
@@ -506,7 +520,10 @@ class perfil_red extends CI_Controller
 		$this->template->set_partial('footer', 'website/ov/footer');
 		
 
-		$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+		if($id<=2)
+			$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+		else 
+			$cantidadRedes = $this->model_tipo_red->cantidadRedesUsuario($id);
 
 		if(sizeof($cantidadRedes)==0)
 			redirect('/');
@@ -569,7 +586,7 @@ class perfil_red extends CI_Controller
 		redirect('/auth');
 		}
 		
-		$id              = $this->tank_auth->get_user_id();
+		$id = $this->tank_auth->get_user_id();
 		
 		if($this->general->isActived($id)!=0){
 			redirect('/ov/compras/carrito');
@@ -595,6 +612,18 @@ class perfil_red extends CI_Controller
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
 		
+	
+		if($id>2){
+			$estaEnRed 	 = $this->model_tipo_red->validarUsuarioRed($id,$id_red);
+			
+			if(!$estaEnRed)
+				redirect('/');
+			
+			if(count($afiliados)>=count($red_forntales))
+				redirect('/ov/perfil_red/afiliar_red?id='.$id_red);
+			
+		}
+
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
 		{
@@ -711,8 +740,14 @@ class perfil_red extends CI_Controller
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
 		
 		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
-		if(!$red)
-			redirect('/ov/perfil_red/afiliar?tipo=1');
+
+		if($id>2){
+			$estaEnRed 	 = $this->model_tipo_red->validarUsuarioRed($id,$id_red);
+				
+			if(!$estaEnRed)
+				redirect('/');
+				
+		}
 		
 		$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
@@ -836,6 +871,14 @@ class perfil_red extends CI_Controller
 				  </script>
 				";
 		}
+		
+		else if($use_mail){
+			echo "<script>
+				  $('.btn-next').attr('disabled','disabled');
+				  </script>
+				";
+		}
+		
 		else if($_POST['password']!=$_POST['confirm_password']){
 			echo "<script>
 				  $('.btn-next').attr('disabled','disabled');
@@ -891,10 +934,16 @@ class perfil_red extends CI_Controller
 	
 	function use_mail()
 	{
+		$email = preg_match(
+				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+		);
+		
 		$use_mail=$this->model_perfil_red->use_mail();
 		if($use_mail){
 			echo "<p style='color: red;'>El email no está disponible.</p>";
-		}else{
+		}else if(!$email){
+			echo "<p style='color: red;'>No es un email valido.</p>";
+		}else {
 			echo "";
 		}
 	}
@@ -1215,8 +1264,10 @@ class perfil_red extends CI_Controller
 
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		
-		if($nivel >= $red[0]->profundidad){
-			return 0;
+		if($red[0]->profundidad>0){
+			if($nivel >= $red[0]->profundidad){
+				return 0;
+			}
 		}
 		
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $id);

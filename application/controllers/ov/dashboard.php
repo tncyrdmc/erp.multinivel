@@ -123,6 +123,9 @@ class dashboard extends CI_Controller
 			redirect('/ov/compras/carrito');
 		}*/
 		
+		$this->getAfiliadosRed($id);
+		$numeroAfiliadosRed=count($this->afiliados);
+		
 		$style=$this->modelo_dashboard->get_style($id);
 
 		$id_sponsor=$this->modelo_dashboard->get_red($id);
@@ -155,7 +158,7 @@ class dashboard extends CI_Controller
 		
 		$style=$this->modelo_dashboard->get_style($id);
 		
-		$redes = $this->model_tipo_red->RedesUsuario($id);
+/*		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
 		foreach ($redes as $red){
 			$this->DeterminarPremio($id, $red->id);
@@ -186,12 +189,32 @@ class dashboard extends CI_Controller
 		$this->template->set("cuentasPorPagar",$cuentasPorPagar);
 		$this->template->set("notifies",$notifies);
 		
+		$this->template->set("numeroAfiliadosRed",$numeroAfiliadosRed);
+		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/view_dashboard');
 	}
+	/**
+	 * 
+	 */private function getAfiliadosRed($id) {
+		$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
+			
+		foreach ($redesUsuario as $redUsuario){
+			$red = $this->model_tipo_red->ObtenerFrontalesRed($redUsuario->id );
+		
+			if($red){
+					
+				if($red[0]->profundidad==0)
+					$this->preOrdenRedProfundidadInfinita($id,$redUsuario->id,$red[0]->frontal);
+				else
+					$this->preOrdenRed($id,$redUsuario->id,$red[0]->frontal,$red[0]->profundidad);
+			}
+		}
+	}
+
 	
 	function ConsultarPremio(){
 		$id=$this->tank_auth->get_user_id();
@@ -204,5 +227,31 @@ class dashboard extends CI_Controller
 		
 		$this->template->set("infoPremios",$infoPremios);
 		$this->template->build('website/ov/perfil_red/premio');
+	}
+	
+	function preOrdenRed($id,$id_red,$frontalidad,$profundidad){
+	
+		$datos = $this->modelo_compras->traer_afiliados_red_frontalidad_profundidad($id,$id_red,$frontalidad);
+	
+		foreach ($datos as $dato){
+				
+			if (($dato!=NULL)&&($profundidad>0)){
+				array_push($this->afiliados, $dato);
+				$this->preOrdenRed($dato->id_afiliado,$id_red,$frontalidad,$profundidad-1);
+			}
+		}
+		$profundidad++;
+	}
+	
+	function preOrdenRedProfundidadInfinita($id,$id_red,$frontalidad){
+	
+		$datos = $this->modelo_compras->traer_afiliados_red_frontalidad_profundidad($id,$id_red,$frontalidad);
+	
+		foreach ($datos as $dato){
+			if (($dato!=NULL)){
+				array_push($this->afiliados, $dato);
+				$this->preOrdenRedProfundidadInfinita($dato->id_afiliado,$id_red,$frontalidad);
+			}
+		}
 	}
 }

@@ -38,6 +38,25 @@ class Model_servicio extends CI_Model{
 		
 	}
 	
+	function listar_todos_por_venta_y_fecha_usuario($inicio, $fin,$id_usuario)
+	{
+	
+		$q=$this->db->query('select V.id_venta,V.fecha as fecha,U.username,UP.nombre as name,UP.apellido as lastname,sum(CVM.costo_total) as costo
+							,sum(CVM.impuesto_unidad*CVM.cantidad) as impuestos,(select sum(valor) from comision where id_venta=V.id_venta)as comision
+							from venta V, cross_venta_mercancia CVM, mercancia M,users U , user_profiles UP
+							where M.id = CVM.id_mercancia
+							and CVM.id_venta = V.id_venta
+							and UP.user_id = U.id
+							and V.id_user = U.id
+							and(V.id_estatus="ACT")
+							and(U.id='.$id_usuario.')
+							and DATE(V.fecha) BETWEEN "'.$inicio.'" AND "'.$fin.'"
+							group by (V.id_venta)
+							order by (V.id_venta)');
+		return $q->result();
+	
+	}
+	
 	function listar_todos_por_venta_y_fecha_por_red_usuario($inicio, $fin,$id_usuario)
 	{
 	

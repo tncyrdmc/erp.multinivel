@@ -37,8 +37,8 @@ class capacidadRed extends CI_Controller{
 		$this->template->set("style",$style);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/TipoRed/index');
 	}
 	public function capacidad_de_la_red()
@@ -72,8 +72,8 @@ class capacidadRed extends CI_Controller{
 		$this->template->set("style",$style);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/TipoRed/actualizarCapacidadRed');	
 	}
 

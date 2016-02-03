@@ -23,9 +23,9 @@ class modelo_compras extends CI_Model
 	
 	function traer_afiliados($id)
 	{
-		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
+		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email,A.id_red as id_red
 from afiliar A, user_profiles UP, users U
-where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id group by(U.id)');
+where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id group by(U.id) order by id_red');
 		
 		return $q->result();
 	}
@@ -35,6 +35,14 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
 from afiliar A, user_profiles UP, users U
 where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id and A.id_red = '.$id_red.' group by(U.id)');
+		return $q->result();
+	}
+	
+	function traer_afiliados_red_frontalidad_profundidad($id, $id_red,$frontalidad)
+	{
+		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
+from afiliar A, user_profiles UP, users U
+where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id and A.id_red = '.$id_red.' and (A.lado<'.$frontalidad.' or 0='.$frontalidad.') group by(U.id) order by id_red,A.lado');
 		return $q->result();
 	}
 	
@@ -62,7 +70,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 	
 	function traer_compras($id, $inicio, $fin)
 	{
-		$q=$this->db->query("select sum(costo) compras from venta where id_user=".$id." and fecha between '".$inicio."' and '".$fin."' and id_estatus=2");
+		$q=$this->db->query("select sum(costo) compras from venta where id_user=".$id." and fecha between '".$inicio."' and '".$fin."' and id_estatus='ACT'");
 		return $q->result();
 	}
 	
@@ -78,7 +86,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 	from venta V, cross_venta_mercancia CVM, mercancia M, producto P, tipo_red TR, cat_grupo_producto CGP
 	where V.id_user = ".$id." and CVM.id_venta = V.id_venta and CVM.id_mercancia = M.id
 	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = P.id and M.id_tipo_mercancia = 1 and
-	P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus=2");
+	P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus='ACT'");
 		return $q->result();
 	}
 	
@@ -88,7 +96,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 	from venta V, cross_venta_mercancia CVM, mercancia M, servicio S, tipo_red TR, cat_grupo_producto CGP
 	where V.id_user = ".$id." and CVM.id_venta = V.id_venta and CVM.id_mercancia = M.id 
 	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = S.id and M.id_tipo_mercancia = 2 and 
-	S.id_red = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus=2");
+	S.id_red = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus='ACT'");
 		return $q->result();
 	}
 	
@@ -98,7 +106,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 	from venta V, cross_venta_mercancia CVM, mercancia M, combinado C, tipo_red TR, cat_grupo_producto CGP
 	where V.id_user = ".$id." and CVM.id_venta = V.id_venta and CVM.id_mercancia = M.id 
 	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = C.id and M.id_tipo_mercancia = 3 and
-	C.id_red = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus=2");
+	C.id_red = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus='ACT'");
 		return $q->result();
 	}
 	

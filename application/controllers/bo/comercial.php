@@ -300,8 +300,8 @@ class comercial extends CI_Controller
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/redes_ver');
 	}*/
 	
@@ -334,8 +334,8 @@ class comercial extends CI_Controller
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/redes_ver_genealogico');
 	}
 	
@@ -368,8 +368,8 @@ class comercial extends CI_Controller
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/redes_ver_grafico_1');
 	}
 	
@@ -402,8 +402,8 @@ class comercial extends CI_Controller
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/redes_ver_grafico_2');
 	}
 	
@@ -470,8 +470,8 @@ class comercial extends CI_Controller
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/tabla');
 	}
 	
@@ -593,8 +593,8 @@ class comercial extends CI_Controller
 		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/ver_noticia',$data);
 	}
 	
@@ -2181,8 +2181,8 @@ class comercial extends CI_Controller
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/ov/header');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/carrito/index');
 	}
 

@@ -834,7 +834,7 @@ function index()
 	}
 	
 	function preOrden($id){
-				
+			
 		$datos = $this->modelo_compras->traer_afiliados($id);
 		
 		foreach ($datos as $dato){
@@ -842,60 +842,69 @@ function index()
 				array_push($this->afiliados, $dato);
 				$this->preOrden($dato->id_afiliado);
 			}
+			
+		}
+	}
+	
+	function preOrdenRed($id,$id_red,$frontalidad,$profundidad){
+
+		$datos = $this->modelo_compras->traer_afiliados_red_frontalidad_profundidad($id,$id_red,$frontalidad);
+
+		foreach ($datos as $dato){
+			
+			if (($dato!=NULL)&&($profundidad>0)){
+				array_push($this->afiliados, $dato);
+				$this->preOrdenRed($dato->id_afiliado,$id_red,$frontalidad,$profundidad-1);
+			}			
+		}
+		$profundidad++;
+	}
+	
+	function preOrdenRedProfundidadInfinita($id,$id_red,$frontalidad){
+	
+		$datos = $this->modelo_compras->traer_afiliados_red_frontalidad_profundidad($id,$id_red,$frontalidad);
+	
+		foreach ($datos as $dato){
+			if (($dato!=NULL)){
+				array_push($this->afiliados, $dato);
+				$this->preOrdenRedProfundidadInfinita($dato->id_afiliado,$id_red,$frontalidad);
+			}
 		}
 	}
 
 	function reporte_afiliados_todos()
 	{
 		$id=$this->tank_auth->get_user_id();
-		
-		$this->preOrden($id);
-		$fotos = $this->modelo_compras->traer_fotos();
+		$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
+			
+		foreach ($redesUsuario as $redUsuario){
+			$red = $this->model_tipo_red->ObtenerFrontalesRed($redUsuario->id );
+	
+			if($red){
+			
+				if($red[0]->profundidad==0)
+					$this->preOrdenRedProfundidadInfinita($id,$redUsuario->id,$red[0]->frontal);
+				else
+					$this->preOrdenRed($id,$redUsuario->id,$red[0]->frontal,$red[0]->profundidad);
+			}
+		}
 		
 		echo 
 			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th>ID</th>
-					<th data-class='expand'>Foto</th>
 					<th>Nombre</th>
 					<th data-hide='phone'>Correo</th>
-					<th data-hide='phone,tablet'>Telefonos</th>
 				</thead>
 				<tbody>";
 			foreach ($this->afiliados as $afiliado)
 			{
-				foreach ($fotos as $key){
-					if ($afiliado->id_afiliado == $key->id_user){
-						$foto = $key->url;
-					}
-					else $foto = "/template/img/empresario.jpg";
-				}
-				$telefonos = array();
-				$telefonos_usuario = "";
-				$telefonos = $this->modelo_compras->traer_telefonos($afiliado->id_afiliado);
-				$contador = 0;
-				
-				foreach ($telefonos as $key){
-					$contador = $contador+1;
-					if ($key->numero!=""){
-						if ($contador==1){
-							$telefonos_usuario = $key->numero;
-						}
-						else $telefonos_usuario = $telefonos_usuario.", ".$key->numero;
-					}
-					else ;
-				}
-				
-				if ($telefonos_usuario==""){
-					$telefonos_usuario = "El afiliado no tiene números inscritos.";
-				}
+			$contador = 0;
 				
 					echo "<tr>
 					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
-					<td><img src=".$foto." style='height: 10rem; width: 10rem;'></img></td>
 					<td>".$afiliado->nombre."</td>
 					<td>".$afiliado->email."</td>
-					<td>".$telefonos_usuario."</td>
 				</tr>";
 			}
 				
@@ -962,154 +971,62 @@ function index()
 	function reporte_compras_afiliados_todos()
 	{
 		$id=$this->tank_auth->get_user_id();
-		
+
 		$inicio = $_POST['inicio'];
 		$fin = $_POST['fin'];
 		
-	/*	
-		$total_venta = 0;
-		$total_costo = 0;
-		$total_impuesto = 0;
-		$total_comision = 0;
-		$total_neto = 0;
-		
 		$id=$this->tank_auth->get_user_id();
-		$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha_por_red_usuario($inicio,$fin,$id);
+		$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
+			
+		foreach ($redesUsuario as $redUsuario){
+			$red = $this->model_tipo_red->ObtenerFrontalesRed($redUsuario->id );
 		
-		
-		echo
-		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
-				<thead id='tablacabeza'>
-					<th data-class='expand'>ID Usuario</th>
-					<th data-class='expand'>ID Venta</th>
-					<th data-hide='phone,tablet'>Username</th>
-					<th data-hide='phone,tablet'>Nombre</th>
-					<th data-hide='phone,tablet'>Apellido</th>
-					<th data-hide='phone,tablet'>Subtotal</th>
-					<th data-hide='phone,tablet'>Impuestos</th>
-					<th data-hide='phone,tablet'>Total Venta</th>
-					<th data-hide='phone,tablet'>Total Comisiones</th>
-				</thead>
-				<tbody>";
-		
-		if ($inicio!=""){
-			foreach($ventas as $venta)
-			{
-				echo "<tr>
-			<td class='sorting_1'>".$venta->id_usuario."</td>
-			<td >".$venta->id_venta."</td>
-			<td>".$venta->username."</td>
-			<td>".$venta->name."</td>
-			<td>".$venta->lastname."</td>
-			<td> $	".($venta->costo-$venta->impuestos)."</td>
-			<td> $	".$venta->impuestos."</td>
-			<td> $	".$venta->costo."</td>
-			<td> $	".$venta->comision."</td>
-			</tr>";
+			if($red){
 					
-				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
-				$total_impuesto = $total_impuesto + $venta->impuestos;
-				$total_venta = $total_venta  + $venta->costo;
-				$total_comision = $total_comision + $venta->comision;
-				$total_neto = $total_neto + (($venta->costo)-($venta->impuestos+$venta->comision));
-					
+				if($red[0]->profundidad==0)
+					$this->preOrdenRedProfundidadInfinita($id,$redUsuario->id,$red[0]->frontal);
+				else
+					$this->preOrdenRed($id,$redUsuario->id,$red[0]->frontal,$red[0]->profundidad);
 			}
-		
-			echo "<tr>
-			<td class='sorting_1'></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			</tr>";
-				
-			echo "<tr>
-			<td class='sorting_1'><b>TOTALES</b></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td><b> $	".$total_costo."</b></td>
-			<td><b> $	".$total_impuesto."</b></td>
-			<td><b> $	".$total_venta."</b></td>
-			<td><b> $	".$total_comision."</b></td>
-			</tr>";
 		}
-		echo "</tbody>
-		</table><tr class='odd' role='row'>";
-*/		
 		
-		$this->preOrden($id);
-		$fotos = $this->modelo_compras->traer_fotos();
-	
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th>ID</th>
-					<th data-class='expand'>Foto</th>
 					<th>Nombre</th>
 					<th data-hide='phone'>Correo</th>
-					<th data-hide='phone,tablet'>Telefonos</th>
 					<th data-hide='phone,tablet'>Compras</th>
+					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Total</th>
 				</thead>
 				<tbody>";
 		foreach ($this->afiliados as $afiliado)
 		{
-			foreach ($fotos as $key){
-				if ($afiliado->id_afiliado == $key->id_user){
-					$foto = $key->url;
-				}
-				else $foto = "/template/img/empresario.jpg";
-			}
-			$telefonos = array();
-			$telefonos_usuario = "";
-			$telefonos = $this->modelo_compras->traer_telefonos($afiliado->id_afiliado);
-			$contador = 0;
+
+			$total_venta = 0;
+			$total_costo = 0;
+			$total_impuesto = 0;
 			
-			foreach ($telefonos as $key){
-				$contador = $contador+1;
-				if ($key->numero!=""){
-					if ($contador==1){
-						$telefonos_usuario = $key->numero;
-					}
-					else $telefonos_usuario = $telefonos_usuario.", ".$key->numero;
-				}
-				else ;
-			}
-	
-			if ($telefonos_usuario==""){
-				$telefonos_usuario = "El afiliado no tiene números inscritos.";
-			}
-	/*		
-			$compras = 0;
-			$compras = $this->modelo_compras->traer_compras($afiliado->id_afiliado, $inicio, $fin);
+			$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha_usuario($inicio,$fin,$afiliado->id_afiliado);
+		
+			foreach($ventas as $venta)
+			{
+					
+				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
+				$total_impuesto = $total_impuesto + $venta->impuestos;
+				$total_venta = $total_venta  + $venta->costo;
 			
-			$compras_impresion = "$ ".$compras[0]->compras;
-			
-			if ($compras[0]->compras==NULL){
-				$compras_impresion = "El afiliado no ha realizado compras.";
+
 			}
 			
-			$impuestos = 0;
-			$impuestos = $this->modelo_compras->traer_impuestos($afiliado->id_afiliado, $inicio, $fin);
-				
-			$impuestos_impresion = "$ ".$impuestos[0]->impuestos;
-				
-			if ($impuestos[0]->impuestos==NULL){
-				$impuestos_impresion = "$ 0.00";
-			}
-			*/ 
 			echo "<tr>
 					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
-					<td><img src=".$foto." style='height: 10rem; width: 10rem;'></img></td>
 					<td>".$afiliado->nombre."</td>
 					<td>".$afiliado->email."</td>
-					<td>".$telefonos_usuario."</td>
-			
+					<td>$ ".number_format($total_costo, 2, '.', '')."</td>
+					<td>$ ".number_format($total_impuesto, 2, '.', '')."</td>
+					<td>$ ".number_format($total_venta, 2, '.', '')."</td>
 				</tr>";
 		}
 	
@@ -1196,7 +1113,77 @@ function index()
 	
 	function reporte_compras_personales()
 	{
+		$total_venta = 0;
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		
 		$id=$this->tank_auth->get_user_id();
+		
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
+		
+		$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha_usuario($inicio,$fin,$id);
+		
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Venta</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Nombre</th>
+					<th data-hide='phone,tablet'>Apellido</th>
+					<th data-hide='phone,tablet'>Subtotal</th>
+					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Total Venta</th>
+				</thead>
+				<tbody>";
+		
+		if ($inicio!=""){
+			foreach($ventas as $venta)
+			{
+				echo "<tr>
+			<td class='sorting_1'>".$venta->id_venta."</td>
+			<td>".$venta->fecha."</td>
+			<td>".$venta->name."</td>
+			<td>".$venta->lastname."</td>
+			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>
+			<td> $	".number_format($venta->impuestos, 2, '.', '')."</td>
+			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
+			</tr>";
+					
+				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
+				$total_impuesto = $total_impuesto + $venta->impuestos;
+				$total_venta = $total_venta  + $venta->costo;
+				$total_comision = $total_comision + $venta->comision;
+					
+			}
+		
+			echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+				
+			echo "<tr>
+			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b> $	".number_format($total_costo, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_impuesto, 2, '.', '')."</b></td>
+			<td><b> $	".number_format($total_venta, 2, '.', '')."</b></td>
+			</tr>";
+		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	/*
+		$id=$this->tank_auth->get_user_id();
+		$id=2;
 		$inicio = $_POST['inicio'];
 		$fin = $_POST['fin'];
 		
@@ -1261,7 +1248,7 @@ function index()
 				</tbody>
 			</table><tr class='odd' role='row'>";
 	
-	
+	*/
 	}
 	
 	function reporte_compras_personales_excel()
@@ -1646,9 +1633,13 @@ function index()
 			<td>".$cobros[$i]->banco."</td>
 			<td>".$cobros[$i]->cuenta."</td>
 			<td>".$cobros[$i]->clave."</td>
-			<td>$ ".number_format($cobros[$i]->valor,2)."</td>
-			<td>".$cobros[$i]->estado."</td>
-			</tr>";
+			<td>$ ".number_format($cobros[$i]->valor,2)."</td>";
+		if($cobros[$i]->estado=='ACT')
+			echo "<td>Pagado</td>";
+		else
+			echo "<td>Pendiente</td>";
+		echo "</tr>";
+			
 		}
 		
 		
@@ -2362,261 +2353,7 @@ function index()
 							
 		}
 	}
-/*	function show_prod_grup()
-	{
-		$prod=$this->modelo_compras->get_grupo_productos($_GET['grupo']);
-		for($i=0;$i<sizeof($prod);$i++)
-		{
-			$imagen=$this->modelo_compras->get_img($prod[$i]->id);
-			if(isset($imagen[0]))
-			{
-				$prod[$i]->img=$imagen[0]->url;
-			}
-			else 
-			{
-				$prod[$i]->img="";
-			}
-		}
-		//$prom=$this->modelo_compras->get_promocion();
-		$grupos=$this->modelo_compras->get_grupo_prod();
-		echo '<div class="row">
-				<div class="well" style="background-color:transparent;border:none;">
-					<article>
-						<section class="pull-right">
-							<label class="select">
-								<select class="input-sm" id="grupo_prod" onchange="show_grupo_prod()">
-									<option value="0">Seleccione un grupo</option>';
-									for($k=0;$k<sizeof($grupos);$k++)
-									{
-										echo '	<option value="'.$grupos[$k]->id_grupo.'">'.$grupos[$k]->descripcion.'</option>';
-									}
-									
-								echo '</select>
-							</label>
-						</section>
-					</article>
-				</div>
-			</div>';
-		for($productos=0;$productos<sizeof($prod);$productos++)
-		{
 
-				echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$prod[$productos]->id.',1)"><img src="'.$prod[$productos]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">   </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$prod[$productos]->nombre.'</a></h4>
-				              		<p>'.$prod[$productos]->grupo.' </br></br>
-				              		'.$prod[$productos]->descripcion.'. </p>
-				              		
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-
-							
-		}
-	}*//*
-	function show_servicios()
-	{
-		$serv=$this->modelo_compras->get_servicios();
-		for($j=0;$j<sizeof($serv);$j++)
-		{
-			$imagen=$this->modelo_compras->get_img($serv[$j]->id);
-			if(isset($imagen[0]))
-			{
-				$serv[$j]->img=$imagen[0]->url;
-			}
-			else 
-			{
-				$serv[$j]->img="";
-			}
-		}
-		//$prom=$this->modelo_compras->get_promocion();
-		for($servicios=0;$servicios<sizeof($serv);$servicios++)
-		{
-			$impuesto = $this->modelo_compras->ImpuestoMercancia($serv[$servicios]->id, $serv[$servicios]->costo);
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$serv[$servicios]->id.',2)"><img src="'.$serv[$servicios]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$serv[$servicios]->nombre.'</a></h4>
-				              		<p>'.$serv[$servicios]->descripcion.'.</p>
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$serv[$servicios]->costo+$impuesto.'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-		}
-	}
-	function show_promocion()
-	{
-		$prom_p=$this->modelo_compras->get_promocion_prod();
-		for($n=0;$n<sizeof($prom_p);$n++)
-		{
-			$imagen=$this->modelo_compras->get_img_prom($prom_p[$n]->id_promocion);
-			if(isset($imagen[0]))
-			{
-				$prom_p[$n]->img=$imagen[0]->url;
-			}
-			else 
-			{
-				$prom_p[$n]->img="";
-			}
-		}
-		$prom_s=$this->modelo_compras->get_promocion_serv();
-		for($m=0;$m<sizeof($prom_s);$m++)
-		{
-			$imagen=$this->modelo_compras->get_img_prom($prom_s[$m]->id_promocion);
-			if(isset($imagen[0]))
-			{
-				$prom_s[$m]->img=$imagen[0]->url;
-			}
-			else 
-			{
-				$prom_s[$m]->img="";
-			}
-		}
-		$prom_c=$this->modelo_compras->get_promocion_comb();
-		for($l=0;$l<sizeof($prom_c);$l++)
-		{
-			$imagen=$this->modelo_compras->get_img_prom($prom_c[$l]->id_promocion);
-			if(isset($imagen[0]))
-			{
-				$prom_c[$l]->img=$imagen[0]->url;
-			}
-			else 
-			{
-				$prom_c[$l]->img="";
-			}
-		}
-		for($promocion_p=0;$promocion_p<sizeof($prom_p);$promocion_p++)
-		{
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$prom_p[$promocion_p]->id_promocion.',4)"><img src="'.$prom_p[$promocion_p]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$prom_p[$promocion_p]->nombre.'</a></h4>
-				              		<p>'.$prom_p[$promocion_p]->descripcion.'.
-				              		</br></br>Producto</br>'.$prom_p[$promocion_p]->producto.'</p>
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$prom_p[$promocion_p]->costo*(1-($prom_p[$promocion_p]->prom_costo/100)).'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_p[$promocion_p]->id_promocion.',4,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-		}
-		for($promocion_s=0;$promocion_s<sizeof($prom_s);$promocion_s++)
-		{
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$prom_s[$promocion_s]->id_promocion.',5)"><img src="'.$prom_s[$promocion_s]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$prom_s[$promocion_s]->nombre.'</a></h4>
-				              		<p>'.$prom_s[$promocion_s]->descripcion.'.
-				              		</br></br>Servicio</br>'.$prom_s[$promocion_s]->producto.'</p>
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$prom_s[$promocion_s]->costo*(1-($prom_s[$promocion_s]->prom_costo/100)).'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_s[$promocion_s]->id_promocion.',5,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-		}
-		for($promocion_c=0;$promocion_c<sizeof($prom_c);$promocion_c++)
-		{
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$prom_c[$promocion_c]->id_promocion.',6)"><img src="'.$prom_c[$promocion_c]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$prom_c[$promocion_c]->nombre.'</a></h4>
-				              		<p>'.$prom_c[$promocion_c]->descripcion.'.
-				              		</br></br>Combinado</br>'.$prom_c[$promocion_c]->combinado.'</p>
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$prom_c[$promocion_c]->costo*(1-($prom_c[$promocion_c]->prom_costo/100)).'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_c[$promocion_c]->id_promocion.',6,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-		}
-	}
-/*	
-	function show_combinados()
-	{
-		$comb=$this->modelo_compras->get_combinados();
-		for($k=0;$k<sizeof($comb);$k++)
-		{
-			$imagen=$this->modelo_compras->get_img($comb[$k]->id);
-			if(isset($imagen[0]))
-			{
-				$comb[$k]->img=$imagen[0]->url;
-			}
-			else 
-			{
-				$comb[$k]->img="";
-			}
-		}
-		for($combinados=0;$combinados<sizeof($comb);$combinados++)
-		{
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  <span class="discount">'.$comb[$combinados]->descuento.'% DESCUENTO</span></div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$comb[$combinados]->nombre.'</a></h4>
-				              		<p>'.$comb[$combinados]->descripcion.'
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-		}
-	}
-	
-*/	
 	function show_todos()
 	{
 		$id = 2;
@@ -2638,15 +2375,20 @@ function index()
 		$productos=1;
 		$servicios=2;
 		$combinados=3;
-	
-		$categorias=$this->model_mercancia->CategoriasMercancia();
 		
-			foreach ($categorias as $categoria){
-				
-			$this->showMercanciaPorCategoria($productos, $categoria->id_grupo, $paisUsuario);
-			$this->showMercanciaPorCategoria($servicios, $categoria->id_grupo, $paisUsuario);
-			$this->showMercanciaPorCategoria($combinados, $categoria->id_grupo, $paisUsuario);
+		$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
 			
+			foreach ($redesUsuario as $red){
+		
+			$categorias=$this->model_mercancia->CategoriasMercanciaIdRed($red->id);
+			
+				foreach ($categorias as $categoria){
+					
+				$this->showMercanciaPorCategoria($productos, $categoria->id_grupo, $paisUsuario);
+				$this->showMercanciaPorCategoria($servicios, $categoria->id_grupo, $paisUsuario);
+				$this->showMercanciaPorCategoria($combinados, $categoria->id_grupo, $paisUsuario);
+				
+				}
 			}
 		}
 	
@@ -2669,11 +2411,16 @@ function index()
 		
 			$tipoMercancia = $_GET['tipoMercancia'];
 		
-			$categorias=$this->model_mercancia->CategoriasMercancia();
-		
-			foreach ($categorias as $categoria){
-				$this->showMercanciaPorCategoria($tipoMercancia, $categoria->id_grupo, $paisUsuario);
+			$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
+			
+			foreach ($redesUsuario as $red){
+				$categorias=$this->model_mercancia->CategoriasMercanciaIdRed($red->id);
+			
+				foreach ($categorias as $categoria){
+					$this->showMercanciaPorCategoria($tipoMercancia, $categoria->id_grupo, $paisUsuario);
+				}
 			}
+			
 	}
 		
 	function show_todos_categoria()
@@ -2808,685 +2555,7 @@ function index()
 		$mercancia=$this->getMercanciaPorTipoDeRed($tipoMercancia,$idCategoriaRed,$paisUsuario);
 		$this->printMercanciaPorTipoDeRed($mercancia,$tipoMercancia);
 	}
-	/*
-	function show_paquetes()
-	{		
-		
-		$id = $this->tank_auth->get_user_id();
-		$pais = $this->general->get_pais($id);
-		
-		//echo "dentro de show paquetes: ".$pais[0]->pais;
-		
-		$comb=$this->modelo_compras->get_paquetes_inscripcion($pais[0]->pais, $id);
-	
-		for($k=0;$k<sizeof($comb);$k++) 
-		{
-			$imagen=$this->modelo_compras->get_img($comb[$k]->id);
-			if(isset($imagen[0]))
-			{
-				$comb[$k]->img=$imagen[0]->url;
-			}
-			else
-			{
-				$comb[$k]->img="";
-			}
-		}
-	
-		for($combinados=0;$combinados<sizeof($comb);$combinados++)
-		{
-				
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									 
-									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',4)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion"> <a onclick="detalles('.$comb[$combinados]->id.',4)"></a></div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a onclick="detalles('.$comb[$combinados]->id.',4)">'.$comb[$combinados]->nombre.'</a></h4>
-									              	</div>
-									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',4,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div>
-								';
-		}
-	}
-	*/	
-	/*
-	function buscar_servicio()
-	{
-		$buscar=$_GET['buscar'];
-		$serv=$this->modelo_compras->get_servicio_espec($buscar);
-		if($serv)
-		{
-			$fila=0;
-			for($servicios=0;$servicios<sizeof($serv);$servicios++)
-			{
-				if($fila%4==0)
-				{
-					echo '<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-				}
-				echo'<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 well div_merca" style="text-align:center; height:10%; ">
-						<div class="row">
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="height:30%;">
-								<img class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:30%;" src="'.$serv[$servicios]->ruta.'">
-							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-						</div>
-						<p><h1><strong>'.$serv[$servicios]->nombre.'</strong></h1></p>
-						
-						<p><h3>$ '.$serv[$servicios]->costo.'</h3></p>
-				
-						<p><a class="btn btn-success btn-lg" href="javascript:void(0);" onclick="detalles('.$serv[$servicios]->id.',2)"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a></p>
-					</div>';
-				$fila++;
-				if($fila%4==0)
-				{
-					echo '</div>';
-				}
-				
-			}
-			if($fila%4!=0)
-			{
-				echo '</div>';
-			}
-		}
-		else
-		{
-			echo'<p>NO HAY DATOS EN LA BUSQUEDA</p>';
-		}
-	}
-	function buscar_producto()
-	{
-		$buscar=$_GET['buscar'];
-		$prod=$this->modelo_compras->get_producto_espec($buscar);
-		if($prod)
-		{
-			$fila=0;
-			for($productos=0;$productos<sizeof($prod);$productos++)
-			{
-				if($fila%4==0)
-				{
-					echo '<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-				}
-				echo'<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 well div_merca" style="text-align:center; height:20%;">
-						<div class"row">
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="height:30%;">
-								<img class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:30%;" src="'.$prod[$productos]->ruta.'">
-							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-						</div>
-						<p><h1><strong>'.$prod[$productos]->nombre.'</strong></h1></p>
-						
-						<p><h3>$ '.$prod[$productos]->costo.'</h3></p>
-						
-						<p><a class="btn btn-success btn-lg" href="javascript:void(0);" onclick="detalles('.$prod[$productos]->id.',1)"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a></p>
-					</div>';
-					$fila++;
-				if($fila%4==0)
-				{
-					echo '</div>';
-				}
-				
-			}
-			if($fila%4!=0)
-			{
-				echo '</div>';
-			}
-		}
-		else
-		{
-			echo'<p>NO HAY DATOS EN LA BUSQUEDA</p>';
-		}
-	}
-	function buscar_combinado()
-	{
-		$buscar=$_GET['buscar'];
-		$comb=$this->modelo_compras->get_combinado_espec($buscar);
-		if($comb)
-		{
-			$fila=0;
-			for($combinados=0;$combinados<sizeof($comb);$combinados++)
-			{
-				if($fila%4==0)
-				{
-					echo '<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-				}
-				echo'<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 well div_merca" style="text-align:center; height:20%; ">
-						<div class="row">
-							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"></div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="height:30%;">
-								<img class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:30%;" src="'.$comb[$combinados]->ruta.'">
-							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-						</div>
-						<p><h1><strong>'.$comb[$combinados]->nombre.'</strong></h1></p>
-						
-						<p><h2>'.$comb[$combinados]->n_prod.' + '.$comb[$combinados]->n_serv.'</h2></p>
-						
-						<p><h3>$ '.$comb[$combinados]->costo.'</h3></p>
-						
-						<p><a class="btn btn-success btn-lg" href="javascript:void(0);" onclick="detalles('.$comb[$combinados]->id.',3)"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a></p>
-					</div>';
-					$fila++;
-				if($fila%4==0)
-				{
-					echo '</div>';
-				}
-			}
-			if($fila%4!=0)
-			{
-				echo '</div>';
-			}
-		}
-		else
-		{
-			echo'<p>NO HAY DATOS EN LA BUSQUEDA</p>';
-		}
-	}
-	function buscar_todo()
-	{
-		$buscar=$_GET['buscar'];
-		$serv=$this->modelo_compras->get_producto_espec($buscar);
-		$prod=$this->modelo_compras->get_servicio_espec($buscar);
-		$comb=$this->modelo_compras->get_combinado_espec($buscar);
-		if($prod or $serv or $comb)
-		{
-			$fila=0;
-			for($productos=0;$productos<sizeof($prod);$productos++)
-			{
-				if($fila%4==0)
-				{
-					echo '<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-				}
-				echo'<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 well div_merca" style="text-align:center; height:20%;">
-						<div class"row">
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="height:30%;">
-								<img class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:30%;" src="'.$prod[$productos]->ruta.'">
-							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-						</div>
-						<p><h1><strong>'.$prod[$productos]->nombre.'</strong></h1></p>
-						
-						<p><h3>$ '.$prod[$productos]->costo.'</h3></p>
-						
-						<p><a class="btn btn-success btn-lg" href="javascript:void(0);" onclick="detalles('.$prod[$productos]->id.',1)"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a></p>
-					</div>';
-					$fila++;
-				if($fila%4==0)
-				{
-					echo '</div>';
-				}
-				
-			}
-					
-			for($servicios=0;$servicios<sizeof($serv);$servicios++)
-			{
-				if($fila%4==0)
-				{
-					echo '<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-				}
-				echo'<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 well div_merca" style="text-align:center; height:10%; ">
-						<div class="row">
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="height:30%;">
-								<img class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:30%;" src="'.$serv[$servicios]->ruta.'">
-							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-						</div>
-						<p><h1><strong>'.$serv[$servicios]->nombre.'</strong></h1></p>
-						
-						<p><h3>$ '.$serv[$servicios]->costo.'</h3></p>
-						
-						<p><a class="btn btn-success btn-lg" href="javascript:void(0);" onclick="detalles('.$serv[$servicios]->id.',2)"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a></p>
-					</div>';
-				$fila++;
-				if($fila%4==0)
-				{
-					echo '</div>';
-				}
-				
-			}
-		
-			for($combinados=0;$combinados<sizeof($comb);$combinados++)
-			{
-				if($fila%4==0)
-				{
-					echo '<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">';
-				}
-				echo'<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 well div_merca" style="text-align:center; height:20%; ">
-						<div class="row">
-							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-1"></div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="height:30%;">
-								<img class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:30%;" src="'.$comb[$combinados]->ruta.'">
-							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-						</div>
-						<p><h1><strong>'.$comb[$combinados]->nombre.'</strong></h1></p>
-						
-						<p><h2>'.$comb[$combinados]->n_prod.' + '.$comb[$combinados]->n_serv.'</h2></p>
-						
-						<p><h3>$ '.$comb[$combinados]->costo.'</h3></p>
-						
-						<p><a class="btn btn-success btn-lg" href="javascript:void(0);" onclick="detalles('.$comb[$combinados]->id.',3)"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a></p>
-					</div>';
-					$fila++;
-				if($fila%4==0)
-				{
-					echo '</div>';
-				}
-					
-			}
-			if($fila%4!=0)
-			{
-				echo'</div>';
-			}
-		}
-		else
-		{
-			echo'<p>NO HAY DATOS EN LA BUSQUEDA</p>';
-		}
-	}
-*/
-/*	
-	function por_comprar()
-	{
-		echo '<div class="row userInfo">';
-				if($_GET['tipo']==3)
-			  	{
-			  		echo '<form id="wizard-1" novalidate="novalidate">
-							<div id="bootstrap-wizard-1" class="col-sm-12">
-								<div class="form-bootstrapWizard">
-									<ul class="bootstrapWizard form-wizard">
-										<li class="active" data-target="#step1">
-											<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Fecha de venta</span> </a>
-										</li>
-										<li data-target="#step2">
-											<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Información de la tarjeta</span> </a>
-										</li>
-										<li data-target="#step3">
-											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Fin</span> </a>
-										</li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
-								<div class="tab-content">
-									<div class="tab-pane active" id="tab1">
-										<br>
-										<h3><strong>Paso 1 </strong> - Fecha de Venta</h3>
-	
-										<div class="row">
-	
-											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
-								  				<section class="col col-lg-12 col-sm-12 col-xs-12 col-md-12">
-								  				<p><strong>Selecciona la fecha de la siguente compra</strong></p>
-													<label class="input"> <i class="icon-append fa fa-calendar"></i>
-														<input type="text" name="startdate" id="startdate" placeholder="Fecha de compra">
-													</label>
-												</section>
-								  			</div>
-	
-										</div>
-	
-													
-									</div>
-									<div class="tab-pane" id="tab2">
-										<br>
-										<h3><strong>Paso 2</strong> - Infomaciond de la tarjeta</h3>
-	
-										<div class="row">
-											<div class="panel-body">
-					                        	<p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-					                          	<br>
-					                          	<div class="panel open">
-					                            	<div class="creditCard">
-					                              		<div class="cartBottomInnerRight paymentCard"> 
-					                              		</div>
-					                              		<span>Tarjetas</span> <span>Admitidas</span>
-					                              		<div class="paymentInput">
-					                                		<div class="form-group">
-					                  						<br>
-						                              			<div class="col-lg-4 col-md-4 col-sm-4 no-margin-left no-padding">
-						                                			<select required aria-required="true" id="banco_taj" name="expire">
-						                                  				<option value="">Banco</option>
-						                                  				<option value="1">01 - VISA</option>
-						                                  				<option value="2">02 - Master Card</option>
-						                                  				<option value="3">03 - American Express</option>
-						                                			</select>
-						                              			</div>
-						                             	 		<div class="col-lg-4 col-md-4 col-sm-4 ">
-						                                			<select required aria-required="true" id="tipo_taj" name="expire">
-						                                  				<option value="">Tipo</option>
-						                                  				<option value="1">01 - Credito</option>
-						                                  				<option value="2">02 - Debito</option>
-						                                			</select>
-						                              			</div>
-						                            		</div>
-					                              		</div>
-						                              	<div class="paymentInput">
-						                                	<label for="CardNumber">Número de Tarjeta de Crédito*</label>
-						                                	<br>
-						                                	<input id="numero_taj" type="text" name="Number">
-						                              	</div>
-						                              	<!--paymentInput-->
-						                              	<div class="paymentInput">
-						                                	<label for="CardNumber2">Titular de la Tarjeda de Credito *</label>
-						                                	<br>
-						                                	<input type="text" name="CardNumber2" id="titular_taj">
-						                              	</div>
-						                              	<!--paymentInput-->
-						                              	<div class="paymentInput">
-						                                	<div class="form-group">
-						                                  	<label>Fecha de Vencimiento *</label>
-						                                  	<br>
-						                                  	<div class="col-lg-4 col-md-4 col-sm-4 no-margin-left no-padding">
-						                                    	<select required aria-required="true" name="expire" id="mes_taj">
-						                                      		<option value="">Month</option>
-							                                      	<option value="1">01 - Enero</option>
-							                                      	<option value="2">02 - Febrero</option>
-							                                      	<option value="3">03 - Marzo</option>
-							                                      	<option value="4">04 - Abril</option>
-							                                      	<option value="5">05 - Mayo</option>
-							                                      	<option value="6">06 - Junio</option>
-							                                      	<option value="7">07 - Julio</option>
-							                                      	<option value="8">08 - Agosto</option>
-							                                      	<option value="9">09 - Septiembre</option>
-							                                      	<option value="10">10 - Octubre</option>
-							                                      	<option value="11">11 - Noviembre</option>
-							                                      	<option value="12">12 - Diciembre</option>
-							                                    </select>
-						                                  	</div>
-						                                  	<div class="col-lg-4 col-md-4 col-sm-4">
-						                                    	<select required aria-required="true" name="year" id="ano_taj">
-							                                      	<option value="">Año</option>
-							                                      	<option value="2013">2013</option>
-							                                      	<option value="2014">2014</option>
-						                                      		<option value="2015">2015</option>
-						                                      		<option value="2016">2016</option>
-						                                      		<option value="2017">2017</option>
-						                                      		<option value="2018">2018</option>
-						                                      		<option value="2019">2019</option>
-						                                      		<option value="2020">2020</option>
-						                                      		<option value="2021">2021</option>
-						                                      		<option value="2022">2022</option>
-						                                      		<option value="2023">2023</option>
-						                                    	</select>
-						                                  	</div>
-						                                  
-						                                </div>
-						                             </div>
-						                             <!--paymentInput-->
-							                         <div style="clear:both"></div>
-						                             	<div class="paymentInput clearfix">
-						                                	<label for="VerificationCode">Codigo de Verificación *</label>
-						                                	<br>
-						                                	<input type="text" name="VerificationCode" id="code_taj" style="width:90px;">
-						                                	<br> 
-						                              	</div>
-						                              	<!--paymentInput-->
-							                            <div> 
-						                                	<input type="checkbox" name="saveInfo" id="saveInfoid" id="salvar_taj">
-						                                	<label for="saveInfoid">&nbsp;Guardar la información de mi tarjeta de Crédito</label>
-						                              	</div> 
-						                            </div>
-						                            <!--creditCard-->
-						                            
-						                          	</div>
-												</div>
-											</div>
-										</div>
-									
-									
-										<div class="tab-pane" id="tab3">
-											<br>
-											<h3><strong>Paso 4</strong> - Programar Compra</h3>
-											<br>
-											<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Cmpletado</strong></h1>
-											<h4 class="text-center">Pulsa aceptar para guardar la compra</h4>
-											<br>
-											<br>
-											<div class="pull-right"> <a  class="btn btn-primary btn-small" onclick="completar_compra(5)" > Guardar Compra &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
-										</div>
-	
-										<div class="form-actions">
-											<div class="row">
-												<div class="col-sm-12">
-													<ul class="pager wizard no-margin">
-														<!--<li class="previous first disabled">
-														<a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
-														</li>-->
-														<li class="previous disabled">
-															<a href="javascript:void(0);" class="btn btn-lg btn-default"> Previous </a>
-														</li>
-														<!--<li class="next last">
-														<a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
-														</li>-->
-														<li class="next">
-															<a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Next </a>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>';
-						/*echo "$('#bootstrap-wizard-1').bootstrapWizard({
-						    'tabClass': 'form-wizard',
-						    'onNext': function (tab, navigation, index) {
-						      var $valid = $('#wizard-1').valid();
-						      if (!$valid) {
-						        $validator.focusInvalid();
-						        return false;
-						      } else {
-						        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
-						          'complete');
-						        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
-						        .html('<i class='fa fa-check'></i>');
-						      }
-						    }
-						  });
-						</script>";
-											
-			  		
-						
-			  		
-			  	}
-				else
-				{
-              echo '<div class="col-lg-12">
-			  	
-               <p>Seleccione el metodo para pagar su orden.</p>
-                <hr>
-              </div>
-              <div class="col-xs-12 col-sm-12">
-                <div class="paymentBox">
-                  <div class="panel-group paymentMethod" id="accordion">
-                  	<div class="panel panel-default">
-                      <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <span class="numberCircuil">Opcion 1</span> <strong> Efectivo</strong> </a> </h4>
-                      </div>
-                      <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                          <p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-                          <br>
-                          <div class="panel open">
-                            
-                              
-                           </div>
-                         </div>
-                      </div>
-                    </div>
-                    <div class="panel panel-default">
-                      <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> <span class="numberCircuil">Opcion 2</span> <strong> Deposito</strong> </a> </h4>
-                      </div>
-                      <div id="collapseTwo" class="panel-collapse collapse">
-                         <div class="panel-body">
-                           <p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-                           <br>
-                           <div class="panel open">
-                           		
-                              
-                           </div>
-                         </div>
-                      </div>
-                    </div>
-                    <div class="panel panel-default">
-                      <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> <span class="numberCircuil">Opcion 3</span> <strong> Tarjeta</strong> </a> </h4>
-                      </div>
-                      <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                          <p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-                          <br>
-                          <div class="panel open">
-                            <div class="creditCard">
-                              <div class="cartBottomInnerRight paymentCard"> 
-                              </div>
-                              <span>Tarjetas</span> <span>Admitidas</span>
-                              <div class="paymentInput">
-                                <div class="form-group">
-                  
-                                  <br>
-	                              <div class="col-lg-4 col-md-4 col-sm-4 no-margin-left no-padding">
-	                                <select required aria-required="true" id="banco_taj" name="expire">
-	                                  <option value="">Banco</option>
-	                                  <option value="1">01 - VISA</option>
-	                                  <option value="2">02 - Master Card</option>
-	                                  <option value="3">03 - American Express</option>
-	                                  
-	                                </select>
-	                              </div>
-	                              
-	                              <div class="col-lg-4 col-md-4 col-sm-4 ">
-	                                <select required aria-required="true" id="tipo_taj" name="expire">
-	                                  <option value="">Tipo</option>
-	                                  <option value="1">01 - Credito</option>
-	                                  <option value="2">02 - Debito</option>
-	                                 
-	                                </select>
-	                              </div>
-	                            </div>
-                              </div>
-                              <div class="paymentInput">
-                                <label for="CardNumber">Número de Tarjeta de Crédito*</label>
-                                <br>
-                                <input id="numero_taj" type="text" name="Number">
-                              </div>
-                              <!--paymentInput-->
-                              <div class="paymentInput">
-                                <label for="CardNumber2">Titular de la Tarjeda de Credito *</label>
-                                <br>
-                                <input type="text" name="CardNumber2" id="titular_taj">
-                              </div>
-                              <!--paymentInput-->
-                              <div class="paymentInput">
-                                <div class="form-group">
-                                  <label>Fecha de Vencimiento *</label>
-                                  <br>
-                                  <div class="col-lg-4 col-md-4 col-sm-4 no-margin-left no-padding">
-                                    <select required aria-required="true" name="expire" id="mes_taj">
-                                      <option value="">Month</option>
-                                      <option value="1">01 - Enero</option>
-                                      <option value="2">02 - Febrero</option>
-                                      <option value="3">03 - Marzo</option>
-                                      <option value="4">04 - Abril</option>
-                                      <option value="5">05 - Mayo</option>
-                                      <option value="6">06 - Junio</option>
-                                      <option value="7">07 - Julio</option>
-                                      <option value="8">08 - Agosto</option>
-                                      <option value="9">09 - Septiembre</option>
-                                      <option value="10">10 - Octubre</option>
-                                      <option value="11">11 - Noviembre</option>
-                                      <option value="12">12 - Diciembre</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <select required aria-required="true" name="year" id="ano_taj">
-                                      <option value="">Año</option>
-                                      <option value="2013">2013</option>
-                                      <option value="2014">2014</option>
-                                      <option value="2015">2015</option>
-                                      <option value="2016">2016</option>
-                                      <option value="2017">2017</option>
-                                      <option value="2018">2018</option>
-                                      <option value="2019">2019</option>
-                                      <option value="2020">2020</option>
-                                      <option value="2021">2021</option>
-                                      <option value="2022">2022</option>
-                                      <option value="2023">2023</option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <!--paymentInput-->
-                               
-                              <div style="clear:both"></div>
-                              <div class="paymentInput clearfix">
-                                <label for="VerificationCode">Codigo de Verificación *</label>
-                                <br>
-                                <input type="text" name="VerificationCode" id="code_taj" style="width:90px;">
-                                <br> 
-                              </div>
-                              <!--paymentInput-->
-                              
-                              <div> 
-                                <input type="checkbox" name="saveInfo" id="saveInfoid" id="salvar_taj">
-                                <label for="saveInfoid">&nbsp;Guardar la información de mi tarjeta de Crédito</label>
-                              </div> 
-                            </div>
-                            <!--creditCard-->
-                            
-                            <div class="pull-right"> <a  class="btn btn-primary btn-small" onclick="completar_compra(1)" > Procesar pago &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
-                          </div>
-                         </div>
-                      </div>
-                    </div>
-					
-                    <div class="panel panel-default">
-                      <div class="panel-heading panel-heading-custom">
-                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"> <span class="numberCircuil">Opcion 4</span><strong> PayPal</strong> </a> </h4>
-                      </div>
-                      <div id="collapseFour" class="panel-collapse collapse">
-                        <div class="panel-body">
-                          <p> Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-                          <br>
-                          <label class="radio-inline" for="radios-3">
-                            <input name="radios" id="radios-3" value="4" type="radio">
-                            <img src="images/site/payment/paypal-small.png" height="18" alt="paypal"> Comprar con Paypal </label>
-                          <div class="form-group">
-                            <label for="CommentsOrder2">Agrega comentarios acerca de tu orden</label>
-                            <textarea id="CommentsOrder2" class="form-control" name="CommentsOrder2" cols="26" rows="3"></textarea>
-                          </div>
-                          <div class="form-group clearfix">
-                            <label class="checkbox-inline" for="checkboxes-0">
-                              <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
-                              He leído y acepto los <a href="terms-conditions.html">Terminos y Condiciones</a> </label>
-                          </div>
-                          <div class="pull-right"> <a href="" class="btn btn-primary btn-small " > Procesar pago &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
-                        </div>
-                       </div>
-                    </div>
-                    
-                    
-                    
-                  </div>
-                </div>
-                
-                <!--/row--> 
-                
-              </div>
-            </div>';
-            }
-	}*/
+
 	function completar_compra()
 	{
 		$data=$_GET["info"];
@@ -4203,47 +3272,7 @@ function index()
 	function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
 		$this->modelo_compras->CalcularComisionVenta ( $id_venta, $id_afiliado[0]->debajo_de, $porcentaje_comision, $costo_comision, $id_categoria_mercancia);
 	} 
-	/*
-	
-	function bonoMes234($id_afiliado, $id_venta, $id_categoria_mercancia, $config_comision, $capacidad_red ,$contador, $costo_mercancia){
-		$mercancias = $this->modelo_compras->consultarMercancia($id_venta);
-		
-		foreach ($mercancias as $mercancia){
-		
-			if($mercancia->id_tipo_mercancia == '4'){
-				return 0;
-			}
-			
-			for($i = 0; $i < $capacidad_red[0]->profundidad; $i++){
-					
-				if(!isset($id_afiliado[0]->debajo_de)){
-					break;
-				}
-				if($id_afiliado[0]->debajo_de == 1){
-					break;
-				}
-				
-				$fecha_creacion = $this->model_perfil_red->ConsultarFechaInscripcion($id_afiliado[0]->debajo_de);
-				$fechainicial =  new DateTime($fecha_creacion[0]->created);
-				$fechafinal = new DateTime();
-				
-				$diferencia = $fechainicial->diff($fechafinal);
-				
-				if($diferencia->m < 4){
-					$red2 = $this->model_afiliado->RedAfiliado( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
-					$valor_comision = ($config_comision[$i]->valor * $costo_mercancia) / 100;
-					
-					$this->DarComision($id_venta, $id_afiliado, $valor_comision, $mercancia->puntos_comisionables, $id_categoria_mercancia);
-				}
-				$id_padre = $this->model_perfil_red->ConsultarIdPadre( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id );
-				$id_afiliado = $id_padre;
-			}
-				
-		}
-		
-	}
 
-	*/
 	function SelecioneBancoWebPersonal(){
 		
 		if(!isset($_POST['id_mercancia'])){
@@ -4284,123 +3313,6 @@ function index()
 			redirect('/auth');
 		
 		redirect("/ov/compras/comprar");
-		
-/*		
-		$productos = $this->cart->contents();
-		$hay_productos=false;
-		$id = $this->tank_auth->get_user_id();
-		$usuario = $this->general->get_username($id);
-		$grupos = $this->model_mercancia->CategoriasMercancia();
-		$redes = $this->model_tipo_red->RedesUsuario($id);
-		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
-		
-		foreach ($productos as $producto){
-			$mercancia = $this->modelo_compras->esProducto($producto['id']);
-			if($mercancia){
-				$hay_productos = true;
-			}
-			
-		}
-		if(!$hay_productos){
-			$telefono = $this->modelo_compras->traer_telefonos($id);
-			
-			$datos = array(
-					'id_user' => $id,
-					'id_proveedor' => '0',
-					'costo' => '0',
-					'nombre' => $datos_perfil[0]->nombre,
-					'apellido' => $datos_perfil[0]->apellido,
-					'id_pais' => $datos_perfil[0]->pais,
-					'estado' => $datos_perfil[0]->estado,
-					'municipio' => $datos_perfil[0]->municipio,
-					'colonia' => $datos_perfil[0]->colonia,
-					'calle' => $datos_perfil[0]->calle,
-					'cp' => $datos_perfil[0]->cp,
-					'email' => $datos_perfil[0]->email,
-					'telefono' => $telefono[0]->numero,
-			);
-			$this->modelo_compras->guardarDatosEnvio($datos);
-			redirect("/ov/compras/comprar");
-			
-		}
-		
-		$this->template->set("grupos",$grupos);
-		$this->template->set("datos",$datos_perfil);
-		
-		$info_compras=Array();
-		$producto=0;
-		if($this->cart->contents())
-		{
-		
-			foreach ($this->cart->contents() as $items)
-			{
-				$imgn=$this->modelo_compras->get_img($items['id']);
-				if(isset($imgn[0]->url))
-				{
-					$imagen=$imgn[0]->url;
-				}
-				else
-				{
-					$imagen="";
-				}
-				switch($items['name'])
-				{
-					case 1:
-						$detalles=$this->modelo_compras->detalles_productos($items['id']);
-						break;
-					case 2:
-						$detalles=$this->modelo_compras->detalles_servicios($items['id']);
-						break;
-					case 3:
-						$detalles=$this->modelo_compras->comb_espec($items['id']);
-						break;
-					case 4:
-						$detalles=$this->modelo_compras->comb_paquete($items['id']);
-						break;
-					case 5:
-						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
-						break;
-					case 6:
-						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
-						break;
-				}
-				$info_compras[$producto]=Array(
-						"imagen" => $imagen,
-						"nombre" => $detalles[0]->nombre
-				);
-				$producto++;
-			}
-		}
-		$data=array();
-		$data['compras']= $info_compras;
-		
-		
-		$id=$this->tank_auth->get_user_id();
-		$costo_envio = $this->modelo_compras->consultarCostoEnvio($id);
-		if(isset($costo_envio[0]->costo)){
-			redirect("/ov/compras/comprar");
-		}
-		
-		$usuario=$this->general->get_username($id);
-		$style=$this->general->get_style($id);
-		
-		$descuento_por_nivel_actual=$this->modelo_compras->get_descuento_por_nivel_actual($id);
-		if ($descuento_por_nivel_actual!=null){
-			$calcular_descuento=(100-$descuento_por_nivel_actual[0]->porcentage_venta)/100;
-		}else{
-			$calcular_descuento=1;
-		}
-		
-		$data['paises'] = $pais = $this->model_admin->get_pais_activo();
-		$this->template->set("style",$style);
-		$this->template->set("usuario",$usuario);
-		$this->template->set("compras",$info_compras);
-		
-		$this->template->set("calcular_descuento",$calcular_descuento);
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
-		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/compra_reporte/datos_envio',$data);*/
 	}
 	
 	function buscarProveedores(){

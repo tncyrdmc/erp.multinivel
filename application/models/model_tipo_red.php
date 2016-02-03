@@ -115,4 +115,16 @@ class Model_tipo_red extends CI_Model{
 		$q=$this->db->query("SELECT id FROM tipo_red where estatus = 'ACT' ");
 		return $q->result();
 	}
+	
+	function cantidadRedesUsuario($id)
+	{
+		$q=$this->db->query("SELECT id_red as id FROM afiliar where id_afiliado= '".$id."' group by id_red");
+		return $q->result();
+	}
+	
+	function validarUsuarioRed($id,$id_red)
+	{
+		$q=$this->db->query("SELECT id_red as id FROM afiliar where id_afiliado= '".$id."' and id_red='".$id_red."'");
+		return $q->result();
+	}
 }

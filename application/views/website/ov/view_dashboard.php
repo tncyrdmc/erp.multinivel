@@ -158,8 +158,8 @@
 															</div>
 															<!-- CHAT BODY -->
 															<div id="chat-body" class="chat-body custom-scroll">
-																<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados Nuevos en el Mes 
-																<b class="badge bg-color-red bounceIn animated"> 21 </b> </span>
+																<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados En Mi Red 
+																<b class="badge bg-color-red bounceIn animated"> <?php echo $numeroAfiliadosRed;?> </b> </span>
 																<ul>
 																    <?php 
 																    
@@ -320,7 +320,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a> <!--href="compras/reportes"  -->
+													<a href="compras/reportes"> 
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-table fa-3x"></i>
 															<h5>Reportes</h5>

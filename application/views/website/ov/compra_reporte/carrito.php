@@ -23,7 +23,8 @@
 <![endif]-->
 
 <!-- include pace script for automatic web page progress bar  -->
-<div>
+
+<div id="content">
  <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation" id="cart_cont" style="background: #2980b9 ! important;">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i style="color : #fff;" class="fa fa-shopping-cart fa-2x"> </i> <span style="color : #fff;" class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
@@ -38,7 +39,6 @@
         
       </div> -->
     </div>
-    
     <!-- this part is duplicate from cartMenu  keep it for mobile -->
     <div class="navbar-cart  collapse">
       <div class="cartMenu  hidden-lg col-xs-12 hidden-md hidden-sm">
@@ -276,14 +276,13 @@
 				</div>
 </article>
 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-	    	<h3 class="section-title style2 text-center"><span>NUESTROS PRODUCTOS</span></h3>
 	    		<div class="">
 	      			<div class="row xsResponse" id="mercancias">
 	      									<!-- start row -->
 					<div class="row">
 						<div class="col-sm-3">
 						</div>
-						<div class="col-sm-6">
+						<div class="col-sm-8">
 				
 							<div class="row">
 				
@@ -485,11 +484,13 @@
 			}*/
 			function show_todos_categoria(idTipoRed)
 			{
+				iniciarSpinner();
 				$.ajax({
 					type: "get",
 					url: "show_todos_categoria",
 					data: { id: idTipoRed},
 					success:function(msg){
+						FinalizarSpinner();
 						$("#mercancias").html(msg);
 				
 					}
@@ -498,11 +499,13 @@
 					
 			function show_todos(idTipoRed)
 			{
+				iniciarSpinner();
 				$.ajax({
 					type: "get",
 					url: "show_todos",
 					data: { id: idTipoRed},
 					success:function(msg){
+						FinalizarSpinner();
 						$("#mercancias").html(msg);
 				
 					}
@@ -511,11 +514,13 @@
 
 			function show_todos_tipo_mercancia(tipoMercancia)
 			{
+				iniciarSpinner();
 				$.ajax({
 					type: "get",
 					url: "show_todos_tipo_mercancia",
 					data: { tipoMercancia: tipoMercancia},
 					success:function(msg){
+						FinalizarSpinner();
 						$("#mercancias").html(msg);
 				
 					}

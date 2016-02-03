@@ -33,12 +33,13 @@
 									<label class="select">
 										<select id="tipo-reporte">
 											<option value="0" selected="" disabled="">Tipo de reporte</option>
-											<!--<option value="6">Ver consecutivo de mi red</option>-->
-											<option value="1">Afiados nuevos</option>
+											<option value="6">Ver consecutivo de mi red</option>
+											<!--<option value="1">Afiados nuevos</option>-->
 											<!--<option value="7">Ver compras de mi red</option>-->
 											<!--  <option value="4">Ventas web personal</option>-->
 											<option value="5">Compras por Banco</option>
 											<option value="8">Ver mis compras</option>
+											<option value="7">Ver compras de mi red</option>
 										</select> <i></i> </label>
 								</section>
 								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -138,7 +139,7 @@
 					-->
 					<header>
 						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-						<h2>Export to PDF / Excel</h2>
+						<h2>Reportes</h2>
 	
 					</header>
 				
@@ -177,7 +178,7 @@
 									 <section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
-											<a id="imprimir-2" href="reporte_afiliados_excel" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+										<!--<a id="imprimir-2" href="reporte_afiliados_excel" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a> -->
 										</label>
 									</section> 
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -202,7 +203,7 @@
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
-											<a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+										<!-- <a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a> -->
 										</label>
 									</section>
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -227,7 +228,7 @@
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
-											<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+									<!-- <a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a> -->
 										</label>
 									</section>
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -252,7 +253,7 @@
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
-											<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+									<!-- <a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a> -->
 										</label>
 									</section>
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -506,13 +507,14 @@
 
 					case '6':
 						$("#nuevos-afiliados").show();
+						iniciarSpinner();
 						$.ajax({
 					         type: "post",
 					         url: "reporte_afiliados_todos",
 							success: function( msg )
 							{
 							$("#reporte_div").html(msg);
-
+							FinalizarSpinner();
 							}
 						});
 						break;
@@ -525,6 +527,7 @@
 							return 0;
 						}
 						$("#nuevos-afiliados").show();
+						iniciarSpinner();
 						$.ajax({
 					         type: "post",
 					         data: {inicio : inicio, fin : fin},
@@ -533,6 +536,7 @@
 							{
 								$("#reporte_div").html(msg);
 								setTableConfig();
+								FinalizarSpinner();
 							}
 						});
 						
@@ -546,6 +550,7 @@
 							return 0;
 						}
 						$("#nuevos-afiliados").show();
+						iniciarSpinner();
 						$.ajax({
 					         type: "post",
 					         data: {inicio : inicio, fin : fin},
@@ -553,7 +558,7 @@
 							success: function( msg )
 							{
 								$("#reporte_div").html(msg);
-
+								FinalizarSpinner();
 							}
 						});
 						
@@ -905,8 +910,8 @@
 		    $("#well-print-af").show();
 			$("#row-print-af").show();
 	    // custom toolbar
-			 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
-					$("#remplazar").html(obj);
+		/*	 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+					$("#remplazar").html(obj);*/
 					$("#row-print-red").show();
 		}
 		</script>
