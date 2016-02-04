@@ -25,6 +25,7 @@ class compras extends CI_Controller
 		$this->load->model('model_comprador');
 		$this->load->model('model_carrito_temporal');
 		$this->load->model('model_servicio');
+		$this->load->model('bo/modelo_pagosonline');
 			
 		$this->load->model('ov/model_web_personal_reporte');
 	}
@@ -388,11 +389,6 @@ function index()
 	
 	function RegistrarVentaPayuLatam(){
 	
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-	
 		$id = $_POST['extra1'];
 		$id_pago = $_POST['extra2'];
 		$identificado_transacion = $_POST['transaction_id'];
@@ -425,6 +421,34 @@ function index()
 
 	}
 	
+	function RespuestaPayuLatam(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		if($_GET['transactionState']==4){
+			
+			$this->cart->destroy();
+			$id=$this->tank_auth->get_user_id();
+			$usuario=$this->general->get_username($id);
+			$style=$this->general->get_style($id);
+			
+			$this->template->set("style",$style);
+			$this->template->set("usuario",$usuario);
+			
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/ov/header');
+			$this->template->set_partial('footer', 'website/ov/footer');
+			$this->template->build('website/ov/compra_reporte/transaccionExitosa');
+			return true;
+		}
+	
+		redirect('/');
+	}
+	
 	function pagarVentaPayuLatam(){
 	
 		if (!$this->tank_auth->is_logged_in())
@@ -439,12 +463,9 @@ function index()
 		}
 	
 		$actual_link = "http://$_SERVER[HTTP_HOST]";
-		// merchantId: Cuenta
-		//Api Key cuenta
-		//referenceCode: IDventa
 
 		$id = $this->tank_auth->get_user_id();
-		
+		$email = $this->general->get_email($id);
 		
 		
 		$contenidoCarrito=$this->get_content_carrito ();
@@ -459,39 +480,39 @@ function index()
 		
 		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
 		
+		
+		$payulatam  = $this->modelo_pagosonline->val_payulatam();
+		
 		$time = time();
-		$firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~NetSoft".$time."~".$totalCarrito."~USD");
+		$firma = md5($payulatam[0]->apykey."~".$payulatam[0]->id_comercio."~NetSoft".$time."~".$totalCarrito."~".$payulatam[0]->moneda);
 		$id_transacion = $firma; 
 		
-		echo' <form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
-			  <input name="merchantId"    type="hidden"  value="500238"   >
-			  <input name="accountId"     type="hidden"  value="509171" >
+		$link="https://stg.gateway.payulatam.com/ppp-web-gateway/";
+		
+		if($payulatam[0]->test!=1)
+			$link="https://gateway.payulatam.com/ppp-web-gateway/";
+		
+		echo' 
+			<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
+			<form method="post" action="'.$link.'">
+			  <input name="merchantId"    type="hidden"  value="'.$payulatam[0]->id_comercio.'">
+			  <input name="accountId"     type="hidden"  value="'.$payulatam[0]->id_cuenta.'" >
 			  <input name="description"   type="hidden"  value="'.$descripcion.'"  >
 			  <input name="referenceCode" type="hidden"  value="NetSoft'.$time.'" >
 			  <input name="amount"        type="hidden"  value="'.$totalCarrito.'"   >
 			  <input name="tax"           type="hidden"  value="0"  >
 			  <input name="taxReturnBase" type="hidden"  value="0" >
-			  <input name="currency"      type="hidden"  value="USD" >
+			  <input name="currency"      type="hidden"  value="'.$payulatam[0]->moneda.'" >
 			  <input name="signature"     type="hidden"  value="'.$id_transacion.'"  >
-			  <input name="test"          type="hidden"  value="1" >
+			  <input name="test"          type="hidden"  value="'.$payulatam[0]->test.'" >
 			  <input name="extra1" type="hidden" value="'.$id.'" > 
 			  <input name="extra2" type="hidden" value="'.$id_pago_proceso.'" >
-			  <input name="buyerEmail"    type="hidden"  value="test@test.com" >
-			  <input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaPayuLatam" >
+			  <input name="buyerEmail"    type="hidden"  value="'.$email[0]->email.'" >
+			  <input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RespuestaPayuLatam" >
 			  <input name="confirmationUrl"  type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaPayuLatam" >
-			  <input name="Submit"        type="submit"  value="Pago PayuLatam" >
+			  <input name="Submit" type="submit"  value="Pagar" class="btn btn-success">
 			</form>';
-/*	
-		
-	
-		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id, $id_transacion, $firma, $fecha);
-	
-		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
-	
-		$this->registrarFacturaMercancia ( $contenidoCarrito ,$id_venta);
-	
-		$this->cart->destroy();
-*/
+
 	}
 	/**
 	 * @param contenidoCarrito

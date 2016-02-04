@@ -44,7 +44,7 @@
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="#"><!-- /bo/payulatam -->
+												<a href="/bo/configuracion/payuLatam"><!-- /bo/payulatam -->
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-globe fa-3x"></i>
 														<h1>Payulatam</h1>

@@ -21,6 +21,7 @@ class configuracion extends CI_Controller
 		$this->load->model('model_cat_grupo_soporte_tecnico');		
 		$this->load->model('bo/model_soporte_tecnico');
 		$this->load->model('model_emails_departamentos');
+		$this->load->model('bo/modelo_pagosonline');
 
 	}
 	 
@@ -174,6 +175,44 @@ class configuracion extends CI_Controller
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/empresa/datos');
 	}
+	
+	function payuLatam()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$payulatam  = $this->modelo_pagosonline->val_payulatam();
+		$this->template->set("payulatam",$payulatam);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/pagosOnline/payulatam');
+	}
+	
+	function actualizarPayuLatam()
+	{
+		$payulatam = $this->modelo_pagosonline->actualizar_payulatam();
+		echo $payulatam
+		? "Se ha actualizado los datos de payulatam."
+				: "No se ha podido actualizar los datos de payulatam.";
+	}
+	
 	
 	function banner()
 	{
