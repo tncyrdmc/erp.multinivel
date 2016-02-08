@@ -79,7 +79,7 @@
 													<tr>
 														<td><?php echo $notify->id; ?></td>
 														<td><?php echo $notify->fecha_inicio; ?></td>
-														<td><?php echo $notify->fecha_inicio; ?></td>
+														<td><?php echo $notify->fecha_fin; ?></td>
 														<td><?php echo $notify->nombre; ?></td>
 														<td><?php echo $notify->descripcion; ?></td>
 														<td>

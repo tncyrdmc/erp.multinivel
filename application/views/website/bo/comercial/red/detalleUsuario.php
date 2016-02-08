@@ -140,6 +140,7 @@ function use_username()
 	})
 	.done(function( msg )
 	{
+		$("#msg_usuario").remove();
 		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
 	});
 	validate_user_data()
@@ -156,6 +157,7 @@ function use_mail()
 	})
 	.done(function( msg )
 	{
+		$("#msg_correo").remove();
 		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
 	});
 	validate_user_data()
