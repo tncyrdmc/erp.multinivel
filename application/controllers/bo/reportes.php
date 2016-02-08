@@ -836,7 +836,7 @@ class reportes extends CI_Controller
 			<td>".$cobros[$i]->email."</td>
 			<td>".$cobros[$i]->banco."</td>
 			<td>".$cobros[$i]->cuenta."</td>
-			<td>".$cobros[$i]->valor."</td>
+			<td>$ ".$cobros[$i]->valor."</td>
 			<td>".$cobros[$i]->fecha."</td>
 			<td>Pagado</td>
 			</tr>";
@@ -869,6 +869,57 @@ class reportes extends CI_Controller
 		echo "</tbody> </table> <tr class='odd' role='row'>";
 	}
 	
+	function reporte_ventas_pagadas_online(){
+	
+		$cobros=$this->modelo_historial_consignacion->ListarPagosOnline($_POST['startdate'],$_POST['finishdate']);
+	
+		$totalCobros=0;
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID Venta</th>
+					<th>Afiliado</th>
+					<th>Email</th>
+					<th>Fecha</th>
+					<th>Valor</th>
+					<th>Tipo PagoOnline</th>
+				</thead>
+				<tbody>";
+	
+		for($i=0;$i < sizeof($cobros);$i++)
+		{
+			echo "<tr>
+			<td class='sorting_1'>".$cobros[$i]->id_venta."</td>
+			<td>".$cobros[$i]->usuario."</td>
+			<td>".$cobros[$i]->email."</td>
+			<td>".$cobros[$i]->fecha."</td>
+			<td>$ ".$cobros[$i]->valor."</td>
+			<td>".$cobros[$i]->metodo."</td>
+			</tr>";
+			$totalCobros = $totalCobros + $cobros[$i]->valor;
+		}
+	
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+	
+		echo "<tr>
+			<td class='sorting_1'><b>TOTAL</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b> $	".number_format($totalCobros, 2, '.', '')."</b></td>
+			<td><b></b></td>
+			<td><b></b></td>
+			</tr>";
+	
+		echo "</tbody> </table> <tr class='odd' role='row'>";
+	}
 
 	function reporte_cobros_pendientes_excel()
 	{

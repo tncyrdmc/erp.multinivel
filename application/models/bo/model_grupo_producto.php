@@ -69,6 +69,18 @@ function __construct()
 			return false;
 		}
 		
+		$q = $this->db->query("select nombre from paquete_inscripcion where id_red = ".$id_categoria);
+		$pro = $q->result();
+		if(isset($pro[0]->nombre)){
+			return false;
+		}
+		
+		$q = $this->db->query("select nombre from membresia where id_red = ".$id_categoria);
+		$pro = $q->result();
+		if(isset($pro[0]->nombre)){
+			return false;
+		}
+		
 		return true;
 	}
 }

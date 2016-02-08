@@ -2126,9 +2126,9 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		return $q->result();
 	}
 	
-	function get_Profundidad_tipo_red($id_categoria)
+	function get_Profundidad_tipo_red($id_red)
 	{
-		$q=$this->db->query("SELECT profundidad FROM tipo_red, cat_grupo_producto where id_red = id and id_red = ".$id_categoria);
+		$q=$this->db->query("SELECT profundidad FROM tipo_red where id= ".$id_red);
 		$profundidad = $q->result();
 		return $profundidad[0]->profundidad;
 	}
@@ -2199,6 +2199,21 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 		$q=$this->db->query("SELECT *  FROM cat_impuesto ");
 		return $q->result();
+	}
+	
+	function kill_venta($id){
+		$this->db->query("delete from cuenta_pagar_banco_historial where id_venta=".$id);
+		$this->db->query("delete from pago_por_payulatam where id_venta=".$id);
+		$this->db->query("delete from comision where id_venta=".$id);
+		$this->db->query("delete from cross_venta_mercancia where id_venta=".$id);
+		$this->db->query("delete from factura where id_venta=".$id);
+		$this->db->query("delete from venta where id_venta=".$id);
+
+	}
+	
+	function kill_cobro($id){
+		$this->db->query("DELETE FROM cobro WHERE id_cobro=".$id);
+	
 	}
 	
 }

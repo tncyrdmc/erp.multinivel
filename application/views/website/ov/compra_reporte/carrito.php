@@ -299,7 +299,7 @@
 											<div class="carousel-inner">
 												<!-- Slide 1 -->
 												<div class="item active">
-													<img src="/template/img/demo/banner1.png" alt="">
+													<img src="/media/imagenes/carrito/banner1.png" alt="">
 													<div class="carousel-caption caption-right">
 												<!--  		<h4>Title 1</h4>
 														<p>
@@ -311,7 +311,7 @@
 												</div>
 												<!-- Slide 2 -->
 												<div class="item">
-													<img src="/template/img/demo/banner2.png" alt="">
+													<img src="/media/imagenes/carrito/banner2.png" alt="">
 													<div class="carousel-caption caption-left">
 													<!--  	<h4>Title 2</h4>
 														<p>
@@ -323,7 +323,7 @@
 												</div>
 												<!-- Slide 3 -->
 												<div class="item">
-													<img src="/template/img/demo/banner3.png" alt="">
+													<img src="/media/imagenes/carrito/banner3.png" alt="">
 													<div class="carousel-caption caption-left">
 													<!--  	<h4>Title 2</h4>
 														<p>
@@ -434,54 +434,7 @@
 			}
 		</script>
 		<script type="text/javascript">
-/*			function show_prod()
-			{
-				$.ajax({
-					type: "get",
-					url: "show_productos",
-					success:function(msg){
-						$("#mercancias").html(msg);
-					
-					}
-				});
-			}
-*/
-/*			function show_serv()
-			{
-				$.ajax({
-					type: "get",
-					url: "show_servicios",
-					success:function(msg){
-						$("#mercancias").html(msg);
-						
-					}
-				});
-			}
-*/			
-/*			function show_prom()
-			{
-				$.ajax({
-					type: "get",
-					url: "show_promocion",
-					success:function(msg){
-						$("#mercancias").html(msg);
-						
 
-					}
-				});
-			}*/
-/*			function show_comb()
-			{
-				$.ajax({
-					type: "get",
-					url: "show_combinados",
-					success:function(msg){
-						$("#mercancias").html(msg);
-						
-
-					}
-				});
-			}*/
 			function show_todos_categoria(idTipoRed)
 			{
 				iniciarSpinner();
@@ -526,60 +479,7 @@
 					}
 				});
 			}
-/*			
-			function busqueda_merc(tipo)
-			{
-				
-				switch(tipo)
-				{
-					case 1:
-						var buscando=$("#busqueda1").val();
-						$.ajax({
-							data:'buscar='+buscando,
-							type:"get",
-							url:"buscar_producto",
-							success: function(msg){
-								$("#mercancias").html(msg);
-							}
-						});
-						break;
-					case 2:
-						var buscando=$("#busqueda2").val();
-						$.ajax({
-							data:'buscar='+buscando,
-							type:"get",
-							url:"buscar_servicio",
-							success: function(msg){
-								$("#mercancias").html(msg);
-							}
-						});
-						break;
-					case 3:
-						var buscando=$("#busqueda3").val();
-						$.ajax({
-							data:'buscar='+buscando,
-							type:"get",
-							url:"buscar_combinado",
-							success: function(msg){
-								$("#mercancias").html(msg);
-							}
-						});
-						break;
-					case 4:
-						var buscando=$("#busqueda4").val();
-						$.ajax({
-							data:'buscar='+buscando,
-							type:"get",
-							url:"buscar_todo",
-							success: function(msg){
-								$("#mercancias").html(msg);
-							}
-						});
-						break;
-					default:
-						
-				}
-			}*/
+
 		</script>
 		<script>
 			function comprar(id,tipo)
@@ -664,50 +564,7 @@
 					}
 				});
 			}
-/*			
-			function to_buy()
-			{
-				$.ajax({
-					type: "get",
-					data: "tipo="+tipo,
-					url: 'por_comprar',
-					success: function(msg){
-						bootbox.dialog({
-							message: msg,
-							title: "Metodo de pago",
-							className: "",
-						
-						});
-							$('#startdate').datepicker({
-								dateFormat : "yy-mm-dd",
-								prevText : '<i class="fa fa-chevron-left"></i>',
-								nextText : '<i class="fa fa-chevron-right"></i>',
-								changeMonth: false,
-								numberOfMonths: 1,
-								//defaultDate: "1970-01-01",
-								changeYear: false,
-								
-							}); 
-							$('#bootstrap-wizard-1').bootstrapWizard({
-							    'tabClass': 'form-wizard',
-							    'onNext': function (tab, navigation, index) {
-							      var $valid = $("#wizard-1").valid();
-							      if (!$valid) {
-							        $validator.focusInvalid();
-							        return false;
-							      } else {
-							        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
-							          'complete');
-							        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
-							        .html('<i class="fa fa-check"></i>');
-							      }
-							    }
-							  });
-					}
-				
-				});
-			}
-*/			
+			
 
 			function quitar_producto(id)
 			{
@@ -752,46 +609,11 @@
 				});
 				
 			}
-/*			
-			function muestra_afiliados()
-			{
-				if($('#comprar_otro').prop('checked'))
-				{
-				 	$("#afiliados").show();
-				}
-				else
-				{
-					$("#afiliados").hide();
 
-				}
-			}
-*/			
-/*			function show_grupo_prod()
-			{
-				var grupo=$("#grupo_prod").val();
-				$.ajax({
-					data:'grupo='+grupo,
-					type:"get",
-					url:"show_prod_grup",
-					success: function(msg){
-						$("#mercancias").html(msg);
-					}
-				});
-			}*/
-			function a_comprar()
+		function a_comprar()
 			{
 				window.location.href="DatosEnvio";						
 			}
-		</script>
-		<script>
-		/*	$(document).ready(function(){
-			    var wizard = $('.wizard').wizard();
-	
-			  wizard.on('finished', function (e, data) {
-			  });
-			  
-			});*/
-			
 		</script>
 		<script type="text/javascript">
 		
@@ -822,15 +644,4 @@
 				
 		})
 
-/*		function paquetes(){
-			$.ajax({
-				type: "get",
-				url: "show_paquetes",
-				data: { },
-				}).done(function(msg){
-					
-				$("#mercancias").html(msg);
-
-			});
-		} */
 		</script>

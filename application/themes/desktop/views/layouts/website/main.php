@@ -1,8 +1,11 @@
+<?php $ci = &get_instance();
+   	$ci ->load ->model("bo/model_admin");
+   	$empresa=$ci->model_admin->val_empresa_multinivel()?>
 <!DOCTYPE html>
 <html class="">
 	<head>
 		<meta charset="utf-8">
-		<title> NetworkSoft </title>
+		<title> <?php echo $empresa[0]->nombre; ?></title>
 		<meta name="description" content="">
 		<meta name="author" content="">
 

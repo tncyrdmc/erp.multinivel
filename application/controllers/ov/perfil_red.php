@@ -160,6 +160,9 @@ class perfil_red extends CI_Controller
 	        	
 			}
 
+			if($frontales==0)
+				$frontales=$aux+1;
+			
 			if($aux > 0){
 				for($i=$aux; $i < $frontales; $i++){
 					echo "<li>
@@ -619,7 +622,7 @@ class perfil_red extends CI_Controller
 			if(!$estaEnRed)
 				redirect('/');
 			
-			if(count($afiliados)>=count($red_forntales))
+			if(count($afiliados)>=$red_forntales[0]->frontal&&$red_forntales[0]->frontal>0)
 				redirect('/ov/perfil_red/afiliar_red?id='.$id_red);
 			
 		}

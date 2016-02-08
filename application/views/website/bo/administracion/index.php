@@ -29,11 +29,10 @@
 						<!-- end widget edit box -->
 						<!-- widget content -->
 						<div class="widget-body no-padding smart-form">
-                <fieldset>
+                		<fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-12 link">
-											<div class="col-sm-1 link">
+											<div class="col-sm-2 link">
 											</div>
 											<div class="col-sm-2 link">
 													<a href="/bo/usuarios">
@@ -46,41 +45,60 @@
 											<div class="col-sm-2 link">	
 													<a href="/bo/cuentasporcobrar/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-bank fa-3x"></i>
-															<h1>Cuentas Por Cobrar</h1>
+															<i class="fa fa-briefcase fa-3x"></i>
+															<h1>Ventas Por Cobrar</h1>
 														</div>
 													</a>
+											</div>
+											<div class="col-sm-2 link">	
+													<a href="/bo/ventas/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-credit-card fa-3x"></i>
+															<h1>Ventas<br>&nbsp</h1>
+														</div>
+													</a>
+											</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-2 link">
 												</div>
-											<div class="col-sm-2 link">	
-													<a href="/bo/CuentasPagar/PorPagar">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-money fa-3x"></i>
-															<h1>Cuentas por Pagar</h1>
-														</div>
-													</a>
-											</div>
-											<div class="col-sm-2 link">	
-													<a href="/bo/CuentasPagar/Archivos">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-archive fa-3x"></i>
-															<h1>Historial Pagos</h1>
-														</div>
-													</a>
-											</div>
+												<div class="col-sm-2 link">	
+														<a href="/bo/CuentasPagar/PorPagar">
+															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+																<i class="fa fa-money fa-3x"></i>
+																<h1>Comisiones por Pagar</h1>
+															</div>
+														</a>
+												</div>
+												<div class="col-sm-2 link">	
+														<a href="/bo/comisionesPagadas/index">
+															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+																<i class="fa fa-history fa-3x"></i>
+																<h1>Cobros Pedidos</h1>
+															</div>
+														</a>
+												</div>
+												<div class="col-sm-2 link">	
+														<a href="/bo/CuentasPagar/Archivos">
+															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+																<i class="fa fa-archive fa-3x"></i>
+																<h1>Historial Pagos</h1>
+															</div>
+														</a>
+												</div>
 											</div>
 										 </div>
-									</div>
-								</fieldset>
+
+						</fieldset>
+						</div>
+						</div>
 						</div>
 						<!-- end widget content -->
-
-					</div>
+			</article>
 					<!-- end widget div -->
 				</div>
 				<!-- end widget -->
-			</article>
 			<!-- END COL -->
-		</div>
 				<div class="row">         
 			        <!-- a blank row to get started -->
 			        <div class="col-sm-12">
@@ -88,7 +106,8 @@
 			            <br />
 			        </div>
 		        </div>
-			</div>
+		</section>
+		</div>
 			<!-- END MAIN CONTENT -->
 <style>
 .link

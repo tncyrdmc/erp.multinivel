@@ -18,7 +18,7 @@
 				×
 			</button>
 			<i class="fa-fw fa fa-check"></i>
-			<strong>Error </strong> La categoria No tiene configurada las comisiones
+			<strong>Error </strong> La red No tiene configurada las comisiones
 			</div>
 	<?php } ?>
 	<section id="widget-grid" class="">

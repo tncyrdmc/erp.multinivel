@@ -38,6 +38,19 @@ class Model_servicio extends CI_Model{
 		
 	}
 	
+	function listar_cobros_comisiones($inicio, $fin)
+	{
+	
+		$q=$this->db->query("SELECT c.id_cobro,c.fecha,concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email
+							,c.banco,c.cuenta,c.titular,c.clabe,c.id_metodo,c.id_estatus,c.monto FROM cobro c,users u ,user_profiles up
+							where u.id=c.id_user
+							and up.user_id=u.id
+							and DATE(c.fecha) BETWEEN '".$inicio."' AND '".$fin."' order by c.id_cobro
+							"); 
+		return $q->result();
+	
+	}
+	
 	function listar_todos_por_venta_y_fecha_usuario($inicio, $fin,$id_usuario)
 	{
 	

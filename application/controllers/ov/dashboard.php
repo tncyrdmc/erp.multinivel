@@ -138,7 +138,8 @@ class dashboard extends CI_Controller
 	    $cuentasPorPagar=$this->modelo_dashboard->get_cuentas_por_pagar_banco($id);
 	    $notifies = $this->model_admin->get_notify_activos();
 
-		$name_sponsor=$this->general->get_username($id_sponsor[0]->id_usuario);
+
+	    $name_sponsor=$this->general->get_username($id_sponsor[0]->id_usuario);
 
 		$image=$this->modelo_dashboard->get_images($id);
 		$fondo="/template/img/portada.jpg";
@@ -157,23 +158,7 @@ class dashboard extends CI_Controller
 		}
 		
 		$style=$this->modelo_dashboard->get_style($id);
-		
-/*		$redes = $this->model_tipo_red->RedesUsuario($id);
-		
-		foreach ($redes as $red){
-			$this->DeterminarPremio($id, $red->id);
-		}
-/*		
-		$infoPremios = $this->modelo_premios->verEstadoPremio($id);
-		
-		$hayPremios = false;
-		if (isset($infoPremios[0]->nombre)){
-			$hayPremios = true;
-		}
-		//$nivel_actual_red=$this->modelo_compras->get_nivel_actual($id);
-		*/
-		//$this->template->set("hayPremios",$hayPremios);
-		//$this->template->set("nivel_actual_red",$nivel_actual_red[0]->nombre);
+
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
 	    $this->template->set("telefono",$telefono);

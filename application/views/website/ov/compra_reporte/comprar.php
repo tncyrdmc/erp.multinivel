@@ -181,9 +181,9 @@
 														<div class="payment-methods">
 															<h1 class="font-300">Metodos de Pago</h1>
 															<a onclick="consignacion()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
-																<img src="/template/img/payment/deposito-bancario.jpg" alt="paypal" height="60" width="240">
+																<img src="/template/img/payment/deposito-bancario.jpg" alt="Banco" height="60" width="240">
 															</a>
-															<a style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight" href="javascript:void(0);">
+															<a onclick="payPal()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
 															</a>
 															<a onclick="payuLatam()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
@@ -298,6 +298,30 @@
 				bootbox.dialog({
 					message: msg,
 					title: "Pago PayuLatam",
+					className: "",
+					buttons: {
+						success: {
+						label: "Cancelar",
+						className: "btn-danger",
+						callback: function() {
+							}
+						}
+					}
+				})
+			}
+		});	
+	}
+
+	function payPal(){
+		iniciarSpinner();
+		$.ajax({
+			type:"post",
+			url:"pagarVentaPayPal",
+			success: function(msg){
+				FinalizarSpinner();
+				bootbox.dialog({
+					message: msg,
+					title: "Pago PayPal",
 					className: "",
 					buttons: {
 						success: {

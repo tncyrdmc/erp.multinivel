@@ -187,8 +187,8 @@ class modelo_billetera extends CI_Model
 	function ValorRetencionesTotales($id){
 		$q = $this->db->query("SELECT created FROM users where id=".$id.";");
 		$fecha_creacion = $q->result();
-		$q = $this->db->query("SELECT descripcion,sum(valor) as valor FROM cat_retenciones_historial  where month('".$fecha_creacion[0]->created."')
-										<=mes and year('".$fecha_creacion[0]->created."')<=ano and id_afiliado IN(0,".$id.") group by descripcion");
+		$q = $this->db->query("SELECT descripcion,sum(valor) as valor FROM cat_retenciones_historial  
+								where '".$fecha_creacion[0]->created."'<=str_to_date(concat(ano,'-',mes,'-','01'),'%Y-%m-%d') group by descripcion");
 		$retenciones_regis = $q->result();
 		$retenciones = array();
 		foreach ($retenciones_regis as $retencion){
