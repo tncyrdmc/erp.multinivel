@@ -77,11 +77,11 @@ class Cemail extends CI_Model
 	function Asuntos ($type){		
 		$q = array(
 				"TE DAMOS LA BIENVENIDA", //welcome
-				"ACTIVACION", //activate
+				"ACTIVACIÓN", //activate
 				"CONFIRMACIÓN NUEVO EMAIL", //change-email
 				"PAGO DE SOLICITUD DE DINERO", //cobros
-				"CONFIRMACION DE PAGO POR BANCO", //cuentas-cobrar
-				"RECUPERAR CONTRASEÑA", //forgot password
+				"CONFIRMACIÓN DE PAGO POR BANCO", //cuentas-cobrar
+				"RECUPERACIÓN DE CONTRASEÑA", //forgot password
 				"CONFIRMACIÓN DE NUEVA CONTRASEÑA" //reset password
 		);
 		
