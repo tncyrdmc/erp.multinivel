@@ -40,7 +40,8 @@ class Cemail extends CI_Model
 		$empresa = $this->model_admin->val_empresa_multinivel();		
 		$cuerpo = $this->get_cuerpo_mensaje($type,$data);		
 		$tema = $this->model_emails_departamentos->get_tema($type);
-		$email = $this->model_emails_departamentos->get_departamento_email($type);		
+		$email = $this->config->item('webmaster_email', 'tank_auth');
+				//$this->model_emails_departamentos->get_departamento_email($type);		
 		
 		$message = array (
 				'tema' => $tema,

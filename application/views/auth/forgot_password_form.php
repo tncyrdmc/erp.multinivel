@@ -113,7 +113,7 @@ if ($this->config->item('use_username', 'tank_auth')) {
 									<section>
 										<label class="label">Correo</label>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input required type="email" name="login">
+											<input required type="email" name="login" id="login">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Ingrese su cuenta de correo</b></label>
 									</section>
 								</fieldset>
