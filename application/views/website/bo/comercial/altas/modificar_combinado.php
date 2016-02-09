@@ -374,7 +374,7 @@ $porcentajeContador=0;
 									<section id="imagenes" class="col col-12">
 										<label class="label"> Imágen </label>
 										<div class="input input-file">
-											<span class="button"> <input id="img" name="img[]"
+											<span class="button"> <input id="img" name="img"
 												onchange="this.parentNode.nextSibling.value = this.value"
 												type="file" multiple>Buscar
 											</span><input id="imagen_mr"

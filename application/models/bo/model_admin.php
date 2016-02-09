@@ -1394,13 +1394,25 @@ where(a.id_pais=b.Code)");
 	}
 	function img_merc($id,$data)
 	{
-		foreach ($data as $key){
+		/*foreach ($data as $key){
 			$explode=explode(".",$key["file_name"]);
 			$nombre=$explode[0];
 			$extencion=$explode[1];
 			$dato_img=array(
 	                "url"				=>	"/media/carrito/".$key["file_name"],
 	                "nombre_completo"	=>	$key["file_name"],
+	                "nombre"			=>	$nombre,
+	                "extencion"			=>	$extencion,
+	                "estatus"			=>	"ACT"
+	            );
+			$this->db->insert("cat_img",$dato_img);*/
+
+			$explode=explode(".",$data);
+			$nombre=$explode[0];
+			$extencion=$explode[1];
+			$dato_img=array(
+	                "url"				=>	"/media/carrito/".$data,
+	                "nombre_completo"	=>	$data,
 	                "nombre"			=>	$nombre,
 	                "extencion"			=>	$extencion,
 	                "estatus"			=>	"ACT"
@@ -1416,7 +1428,7 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->where('id_mercancia', $id);
 			$this->db->update("cross_merc_img",$dato_cross_img);
-		}
+		//}
 	}
 	function img_merc_promo($id,$data)
 	{

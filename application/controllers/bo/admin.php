@@ -800,7 +800,7 @@ class admin extends CI_Controller
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
-		if (!$this->upload->do_multi_upload('img'))
+		if (!$this->upload->do_upload('img'))
 		{
 			/*$error = array('error' => $this->upload->display_errors());
 			print_r($error);*/
@@ -822,8 +822,8 @@ class admin extends CI_Controller
 			
 			
 			
-			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			$this->model_admin->img_merc($sku,$data["upload_data"]);
+			$data = array('upload_data' => $this->upload->data());
+			$this->model_admin->img_merc($sku,$data["upload_data"]["file_name"]);
 		}
 			$msj = "Se ha modificado la mercancia.";
 			$this->session->set_flashdata('msj', $msj);

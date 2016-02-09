@@ -116,7 +116,7 @@ $porcentajeContador=0;
 												            ?>
 										            </section>
 													
-													<section id="imagenes" class="col col-12">
+													<!--<section id="imagenes" class="col col-12">
 														<label class="label"> Imágen </label>
 														<div class="input input-file">
 															<span class="button"> <input id="img" name="img[]"
@@ -128,7 +128,15 @@ $porcentajeContador=0;
 														<small><cite
 															title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite>
 														</small>
-													</section>
+													</section>-->
+													<section id="imagenes" class="col col-6">
+														<label class="label">Imágen</label>
+														<div class="input input-file">
+															<span class="button">
+																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
+															</div>
+															<small><cite title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite></small>
+														</section>
 												
 												</div>
 													
