@@ -14,7 +14,7 @@
 							<a href="/bo/configuracion/formaspago">Formas de Pago</a>
 							</span>
 							<span>>
-							Payulatam 
+							Paypal
 							</span>
 							</h1>
 		</div>
@@ -45,59 +45,30 @@
 					<header>
 						<span class="widget-icon"> <i class="fa fa-bookmark"></i>
 						</span>
-						<h2>PAYULATAM</h2>
+						<h2>paypal</h2>
 					</header>
 
 					<!-- widget div-->
 					<div>
-						<form id="form_payulatam" method="post" action="/bo/configuracion/actualizarPayuLatam" role="form" class="smart-form">
+						<form id="form_paypal" method="post" action="/bo/configuracion/actualizarpaypal" role="form" class="smart-form">
 					 <fieldset>
-						 <legend>Configuracion Payulatam</legend>
-						 <input type="hidden" value="<?=$payulatam[0]->apykey;?>" name="id" >
+						 <legend>Configuracion PayPal</legend>
+						 <input type="hidden" value="<?=$paypal[0]->email;?>" name="id" >
 						 <section id="usuario" class="col col-6">
-							 <label class="input">Apy key
-								 <input required type="text" name="apykey" placeholder="Apy key" value="<?=$payulatam[0]->apykey;?>" > 
+							 <label class="input">Email Cuenta Paypal
+								 <input required type="email" name="email" placeholder="Email" value="<?=$paypal[0]->email;?>" > 
 							 </label>
 							 <div class="note">
-								<strong>Nota:</strong> En estado test :6u39nqhq8ftd0hlvnjfs66eh8c.
-							</div>
-						 </section>
-						 <section id="usuario" class="col col-6">
-							 <label class="input">Merchant Id
-								 <input required type="text" name="id_comercio" value="<?=$payulatam[0]->id_comercio;?>">
-							 </label> 
-							<div class="note">
-								<strong>Nota:</strong> En estado test : 500238.
-							</div>
-						 </section>
-						 <section id="usuario" class="col col-6">
-							 <label class="input">Account Id
-								 <input required type="text" name="id_cuenta" value="<?=$payulatam[0]->id_cuenta;?>">
-							 </label>
-							 <div class="note">
-								<strong>Nota:</strong> En estado test : 509171.
+								<strong>Nota:</strong> En estado test :seonetworksoft-facilitator@gmail.com.
 							</div>
 						 </section>
 						 <section  class="col col-6">
 							 <label class="select">Moneda
 							 	<select id="moneda" name="moneda">
-									<option value="ANG">ANG</option>
 									<option value="EUR">EUR</option>
 									<option value="GBP">GBP</option>
-									<option value="CAD">CAD</option>
-									<option value="INR">INR</option>
-									<option value="ARS">ARS</option>
 									<option value="USD">USD</option>
 									<option value="MXN">MXN</option>
-									<option value="DOP">DOP</option>
-									<option value="CLP">CLP</option>
-									<option value="BRL">BRL</option>
-									<option value="CRC">CRC</option>
-									<option value="PAB">PAB</option>
-									<option value="VEF">VEF</option>
-									<option value="AWG">AWG</option>
-									<option value="PEN">PEN</option>
-									<option value="COP">COP</option>
 								</select>
 							 </label>
 							 <div class="note">
@@ -106,7 +77,7 @@
 						 </section>
 						 <section id="usuario" class="col col-6">
 							<label class="checkbox">
-								<input name="test" <?php if($payulatam[0]->test == '1') echo "checked='checked'";?> type="checkbox">
+								<input name="test" <?php if($paypal[0]->test == '1') echo "checked='checked'";?> type="checkbox">
 							<i></i>Test
 							</label>
 						 </section>
@@ -137,13 +108,13 @@
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
 
-$( "#form_payulatam" ).submit(function( event ) {
+$( "#form_paypal" ).submit(function( event ) {
 	event.preventDefault();	
 	iniciarSpinner();
 	enviar();
 });
 
-$("#moneda").val("<?=$payulatam[0]->moneda;?>");
+$("#moneda").val("<?=$paypal[0]->moneda;?>");
 
 function enviar()
 {
@@ -151,21 +122,21 @@ function enviar()
 
 					$.ajax({
 						type: "POST",
-						url: "/bo/configuracion/actualizarPayuLatam",
-						data: $("#form_payulatam").serialize()
+						url: "/bo/configuracion/actualizarPaypal",
+						data: $("#form_paypal").serialize()
 					})
 					.done(function( msg )
 					{
 						FinalizarSpinner();
 						bootbox.dialog({
 						message: msg,
-						title: 'PayuLatam',
+						title: 'paypal',
 						buttons: {
 							success: {
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/configuracion/payuLatam";
+								location.href="/bo/configuracion/paypal";
 								
 							}
 						}

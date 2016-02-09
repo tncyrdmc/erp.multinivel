@@ -1094,9 +1094,10 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return $venta;
 	}
 	
-	function  registrar_pago_payulatam ($id,$identificado_transacion,$fecha,$referencia,
+	function  registrar_pago_online ($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 									 	$metodo_pago,$estado,$respuesta,$moneda,$medio_pago){
 		$dato_venta=array(
+				"id_venta" => $id_venta,
 				"id_usuario" => $id,
 				"transaction_id"=> $identificado_transacion,
 				"fecha" => $fecha,
@@ -1107,7 +1108,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"currency" => $moneda,
 				"payment_method_name" => $medio_pago
 		);
-		$this->db->insert("pago_por_payulatam",$dato_venta);
+		$this->db->insert("pago_online_transaccion",$dato_venta);
 		$venta = mysql_insert_id();
 		return $venta;
 	}
@@ -1544,5 +1545,22 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q = $this->db->query("SELECT id_user FROM venta where id_venta=".$id_venta);
 		return $q->result();
 
+	}
+	
+	function get_datos_venta($id_venta){
+		$q = $this->db->query("SELECT * FROM venta where id_venta=".$id_venta);
+		return $q->result();
+	
+	}
+	
+	function get_mercancia_venta($id_venta){
+		$q = $this->db->query("SELECT * FROM cross_venta_mercancia where id_venta=".$id_venta);
+		return $q->result();
+	
+	}
+	function get_tipo_mercancia($id_mercancia){
+		$q = $this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id_mercancia);
+		return $q->result();
+	
 	}
 }

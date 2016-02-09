@@ -28,6 +28,17 @@ class Modelo_historial_consignacion extends CI_Model{
 		return $historial;
 	}
 	
+	function ListarPagosOnline($inicio,$fin){
+		$q = $this->db->query("SELECT v.id_venta,concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email,cvm.costo_total as valor,v.fecha,v.id_metodo_pago as metodo  FROM venta v , cross_venta_mercancia cvm , user_profiles up, users u
+								where v.id_metodo_pago!='BANCO'
+								and v.id_venta=cvm.id_venta
+								and v.id_user = u.id
+								and up.user_id = u.id and v.fecha BETWEEN '".$inicio."' AND '".$fin."'
+								");
+		$historial = $q->result();
+		return $historial;
+	}
+	
 	function CambiarEstadoPago($id_venta, $id_historial){
 		$q = $this->db->query("update venta set id_estatus = 'ACT' where id_venta = ".$id_venta);
 		$q = $this->db->query("update cuenta_pagar_banco_historial set estatus = 'ACT' where id = ".$id_historial);

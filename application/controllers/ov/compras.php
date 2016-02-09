@@ -399,11 +399,15 @@ function index()
 		$respuesta = $_POST['response_code_pol'];
 		$moneda = $_POST['currency'];
 		$medio_pago = $_POST['payment_method_name'];
-		$fecha=$_POST['transaction_date'];
+
 		
 		if($estado==4){
-			$this->modelo_compras->registrar_pago_payulatam
-			($id,$identificado_transacion,$fecha,$referencia,
+			
+
+			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYULATAM',$fecha);
+			
+			$this->modelo_compras->registrar_pago_online
+			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
 			
 			
@@ -412,13 +416,47 @@ function index()
 			$contenidoCarrito=json_decode($contenido_carrito_proceso[0]->contenido,true);
 			$carrito=json_decode($contenido_carrito_proceso[0]->carrito,true);
 			
-			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYULATAM',$fecha);
-			
 			$this->registrarFacturaDatosDefaultAfiliado($id,$id_venta);
 			$this->registrarFacturaMercanciaPagoOnline ( $contenidoCarrito,$carrito ,$id_venta);
 			$this->pagarComisionVenta($id_venta,$id);
 		}
 
+	}
+	
+	function RegistrarVentaPayPal(){
+	
+		$id = $_POST['custom'];
+		$id_pago = $_POST['invoice'];
+		$identificado_transacion = $_POST['txn_id'];
+		$fecha=$_POST['payment_date'];
+		$referencia = $_POST['payer_id'];
+		$metodo_pago = $_POST['payment_type'];
+		$estado = $_POST['payment_status'];
+		$respuesta = $_POST['txn_type'];
+		$moneda = $_POST['mc_currency'];
+		$medio_pago = $_POST['payment_type'];
+
+	
+		if($estado=='Completed'){
+				
+	
+			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYPAL',$fecha);
+				
+			$this->modelo_compras->registrar_pago_online
+			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
+					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
+				
+				
+			$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProceso($id_pago);
+				
+			$contenidoCarrito=json_decode($contenido_carrito_proceso[0]->contenido,true);
+			$carrito=json_decode($contenido_carrito_proceso[0]->carrito,true);
+				
+			$this->registrarFacturaDatosDefaultAfiliado($id,$id_venta);
+			$this->registrarFacturaMercanciaPagoOnline ( $contenidoCarrito,$carrito ,$id_venta);
+			$this->pagarComisionVenta($id_venta,$id);
+		}
+	
 	}
 	
 	function RespuestaPayuLatam(){
@@ -447,6 +485,34 @@ function index()
 		}
 	
 		redirect('/');
+	}
+	
+	function RespuestaPayPal(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$payment_status = $_POST['payment_status'];
+		
+		if ($payment_status=="Completed") {
+			$this->cart->destroy();
+			$id=$this->tank_auth->get_user_id();
+			$usuario=$this->general->get_username($id);
+			$style=$this->general->get_style($id);
+				
+			$this->template->set("style",$style);
+			$this->template->set("usuario",$usuario);
+				
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/ov/header');
+			$this->template->set_partial('footer', 'website/ov/footer');
+			$this->template->build('website/ov/compra_reporte/transaccionExitosa');
+			return true;
+		}
+			redirect('/');
 	}
 	
 	function pagarVentaPayuLatam(){
@@ -513,6 +579,99 @@ function index()
 			  <input name="Submit" type="submit"  value="Pagar" class="btn btn-success">
 			</form>';
 
+	}
+	
+	
+	function pagarVentaPayPal(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$actual_link = "http://$_SERVER[HTTP_HOST]";
+	
+		$id = $this->tank_auth->get_user_id();
+		$email = $this->general->get_email($id);
+	
+	
+		$contenidoCarrito=$this->get_content_carrito ();
+		$carritoCompras=$this->cart->contents();
+	
+		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
+	
+		$descripcion="";
+		foreach ($contenidoCarrito["compras"] as $mercancia){
+			$descripcion.=" ".$mercancia["nombre"];
+		}
+	
+		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
+		
+		$paypal  = $this->modelo_pagosonline->val_paypal();
+		
+		$link="http://www.sandbox.paypal.com/webscr";
+		
+		if($paypal[0]->test!=1)
+			$link="https://www.paypal.com/cgi-bin/webscr";
+/*	
+		
+	
+		$time = time();
+		$firma = md5($payulatam[0]->apykey."~".$payulatam[0]->id_comercio."~NetSoft".$time."~".$totalCarrito."~".$payulatam[0]->moneda);
+		$id_transacion = $firma;
+	
+		$link="https://stg.gateway.payulatam.com/ppp-web-gateway/";
+	
+		if($payulatam[0]->test!=1)
+			$link="https://gateway.payulatam.com/ppp-web-gateway/";
+		*/
+		
+		//Prueba : http://www.sandbox.paypal.com/webscr.
+		// Produccion : https://www.paypal.com/cgi-bin/webscr
+		
+	/*	echo'
+			<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
+			<form method="post" action="'.$link.'">
+			  <input name="merchantId"    type="hidden"  value="'.$payulatam[0]->id_comercio.'">
+			  <input name="accountId"     type="hidden"  value="'.$payulatam[0]->id_cuenta.'" >
+			  <input name="description"   type="hidden"  value="'.$descripcion.'"  >
+			  <input name="referenceCode" type="hidden"  value="NetSoft'.$time.'" >
+			  <input name="amount"        type="hidden"  value="'.$totalCarrito.'"   >
+			  <input name="tax"           type="hidden"  value="0"  >
+			  <input name="taxReturnBase" type="hidden"  value="0" >
+			  <input name="currency"      type="hidden"  value="'.$payulatam[0]->moneda.'" >
+			  <input name="signature"     type="hidden"  value="'.$id_transacion.'"  >
+			  <input name="test"          type="hidden"  value="'.$payulatam[0]->test.'" >
+			  <input name="extra1" type="hidden" value="'.$id.'" >
+			  <input name="extra2" type="hidden" value="'.$id_pago_proceso.'" >
+			  <input name="buyerEmail"    type="hidden"  value="'.$email[0]->email.'" >
+			  <input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RespuestaPayuLatam" >
+			  <input name="confirmationUrl"  type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaPayuLatam" >
+			  <input name="Submit" type="submit"  value="Pagar" class="btn btn-success">
+			</form>';
+		*/
+		echo '<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
+			  <form action="'.$link.'" method="post">
+				<input type="hidden" name="cmd" value="_xclick">
+				<input type="hidden" name="custom" value="'.$id.'">
+				<input type="hidden" name="business" value="'.$paypal[0]->email.'">
+				<input type="hidden" name="item_name" value="'.$descripcion.'">
+				<input type="hidden" name="currency_code" value="'.$paypal[0]->moneda.'">
+				<input type="hidden" name="amount" value="'.$totalCarrito.'">
+				<input type="hidden" name="return" value="'.$actual_link.'/ov/compras/RespuestaPayPal">
+				<input type="hidden" name="cancel_return" value="'.$actual_link.'/ov/compras/">
+				<input type="hidden" name="invoice" id="invoice" value="'.$id_pago_proceso.'" >
+				<input type="hidden" name="notify_url" id="notify_url" value="'.$actual_link.'/ov/compras/RegistrarVentaPayPal"/>
+				<input name="Submit" type="submit"  value="Pagar" class="btn btn-success">
+			  </form>';
+		
+	
 	}
 	/**
 	 * @param contenidoCarrito
@@ -1288,6 +1447,7 @@ function index()
 					<th data-hide='phone,tablet'>Subtotal</th>
 					<th data-hide='phone,tablet'>Impuestos</th>
 					<th data-hide='phone,tablet'>Total Venta</th>
+					<th data-hide='phone,tablet'>Factura</th>
 				</thead>
 				<tbody>";
 		
@@ -1302,6 +1462,9 @@ function index()
 			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>
 			<td> $	".number_format($venta->impuestos, 2, '.', '')."</td>
 			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
+			<td>				<a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura(".$venta->id_venta.");'>
+				<i class='fa fa-eye fa-3x'></i>
+				</a></td>
 			</tr>";
 					
 				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
@@ -1319,6 +1482,7 @@ function index()
 			<td></td>
 			<td></td>
 			<td></td>
+			<td></td>
 			</tr>";
 				
 			echo "<tr>
@@ -1329,6 +1493,7 @@ function index()
 			<td><b> $	".number_format($total_costo, 2, '.', '')."</b></td>
 			<td><b> $	".number_format($total_impuesto, 2, '.', '')."</b></td>
 			<td><b> $	".number_format($total_venta, 2, '.', '')."</b></td>
+			<td></td>
 			</tr>";
 		}
 		echo "</tbody>

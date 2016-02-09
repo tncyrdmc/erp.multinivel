@@ -1237,6 +1237,7 @@ BONO AUTOCOMPRA
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$profundidad  = $this->model_admin->get_Profundidad_tipo_red($_GET['id']) + 1;
+
 		$configuracion_red = $this->model_admin->get_config_red_comision($_GET['id']);
 		$categoria = $this->model_tipo_red->traerRed($_GET['id']);
 		

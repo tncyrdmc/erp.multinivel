@@ -109,8 +109,8 @@ table.social div[class="column"]{width:auto !important}}
 												<p>
 												Telefono fijo: <strong><?=$fijo ? $fijo : "000 00 00"?></strong><br/>
 												Telefono movil: <strong><?=$movil ? $movil : "000 000 00 00"?></strong><br/>
-                								Email: <strong><a href="mailto:<?=$email ? $email : "you@domain.com"?>">
-                								<?=$email ? $email : "you@domain.com"?></a></strong></p>
+                								Web: <strong><a href="<?=$web ? $web : "#"?>">
+                								<?=$web ? $web : ""?></a></strong></p>
                 
 											</td>
 										</tr>

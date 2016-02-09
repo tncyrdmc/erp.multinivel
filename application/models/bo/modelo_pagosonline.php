@@ -15,11 +15,31 @@ class modelo_pagosonline extends CI_Model
 		return $payulatam;
 	}
 	
+	function val_paypal()
+	{
+		$payulatam=$this->get_datos_paypal();
+		if(!$payulatam){
+			$dato=array(
+					"email" =>	"seonetworksoft-facilitator@gmail.com"
+			);
+			$this->db->insert("paypal",$dato);
+			$payulatam=$this->get_datos_payulatam();
+		}
+		return $payulatam;
+	}
+	
 	function get_datos_payulatam()
 	{
 		$q=$this->db->query("select * from payulatam");
 		$payulatam = $q->result();
 		return $payulatam;
+	}
+	
+	function get_datos_paypal()
+	{
+		$q=$this->db->query("select * from paypal");
+		$paypal = $q->result();
+		return $paypal;
 	}
 	
 	function actualizar_payulatam()
@@ -43,7 +63,26 @@ class modelo_pagosonline extends CI_Model
 	
 		return true;
 	}
+	
+	function actualizar_paypal()
+	{
+	
+		$estado=0;
+	
+		if(isset($_POST['test']))
+			$estado=1;
+	
+		$dato=array(
+				"email"     => $_POST['email'],
+				"moneda"       		=> $_POST['moneda'],
+				"test"       		=> $estado
+		);
+	
+		$this->db->where('email', $_POST['id']);
+		$this->db->update('paypal', $dato);
+	
+		return true;
+	}
 }
 
 ?>
-

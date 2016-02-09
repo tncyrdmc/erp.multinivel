@@ -130,7 +130,6 @@ class model_admin extends CI_Model
 			$q=$this->db->query("select * from paquete_inscripcion where id_paquete=".$sku);
 		if($tipo==5)
 			$q=$this->db->query("select * from membresia where id=".$sku);
-
 		return $q->result();
 	}
 	function get_img_merc()
@@ -162,10 +161,7 @@ class model_admin extends CI_Model
 	function img_banner(){
 		$q2=$this->db->query("select * from banner where id=1");
 			return $q2->result();
-
 	}
-
-
 	function get_tipo_proveedor()
 	{
 		$q=$this->db->query("select * from cat_tipo_proveedor where estatus ='ACT'");
@@ -271,12 +267,10 @@ class model_admin extends CI_Model
 	}
 	function validar_venta($id){
 			$query = $this->db->query('select * from cat_bono_condicion where id_tipo_rango=2 and condicion2='.$id.'');
-
 			return $query->result();
 	}
 	function validar_actividad($id){
 			$query = $this->db->query('select * from cat_bono_condicion where id_tipo_rango=3 and condicion2='.$id.'');
-
 			return $query->result();
 	}
 	
@@ -330,12 +324,10 @@ class model_admin extends CI_Model
 		$this->db->query("delete from cross_merc_img where id_cat_imagen = ".$id_img);
 		$this->db->query("delete from cat_img where id_img = ".$id_img);
 	}	
-
 	function traer_id_imagen_merc($id_merc){
 		$q=$this->db->query("select * from cross_merc_img where id_mercancia = ".$id_merc);
 		return $q->result();
 	}
-
 	function get_proveedor()
 	{
 		/*$q=$this->db->query("select id_usuario, comision, (select nombre from user_profiles where user_id=id_usuario) nombre, 
@@ -364,7 +356,6 @@ class model_admin extends CI_Model
 		}
 		return $q->result();
 	}
-
 	function get_servicio()
 	{
 		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from servicio a, mercancia b where a.id=b.sku 
@@ -539,7 +530,6 @@ where(a.id_pais=b.Code)");
 	function get_impuestos_mercancia($id)
 	{
 		$q=$this->db->query("SELECT id_impuesto FROM cross_merc_impuesto WHERE id_mercancia=".$id);
-
 		return $q->result();
 	}
 	function impuestos_por_mercancia(){
@@ -554,11 +544,8 @@ where(a.id_pais=b.Code)");
 				"correo"     => $_POST['email'],
 				"site"       => $_POST['site']
             );
-
         $this->db->insert("empresa",$dato_empresa);
-
         $id_nuevo=mysql_insert_id();
-
 		$dato_dir=array(
 				"id_empresa"      => $id_nuevo,
 				"cp"              =>$_POST['cp'],
@@ -569,9 +556,7 @@ where(a.id_pais=b.Code)");
 				"numero_exterior" => $_POST['exterior'],
 				"numero_interior" => $_POST['interior']
             );
-
         $this->db->insert("cross_dir_emp",$dato_dir);
-
         $empresa = array('id' => $id_nuevo, 'nombre' => $_POST['nombre']);
         return $empresa;
 	}
@@ -669,7 +654,6 @@ where(a.id_pais=b.Code)");
 					"importacion"    => $_POST['importacion'],
 					"sobrepedido"    => $_POST['sobrepedido']
 	            );
-
 			$this->db->where('id', $sku);
 			$this->db->update('producto', $dato_producto); 
 			$iva="";
@@ -717,7 +701,6 @@ where(a.id_pais=b.Code)");
 					"fecha_fin"    => $_POST['fecha_fin'],
 					"id_red"    => $_POST['red']
 	            );
-
 			$this->db->where('id', $sku);
 			$this->db->update('servicio', $dato_servicio); 
 			$iva="";
@@ -764,10 +747,8 @@ where(a.id_pais=b.Code)");
 					"descuento"    => $_POST['descuento'],
 					"id_red"	   => $_POST['red']
 	            );
-
 			$this->db->where('id', $sku);
 			$this->db->update('combinado', $dato_combinado); 
-
 			$n=0;
 			$this->db->query("delete from cross_combinado where id_combinado=".$sku);
 			
@@ -779,9 +760,7 @@ where(a.id_pais=b.Code)");
 			$n_servicios = $_POST['n_servicios'];
 			$producto    = sizeof($_POST['producto']);
 			$servicio    = sizeof($_POST['servicio']);
-
 			$n = 0;
-
 		if (isset ( $_POST ['producto'] )){
 		foreach ( $productos as $key ) {
 			if($n_productos [$n]!=""){
@@ -832,7 +811,6 @@ where(a.id_pais=b.Code)");
 					$n ++;
 				}
 			}
-
 			/*if($productos<$servicios)
 			{
 				if ($n_productos[0]==0)
@@ -977,7 +955,6 @@ where(a.id_pais=b.Code)");
 			$n_servicios = $_POST['n_servicios'];
 			$producto    = sizeof($_POST['producto']);
 			$servicio    = sizeof($_POST['servicio']);
-
 			if (isset ( $_POST ['producto'] )){
 		foreach ( $productos as $key ) {
 			if($n_productos [$n]!=""){
@@ -1028,7 +1005,6 @@ where(a.id_pais=b.Code)");
 					$n ++;
 				}
 			}
-
 		
 			/*if($productos<$servicios)
 			{
@@ -1155,7 +1131,6 @@ where(a.id_pais=b.Code)");
 					"descripcion"  => $_POST['descripcion'],
 					"id_red"    => $_POST['red']
 	            );
-
 			$this->db->where('id', $sku);
 			$this->db->update('membresia', $dato_membresia); 
 			$iva="";
@@ -1219,7 +1194,6 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->insert("producto",$dato_producto);
 		}
-
 		if($_POST['tipo_mercancia']==2)
 		{
 			$dato_servicio=array(
@@ -1231,7 +1205,6 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->insert("servicio",$dato_servicio);
 		}
-
 		if ($_POST['tipo_mercancia']==3&&$_POST['tipo']==1)
 		{
 			$dato_combinado=array(
@@ -1241,10 +1214,8 @@ where(a.id_pais=b.Code)");
 					"estatus"     => 'ACT'
 	            );
 			$this->db->insert("combinado",$dato_combinado);
-
 			$combinado=mysql_insert_id();
 			$n=0;
-
 			if(!isset($_POST['n_productos']))$_POST['n_productos']=0;
 			if(!isset($_POST['n_servicios']))$_POST['n_servicios']=0;
 			$productos   = $_POST['producto'];
@@ -1253,7 +1224,6 @@ where(a.id_pais=b.Code)");
 			$n_servicios = $_POST['n_servicios'];
 			$producto    = sizeof($_POST['producto']);
 			$servicio    = sizeof($_POST['servicio']);
-
 			if($producto<$servicio)
 			{
 				if ($n_productos[0]==0)
@@ -1353,7 +1323,6 @@ where(a.id_pais=b.Code)");
 						"inicio"             => $_POST['fecha_inicio'],
 						"fin"                => $_POST['fecha_fin'],
 						"estatus"            => 'ACT'
-
 		            );
 					$this->db->insert("promocion",$dato_promo);
 					$mercancia=mysql_insert_id();;
@@ -1389,30 +1358,17 @@ where(a.id_pais=b.Code)");
 				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
 			}
 		}
-
 		return $mercancia;
 	}
 	function img_merc($id,$data)
 	{
-		/*foreach ($data as $key){
+		foreach ($data as $key){
 			$explode=explode(".",$key["file_name"]);
 			$nombre=$explode[0];
 			$extencion=$explode[1];
 			$dato_img=array(
 	                "url"				=>	"/media/carrito/".$key["file_name"],
 	                "nombre_completo"	=>	$key["file_name"],
-	                "nombre"			=>	$nombre,
-	                "extencion"			=>	$extencion,
-	                "estatus"			=>	"ACT"
-	            );
-			$this->db->insert("cat_img",$dato_img);*/
-
-			$explode=explode(".",$data);
-			$nombre=$explode[0];
-			$extencion=$explode[1];
-			$dato_img=array(
-	                "url"				=>	"/media/carrito/".$data,
-	                "nombre_completo"	=>	$data,
 	                "nombre"			=>	$nombre,
 	                "extencion"			=>	$extencion,
 	                "estatus"			=>	"ACT"
@@ -1428,7 +1384,7 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->where('id_mercancia', $id);
 			$this->db->update("cross_merc_img",$dato_cross_img);
-		//}
+		}
 	}
 	function img_merc_promo($id,$data)
 	{
@@ -1445,7 +1401,6 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->insert("cat_img",$dato_img);
 			$id_foto=mysql_insert_id();
-
 			$dato_cross_img=array(
 	                "id_promo"		=>	$id,
 	                "id_img"	=>	$id_foto
@@ -1651,14 +1606,12 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	function new_user($id)
 	{
 		$id_afiliador=$this->db->query('select id from users where email like "'.$_POST['mail_important'].'"');
-
 		$id_afiliador=$id_afiliador->result();
 		
 		if($id_afiliador[0]->id)
 		$id_nuevo=$id_afiliador[0]->id;
 		else
 		$id_nuevo=$id_afiliador->id;
-
 		$directo=0;
 		if(!isset($_POST['afiliados']))
 		{
@@ -1672,7 +1625,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	                "btn_2_color"		=> "#3DB2E5"
 	            );
 		$this->db->insert("estilo_usuario",$dato_style);
-
 		/*################ PERFIL DEL USUARIO #########################*/
 		$dato_profile=array(
 					"user_id"            => $id_nuevo,
@@ -1687,11 +1639,9 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 					"id_tiempo_dedicado" => 1,
 					"keyword"            => $_POST['keyword'],
 					'id_estatus'         => 1
-
 	            );
 		$this->db->insert("user_profiles",$dato_profile);
 		/*############# FIN PERFIL DEL USUARIO #########################*/
-
 		/*################### DATO PERMISO #########################*/
 		if($_POST['tipo_usuario']==1)
 			$perfil=1;
@@ -1699,14 +1649,12 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 			$perfil=2;
 		else
 			$perfil=1;
-
 		$dato_permiso=array(
 					"id_user"   => $id_nuevo,
 					"id_perfil" => $perfil
 	            );
 	    $this->db->insert("cross_perfil_usuario",$dato_permiso);
 	    /*################### FIN DATO PERMISO #########################*/
-
 	    /*################### DATO COPALICANTE #########################
 		$dato_coaplicante=array(
 					"id_user"   => $id_nuevo,
@@ -1716,7 +1664,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 	    $this->db->insert("coaplicante",$dato_coaplicante);
 	    ################### FIN DATO COPALICANTE #########################*/
-
 		/*################### DATO RED #########################
 		$dato_red=array(
 	                "id_usuario"	=> $id_nuevo,
@@ -1725,12 +1672,10 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 	    $this->db->insert("red",$dato_red);
 	    ################### FIN DATO RED #########################*/
-
 	    /*################### DATO AFILIAR #########################
 	    $mi_red=$this->db->query('select id_red from red where id_usuario='.$id);
 	    $mi_red=$mi_red->result();
 	    $mi_red=$mi_red[0]->id_red;
-
 	    if(isset($_POST['sponsor']))
 	    {
 	    	$directo=0;
@@ -1739,7 +1684,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	    	$lado=0;
 	    else
 	    	$lado=$_POST['lado'];
-
 		$dato_afiliar=array(
 					"id_red"      => $mi_red,
 					"id_afiliado" => $id_nuevo,
@@ -1765,7 +1709,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 				
 			else
 				$i=99999991;
-
 		}
 	    foreach ($ids as $key)
 	    {
@@ -1786,9 +1729,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 				$this->db->insert("afiliar",$dato_afiliar);
 			}
 		}
-
 	    ################### FIN DATO AFILIAR #########################*/
-
 	    /*################### DATO TELEFONOS #########################*/
 		//tipo_tel 1=fijo 2=movil
 		if($_POST["fijo"])
@@ -1817,9 +1758,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		        $this->db->insert("cross_tel_user",$dato_tel);
 			}
 		}
-
 		/*################### FIN DATO TELEFONOS #########################*/
-
 		/*################### DATO DIRECCION #########################*/
 		$dato_dir=array(
                 "id_user"   =>$id_nuevo,
@@ -1832,7 +1771,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
             );
             $this->db->insert("cross_dir_user",$dato_dir);
         /*################### FIN DATO DIRECCION #########################*/
-
         /*################### DATO BILLETERA #########################*/
             $dato_billetera=array(
 	                "id_user"	=> $id_nuevo,
@@ -1841,7 +1779,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 	    $this->db->insert("billetera",$dato_billetera);
 	    /*################### FIN DATO BILLETERA #########################*/
-
 	    /*################### FIN DATO COBRO #########################*/
 	    $dato_cobro=array(
 	                "id_user"		=> $id_nuevo,
@@ -1850,7 +1787,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	                "monto"			=> 0
 	            );
 	    $this->db->insert("cobro",$dato_cobro);
-
 	    $dato_cobro=array(
 	                "id_user"		=> $id_nuevo,
 	                "id_metodo"		=> 1,
@@ -1858,7 +1794,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	                "monto"			=> 0
 	            );
 	    $this->db->insert("cobro",$dato_cobro);
-
 	     /*################### FIN DATO COBRO #########################*/
 	}
 	function cp()
@@ -1874,14 +1809,12 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	function new_proveedor($id)
 	{
 		$id_afiliador=$this->db->query('select id from users where email like "'.$_POST['mail_important'].'"');
-
 		$id_afiliador=$id_afiliador->result();
 		
 		if($id_afiliador[0]->id)
 		$id_nuevo=$id_afiliador[0]->id;
 		else
 		$id_nuevo=$id_afiliador->id;
-
 		$directo=0;
 		if(!isset($_POST['afiliados']))
 		{
@@ -1895,7 +1828,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	                "btn_2_color"		=> "#3DB2E5"
 	            );
 		$this->db->insert("estilo_usuario",$dato_style);
-
 		/*################ PERFIL DEL USUARIO #########################*/
 		$dato_profile=array(
 					"user_id"            => $id_nuevo,
@@ -1913,7 +1845,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 		$this->db->insert("user_profiles",$dato_profile);
 		/*############# FIN PERFIL DEL USUARIO #########################*/
-
 		/*################### DATO PERMISO #########################*/
 		$dato_permiso=array(
 					"id_user"   => $id_nuevo,
@@ -1921,7 +1852,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 	    $this->db->insert("cross_perfil_usuario",$dato_permiso);
 	    /*################### FIN DATO PERMISO #########################*/
-
 		/*################### DATO RED #########################*/
 		$dato_red=array(
 	                "id_usuario"	=> $id_nuevo,
@@ -1930,12 +1860,10 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 	    $this->db->insert("red",$dato_red);
 	    /*################### FIN DATO RED #########################*/
-
 	    /*################### DATO AFILIAR #########################*/
 	    $mi_red=$this->db->query('select id_red from red where id_usuario='.$id);
 	    $mi_red=$mi_red->result();
 	    $mi_red=$mi_red[0]->id_red;
-
 		$dato_afiliar=array(
 					"id_red"		=> $mi_red,
 	                "id_afiliado"	=> $id_nuevo,
@@ -1960,7 +1888,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 				
 			else
 				$i=99999991;
-
 		}
 	    foreach ($ids as $key)
 	    {
@@ -1972,9 +1899,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 				$this->db->insert("afiliar",$dato_afiliar);
 		}
-
 	    /*################### FIN DATO AFILIAR #########################*/
-
 	    /*################### DATO TELEFONOS #########################*/
 		//tipo_tel 1=fijo 2=movil
 		if($_POST["fijo"])
@@ -2003,9 +1928,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		        $this->db->insert("cross_tel_user",$dato_tel);
 			}
 		}
-
 		/*################### FIN DATO TELEFONOS #########################*/
-
 		/*################### DATO DIRECCION #########################*/
 		$dato_dir=array(
                 "id_user"   =>$id,
@@ -2018,7 +1941,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
             );
             $this->db->insert("cross_dir_user",$dato_dir);
         /*################### FIN DATO DIRECCION #########################*/
-
         /*################### DATO BILLETERA #########################*/
             $dato_billetera=array(
 	                "id_user"	=> $id_nuevo,
@@ -2027,7 +1949,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	            );
 	    $this->db->insert("billetera",$dato_billetera);
 	    /*################### FIN DATO BILLETERA #########################*/
-
 	    /*################### FIN DATO COBRO #########################*/
 	    $dato_cobro=array(
 	                "id_user"		=> $id_nuevo,
@@ -2036,7 +1957,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	                "monto"			=> 0
 	            );
 	    $this->db->insert("cobro",$dato_cobro);
-
 	    $dato_cobro=array(
 	                "id_user"		=> $id_nuevo,
 	                "id_metodo"		=> 1,
@@ -2044,18 +1964,14 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	                "monto"			=> 0
 	            );
 	    $this->db->insert("cobro",$dato_cobro);
-
 	     /*################### FIN DATO COBRO #########################*/
-
 	     /*################### DATO PROVEEDOR #########################*/
 	    $dato_cat_proveedor=array(
 					"id_usuario" => $id_nuevo,
 					"comision"   => $_POST['comision']
 	            );
 	    $this->db->insert("cat_proveedor",$dato_cat_proveedor);
-
 	    $id_proveedor=mysql_insert_id();
-
 	    $dato_proveedor=array(
 					"id_proveedor"                   => $id_proveedor,
 					"id_empresa"                     => $_POST['empresa'],
@@ -2080,10 +1996,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 					"estatus"                        => 'ACT'
 	            );
 	    $this->db->insert("proveedor",$dato_proveedor);
-
-
 	     /*################### FIN DATO PROVEEDOR #########################*/
-
 	    foreach ($_POST['clabe'] as $key)
 		{
 			$cuenta=substr($key,7,-1);
@@ -2094,7 +2007,6 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		    {
 		    	$banco[0]->descripcion='Ninguno';
 		    }
-
 		    $dato_cat_cuenta=array(
 						"id_user" => $id_nuevo,
 						"cuenta"   => $cuenta,
@@ -2102,17 +2014,13 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 						"estatus"   => 'ACT',
 		            );
 		    $this->db->insert("cat_cuenta",$dato_cat_cuenta);
-
 		}
 	}
-
 	function get_prod_combinado($id)
 	{
-
 		$q=$this->db->query("select p.id, p.nombre, c.cantidad from producto p, mercancia m, cross_combinado c where m.sku=p.id and c.id_mercancia=m.id and c.id_tipo_mercancia='1' and c.id_combinado=(select c.id from combinado c where c.id=(select m.sku from mercancia m where m.id=".$id."))");
 		return $q->result();
 	}
-
 	
 	function get_serv_combinado($id)
 	{
@@ -2138,9 +2046,9 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		return $q->result();
 	}
 	
-	function get_Profundidad_tipo_red($id_categoria)
+	function get_Profundidad_tipo_red($id_red)
 	{
-		$q=$this->db->query("SELECT profundidad FROM tipo_red, cat_grupo_producto where id_red = id and id_red = ".$id_categoria);
+		$q=$this->db->query("SELECT profundidad FROM tipo_red where id= ".$id_red);
 		$profundidad = $q->result();
 		return $profundidad[0]->profundidad;
 	}
@@ -2211,6 +2119,20 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 		$q=$this->db->query("SELECT *  FROM cat_impuesto ");
 		return $q->result();
+	}
+	
+	function kill_venta($id){
+		$this->db->query("delete from cuenta_pagar_banco_historial where id_venta=".$id);
+		$this->db->query("delete from pago_por_payulatam where id_venta=".$id);
+		$this->db->query("delete from comision where id_venta=".$id);
+		$this->db->query("delete from cross_venta_mercancia where id_venta=".$id);
+		$this->db->query("delete from factura where id_venta=".$id);
+		$this->db->query("delete from venta where id_venta=".$id);
+	}
+	
+	function kill_cobro($id){
+		$this->db->query("DELETE FROM cobro WHERE id_cobro=".$id);
+	
 	}
 	
 }

@@ -26,11 +26,12 @@
 								<label class="select">
 									<select id="tipo-reporte" >
 										<option value="1000" selected> </option>
-										<option value="1" >Ventas por Oficinas Virtuales</option>
 										<option value="7" >Afiliados</option>
 										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
-										<option value="9" onclick="tipo_reporte()">Ventas Por Cobrar</option>
-										<option value="12">Ventas Pagadas</option>
+										<option value="1" >Ventas por Oficinas Virtuales</option>
+										<option value="9" onclick="tipo_reporte()">Ventas Por Cobrar Bancos</option>
+										<option value="12">Ventas Pagadas Bancos</option>
+										<option value="14">Ventas Pagos Enlinea</option>
 										<option value="13" >Comisiones Por Pagar</option>
 										<option value="10" >Comisiones Pagadas</option>
 										<option value="11" >Comisiones Pagadas y Por Pagar</option>
@@ -390,8 +391,8 @@
 						});
 						break;
 					case "12" :{
-						//	iniciarSpinner();
-						// Ventas Pagadas
+							iniciarSpinner();
+						// Ventas Pagadas Bancos
 						var inicio=$("#startdate").val();
 						var fin=$("#finishdate").val();
 							$.ajax({
@@ -406,6 +407,23 @@
 							});
 						}
 						break;
+					case "14" :{
+						iniciarSpinner();
+					// Ventas Pagadas Online
+					var inicio=$("#startdate").val();
+					var fin=$("#finishdate").val();
+						$.ajax({
+							type: "POST",
+							url: "/bo/reportes/reporte_ventas_pagadas_online",
+							data: {startdate:inicio,finishdate:fin}
+						})
+						.done(function( msg ) {
+							FinalizarSpinner();
+							$("#reporte_div").html(msg);
+							
+						});
+					}
+					break;
 					case '17':
 						$("#nuevos-afiliados").show();
 						$.ajax({
@@ -706,7 +724,7 @@
 					data: {startdate:startdate,finishdate:finishdate}
 				});
 				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();*/
-				//iniciarSpinner();
+				iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
@@ -724,7 +742,7 @@
 			break;
 			case "7" :{
 				//AFILIADOS
-				//iniciarSpinner();
+				iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
@@ -742,7 +760,7 @@
 			}
 			break;
 			case "8" :{
-				//iniciarSpinner();
+				iniciarSpinner();
 				// Afiliados en el mes
 				$.ajax({
 					type: "POST",
@@ -755,8 +773,8 @@
 			}
 			break;
 			case "9" :{
-			//	iniciarSpinner();
-			//Ventas por combrar
+				iniciarSpinner();
+			//Ventas por combrar Bancos
 				$.ajax({
 					type: "POST",
 					url: "/bo/reportes/reporte_cobros_pendientes"
@@ -768,7 +786,7 @@
 			}
 			break;
 			case "10" :{
-				//iniciarSpinner();
+				iniciarSpinner();
 				// Comisiones pagadas
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
@@ -788,7 +806,7 @@
 			break;
 			case "13" :{
 				// Comisiones por pagar
-				//iniciarSpinner();
+				iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
@@ -808,7 +826,7 @@
 
 			case "11" :{
 				// Comisiones por pagar y pagadas
-				//iniciarSpinner();
+				iniciarSpinner();
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
