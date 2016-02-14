@@ -182,10 +182,10 @@
 																										<section class="col col-2">Requiere especificación
 																<div class="inline-group">
 																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" checked="">
+																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" >
 																		<i></i>con IVA</label>
 																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva">
+																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva" checked="">
 																			<i></i>más IVA</label>
 																		</div>
 																	</section>

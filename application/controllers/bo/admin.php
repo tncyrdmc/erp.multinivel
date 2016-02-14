@@ -827,7 +827,7 @@ class admin extends CI_Controller
 		}
 			$msj = "Se ha modificado la mercancia.";
 			$this->session->set_flashdata('msj', $msj);
-		redirect("/bo/comercial/carrito");
+		redirect("/bo/comercial/carrito?co=c");
 	}
 	
 	function detalle_paquete()
