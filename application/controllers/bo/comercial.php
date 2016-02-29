@@ -2033,16 +2033,37 @@ class comercial extends CI_Controller
   
  }
  
+ function eliminar_afiliado()
+ {
+ 	$q=$this->model_tipo_red->cantidadRedesUsuario($_POST['id']);
+ 	
+ 	$this->template->set("redes",$q);
+ 	$this->template->set("id",$_POST['id']);
+ 	$this->template->build('website/bo/comercial/red/eliminar_usuario');
+ 	//echo "dentro de kill controller ";  	
+ 
+ }
+ 
  function kill_afiliado()
  {
  	//echo "dentro de kill controller ";
- 	$q=$this->model_admin->kill_afiliado($_POST['id']);
+ 	$q=$this->model_admin->kill_afiliado($_POST['id'],$_POST['red']);
  	if($q){
  		echo "El Afiliado ha sido eliminado con exito";
+ 		$this->trash_afiliado($_POST['id'],$_POST['red']);
  	}else{
  		echo "El Afiliado no pudo ser eliminado";
- 	}
+ 	} 	
  
+ }
+ 
+ function trash_afiliado($id,$red){
+ 	$q=count($this->model_tipo_red->cantidadRedesUsuario($id));
+ 	if($q==1){
+ 		$this->model_perfil_red->kill_afiliado($id);
+ 	}else{
+ 		$this->model_perfil_red->kill_afiliadonred($id,$red);
+ 	}
  }
   
   function cambiar_estado_proveedor(){

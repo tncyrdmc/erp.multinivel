@@ -172,23 +172,14 @@ class model_admin extends CI_Model
 	    return $q->result();		
 	}
 	
-	function kill_afiliado($id){
-		//echo "dentro de admin kill ";
-		$i=0;
-		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);		
-		foreach($redes_afiliado as $red_afiliado){
+	function kill_afiliado($id,$red){
+		//echo "dentro de admin kill ";		
+		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);	
+		//$red = ($red) ? $red : $redes_afiliado[0]->id_red;
+		//foreach($redes_afiliado as $red_afiliado){
 			//echo "red: ".$red_afiliado->id_red." ";
-			if (!$this->flowCompress($id,$red_afiliado->id_red)){ 
-				$i++;
-			}
-		}
-		if ($i==0){
-			$this->model_perfil_red->kill_afiliado($id);
-			return true;
-		}else{
-			return false;
-		}		
-		
+			return ($this->flowCompress($id,$red)) ? true : false;
+		//}
 	}
 	
 	function flowCompress($id,$red){

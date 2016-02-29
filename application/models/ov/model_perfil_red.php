@@ -704,5 +704,9 @@ order by (U.id);");
 		$this->db->query("delete from users where id = ".$id);
 		$this->db->query("delete from red where id_usuario = ".$id);
 	}
+	function kill_afiliadonred($id,$red){
+		$this->db->query("delete from afiliar where id_afiliado = ".$id." and id_red = ".$red);
+		$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
+	}
 	
 }

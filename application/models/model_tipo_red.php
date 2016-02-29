@@ -121,7 +121,7 @@ class Model_tipo_red extends CI_Model{
 	
 	function cantidadRedesUsuario($id)
 	{
-		$q=$this->db->query("SELECT id_red as id FROM afiliar where id_afiliado= '".$id."' group by id_red");
+		$q=$this->db->query("SELECT af.id_red as id , r.nombre as nombre FROM afiliar af, tipo_red r where id_afiliado = '".$id."' and r.id = af.id_red group by id_red");
 		return $q->result();
 	}
 	
