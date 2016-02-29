@@ -4,9 +4,18 @@ class modelo_reportes extends CI_Model
 {
 	function reporte_afiliados($inicio,$fin)
 	{
-		$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email 
-							 FROM users a, user_profiles b where(a.id=b.user_id) and b.id_tipo_usuario=2  
-							 and DATE(a.created) BETWEEN "'.$inicio.'" AND "'.$fin.'"');
+		$q=$this->db->query('SELECT a.id as id,af.debajo_de as id_sponsor,a.username as usuario,b.nombre as nombre,a.email as email,b.apellido as apellido,
+								concat(ctu.numero) as telefono,cdu.cp as codigo_postal,
+								concat(cdu.calle," ",cdu.colonia," ",cdu.municipio," ",cdu.estado," ",c.Name) as direccion,
+								b.keyword as dni,b.fecha_nacimiento as fecha_nacimiento 
+								FROM users a, user_profiles b,cross_tel_user ctu,cross_dir_user cdu,Country c ,afiliar af 
+								where(a.id=b.user_id) 
+								and(ctu.id_user=a.id)
+								and(cdu.id_user=a.id)
+								and(c.Code=cdu.pais)
+								and(af.id_afiliado=a.id)
+								and b.id_tipo_usuario=2
+							 	and DATE(a.created) BETWEEN "'.$inicio.'" AND "'.$fin.'" group by a.id order by a.id');
 		return $q->result();
 	}
 	function reporte_afiliados_mes()

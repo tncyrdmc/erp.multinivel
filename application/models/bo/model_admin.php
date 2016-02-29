@@ -2134,7 +2134,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 	function kill_venta($id){
 		$this->db->query("delete from cuenta_pagar_banco_historial where id_venta=".$id);
-		$this->db->query("delete from pago_por_payulatam where id_venta=".$id);
+		$this->db->query("delete from pago_online_transaccion where id_venta=".$id);
 		$this->db->query("delete from comision where id_venta=".$id);
 		$this->db->query("delete from cross_venta_mercancia where id_venta=".$id);
 		$this->db->query("delete from factura where id_venta=".$id);

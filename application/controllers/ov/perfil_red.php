@@ -90,102 +90,117 @@ class perfil_red extends CI_Controller
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
+		$id_afiliado=$_POST['id'];
+		
+		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
+		$frontalidadRed= $red[0]->frontal;
+		$profundidadRed=$red[0]->profundidad;
+
+		$INFINITO=0;
 		
 		if($this->tank_auth->get_user_id()>2){
 			$nivel=$_POST['profundidad'];
 		}else {
-			$nivel=0;
+			$nivel=$INFINITO;
+			$profundidadRed=$INFINITO;
 		}
 		
-		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
-		$frontales= $red[0]->frontal;
-		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
-		
-		if($red[0]->profundidad>0){
-			if($nivel >= $red[0]->profundidad){
-				return 0;
-			}
-		}
-		
-		$nombre=$this->model_perfil_red->get_name($_POST['id']);
-		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
-		$aux=0;
-		if($afiliados)
-		{
-			
-			$usuario=array();
-			foreach ($afiliados as $id_afiliado)
-			{
-				$usuario[]=$this->model_perfil_red->datos_perfil($id_afiliado->id_afiliado);
-			}
-			
-			
-			foreach ($usuario as $afiliado)
-			{
-				
-				$image 			 = $this->model_perfil_red->get_images($afiliado[0]->user_id);
-				$img_perfil='/template/img/empresario.jpg';
-				foreach ($image as $img)
-				{
-					$cadena=explode(".", $img->img);
-					if($cadena[0]=="user")
-					{
-						$img_perfil=$img->url;
-					}
-				}
-				
-				if(sizeof($afiliados) == 0)
-				{
-						
-						($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
-						
-						for($i=$aux; $i < $frontales; $i++){
-							echo "<li>
-								<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
-				            </li>";
-				           }
-				           
-				}
-				else
-				{
-					$aux++;
-					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
-					echo "
-					<li id='".$afiliado[0]->user_id."'>
-		            	<a class='quitar' onclick='subred(".$afiliado[0]->user_id.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
-		            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
-		            </li>";
-					
-	        	}
-	        	
-			}
+		if(!$this->getHayEspacioParaAfiliarProfundidad ( $nivel ,$profundidadRed))
+			return false;
 
-			if($frontales==0)
-				$frontales=$aux+1;
-			
-			if($aux > 0){
-				for($i=$aux; $i < $frontales; $i++){
-					echo "<li>
-								<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
-						  </li>";
-				}
+		$frontalesUsuario = $this->model_perfil_red->get_cantidad_de_frontales($id_afiliado);
+		$frontalesUsuario=$frontalesUsuario[0]->frontales;
+
+		
+		if(!$this->getHayEspacioParaAfiliarFrontalidad ($id_afiliado , $frontalidadRed ,$frontalesUsuario)){
+			$this->printRedFrontales ( $id_red,$id_afiliado,$frontalidadRed,$nivel);
+			return true;
+		}
+		
+		if($frontalidadRed==$INFINITO)
+			$frontalidadRed=$frontalesUsuario+1;
+
+		$this->printRedParaAfiliar ( $id_red,$id_afiliado,$frontalidadRed,$nivel);
+
+		
+	}
+	
+	private function getHayEspacioParaAfiliarFrontalidad($id_afiliado,$frontales ,$frontalesUsuario) {
+		$INFINITO=0;
+		
+		if($frontales==$INFINITO){
+			return true;
+		}
+		else if($frontales>$frontalesUsuario){
+			return true;
+		}
+		return false;
+	}
+
+	private function getHayEspacioParaAfiliarProfundidad($nivel,$profundidadRed) {
+		if($profundidadRed>0){
+			if($nivel >= $profundidadRed){
+				return false;
 			}
-			echo "</ul>";
 		}
-		else
+		return true;
+	}
+
+	private function printRedFrontales($id_red,$id_afiliado, $frontales,$nivel){
+
+		echo "<ul>";
+		for($lado=0;$lado<$frontales;$lado++){
+			$afiliado = $this->model_perfil_red->get_afiliado_por_posicion($id_red,$id_afiliado,$lado);
+			$this->printPosicionAfiliado ( $nivel, $afiliado);
+		}
+		echo "</ul>";
+	}
+	
+	private function printPosicionAfiliado($nivel, $afiliado) {
+		$img_perfil = $this->setImagenAfiliado ($afiliado[0]->id_afiliado);
+				
+		echo "  <li id='".$afiliado[0]->id_afiliado."'>
+		        	<a class='quitar' onclick='subred(".$afiliado[0]->id_afiliado.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='todo'>".$afiliado[0]->afiliado."<br />Detalles</div>
+		        </li>";
+	}
+
+	private function printRedParaAfiliar($id_red,$id_afiliado, $frontales,$nivel) {
+	
+		echo "<ul>";
+		for($lado=0;$lado<$frontales;$lado++){
+			$afiliado = $this->model_perfil_red->get_afiliado_por_posicion($id_red,$id_afiliado,$lado);
+			
+			if($afiliado){
+				$this->printPosicionAfiliado ( $nivel, $afiliado);
+			}else {
+				$sponsor=$this->model_perfil_red->get_name($id_afiliado);
+				$this->printEspacioParaAfiliar ($sponsor, $id_afiliado, $lado );
+
+			}
+		}
+		echo "</ul>";
+		
+	}
+	
+	private function printEspacioParaAfiliar($sponsor,$id_afiliado, $lado) {
+		echo "<li>
+				<a onclick=\"botbox('".$sponsor[0]->nombre."',".$id_afiliado.",".$lado.")\" href='javascript:void(0)'>Afiliar Aqui</a>
+			  </li>	";
+	}
+
+	private function setImagenAfiliado($id_afiliado) {
+		$image 			 = $this->model_perfil_red->get_images($id_afiliado);
+		$img_perfil='/template/img/empresario.jpg';
+		foreach ($image as $img)
 		{
-			$nombre=$this->model_perfil_red->get_name($_POST['id']);
-			$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
-			echo "<ul>";
-			for($i=0; $i < 1; $i++){
-				echo "<li>
-					<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
-	            </li>";
-	           }
-			echo "</ul>";
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
 		}
-		
-		
+		return $img_perfil;
 	}
 	
 	function subtree()
