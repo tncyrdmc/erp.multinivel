@@ -51,7 +51,21 @@
 	        </label>
 	        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
 				<input type="number" class="form-control" name="profundidad" size="30" placeholder="profundidad" required>
-	        </label>
+	        </label><br>
+	        <p>Elije tipo de plan de compensación.</p><br>
+	        <label class="radio">
+	        <input type="radio" name="tipo_plan" value="BIN" placeholder="tipo de plan">
+	        <i></i>Binario</label>
+	        <label class="radio">
+	        <input type="radio" name="tipo_plan" value="BEQ" placeholder="tipo de plan">
+	        <i></i>Binario Equilibrado</label>
+	        <label class="radio">
+	        <input type="radio" name="tipo_plan" value="MAT" checked placeholder="tipo de plan">
+	        <i></i>Matricial</label>
+	        <label class="radio">
+	        <input type="radio" name="tipo_plan" value="UNI" placeholder="tipo de plan">
+	        <i></i>Unilevel</label>
+																		
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Crear</button>
 			</div>
 		</form>

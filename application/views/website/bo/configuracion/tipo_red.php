@@ -34,7 +34,7 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 link">
+											<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 link">
 											</div>
 											<div class="col-xs-11 col-sm-12 col-md-6 col-lg-8 link">
 												<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 link">
@@ -56,14 +56,14 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 link">	
+												<!-- <div class="col-xs-12 col-sm-5 col-md-5 col-lg-3 link">	
 													<a href="/bo/capacidadRed/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;  padding-bottom: 19%;">
 															<i class="fa fa-sort-numeric-asc fa-3x"></i>
 															<h1>Frontalidad / Profundidad</h1>
 														</div>
 													</a>
-												</div>
+												</div> -->
 											</div>
 										 </div>
 									</div>

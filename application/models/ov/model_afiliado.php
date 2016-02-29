@@ -249,6 +249,13 @@ class model_afiliado extends CI_Model{
 		$id_afiliador = $id_afiliador->result();
 		return $id_afiliador[0]->id;
 	}
+	
+	function obtenrIdUserby($usuario,$email){
+		$id_afiliador= $this->db->query('select id from users where username like "'.$usuario.'" and email like "'.$email.'"');
+	
+		$id_afiliador = $id_afiliador->result();
+		return $id_afiliador[0]->id;
+	}
 
 	function consultarFrontalDisponible($id_debajo, $red){
 		
@@ -598,9 +605,9 @@ class model_afiliado extends CI_Model{
 		return $comision[0]->comision;
 	}
 	
-	function AgregarAfiliadoRed($id_debajo, $red, $email){
+	function AgregarAfiliadoRed($id_debajo, $red, $usuario, $email){
 		$mi_red= $red;
-		$id = $this->obtenrIdUser($email);
+		$id = $this->obtenrIdUserby($usuario, $email);
 		$lado = 1;
 		if(!isset($_POST['lado']))
 			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);

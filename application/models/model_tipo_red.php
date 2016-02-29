@@ -9,12 +9,13 @@ class Model_tipo_red extends CI_Model{
 	}
 	
 	
-	function insertar($nombre, $descripcion, $frontal, $profundidad){
+	function insertar($nombre, $descripcion, $frontal, $profundidad, $plan){
 		$datos = array('id' => 0,
 						'nombre' => $nombre,
 						'descripcion' => $descripcion,
 						'frontal' => $frontal,
 						'profundidad' => $profundidad,
+						'plan' => $plan,
 						'valor_punto' => 1
 		);
 		$this->db->insert("tipo_red",$datos);
@@ -89,13 +90,16 @@ class Model_tipo_red extends CI_Model{
 		$this->db->update('tipo_red', $datos, array('id' => $id_red));
 	}
 	
-	function actualizar($id, $nombre, $descripcion, $profundidad, $frontal){
+	function actualizar($id, $nombre, $descripcion,  $frontal,$profundidad, $plan){
 		$datos = array(
 				'nombre' => $nombre,
 				'descripcion' => $descripcion,
 				'frontal' => $frontal,
-				'profundidad' => $profundidad);
+				'profundidad' => $profundidad,
+				'plan' => $plan
+		);
 		$this->db->update("tipo_red",$datos,"id = ".$id);
+		return true; 
 	}
 	
 	function cambiar_estado(){
@@ -118,7 +122,7 @@ class Model_tipo_red extends CI_Model{
 	
 	function cantidadRedesUsuario($id)
 	{
-		$q=$this->db->query("SELECT id_red as id FROM afiliar where id_afiliado= '".$id."' group by id_red");
+		$q=$this->db->query("SELECT af.id_red as id , r.nombre as nombre FROM afiliar af, tipo_red r where id_afiliado = '".$id."' and r.id = af.id_red group by id_red");
 		return $q->result();
 	}
 	
