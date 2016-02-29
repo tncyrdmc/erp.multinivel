@@ -1,4 +1,3 @@
-
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
@@ -161,7 +160,7 @@
 																	<label class="select">
 																		<select id="tipo_fiscal" required name="fiscal">
 																		<?foreach ($tipo_fiscal as $key)
-																		{?>contenedor
+																		{?> contenedor
 																			<option value="<?=$key->id?>">
 																				<?=$key->descripcion?>
 																			</option>
