@@ -1032,7 +1032,7 @@ class perfil_red extends CI_Controller
 		
 		if($this->model_afiliado->ConprobarUsuario($username,$email,$red, $id)){
 			
-			$this->model_afiliado->AgregarAfiliadoRed($id, $red, $email);
+			$this->model_afiliado->AgregarAfiliadoRed($id, $red,$username, $email);
 			echo "Felicitaciones el usuario ha sido afiliado a otra red";
 		}
 		

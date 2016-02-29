@@ -99,6 +99,7 @@ class Model_tipo_red extends CI_Model{
 				'plan' => $plan
 		);
 		$this->db->update("tipo_red",$datos,"id = ".$id);
+		return true; 
 	}
 	
 	function cambiar_estado(){
