@@ -107,7 +107,7 @@ $porcentajeContador=0;
 												        	</label>
 																<?php foreach ($img as $key)
 													                {
-													                	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'"></div>';
+													                	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'" width="150" height="126"></div>';
 													                }
 													            ?>
 											            </section>
@@ -264,9 +264,9 @@ $porcentajeContador=0;
 																			$valor_iva_publico=($mercancia[0]->costo_publico*$porcentajeContador)/100;
 
 																		if($mercancia[0]->iva=="CON"){  
-																			$valor_total_real=	$mercancia[0]->real-$valor_iva_real;
-																			$valor_total_distribuidores= $mercancia[0]->costo-$valor_iva_distribuidores;
-																			$valor_total_publico=	$mercancia[0]->costo_publico-$valor_iva_publico;
+																			$valor_total_real=	$mercancia[0]->real/*-$valor_iva_real*/;
+																			$valor_total_distribuidores= $mercancia[0]->costo/*-$valor_iva_distribuidores*/;
+																			$valor_total_publico=	$mercancia[0]->costo_publico/*-$valor_iva_publico*/;
 																		}
 																			if($mercancia[0]->iva=="MAS"){
 																			$valor_total_real=	$mercancia[0]->real+$valor_iva_real;
@@ -461,7 +461,7 @@ function validar_tipo_iva(porcentaje, tipo, valor){
 	var valor_iva=0;
 	valor_iva=((valor)*parseFloat(porcentaje))/(100);
 if(tipo=="1"){
-	precio_con_iva=valor-valor_iva;
+	precio_con_iva=valor/*-valor_iva*/;
 	return precio_con_iva;
 }
 if(tipo=="0"){

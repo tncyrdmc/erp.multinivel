@@ -96,7 +96,7 @@ $porcentajeContador=0;
 												        	</label>
 																<?php foreach ($img as $key)
 													                {
-													                	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'"></div>';
+													                	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'" width="150" height="126"></div>';
 													                }
 													            ?>
 											            </section>
@@ -205,7 +205,7 @@ $porcentajeContador=0;
 																		$valor_iva=($mercancia[0]->costo*$porcentajeContador)/100;
 
 																			if($mercancia[0]->iva=="CON"){  
-																			$valor_total=	$mercancia[0]->costo-$valor_iva;
+																			$valor_total=	$mercancia[0]->costo/*-$valor_iva*/;
 																		}
 																			if($mercancia[0]->iva=="MAS"){
 																			$valor_total=$mercancia[0]->costo+$valor_iva;
@@ -293,7 +293,7 @@ function add_impuesto()
 	i=i+1;
 	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto" style="width: 50%;">Impuesto'
 	+'<label class="select">'
-	+'<select name="id_impuesto[]" onChange="calcular_precio_total()">'
+	+'<select name="id_impuesto[]" onClick="calcular_precio_total()">'
 	+'</select>'
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
@@ -374,7 +374,7 @@ function validar_tipo_iva(porcentaje, tipo, valor){
 	var valor_iva=0;
 	valor_iva=((valor)*parseFloat(porcentaje))/(100);
 if(tipo=="1"){
-	precio_con_iva=valor-valor_iva;
+	precio_con_iva=valor/*-valor_iva*/;
 	return precio_con_iva;
 }
 if(tipo=="0"){
