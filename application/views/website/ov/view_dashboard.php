@@ -413,6 +413,14 @@
 											<fieldset>
 												<legend><b>Comunicación</b></legend>
 												<div class="col-sm-1">
+												</div>
+												<div class="col-sm-2">
+													<a href="cgeneral/autoresponder">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-globe fa-3x"></i>
+															<h5>Autoresponder</h5>
+														</div>
+													</a>
 												</div>	
 												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
 												if($permiso){
@@ -461,6 +469,10 @@
 													</a>
 												</div>
 												<?php }?>
+												</fieldset>
+								<!---<div class="row">-->
+											<div class="col-sm-1">
+												</div>
 												<div class="col-sm-2">
 													<a href="cabecera/sugerencia">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
@@ -469,6 +481,7 @@
 														</div>
 													</a>
 												</div>
+								<!---</div>-->
 												<?php }?>
 											<div class="row">
                       <?php $permiso=$ci->model_permissions->check($id,'videollamadas');
@@ -505,7 +518,8 @@
 												</div>
 												<?php }?>	 -->
 											</div>
-											</fieldset>
+
+											
 										</div>
 										</div>
 									<!--Termina la secciion de escuela y negocios-->

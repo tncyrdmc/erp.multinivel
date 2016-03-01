@@ -1,4 +1,3 @@
-
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
@@ -6,15 +5,11 @@
 			<h1 class="page-title txt-color-blueDark">
 			
 			
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+						<a class="backHome" href="/ov/dashboard"><i class="fa fa-home"></i> Menu</a>
+
+
 							<span>>
-							<a href="/bo/configuracion">Configuracion</a>
-							</span>
-							<span>>
-							<a href="/bo/configuracion/empresa">Empresa</a>
-							</span>
-							<span>>
-							Actualizar Banner 
+							Autoresponder
 							</span>
 							</h1>
 		</div>
@@ -78,7 +73,7 @@
 								<section class="col col-3">
 									 <label class="input">
 										 Titulo
-										 <input required  type="text" id="titulo" name="titulo" value="<?=$img[0]->titulo?>" required>
+										 <input required readonly="readonly" type="text" id="titulo" name="titulo" value="<?=$img[0]->titulo?>" required>
 									 </label>
 								 </section>
 								 </div>
@@ -92,7 +87,7 @@
 														<section class="col col-3">
 														<label class="textarea"> 	
 														Descripción									
-															<textarea id="descripcion" name="descripcion" rows="3" class="custom-scroll" required><?=$img[0]->descripcion?></textarea> 
+															<textarea id="descripcion" readonly="readonly" name="descripcion" rows="3" class="custom-scroll" required><?=$img[0]->descripcion?></textarea> 
 														</label>
 														</section>
 														</div>
@@ -114,19 +109,7 @@
 									
 										            </section>
 													
-													<section id="imagenes" class="col col-12">
-														<label class="label"> Imágen </label>
-														<div class="input input-file">
-															<span class="button"> <input id="img" name="img"
-																onchange="this.parentNode.nextSibling.value = this.value"
-																type="file" value="<?$img[0]->nombre_banner?>" multiple>Buscar
-															</span><?$img[0]->nombre_banner?><input id="imagen_mr"
-																placeholder="Agregar alguna imágen" value="<?=$img[0]->nombre_banner?>" type="text">
-														</div>
-														<small><cite
-															title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite>
-														</small>
-													</section>
+
 							</div>
 						</fieldset>
 						<fieldset>
