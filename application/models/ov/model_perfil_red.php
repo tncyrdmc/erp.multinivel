@@ -92,6 +92,7 @@ class model_perfil_red extends CI_Model
 		{
 			
 			$directo=0;
+			
 			if(!isset($_POST['afiliados']))
 			{
 				$_POST['afiliados']=$id;
@@ -165,7 +166,9 @@ class model_perfil_red extends CI_Model
 
 		    if(isset($_POST['sponsor']))
 		    {
-		    	$directo=0;
+		    	$directo=$_POST['sponsor'];
+		    }else{
+		    	$directo=$_POST['afiliados'];
 		    }
 		    
 		    if(!isset($_POST['lado']))
@@ -347,6 +350,25 @@ class model_perfil_red extends CI_Model
 			(select apellido from user_profiles where user_id=debajo_de) debajo_de_p,
 			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
 			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." order by lado");
+		return $q->result();
+	}
+	
+	function get_afiliado_por_posicion($id, $id_afiliado,$lado)
+	{
+	
+		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
+			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p,
+			(select nombre from user_profiles where user_id=debajo_de) debajo_de_n,
+			(select apellido from user_profiles where user_id=debajo_de) debajo_de_p,
+			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
+			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." and lado=".$lado." order by lado");
+		return $q->result();
+	}
+	
+	function get_cantidad_de_frontales($id_afiliado)
+	{
+	
+		$q=$this->db->query("SELECT count(*) as frontales FROM afiliar where debajo_de=".$id_afiliado." order by lado");
 		return $q->result();
 	}
 	

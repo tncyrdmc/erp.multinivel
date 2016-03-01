@@ -173,20 +173,30 @@ class reportes extends CI_Controller
 			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th>ID</th>
+					<th>ID Sponsor</th>
 					<th>Usuario</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
+					<th>DNI</th>
+					<th>Fecha de Nacimiento</th>
 					<th>Email</th>
+					<th>Telefono</th>
+					<th>Direccion</th>
 				</thead>
 				<tbody>";
 			for($i=0;$i<sizeof($afiliados);$i++)
 			{
 					echo "<tr>
 					<td class='sorting_1'>".$afiliados[$i]->id."</td>
+					<td class='sorting_1'>".$afiliados[$i]->id_sponsor."</td>
 					<td>".$afiliados[$i]->usuario."</td>
 					<td>".$afiliados[$i]->nombre."</td>
 					<td>".$afiliados[$i]->apellido."</td>
+					<td>".$afiliados[$i]->dni."</td>
+					<td>".$afiliados[$i]->fecha_nacimiento."</td>
 					<td>".$afiliados[$i]->email."</td>
+					<td>".$afiliados[$i]->telefono."</td>
+					<td>".$afiliados[$i]->direccion."</td>
 				</tr>";
 			}
 				
@@ -233,14 +243,19 @@ class reportes extends CI_Controller
 		for($i = 0;$i < count($afiliados);$i++)
 		{
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $afiliados[$i]->usuario);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $afiliados[$i]->id_sponsor);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->nombre);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->apellido);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $afiliados[$i]->dni);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $afiliados[$i]->fecha_nacimiento);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $afiliados[$i]->email);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $afiliados[$i]->telefono);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $afiliados[$i]->direccion);
 			$contador_filas++;
 		}
 		
-		$subtitulos	=array("ID","Usuario","Nombre","Apellido","Email");
+		$subtitulos	=array("ID","ID Sponsor","Usuario","Nombre","Apellido","DNI","Fecha de Nacimiento","Email","Telefono","Direccion");
 		$this->model_excel->setTemplateExcelReport ("Afiliados",$subtitulos,$contador_filas,$this->excel);
 		
 		

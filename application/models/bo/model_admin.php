@@ -182,12 +182,17 @@ class model_admin extends CI_Model
 	
 	function kill_afiliado($id,$red){
 		//echo "dentro de admin kill ";		
+		$i=0;
 		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);	
-		//$red = ($red) ? $red : $redes_afiliado[0]->id_red;
-		//foreach($redes_afiliado as $red_afiliado){
+		if ($red==0){
+			foreach($redes_afiliado as $red_afiliado){
 			//echo "red: ".$red_afiliado->id_red." ";
+				 (!$this->flowCompress($id,$red_afiliado->id_red)) ? $i++ : 0;
+			}
+			return ($i==0) ? true : false;
+		}else {
 			return ($this->flowCompress($id,$red)) ? true : false;
-		//}
+		}		
 	}
 	
 	function flowCompress($id,$red){
@@ -222,7 +227,7 @@ class model_admin extends CI_Model
 				return $padre;
 			}else{
 				$padre = $this->model_perfil_red->ConsultarPadre($padre , $red);
-				$frontales = count($this->model_perfil_red->ConsultarHijos($p,$red));
+				$frontales = count($this->model_perfil_red->ConsultarHijos($padre,$red));
 			}
 		}
 		//echo "padre : ".$padre." ";
@@ -564,11 +569,11 @@ where(a.id_pais=b.Code)");
 	{
 		$dato=array(
 				"id_tributaria"     => $_POST['id_tributaria'],
-				"regimen"   		=> $_POST['regimen'],
+				//"regimen"   		=> $_POST['regimen'],
 				"nombre"     		=> $_POST['nombre'],
 				"web"       		=> $_POST['web'],
-				"postal"         	=> $_POST['postal'],
-				"direccion"      	=> $_POST['direccion'],
+				"postal"         	=> $_POST['postal'] ? $_POST['postal'] : "No define",
+				"direccion"      	=> $_POST['direccion'] ? $_POST['direccion'] : "No define",
 				"ciudad"         	=> $_POST['ciudad'] ? $_POST['ciudad'] : "No define",
 				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
 				"pais"          	=> $_POST['pais'],
@@ -2133,7 +2138,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 	function kill_venta($id){
 		$this->db->query("delete from cuenta_pagar_banco_historial where id_venta=".$id);
-		$this->db->query("delete from pago_por_payulatam where id_venta=".$id);
+		$this->db->query("delete from pago_online_transaccion where id_venta=".$id);
 		$this->db->query("delete from comision where id_venta=".$id);
 		$this->db->query("delete from cross_venta_mercancia where id_venta=".$id);
 		$this->db->query("delete from factura where id_venta=".$id);
