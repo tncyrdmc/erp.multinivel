@@ -133,7 +133,7 @@ class usuarios extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/comercial/red/afiliar_red');
+		$this->template->build('website/ov/perfil_red/afiliar_red');
 	}
 	
 	function alta_frontal(){
