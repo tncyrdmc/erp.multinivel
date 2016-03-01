@@ -134,8 +134,20 @@ class model_afiliado extends CI_Model{
 		}
 
 		$mi_red=$_POST['red'];
-		$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
 		
+		if(isset($_POST['lado'])){
+			$lado=$_POST['lado'];
+		}else {
+			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
+		}
+		
+		if(isset($_POST['sponsor']))
+		{
+			$directo=intval($this->tank_auth->get_user_id());
+		}else{
+			$directo=intval($id_debajo);
+		}
+
 		$dato_afiliar =array(
 			"id_red"      => $mi_red,
 			"id_afiliado" => $id,
