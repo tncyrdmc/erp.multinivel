@@ -1353,7 +1353,7 @@ function add_impuesto()
 {
 	var code=	'<div id="'+i+'"><section class="col col-2" id="impuesto">Impuesto'
 	+'<label class="select">'
-	+'<select name="id_impuesto[]">'
+	+'<select name="id_impuesto[]" id="id_impuesto[]" onclick="calcular_precio_total()">'
 	+'</select>'
 	+'</label>'
 	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
@@ -2023,7 +2023,7 @@ function validar_tipo_iva(porcentaje, tipo, valor){
 	var valor_iva=0;
 	valor_iva=((valor)*parseFloat(porcentaje))/(100);
 if(tipo=="1"){
-	precio_con_iva=valor-valor_iva;
+	precio_con_iva=valor/*-valor_iva*/;
 	return precio_con_iva;
 }
 if(tipo=="0"){

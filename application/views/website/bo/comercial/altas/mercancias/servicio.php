@@ -520,7 +520,7 @@ function validar_tipo_iva(porcentaje, tipo, valor){
 	var valor_iva=0;
 	valor_iva=((valor)*parseFloat(porcentaje))/(100);
 if(tipo=="1"){
-	precio_con_iva=valor-valor_iva;
+	precio_con_iva=valor/*-valor_iva*/;
 	return precio_con_iva;
 }
 if(tipo=="0"){
