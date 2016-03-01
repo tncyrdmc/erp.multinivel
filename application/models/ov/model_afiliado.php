@@ -251,7 +251,7 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function obtenrIdUserby($usuario,$email){
-		$id_afiliador= $this->db->query('select id from users where username like "'.$usuario.'" and email like "'.$email.'"');
+		$id_afiliador= $this->db->query('select id from users where username like "'.$usuario.'"');
 	
 		$id_afiliador = $id_afiliador->result();
 		return $id_afiliador[0]->id;
@@ -607,7 +607,7 @@ class model_afiliado extends CI_Model{
 	
 	function AgregarAfiliadoRed($id_debajo, $red, $usuario, $email){
 		$mi_red= $red;
-		$id = $this->obtenrIdUserby($usuario, $email);
+		$id = $this->obtenrIdUserby($usuario);
 		$lado = 1;
 		if(!isset($_POST['lado']))
 			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
