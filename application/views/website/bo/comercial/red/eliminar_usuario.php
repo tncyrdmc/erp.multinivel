@@ -3,7 +3,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 		<form action="/bo/comercial/kill_afiliado"  method="POST" id="edit" role="form" class="smart-form">
-			<legend>Eliminar Afiliado</legend>
+			<legend>Por favor, Elija la red en la desea eliminar a este usuario.</legend>
 
 			<br><br>
 
@@ -16,6 +16,7 @@
 						<section style="width: 50%;" class="col col-2">
 							<label class="select" for="">Redes del usuario
 							<select name="red" >
+								<option value="0">Todas las redes</option>
 								<?php foreach ($redes as $red){
 									echo '<option value="'.$red->id.'">'.$red->nombre.'</option>' ;
 								}?>

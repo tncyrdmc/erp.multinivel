@@ -2059,7 +2059,7 @@ class comercial extends CI_Controller
  
  function trash_afiliado($id,$red){
  	$q=count($this->model_tipo_red->cantidadRedesUsuario($id));
- 	if($q==1){
+ 	if($q==1||$red==0){
  		$this->model_perfil_red->kill_afiliado($id);
  	}else{
  		$this->model_perfil_red->kill_afiliadonred($id,$red);
