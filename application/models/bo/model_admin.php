@@ -146,17 +146,25 @@ class model_admin extends CI_Model
 	}
 		function modificar_banner($data){
 		$nombre_imagen="";
-			foreach ( $data as $key ) {
-			$nombre_imagen=$key['file_name'];
-			}
+			//foreach ( $data as $key ) {
+			//$nombre_imagen=$key['file_name'];
+			//}
 			$this->db->query('delete from banner where id=1');
 			$dato_banner= array(
 				"id"=>1,
 				"titulo"=>$_POST['titulo'],
 				"descripcion"=>$_POST['descripcion'],
-				"nombre_banner"=>$nombre_imagen
+				"nombre_banner"=>$data
 				);
 			$this->db->insert("banner",$dato_banner);
+	}
+
+	function banner_modificacion(){
+		//$this->db->set('id', 1 );
+		$this->db->set('titulo', $_POST['titulo']);
+		$this->db->set('descripcion', $_POST['descripcion']);
+		$this->db->where('id', 1);
+		$this->db->update('banner');
 	}
 	function img_banner(){
 		$q2=$this->db->query("select * from banner where id=1");
