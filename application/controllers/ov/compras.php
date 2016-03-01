@@ -1182,7 +1182,67 @@ function index()
 			}
 		}
 	}
-
+	
+	function reportes_tipo (){
+		
+		switch ($_POST['tipo']){
+			case 1 	: $this->reporte_afiliados(); break;
+			case 2 	: $this->reporte_compras_usr(); 
+						$this->reporte_compras_usr_well(); break;
+			case 3 	: $this->reporte_compras(); 
+						$this->reporte_compras_red_well();break;
+			case 4	: ''; break;
+			case 5	: $this->ReportePagosBanco(); break;
+			case 6	: $this->reporte_afiliados_todos(); break;
+			case 7 	: $this->reporte_compras_afiliados_todos(); break;
+			case 8 	: $this->reporte_compras_personales(); break;
+			case 9 	: $this->reporte_directos(); break;
+		}
+		
+	}
+	function reporte_directos() {
+		$id=$this->tank_auth->get_user_id();
+		$afiliados = $this->model_perfil_red->get_directos_by_id($id);
+		$image=$this->model_perfil_red->get_images_users();
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+						<th>ID</th>
+		                <th data-class='expand'>Imagen</th>
+		                <th data-hide='phone'>Usuario</th>
+			            <th data-hide='phone,tablet'>Nombre</th>
+			            <th data-hide='phone,tablet'>Apellido</th>
+				        <th data-hide='phone,tablet'>e-mail</th>
+				        <th data-hide='phone'>Redes</th>
+				</thead>
+				<tbody>";
+		foreach ($afiliados as $afiliado)
+		{
+		 			$afiliados_imagen="/template/img/empresario.jpg";
+				       foreach ($image as $img) {
+				       	   if($img->id_user==$afiliado->id){
+								$cadena=explode(".", $img->img);
+								if($cadena[0]=="user")
+								{
+									$afiliados_imagen=$img->url;
+								}
+				       	   }
+						}
+		
+			echo "<tr>
+					<td class='sorting_1'>".$afiliado->id."</td>
+					<td><img style='width: 10rem; height: 10rem;' src='".$afiliados_imagen."'></img></td>
+					<td>".$afiliado->username."</td>
+					<td>".$afiliado->nombre."</td>
+					<td>".$afiliado->apellido."</td>
+					<td>".$afiliado->email."</td>
+					<td>".$afiliado->redes."</td>
+				</tr>";
+		}		
+			
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	}
 	function reporte_afiliados_todos()
 	{
 		$id=$this->tank_auth->get_user_id();
