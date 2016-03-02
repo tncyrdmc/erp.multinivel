@@ -250,8 +250,8 @@ class model_afiliado extends CI_Model{
 		return $id_afiliador[0]->id;
 	}
 	
-	function obtenrIdUserby($usuario,$email){
-		$id_afiliador= $this->db->query('select id from users where username like "'.$usuario.'" and email like "'.$email.'"');
+	function obtenrIdUserby($usuario){
+		$id_afiliador= $this->db->query('select id from users where username ="'.$usuario.'"');
 	
 		$id_afiliador = $id_afiliador->result();
 		return $id_afiliador[0]->id;
@@ -263,11 +263,15 @@ class model_afiliado extends CI_Model{
 		
 		$lados = $query->result();
 		$lado_disponible=0;
-		
+
 		if(isset($lados[0]->id)){
+			$aux=0;
 			foreach ($lados as $filaLado){
-				$lado_disponible = ($filaLado->lado) + 1;
-				
+				if($filaLado->lado!=$aux){
+					$lado_disponible = $aux;
+					return $lado_disponible;
+				}
+			$aux++;
 			}
 		}
 		return $lado_disponible;
@@ -605,9 +609,13 @@ class model_afiliado extends CI_Model{
 		return $comision[0]->comision;
 	}
 	
-	function AgregarAfiliadoRed($id_debajo, $red, $usuario, $email){
+	function AgregarAfiliadoRed($id_debajo, $red, $usuario){
 		$mi_red= $red;
-		$id = $this->obtenrIdUserby($usuario, $email);
+		$id = $this->obtenrIdUserby($usuario);
+		if(!$id){
+			echo "No se pudo hacer la afiliacion.";
+			return false;
+		}
 		$lado = 1;
 		if(!isset($_POST['lado']))
 			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);

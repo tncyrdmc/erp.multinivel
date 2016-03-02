@@ -3,354 +3,14 @@
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
 
-// DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-$(document).ready(function() {
-
-	// fuelux 
-
-			  var wizard = $('.wizard').wizard();
-
-			  wizard.on('finished', function (e, data) {
-
-			  	var ids = new Array( 
-						"#nombre",
-					 	"#apellido",
-					 	"#datepicker",
-					 	"#cp",
-					 	"#username",
-					 	"#email",
-					 	"#password",
-					 	"#confirm_password"
-					 	
-					 );
-					var mensajes = new Array( 
-						"Por favor ingresa tu nombre",
-					 	"Por favor ingresa tu apellido",
-					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa tu código postal",
-					 	"Por favor ingresa un nombre de usuario",
-					 	"Por favor ingresa un correo",
-					 	"Por favor ingresa una contraseña",
-					 	"Por favor confirma tu contraseña"
-					 );
-
-					var idss=new Array(
-						"#username"
-					);
-					var mensajess=new Array(
-						"El nombre de usuario no puede contener espacios en blanco"
-					);
-					var validacion_=valida_espacios(idss,mensajess);
-					var validacion=valida_vacios(ids,mensajes);
-					if(validacion&&validacion_)
-					{
-						$( ".steps" ).slideUp();
-						$( ".steps" ).remove();
-						$( ".actions" ).slideUp();
-						$( ".actions" ).remove();
-						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
-						
-						$.ajax({
-							type: "POST",
-							url: "/auth/register",
-							data: $('#register').serialize()
-						})
-						.done(function( msg1 ) {
-							
-							$("#progress").attr('style','width: 40%');
-							var email=$("#email").val();
-							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-							$.ajax({
-								type: "POST",
-								url: "/ov/perfil_red/afiliar_nuevo",
-								data: $('#checkout-form').serialize()
-								})
-								.done(function( msg ) {
-									$("#progress").attr('style','width: 100%');
-									bootbox.dialog({
-										message: msg,
-										title: "Atención",
-										buttons: {
-											success: {
-											label: "Ok!",
-											className: "btn-success",
-											callback: function() {
-												location.href="/ov/red/red_arbol1?id="+<?php echo $_GET['id']; ?>;
-												}
-											}
-										}
-									});
-								});
-						});//fin Done ajax
-					}
-					else
-					{
-						$.smallBox({
-					      title: "<h1>Atención</h1>",
-					      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
-					      color: "#C46A69",
-					      icon : "fa fa-warning fadeInLeft animated",
-					      timeout: 4000
-					    });
-					}
-			    
-			  });
-	
-	pageSetUp();
-});
-
-
-$("#remove_step").click(function() {
-	$("#tipo_plan").attr("name","tipo_plan");
-	$('.wizard').wizard('selectedItem', {
-			step: 4
-		});
-	$( "#step4" ).slideUp();
-	$( "#step4" ).remove();
-	$( "#paso4" ).slideUp();
-	$( "#paso4" ).remove();
-	$( this ).slideUp();
-	$( this ).remove();
-});
-
-$("#plan1").click(function(event) {
-	$("#tipo_plan").attr("value","1");
-	$("#planuno").addClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-
-$("#plan2").click(function(event) {
-	$("#tipo_plan").attr("value","2");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").addClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan3").click(function(event) {
-	$("#tipo_plan").attr("value","3");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").addClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan4").click(function(event) {
-	$("#tipo_plan").attr("value","4");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").addClass('packselected');
-});
-
-
-
-/*
-CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
-$("input").click(function() {
-$( this ).slideUp();
-$( this ).remove();
-});
-*/
-function codpos()
+function subred(id,profundidad)
 {
-	var pais = $("#pais").val();
-	if(pais=="MEX")
-	{
-		var cp=$("#cp").val();
-		$.ajax({
-			type: "POST",
-			url: "/ov/perfil_red/cp",
-			data: {cp: cp},
-		})
-		.done(function( msg )
-		{
-			$("#colonia").remove();
-			$("#municipio").remove();
-			$("#estado").remove();
-			$("#dir").append(msg);
-		})
-	}
-}
-function clickme()
-{
-}
-
-function SelecionarFase()
-{
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/MensajeFase",
-		data: {	id: <?php echo $id ?>, red: <?php echo $_GET['id']; ?> }
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Informacion Personal",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "hide",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}
-
-function faseCambio(fase){
-	
-	bootbox.dialog({
-		message: "¿Estas Seguro?",
-		title: "Atención",
-		buttons: {
-			success: {
-			label: "Si",
-			className: "btn-success",
-			callback: function() {
-				
-				$.ajax({
-					type: "POST",
-					url: "/ov/perfil_red/CambioFase",
-					data: {
-						id: <?php echo $id ?>,
-						red: <?php echo $_GET['id']; ?>,
-						fase: fase
-							},
-					})
-					.done(function(msg)
-					{
-						alert('Has Cambiado de fase'+msg);
-						location.reload();
-					})
-				}
-			},
-			close:{
-				label: "NO",
-				className: "btn-danger",
-				callback: function() {
-					
-					}
-				}
-		}
-	});
-	
-}
-
-function use_username()
-{
-	$("#msg_usuario").remove();
-	var username=$("#username").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
-	})
-	.done(function( msg )
-	{
-		if( msg != ''){
-			$("#usuario2").html('<div id="msg_usuario" class="alert alert-success fade in">'
-						+'<i class="fa-fw fa fa-check"></i>'
-						+'<strong>Corecto </strong> Username Correcto'
-					+'</div>')
-		}else{
-			$("#usuario2").html('<div id="msg_usuario" class="alert alert-danger fade in">'
-						+'<i class="fa-fw fa fa-check"></i>'
-						+'<strong>Error </strong> Username no esta registrado en el sistema'
-					+'</div>')
-			}
-		
-	});
-}
-
-function use_mail()
-{
-	$("#msg_correo").remove();
-	var mail=$("#email").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
-	})
-	.done(function( msg )
-	{
-		if( msg != ''){
-			$("#correo2").html('<div id="msg_correo" class="alert alert-success fade in">'
-					
-						+'<i class="fa-fw fa fa-check"></i>'
-						+'<strong>Corecto </strong> Emial Correcto'
-					+'</div>')
-		}else{
-			$("#correo2").html('<div id="msg_correo" class="alert alert-danger fade in">'
-					
-						+'<i class="fa-fw fa fa-check"></i>'
-						+'<strong>Error </strong> Email no esta registrado en el sistema'
-					+'</div>')
-			}
-		
-		
-	});
-}
-function otra()
-{
-	if($("#otro:checked").val()=="on")
-	{
-		$("#b_persona").removeClass("hidden");
-		$("#afiliado_value").attr("name","afiliados");
-	}
-	else
-	{
-		$("#b_persona").addClass("hidden");
-		$("#afiliado_value").attr("name","");
-	}
-}
-function agregar(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
-function agregar_red(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
- $(function()
- {
- 	a = new Date();
-	año = a.getFullYear()-19;
-	$( "#datepicker" ).datepicker({
-	changeMonth: true,
-	numberOfMonths: 2,
-	maxDate: año+"-12-31",
-	dateFormat:"yy-mm-dd",
-	changeYear: true
-	});
-});
-
-function subred(id)
-{
-	$("#"+id).children(".quitar").attr('onclick','');
+	//$("#"+id).children(".quitar").attr('onclick','');
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/get_red_afiliar",
 		data: {id: id,
-				red: <?php echo $_GET['id']; ?>},
+				red: <?php echo $_GET['id_red']; ?>,profundidad:profundidad},
 	})
 	.done(function( msg )
 	{
@@ -362,24 +22,17 @@ function botbox(nombre, id, lado)
 {
 	bootbox.dialog({
 		message: '<div class="row fuelux">'
-		+'<form id="register" class="smart-form">'
+		+'<div id="spinner-div"></div><form id="register" class="smart-form">'
 			+'<fieldset>'
-			+'<legend>Información de cuenta</legend>'
+			+'<legend>¿ Esta seguro de la Afiliacion ?</legend>'
 				+'<section id="usuario" class="col col-6">'
-					+'<label class="input"> <i class="icon-prepend fa fa-user"></i>'
-						+'<input id="username" onkeyup="use_username()" required type="text" name="username" placeholder="Usuario">'
+					+'<label class="input">'
+						+'<input type="hidden" id="username" onkeyup="use_username()" value="<?php echo $_GET['username']?>" required type="text" name="username" placeholder="Usuario">'
 					+'</label>'
-					+'<div id="usuario2" > </div>'
 				+'</section>'
-				+'<section id="correo" class="col col-6">'
-					+'<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>'
-						+'<input id="email" onkeyup="use_mail()" required type="email" name="email" placeholder="Email">'
-					+'</label>'
-					+'<div id="correo2" > </div>'
-				+'</section>'
-				+'<input class="hide" type="text" name="red" id="red" value="<?php echo $_GET['id']; ?>" placeholder="">'
-				+'<input type="text" name="id" value="'+id+'" class="hide">'
-				+'<input type="text" name="lado" value="'+lado+'" class="hide">'
+				+'<input class="hide" type="hidden" name="red" id="red" value="<?php echo $_GET['id_red']; ?>" placeholder="">'
+				+'<input type="hidden" name="id" value="'+id+'" class="hide">'
+				+'<input type="hidden"" name="lado" value="'+lado+'" class="hide">'
 			+'</fieldset>'
 			+'<input type="button" class="btn btn-primary" value="Afiliar" onclick="Crear()">'
 		+'</form>',
@@ -388,36 +41,14 @@ function botbox(nombre, id, lado)
 	}
 
 function Crear() {
-	
-	var ids = new Array( 
-					
-				 	"#username",
-				 	"#email"
-				 	
-				 );
-				var mensajes = new Array( 
-					"Por favor ingresa un nombre de usuario",
-				 	"Por favor ingresa un correo"
-				 );
-
-				var idss=new Array(
-					"#username"
-				);
-				var mensajess=new Array(
-					"El nombre de usuario no puede contener espacios en blanco"
-				);
-				var validacion_=valida_espacios(idss,mensajess);
-				var validacion=valida_vacios(ids,mensajes);
-				if(validacion&&validacion_)
-				{
-					$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
+					setiniciarSpinner();
 					$.ajax({
 						type: "POST",
 						url: "/ov/perfil_red/AgregarUsuarioRed",
 						data: $('#register').serialize()
 					})
 					.done(function( msg1 ) {
-						
+						FinalizarSpinner();
 						$("#progress").attr('style','width: 100%');
 						bootbox.dialog({
 							message: msg1,
@@ -427,7 +58,12 @@ function Crear() {
 								label: "Ok!",
 								className: "btn-success",
 								callback: function() {
-									location.href="";
+										<?php if($this->tank_auth->get_user_id()<2){?>
+										location.href="/bo/usuarios/afiliar_existente";
+										<?php }else {?>
+										<?php ?>
+										location.href="/ov/perfil_red/afiliarExistente";
+										<?php }?>
 									}
 								}
 							}
@@ -437,111 +73,10 @@ function Crear() {
 						$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
 						
 					});//fin Done ajax
-				}
-				else
-				{
-					$.smallBox({
-				      title: "<h1>Atención</h1>",
-				      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
-				      color: "#C46A69",
-				      icon : "fa fa-warning fadeInLeft animated",
-				      timeout: 4000
-				    });
-				}
-		    
-		  
 
 pageSetUp();
 }
 
-function check_keyword()
-{
-	$("#msg_key").remove();
-	$("#key_").append('<i id="ajax_" class="icon-append fa fa-spinner fa-spin"></i>');
-
-	var keyword=$("#keyword").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key").remove();
-		$("#key").append("<p id='msg_key'>"+msg+"</msg>");
-		$("#ajax_").remove();
-	});
-}
-function check_keyword_co()
-{
-	$("#msg_key_co").remove();
-	$("#key_1").append('<i id="ajax_1" class="icon-append fa fa-spinner fa-spin"></i>');
-	var keyword=$("#keyword_co").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key_co").remove();
-		$("#key_co").append("<p id='msg_key_co'>"+msg+"</msg>");
-		$("#ajax_1").remove();
-	});
-}
-function check_keyword_red()
-{
-	$("#msg_key_red").remove();
-	var keyword=$("#keyword_red").val();
-	$("#key_2").append('<i id="ajax_2" class="icon-append fa fa-spinner fa-spin"></i>');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#key_red").append("<p id='msg_key_red'>"+msg+"</msg>");
-		$("#ajax_2").remove();
-	});
-}
-function check_keyword_red_co()
-{
-	$("#msg_key_red_co").remove();
-	var keyword=$("#keyword_red_co").val();
-	$("#key_3").append('<i id="ajax_3" class="icon-append fa fa-spinner fa-spin"></i>');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key_red_co").remove();
-		$("#key_red_co").append("<p id='msg_key_red_co'>"+msg+"</msg>");
-		$("#ajax_3").remove();
-	});
-}
-function codpos_red()
-{
-	var pais = $("#pais_red").val();
-	if(pais=="MEX")
-	{
-		var cp=$("#cp_red").val();
-		$.ajax({
-			type: "POST",
-			url: "/ov/perfil_red/cp_red",
-			data: {cp: cp},
-		})
-		.done(function( msg )
-		{
-			$("#colonia_red").remove();
-			$("#municipio_red").remove();
-			$("#estado_red").remove();
-			$("#dir_red").append(msg);
-		})
-	}
-}
 function detalles(id)
 {
 	$.ajax({
@@ -566,41 +101,29 @@ function detalles(id)
 		});
 	});
 }
-function InformarPremio(premio){
-	$.ajax({
-		type: "POST",
-		url: "ConsultarPremio",
-		data: {id: premio},
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Felicitaciones",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "btn btn-danger",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}
+
 </script>
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>
-					> <a href="/ov/perfil_red/TipoAfiliacion">Tipo de Afiliacion</a> >
-					<a href="/ov/perfil_red/afiliar?tipo=2">Redes</a> > <a
-					href="/ov/perfil_red/afiliarExistente?id=<?php echo $_GET['id']; ?>">Afiliar
-						Usuario</a> > Red
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<?php if($this->tank_auth->get_user_id()<2){?>
+				<span>
+					> <a href="/bo/comercial">Comercial</a> 
+					> <a href="/bo/comercial/red">Red</a>
+					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
+					> <a href="/bo/usuarios/afiliar_existente" > Afiliar Existente</a>
+					> Seleccionar Posicion
 				</span>
+				<?php }else {?>
+				<span>
+					> <a href="/ov/perfil_red/afiliar?tipo=1">Afiliar</a> 
+					> <a href="/ov/perfil_red/afiliarExistente"> Afiliar Existente</a>
+					> Seleccionar Posicion
+				</span>
+				<?php }?>
 			</h1>
 		</div>
 	</div>
@@ -614,19 +137,6 @@ function InformarPremio(premio){
 				<div class="jarviswidget" id="wid-id-1"
 					data-widget-editbutton="false" data-widget-custombutton="false"
 					data-widget-colorbutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i>
 						</span>
@@ -664,7 +174,7 @@ function InformarPremio(premio){
 														$key->img ? $img = $key->img : $img = "/template/img/empresario.jpg";
 														if ($key->debajo_de == $id) {
 															?>
-														<li id="<?=$key->id_afiliado?>"><a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>)" href="#"></a>
+														<li id="<?=$key->id_afiliado?>"><a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>,1)" href="#"></a>
 															<div onclick="detalles(<?=$key->id_afiliado?>)"
 																class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles
 															</div></li>
@@ -672,12 +182,22 @@ function InformarPremio(premio){
 														
 }
 													}
-													for($i = $aux; $i < $red_frontales [0]->frontal; $i ++) {
-														?>
-															<li><a
-															onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")'
-															href='javascript:void(0)'>Afiliar Aqui</a></li>
-														<? } ?>
+														
+														 if($red_frontales [0]->frontal==0){?>
+															<li>
+																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","0")'
+																href='javascript:void(0)'>Afiliar Aqui</a>
+															</li>
+														 <?php }else {
+														 	for($i = $aux; $i < $red_frontales [0]->frontal; $i ++) {
+														 		?>
+														 		<li><a
+														 			onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")'
+														 			href='javascript:void(0)'>Afiliar Aqui</a>
+														 		</li>
+														 		<? } ?>
+														 
+														 <?php }?>
 													</ul></li>
 											</ul>
 										</div>

@@ -70,13 +70,17 @@ class usuarios extends CI_Controller
 	
 		if(sizeof($cantidadRedes)==0)
 			redirect('/');
-			if(sizeof($cantidadRedes)==1)
-				redirect('/bo/usuarios/alta_red?id='.$cantidadRedes[0]->id);
+		if(sizeof($cantidadRedes)==1)
+			redirect('/bo/usuarios/alta_red?id='.$cantidadRedes[0]->id);
 	
-				$redes = $this->model_tipo_red->RedesUsuario($id);
-				$this->template->set("redes",$redes);
+		if($id>2)
+			$redes = $this->model_tipo_red->RedesUsuario($id);
+		else 
+			$redes=$this->model_tipo_red->listarActivos();
+		
+		$this->template->set("redes",$redes);
 	
-				$this->template->build('website/bo/comercial/red/redes');
+		$this->template->build('website/bo/comercial/red/redes');
 	}
 	
 	function alta_red()
@@ -271,6 +275,84 @@ class usuarios extends CI_Controller
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/AfiliarExistente');
+	}
+	
+	function seleccionarRedParaAfiliarAfiliadoExistente(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$NODO_RAIZ=1;
+		$NODO_EMPRESA=2;
+		
+		$id              = $this->tank_auth->get_user_id();
+		
+		if($id==$NODO_RAIZ)
+			$id=$NODO_EMPRESA;
+		
+		if($this->general->isActived($id)!=0){
+			redirect('/ov/compras/carrito');
+		}
+		
+		$id_red          = $_GET['id_red'];
+		
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$style           = $this->general->get_style($id);
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		
+		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
+		
+		if($id>2){
+			$estaEnRed 	 = $this->model_tipo_red->validarUsuarioRed($id,$id_red);
+		
+			if(!$estaEnRed)
+				redirect('/');
+		
+		}
+		
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+		
+		$image 			 = $this->model_perfil_red->get_images($id);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
+		
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("pais",$pais);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("red_frontales",$red_forntales);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		if($id>2){
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		}else{
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		}
+		$this->template->build('website/ov/perfil_red/afiliar_red_existente');
 	}
 	
 	function altaTipoDeUsuarioAcceso(){

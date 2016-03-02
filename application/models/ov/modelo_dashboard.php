@@ -14,7 +14,7 @@ class modelo_dashboard extends CI_Model
 	}
 	function get_red($id)
 	{
-		$q=$this->db->query('select id_red, debajo_de as id_usuario from afiliar where id_afiliado ='.$id.' and directo=1');
+		$q=$this->db->query('select id_red, directo id_usuario from afiliar where id_afiliado ='.$id.'');
 		$q=$q->result();
 		return $q;
 
