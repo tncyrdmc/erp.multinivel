@@ -69,20 +69,20 @@
 								 <input required type="url" name="web" value="<?=$empresa[0]->web;?>">
 							 </label>
 						 </section>
-						 <section class="col col-3">Regimen fiscal
+						 <!--  <section class="col col-3">Regimen fiscal
 				             <label class="select">
 				                 <select class="custom-scroll" name="regimen">
-				                     <?foreach ($regimen as $key){?>
-				                     	<?php if($key->id_regimen == $empresa[0]->regimen){?>
-				                         <option selected value="<?=$key->id_regimen?>">
-				                             <?=$key->abreviatura." ".$key->descripcion?></option>
-				                              <?php }else{?>
-											<option value="<?=$key->id_regimen?>">
-				                             <?=$key->abreviatura." ".$key->descripcion?></option>
-				                         <?}}?>
+				                     <?//foreach ($regimen as $key){?>
+				                     	<?php //if($key->id_regimen == $empresa[0]->regimen){?>
+				                         <option selected value="<?//$key->id_regimen?>">
+				                             <?//$key->abreviatura." ".$key->descripcion?></option>
+				                              <?php //}else{?>
+											<option value="<?//$key->id_regimen?>">
+				                             <?//$key->abreviatura." ".$key->descripcion?></option>
+				                         <?//}}?>
 				                 </select>
 				             </label>
-				         </section>
+				         </section>-->
 					 </fieldset>
 					 <fieldset>
 						 <legend>Dirección de la empresa</legend>
@@ -107,13 +107,13 @@
 								 <section class="col col-3">
 									 <label class="input">
 										 Código postal
-										 <input required  type="text" id="postal" name="postal" value="<?=$empresa[0]->postal;?>">
+										 <input type="text" id="postal" name="postal" value="<?=$empresa[0]->postal;?>">
 									 </label>
 								 </section>
 								 <section class="col col-3">
 									 <label class="input">
 										 Dirección domicilio
-										 <input required type="text" name="direccion" value="<?=$empresa[0]->direccion;?>">
+										 <input type="text" name="direccion" value="<?=$empresa[0]->direccion;?>">
 									 </label>
 								</section>
 								<section class="col col-3">

@@ -18,7 +18,8 @@ class cgeneral extends CI_Controller
 		$this->load->model('model_cat_grupo_soporte_tecnico');
 		$this->load->model('model_archivo_soporte_tecnico');
 		$this->load->model('model_user_webs_personales');
-		
+			$this->load->model('bo/model_admin');
+			$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_soporte_tecnico');
 		$this->load->model('ov/model_cabecera');
 		
@@ -558,6 +559,31 @@ class cgeneral extends CI_Controller
 		}
 		$mensaje=$this->modelo_general->get_sms();
 		echo $mensaje[0]->mensaje;
+	}
+	function autoresponder(){
+if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+	
+		$style=$this->modelo_dashboard->get_style($id);
+		//$datos_banner=$this->model_admin->datos_banner();
+			$img = $this->model_admin->img_banner();
+		$this->template->set("style",$style);
+	
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+		$this->template->set("img",$img);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/ov/general/view_autoresponder');
+
 	}
 	
 	

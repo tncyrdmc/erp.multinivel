@@ -33,6 +33,7 @@
 									<label class="select">
 										<select id="tipo-reporte">
 											<option value="0" selected="" disabled="">Tipo de reporte</option>
+											<option value="9">Ver mis Directos</option>
 											<option value="6">Ver consecutivo de mi red</option>
 											<!--<option value="1">Afiados nuevos</option>-->
 											<!--<option value="7">Ver compras de mi red</option>-->
@@ -360,214 +361,42 @@
 		</script>
 		
 		<script type="text/javascript">
+
+			function validarsifecha(tipo,inicio,fin){
+				var tiposfecha = [2,3,4,5,7,8];
+				for (i = 0; i < tiposfecha.length; i++)  {
+					if(tipo == tiposfecha[i]){
+						return (inicio == '' || fin == '') ? true : false;						
+					}			
+				}					
+			}
 		
 			$("#genera-reporte").click(function()
 			{
-				tipo=$("#tipo-reporte").val();
-				switch(tipo)
-				{
-					case '1':
-						$("#nuevos-afiliados").show();
-						$.ajax({
-					         type: "post",
-					         url: "reporte_afiliados",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-								setTableConfig();
-							}
-						});
-						
-						break;
-					case '2':
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
+				
+				var tipo=$("#tipo-reporte").val();
+				var inicio=$("#startdate").val();
+				var fin=$("#finishdate").val();
+				if (!validarsifecha(tipo,inicio,fin)){
+					$("#nuevos-afiliados").show();
+					iniciarSpinner();
+					$.ajax({
+				         type: "post",
+				         url: "reportes_tipo",
+				         data: {
+					         	tipo : tipo,
+					         	inicio :inicio,
+					         	fin :fin
+					         },
+						success: function( msg )
 						{
-							alert('Introduzca fecha de inicio');
+						$("#reporte_div").html(msg);
+						FinalizarSpinner();
 						}
-						else
-						{
-							if(fin=='')
-							{
-								alert('Introduzca fecha de fin');
-							}
-							else
-							{
-							/*	$("#nuevos_afiliados").show();
-								var datos={'inicio':inicio,'fin':fin};
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras_usr",
-									success: function( msg )
-									{
-								});
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras_usr_well",
-									success: function( msg )
-									{
-										$("#well-print-usr").html(msg);
-									}
-								});
-							}*/
-						}	
-						}
-						
-						
-						break;
-					case '3':
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
-						{
-							alert('Introduzca fecha de inicio');
-						}
-						else
-						{
-							if(fin=='')
-							{
-								alert('Introduzca fecha de fin');
-							}
-							else
-							{
-								$("#nuevos_afiliados").show();
-								var datos={'inicio':inicio,'fin':fin};
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras",
-									success: function( msg )
-									{
-										$("#reporte_div").html(msg);
-								    
-									}
-								});
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras_red_well",
-									success: function( msg )
-									{
-										$("#well-print-red").html(msg);
-									}
-								});
-							}
-						}	
-						
-						
-						break;
-					case '4':
-						$("#nuevos-afiliados").show();
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if (inicio == '' || fin == ''){
-							alert('Introduzca las fechas para buscar');
-							return 0;
-						}
-						$.ajax({
-					         type: "post",
-					         data: {inicio : inicio, fin : fin},
-					         url: "reporte_ventas_web_personal",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-							}
-						});
-						break;
-					case '5':{
-						$("#well-print-usr").hide();
-						$("#row-print-usr").hide();
-						$("#well-print-af").hide();
-						$("#row-print-af").hide();
-						$("#well-print-web").hide();
-						$("#row-print-web").hide();
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if (inicio == '' || fin == ''){
-							alert('Introduzca las fechas para buscar');
-							return 0;
-						}
-						iniciarSpinner();
-						$.ajax({
-							type: "POST",
-							data: {inicio : inicio, fin : fin},
-							url: "/ov/compras/ReportePagosBanco"
-						})
-						.done(function( msg ) {
-							
-							FinalizarSpinner();
-							$("#reporte_div").html(msg);
-
-							});
-						}
-					break;
-
-					case '6':
-						$("#nuevos-afiliados").show();
-						iniciarSpinner();
-						$.ajax({
-					         type: "post",
-					         url: "reporte_afiliados_todos",
-							success: function( msg )
-							{
-							$("#reporte_div").html(msg);
-							FinalizarSpinner();
-							}
-						});
-						break;
-
-					case '7':
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if (inicio == '' || fin == ''){
-							alert('Introduzca las fechas para buscar');
-							return 0;
-						}
-						$("#nuevos-afiliados").show();
-						iniciarSpinner();
-						$.ajax({
-					         type: "post",
-					         data: {inicio : inicio, fin : fin},
-					         url: "reporte_compras_afiliados_todos",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-								setTableConfig();
-								FinalizarSpinner();
-							}
-						});
-						
-						break;
-
-					case '8':
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if (inicio == '' || fin == ''){
-							alert('Introduzca las fechas para buscar');
-							return 0;
-						}
-						$("#nuevos-afiliados").show();
-						iniciarSpinner();
-						$.ajax({
-					         type: "post",
-					         data: {inicio : inicio, fin : fin},
-					         url: "reporte_compras_personales",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-								FinalizarSpinner();
-							}
-						});
-						
-						break;
-						
-					default:
-						break;
+					});
+				}else{
+					alert('Introduzca las fechas para buscar');
 				}
-
 			
 			});
 
@@ -618,62 +447,20 @@
 			function reporte_excel_comprar_usr()
 			{
 				var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
-						{
-							alert('Introduzca fecha de inicio');
-						}
-						else
-						{
-							if(fin=='')
-							{
-								alert('Introduzca fecha de fin');
-							}
-							else
-							{
-								$("#nuevos_afiliados").show();
-								var datos={'inicio':inicio,'fin':fin};
-								$.ajax({
-							         type: "get",
-							         url: "reporte_compras_excel/"+inicio+fin,
-								});
-							}
-						}	
-			}
-
-			function iniciarSpinner(){
-				
-				var opts = {
-						  lines: 12 // The number of lines to draw
-						, length: 28 // The length of each line
-						, width: 14 // The line thickness
-						, radius: 42 // The radius of the inner circle
-						, scale: 1 // Scales overall size of the spinner
-						, corners: 1 // Corner roundness (0..1)
-						, color: '#3276B1' // #rgb or #rrggbb or array of colors
-						, opacity: 0.25 // Opacity of the lines
-						, rotate: 0 // The rotation offset
-						, direction: 1 // 1: clockwise, -1: counterclockwise
-						, speed: 1 // Rounds per second
-						, trail: 60 // Afterglow percentage
-						, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-						, zIndex: 2e9 // The z-index (defaults to 2000000000)
-						, className: 'spinner' // The CSS class to assign to the spinner
-						, top: '50%' // Top position relative to parent
-						, left: '50%' // Left position relative to parent
-						, shadow: false // Whether to render a shadow
-						, hwaccel: true // Whether to use hardware acceleration
-						, position: 'absolute' // Element positioning
-						}
-						
-						var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
+				var fin=$("#finishdate").val();
+				if(inicio==''||fin=='')
+				{
+					alert('Introduzca las fechas para buscar');
+				}else{
+					$("#nuevos_afiliados").show();
+					var datos={'inicio':inicio,'fin':fin};
+					$.ajax({
+						 type: "get",
+						 url: "reporte_compras_excel/"+inicio+fin,
+					});
 				}
-
-			function FinalizarSpinner(){
-				
-				$("#spinner2").html('');
-			}
-
+			}	
+			
 			function factura(id) {
 				iniciarSpinner();
 				$.ajax({

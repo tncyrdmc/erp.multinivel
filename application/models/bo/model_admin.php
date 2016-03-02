@@ -146,17 +146,25 @@ class model_admin extends CI_Model
 	}
 		function modificar_banner($data){
 		$nombre_imagen="";
-			foreach ( $data as $key ) {
-			$nombre_imagen=$key['file_name'];
-			}
+			//foreach ( $data as $key ) {
+			//$nombre_imagen=$key['file_name'];
+			//}
 			$this->db->query('delete from banner where id=1');
 			$dato_banner= array(
 				"id"=>1,
 				"titulo"=>$_POST['titulo'],
 				"descripcion"=>$_POST['descripcion'],
-				"nombre_banner"=>$nombre_imagen
+				"nombre_banner"=>$data
 				);
 			$this->db->insert("banner",$dato_banner);
+	}
+
+	function banner_modificacion(){
+		//$this->db->set('id', 1 );
+		$this->db->set('titulo', $_POST['titulo']);
+		$this->db->set('descripcion', $_POST['descripcion']);
+		$this->db->where('id', 1);
+		$this->db->update('banner');
 	}
 	function img_banner(){
 		$q2=$this->db->query("select * from banner where id=1");
@@ -174,12 +182,17 @@ class model_admin extends CI_Model
 	
 	function kill_afiliado($id,$red){
 		//echo "dentro de admin kill ";		
+		$i=0;
 		$redes_afiliado = $this->model_perfil_red->ConsultarRedAfiliado($id);	
-		//$red = ($red) ? $red : $redes_afiliado[0]->id_red;
-		//foreach($redes_afiliado as $red_afiliado){
+		if ($red==0){
+			foreach($redes_afiliado as $red_afiliado){
 			//echo "red: ".$red_afiliado->id_red." ";
+				 (!$this->flowCompress($id,$red_afiliado->id_red)) ? $i++ : 0;
+			}
+			return ($i==0) ? true : false;
+		}else {
 			return ($this->flowCompress($id,$red)) ? true : false;
-		//}
+		}		
 	}
 	
 	function flowCompress($id,$red){
@@ -214,7 +227,7 @@ class model_admin extends CI_Model
 				return $padre;
 			}else{
 				$padre = $this->model_perfil_red->ConsultarPadre($padre , $red);
-				$frontales = count($this->model_perfil_red->ConsultarHijos($p,$red));
+				$frontales = count($this->model_perfil_red->ConsultarHijos($padre,$red));
 			}
 		}
 		//echo "padre : ".$padre." ";
@@ -556,11 +569,11 @@ where(a.id_pais=b.Code)");
 	{
 		$dato=array(
 				"id_tributaria"     => $_POST['id_tributaria'],
-				"regimen"   		=> $_POST['regimen'],
+				//"regimen"   		=> $_POST['regimen'],
 				"nombre"     		=> $_POST['nombre'],
 				"web"       		=> $_POST['web'],
-				"postal"         	=> $_POST['postal'],
-				"direccion"      	=> $_POST['direccion'],
+				"postal"         	=> $_POST['postal'] ? $_POST['postal'] : "No define",
+				"direccion"      	=> $_POST['direccion'] ? $_POST['direccion'] : "No define",
 				"ciudad"         	=> $_POST['ciudad'] ? $_POST['ciudad'] : "No define",
 				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
 				"pais"          	=> $_POST['pais'],
