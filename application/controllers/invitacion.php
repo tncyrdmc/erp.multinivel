@@ -15,6 +15,13 @@ class Invitacion extends CI_Controller
 		$this->load->model('cemail');
 	}
 
-	
+	function index(){
+		
+		$token	= $this->uri->segment(2);
+		$key = $this->general->get_temp_invitacion_ACT($token);
+		if ($key){
+			//aqui voy
+		}
+	}
 	
 }

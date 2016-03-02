@@ -724,9 +724,29 @@ class cgeneral extends CI_Controller
 		$red = $_POST['red'];
 		$debajo_de = $_POST['debajo_de'];
 		$lado = $_POST['lado'];
-		$email = $_POST['email'];		
+		$email = $_POST['email'];	
+		$id = $this->tank_auth->get_user_id();
 		
-		echo ($this->general->new_invitacion($email,$red,$debajo_de,$lado)) ? "Temp Creado" : "Temp no creado" ;
+		$token = $this->general->new_invitacion($email,$red,$debajo_de,$lado);
+		
+		$banner = $this->model_admin->img_banner(); 
+		$sponsor = array(
+				'name' => $this->model_perfil_red->get_nombres($id),
+				'email' => $this->model_perfil_red->get_email($id),
+				'tel' => $this->model_perfil_red->telefonos_group($id)
+		);
+		
+		$data = array(
+				'token' => $token,
+				'email' => $email,
+				'b_img' => $banner[0]->nombre_banner,
+				'b_desc' => $banner[0]->descripcion,
+				'sponsor_name' => $sponsor['name'],
+				'sponsor_email' => $sponsor['email'],
+				'sponsor_tel' => $sponsor['tel']
+		);
+		
+		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito" : "Error al Enviar Invitación";
 		
 	}
 	

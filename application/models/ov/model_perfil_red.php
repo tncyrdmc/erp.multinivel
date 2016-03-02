@@ -71,6 +71,18 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
 		return $q->result();
 	}
+	function get_email($id)
+	{
+		$q=$this->db->query('select email from users where id='.$id);
+		$q2 = $q->result();
+		return $q2[0]->email;
+	}
+	function get_nombres($id)
+	{
+		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
+		$q2 = $q->result();
+		return $q2[0]->nombre." ".$q2[0]->apellido;
+	}
 	function afiliar_nuevo($id)
 	{
 
@@ -510,6 +522,12 @@ order by (U.id);");
 	{
 		$q=$this->db->query("select (select descripcion from cat_tipo_tel A where A.id_tipo_tel=B.id_tipo_tel) tipo, numero from cross_tel_user B where id_user=".$id);
 		return $q->result();
+	}
+	function telefonos_group($id)
+	{
+		$q=$this->db->query("select group_concat(numero) as tels from cross_tel_user B where id_user=".$id." order by B.id_tipo_tel");
+		$q2 = $q->result();
+		return $q2[0]->tels;
 	}
 	function edad($id)
 	{

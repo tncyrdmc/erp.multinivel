@@ -170,6 +170,7 @@ class model_admin extends CI_Model
 		$q2=$this->db->query("select * from banner where id=1");
 			return $q2->result();
 	}
+	
 	function get_tipo_proveedor()
 	{
 		$q=$this->db->query("select * from cat_tipo_proveedor where estatus ='ACT'");

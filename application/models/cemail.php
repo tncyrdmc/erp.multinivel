@@ -33,6 +33,8 @@ class Cemail extends CI_Model
 		$this->email->message($this->load->view('email/template-html', $message, TRUE));
 		$this->email->set_alt_message($this->load->view('email/template-txt', $message, TRUE));
 		$this->email->send();
+		
+		return true;
 	}
 	
 	function setMessage($type,$data){
@@ -82,7 +84,9 @@ class Cemail extends CI_Model
 				"PAGO DE SOLICITUD DE DINERO", //cobros
 				"CONFIRMACIÓN DE PAGO POR BANCO", //cuentas-cobrar
 				"RECUPERACIÓN DE CONTRASEÑA", //forgot password
-				"CONFIRMACIÓN DE NUEVA CONTRASEÑA" //reset password
+				"CONFIRMACIÓN DE NUEVA CONTRASEÑA", //reset password
+				"INVITACION AL MULTINIVEL", //invitacion
+				"BANNER PROMOCIONAL" //autoresponder
 		);
 		
 		return $q[$type]; 		
@@ -96,7 +100,9 @@ class Cemail extends CI_Model
 				"Hola ".$data['username'].", Su peticion de pago esta siendo procesada.", //cobros
 				"Hola ".$data['username'].", Su pago se ha recibido.", //cuentas-cobrar
 				"Hi, ".$data['username'].".", //forgot password
-				"Tu nueva contraseña en ".$data['site_name']."." //reset password
+				"Tu nueva contraseña en ".$data['site_name'].".", //reset password
+				"Hola, ".$data['email'].", Te han invitado a afiliarte.", //invitacion
+				"Gusto en Conocerte, ".$data['email']."." //autoresponder
 		);
 	
 		return $q[$type];
@@ -109,7 +115,8 @@ class Cemail extends CI_Model
 				site_url('/auth/login/'),
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
-				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : '')
+				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''),				
+				site_url(($data['token']) ? '/invitacion/'.$data['token'] : '')
 		);
 		
 		$validar = array (
@@ -124,7 +131,8 @@ class Cemail extends CI_Model
 				'titular'	=>($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "",
 				'clave'		=>($data['clave']) ? "CLABE: ".$data['clave'] : "",
 				'monto'		=>($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
-				'valor'		=>($data['valor']) ? "Valor de pago: $ ".$data['valor'] : ""
+				'valor'		=>($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
+				'sponsor_tel'	=>($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: $ ".$data['sponsor_tel'] : ""
 		);
 		
 		$welcome = '<p class="callout">
@@ -212,6 +220,19 @@ class Cemail extends CI_Model
 						Tu correo: '.$data['email'].'<br />
 						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>';
 		
+		$invitacion = '<img src="/media/Empresa/"'.$data['b_img'].'" alt="" width="100%"/> <br/><hr/>
+						<p class="lead">'.$data['b_desc'].'</p>
+						<p class="callout">
+								Para afiliarse al sitio de clic <a class="btn" href="'.$sitios[5].'">Aqui!</a>
+						</p><!-- /Callout Panel -->
+						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador
+						<a href="'.$sitios[5].'"></a>'.$sitios[5].'</p><br /><br />
+						<h4>Datos del Sponsor</h4><br />
+						<p>Nombre Completo: '.$data['sponsor_name'].'<br /></p>
+						<p>Correo: '.$data['sponsor_email'].'<br /></p>
+						<p>'.$validar['sponsor_tel'].'<br /></p>';
+		
+		
 		$q = array(			//welcome
 						$welcome, 
 							//activate
@@ -225,7 +246,9 @@ class Cemail extends CI_Model
 							//forgot password 
 						$forgot_password, 
 							//reset password
-						$reset_password
+						$reset_password, 
+							//invitacion
+						$invitacion
 		);
 	
 		return $q[$type];
