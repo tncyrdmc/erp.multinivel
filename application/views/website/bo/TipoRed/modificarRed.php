@@ -67,7 +67,8 @@ function enviar_datos(){
 		type: "POST",
 		url: "/bo/tipo_red/actualizar_red",
 		data: $('#redes').serialize()
-	}).done(function( msg ) {				
+	}).done(function( msg ) {	
+		FinalizarSpinner();			
 		bootbox.dialog({
 			message: msg,
 			title: 'ATENCION',
@@ -77,7 +78,7 @@ function enviar_datos(){
 					className: "btn-success",
 					callback: function() {
 							location.href="/bo/tipo_red/mostrar_redes";
-							FinalizarSpinner();
+							
 					}
 				}
 			}

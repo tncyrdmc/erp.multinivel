@@ -187,5 +187,29 @@ class general extends CI_Model
 		return true;
 	}
 	
+	function get_temp_invitacion($token)
+	{
+		$q=$this->db->query("select * from temp_invitacion where token = '".$token."'");
+		$token = $q->result();
+		return $token;
+	}
+	
+	function new_invitacion($email,$red,$debajo_de,$lado){
+		
+		$time = time();
+		$token = md5($time."~".$email."~".$red."~".$debajo_de."~".$lado);	
+		
+			$dato=array(
+					"token" =>	$token,
+					"email" =>	$email,
+					"red" =>	$red,
+					"padre" =>	$debajo_de,
+					"lado" =>	$lado,
+			);
+			$this->db->insert("temp_invitacion",$dato);
+		
+		return ($this->get_temp_invitacion($token)) ?  true : false;
+		
+	}
 
 }

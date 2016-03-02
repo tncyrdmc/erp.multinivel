@@ -12,8 +12,12 @@ class cgeneral extends CI_Controller
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/modelo_general');
+		$this->load->model('general');
 		$this->load->model('ov/general');
+		$this->load->model('ov/model_perfil_red');
+		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
+		$this->load->model('model_planes');
 		$this->load->model('model_datos_generales_soporte_tecnico');
 		$this->load->model('model_cat_grupo_soporte_tecnico');
 		$this->load->model('model_archivo_soporte_tecnico');
@@ -24,7 +28,7 @@ class cgeneral extends CI_Controller
 		$this->load->model('ov/model_cabecera');
 		
 		$this->load->model('ov/model_web_personal_reporte');
-		
+		$this->load->model('cemail');
 
 	}
 	function soporte_tecnico_ver_redes()
@@ -561,7 +565,7 @@ class cgeneral extends CI_Controller
 		echo $mensaje[0]->mensaje;
 	}
 	function autoresponder(){
-if (!$this->tank_auth->is_logged_in())
+		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
@@ -580,11 +584,150 @@ if (!$this->tank_auth->is_logged_in())
 		$this->template->set("img",$img);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
-		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/general/view_autoresponder');
 
 	}
 	
+	function invitacion_afiliar()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		
+		$id = $this->tank_auth->get_user_id();
+		$style = $this->general->get_style($id);
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+	
+	
+		if($id<=2)
+			$cantidadRedes = $this->model_tipo_red->cantidadRedes();
+			else
+				$cantidadRedes = $this->model_tipo_red->cantidadRedesUsuario($id);
+	
+				if(sizeof($cantidadRedes)==0)
+					redirect('/');
+					if(sizeof($cantidadRedes)==1)
+						redirect('/ov/general/invitar_red?id='.$cantidadRedes[0]->id);
+	
+						$redes = $this->model_tipo_red->RedesUsuario($id);
+						$this->template->set("redes",$redes);
+	
+						$this->template->build('website/ov/general/invitar/redes');
+	}
+	
+	function invitar_red()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id              = $this->tank_auth->get_user_id();
+	
+		
+	
+		$id_red          = $_GET['id'];
+	
+		$usuario         = $this->model_perfil_red->datos_perfil($id);
+		$telefonos       = $this->model_perfil_red->telefonos($id);
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$style           = $this->general->get_style($id);
+		$dir             = $this->model_perfil_red->dir($id);
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+	
+		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
+	
+		if($id>2){
+			$estaEnRed 	 = $this->model_tipo_red->validarUsuarioRed($id,$id_red);
+	
+			if(!$estaEnRed)
+				redirect('/');
+	
+		}
+	
+		$premium         = $red[0]->premium;
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+		$planes 		 = $this->model_planes->Planes();
+	
+		$image 			 = $this->model_perfil_red->get_images($id);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red );
+	
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("pais",$pais);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("red_frontales",$red_forntales);
+		$this->template->set("premium",$premium);
+		$this->template->set("planes",$planes);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/general/invitar/afiliar_red');
+	}
+	
+	function nuevo_invitado(){
+		//echo "dentro de botbox";	
+		
+		//$datos_banner=$this->model_admin->datos_banner();
+		$img = $this->model_admin->img_banner();
+	
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+		$this->template->set("img",$img);
+		$this->template->set("debajo_de",$_POST['id_debajo']);
+		$this->template->set("lado",$_POST['lado']);
+		$this->template->set("red",$_POST['red']);
+		
+		$this->template->build('website/ov/general/invitar/ver');
+		
+	}
+	
+	function enviar_invitacion(){
+		
+		//echo "dentro de enviar";
+		
+		$red = $_POST['red'];
+		$debajo_de = $_POST['debajo_de'];
+		$lado = $_POST['lado'];
+		$email = $_POST['email'];		
+		
+		echo ($this->general->new_invitacion($email,$red,$debajo_de,$lado)) ? "Temp Creado" : "Temp no creado" ;
+		
+	}
 	
 }
