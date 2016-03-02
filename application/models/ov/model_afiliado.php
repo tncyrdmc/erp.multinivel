@@ -611,13 +611,12 @@ class model_afiliado extends CI_Model{
 	function AgregarAfiliadoRed($id_debajo, $red, $usuario){
 		$mi_red= $red;
 		$id = $this->obtenrIdUserby($usuario);
-<<<<<<< HEAD
+
 		if(!$id){
 			echo "No se pudo hacer la afiliacion.";
 			return false;
 		}
-=======
->>>>>>> e7fb95db965b467ffc0699b37514e00bc062f8da
+
 		$lado = 1;
 		if(!isset($_POST['lado']))
 			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
