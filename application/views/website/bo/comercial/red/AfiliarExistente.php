@@ -5,12 +5,19 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<?php if($this->tank_auth->get_user_id()<2){?>
 				<span>
 					> <a href="/bo/comercial">Comercial</a> 
 					> <a href="/bo/comercial/red">Red</a>
 					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
 					> Afiliar Existente
 				</span>
+				<?php }else {?>
+				<span>
+					> <a href="/ov/perfil_red/afiliar?tipo=1">Afiliar</a> 
+					> Seleccion de Red
+				</span>
+				<?php }?>
 			</h1>
 		</div>
 	</div>
@@ -65,7 +72,7 @@
 															<legend>Información de cuenta</legend>
 															<section class="col col-4">
 																<label class="input">RED
-																	<select class="form-control input-sm" name="red">
+																	<select class="form-control input-sm" id="red" name="red" onchange="use_username()">
 																		<?php foreach ($redes as $red) { ?>
 																			<option value="<?php echo $red->id; ?>"><?php echo $red->nombre; ?></option>
 																		<?php }?>
@@ -80,23 +87,13 @@
 																</label>
 																<div id="usuario2"></div>
 															</section>
-															<section id="correo" class="col col-4">
-																Email
-																<label class="input"> <i
-																	class="icon-prepend fa fa-envelope-o"></i> <input
-																	id="email" onkeyup="use_mail()" required type="email"
-																	name="email" placeholder="Email">
-																</label>
-																<div id="correo2"></div>
-															</section>
-															
 															<input type="text" name="id" value="<?php echo $id; ?>" class="hide">
 															
 														</fieldset>
 														<div class="col col-5">
 														</div>
 														<div class="col col-2 col-xs-12">
-															<input type="button" class="btn btn-primary btn-block" value="Afiliar" onclick="Crear()">
+															<input id="boton" disabled type="button" class="btn btn-primary btn-block" value="Afiliar" onclick="Crear()">
 														</div>
 													</form>
 												</div>
@@ -273,35 +270,9 @@ function Crear() {
 				var validacion=valida_vacios(ids,mensajes);
 				if(validacion&&validacion_)
 				{
-					iniciarSpinner();
-					$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
-					$.ajax({
-						type: "POST",
-						url: "/ov/perfil_red/AgregarUsuarioRed",
-						data: $('#register').serialize()
-					})
-					.done(function( msg1 ) {
-						
-						$("#progress").attr('style','width: 100%');
-						bootbox.dialog({
-							message: msg1,
-							title: "Atención",
-							buttons: {
-								success: {
-								label: "Ok!",
-								className: "btn-success",
-								callback: function() {
-									location.href="";
-									FinalizarSpinner();
-									}
-								}
-							}
-						});
-						
-						var email=$("#email").val();
-						$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-						
-					});//fin Done ajax
+					var username=$("#username").val();
+					var id_red=$("#red").val();
+					location.href='/bo/usuarios/seleccionarRedParaAfiliarAfiliadoExistente?username='+username+'&id_red='+id_red;
 				}
 				else
 				{
@@ -319,101 +290,6 @@ function Crear() {
 pageSetUp();
 }
 
-/**$(document).ready(function() {
-
-	// fuelux 
-
-			  var wizard = $('.wizard').wizard();
-
-			  wizard.on('finished', function (e, data) {
-
-			  	var ids = new Array( 
-						"#nombre",
-					 	"#apellido",
-					 	"#datepicker",
-					 	"#cp",
-					 	"#username",
-					 	"#email",
-					 	"#password",
-					 	"#confirm_password"
-					 	
-					 );
-					var mensajes = new Array( 
-						"Por favor ingresa tu nombre",
-					 	"Por favor ingresa tu apellido",
-					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa tu código postal",
-					 	"Por favor ingresa un nombre de usuario",
-					 	"Por favor ingresa un correo",
-					 	"Por favor ingresa una contraseña",
-					 	"Por favor confirma tu contraseña"
-					 );
-
-					var idss=new Array(
-						"#username"
-					);
-					var mensajess=new Array(
-						"El nombre de usuario no puede contener espacios en blanco"
-					);
-					var validacion_=valida_espacios(idss,mensajess);
-					var validacion=valida_vacios(ids,mensajes);
-					if(validacion&&validacion_)
-					{
-						$( ".steps" ).slideUp();
-						$( ".steps" ).remove();
-						$( ".actions" ).slideUp();
-						$( ".actions" ).remove();
-						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
-						
-						$.ajax({
-							type: "POST",
-							url: "/auth/register",
-							data: $('#register').serialize()
-						})
-						.done(function( msg1 ) {
-						
-							$("#progress").attr('style','width: 40%');
-							var email=$("#email").val();
-							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-							$.ajax({
-								type: "POST",
-								url: "/bo/usuarios/afiliar_nuevo",
-								data: $('#checkout-form').serialize()
-								})
-								.done(function( msg ) {
-									
-									$("#progress").attr('style','width: 100%');
-									bootbox.dialog({
-										message: msg,
-										title: "Atención",
-										buttons: {
-											success: {
-											label: "Ok!",
-											className: "btn-success",
-											callback: function() {
-												location.href="";
-												}
-											}
-										}
-									});
-								});
-						});//fin Done ajax
-					}
-					else
-					{
-						$.smallBox({
-					      title: "<h1>Atención</h1>",
-					      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
-					      color: "#C46A69",
-					      icon : "fa fa-warning fadeInLeft animated",
-					      timeout: 4000
-					    });
-					}
-			    
-			  });
-	
-	pageSetUp();
-})*/
 $("#remove_step").click(function() {
 	$("#tipo_plan").attr("name","tipo_plan");
 	$('.wizard').wizard('selectedItem', {
@@ -488,23 +364,27 @@ function use_username()
 {
 	$("#msg_usuario").remove();
 	var username=$("#username").val();
+	var red=$("#red").val();
 	$.ajax({
 		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
+		url: "/ov/perfil_red/use_username_red",
+		data: {username: username,red :red},
 	})
 	.done(function( msg )
-	{
-		if( msg != ''){
+	{	
+
+		if( msg == ''){
 			$("#usuario2").html('<div id="msg_usuario" class="alert alert-success fade in">'
 						+'<i class="fa-fw fa fa-check"></i>'
 						+'<strong>Corecto </strong> Username Correcto'
 					+'</div>')
+			$('#boton').removeAttr("disabled");
 		}else{
 			$("#usuario2").html('<div id="msg_usuario" class="alert alert-danger fade in">'
 						+'<i class="fa-fw fa fa-check"></i>'
-						+'<strong>Error </strong> Username no esta registrado en el sistema'
+						+'<strong>Error </strong> Username no esta registrado en el sistema o Ya esta registrado en la red.'
 					+'</div>')
+			$('#boton').attr('disabled','disabled');
 			}
 		
 	});

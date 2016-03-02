@@ -28,6 +28,14 @@
 					</a>
 				</div>
 			<?php } ?>
+			<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+						<a href="afiliarExistente">
+							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#2c3640">
+								<i class="fa fa-user fa-3x"></i>
+								<h5>Afiliado Existente</h5>
+							</div>	
+						</a>
+					</div>
 </fieldset>
 </div>
 </div>

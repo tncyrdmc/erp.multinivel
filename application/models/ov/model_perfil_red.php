@@ -66,6 +66,13 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query('select id from users where email like "'.$_POST['mail_important'].'"');
 		return $q->result();
 	}
+	
+	function get_id_by_username($username)
+	{
+		$q=$this->db->query('select id from users where username = "'.$username.'"');
+		return $q->result();
+	}
+	
 	function get_name($id)
 	{
 		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
@@ -377,10 +384,10 @@ class model_perfil_red extends CI_Model
 		return $q->result();
 	}
 	
-	function get_cantidad_de_frontales($id_afiliado)
+	function get_cantidad_de_frontales($id_afiliado,$id_red)
 	{
 	
-		$q=$this->db->query("SELECT count(*) as frontales FROM afiliar where debajo_de=".$id_afiliado." order by lado");
+		$q=$this->db->query("SELECT count(*) as frontales FROM afiliar where debajo_de=".$id_afiliado." and id_red=".$id_red." order by lado");
 		return $q->result();
 	}
 	
@@ -498,7 +505,13 @@ order by (U.id);");
 	
 	function use_username()
 	{
-		$q=$this->db->query("select * from users where username like '".$_POST['username']."'");
+		$q=$this->db->query("select * from users where username = '".$_POST['username']."'");
+		return $q->result();
+	}
+	
+	function use_username_red($id_afiliado)
+	{
+		$q=$this->db->query("select * from  afiliar where id_afiliado = '$id_afiliado' and id_red = '".$_POST['red']."'");
 		return $q->result();
 	}
 	

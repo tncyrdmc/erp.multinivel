@@ -17,6 +17,7 @@ class perfil_red extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_planes');
 		$this->load->model('ov/modelo_dashboard');
+		$this->load->model('bo/model_tipo_usuario');
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 		redirect('/auth');
@@ -108,33 +109,16 @@ class perfil_red extends CI_Controller
 		if(!$this->getHayEspacioParaAfiliarProfundidad ( $nivel ,$profundidadRed))
 			return false;
 
-		$frontalesUsuario = $this->model_perfil_red->get_cantidad_de_frontales($id_afiliado);
-		$frontalesUsuario=$frontalesUsuario[0]->frontales;
 
-		
-		if(!$this->getHayEspacioParaAfiliarFrontalidad ($id_afiliado , $frontalidadRed ,$frontalesUsuario)){
-			$this->printRedFrontales ( $id_red,$id_afiliado,$frontalidadRed,$nivel);
-			return true;
-		}
-		
-		if($frontalidadRed==$INFINITO)
+		if($frontalidadRed==$INFINITO){
+			$frontalesUsuario = $this->model_perfil_red->get_cantidad_de_frontales($id_afiliado,$id_red);
+			$frontalesUsuario=$frontalesUsuario[0]->frontales;
 			$frontalidadRed=$frontalesUsuario+1;
+		}
 
 		$this->printRedParaAfiliar ( $id_red,$id_afiliado,$frontalidadRed,$nivel);
 
 		
-	}
-	
-	private function getHayEspacioParaAfiliarFrontalidad($id_afiliado,$frontales ,$frontalesUsuario) {
-		$INFINITO=0;
-		
-		if($frontales==$INFINITO){
-			return true;
-		}
-		else if($frontales>$frontalesUsuario){
-			return true;
-		}
-		return false;
 	}
 
 	private function getHayEspacioParaAfiliarProfundidad($nivel,$profundidadRed) {
@@ -144,25 +128,6 @@ class perfil_red extends CI_Controller
 			}
 		}
 		return true;
-	}
-
-	private function printRedFrontales($id_red,$id_afiliado, $frontales,$nivel){
-
-		echo "<ul>";
-		for($lado=0;$lado<$frontales;$lado++){
-			$afiliado = $this->model_perfil_red->get_afiliado_por_posicion($id_red,$id_afiliado,$lado);
-			$this->printPosicionAfiliado ( $nivel, $afiliado);
-		}
-		echo "</ul>";
-	}
-	
-	private function printPosicionAfiliado($nivel, $afiliado) {
-		$img_perfil = $this->setImagenAfiliado ($afiliado[0]->id_afiliado);
-				
-		echo "  <li id='".$afiliado[0]->id_afiliado."'>
-		        	<a class='quitar' onclick='subred(".$afiliado[0]->id_afiliado.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
-		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='todo'>".$afiliado[0]->afiliado."<br />Detalles</div>
-		        </li>";
 	}
 
 	private function printRedParaAfiliar($id_red,$id_afiliado, $frontales,$nivel) {
@@ -183,6 +148,15 @@ class perfil_red extends CI_Controller
 		
 	}
 	
+	private function printPosicionAfiliado($nivel, $afiliado) {
+		$img_perfil = $this->setImagenAfiliado ($afiliado[0]->id_afiliado);
+	
+		echo "  <li id='".$afiliado[0]->id_afiliado."'>
+		        	<a class='quitar' onclick='subred(".$afiliado[0]->id_afiliado.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='todo'>".$afiliado[0]->afiliado."<br />Detalles</div>
+		        </li>";
+	}
+	
 	private function printEspacioParaAfiliar($sponsor,$id_afiliado, $lado) {
 		echo "<li>
 				<a onclick=\"botbox('".$sponsor[0]->nombre."',".$id_afiliado.",".$lado.")\" href='javascript:void(0)'>Afiliar Aqui</a>
@@ -200,6 +174,7 @@ class perfil_red extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
+		
 		return $img_perfil;
 	}
 	
@@ -555,22 +530,53 @@ class perfil_red extends CI_Controller
 	}
 	
 	function afiliarExistente(){
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-		redirect('/auth');
+		if (!$this->tank_auth->is_logged_in()){																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		$usuario=$this->general->get_username($id);
+		
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$style           = $this->general->get_style(1);
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		
+		$tipos 			 = $this->model_tipo_usuario->listarTodos();
+		
+		$image 			 = $this->model_perfil_red->get_images($id);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+		
+		if($id>2)
+			$redes = $this->model_tipo_red->RedesUsuario($id);
+		else
+			$redes = $this->model_tipo_red->listarActivos();
+		
+		
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
 		}
 		
-		$id              = $this->tank_auth->get_user_id();
-		$style           = $this->general->get_style($id);
-		
 		$this->template->set("id",$id);
-		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("tipos",$tipos);
 		
 		$this->template->set_theme('desktop');
+		$this->template->set("style",$style);
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/perfil_red/afiliarExistente');
+		$this->template->build('website/bo/comercial/red/AfiliarExistente');
 	}
 	function nuevo_afilido()
 	{
@@ -628,7 +634,7 @@ class perfil_red extends CI_Controller
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		//$planes 		 = $this->model_planes->Planes();
 		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		
 	
 		if($id>2){
@@ -1015,6 +1021,26 @@ class perfil_red extends CI_Controller
 		}
 	}
 	
+	function use_username_red()
+	{
+
+		$id_user=$this->model_perfil_red->get_id_by_username($_POST['username']);
+		
+		if(isset($id_user[0]->id)){
+			$use_username_red=$this->model_perfil_red->use_username_red($id_user[0]->id);
+			if(!$use_username_red){
+				echo "";
+				return true;
+			}
+		}
+		
+		echo "<script>
+					$('#boton').attr('disabled','disabled');
+				  </script>
+			";
+
+	}
+	
 	function use_username_modificar()
 	{
 		$use_username_modificar = $this->model_perfil_red->use_username_modificar();
@@ -1042,13 +1068,15 @@ class perfil_red extends CI_Controller
 		//echo "dentro de agregar";
 		$id = $_POST['id'];
 		$red = $_POST['red'];
-		$email = $_POST['email'];
 		$username = $_POST['username'];
-		
-		if($this->model_afiliado->ConprobarUsuario($username,$email,$red, $id)){
-			
-			$this->model_afiliado->AgregarAfiliadoRed($id, $red,$username, $email);
-			echo "Felicitaciones el usuario ha sido afiliado a otra red";
+
+		$id_user=$this->model_perfil_red->get_id_by_username($_POST['username']);
+		$use_username_red=$this->model_perfil_red->use_username_red($id_user[0]->id);
+		if(!$use_username_red){
+			$this->model_afiliado->AgregarAfiliadoRed($id, $red,$username);
+			echo "Felicitaciones el usuario ha sido afiliado a la red";
+		}else{
+			echo "ERROR<br> El usuario ya existe en la red.";
 		}
 		
 	}
