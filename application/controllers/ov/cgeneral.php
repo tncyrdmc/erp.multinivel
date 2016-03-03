@@ -595,7 +595,45 @@ class cgeneral extends CI_Controller
 		$correos=explode(",", $_POST['correos']);
 		$i=0;
 		foreach ($correos as $correo) {
+
 			(!$this->cemail->send_email(9,$correo,$data)) ? $i++ : '';
+		}
+
+		if($i>0){
+			$mensaje = "Hubo un error al enviar uno de los correos.";
+			$this->session->set_flashdata('mensaje', $mensaje);
+			redirect('/ov/cgeneral/autoresponder');
+
+		}
+
+			$mensaje = "Los correos se han enviado correctamente";
+			$this->session->set_flashdata('mensaje', $mensaje);
+			redirect('/ov/cgeneral/autoresponder');
+
+	}
+
+	function validar_correo(){
+		$correos=explode(",", $_POST['correos']);
+		$i=0;
+		foreach ($correos as $correo) {
+			$email = preg_match(
+				'/^[A-z0-9_\-.]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $correo
+			);
+					if(!$email){
+						$i++;
+					}
+		}
+
+		if($i>0){
+			echo "<script>
+				  $('#botonsave').attr('disabled','disabled');
+				  </script>
+				";
+		}else{
+			echo "<script>
+				  $('#botonsave').removeAttr('disabled');
+				  </script>
+				";
 		}
 
 
