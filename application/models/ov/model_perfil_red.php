@@ -494,6 +494,12 @@ order by (U.id);");
 		return $q->result();
 	}
 	
+	function exist_mail($mail)
+	{
+		$q=$this->db->query("select * from users where email like '".$mail."'");
+		return $q->result();
+	}
+	
 	function use_mail_modificar_perfil($id)
 	{
 		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id!= '".$id."'");
@@ -776,6 +782,15 @@ order by (U.id);");
 	function kill_afiliadonred($id,$red){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id." and id_red = ".$red);
 		$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
+	}
+	
+	function ocupado($temp){
+		$this->db->query("select * from afiliar 
+							where id_red = ".$temp[0]->red." 
+								and debajo_de = ".$temp[0]->padre." 
+								and directo = ".$temp[0]->sponsor." 
+								and lado = ".$temp[0]->lado);
+		return $q->result();
 	}
 	
 }

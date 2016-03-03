@@ -97,12 +97,12 @@ class Key extends CI_Controller
 	}
 	
 	function check_espacio_invite(){
-	
+		$token = $this->general->get_temp_invitacion_ACT($_POST['token']);
+		echo ($this->general->checkespacio($token)) ? "OK" : "FAIL";
 	}
 	
 	function done_invitacion(){
-		
-	}
-	
+		$this->general->trash_temp($_POST['token']);
+	}	
 	
 }

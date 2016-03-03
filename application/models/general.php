@@ -2,6 +2,14 @@
 
 class general extends CI_Model
 {
+	
+	function __construct() {
+		parent::__construct();
+	
+		$this->load->model('ov/model_perfil_red');
+	}
+	
+	
 	function isAValidUser($id,$modulo){
 	
 		$q=$this->db->query('SELECT cu.id_tipo_usuario as tipoId
@@ -218,6 +226,26 @@ class general extends CI_Model
 		
 		return ($this->get_temp_invitacion($token)) ?  $token : false;
 		
+	}
+	
+	function checkespacio ($temp){
+		
+		$exist = $this->model_perfil_red->exist_mail($token[0]->email);
+		if ($exist){
+			return false;
+		}
+		
+		return $this->model_perfil_red->ocupado($token) ? false : true;
+		
+	}
+	
+	function trash_token($token)
+	{
+		$this->db->query("update temp_invitacion set estatus = 'DES' where token = '".$token."'");
+		$q=$this->db->query("select id from temp_invitacion where token = '".$token."'");
+		$q2=$q->result();
+		$this->db->query("delete from temp_invitacion where id <= ".$q2[0]->id);
+		return true;
 	}
 
 }

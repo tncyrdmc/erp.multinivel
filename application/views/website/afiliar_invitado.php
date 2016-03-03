@@ -58,8 +58,9 @@ $(document).ready(function() {
 
 						if (!check) {
 							$.smallBox({
-						      title: "<h1>Atención</h1>",
-						      content: "<h3>Por favor revisa que todos los datos estén correctos</h3>",
+						      title: "<h1>Ups!</h1>",
+						      content: "<h3>Lamentamos Informarle que este espacio ha sido ocupado por otro afiliado</h3>"+
+						    	  		"<p>Comuniquese con su Sponsor para más información</p> ",
 						      color: "#00b4cd",
 						      icon : "fa fa-warning fadeInLeft animated",
 						      timeout: 4000
