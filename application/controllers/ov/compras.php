@@ -1201,6 +1201,7 @@ function index()
 		
 	}
 	function reporte_directos() {
+		//echo "dentro de reporte directos";
 		$id=$this->tank_auth->get_user_id();
 		$afiliados = $this->model_perfil_red->get_directos_by_id($id);
 		$image=$this->model_perfil_red->get_images_users();
@@ -1213,7 +1214,7 @@ function index()
 			            <th data-hide='phone,tablet'>Nombre</th>
 			            <th data-hide='phone,tablet'>Apellido</th>
 				        <th data-hide='phone,tablet'>e-mail</th>
-				        <th data-hide='phone'>Redes</th>
+				        <th data-hide='phone'>Red</th>
 				</thead>
 				<tbody>";
 		foreach ($afiliados as $afiliado)
