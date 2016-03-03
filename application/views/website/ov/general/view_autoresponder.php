@@ -14,14 +14,14 @@
 							</h1>
 		</div>
 	</div>
-		<?php if($this->session->flashdata('error')) {
+		<?php if($this->session->flashdata('mensaje')) {
 			if($this->session->flashdata('mensaje')!="Hubo un error al enviar uno de los correos."){
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
 									×
 								</button>
 								<i class="fa-fw fa fa-check"></i>
-								<strong>Error </strong> '.$this->session->flashdata('error').'
+								<strong>Error </strong> '.$this->session->flashdata('mensaje').'
 			</div>'; 
 			}else{
 				echo '<div class="alert alert-success fade in">
@@ -29,7 +29,7 @@
 									×
 								</button>
 								<i class="fa-fw fa fa-check"></i>
-								<strong>completado </strong> '.$this->session->flashdata('error').'
+								<strong>completado </strong> '.$this->session->flashdata('mensaje').'
 			</div>'; 
 			}
 		}
@@ -74,7 +74,7 @@
 								<section class="col-md-3">
 									 <label class="input">
 										 Titulo
-										 <input required readonly="readonly" class="form-control" type="text" id="titulo" name="titulo" value="<?=$img[0]->titulo?>" >
+										 <input  readonly="readonly" class="form-control" type="text"  value="<?=$img[0]->titulo?>" >
 									 </label>
 								 </section>
 								 </div>
@@ -88,7 +88,7 @@
 														<section class="col-md-3">
 														<label class="textarea"> 	
 														Descripción									
-															<textarea id="descripcion" readonly="readonly" name="descripcion" rows="3" class="form-control" ><?=$img[0]->descripcion?></textarea> 
+															<textarea  readonly="readonly"  rows="3" class="form-control" ><?=$img[0]->descripcion?></textarea> 
 														</label>
 														</section>
 														</div>
@@ -119,14 +119,14 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>Correos Electrónicos</label>
-															<input class="form-control tagsinput" name="correos" id="correos" value="" data-role="tagsinput" required>
+															<input onchange="validar_correo()" class="form-control tagsinput" name="correos" id="correos" value="" data-role="tagsinput" required>
 														</div>
 													</div>
 													
 												
 						</fieldset>
 						<footer>
-<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Enviar</button>
+<button style="margin: 1rem;margin-bottom: 4rem;" id="botonsave" type="input" class="btn btn-success">Enviar</button>
 							</footer>
 				</form>
 					</div>
@@ -167,7 +167,20 @@
 <script type="text/javascript">
 
 
+function validar_correo(){
+var correo=$('#correos').val();
 
+				$.ajax({
+					type: "POST",
+					url: "/ov/cgeneral/validar_correo",
+					data: {correos:correo}
+				})
+				.done(function( msg )
+		{
+				$('html').append(msg);
+		});
+
+}
 
 
 /*$( "#form_banner" ).submit(function( event ) {
