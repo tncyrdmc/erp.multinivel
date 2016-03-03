@@ -66,14 +66,14 @@
 					<!-- widget div-->
 					<div>
 					<div class="widget-body">
-						<form  class="smart-form" name="form_banner"  method="post" action="/bo/configuracion/crear_banner" enctype="multipart/form-data">
+						<form  class="" name="form_banner"  method="post" action="/ov/cgeneral/Enviar_correos_autoresponder" enctype="multipart/form-data">
 						<fieldset>
 							<legend>Titulo del banner</legend>
 							<div class="row">
-								<section class="col col-3">
+								<section class="col-md-3">
 									 <label class="input">
 										 Titulo
-										 <input required readonly="readonly" type="text" id="titulo" name="titulo" value="<?=$img[0]->titulo?>" required>
+										 <input required readonly="readonly" class="form-control" type="text" id="titulo" name="titulo" value="<?=$img[0]->titulo?>" >
 									 </label>
 								 </section>
 								 </div>
@@ -84,18 +84,17 @@
 						 													<!--<section style="padding-left: 0px;" class="col col-6">Descripcion
 														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown" value="" required><?//echo $img[0]->descripcion?></textarea>
 													</section>-->
-														<section class="col col-3">
+														<section class="col-md-3">
 														<label class="textarea"> 	
 														Descripción									
-															<textarea id="descripcion" readonly="readonly" name="descripcion" rows="3" class="custom-scroll" required><?=$img[0]->descripcion?></textarea> 
+															<textarea id="descripcion" readonly="readonly" name="descripcion" rows="3" class="form-control" ><?=$img[0]->descripcion?></textarea> 
 														</label>
 														</section>
 														</div>
 					 </fieldset>
 					 <fieldset>
 						 <legend>Imagen del banner</legend>
-							 <div id="dir" class="row">
-																					<section id="imagenes2" class="col col-12">
+																					<section id="imagenes2" class="col-md-12">
 											        	<label class="label">
 											        		Imágen actual
 											        	</label>
@@ -113,8 +112,20 @@
 							</div>
 						</fieldset>
 						<fieldset>
+						<legend>Enviar Email</legend>
+												
+													
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label>Correos Electrónicos</label>
+															<input class="form-control tagsinput" name="correos" id="correos" value="" data-role="tagsinput" required>
+														</div>
+													</div>
+													
+												
+						</fieldset>
 						<footer>
-<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
+<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Enviar</button>
 							</footer>
 				</form>
 					</div>
@@ -134,6 +145,12 @@
 		<!-- END ROW -->
 	</section>
 </div>
+
+		<script src="/template/js/plugin/bootstrap-tags/bootstrap-tagsinput.min.js"></script>
+		<script src="/template/js/plugin/typeahead/typeahead.min.js"></script>
+		<script src="/template/js/plugin/typeahead/typeaheadjs.min.js"></script>
+
+											
 											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
 											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
 											<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
@@ -147,6 +164,9 @@
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
+
+
+
 
 
 /*$( "#form_banner" ).submit(function( event ) {
@@ -183,5 +203,10 @@ function enviar()
 }*/
 </script>
 
+<style>
+label{
+display: inside;
 
+}
+</style>
 
