@@ -116,7 +116,8 @@ class Cemail extends CI_Model
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
 				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''),				
-				site_url(($data['token']) ? '/auth/invitacion/'.$data['token'] : '')
+				site_url(($data['token']) ? '/key/invitacion/'.$data['token'] : ''),
+				site_url(($data['b_img']) ? '/media/Empresa/"'.$data['b_img'] : '/logo.png')
 		);
 		
 		$validar = array (
@@ -132,7 +133,7 @@ class Cemail extends CI_Model
 				'clave'		=>($data['clave']) ? "CLABE: ".$data['clave'] : "",
 				'monto'		=>($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
 				'valor'		=>($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
-				'sponsor_tel'	=>($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: $ ".$data['sponsor_tel'] : ""
+				'sponsor_tel'	=>($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : ""
 		);
 		
 		$welcome = '<p class="callout">
@@ -220,7 +221,7 @@ class Cemail extends CI_Model
 						Tu correo: '.$data['email'].'<br />
 						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>';
 		
-		$invitacion = '<img src="/media/Empresa/"'.$data['b_img'].'" alt="" width="100%"/> <br/><hr/>
+		$invitacion = '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
 						<p class="lead">'.$data['b_desc'].'</p>
 						<p class="callout">
 								Para afiliarse al sitio de clic <a class="btn" href="'.$sitios[5].'">Aqui!</a>

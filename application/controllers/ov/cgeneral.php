@@ -701,7 +701,7 @@ class cgeneral extends CI_Controller
 	}
 	
 	function nuevo_invitado(){
-		//echo "dentro de botbox";	
+	    //echo "dentro de botbox ";	
 		
 		//$datos_banner=$this->model_admin->datos_banner();
 		$img = $this->model_admin->img_banner();
@@ -727,7 +727,7 @@ class cgeneral extends CI_Controller
 		$email = $_POST['email'];	
 		$id = $this->tank_auth->get_user_id();
 		
-		$token = $this->general->new_invitacion($email,$red,$debajo_de,$lado);
+		$token = $this->general->new_invitacion($email,$red,$id,$debajo_de,$lado);
 		
 		$banner = $this->model_admin->img_banner(); 
 		$sponsor = array(
