@@ -15,7 +15,7 @@
 		</div>
 	</div>
 		<?php if($this->session->flashdata('error')) {
-			if($this->session->flashdata('error')!="Se ha modificado el banner."){
+			if($this->session->flashdata('mensaje')!="Hubo un error al enviar uno de los correos."){
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
 									×
@@ -32,7 +32,8 @@
 								<strong>completado </strong> '.$this->session->flashdata('error').'
 			</div>'; 
 			}
-	}
+		}
+	
 	?>	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
