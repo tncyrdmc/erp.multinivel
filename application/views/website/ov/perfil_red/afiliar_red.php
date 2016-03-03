@@ -998,12 +998,22 @@ function detalles(id)
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<?php if($this->tank_auth->get_user_id()<2){?>
+				<span>
+					> <a href="/bo/comercial">Comercial</a> 
+					> <a href="/bo/comercial/red">Red</a>
+					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
+					> Afiliacion Red
+				</span>
+				<?php }else {?>
 				<span> 
 				> <a href="/ov/perfil_red/afiliar?tipo=1">Red</a>
 				> <a href="/ov/perfil_red/nuevo_afilido?id=<?php echo $_GET['id']; ?>">Afiliar</a>
 				> Red
 				</span>
+				<?php }?>
+
 			</h1>
 		</div>
 	</div>

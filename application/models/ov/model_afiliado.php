@@ -258,11 +258,11 @@ class model_afiliado extends CI_Model{
 
 	function consultarFrontalDisponible($id_debajo, $red){
 		
-		$query = $this->db->query('select * from afiliar where debajo_de = '.$id_debajo.' and id_red = '.$red.' ');
+		$query = $this->db->query('select * from afiliar where debajo_de = '.$id_debajo.' and id_red = '.$red.' order by lado');
 		
 		$lados = $query->result();
 		$lado_disponible=0;
-
+		
 		if(isset($lados[0]->id)){
 			$aux=0;
 			foreach ($lados as $filaLado){
@@ -271,6 +271,7 @@ class model_afiliado extends CI_Model{
 					return $lado_disponible;
 				}
 			$aux++;
+			$lado_disponible++;
 			}
 		}
 		return $lado_disponible;
@@ -628,7 +629,7 @@ class model_afiliado extends CI_Model{
 				"id_red"      => $mi_red,
 				"id_afiliado" => $id,
 				"debajo_de"   => $id_debajo,
-				"directo"     => 1,
+				"directo"     => $this->tank_auth->get_user_id(),
 				"lado"        => $lado
 		);
 		$this->db->insert("afiliar",$dato_afiliar);
