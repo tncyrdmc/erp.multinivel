@@ -589,6 +589,17 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/view_autoresponder');
 
 	}
+
+	function Enviar_correos_autoresponder(){
+
+		$correos=explode(",", $_POST['correos']);
+		$i=0;
+		foreach ($correos as $correo) {
+			(!$this->cemail->send_email(9,$correo,$data)) ? $i++ : '';
+		}
+
+
+	}
 	
 	function invitacion_afiliar()
 	{
@@ -749,5 +760,7 @@ class cgeneral extends CI_Controller
 		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito" : "Error al Enviar Invitación";
 		
 	}
+
+
 	
 }
