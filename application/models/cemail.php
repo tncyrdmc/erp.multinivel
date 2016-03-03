@@ -116,7 +116,7 @@ class Cemail extends CI_Model
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
 				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''),				
-				site_url(($data['token']) ? '/invitacion/'.$data['token'] : '')
+				site_url(($data['token']) ? '/auth/invitacion/'.$data['token'] : '')
 		);
 		
 		$validar = array (

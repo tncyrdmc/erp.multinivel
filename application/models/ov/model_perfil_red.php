@@ -395,11 +395,15 @@ class model_perfil_red extends CI_Model
 	{
 		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus ,
 	
-			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+			(select distinct tr.nombre from tipo_red tr where tr.id in (select distinct af.id_red from afiliar af where af.directo = AF.directo)) redes
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, afiliar AF
 	
-where U.id = UP.user_id and UP.user_id = AF.id_afiliado and AF.directo = ".$id." and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 order by (AF.id_afiliado) , AF.id_red limit 1000");
+where U.id = UP.user_id and UP.user_id = AF.id_afiliado and AF.directo = ".$id." and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 
+				
+				group by AF.id_afiliado
+				
+				order by (AF.id_afiliado) , AF.id_red limit 1000");
 		return  $q->result();
 	}
 	
