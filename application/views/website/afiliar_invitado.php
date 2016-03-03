@@ -135,7 +135,7 @@ $("#remove_step").click(function() {
 
 
 
-
+var codigo = <?=$token; ?>;
 
 /*
 CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
@@ -156,7 +156,7 @@ function trashToken(){
 	$.ajax({
 		type: "POST",
 		url: "/key/done_invitacion",
-		data: {token: <?php echo $token; ?>},
+		data: {token: codigo},
 	})
 	.done(function( msg )
 	{
@@ -168,7 +168,7 @@ function checkespacio(){
 	$.ajax({
 		type: "POST",
 		url: "/key/check_espacio_invite",
-		data: {token: <?php echo $token; ?>},
+		data: {token: codigo},
 	})
 	.done(function( msg )
 	{
@@ -183,7 +183,7 @@ function use_username()
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/use_username",
-		data: {username: username,token: <?php echo $token; ?>},
+		data: {username: username,token: codigo},
 	})
 	.done(function( msg )
 	{
@@ -198,7 +198,7 @@ function use_mail()
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail,token: <?php echo $token; ?>},
+		data: {mail: mail,token: codigo},
 	})
 	.done(function( msg )
 	{
@@ -216,7 +216,7 @@ function confirm_pass()
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/confirm_password",
-		data: {password: password,confirm_password: confirm_password,token:<?php echo $token; ?>},
+		data: {password: password,confirm_password: confirm_password,token:codigo},
 	})
 	.done(function( msg )
 	{
@@ -239,7 +239,7 @@ function validate_user_data()
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/validate_user_data",
-		data: {mail: mail,username: username,password: password,confirm_password: confirm_password,token:<?php echo $token; ?>},
+		data: {mail: mail,username: username,password: password,confirm_password: confirm_password,token:codigo},
 	})
 	.done(function( msg )
 	{
@@ -298,7 +298,7 @@ function check_keyword()
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword,token:<?php echo $token; ?>},
+		data: {keyword: keyword,token:codigo},
 	})
 	.done(function( msg )
 	{
@@ -315,7 +315,7 @@ function check_keyword_co()
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword,token:<?php echo $token; ?>},
+		data: {keyword: keyword,token:codigo},
 	})
 	.done(function( msg )
 	{
@@ -334,7 +334,7 @@ function codpos_red()
 		$.ajax({
 			type: "POST",
 			url: "/ov/perfil_red/cp_red",
-			data: {cp: cp,token:<?php echo $token; ?>},
+			data: {cp: cp,token:codigo},
 		})
 		.done(function( msg )
 		{

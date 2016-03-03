@@ -87,7 +87,7 @@ class Key extends CI_Controller
 		$this->template->set("lado",$token[0]->padre);
 		$this->template->set("email",$token[0]->email);
 		$this->template->set("red",$id_red);
-		$this->template->set("token",$key);
+		$this->template->set("token",$token[0]->id);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -97,7 +97,7 @@ class Key extends CI_Controller
 	}
 	
 	function check_espacio_invite(){
-		$token = $this->general->get_temp_invitacion_ACT($_POST['token']);
+		$token = $this->general->get_temp_invitacion_ACT_id($_POST['token']);
 		echo ($this->general->checkespacio($token)) ? "OK" : "FAIL";
 	}
 	

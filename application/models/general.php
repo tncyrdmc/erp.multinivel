@@ -209,6 +209,13 @@ class general extends CI_Model
 		return $token;
 	}
 	
+	function get_temp_invitacion_ACT_id($token)
+	{
+		$q=$this->db->query("select * from temp_invitacion where id = '".$token."' and estatus = 'ACT'");
+		$token = $q->result();
+		return $token;
+	}
+	
 	function new_invitacion($email,$red,$sponsor,$debajo_de,$lado){
 		
 		//$time = time();
@@ -241,10 +248,8 @@ class general extends CI_Model
 	
 	function trash_token($token)
 	{
-		$this->db->query("update temp_invitacion set estatus = 'DES' where token = '".$token."'");
-		$q=$this->db->query("select id from temp_invitacion where token = '".$token."'");
-		$q2=$q->result();
-		$this->db->query("delete from temp_invitacion where id <= ".$q2[0]->id);
+		$this->db->query("update temp_invitacion set estatus = 'DES' where id = '".$token."'");
+		$this->db->query("delete from temp_invitacion where id <= ".$token);
 		return true;
 	}
 
