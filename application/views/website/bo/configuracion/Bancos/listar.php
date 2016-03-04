@@ -91,6 +91,9 @@
 										<th data-hide="phone">Nombre</th>
 										<th data-hide="phone">Cuenta</th>
 										<th data-hide="phone, tablet">CLABE</th>
+										<th data-hide="phone, tablet">SWIFT</th>
+										<th data-hide="phone, tablet">ABA/IBAN/OTRO</th>
+										<th data-hide="phone, tablet">Dirección postal </th>
 										<th>Acciones</th>
 
 									</tr>
@@ -103,6 +106,9 @@
 										<td><?php echo $banco->nombre; ?></td>
 										<td><?php echo $banco->cuenta; ?></td>
 										<td><?php echo $banco->clave; ?></td>
+										<td><?php echo $banco->swift; ?></td>
+										<td><?php echo $banco->otro; ?></td>
+										<td><?php echo $banco->dir_postal; ?></td>
 										<td class='text-center'>
 											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_banco("<?php echo $banco->id_banco; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
 											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_banco(<?php echo $banco->id_banco; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>

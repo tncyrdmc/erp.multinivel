@@ -74,9 +74,13 @@ class bancos extends CI_Controller
 			$pais = $_POST['pais'];
 			$cuenta = $_POST['cuenta'];
 			$clabe = $_POST['clabe'];
+			$swift= $_POST['swift'];
+			$otro = $_POST['otro'];
+			$dir_postal = $_POST['dir_postal'];
+			
 			if($this->ValidarDatos($banco,$pais,$cuenta, $clabe)){
 				
-				$this->modelo_bancos->crear_banco($banco, $cuenta, $pais, $clabe);
+				$this->modelo_bancos->crear_banco($banco, $cuenta, $pais, $clabe,$swift,$otro,$dir_postal);
 				echo "El Banco ha sido añadido";
 			}
 			
@@ -186,12 +190,15 @@ class bancos extends CI_Controller
 			$pais = $_POST['pais'];
 			$cuenta = $_POST['cuenta'];
 			$clabe = $_POST['clabe'];
+			$swift= $_POST['swift'];
+			$otro = $_POST['otro'];
+			$dir_postal = $_POST['dir_postal'];
 				
 			if($this->ValidarDatos2($banco, $pais, $cuenta, $clabe)){
 					
 				$this->ValidarDatos2($banco,$pais,$cuenta, $clabe);
 			
-				$this->modelo_bancos->actualizar_banco($id_banco, $banco, $cuenta, $pais, $clabe);
+				$this->modelo_bancos->actualizar_banco($id_banco, $banco, $cuenta, $pais, $clabe,$swift,$otro,$dir_postal);
 				echo "El Banco a sido actualizado.";
 					
 					

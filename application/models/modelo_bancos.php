@@ -2,18 +2,21 @@
 
 class modelo_bancos extends CI_Model
 {
-	function crear_banco($banco, $cuenta, $pais, $clabe)
+	function crear_banco($banco, $cuenta, $pais, $clabe,$swift,$otro,$dir_postal)
 	{
 		$q = $this->db->query("SELECT id_banco FROM cat_banco where descripcion = '".$banco."' and cuenta = '".$cuenta."'");
 		$banco_con = $q->result();
 		
 		if(!isset($banco_con[0]->id_banco)){
 			$datos = array(
-					'descripcion' => $banco,
-					'id_pais'	=> $pais,
-					'cuenta'   => $cuenta,
-					'clave'		=> $clabe,
-					'estatus'	=> 'ACT'
+					'descripcion' 	=> $banco,
+					'id_pais'		=> $pais,
+					'cuenta'   		=> $cuenta,
+					'clave'			=> $clabe,
+					'swift'			=> $swift,
+					'otro'			=> $otro,
+					'dir_postal'	=> $dir_postal,
+					'estatus'		=> 'ACT'
 			);
 			
 			$this->db->insert("cat_banco", $datos);
@@ -21,7 +24,7 @@ class modelo_bancos extends CI_Model
 	}
 	
 	function Bancos(){
-		$q = $this->db->query("SELECT cb.id_banco, p.Name as pais , cb.descripcion as nombre, cb.cuenta, cb.clave, cb.estatus FROM cat_banco cb, Country p where cb.id_pais = p.Code order by cb.id_pais");
+		$q = $this->db->query("SELECT cb.id_banco, p.Name as pais , cb.descripcion as nombre, cb.cuenta, cb.clave,cb.swift,cb.otro,cb.dir_postal, cb.estatus FROM cat_banco cb, Country p where cb.id_pais = p.Code order by cb.id_pais");
 		$banco_con = $q->result();
 		return $banco_con;
 	}
@@ -46,13 +49,16 @@ class modelo_bancos extends CI_Model
 		return $banco_con;
 	}
 	
-	function actualizar_banco($id ,$banco, $cuenta, $pais, $clabe)
+	function actualizar_banco($id ,$banco, $cuenta, $pais, $clabe,$swift,$otro,$dir_postal)
 	{
 		$datos = array(
 					'descripcion' => $banco,
 					'id_pais'	=> $pais,
 					'cuenta'   => $cuenta,
 					'clave'		=> $clabe,
+					'swift'		=> $swift,
+					'otro'		=> $otro,
+					'dir_postal'=> $dir_postal,
 					'estatus'	=> 'ACT'
 			);
 			

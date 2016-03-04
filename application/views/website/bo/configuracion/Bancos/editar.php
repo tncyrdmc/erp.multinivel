@@ -40,6 +40,24 @@
 						value="<?php echo $banco[0]->clave?>">
 				</div>
 				<br>
+				<div class="form-group">
+					<b>SWIFT</b> <input class="form-control" id="swift" name="swift"
+						type="number"
+						value="<?php echo $banco[0]->swift?>">
+				</div>
+				<br>
+				<div class="form-group">
+					<b>ABA/IBAN/OTRO</b> <input class="form-control" id="otro" name="otro"
+						type="number"
+						value="<?php echo $banco[0]->otro?>">
+				</div>
+				<br>
+				<div class="form-group">
+					<b>Dirección postal</b> <input class="form-control" id="dir_postal" name="dir_postal"
+						type="number"
+						value="<?php echo $banco[0]->dir_postal?>">
+				</div>
+				<br>
 			</fieldset>
 
 			<button style="margin-left: 3rem;" class="btn btn-success"
@@ -97,6 +115,9 @@ function enviar()
 	var cuenta = $("#cuenta").val();
 	var pais = $("#pais").val();
 	var clabe = $("#clabe").val();
+	var swift = $("#swift").val();
+	var otro = $("#otro").val();
+	var dir_postal = $("#dir_postal").val();
 	
 	
 	if(ValidarVacio(banco, pais, cuenta)){
@@ -107,7 +128,10 @@ function enviar()
 				 banco: banco,
 				 pais: pais,
 				 cuenta: cuenta,
-				 clabe: clabe
+				 clabe: clabe,
+				 swift:swift,
+				 otro:otro,
+				 dir_postal:dir_postal
 				},
 	         type: "post",
 	         url: "actualizar_banco",

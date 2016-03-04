@@ -378,18 +378,33 @@ function index()
 				</p>
 				<p>
 				</p><div class="alert alert-success alert-block">
-		 		<p> Nombre de Banco : '.$banco[0]->descripcion.'</p>
-				<p> Numero de Cuenta: '.$banco[0]->cuenta.'</p>
+		 		<p><b>Nombre de Banco</b> : '.$banco[0]->descripcion.'</p>
+				<p><b>Numero de Cuenta</b>: '.$banco[0]->cuenta.'</p>
 			';
 		
-			if($banco[0]->clave){
+			if($banco[0]->swift){
 			echo '
-				<p> CLABE(Solo en Mexico): '.$banco[0]->clave.'</p></div>
-				<p>
-				</p>
-			</div>
+				<p><b>SWIFT</b> :'.$banco[0]->swift.'</p>
 				';	
 			}
+			if($banco[0]->otro){
+				echo '
+				<p><b>ABA/IBAN/OTRO</b> :'.$banco[0]->otro.'</p>
+				';
+			}
+			if($banco[0]->dir_postal){
+				echo '
+				<p><b>Dirección postal</b>  :'.$banco[0]->dir_postal.'</p>
+				';
+			}
+			if($banco[0]->clave){
+				echo '
+				<p><b>CLABE</b> :'.$banco[0]->clave.'</p>
+				';
+			}
+			echo '<p>
+				</p>
+				</div>';
 		}	
 	}
 	
@@ -434,7 +449,7 @@ function index()
 		$id = $_POST['custom'];
 		$id_pago = $_POST['invoice'];
 		$identificado_transacion = $_POST['txn_id'];
-		$fecha=$_POST['payment_date'];
+
 		$referencia = $_POST['payer_id'];
 		$metodo_pago = $_POST['payment_type'];
 		$estado = $_POST['payment_status'];
@@ -445,7 +460,7 @@ function index()
 	
 		if($estado=='Completed'){
 				
-	
+			$fecha = date("Y-m-d");
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYPAL',$fecha);
 				
 			$this->modelo_compras->registrar_pago_online
@@ -1968,7 +1983,10 @@ function index()
 					<th data-class='expand'>Fecha</th>
 					<th >Banco</th>
 					<th data-hide='phone'>N° Cuenta</th>
-					<th data-hide='phone'>Clave</th>
+					<th data-hide='phone'>CLABE</th>
+					<th data-hide='phone'>SWIFT</th>
+					<th data-hide='phone'>ABA/IBAN/OTRO</th>
+					<th data-hide='phone'>Dirección postal</th>
 					<th data-hide='phone,tablet'>Monto</th>
 					<th data-hide='phone,tablet'>Estado</th>
 				</thead>
@@ -1981,6 +1999,9 @@ function index()
 			<td>".$cobros[$i]->banco."</td>
 			<td>".$cobros[$i]->cuenta."</td>
 			<td>".$cobros[$i]->clave."</td>
+			<td>".$cobros[$i]->swift."</td>
+			<td>".$cobros[$i]->otro."</td>
+			<td>".$cobros[$i]->dir_postal."</td>
 			<td>$ ".number_format($cobros[$i]->valor,2)."</td>";
 		if($cobros[$i]->estado=='ACT')
 			echo "<td>Pagado</td>";
