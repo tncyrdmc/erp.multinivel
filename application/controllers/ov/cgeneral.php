@@ -679,7 +679,7 @@ class cgeneral extends CI_Controller
 				if(sizeof($cantidadRedes)==0)
 					redirect('/');
 					if(sizeof($cantidadRedes)==1)
-						redirect('/ov/general/invitar_red?id='.$cantidadRedes[0]->id);
+						redirect('/ov/cgeneral/invitar_red?id='.$cantidadRedes[0]->id);
 	
 						$redes = $this->model_tipo_red->RedesUsuario($id);
 						$this->template->set("redes",$redes);
@@ -752,7 +752,7 @@ class cgeneral extends CI_Controller
 		$this->template->set("red_frontales",$red_forntales);
 		$this->template->set("premium",$premium);
 		$this->template->set("planes",$planes);
-	
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
@@ -807,7 +807,7 @@ class cgeneral extends CI_Controller
 		);
 		
 		//$img = site_url(($data['b_img']) ? '/media/Empresa/'.$data['b_img'] : '/logo.png');
-		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito,  IMG: ".$img : "Error al Enviar Invitación";
+		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito. " : "Error al Enviar Invitación.";
 		
 	}
 

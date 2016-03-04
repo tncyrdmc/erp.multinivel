@@ -798,4 +798,13 @@ order by (U.id);");
 		return $q3;
 	}
 	
+	function trash_token($token)
+	{
+		$this->db->query("update temp_invitacion set estatus = 'DES' where id = '".$token."'");
+		$this->db->query("delete from temp_invitacion where id <= ".$token);
+		$this->db->query("truncate table temp_invitacion");
+		return true;
+	}
+	
+	
 }

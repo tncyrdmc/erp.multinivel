@@ -22,7 +22,8 @@ class Key extends CI_Controller
 		$token = $this->general->get_temp_invitacion_ACT($key);
 	
 		if (!$token){
-			redirect("/auth/login");
+			echo $token[0]->id;
+			//redirect("/auth/login");
 		}
 	
 		//echo "hola";

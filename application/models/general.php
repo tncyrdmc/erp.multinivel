@@ -243,15 +243,9 @@ class general extends CI_Model
 			return $exist[0]->email;
 		}
 		$ocupado = $this->model_perfil_red->ocupado($temp);
-		($ocupado) ? $this->trash_token($temp[0]->id) : '';
+		($ocupado) ? $this->model_perfil_red->trash_token($temp[0]->id) : '';
 		return $ocupado;
 	}
 	
-	function trash_token($token)
-	{
-		$this->db->query("update temp_invitacion set estatus = 'DES' where id = '".$token."'");
-		$this->db->query("delete from temp_invitacion where id <= ".$token);
-		return true;
-	}
-
+	
 }

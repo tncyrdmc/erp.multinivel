@@ -113,30 +113,30 @@ class Cemail extends CI_Model
 		$sitios = array(
 				site_url(''),
 				site_url('/auth/login/'),
-				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
-				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
-				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''),				
-				site_url(($data['token']) ? '/key/invitacion/'.$data['token'] : ''),
-				site_url(($data['b_img']) ? '/media/Empresa/'.$data['b_img'] : '/logo.png')
+				site_url((isset($data['user_id'])&&isset($data['new_email_key'])) ? '/auth/activate/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
+				site_url((isset($data['user_id'])&&isset($data['new_email_key'])) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
+				site_url((isset($data['user_id'])&&isset($data['new_pass_key'])) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''),				
+				site_url(isset($data['token']) ? '/key/invitacion/'.$data['token'] : ''),
+				site_url(isset($data['b_img']) ? '/media/Empresa/'.$data['b_img'] : '/logo.png')
 		);
 		
 		$validar = array (
 				'username' 	=>(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "",
-				'password' 	=>($data['password']) ? "Contraseña: ".$data['password'] : "",
-				'id_cobro'	=>($data['id_cobro']) ? "ID de Cobro: ".$data['id_cobro'] : "",
-				'id_venta'	=>($data['id_venta']) ? "ID venta: ".$data['id_venta'] : "",
-				'fecha'		=>($data['fecha']) ? "Fecha de Solicitud: ".$data['fecha'] : "",
-				'nombres'	=>($data['nombre']) &&  ($data['apellido'])  ? "Nombre y apellido: ".$data['nombre']." ".$data['apellido'] : "",
-				'banco'		=>($data['banco']) ? "Banco: ".$data['banco'] : "",
-				'cuenta'	=>($data['cuenta']) ? "Numero de Cuenta: ".$data['cuenta'] : "",
-				'titular'	=>($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "",
-				'clave'		=>($data['clave']) ? "CLABE: ".$data['clave'] : "",
-				'monto'		=>($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
-				'valor'		=>($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
-				'sponsor_tel'	=>($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : ""
+				'password' 	=>isset($data['password']) ? "Contraseña: ".$data['password'] : "",
+				'id_cobro'	=>isset($data['id_cobro']) ? "ID de Cobro: ".$data['id_cobro'] : "",
+				'id_venta'	=>isset($data['id_venta']) ? "ID venta: ".$data['id_venta'] : "",
+				'fecha'		=>isset($data['fecha']) ? "Fecha de Solicitud: ".$data['fecha'] : "",
+				'nombres'	=>isset($data['nombre']) &&  ($data['apellido'])  ? "Nombre y apellido: ".$data['nombre']." ".$data['apellido'] : "",
+				'banco'		=>isset($data['banco']) ? "Banco: ".$data['banco'] : "",
+				'cuenta'	=>isset($data['cuenta']) ? "Numero de Cuenta: ".$data['cuenta'] : "",
+				'titular'	=>isset($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "",
+				'clave'		=>isset($data['clave']) ? "CLABE: ".$data['clave'] : "",
+				'monto'		=>isset($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
+				'valor'		=>isset($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
+				'sponsor_tel'	=>isset($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : ""
 		);
 		
-		$welcome = '<p class="callout">
+		$welcome = ($type==0) ? '<p class="callout">
 								Para ingresar al sitio de clic <a class="btn" href="'.$sitios[1].'">Aqui!</a>
 						</p><!-- /Callout Panel -->						
 						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador 
@@ -144,9 +144,9 @@ class Cemail extends CI_Model
 						<p>'.$validar['username'].'<br /></p>
 						<p>Correo: '.$data['email'].'</p>
 						<p>'.$validar['password'].'<br /></p>
-						<p>Id del Usuario: '.$data['lst_id'][0]->id.'</p>';
+						<p>Id del Usuario: '.$data['lst_id'][0]->id.'</p>' : '';
 		
-		$activate = '<p class="callout">
+		$activate = ($type==1) ? '<p class="callout">
 							Para completar tu registro ingresa a este link 
 						<a class="btn" href="'.$sitios[2].'"><h3>Aqui!</h3></a>
 						</p><!-- /Callout Panel -->						
@@ -157,9 +157,9 @@ class Cemail extends CI_Model
 						de no ser activada su cuenta tu registro sera invalido y deberas ser afiliado por otro usuario nuevamente.</p>
 						<p>'.$validar['username'].'<br/></p>
 						<p>Correo: '.$data['email'].'</p><br />
-						<p>'.$validar['password'].'<br/></p>';
+						<p>'.$validar['password'].'<br/></p>' : '';
 		
-		$change_email = 'You have changed your email address for '.$data['site_name'].'<br />
+		$change_email = ($type==2) ? 'You have changed your email address for '.$data['site_name'].'<br />
 						Follow this link to confirm your new email address:<br />
 						<br />
 						<big style="font: 16px/18px Arial, Helvetica, sans-serif;"><b>
@@ -176,9 +176,9 @@ class Cemail extends CI_Model
 						<br />
 						You received this email, because it was requested by a <a href="'.$sitios[0].'" >'.$data['site_name'].'
 						</a> user. If you have received this by mistake, please DO NOT click the confirmation link, and simply delete this email. 
-						After a short time,the request will be removed from the system.<br />';
+						After a short time,the request will be removed from the system.<br />' : '';
 		
-		$cobros = '<p class="callout">
+		$cobros = ($type==3) ? '<p class="callout">
 							El pago se realizara en las proximas 24 horas con los siguientes datos:
 						</p><!-- /Callout Panel -->						
 						<p>'. $validar['id_cobro'].'<br /></p>
@@ -190,9 +190,9 @@ class Cemail extends CI_Model
 						<p>'. $validar['cuenta'].'<br /></p>
 						<p>'. $validar['titular'].'<br /></p>
 						<p>'. $validar['clave'].'<br /></p><br/>
-						<p>'. $validar['monto'].'<br /></p>';
+						<p>'. $validar['monto'].'<br /></p>' : '';
 		
-		$cuentas_cobrar = '<p class="callout">
+		$cuentas_cobrar = ($type==4) ? '<p class="callout">
 							Recibimos su confirmacion sobre la transacion con los siguientes datos:
 						</p><!-- /Callout Panel -->						
 						<p>'. $validar['id_venta'].'<br /></p>
@@ -202,9 +202,9 @@ class Cemail extends CI_Model
 						<p>'. $validar['nombres'].'<br /></p>	
 						<p>'. $validar['banco'].'<br /></p>
 						<p>'. $validar['cuenta'].'<br /></p>
-						<p>'. $validar['valor'].'<br /></p> ';
+						<p>'. $validar['valor'].'<br /></p> ' : '';
 		
-		$forgot_password = '<a href="'.$sitios[4].'" >
+		$forgot_password = ($type==5) ? '<a href="'.$sitios[4].'" >
 						<h5>Da click aquí para recuperar tu contraseña</h5></a><br />
 						<br />
 						¿El link no funciona? Copia y pega en la barra de direcciones de tu navegador el siguiente link.<br />
@@ -212,16 +212,16 @@ class Cemail extends CI_Model
 						<nobr><a href="'.$sitios[4].'">
 						'.$sitios[4].'></a></nobr><br />
 						Has recibido este correo desde <a href="'.$sitios[0].'" >
-						'.$data['site_name'].'</a> como solicitud de una recuperación de contraseña, si no has sido tú, puedes ignorarlo.<br />';
+						'.$data['site_name'].'</a> como solicitud de una recuperación de contraseña, si no has sido tú, puedes ignorarlo.<br />': '';
 		
-		$reset_password = '<p>Has cambiado tu contraseña.<br />
+		$reset_password = ($type==6) ? '<p>Has cambiado tu contraseña.<br />
 						Por favor , mantenga en sus registros para que no se olvide.<br />
 						<br />
 						'.$validar['username'].'
 						Tu correo: '.$data['email'].'<br />
-						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>';
+						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>': '';
 		
-		$invitacion = '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
+		$invitacion = ($type==7) ? '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
 						<p class="lead">'.$data['b_desc'].'</p>
 						<p class="callout">
 								Para afiliarse al sitio de clic <a class="btn" href="'.$sitios[5].'">Aqui!</a>
@@ -231,15 +231,15 @@ class Cemail extends CI_Model
 						<h4>Datos del Sponsor</h4><br />
 						<p>Nombre Completo: '.$data['sponsor_name'].'<br /></p>
 						<p>Correo: '.$data['sponsor_email'].'<br /></p>
-						<p>'.$validar['sponsor_tel'].'<br /></p>';
+						<p>'.$validar['sponsor_tel'].'<br /></p>': '';
 		
-		$autoresponder = '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
+		$autoresponder = ($type==8) ? '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
 						<p class="lead">'.$data['b_desc'].'</p>
 						<p class="callout">
 								Para mas informacion de click <a class="btn" href="'.$data['b_link'].'">Aqui!</a>
 						</p><!-- /Callout Panel -->
 						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador
-						<a href="'.$data['b_link'].'">'.$data['b_link'].'</a></p><br /><br />';
+						<a href="'.$data['b_link'].'">'.$data['b_link'].'</a></p><br /><br />': '';
 		
 		
 		$q = array(			//welcome

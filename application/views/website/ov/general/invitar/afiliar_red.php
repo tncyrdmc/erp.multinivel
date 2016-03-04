@@ -129,12 +129,7 @@ function detalles(id)
 													<ul>
 													<?
 													$aux =0;
-													if($afiliados==null)
-													{?>
-													<li>
-														<a onclick="botbox('Administrador OV',2,0)" href='javascript:void(0)'>Afiliar Aqui</a>
-			 										 </li>
-													<?}
+													
 													foreach ($afiliados as $key) 
                                                     {
                                                     	$aux++;
@@ -146,13 +141,13 @@ function detalles(id)
 															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
 														</li>
 														<?}
-														
-														
-													}?>
+                                                    }
+													if($afiliados==null||$id==2||$red_frontales[0]->frontal>count($afiliados))
+                                                        {?>
 														<li>
-															<a onclick="botbox('Administrador OV',2,<?=count($afiliados)?>)" href='javascript:void(0)'>Afiliar Aqui</a>
+															<a onclick="botbox('Tí',<?=$id?>,<?=count($afiliados)?>)" href='javascript:void(0)'>Afiliar Aqui</a>
 			 										 	</li>
-												
+												<?}?>
 													</ul>
 												</li>
 											</ul>

@@ -1053,10 +1053,10 @@ class perfil_red extends CI_Controller
 	
 	function afiliar_nuevo()
 	{
-		$this->load->model('general');
+		
 		$resultado = $this->model_afiliado->crearUsuario();
 		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
-		isset($_POST['token']) ? $this->general->trash_token($_POST['token']) : '';
+		isset($_POST['token']) ? $this->model_perfil_red->trash_token($_POST['token']) : '';
 		if($resultado)
 		{
 			$id_afiliado=$this->model_perfil_red->get_id();
