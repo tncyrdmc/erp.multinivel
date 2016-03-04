@@ -5,6 +5,8 @@
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
+var codigo = <?=$token; ?>;
+
 $(document).ready(function() {
 	//Para local /ov/perfil_red/crear_user
 	//Produccion /auth/register
@@ -46,7 +48,7 @@ $(document).ready(function() {
 					);
 					var validacion_=valida_espacios(idss,mensajess);
 					var validacion=valida_vacios(ids,mensajes);
-					var check=checkespacio();
+					
 					if(validacion&&validacion)
 					{
 						iniciarSpinner();
@@ -56,7 +58,9 @@ $(document).ready(function() {
 						$( ".actions" ).remove();
 						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
 
-						if (!check) {
+						var check=checkespacio();
+						if (check) {
+							//alert(check);
 							$.smallBox({
 						      title: "<h1>Ups!</h1>",
 						      content: "<h3>Lamentamos Informarle que este espacio ha sido ocupado por otro afiliado</h3>"+
@@ -66,7 +70,7 @@ $(document).ready(function() {
 						      timeout: 4000
 						    });
 						    location.href="/auth/login";
-						    }
+						    }else{
 							
 						$.ajax({
 							type: "POST",
@@ -78,6 +82,7 @@ $(document).ready(function() {
 							$("#progress").attr('style','width: 40%');
 							var email=$("#email").val();
 							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
+							$("#checkout-form").append("<input value='"+codigo+"' type='hidden' name='token'>");
 							$.ajax({
 								type: "POST",
 								url: "/ov/perfil_red/afiliar_nuevo",
@@ -93,8 +98,8 @@ $(document).ready(function() {
 											label: "Ok!",
 											className: "btn-success",
 											callback: function() {
-												location.href="/auth/login";
-												trashToken();
+												//trashToken();
+												location.href="/auth/login";												
 												FinalizarSpinner();
 												}
 											}
@@ -102,6 +107,8 @@ $(document).ready(function() {
 									});
 								});
 						});//fin Done ajax
+
+						}
 					}
 					else
 					{
@@ -135,7 +142,7 @@ $("#remove_step").click(function() {
 
 
 
-var codigo = <?=$token; ?>;
+
 
 /*
 CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
@@ -172,7 +179,9 @@ function checkespacio(){
 	})
 	.done(function( msg )
 	{
-		return (msg=="OK") ? true : false;  
+		//alert(msg);
+		return (msg);  
+		//
 	});
 }
 
@@ -422,8 +431,7 @@ function codpos_red()
 												<div class="step-pane active" id="step1">
 													<form id="register" class="smart-form">
 														<fieldset>
-															<input required type="hidden" id="afiliados" name="afiliados" value="<?=$debajo_de?>">
-															<input id="lado" required type="hidden" name="lado" value="<?=$lado?>">
+															
 															<legend>Información de cuenta</legend>
 															<section id="usuario" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -452,6 +460,8 @@ function codpos_red()
 													<form method="POST" action="/perfil_red/afiliar_nuevo" id="checkout-form" class="smart-form" novalidate="novalidate">
 														<fieldset>
 															<legend>Datos personales del afiliado</legend>
+															<input required type="hidden" id="afiliados" name="afiliados" value="<?=$debajo_de?>">
+															<input id="lado" required type="hidden" name="lado" value="<?=$lado?>">
 															<div class="row">
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -649,7 +659,7 @@ function codpos_red()
 															</div>
 														</fieldset>
 															<input class='hide' type="text" name="red" id='red' value="<?=$red?>" placeholder="">
-															<input type="text" name="id" value="<?= $id; ?>" class="hide">
+															<input type="text" name="directo" value="<?= $id; ?>" class="hide">
 															
 													</form>
 												</div>

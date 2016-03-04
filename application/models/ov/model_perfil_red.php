@@ -785,12 +785,14 @@ order by (U.id);");
 	}
 	
 	function ocupado($temp){
-		$this->db->query("select * from afiliar 
+		$q=$this->db->query("select * from afiliar 
 							where id_red = ".$temp[0]->red." 
 								and debajo_de = ".$temp[0]->padre." 
 								and directo = ".$temp[0]->sponsor." 
 								and lado = ".$temp[0]->lado);
-		return $q->result();
+		$q2=$q->result();
+		$q3=$this->get_email($q2[0]->id_afiliado);
+		return $q3;
 	}
 	
 }

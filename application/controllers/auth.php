@@ -208,7 +208,8 @@ class Auth extends CI_Controller
 			exit();
 			redirect('');
 		} else*/if ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
-			redirect('/auth/send_again/');
+					//echo "falla en auth";	
+					redirect('/auth/send_again/');
 
 		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
 			$this->_show_message($this->lang->line('auth_message_registration_disabled'));

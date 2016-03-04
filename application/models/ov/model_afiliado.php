@@ -85,6 +85,12 @@ class model_afiliado extends CI_Model{
 	
 	function crearUsuario(){
 		
+		/*echo "red : ".$_POST['red']
+			." 	afiliado: ".$_POST['mail_important']
+			."	padre: ".$_POST['afiliados']
+			."	sponsor: ".$_POST['directo']
+			."	lado: ".$_POST['lado'];*/
+		
 		$id = $this->obtenrIdUser($_POST['mail_important']);
 		
 		$this->db->query('update users set activated="1" where id="'.$id.'"');
@@ -145,7 +151,7 @@ class model_afiliado extends CI_Model{
 		{
 			$directo=intval($this->tank_auth->get_user_id());
 		}else{
-			$directo=intval($id_debajo);
+			$directo=intval(($_POST['directo']) ? $_POST['directo'] : $id_debajo);
 		}
 
 		$dato_afiliar =array(
