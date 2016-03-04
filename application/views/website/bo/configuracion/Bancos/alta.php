@@ -45,7 +45,7 @@
 															<input class="form-control"  id="banco" name="banco" type="text" placeholder="Nombre del banco">
 														</div><br>
 														<div class="form-group">
-															<label class="label">Pais</label> 
+															<label class="label"><b>Pais</b></label> 
 															<label class="select">
 																<select name="pais" id="pais" required>
 																	<option value="0">Selecciona el pais</option>
@@ -61,8 +61,20 @@
 															<input class="form-control"  id="cuenta" name="cuenta"  type="number" placeholder="Numero de cuenta" onChange="validarSiNumero(this.value);">
 														</div><br>
 														<div class="form-group">
-															<b>CLABE</b>
+															Código SWIFT
+															<input class="form-control"  id="swift" name="swift" type="text">
+														</div><br>
+														<div class="form-group">
+															ABA/IBAN/OTRO
+															<input class="form-control"  id="otro" name="otro" type="text">
+														</div><br>
+														<div class="form-group">
+															CLABE
 															<input class="form-control"  id="clabe" name="clabe" type="number" onChange="validarSiNumero(this.value);">
+														</div><br>
+														<div class="form-group">
+															Dirección postal
+															<input class="form-control"  id="dir_postal" name="dir_postal" type="text">
 														</div><br>
 													</fieldset>
 													
@@ -136,7 +148,9 @@ function agregar_banco()
 	var cuenta = $("#cuenta").val();
 	var pais = $("#pais").val();
 	var clabe = $("#clabe").val();
-	
+	var swift = $("#swift").val();
+	var otro = $("#otro").val();
+	var dir_postal = $("#dir_postal").val();
 	
 	if(ValidarVacio(banco, pais, cuenta)){
 		iniciarSpinner();
@@ -145,7 +159,10 @@ function agregar_banco()
 				 banco: banco,
 				 pais: pais,
 				 cuenta: cuenta,
-				 clabe: clabe
+				 clabe: clabe,
+				 swift:swift,
+				 otro:otro,
+				 dir_postal:dir_postal
 				},
 	         type: "post",
 	         url: "nuevo_banco",

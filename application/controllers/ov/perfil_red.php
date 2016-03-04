@@ -279,9 +279,7 @@ class perfil_red extends CI_Controller
 		$id_red=$_POST['red'];
 		$nivel = ($this->tank_auth->get_user_id()==2) ? 0 : $_POST['nivel'];
 		$red 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
-		$frontales= $red[0]->frontal;
-		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
-		$frontales=count($afiliados);
+		$afiliados = $this->model_perfil_red->get_afiliados_directos($id_red, $_POST['id']);
 		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
@@ -369,6 +367,7 @@ class perfil_red extends CI_Controller
 	
 	function detalle_usuario()
 	{
+
 		$image 			 = $this->model_perfil_red->get_images($_POST['id']);
 		
 		$img_perfil="/template/img/empresario.jpg";
@@ -388,6 +387,8 @@ class perfil_red extends CI_Controller
 		$telefonos    =$this->model_perfil_red->telefonos($_POST['id']);
 		$dir    =$this->model_perfil_red->dir($_POST['id']);
 		$username = $this->general->username($_POST['id']);
+		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
+		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
 		
 		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -424,7 +425,9 @@ class perfil_red extends CI_Controller
 				echo '<b>'.$key->numero."</b><br />";
 			}
 		}
-		echo '</div>';
+		echo '</div><br>';
+		echo '<div class="row">Compras: $ <b>'.number_format($compras,2).'</b></div>';
+		echo '<div class="row">Comisiones: $ <b>'.number_format($comision,2).'</b></div>';
 		echo '</div></div></div>';
 	}
 	

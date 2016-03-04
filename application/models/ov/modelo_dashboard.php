@@ -61,7 +61,7 @@ class modelo_dashboard extends CI_Model
   }
   
   function get_cuentas_por_pagar_banco($id){
-  	$q=$this->db->query('SELECT cb.descripcion as nombreBanco,cb.cuenta as cuenta,cb.clave as clabe,
+  	$q=$this->db->query('SELECT cb.descripcion as nombreBanco,cb.cuenta as cuenta,cb.clave as clabe,cb.swift,cb.otro,cb.dir_postal,
   						cbh.valor as valor,cbh.fecha as fecha FROM cuenta_pagar_banco_historial cbh , cat_banco cb
   						where(cbh.id_banco=cb.id_banco)and(cbh.estatus="DES") and(cbh.id_usuario='.$id.')');
 	return $q->result();

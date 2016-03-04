@@ -7,7 +7,7 @@ class Modelo_historial_consignacion extends CI_Model{
 	}
 	
 	function ListarHistorialPendiente(){
-		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.cuenta, cpb.valor, cpb.id_venta,'Pendiente' as estado, cpb.id_usuario
+		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.clave, cb.swift,cb.otro, cb.dir_postal, cb.cuenta, cpb.valor, cpb.id_venta,'Pendiente' as estado, cpb.id_usuario
 								FROM cuenta_pagar_banco_historial cpb, user_profiles up, users u, cat_banco cb
 								where cpb.id_banco = cb.id_banco 
 								and cpb.id_usuario = u.id 
@@ -88,7 +88,7 @@ where cpb.id_banco = cb.id_banco and cpb.id_usuario = u.id and up.user_id = u.id
 	}
 	
 	function ConsultarPagosBanco($id, $inicio, $fin){
-		$q = $this->db->query("SELECT cpb.id, cpb.fecha, cb.descripcion as banco, cb.cuenta, cb.clave, cpb.valor,cpb.estatus as estado
+		$q = $this->db->query("SELECT cpb.id, cpb.fecha, cb.descripcion as banco, cb.cuenta, cb.clave, cb.swift, cb.otro, cb.dir_postal, cpb.valor,cpb.estatus as estado
 FROM cuenta_pagar_banco_historial cpb, cat_banco cb
 where cpb.id_banco = cb.id_banco and cpb.id_usuario =".$id." and fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59'");
 		$historial = $q->result();

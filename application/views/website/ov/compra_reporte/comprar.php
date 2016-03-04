@@ -183,12 +183,16 @@
 															<a onclick="consignacion()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/deposito-bancario.jpg" alt="Banco" height="60" width="240">
 															</a>
-															<a onclick="payPal()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
-																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
-															</a>
+															<?php if($payulatam[0]->estatus=='ACT') {?>
 															<a onclick="payuLatam()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/payu.jpg" alt="american express" height="60" width="100">
 															</a>
+															<?php }?>
+															<?php if($paypal[0]->estatus=='ACT') {?>
+															<a onclick="payPal()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
+																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
+															</a>
+															<?php }?>
 														</div>
 													</div>
 													<div class="col-sm-4">

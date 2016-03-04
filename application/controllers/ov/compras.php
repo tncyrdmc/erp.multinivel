@@ -322,6 +322,12 @@ function index()
 		if(!$contenidoCarrito['compras'])
 			redirect('/ov/compras/carrito');
 		
+		$paypal  = $this->modelo_pagosonline->val_paypal();
+		$payulatam  = $this->modelo_pagosonline->val_payulatam();
+		
+		$this->template->set('paypal',$paypal);
+		$this->template->set('payulatam',$payulatam);
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('footer', 'website/ov/footer');
@@ -372,18 +378,33 @@ function index()
 				</p>
 				<p>
 				</p><div class="alert alert-success alert-block">
-		 		<p> Nombre de Banco : '.$banco[0]->descripcion.'</p>
-				<p> Numero de Cuenta: '.$banco[0]->cuenta.'</p>
+		 		<p><b>Nombre de Banco</b> : '.$banco[0]->descripcion.'</p>
+				<p><b>Numero de Cuenta</b>: '.$banco[0]->cuenta.'</p>
 			';
 		
-			if($banco[0]->clave){
+			if($banco[0]->swift){
 			echo '
-				<p> CLABE(Solo en Mexico): '.$banco[0]->clave.'</p></div>
-				<p>
-				</p>
-			</div>
+				<p><b>SWIFT</b> :'.$banco[0]->swift.'</p>
 				';	
 			}
+			if($banco[0]->otro){
+				echo '
+				<p><b>ABA/IBAN/OTRO</b> :'.$banco[0]->otro.'</p>
+				';
+			}
+			if($banco[0]->dir_postal){
+				echo '
+				<p><b>Dirección postal</b>  :'.$banco[0]->dir_postal.'</p>
+				';
+			}
+			if($banco[0]->clave){
+				echo '
+				<p><b>CLABE</b> :'.$banco[0]->clave.'</p>
+				';
+			}
+			echo '<p>
+				</p>
+				</div>';
 		}	
 	}
 	
@@ -428,7 +449,7 @@ function index()
 		$id = $_POST['custom'];
 		$id_pago = $_POST['invoice'];
 		$identificado_transacion = $_POST['txn_id'];
-		$fecha=$_POST['payment_date'];
+
 		$referencia = $_POST['payer_id'];
 		$metodo_pago = $_POST['payment_type'];
 		$estado = $_POST['payment_status'];
@@ -439,7 +460,7 @@ function index()
 	
 		if($estado=='Completed'){
 				
-	
+			$fecha = date("Y-m-d");
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYPAL',$fecha);
 				
 			$this->modelo_compras->registrar_pago_online
@@ -619,43 +640,7 @@ function index()
 		
 		if($paypal[0]->test!=1)
 			$link="https://www.paypal.com/cgi-bin/webscr";
-/*	
-		
-	
-		$time = time();
-		$firma = md5($payulatam[0]->apykey."~".$payulatam[0]->id_comercio."~NetSoft".$time."~".$totalCarrito."~".$payulatam[0]->moneda);
-		$id_transacion = $firma;
-	
-		$link="https://stg.gateway.payulatam.com/ppp-web-gateway/";
-	
-		if($payulatam[0]->test!=1)
-			$link="https://gateway.payulatam.com/ppp-web-gateway/";
-		*/
-		
-		//Prueba : http://www.sandbox.paypal.com/webscr.
-		// Produccion : https://www.paypal.com/cgi-bin/webscr
-		
-	/*	echo'
-			<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
-			<form method="post" action="'.$link.'">
-			  <input name="merchantId"    type="hidden"  value="'.$payulatam[0]->id_comercio.'">
-			  <input name="accountId"     type="hidden"  value="'.$payulatam[0]->id_cuenta.'" >
-			  <input name="description"   type="hidden"  value="'.$descripcion.'"  >
-			  <input name="referenceCode" type="hidden"  value="NetSoft'.$time.'" >
-			  <input name="amount"        type="hidden"  value="'.$totalCarrito.'"   >
-			  <input name="tax"           type="hidden"  value="0"  >
-			  <input name="taxReturnBase" type="hidden"  value="0" >
-			  <input name="currency"      type="hidden"  value="'.$payulatam[0]->moneda.'" >
-			  <input name="signature"     type="hidden"  value="'.$id_transacion.'"  >
-			  <input name="test"          type="hidden"  value="'.$payulatam[0]->test.'" >
-			  <input name="extra1" type="hidden" value="'.$id.'" >
-			  <input name="extra2" type="hidden" value="'.$id_pago_proceso.'" >
-			  <input name="buyerEmail"    type="hidden"  value="'.$email[0]->email.'" >
-			  <input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RespuestaPayuLatam" >
-			  <input name="confirmationUrl"  type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaPayuLatam" >
-			  <input name="Submit" type="submit"  value="Pagar" class="btn btn-success">
-			</form>';
-		*/
+
 		echo '<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
 			  <form action="'.$link.'" method="post">
 				<input type="hidden" name="cmd" value="_xclick">
@@ -1998,7 +1983,10 @@ function index()
 					<th data-class='expand'>Fecha</th>
 					<th >Banco</th>
 					<th data-hide='phone'>N° Cuenta</th>
-					<th data-hide='phone'>Clave</th>
+					<th data-hide='phone'>CLABE</th>
+					<th data-hide='phone'>SWIFT</th>
+					<th data-hide='phone'>ABA/IBAN/OTRO</th>
+					<th data-hide='phone'>Dirección postal</th>
 					<th data-hide='phone,tablet'>Monto</th>
 					<th data-hide='phone,tablet'>Estado</th>
 				</thead>
@@ -2011,6 +1999,9 @@ function index()
 			<td>".$cobros[$i]->banco."</td>
 			<td>".$cobros[$i]->cuenta."</td>
 			<td>".$cobros[$i]->clave."</td>
+			<td>".$cobros[$i]->swift."</td>
+			<td>".$cobros[$i]->otro."</td>
+			<td>".$cobros[$i]->dir_postal."</td>
 			<td>$ ".number_format($cobros[$i]->valor,2)."</td>";
 		if($cobros[$i]->estado=='ACT')
 			echo "<td>Pagado</td>";
@@ -3733,19 +3724,24 @@ function index()
 	
 
 	public function pagarComisionVenta($id_venta,$id_afiliado_comprador){
+		$MATRICIAL='MAT';
+		$UNILEVEL='UNI';	
+		
 		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
 	
 		foreach ($mercancias as $mercancia){
 				
 			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
-	
-			$costoVenta=$mercancia->costo_unidad_total;
-	
-			$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
-	
+			$tipo_plan_compensacion=$this->modelo_compras->obtenerPlanDeCompensacion($id_red_mercancia);
+			
+			if($tipo_plan_compensacion[0]->plan==$MATRICIAL||$tipo_plan_compensacion[0]->plan==$UNILEVEL){
+
+				$costoVenta=$mercancia->costo_unidad_total;
+				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
+				
+			}
+
 		}
-	
-	
 	}
 	
 	public function calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado){

@@ -605,7 +605,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$q = $this->db->query("select pais from cross_dir_user where id_user=".$id);
 		$pais = $q->result();
 		$pais = $pais[0]->pais;
-		$q = $this->db->query("select * from cat_banco where id_pais='".$pais."' and estatus = 'ACT'");
+		$q = $this->db->query("select * from cat_banco where (id_pais='".$pais."' or id_pais='AAA')  and estatus = 'ACT'");
 		$bancos = $q->result();
 		return $bancos;
 	}
@@ -1073,7 +1073,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	function registrar_ventaConsignacion($id_usuario, $fecha){
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
-				"id_estatus"		=> 'ACT',
+				"id_estatus"		=> 'DES',
 				"id_metodo_pago" 	=> 'BANCO',
 				"fecha" 			=> $fecha
 		);
@@ -1215,6 +1215,11 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$red=$this->ConsultarIdRedMercancia($categoria[0]->id_grupo);
 
 		return $red; 
+	}
+	
+	function obtenerPlanDeCompensacion($id_red){
+		$q = $this->db->query("SELECT plan FROM tipo_red where id=".$id_red);
+		return $q->result();
 	}
 	
 	function Red($id){

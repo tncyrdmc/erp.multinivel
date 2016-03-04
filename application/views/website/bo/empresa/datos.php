@@ -56,7 +56,7 @@
 						 <input type="hidden" value="<?=$empresa[0]->id_tributaria;?>" name="id" >
 						 <section id="usuario" class="col col-3">
 							 <label class="input">Identificacion Tributaria
-								 <input required type="text" name="id_tributaria" pattern="[0-9]+[-]{1}[0-9]{1}" placeholder="Empresa" value="<?=$empresa[0]->id_tributaria;?>" > 
+								 <input required type="text" name="id_tributaria"  placeholder="Empresa" value="<?=$empresa[0]->id_tributaria;?>" > 
 							 </label>
 						 </section>
 						 <section id="usuario" class="col col-3">

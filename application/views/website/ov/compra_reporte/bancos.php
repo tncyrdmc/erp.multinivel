@@ -26,7 +26,7 @@
 				label: "Aceptar",
 				className: "btn-success",
 				callback: function() {
-						iniciarSpinner();
+						setiniciarSpinner();
 						Registrar(banco);
 					}
 				},
