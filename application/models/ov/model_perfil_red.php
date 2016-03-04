@@ -396,13 +396,17 @@ class model_perfil_red extends CI_Model
 	
 	function get_directos_by_id($id)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus ,
-	
-			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, afiliar AF
-	
-where U.id = UP.user_id and UP.user_id = AF.id_afiliado and AF.directo = ".$id." and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 order by (AF.id_afiliado) , AF.id_red limit 1000");
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , AF.directo ,
+				
+			(select distinct tr.nombre from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_red=  AF.id_red)) as redes
+
+				from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA ,afiliar AF
+
+				where U.id = UP.user_id and UP.user_id = AF.id_afiliado and AF.directo = ".$id." 
+				
+				and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 
+				
+				order by   AF.id_red , AF.lado asc,(U.id) limit 1000");
 		return  $q->result();
 	}
 	
@@ -490,6 +494,12 @@ order by (U.id);");
 	function use_mail()
 	{
 		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");
+		return $q->result();
+	}
+	
+	function exist_mail($mail)
+	{
+		$q=$this->db->query("select * from users where email like '".$mail."'");
 		return $q->result();
 	}
 	
@@ -775,6 +785,15 @@ order by (U.id);");
 	function kill_afiliadonred($id,$red){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id." and id_red = ".$red);
 		$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
+	}
+	
+	function ocupado($temp){
+		$this->db->query("select * from afiliar 
+							where id_red = ".$temp[0]->red." 
+								and debajo_de = ".$temp[0]->padre." 
+								and directo = ".$temp[0]->sponsor." 
+								and lado = ".$temp[0]->lado);
+		return $q->result();
 	}
 	
 }

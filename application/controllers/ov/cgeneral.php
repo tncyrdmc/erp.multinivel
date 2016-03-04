@@ -589,6 +589,55 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/view_autoresponder');
 
 	}
+
+	function Enviar_correos_autoresponder(){
+
+		$correos=explode(",", $_POST['correos']);
+		$i=0;
+		foreach ($correos as $correo) {
+
+			(!$this->cemail->send_email(9,$correo,$data)) ? $i++ : '';
+		}
+
+		if($i>0){
+			$mensaje = "Hubo un error al enviar uno de los correos.";
+			$this->session->set_flashdata('mensaje', $mensaje);
+			redirect('/ov/cgeneral/autoresponder');
+
+		}
+
+			$mensaje = "Los correos se han enviado correctamente";
+			$this->session->set_flashdata('mensaje', $mensaje);
+			redirect('/ov/cgeneral/autoresponder');
+
+	}
+
+	function validar_correo(){
+		$correos=explode(",", $_POST['correos']);
+		$i=0;
+		foreach ($correos as $correo) {
+			$email = preg_match(
+				'/^[A-z0-9_\-.]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $correo
+			);
+					if(!$email){
+						$i++;
+					}
+		}
+
+		if($i>0){
+			echo "<script>
+				  $('#botonsave').attr('disabled','disabled');
+				  </script>
+				";
+		}else{
+			echo "<script>
+				  $('#botonsave').removeAttr('disabled');
+				  </script>
+				";
+		}
+
+
+	}
 	
 	function invitacion_afiliar()
 	{
@@ -701,7 +750,7 @@ class cgeneral extends CI_Controller
 	}
 	
 	function nuevo_invitado(){
-		//echo "dentro de botbox";	
+	    //echo "dentro de botbox ";	
 		
 		//$datos_banner=$this->model_admin->datos_banner();
 		$img = $this->model_admin->img_banner();
@@ -727,7 +776,7 @@ class cgeneral extends CI_Controller
 		$email = $_POST['email'];	
 		$id = $this->tank_auth->get_user_id();
 		
-		$token = $this->general->new_invitacion($email,$red,$debajo_de,$lado);
+		$token = $this->general->new_invitacion($email,$red,$id,$debajo_de,$lado);
 		
 		$banner = $this->model_admin->img_banner(); 
 		$sponsor = array(
@@ -749,5 +798,7 @@ class cgeneral extends CI_Controller
 		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito" : "Error al Enviar Invitación";
 		
 	}
+
+
 	
 }

@@ -718,6 +718,8 @@ class Auth extends CI_Controller
 			$this->db->insert("cat_retenciones_historial",$datos);
 		}
 	}
+	
+	
 
 }
 

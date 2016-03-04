@@ -18,7 +18,7 @@ class perfil_red extends CI_Controller
 		$this->load->model('model_planes');
 		$this->load->model('ov/modelo_dashboard');
 		$this->load->model('bo/model_tipo_usuario');
-		if (!$this->tank_auth->is_logged_in())
+		if (!$this->tank_auth->is_logged_in()&&!$_POST['token'])
 		{																		// logged in
 		redirect('/auth');
 		}
