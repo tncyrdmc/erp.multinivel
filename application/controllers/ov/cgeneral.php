@@ -594,8 +594,19 @@ class cgeneral extends CI_Controller
 
 		$correos=explode(",", $_POST['correos']);
 		$i=0;
+		
+		$banner = $this->model_admin->img_banner();
+		$empresa = $this->model_admin->val_empresa_multinivel();
+		
+		$data = array(
+					'b_img' => $banner[0]->nombre_banner,
+					'b_desc' => $banner[0]->descripcion,
+					'b_link' => $empresa[0]->web,
+					'email' => ''
+			);
+		
 		foreach ($correos as $correo) {
-
+			$data['email'] = $correo;
 			(!$this->cemail->send_email(9,$correo,$data)) ? $i++ : '';
 		}
 
@@ -795,7 +806,8 @@ class cgeneral extends CI_Controller
 				'sponsor_tel' => $sponsor['tel']
 		);
 		
-		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito" : "Error al Enviar Invitación";
+		//$img = site_url(($data['b_img']) ? '/media/Empresa/'.$data['b_img'] : '/logo.png');
+		echo ($this->cemail->send_email(8, $email, $data)) ? "Invitación Realizada con Exito,  IMG: ".$img : "Error al Enviar Invitación";
 		
 	}
 

@@ -237,13 +237,14 @@ class general extends CI_Model
 	
 	function checkespacio ($temp){
 		
-		$exist = $this->model_perfil_red->exist_mail($token[0]->email);
+		$exist = $this->model_perfil_red->exist_mail($temp[0]->email);
+		
 		if ($exist){
-			return false;
+			return $exist[0]->email;
 		}
-		
-		return $this->model_perfil_red->ocupado($token) ? false : true;
-		
+		$ocupado = $this->model_perfil_red->ocupado($temp);
+		($ocupado) ? $this->trash_token($temp[0]->id) : '';
+		return $ocupado;
 	}
 	
 	function trash_token($token)

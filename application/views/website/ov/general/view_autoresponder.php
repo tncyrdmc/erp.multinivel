@@ -15,7 +15,7 @@
 		</div>
 	</div>
 		<?php if($this->session->flashdata('mensaje')) {
-			if($this->session->flashdata('mensaje')!="Hubo un error al enviar uno de los correos."){
+			if($this->session->flashdata('mensaje')=="Hubo un error al enviar uno de los correos."){
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
 									×

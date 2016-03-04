@@ -117,7 +117,7 @@ class Cemail extends CI_Model
 				site_url(($data['user_id']&&$data['new_email_key']) ? '/auth/reset_email/'.$data['user_id'].'/'.$data['new_email_key'] : ''),
 				site_url(($data['user_id']&&$data['new_pass_key']) ?'/auth/reset_password/'.$data['user_id'].'/'.$data['new_pass_key'] : ''),				
 				site_url(($data['token']) ? '/key/invitacion/'.$data['token'] : ''),
-				site_url(($data['b_img']) ? '/media/Empresa/"'.$data['b_img'] : '/logo.png')
+				site_url(($data['b_img']) ? '/media/Empresa/'.$data['b_img'] : '/logo.png')
 		);
 		
 		$validar = array (
@@ -227,11 +227,19 @@ class Cemail extends CI_Model
 								Para afiliarse al sitio de clic <a class="btn" href="'.$sitios[5].'">Aqui!</a>
 						</p><!-- /Callout Panel -->
 						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador
-						<a href="'.$sitios[5].'"></a>'.$sitios[5].'</p><br /><br />
+						<a href="'.$sitios[5].'">'.$sitios[5].'</a></p><br /><br />
 						<h4>Datos del Sponsor</h4><br />
 						<p>Nombre Completo: '.$data['sponsor_name'].'<br /></p>
 						<p>Correo: '.$data['sponsor_email'].'<br /></p>
 						<p>'.$validar['sponsor_tel'].'<br /></p>';
+		
+		$autoresponder = '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
+						<p class="lead">'.$data['b_desc'].'</p>
+						<p class="callout">
+								Para mas informacion de click <a class="btn" href="'.$data['b_link'].'">Aqui!</a>
+						</p><!-- /Callout Panel -->
+						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador
+						<a href="'.$data['b_link'].'">'.$data['b_link'].'</a></p><br /><br />';
 		
 		
 		$q = array(			//welcome
@@ -249,7 +257,9 @@ class Cemail extends CI_Model
 							//reset password
 						$reset_password, 
 							//invitacion
-						$invitacion
+						$invitacion, 
+							//autoresponder
+						$autoresponder
 		);
 	
 		return $q[$type];
