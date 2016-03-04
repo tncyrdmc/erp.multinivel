@@ -31,9 +31,9 @@
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="BIN" <?=($datosDeRed[0]->plan=="BIN") ? 'checked' : '' ?> placeholder="tipo de plan">
 	        <i></i>Binario</label>
-	        <label class="radio">
-	        <input type="radio" name="tipo_plan" value="BEQ" <?=($datosDeRed[0]->plan=="BEQ") ? 'checked' : '' ?> placeholder="tipo de plan">
-	        <i></i>Binario Equilibrado</label>
+	        <!-- <label class="radio">
+	        <input type="radio" name="tipo_plan" value="BEQ" <?/*($datosDeRed[0]->plan=="BEQ") ? 'checked' : '' */?> placeholder="tipo de plan">
+	        <i></i>Binario Equilibrado</label>-->
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="MAT" <?=($datosDeRed[0]->plan=="MAT") ? 'checked' : '' ?> placeholder="tipo de plan">
 	        <i></i>Matricial</label>

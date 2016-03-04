@@ -56,9 +56,9 @@
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="BIN" placeholder="tipo de plan">
 	        <i></i>Binario</label>
-	        <label class="radio">
+	       <!-- <label class="radio">
 	        <input type="radio" name="tipo_plan" value="BEQ" placeholder="tipo de plan">
-	        <i></i>Binario Equilibrado</label>
+	        <i></i>Binario Equilibrado</label>- --> 
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="MAT" checked placeholder="tipo de plan">
 	        <i></i>Matricial</label>
