@@ -81,6 +81,12 @@
 							<i></i>Test
 							</label>
 						 </section>
+						 <section id="usuario" class="col col-6">
+							<label class="checkbox">
+								<input name="estatus" <?php if($paypal[0]->estatus == 'ACT') echo "checked='checked'";?> type="checkbox">
+							<i></i>Mostrar en Carrito de Compras
+							</label>
+						 </section>
 					 </fieldset>
 						<footer>
 <button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>

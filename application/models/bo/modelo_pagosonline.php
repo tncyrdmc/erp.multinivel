@@ -45,17 +45,22 @@ class modelo_pagosonline extends CI_Model
 	function actualizar_payulatam()
 	{
 		
-		$estado=0;
+		$test=0;
+		$estado='DES';
 
 		if(isset($_POST['test']))
-			$estado=1;
+			$test=1;
+		
+		if(isset($_POST['estatus']))
+			$estado='ACT';
 		
 		$dato=array(
 				"apykey"     => $_POST['apykey'],
 				"id_comercio"   		=> $_POST['id_comercio'],
 				"id_cuenta"     		=> $_POST['id_cuenta'],
-				"moneda"       		=> $_POST['moneda'],
-				"test"       		=> $estado
+				"moneda"       			=> $_POST['moneda'],
+				"test"       			=> $test,
+				"estatus"       		=> $estado
 		);
 	
 		$this->db->where('apykey', $_POST['id']);
@@ -67,15 +72,20 @@ class modelo_pagosonline extends CI_Model
 	function actualizar_paypal()
 	{
 	
-		$estado=0;
-	
+		$test=0;
+		$estado='DES';
+
 		if(isset($_POST['test']))
-			$estado=1;
+			$test=1;
+		
+		if(isset($_POST['estatus']))
+			$estado='ACT';
 	
 		$dato=array(
 				"email"     => $_POST['email'],
 				"moneda"       		=> $_POST['moneda'],
-				"test"       		=> $estado
+				"test"       		=> $test,
+				"estatus"       		=> $estado
 		);
 	
 		$this->db->where('email', $_POST['id']);

@@ -75,7 +75,7 @@
                                     										if ($key->debajo_de == $id) {	?>
                                     											<li id="t<?=$key->id_afiliado?>"><a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree(<?=$key->id_afiliado?>, 1)" href="#"></a>
                                     												<div onclick="detalles(<?=$key->id_afiliado?>)"
-                                    													class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles
+                                    													class="<?=($key->directo==$id) ? 'todo1' : 'todo'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles
                                     												</div>
                                     											</li>
                                     											
