@@ -10,8 +10,7 @@ class perfil_red extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->library('security');
 		$this->load->library('tank_auth');
-		$this->lang->load('tank_auth');
-		$this->load->model('general');
+		$this->lang->load('tank_auth');		
 		$this->load->model('ov/general');
 		$this->load->model('ov/model_perfil_red');
 		$this->load->model('ov/model_afiliado');
@@ -1051,7 +1050,7 @@ class perfil_red extends CI_Controller
 	
 	function afiliar_nuevo()
 	{
-		
+		$this->load->model('general');
 		$resultado = $this->model_afiliado->crearUsuario();
 		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
 		($_POST['token']) ? $this->general->trash_token($_POST['token']) : '';
