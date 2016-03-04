@@ -151,7 +151,7 @@ class model_afiliado extends CI_Model{
 		{
 			$directo=intval($this->tank_auth->get_user_id());
 		}else{
-			$directo=intval(($_POST['directo']) ? $_POST['directo'] : $id_debajo);
+			$directo=intval(isset($_POST['directo']) ? $_POST['directo'] : $id_debajo);
 		}
 
 		$dato_afiliar =array(
