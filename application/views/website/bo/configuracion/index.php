@@ -60,8 +60,8 @@
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
 													<a href="/bo/admin/paises">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-usd fa-3x"></i>
-															<h1>Pais/Moneda<br><br></h1>
+															<i class="fa fa-flag fa-3x"></i>
+															<h1>Países<br><br></h1>
 														</div>
 													</a>
 												</div>
