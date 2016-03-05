@@ -135,7 +135,7 @@ class dashboard extends CI_Controller
 	    $notifies = $this->model_admin->get_notify_activos();
 
 
-	    $name_sponsor=$this->general->get_username($id_sponsor[0]->id_usuario);
+	     $name_sponsor= ($id_sponsor) ? $this->general->get_username($id_sponsor[0]->id_usuario) : '';
 
 		$image=$this->modelo_dashboard->get_images($id);
 		$fondo="/template/img/portada.jpg";

@@ -77,7 +77,7 @@
 																	</p>
 																</li>
                                 <li>
-                                <?php
+                                <?php if($id_sponsor&&$name_sponsor){
                                 if(($id_sponsor[0]->id_usuario!=1)){
                                 ?>
                                <b>Patrocinador:</b>
@@ -85,7 +85,7 @@
 
                               <?php }else{?>
                               Eres un nodo raíz, fuiste patrocinado por la empresa<br />
-                              <?php }?>
+                              <?php }}?>
                                 </li>
 															</ul>
 															<br>

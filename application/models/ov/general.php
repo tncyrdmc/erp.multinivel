@@ -225,7 +225,7 @@ class general extends CI_Model
 	
 	function get_username($id)
 	{
-		$q=$this->db->query('select * from user_profiles where user_id = '.$id);
+		$q=$this->db->query('select * from user_profiles where user_id = "'.$id.'"');
 		return $q->result();
 	}
 	function get_style($id)
