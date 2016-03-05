@@ -31,7 +31,7 @@
 					-->
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Afiliados a mi Red</h2>				
+						<h2>Afiliados en Toda Mi Red</h2>				
 						
 					</header>
 

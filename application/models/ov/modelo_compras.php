@@ -46,13 +46,13 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		return $q->result();
 	}
 	
-	function traer_afiliados_estadisticas($id)
+	function traer_afiliados_estadisticas($id,$id_red)
 	{
 		$q=$this->db->query('select UP.id_sexo, 
 (YEAR(CURDATE())-YEAR(UP.fecha_nacimiento)) - (RIGHT(CURDATE(),5)<RIGHT(UP.fecha_nacimiento,5)) edad,
 UP.id_edo_civil, UP.id_ocupacion, UP.id_tiempo_dedicado, U.id id_afiliado
 from afiliar A, user_profiles UP, users U
-where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id');
+where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id and A.id_red="'.$id_red.'"');
 		return $q->result();
 	}
 	
