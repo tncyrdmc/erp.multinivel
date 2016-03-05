@@ -1573,6 +1573,12 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		$q=$this->db->query("select Code, Name, Code2 from Country where Estatus='ACT'");
 		return $q->result();
 	}
+
+	function get_pais_activo_con_todos_los_paises()
+	{
+		$q=$this->db->query("select Code, Name, Code2 from Country where Estatus='ACT' order by Code");
+		return $q->result();
+	}
 	
 	function use_mail()
 	{

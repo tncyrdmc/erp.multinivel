@@ -45,7 +45,7 @@
 				<textarea style="margin-left: 1rem;" rows="6" class="custom-scroll" name="descripcion" size="30" required placeholder="Descripcion"></textarea> 
 			</label>
 			<br>
-			<p>Nota: Si tu red es de frontalidad o profundidad es infinita, en la configuracion ponle 0.</p><br>
+			<p>Nota: Si la red es de frontalidad o profundidad infinita colocar 0.</p><br>
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
 				<input type="number" class="form-control" name="frontal" size="30" placeholder="frontalidad" required>
 	        </label>

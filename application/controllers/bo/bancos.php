@@ -49,7 +49,7 @@ class bancos extends CI_Controller
 		$usuario = $this->general->get_username($id);
 	
 		$style=$this->modelo_dashboard->get_style(1);
-		$paises            = $this->model_admin->get_pais_activo();
+		$paises            = $this->model_admin->get_pais_activo_con_todos_los_paises();
 		
 		$this->template->set("style",$style);
 		$this->template->set("paices",$paises);
