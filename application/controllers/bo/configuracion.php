@@ -158,7 +158,7 @@ class configuracion extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
-		$pais = $this->model_admin->get_pais_activo();
+		$pais = $this->model_admin->get_pais();
 		$this->template->set("pais",$pais);
 		
 		$regimen = $this->model_admin->get_regimen();
