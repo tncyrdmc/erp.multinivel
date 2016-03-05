@@ -1,10 +1,17 @@
 <!-- PAGE FOOTER -->
 		<div class="page-footer" style="height: 6rem;margin-bottom: -4rem;">
 			<div class="row">
-				<div class="col-xs-12 col-sm-12">
+				<div class="col-xs-8 col-sm-8">
 					<span class="txt-color-white">
 			Copyright © 2016 Networksoft S.A.S Todos los derechos reservados.
 		<a href="http://www.networksoft.com.co/" target="_BLANK">Networksoft S.A.S</a></span>
+				</div>
+				<div class="col-xs-4 col-sm-4">
+					<span class="txt-color-white">
+			
+		<a class="txt-color-white" href="/ov/cabecera/sugerencia" target="_self"><i class="fa fa-send fa-2x"></i>&nbsp;Sugerencias</a>
+		
+		</span>
 				</div>
 			</div>
 		</div>
