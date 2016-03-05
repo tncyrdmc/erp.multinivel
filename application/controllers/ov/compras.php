@@ -158,15 +158,18 @@ function index()
 		else if($id_tipo_mercancia==3)
 			$mostrarMercanciaTipo=3;
 
-
 		$id = $this->tank_auth->get_user_id();
 	
-		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$usuario = $this->general->get_username($id);
-		$redes = $this->model_tipo_red->RedesUsuario($id);
 
-		$this->template->set("redes", $redes);
-		$this->template->set("grupos",$grupos);
+		if($id_tipo_mercancia==3){
+			$grupos = $this->model_mercancia->CategoriasMercancia();
+			$redes = $this->model_tipo_red->RedesUsuario($id);
+
+			$this->template->set("redes", $redes);
+			$this->template->set("grupos",$grupos);
+		}
+
 		$this->template->set("usuario",$usuario);
 		$this->template->set("mostrarMercancia",$mostrarMercanciaTipo);
 		
