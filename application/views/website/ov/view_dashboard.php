@@ -418,11 +418,11 @@
 										<div class="row">
 											<fieldset>
 												<legend><b>Comunicación</b></legend>
-												<div class="col-sm-1">
+												<div class="col-sm-3">
 												</div>
 												<div class="col-sm-2">
 													<a href="cgeneral/autoresponder">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-globe fa-3x"></i>
 															<h5>Autoresponder</h5>
 														</div>
@@ -431,14 +431,14 @@
 												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
 												if($permiso){
 												?>
-												<div class="col-sm-2">
+											<!--  	<div class="col-sm-2">
 													<a href="cgeneral/web_personal">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-globe fa-3x"></i>
 															<h5>Web Personal</h5>
 														</div>
 													</a>
-												</div>
+												</div>	-->
 												<?php }?>
 												<?php $permiso=$ci->model_permissions->check($id,'chat');
 												if($permiso){
@@ -466,17 +466,17 @@
 												<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
 												if($permiso){
 												?>
-												<div class="col-sm-2">
+											<!--	<div class="col-sm-2">
 													<a href="cgeneral/soporte_tecnico_ver_redes">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-support fa-3x"></i>
 															<h5>Soporte Técnico</h5>
 														</div>
 													</a>
-												</div>
+												</div>-->
 												<?php }?>
 												</fieldset>
-								<!---<div class="row">-->
+								<!---<div class="row">
 											<div class="col-sm-1">
 												</div>
 												<div class="col-sm-2">
@@ -487,7 +487,7 @@
 														</div>
 													</a>
 												</div>
-								<!---</div>-->
+								</div>-->
 												<?php }?>
 											<div class="row">
                       <?php $permiso=$ci->model_permissions->check($id,'videollamadas');
@@ -504,10 +504,10 @@
 											</div> -->
 											
 											<?php }?>
-								<!--				<?php $permiso=$ci->model_permissions->check($id,'social_network');
+											<?php $permiso=$ci->model_permissions->check($id,'social_network');
 												if($permiso){
 												?>
-												<div class="col-sm-12">
+											<!--		<div class="col-sm-12">
 													<a href="cgeneral/social_network">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<div class="row">
@@ -521,8 +521,8 @@
 															<h5>Social network</h5>
 														</div>
 													</a>
-												</div>
-												<?php }?>	 -->
+												</div>-->
+												<?php }?>	 
 											</div>
 
 											
