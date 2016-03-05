@@ -4,24 +4,13 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						
-						<?php  if($type=='5'){?>
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> Carrito de Compras
-							</span>	
-							 <?php }else if(isset($_GET['co'])){?>
+						 
 							
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
 								<a href="/bo/comercial"> Comercial</a> > Carrito de Compras
 							</span>
-							  <?php }else{?>
-							
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>> <a href="/bol/dashboard">Logistico</a> >
-								<a href="/bo/logistico2/alta"> Alta</a> > Carrito de Compras
-							</span>
-							 <?php }?>
+			
 						</h1>
 					</div>
 				</div>

@@ -5,20 +5,14 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 				
-				<?php  if($type=='5'){?>
+
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>&gt;
-								 <a href="/bo/comercial/carrito_de_compras"> Mercancia </a>
-								> <a href="/bo/mercancia/index" >Alta</a> > Producto
-				</span>
-					<?php }else{?>	
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>&gt;
-								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras"> Carrito de Compras </a>
-								> <a href="/bo/mercancia/index" >Alta</a> > Producto
+								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras?co=c"> Carrito de Compras </a>
+								> <a href="/bo/mercancia/index?co=c" >Alta</a> > Producto
 				</span>
 					
-					<?php }?>
+					
 			</h1>
 		</div>
 	</div>
