@@ -33,19 +33,19 @@
                   <div class="contenidoBotones" style="margin-left: 6%;">
 										<div class="row">
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 link">
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="/bo/configuracion/tipoRed">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-list fa-3x"></i>
-															<h1>Redes<br><br></h1>
-														</div>
-													</a>
-												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
 													<a href="/bo/configuracion/empresa">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-bookmark fa-3x"></i>
 															<h1>Empresa<br><br></h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
+													<a href="/bo/configuracion/tipoRed">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-list fa-3x"></i>
+															<h1>Redes<br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -60,8 +60,8 @@
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
 													<a href="/bo/admin/paises">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-usd fa-3x"></i>
-															<h1>Pais/Moneda<br><br></h1>
+															<i class="fa fa-flag fa-3x"></i>
+															<h1>Países<br><br></h1>
 														</div>
 													</a>
 												</div>
@@ -98,7 +98,7 @@
 													</a>
 												</div>
 											<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="/bo/administracion/emails_departamentos">
+													<a href="/bo/configuracion/emails_departamentos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-envelope fa-3x"></i>
 															<h1>E-mails</h1>

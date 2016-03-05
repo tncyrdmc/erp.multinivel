@@ -814,16 +814,17 @@ function index()
 		echo "Error tu contraseña contiene errores, por favor verificalo";
 	}
 	
-	function preOrdenEstadisticas($id){
-	
-		$datos = $this->modelo_compras->traer_afiliados_estadisticas($id);
-	
-		foreach ($datos as $dato){
-			if ($dato!=NULL){
-				array_push($this->afiliadosEstadisticas, $dato);
-				$this->preOrdenEstadisticas($dato->id_afiliado);
+	function preOrdenEstadisticas($id,$red){
+
+			$datos = $this->modelo_compras->traer_afiliados_estadisticas($id,$red);
+			
+			foreach ($datos as $dato){
+				if ($dato!=NULL){
+					array_push($this->afiliadosEstadisticas, $dato);
+					$this->preOrdenEstadisticas($dato->id_afiliado,$red);
+				}
 			}
-		}
+
 	}
 	
 	function estadistica()
@@ -839,10 +840,14 @@ function index()
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
-		$this->preOrden($id);
-		$this->template->set("afiliadosRed",count($this->afiliados));
+		$redes = $this->model_perfil_red->ConsultarRedAfiliado($id);
 		
-		$this->preOrdenEstadisticas($id);
+		foreach ($redes as $red){
+			$this->preOrdenEstadisticas($id,$red->id_red);
+		}
+		
+		$this->template->set("afiliadosRed",count($this->afiliadosEstadisticas));
+		
 		$cantidad_hombres = 0;
 		$cantidad_mujeres = 0;
 		$cantidad_total_sexo = 0;
