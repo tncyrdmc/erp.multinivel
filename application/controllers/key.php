@@ -51,7 +51,7 @@ class Key extends CI_Controller
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
 		
 	
-		if($id>2){
+		/**if($id>2){
 			$estaEnRed 	 = $this->model_tipo_red->validarUsuarioRed($id,$id_red);
 			
 			if(!$estaEnRed)
@@ -60,7 +60,7 @@ class Key extends CI_Controller
 			if(count($afiliados)>=$red_forntales[0]->frontal&&$red_forntales[0]->frontal>0)
 				redirect('/ov/perfil_red/afiliar_red?id='.$id_red);
 			
-		}
+		}*/
 
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
