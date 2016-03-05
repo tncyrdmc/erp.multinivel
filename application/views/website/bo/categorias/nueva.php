@@ -7,7 +7,7 @@
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> 
 				<a href="/bo/comercial/">Comercial</a> 
-				> <a href="/bo/comercial/categorias"> Categorias </a>
+				> <a href="/bo/comercial/categorias"> Categorías </a>
 				>	Alta
 				</span>
 			</h1>
@@ -46,7 +46,7 @@
 				-->
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Nueva Categoria</h2>				
+					<h2>Nueva Categoría</h2>				
 					
 				</header>
 
