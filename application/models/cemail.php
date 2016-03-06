@@ -94,15 +94,15 @@ class Cemail extends CI_Model
 	
 	function Sumarios ($type,$data){
 		$q = array(
-				"Hola ".$data['username'].", te damos la bienvenida a tu oficina virtual de ".$data['site_name'].".", //welcome
-				"Bienvenido, ".$data['username']." Ha sido registrado en nuestro sistema.", //activate
-				"Your new email address on ".$data['site_name'].".", //change-email
-				"Hola ".$data['username'].", Su peticion de pago esta siendo procesada.", //cobros
-				"Hola ".$data['username'].", Su pago se ha recibido.", //cuentas-cobrar
-				"Hi, ".$data['username'].".", //forgot password
-				"Tu nueva contraseña en ".$data['site_name'].".", //reset password
-				"Hola, ".$data['email'].", Te han invitado a afiliarte.", //invitacion
-				"Gusto en Conocerte, ".$data['email']."." //autoresponder
+				($type==0) ? "Hola ".$data['username'].", te damos la bienvenida a tu oficina virtual de ".$data['site_name']."." : "", //welcome 
+				($type==1) ? "Bienvenido, ".$data['username']." Ha sido registrado en nuestro sistema." : "", //activate
+				($type==2) ? "Your new email address on ".$data['site_name']."." : "", //change-email
+				($type==3) ? "Hola ".$data['username'].", Su peticion de pago esta siendo procesada." : "", //cobros
+				($type==4) ? "Hola ".$data['username'].", Su pago se ha recibido." : "", //cuentas-cobrar
+				($type==5) ? "Hi, ".$data['username']."." : "", //forgot password
+				($type==6) ? "Tu nueva contraseña en ".$data['site_name']."." : "", //reset password
+				($type==7) ? "Hola, ".$data['email'].", Te han invitado a afiliarte." : "", //invitacion
+				($type==8) ? "Gusto en Conocerte, ".$data['email']."." : ""//autoresponder
 		);
 	
 		return $q[$type];
