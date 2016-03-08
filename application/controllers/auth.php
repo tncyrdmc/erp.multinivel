@@ -391,9 +391,9 @@ class Auth extends CI_Controller
 
 				// Send email with new password
 				//$this->_send_email('reset_password', $data['email'], $data);
-				$this->cemail->send_email(7, $data['email'], $data);
+				$this->cemail->send_email(7, $data['email'], $data); 
 				
-				$this->_show_message($this->lang->line('Has cambiado tu contraseña exitosamente').' '.anchor('/auth/login/', 'Login'));
+				$this->_show_message($this->lang->line('auth_message_password_changed').' '.anchor('/auth/login/', 'Login'));
 
 			} else {														// fail
 				$this->_show_message($this->lang->line('auth_message_new_password_failed'));

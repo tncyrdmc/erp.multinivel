@@ -217,7 +217,7 @@ class Cemail extends CI_Model
 		$reset_password = ($type==6) ? '<p>Has cambiado tu contraseña.<br />
 						Por favor , mantenga en sus registros para que no se olvide.<br />
 						<br />
-						'.$validar['username'].'
+						'.$validar['username'].'<br />
 						Tu correo: '.$data['email'].'<br />
 						Tu nueva contraseña: '.$data['new_password'].'<br /></p>': '';
 		
