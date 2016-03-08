@@ -105,7 +105,7 @@
 														<label class="label">Imágen</label>
 														<div class="input input-file">
 															<span class="button">
-																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
+																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen"  type="text" required>
 															</div>
 															<small><cite title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite></small>
 														</section>
@@ -208,7 +208,7 @@
 
 														<section class="col col-2">País de la mercancía
 														<label class="select">
-															<select id="pais" required name="pais" onChange="select_pais()" >
+															<select id="pais"  name="pais" onChange="select_pais()" required >
 																<option value="-" selected>-- Seleciona un pais --</option>
 																<?foreach ($pais as $key)
 																{?>

@@ -193,7 +193,7 @@ class Cemail extends CI_Model
 						<p>'. $validar['monto'].'<br /></p>' : '';
 		
 		$cuentas_cobrar = ($type==4) ? '<p class="callout">
-							Recibimos su confirmacion sobre la transacion con los siguientes datos:
+							Recibimos su confirmacion sobre la transaccion con los siguientes datos:
 						</p><!-- /Callout Panel -->						
 						<p>'. $validar['id_venta'].'<br /></p>
 						<p>'. $validar['fecha'].'<br /></p>
@@ -217,9 +217,9 @@ class Cemail extends CI_Model
 		$reset_password = ($type==6) ? '<p>Has cambiado tu contraseña.<br />
 						Por favor , mantenga en sus registros para que no se olvide.<br />
 						<br />
-						'.$validar['username'].'
+						'.$validar['username'].'<br />
 						Tu correo: '.$data['email'].'<br />
-						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>': '';
+						Tu nueva contraseña: '.$data['new_password'].'<br /></p>': '';
 		
 		$invitacion = ($type==7) ? '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
 						<p class="lead">'.$data['b_desc'].'</p>

@@ -7,7 +7,7 @@
 							<!-- PAGE HEADER -->
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> 
+								<a href="/bo/configuracion/">Configuración</a> 
 							</span>
 							<span>>
 								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a>
@@ -44,7 +44,7 @@
 									<section>
 										<div>
 												<label class="select">
-													<label class="label">Seleccione una categoria</label>
+													<label class="label">Seleccione una categoría</label>
 													<select name="tipo" id="tipo" required="">
 														<option value="INF">Información</option>
 														<option value="VID">Videos</option>
@@ -52,7 +52,7 @@
 											</label><br>
 											
 											<label class="select">
-													<label class="label">Seleccione la red de la categoria</label>
+													<label class="label">Seleccione la red de la categoría</label>
 														<select name="red" id="red" required="">
 															<?php 
 																foreach ($redes as $red){

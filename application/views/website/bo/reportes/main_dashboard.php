@@ -909,6 +909,14 @@
 				window.location="/bo/reportes/reporte_cobros_todos_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
+
+			case "14" :{
+				// Comisiones por pagar y pagadas
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_ventas_pagadas_online_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
 		}
 
 		}

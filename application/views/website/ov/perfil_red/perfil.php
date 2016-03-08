@@ -126,7 +126,7 @@
 									<div class="row">
 										<section class="col col-4">
 											<label class="input">
-												<input placeholder="RFC" type="text" value="<?=$usuario[0]->keyword?>" name="rfc">
+												<input placeholder="Identificacion Fiscal" type="text" value="<?=$usuario[0]->keyword?>" name="rfc" id="keyword">
 											</label>
 										</section>
 										<section class="col col-4">
@@ -357,13 +357,15 @@ function actualizar()
 		"#nombre",
 	 	"#apellido",
 	 	"#datepicker",
-	 	"#cp"
+	 	//"#cp"
+	 	"#keyword"
 	 );
 	var mensajes = new Array(
 		"Por favor ingresa tu nombre",
 	 	"Por favor ingresa tu apellido",
 	 	"Por favor ingresa tu fecha de nacimiento",
-	 	"Por favor ingresa tu código postal"
+	 	//"Por favor ingresa tu código postal"
+	 	"Por favor ingresa tu Identificacion Fiscal"
 	 );
 
 	var validacion=valida_vacios(ids,mensajes);

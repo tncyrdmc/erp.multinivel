@@ -319,15 +319,9 @@
 						callback: function() {
 							var inicio=$("#startdate").val();
 							var fin=$("#finishdate").val();
-							if(inicio=='')
-							{
-								alert('Introduzca fecha de inicio');
-							}
-							else
-							{
-								if(fin=='')
+							if(inicio==''||fin=='')
 								{
-									alert('Introduzca fecha de fin');
+									alert('Introduzca las fechas');
 								}
 								else
 								{
@@ -352,7 +346,7 @@
 										
 									});*/
 								}
-							}	
+								
 							
 						}
 				},

@@ -158,7 +158,7 @@
 															</div>
 															<!-- CHAT BODY -->
 															<div id="chat-body" class="chat-body custom-scroll">
-																<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados En Mi Red 
+																<span id="" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados En Mi Red 
 																<b class="badge bg-color-red bounceIn animated"> <?php echo $numeroAfiliadosRed;?> </b> </span>
 																<ul>
 																    <?php 
