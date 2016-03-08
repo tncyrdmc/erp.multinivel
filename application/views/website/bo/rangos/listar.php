@@ -91,13 +91,13 @@
 															}
 														}?></td>
 														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-pencil fa-3x"></i></a>															
 															<?php if($cat_rango->estatus == 'ACT'){ ?>
 																<a title="Desactivar" onclick="estado('DES','<?php echo $cat_rango->id_rango; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
 																<a title="Activar" onclick="estado('ACT','<?php echo $cat_rango->id_rango; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>

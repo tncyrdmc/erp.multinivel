@@ -97,12 +97,13 @@
 														</td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $retencion->id_retencion; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $retencion->id_retencion; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															
 															<?php if($retencion->estatus == 'ACT'){ ?>
 																<a title="Desactivar" onclick="estado('DES','<?php echo $retencion->id_retencion; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
 																<a title="Activar" onclick="estado('ACT','<?php echo $retencion->id_retencion; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $retencion->id_retencion; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>

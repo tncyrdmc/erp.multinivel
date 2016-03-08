@@ -74,6 +74,7 @@
 													<th data-hide="phone,tablet">Fecuencia</th>
 													<th data-hide="phone,tablet">Condiciones</th>
 													<th data-hide="phone,tablet">Valor por Nivel</th>
+													<th data-hide="phone,tablet">Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -126,12 +127,13 @@
 														</td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $bono->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $bono->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															
 															<?php if($bono->estatus == 'ACT'){ ?>
 																<a title="Desactivar" onclick="estado('DES','<?php echo $bono->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
 																<a title="Activar" onclick="estado('ACT','<?php echo $bono->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $bono->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>
