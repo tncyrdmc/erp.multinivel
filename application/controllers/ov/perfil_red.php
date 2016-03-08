@@ -150,12 +150,22 @@ class perfil_red extends CI_Controller
 	
 	private function printPosicionAfiliado($nivel, $afiliado) {
 		$img_perfil = $this->setImagenAfiliado ($afiliado[0]->id_afiliado);
-	
+		$colorDirecto=$this->getDirectoColor($afiliado[0]->directo);
+		
 		echo "  <li id='".$afiliado[0]->id_afiliado."'>
 		        	<a class='quitar' onclick='subred(".$afiliado[0]->id_afiliado.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
-		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='todo'>".$afiliado[0]->afiliado."<br />Detalles</div>
+		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='".$colorDirecto."'>".$afiliado[0]->afiliado."<br />Detalles</div>
 		        </li>";
 	}
+	
+	private function getDirectoColor($directo){
+		$id_usuario=$this->tank_auth->get_user_id();
+		if($id_usuario==$directo)
+			return 'todo1';
+		return 'todo';
+	}
+	
+	
 	
 	private function printEspacioParaAfiliar($sponsor,$id_afiliado, $lado) {
 		echo "<li>
@@ -237,7 +247,11 @@ class perfil_red extends CI_Controller
 				else
 				{
 					$aux++;
-					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+					$id              = $this->tank_auth->get_user_id();
+					
+					$sponsor 			 = $this->model_perfil_red->get_sponsor_id($afiliado[0]->user_id,$id_red);
+
+					($sponsor[0]->directo==$id) ? $todo='todo1' : $todo='todo';
 					echo "
 					<li id='t".$afiliado[0]->user_id."'>
 		            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>

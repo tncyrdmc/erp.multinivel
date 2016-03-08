@@ -78,6 +78,13 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
 		return $q->result();
 	}
+	
+	function get_sponsor_id($id,$id_red)
+	{
+		$q=$this->db->query('SELECT directo FROM afiliar where id_afiliado='.$id.' and id_red='.$id_red);
+		return $q->result();
+	}
+	
 	function get_email($id)
 	{
 		$q=$this->db->query('select email from users where id='.$id);
@@ -389,7 +396,7 @@ class model_perfil_red extends CI_Model
 	
 	function get_cantidad_de_frontales($id_afiliado,$id_red)
 	{
-	
+		
 		$q=$this->db->query("SELECT count(*) as frontales FROM afiliar where debajo_de=".$id_afiliado." and id_red=".$id_red." order by lado");
 		return $q->result();
 	}

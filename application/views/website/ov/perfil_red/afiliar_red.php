@@ -102,59 +102,6 @@ $(document).ready(function() {
 	pageSetUp(); 
 });
 
-/*
-$("#remove_step").click(function() {
-	$("#tipo_plan").attr("name","tipo_plan");
-	$('.wizard').wizard('selectedItem', {
-			step: 4
-		});
-	$( "#step4" ).slideUp();
-	$( "#step4" ).remove();
-	$( "#paso4" ).slideUp();
-	$( "#paso4" ).remove();
-	$( this ).slideUp();
-	$( this ).remove();
-});
-
-$("#plan1").click(function(event) {
-	$("#tipo_plan").attr("value","1");
-	$("#planuno").addClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-
-$("#plan2").click(function(event) {
-	$("#tipo_plan").attr("value","2");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").addClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan3").click(function(event) {
-	$("#tipo_plan").attr("value","3");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").addClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan4").click(function(event) {
-	$("#tipo_plan").attr("value","4");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").addClass('packselected');
-});
-
-*/
-
-/*
-CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
-$("input").click(function() {
-$( this ).slideUp();
-$( this ).remove();
-});
-*/
 function codpos()
 {
 	var pais = $("#pais").val();
@@ -175,71 +122,7 @@ function codpos()
 		})
 	}
 }
-/*
-function SelecionarFase()
-{
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/MensajeFase",
-		data: {	id: <?php echo $id ?>, red: <?php echo $_GET['id']; ?> }
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Información Personal",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "hide",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}
-*//*
-function faseCambio(fase){
-	
-	bootbox.dialog({
-		message: "¿Estas Seguro?",
-		title: "Atención",
-		buttons: {
-			success: {
-			label: "Si",
-			className: "btn-success",
-			callback: function() {
-				
-				$.ajax({
-					type: "POST",
-					url: "/ov/perfil_red/CambioFase",
-					data: {
-						id: <?php echo $id ?>,
-						red: <?php echo $_GET['id']; ?>,
-						fase: fase
-							},
-					})
-					.done(function(msg)
-					{
-						alert('Has Cambiado de fase'+msg);
-						location.reload();
-					})
-				}
-			},
-			close:{
-				label: "NO",
-				className: "btn-danger",
-				callback: function() {
-					
-					}
-				}
-		}
-	});
-	
-}
-*/
+
 function use_username()
 {
 	$('#username').val($('#username').val().replace(" ",""));
@@ -342,21 +225,8 @@ function agregar_red(tipo)
 }
 function delete_telefono(id){
 	$("#tel_red_"+id+"").remove();	
-}/*
- $(function()
- {
- 	a = new Date();
-	año = a.getFullYear()-19;
-	$( "#datepicker" ).datepicker({
-	changeMonth: true,
-	numberOfMonths: 2,
-	maxDate: año+"-12-31",
-	dateFormat:"yy-mm-dd",
-	changeYear: true
-	yearRange: "-99:+0",
-	});
-});
-*/
+}
+
 function subred(id,profundidad)
 {
 	$("#"+id).children(".quitar").attr('onclick','');
@@ -815,47 +685,6 @@ function botbox(nombre, id, lado)
 			    
 			  });
 
-	/*	$("#remove_step_r").click(function(event) {
-
-			$("#tipo_plan_r").attr("name","tipo_plan");
-			$('.wizard_r').wizard('selectedItem', {
-					step: 4
-				});
-			$( "#step4_r" ).slideUp();
-			$( "#step4_r" ).remove();
-			$( "#paso4_r" ).slideUp();
-			$( "#paso4_r" ).remove();
-			$( this ).slideUp();
-			$( this ).remove();
-		});
-		$("#plan1_r").click(function(event) {
-		$("#tipo_plan_r").attr("value","1");
-		$("#planuno_r").addClass('packselected');
-		$("#plandos_r").removeClass('packselected');
-		$("#plantres_r").removeClass('packselected');
-		$("#plancuatro_r").removeClass('packselected');
-		});
-		$("#plan2_r").click(function(event) {
-			$("#tipo_plan_r").attr("value","2");
-			$("#planuno_r").removeClass('packselected');
-			$("#plandos_r").addClass('packselected');
-			$("#plantres_r").removeClass('packselected');
-			$("#plancuatro_r").removeClass('packselected');
-		});
-		$("#plan3_r").click(function(event) {
-			$("#tipo_plan_r").attr("value","3");
-			$("#planuno_r").removeClass('packselected');
-			$("#plandos_r").removeClass('packselected');
-			$("#plantres_r").addClass('packselected');
-			$("#plancuatro_r").removeClass('packselected');
-		});
-		$("#plan4_r").click(function(event) {
-			$("#tipo_plan_r").attr("value","4");
-			$("#planuno_r").removeClass('packselected');
-			$("#plandos_r").removeClass('packselected');
-			$("#plantres_r").removeClass('packselected');
-			$("#plancuatro_r").addClass('packselected');
-		});*/
 }
 function check_keyword()
 {
@@ -969,29 +798,7 @@ function detalles(id)
 		});
 	});
 }
-/*function InformarPremio(premio){
-	$.ajax({
-		type: "POST",
-		url: "ConsultarPremio",
-		data: {id: premio},
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Felicitaciones",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "btn btn-danger",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}*/
+
 </script>
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -1077,7 +884,7 @@ function detalles(id)
                                                         {?>
 														<li id="<?=$key->id_afiliado?>">
 															<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>, 1)" href="#"></a>
-															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
+															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==$id) ? 'todo1' : 'todo'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
 														</li>
 														<?}
 													}?>
