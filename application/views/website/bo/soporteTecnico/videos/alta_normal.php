@@ -7,7 +7,7 @@
 							<!-- PAGE HEADER -->
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a>
+								<a href="/bo/configuracion/">Configuración</a>
 							</span>
 							<span>>
 								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a> 
@@ -73,7 +73,7 @@
 												<label class="input">	
 													<input name="nombre_publico" placeholder="Nombre" type="text" id="nombre_publico" required>
 												</label>	
-												<label class="label">Descripcion</label>
+												<label class="label">Descripción</label>
 												<label class="textarea">								
 													<textarea rows="3" class="custom-scroll" name="desc_frm"></textarea> 
 												</label>

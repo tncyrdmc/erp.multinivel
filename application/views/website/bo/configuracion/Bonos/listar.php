@@ -5,7 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/compensacion">Plan de compensacion</a> >
 								<a href="/bo/bonos">Bonos</a>
 								> Listar Bonos
@@ -69,7 +69,7 @@
 												<tr>
 													<th>ID</th>
 													<th data-class="expand">Nombre</th>
-													<th data-hide="phone,tablet">Descripcion</th>
+													<th data-hide="phone,tablet">Descripción</th>
 													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Fecuencia</th>
 													<th data-hide="phone,tablet">Condiciones</th>

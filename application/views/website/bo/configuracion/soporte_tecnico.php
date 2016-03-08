@@ -7,7 +7,7 @@
 							<!-- PAGE HEADER -->
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > Soporte Técnico
+								<a href="/bo/configuracion/">Configuración</a> > Soporte Técnico
 							</span>
 						</h1>
 					</div>
@@ -51,7 +51,7 @@
 												<a href="informacion_ver_redes?id=0">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-info fa-3x"></i>
-														<h1>Informacion<br><br></h1>
+														<h1>Información<br><br></h1>
 													</div>
 												</a>
 												</div>

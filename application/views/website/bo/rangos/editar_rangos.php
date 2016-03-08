@@ -13,7 +13,7 @@
 								<input type="text" class="hide" name="id" value="<?php echo $_POST['id']; ?>" id="id">
 								<label class="input"> Nombre
 								<input type="text" name="nombre" required placeholder="Nombre" id="nombre" style="width: 50%;" class="form-control" value="<?php echo $rangos[0]->nombre; ?>" required>
-								<label class="input"> Descripcion
+								<label class="input"> Descripción
 								<textarea type="text" name="descripcion" required placeholder="Descripción" id="descripcion" style="width: 50%;" class="form-control" value="" required><?php echo $rangos[0]->descripcion; ?></textarea>
 								<label class="input"> Condiciones
 								<br>

@@ -13,7 +13,7 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/compensacion/">Plan de compensacion</a> >
 								<a href="/bo/planes/">Planes de Bonos</a>
 								> Nuevo Plan

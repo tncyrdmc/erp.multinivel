@@ -936,6 +936,63 @@ class reportes extends CI_Controller
 		echo "</tbody> </table> <tr class='odd' role='row'>";
 	}
 
+
+	function reporte_ventas_pagadas_online_excel(){
+				$inicio = '2000-01-01';
+		if($_GET['inicio'] != null){
+			$inicio = $_GET['inicio'];
+		}
+		$fin = '3000-12-12';
+		if($_GET['fin'] != null){
+			$fin = $_GET['fin'];
+		}
+
+
+$cobros=$this->modelo_historial_consignacion->ListarPagosOnline($inicio,$fin);
+	
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+	
+		$total = 0;
+		$ultima_fila = 0;
+		for($i = 0;$i < sizeof($cobros);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_venta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->email);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->fecha);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->valor);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->metodo);
+			//$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->fecha);
+			$total = $total + $cobros[$i]->valor;
+			$ultima_fila = $i+8;
+			$contador_filas++;
+				
+		}
+	
+		$subtitulos	=array("ID Venta","Afiliado","Email","Fecha","Valor","Metodo");
+		$this->model_excel->setTemplateExcelReport ("Pagos Online",$subtitulos,$contador_filas,$this->excel);
+	
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($ultima_fila+2), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($ultima_fila+2), $total);
+	
+	
+	
+		$filename='Pagos Online .xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+
+	}
+
 	function reporte_cobros_pendientes_excel()
 	{
 		$cobros=$this->modelo_historial_consignacion->ListarHistorialPendiente ();
