@@ -39,14 +39,14 @@ class Auth extends CI_Controller
 		{																		// logged in
 			$id   = $this->tank_auth->get_user_id();
 			$tipo = $this->general->get_tipo($id);
-			$tipo = $tipo[0]->id_tipo_usuario;
+			$tipo = (int)$tipo[0]->id_tipo_usuario;
 			
-			if($tipo==1){
+			if($tipo==2){
 				$this->cobrarRetenciones();
-				redirect('/bo/dashboard');
-			}
-			elseif ($tipo==2)
 				redirect('/ov/dashboard');
+			}
+			elseif ($tipo==1)
+				redirect('/bo/dashboard');
 			elseif ($tipo==3)
 				redirect('/bos/dashboard');
 			elseif ($tipo==4)
@@ -107,20 +107,19 @@ class Auth extends CI_Controller
 					
 						$id   = $this->tank_auth->get_user_id();
 						$tipo = $this->general->get_tipo($id);
-						$tipo = $tipo[0]->id_tipo_usuario;
+						$tipo = (int)$tipo[0]->id_tipo_usuario;
 							
 						$estatus = $this->general->get_status($id);
 						$estatus = $estatus[0]->id_estatus;
 							
 						if($estatus == '1'){
 							$this->general->unlocked();
-							
-							if($tipo==1){
+							if($tipo==2){
 								$this->cobrarRetenciones();
-								redirect('/bo/dashboard');
-							}
-							elseif ($tipo==2){
 								redirect('/ov/dashboard');
+							}
+							elseif ($tipo==1){
+								redirect('/bo/dashboard');
 							}elseif ($tipo==3)
 								redirect('/bos/dashboard');
 							elseif ($tipo==4)
