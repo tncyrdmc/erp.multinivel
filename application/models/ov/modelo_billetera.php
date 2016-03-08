@@ -188,7 +188,7 @@ class modelo_billetera extends CI_Model
 		$q = $this->db->query("SELECT created FROM users where id=".$id.";");
 		$fecha_creacion = $q->result();
 		$q = $this->db->query("SELECT descripcion,sum(valor) as valor FROM cat_retenciones_historial  
-								where '".$fecha_creacion[0]->created."'<=str_to_date(concat(ano,'-',mes,'-','01'),'%Y-%m-%d') group by descripcion");
+								where '".$fecha_creacion[0]->created."'<=str_to_date(concat(ano,'-',mes,'-','28'),'%Y-%m-%d') group by descripcion");
 		$retenciones_regis = $q->result();
 		$retenciones = array();
 		foreach ($retenciones_regis as $retencion){

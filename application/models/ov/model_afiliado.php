@@ -205,7 +205,7 @@ class model_afiliado extends CI_Model{
 			"calle"     => $_POST['calle'],
 			"colonia"   => $_POST['colonia'],
 			"municipio" => $_POST['municipio'],
-			"estado"    => $_POST['municipio'],
+			"estado"    => $_POST['estado'],
 			"pais"      =>$_POST['pais']
 			);
 		$this->db->insert("cross_dir_user",$dato_dir);
@@ -416,7 +416,7 @@ class model_afiliado extends CI_Model{
 				"calle"     => $_POST['calle'],
 				"colonia"   => $_POST['colonia'],
 				"municipio" => $_POST['municipio'],
-				"estado"    => $_POST['municipio'],
+				"estado"    => $_POST['estado'],
 				"pais"      =>$_POST['pais']
 		);
 		$this->db->insert("cross_dir_user",$dato_dir);
@@ -559,7 +559,7 @@ class model_afiliado extends CI_Model{
 				"calle"     => $_POST['calle'],
 				"colonia"   => $_POST['colonia'],
 				"municipio" => $_POST['municipio'],
-				"estado"    => $_POST['municipio'],
+				"estado"    => $_POST['estado'],
 				"pais"      =>$_POST['pais']
 		);
 		$this->db->insert("cross_dir_user",$dato_dir);
