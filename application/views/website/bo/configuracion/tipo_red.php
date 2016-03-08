@@ -7,7 +7,7 @@
 							<!-- PAGE HEADER -->
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > Tipo de Red
+								<a href="/bo/configuracion/">Configuración</a> > Tipo de Red
 							</span>
 						</h1>
 					</div>
