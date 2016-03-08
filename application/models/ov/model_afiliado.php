@@ -150,6 +150,8 @@ class model_afiliado extends CI_Model{
 		if(isset($_POST['sponsor']))
 		{
 			$directo=intval($this->tank_auth->get_user_id());
+			if($directo==1)
+				$directo=2;
 		}else{
 			$directo=intval(isset($_POST['directo']) ? $_POST['directo'] : $id_debajo);
 		}

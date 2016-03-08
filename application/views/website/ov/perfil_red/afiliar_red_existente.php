@@ -176,7 +176,7 @@ function detalles(id)
 															?>
 														<li id="<?=$key->id_afiliado?>"><a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>,1)" href="#"></a>
 															<div onclick="detalles(<?=$key->id_afiliado?>)"
-																class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles
+																class="<?=($key->directo==$id) ? 'todo1' : 'todo'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles
 															</div></li>
 														<?
 														
@@ -185,7 +185,7 @@ function detalles(id)
 														
 														 if($red_frontales [0]->frontal==0){?>
 															<li>
-																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","0")'
+																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $aux;?>")'
 																href='javascript:void(0)'>Afiliar Aqui</a>
 															</li>
 														 <?php }else {
