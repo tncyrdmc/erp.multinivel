@@ -193,7 +193,7 @@ class Cemail extends CI_Model
 						<p>'. $validar['monto'].'<br /></p>' : '';
 		
 		$cuentas_cobrar = ($type==4) ? '<p class="callout">
-							Recibimos su confirmacion sobre la transacion con los siguientes datos:
+							Recibimos su confirmacion sobre la transaccion con los siguientes datos:
 						</p><!-- /Callout Panel -->						
 						<p>'. $validar['id_venta'].'<br /></p>
 						<p>'. $validar['fecha'].'<br /></p>

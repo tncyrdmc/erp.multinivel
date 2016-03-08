@@ -84,6 +84,14 @@ class model_perfil_red extends CI_Model
 		$q2 = $q->result();
 		return $q2[0]->email;
 	}
+	
+	function get_username($id)
+	{
+		$q=$this->db->query('select username from users where id='.$id);
+		$q2 = $q->result();
+		return $q2[0]->username;
+	}
+	
 	function get_nombres($id)
 	{
 		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
