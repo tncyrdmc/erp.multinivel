@@ -51,64 +51,73 @@ $(document).ready(function() {
 					
 					if(validacion&&validacion)
 					{
-						iniciarSpinner();
-						$( ".steps" ).slideUp();
-						$( ".steps" ).remove();
-						$( ".actions" ).slideUp();
-						$( ".actions" ).remove();
-						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
-
-						var check=checkespacio();
-						if (check) {
-							//alert(check);
-							$.smallBox({
-						      title: "<h1>Ups!</h1>",
-						      content: "<h3>Lamentamos Informarle que este espacio ha sido ocupado por otro afiliado</h3>"+
-						    	  		"<p>Comuniquese con su Sponsor para más información</p> ",
-						      color: "#00b4cd",
-						      icon : "fa fa-warning fadeInLeft animated",
-						      timeout: 4000
-						    });
-						    location.href="/auth/login";
-						    }else{
-							
 						$.ajax({
 							type: "POST",
-							url: "/auth/register",
-							data: $('#register').serialize()
+							url: "/key/check_espacio_invite",
+							data: {token: codigo}
 						})
-						.done(function( msg1 ) {
-							
-							$("#progress").attr('style','width: 40%');
-							var email=$("#email").val();
-							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-							$("#checkout-form").append("<input value='"+codigo+"' type='hidden' name='token'>");
-							$.ajax({
-								type: "POST",
-								url: "/ov/perfil_red/afiliar_nuevo",
-								data: $('#checkout-form').serialize()
-								})
-								.done(function( msg ) {
-									$("#progress").attr('style','width: 100%');
-									bootbox.dialog({
-										message: msg,
-										title: "Atención",
-										buttons: {
-											success: {
-											label: "Ok!",
-											className: "btn-success",
-											callback: function() {
-												//trashToken();
-												location.href="/auth/login";												
-												FinalizarSpinner();
-												}
-											}
-										}
-									});
-								});
-						});//fin Done ajax
+						.done(function( msg )
+						{		
+							if (msg==="FAIL"){
+								$.smallBox({
+								      title: "<h1>Ups!</h1>",
+								      content: "<h3>Lamentamos Informarle que este espacio ha sido ocupado por otro afiliado</h3>"+
+								    	  		"<p>Comuniquese con su Sponsor para más información</p> ",
+								      color: "#00b4cd",
+								      icon : "fa fa-warning fadeInLeft animated",
+								      timeout: 4000
+								    });
+								    location.href="/auth/login";
+							}else{
 
-						}
+								$( ".steps" ).slideUp();
+								$( ".steps" ).remove();
+								$( ".actions" ).slideUp();
+								$( ".actions" ).remove();
+								$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
+
+								iniciarSpinner();
+
+								$.ajax({
+									type: "POST",
+									url: "/auth/register",
+									data: $('#register').serialize()
+								})
+								.done(function( msg1 ) {
+									
+									$("#progress").attr('style','width: 40%');
+									var email=$("#email").val();
+									$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
+									$("#checkout-form").append("<input value='"+codigo+"' type='hidden' name='token'>");
+									$.ajax({
+										type: "POST",
+										url: "/ov/perfil_red/afiliar_nuevo",
+										data: $('#checkout-form').serialize()
+										})
+										.done(function( msg ) {
+											$("#progress").attr('style','width: 100%');
+											bootbox.dialog({
+												message: msg,
+												title: "Atención",
+												buttons: {
+													success: {
+													label: "Ok!",
+													className: "btn-success",
+													callback: function() {
+														//trashToken();
+														location.href="/auth/login";												
+														FinalizarSpinner();
+														}
+													}
+												}
+											});
+										});
+								});//fin Done ajax
+								
+							}
+							
+						});//fin validar invitacion
+
 					}
 					else
 					{
@@ -175,13 +184,13 @@ function checkespacio(){
 	$.ajax({
 		type: "POST",
 		url: "/key/check_espacio_invite",
-		data: {token: codigo},
+		data: {token: codigo}
 	})
 	.done(function( msg )
-	{
-		//alert(msg);
-		return (msg);  
-		//
+	{		
+		if (msg==="FAIL"){
+			
+		}
 	});
 }
 

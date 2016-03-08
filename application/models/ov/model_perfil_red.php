@@ -802,8 +802,7 @@ order by (U.id);");
 								and directo = ".$temp[0]->sponsor.*/" 
 								and lado = ".$temp[0]->lado);
 		$q2=$q->result();
-		$q3=$this->get_email($q2[0]->id_afiliado);
-		return $q3;
+		return $q2 ? true: false;
 	}
 	
 	function trash_token($token)

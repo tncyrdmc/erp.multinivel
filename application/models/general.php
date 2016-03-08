@@ -240,11 +240,11 @@ class general extends CI_Model
 		$exist = $this->model_perfil_red->exist_mail($temp[0]->email);
 		
 		if ($exist){
-			return $exist[0]->email;
+			return  true;
 		}
 		$ocupado = $this->model_perfil_red->ocupado($temp);
-		($ocupado) ? $this->model_perfil_red->trash_token($temp[0]->id) : '';
-		return $ocupado;
+		($ocupado) ? $this->model_perfil_red->trash_token($temp[0]->id) : ''; 
+		return ($ocupado) ? true : false;
 	}
 	
 	
