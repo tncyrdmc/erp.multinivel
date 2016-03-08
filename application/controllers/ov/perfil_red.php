@@ -931,27 +931,12 @@ class perfil_red extends CI_Controller
 				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 				);
 	
-		if(!$_POST['username']||!$_POST['mail']){
+		if(!$_POST['username']||!$_POST['mail']||!$email||$_POST['password']!=$_POST['confirm_password']||$use_mail||$use_username){
 			echo "<script>
 				  $('.btn-next').attr('disabled','disabled');
 				  </script>
 				";
-		}
-	
-		else if(!$email){
-			echo "<script>
-				  $('.btn-next').attr('disabled','disabled');
-				  </script>
-				";
-		}
-		else if($_POST['password']!=$_POST['confirm_password']){
-			echo "<script>
-				  $('.btn-next').attr('disabled','disabled');
-				  </script>
-				";
-		}
-	
-		else if(!$use_mail&&!$use_username){
+		}else {
 			echo "<script>
 				  $('.btn-next').removeAttr('disabled');
 				  </script>

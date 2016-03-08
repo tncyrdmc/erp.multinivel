@@ -219,7 +219,7 @@ class Cemail extends CI_Model
 						<br />
 						'.$validar['username'].'
 						Tu correo: '.$data['email'].'<br />
-						Tu nueva contraseña: '.$data['new_pasword'].'<br /></p>': '';
+						Tu nueva contraseña: '.$data['new_password'].'<br /></p>': '';
 		
 		$invitacion = ($type==7) ? '<img src="'.$sitios[6].'" alt="" width="100%"/> <br/><hr/>
 						<p class="lead">'.$data['b_desc'].'</p>
