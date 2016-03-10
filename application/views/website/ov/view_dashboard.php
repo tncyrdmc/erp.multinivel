@@ -428,6 +428,14 @@
 														</div>
 													</a>
 												</div>	
+												<div class="col-sm-2">
+													<a href="cgeneral/invitacion_afiliar">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-envelope fa-3x"></i>
+															<h5>Invitacion Afiliar</h5>
+														</div>
+													</a>
+												</div>
 												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
 												if($permiso){
 												?>
