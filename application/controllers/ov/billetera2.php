@@ -252,17 +252,23 @@ class billetera2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
-		$retenciones = $this->modelo_billetera->ValorRetencionesTotalesAfiliado();
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotalesAfiliado($id);
 		$cobrosPagos=$this->modelo_billetera->get_cobros_total_afiliado($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
-
+		
+		echo $comisiones."<br>";
+		echo $retenciones."<br>";
+		echo $cobrosPagos."<br>";
+		echo $cobroPendientes."<br>";
+/*
+ 
 		if(($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))>0){
 			$this->modelo_billetera->cobrar($id,$_POST['ncuenta'],$_POST['ctitular'],$_POST['cbanco'],$_POST['cclabe']);
 			echo "Felicitaciones<br> Tu cobro se esta procesando.";
 		}else {
 			echo "ERROR <br>No hay saldo para realizar el cobro.";
 		}
-
+*/
 	}
 	
 	function estado()

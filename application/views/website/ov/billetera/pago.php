@@ -156,7 +156,15 @@
 																	<tr class="info">
 																		<td><h4><b>Saldo Neto</b></h4>
 																		<td></td>
-																		<td><h4><b>$ <?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)),2); ?></b></h4></td>
+																		<td><h4><b>
+																		$ 
+																		<?php 
+																		$saldo_neto=number_format(($total-($cobro+$retenciones_total+$cobroPendientes)),2);
+																		if($saldo_neto<0)
+																			echo 0;
+																		else
+																			echo $saldo_neto
+																		?></b></h4></td>
 																	</tr>
 																</table>
 														
@@ -168,14 +176,19 @@
 																	<section class="col col-10">
 																		<label class="label "><b>Saldo Disponible</b></label>
 																		<label class="input input state-success">
-																			<input type="text" name="saldo"  class="from-control" id="saldo" value="<?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)), 2, '.', ''); ?>" readonly />
+																			<input type="text" name="saldo"  class="from-control" id="saldo" 
+																			value="<?php 																		$saldo_neto=number_format(($total-($cobro+$retenciones_total+$cobroPendientes)),2);
+																		if($saldo_neto<0)
+																			echo 0;
+																		else
+																			echo $saldo_neto ?>" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-10">
 																		<label class="label"><b>Pedir Dinero</b></label>
 																		<label class="input">
 																			<i class="icon-prepend fa fa-money"></i>
-																			<input name="cobro" type="number" class="from-control" id="cobro"/>
+																			<input name="cobro" type="number" min="1" class="from-control" id="cobro"/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
@@ -282,7 +295,7 @@
 function CalcularSaldo(evt){
 				
 				var saldo = $("#saldo").val();
-				var pago = $("#cobro").val() + String.fromCharCode(evt.charCode);
+				var pago = $("#cobro").val() + (String.fromCharCode(evt.charCode);
 				var neto = saldo-pago;
 				$("#neto").val(neto);
 				if(neto > 0){
