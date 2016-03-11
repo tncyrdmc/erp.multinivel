@@ -86,6 +86,8 @@
 																foreach ($cat_rango_tipo as $CatRangoTipo) {
 																	if($CatRangoTipo->id==$CrossRangoTipos->id_tipo_rango){
 																		echo $CatRangoTipo->nombre.'&nbsp&nbsp&nbspValor: '.$CrossRangoTipos->valor.'<br>';
+																		$condicion_Red=($CrossRangoTipos->condicion_red=='DIRECTOS') ? 'Directos de la red':'Toda la Red';
+																		echo $condicion_Red.'&nbsp&nbsp&nbspValor: '.$CrossRangoTipos->nivel_red.'<br>';
 																	}
 																}
 															}
