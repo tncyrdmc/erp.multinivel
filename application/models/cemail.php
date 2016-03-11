@@ -121,7 +121,7 @@ class Cemail extends CI_Model
 		);
 		
 		$validar = array (
-				'username' 	=>(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "",
+				'username' 	=>isset($data['username']) ? "Nombre de usuario: ".$data['username'] : "",
 				'password' 	=>isset($data['password']) ? "Contraseña: ".$data['password'] : "",
 				'id_cobro'	=>isset($data['id_cobro']) ? "ID de Cobro: ".$data['id_cobro'] : "",
 				'id_venta'	=>isset($data['id_venta']) ? "ID venta: ".$data['id_venta'] : "",

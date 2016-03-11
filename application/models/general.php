@@ -237,7 +237,7 @@ class general extends CI_Model
 	
 	function checkespacio ($temp){
 		
-		$exist = $this->model_perfil_red->exist_mail($temp[0]->email);
+		$exist = $this->model_perfil_red->exist_mail($_POST['email']);
 		
 		if ($exist){
 			return  true;
