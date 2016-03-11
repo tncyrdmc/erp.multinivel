@@ -31,7 +31,7 @@ function get_rango_max(){
 	$g=$this->db->query("select max(id_rango) as max from cat_rango");
 	return $g->result();
 }
-function ingresar_condicion_rango($id_rango,$condiciones,$valores){
+function ingresar_condicion_rango($id_rango,$condiciones,$valores,$condicion_red,$nivel_red){
 		
 		$condicionRango = array();
 		$i = 0;
@@ -41,6 +41,8 @@ function ingresar_condicion_rango($id_rango,$condiciones,$valores){
 						'id_rango' => intval($id_rango),
 						'id_tipo_rango' => intval($condicion),
 						'valor' => intval($valores[$i]),
+						'condicion_red' => $condicion_red[$i],
+						'nivel_red' => intval($nivel_red[$i]),
 				);
 				array_push($condicionRango, $condicion);
 				$i = $i + 1;
@@ -50,7 +52,7 @@ function ingresar_condicion_rango($id_rango,$condiciones,$valores){
 		$this->db->insert("cross_rango_tipos",$condicion);
 	}
 }
-function actualizar_condicion_rango($id_rango,$condiciones,$valores){
+function actualizar_condicion_rango($id_rango,$condiciones,$valores,$condicion_red,$nivel_red){
 		$this->kill_cross_rango();
 		$condicionRango = array();
 		$i = 0;
@@ -60,6 +62,8 @@ function actualizar_condicion_rango($id_rango,$condiciones,$valores){
 						'id_rango' => intval($id_rango),
 						'id_tipo_rango' => intval($condicion),
 						'valor' => intval($valores[$i]),
+						'condicion_red' => $condicion_red[$i],
+						'nivel_red' => intval($nivel_red[$i]),
 				);
 				array_push($condicionRango, $condicion);
 				$i = $i + 1;
@@ -67,11 +71,6 @@ function actualizar_condicion_rango($id_rango,$condiciones,$valores){
 		}		
 	foreach ($condicionRango as $condicion) {
 		$this->db->insert("cross_rango_tipos",$condicion);
-		
-		//$this->db->query('update cross_rango_tipos set id_rango='.$condicion['id_rango'].', id_tipo_rango='
-			//.$condicion['id_tipo_rango'].', valor='.$condicion['valor']
-			//.' where id_rango='.$condicion['id_rango'].' AND id_tipo_rango='.$condicion['id_tipo_rango'].'');
-
 	}
 }
 

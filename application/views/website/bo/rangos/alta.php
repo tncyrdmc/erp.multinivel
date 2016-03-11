@@ -71,7 +71,7 @@
 									<div class="row">
 										<div class="col col-lg-2">
 										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo_condicion">
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
 											<label class="select">Tipo Condicion
 											<select name="id_tipo_condicion[]" >
 													<?php	
@@ -83,11 +83,36 @@
 											</label>
 										</div>
 										
-										<div class="col col-xs-12 col-sm-5 col-lg-3">
+										<div class="col col-xs-12 col-sm-5 col-lg-2">
 											Valor<label for="" class="input">
 												<i class="icon-prepend fa fa-sort"></i>
 												<input id="valor_rango[]" type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />
 											</label>		
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
+											<label class="select">Condición Red
+											<select name="condicion_red[]" >
+												<option value='DIRECTOS'>Directos Afiliado</option>
+												<option value='RED'>Toda La red</option>
+											</select>
+											</label>
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
+											<label class="select">Niveles Red
+											<select name="nivel_red[]" >
+												<option value='0'>0</option>
+												<option value='1'>1</option>
+												<option value='2'>2</option>
+												<option value='3'>3</option>
+												<option value='4'>4</option>
+												<option value='5'>5</option>
+												<option value='6'>6</option>
+												<option value='7'>7</option>
+												<option value='8'>8</option>
+												<option value='9'>9</option>
+												<option value='10'>10</option>
+											</select>
+											</label>
 										</div>
 									</div>
 									
@@ -185,19 +210,44 @@ function add_rango()
 	var code=	'<div id="'+i+'" class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
 		+'<label class="select">Tipo Condición'
 		+'<select name="id_tipo_condicion[]" >'
 		+'<?php	echo $rangos; ?>'
 	+'</select>'
 	+'</label>'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
-		+'Tarifa<label for="" class="input">'
+	+'<div class="col col-xs-12 col-sm-5 col-lg-2">'
+		+'Valor<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-sort"></i>'
 			+'<input type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />'
-			+'<a style="cursor: pointer;" onclick="delete_rango('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
+			+'<a style="color: red;cursor: pointer;" onclick="delete_rango('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
 		+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
+	+'<label class="select">Condición Red'
+	+'<select name="condicion_red[]" >'
+		+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'<option value="RED">Toda La red</option>'
+	+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
+	+'<label class="select">Niveles Red'
+	+'<select name="nivel_red[]" >'
+	+'<option value="0">0</option>'
+	+'<option value="1">1</option>'
+	+'<option value="2">2</option>'
+	+'	<option value="3">3</option>'
+	+'	<option value="4">4</option>'
+	+'	<option value="5">5</option>'
+	+'	<option value="6">6</option>'
+	+'	<option value="7">7</option>'
+	+'	<option value="8">8</option>'
+	+'	<option value="9">9</option>'
+	+'	<option value="10">10</option>'
+	+'</select>'
+	+'</label>'
 	+'</div>'
 	+'</div>';
 	$("#rango").append(code);
