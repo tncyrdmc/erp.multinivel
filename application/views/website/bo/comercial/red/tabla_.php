@@ -206,10 +206,12 @@
 							
 					        <a title="Editar" style='cursor: pointer;' onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 					        <!-- <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a> -->
+					         <a title="Billetera" style='cursor: pointer;' onclick="billetera_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-money fa-3x"></i></a>
+					        <a title="Eliminar" style='cursor: pointer;' onclick="eliminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					        </br>
 					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
 					        <a title="Arbol 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a>
 					        <a title="Arbol 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
-					        <a title="Eliminar" style='cursor: pointer;' onclick="eliminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 						</td>
 				        
 				    </tr>
@@ -328,7 +330,21 @@ function eliminar_afiliado(id){
 	}
 	
 }
-
+function billetera_afiliado(id_afiliado){
+$.ajax({
+	type: "POST",
+	url: "/bo/comercial/billetera_afiliado",
+	data: {id:id_afiliado},
+})
+.done(function( msg )
+{
+	bootbox.dialog({
+	message: msg,
+	title: 'Billetera Afiliado',
+})//fin done ajax
+});
+	
+}
 $(document).ready(function() {
 	
 	pageSetUp();
