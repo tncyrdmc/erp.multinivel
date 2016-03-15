@@ -27,6 +27,12 @@ class model_mercancia extends CI_Model {
 		$categorias = $this->db->query ( "SELECT ctg.id_grupo, ctg.descripcion, tr.nombre as red  FROM cat_grupo_producto ctg, tipo_red tr where ctg.id_red = tr.id and ctg.estatus = 'ACT' and ctg.id_grupo =".$id);
 		return $categorias->result ();
 	}
+
+	function todogrupos(){
+		$categorias = $this->db->query ( "SELECT * FROM cat_grupo_producto WHERE estatus='ACT'");
+		return $categorias->result ();
+
+	}
 	
 	function nuevo_servicio() {
 		$dato_servicio = array (

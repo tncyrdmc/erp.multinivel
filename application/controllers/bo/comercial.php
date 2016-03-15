@@ -2256,7 +2256,7 @@ class comercial extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		
+		$grupos1         = $this->model_mercancia->todogrupos();
 		$proveedores	 = $this->model_admin->get_proveedor();
 		$grupo			 = $this->model_admin->get_grupo();
 		$impuesto		 = $this->model_admin->get_impuesto();
@@ -2297,6 +2297,7 @@ class comercial extends CI_Controller
 		$this->template->set("tipo_paquete",$tipo_paquete);
 		$this->template->set("paquetes",$paquete);
 		$this->template->set("membresias",$membresias );
+		$this->template->set("grupos1",$grupos1 );
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

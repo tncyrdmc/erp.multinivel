@@ -120,6 +120,79 @@
 											</section>
 													
 														</fieldset>
+														<fieldset>
+																										<!--<div class="row">-->
+												<? $i1=0; ?>
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
+															id="prods">
+															<div id="<?= $i1=$i1+1?>p">
+															<section class="col col-xs-12 col-md-6 col-lg-6" id="ProductosPais" name="ProductosPais">
+																Productos <label class="select"> <select
+																	class="custom-scroll" name="producto[]">
+																		<option value="0">Ninguno</option>
+																<!--<?//foreach ($producto as $key){?>
+																	<option value="<?//=$key->id?>">
+																	<?//=$key->nombre?></option>
+																<?//}?>-->
+															</select>
+																</label>
+															</section>
+															<section class="col col-xs-12 col-md-6 col-lg-6" >
+																<label class="input">Cantidad de productos <input
+																	required type="number" min="1" name="n_productos[]"
+																	id="prod_qty">
+																</label>
+															</section>
+															<div class=" text-center row"  ><a onclick="delete_product(<?=$i1?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir producto <i class="fa fa-minus"></i></a></div>
+														</div>
+														</div>
+														<? $i2=0; ?>
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
+															id="servs">
+															<div id="<?= $i2=$i2+1?>s">
+															<section class="col col col-xs-12 col-md-6 col-lg-6" id="ServicioPais" name="ServicioPais">
+																Servicios <label class="select"> <select
+																	class="custom-scroll" name="servicio[]">
+																		<option value="0">Ninguno</option>
+																<!--<?//foreach ($servicio as $key){?>
+																<option value="<?//=$key->id?>">
+																<?//=$key->nombre?></option>
+																<?//}?>-->
+															</select>
+																</label>
+															</section>
+															<section class="col col-xs-12 col-md-6 col-lg-6">
+																<label class="input">Cantidad de servicios <input
+																	required type="number" min="1" name="n_servicios[]"
+																	id="serv_qty">
+																</label>
+															</section>
+															<div class=" text-center row"  ><a onclick="delete_service(<?=$i2?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir servicio <i class="fa fa-minus"></i></a></div>
+														</div>
+														</div>
+													<!--</div>-->
+													</fieldset>
+											
+											<div id="agregar" class=" text-center row">
+												<a onclick="new_product()">Agregar producto <i
+													class="fa fa-plus"></i>
+												</a> <a onclick="new_service()">Agregar servicio <i
+													class="fa fa-plus"></i>
+												</a>
+											</div>
+											
+										</div>
+																							<fieldset><div>
+													<section class="col col-xs-12 col-md-6 col-lg-6">
+														Tipo Paquete <label class="select"> <select name="tipo">
+																<?foreach ($paquetes_actuales as $row){?>
+																	<option value="<?=$row->idnivel?>">
+																	<?= $row->nombre ?>
+																<?}?>
+																
+														</select>
+													</label>
+													</div></fieldset>
 													<div id="moneda">
 														<fieldset id="moneda_field">
 															<legend>Moneda</legend>
@@ -220,8 +293,8 @@
 																	onchange="this.parentNode.nextSibling.value = this.value"
 																	type="file" multiple>Buscar
 																</span><input id="imagen_mr"
-																	placeholder="Agregar alguna imágen" readonly=""
-																	type="text">
+																	placeholder="Agregar alguna imágen" 
+																	type="text" required>
 															</div>
 															<small><cite
 																title="Source Title">Para ver los archivos que va a
@@ -230,85 +303,11 @@
 														</section>
 													</div>
 													</fieldset>
-													<div>
-													<section class="col col-xs-12 col-md-6 col-lg-6">
-														Tipo Paquete <label class="select"> <select name="tipo">
-																<?foreach ($paquetes_actuales as $row){?>
-																	<option value="<?=$row->idnivel?>">
-																	<?= $row->nombre ?>
-																<?}?>
-																
-														</select>
-													</label>
-													</div>
+
 													
 											
 											</fieldset>
 
-											<fieldset>
-											<legend>Productos y servicios</span></legend>
-												<div class="row">
-												<? $i1=0; ?>
-														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
-															id="prods">
-															<div id="<?= $i1=$i1+1?>p">
-															<section class="col col-xs-12 col-md-6 col-lg-6" id="ProductosPais" name="ProductosPais">
-																Productos <label class="select"> <select
-																	class="custom-scroll" name="producto[]">
-																		<option value="0">Ninguno</option>
-																<!--<?//foreach ($producto as $key){?>
-																	<option value="<?//=$key->id?>">
-																	<?//=$key->nombre?></option>
-																<?//}?>-->
-															</select>
-																</label>
-															</section>
-															<section class="col col-xs-12 col-md-6 col-lg-6" >
-																<label class="input">Cantidad de productos <input
-																	required type="number" min="1" name="n_productos[]"
-																	id="prod_qty">
-																</label>
-															</section>
-															<div class=" text-center row"  ><a onclick="delete_product(<?=$i1?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir producto <i class="fa fa-minus"></i></a></div>
-														</div>
-														</div>
-														<? $i2=0; ?>
-														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
-															id="servs">
-															<div id="<?= $i2=$i2+1?>s">
-															<section class="col col col-xs-12 col-md-6 col-lg-6" id="ServicioPais" name="ServicioPais">
-																Servicios <label class="select"> <select
-																	class="custom-scroll" name="servicio[]">
-																		<option value="0">Ninguno</option>
-																<!--<?//foreach ($servicio as $key){?>
-																<option value="<?//=$key->id?>">
-																<?//=$key->nombre?></option>
-																<?//}?>-->
-															</select>
-																</label>
-															</section>
-															<section class="col col-xs-12 col-md-6 col-lg-6">
-																<label class="input">Cantidad de servicios <input
-																	required type="number" min="1" name="n_servicios[]"
-																	id="serv_qty">
-																</label>
-															</section>
-															<div class=" text-center row"  ><a onclick="delete_service(<?=$i2?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir servicio <i class="fa fa-minus"></i></a></div>
-														</div>
-														</div>
-													</div>
-													
-											</fieldset>
-											<div id="agregar" class=" text-center row">
-												<a onclick="new_product()">Agregar producto <i
-													class="fa fa-plus"></i>
-												</a> <a onclick="new_service()">Agregar servicio <i
-													class="fa fa-plus"></i>
-												</a>
-											</div>
-										</div>
-								
-								</fieldset>
 
 								<footer>
 									<button type="submit" class="btn btn-primary">Agregar</button>
