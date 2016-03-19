@@ -115,7 +115,7 @@ class comercial extends CI_Controller
 				'email' => $this->model_perfil_red->get_email($id),
 				'username' => $this->model_perfil_red->get_username($id),
 				'id_transaccion' => $transact,
-				'tipo_t' => $tipo=="ADD" ? "Agregado" : "Sustraido",
+				'tipo_t' => ($tipo=="ADD") ? "Agregado" : "Descontado",
 				'descripcion_t' => $descripcion,
 				'monto_t' => $monto
 		);

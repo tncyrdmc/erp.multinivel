@@ -136,7 +136,7 @@ class Cemail extends CI_Model
 				'clave'		=>isset($data['clave']) ? "CLABE: ".$data['clave'] : "",
 				'monto'		=>isset($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
 				'monto_t'		=>isset($data['monto_t']) ? "Valor de la transacción: $ ".$data['monto_t'] : "",
-				'descripcion_t'		=>isset($data['descripcion_t']) ? "Motivo la transacción: <br/><em> ".$data['descripcion_t']."<em/><br/>" : "",
+				'descripcion_t'		=>isset($data['descripcion_t']) ? "Motivo la transacción: <br/><hr/><br/><em> ".$data['descripcion_t']."<em/>" : "",
 				'valor'		=>isset($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
 				'sponsor_tel'	=>isset($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : "",
 				'tipo_t'	=>isset($data['tipo_t']) ? "Informamos que la empresa le ha <strong>".$data['tipo_t']." Dinero</strong> a su billetera," : ""
@@ -251,7 +251,7 @@ class Cemail extends CI_Model
 							'.$validar['tipo_t'].' los siguientes son los datos de la transacción:
 						</p><!-- /Callout Panel -->
 						<p>'. $validar['id_transaccion'].'<br /></p>
-						<p>'. $validar['descripcion_t'].'<br /></p>
+						<p class="callout">'. $validar['descripcion_t'].'<br /></p>
 						<p>'. $validar['monto_t'].'<br /></p>' : '';
 		
 		

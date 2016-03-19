@@ -308,7 +308,7 @@ class modelo_billetera extends CI_Model
 	
 	function get_id_transaccion($id,$monto,$descripcion,$tipo){
 		$q=$this->db->query("select max(id) as id from transaccion_billetera 
-				where id_user = ".$id." and monto = ".number_format($monto,2)." and descripcion = '".$descripcion."' and tipo = '".$tipo."'");
+				where id_user = ".$id." and monto = ".number_format($monto,2)./*" and descripcion = '".$descripcion."'".*/" and tipo = '".$tipo."'");
 		$q2=$q->result();
 	
 		return $q2[0]->id ;
