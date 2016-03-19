@@ -107,8 +107,21 @@ class comercial extends CI_Controller
 		$descripcion = $_POST['descripcion'];
 		$tipo = $_POST['tipo'];
 		
-		$transact = $this->modelo_billetera->add_sub_billetera($tipo,$id,$monto,$descripcion);
-		echo $transact ? "Transacción Exitosa" : "Falló la Transacción";
+		$transact = $this->modelo_billetera->add_sub_billetera($tipo,$id,$monto,$descripcion);		
+		
+		$data = array(
+				'email' => $this->model_perfil_red->get_email($id),
+				'username' => $this->model_perfil_red->get_username($id),
+				'id_transaccion' => $transact,
+				'tipo_t' => $tipo=="ADD" ? "Agregado" : "Sustraido",
+				'descripcion_t' => $descripcion,
+				'monto_t' => $monto
+		);
+		
+		$email = $this->cemail->send_email(10, $data['email'], $data);
+		
+		echo $transact&&$email ? "Transacción Exitosa" : "Falló la Transacción";
+		
 	}
 	
 	function red_genealogica()

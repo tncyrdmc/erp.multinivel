@@ -296,7 +296,7 @@ class modelo_billetera extends CI_Model
 		);
 			
 		$this->db->insert("transaccion_billetera",$dato_cobro);
-		return true;
+		return $this->get_id_transaccion($id,$monto,$descripcion,$tipo);
 	}
 	
 	function get_total_transacciones_id_fecha($id,$fecha){
@@ -304,6 +304,14 @@ class modelo_billetera extends CI_Model
 		$q2=$q->result();
 		
 		return $this->set_transacciones_format($q2);
+	}
+	
+	function get_id_transaccion($id,$monto,$descripcion,$tipo){
+		$q=$this->db->query("select max(id) from transaccion_billetera 
+				where id_user = ".$id." and monto = ".$monto." and descripcion = ".$descripcion." and tipo = ".$tipo);
+		$q2=$q->result();
+	
+		return $q2[0]->id ;
 	}
 	
 	function get_total_transacciones_id($id){
