@@ -104,7 +104,7 @@ class Cemail extends CI_Model
 				($type==6) ? "Tu nueva contraseña en ".$data['site_name']."." : "", //reset-password
 				($type==7) ? "Hola, ".$data['email'].", Te han invitado a afiliarte." : "", //invitacion
 				($type==8) ? "Gusto en Conocerte, ".$data['email']."." : "" , //autoresponder
-				($type==9) ? "Apreciado usuario ".$data['username'].", Se ha realizado una transacción por parte de la Empresa." : "" //transaccion-empresa
+				($type==9) ? "Apreciado ".$data['username'].", Se ha realizado una transacción por parte de la Empresa." : "" //transaccion-empresa
 		);
 	
 		return $q[$type];
@@ -135,11 +135,11 @@ class Cemail extends CI_Model
 				'titular'	=>isset($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "",
 				'clave'		=>isset($data['clave']) ? "CLABE: ".$data['clave'] : "",
 				'monto'		=>isset($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
-				'monto_t'		=>isset($data['monto_t']) ? "Valor de la transacción: $ ".$data['monto'] : "",
+				'monto_t'		=>isset($data['monto_t']) ? "Valor de la transacción: $ ".$data['monto_t'] : "",
 				'descripcion_t'		=>isset($data['descripcion_t']) ? "Motivo la transacción: <br/><em> ".$data['descripcion_t']."<em/><br/>" : "",
 				'valor'		=>isset($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
 				'sponsor_tel'	=>isset($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : "",
-				'tipo_t'	=>isset($data['tipo_t']) ? "Informamos que La Empresa le ha ".$data['tipo_t']." dinero a su billetera," : ""
+				'tipo_t'	=>isset($data['tipo_t']) ? "Informamos que la empresa le ha <strong>".$data['tipo_t']." Dinero</strong> a su billetera," : ""
 		);
 		
 		$welcome = ($type==0) ? '<p class="callout">

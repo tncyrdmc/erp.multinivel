@@ -31,6 +31,8 @@ class comercial extends CI_Controller
 		$this->load->model('ov/modelo_compras');
 		$this->load->model('ov/modelo_billetera');
 		$this->load->model('model_tipo_red');
+		$this->load->model('cemail');
+		
 	}
 
 	function index()
