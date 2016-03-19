@@ -349,6 +349,9 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
 
+		/*echo date("Y-m", strtotime($_GET['fecha'])) ;
+		exit();*/
+		
 		$transaction = $this->modelo_billetera->get_total_transacciones_id_fecha($id,$_GET['fecha']);
 		
 		$this->template->set("style",$style);

@@ -300,7 +300,7 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function get_total_transacciones_id_fecha($id,$fecha){
-		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." and date_format(fecha,'%Y-%m')  = ".date("Y-m", strtotime($fecha))." group by tipo ");
+		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." and date_format(fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."' group by tipo ");
 		$q2=$q->result();
 		
 		return $this->set_transacciones_format($q2);
