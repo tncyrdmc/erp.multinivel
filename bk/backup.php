@@ -3,10 +3,10 @@
 
 echo "Leyendo datos...";
 	
-	$base="/var/www";
-	$project="/erp.multinivel";
-	//$base="/home/content/57/11569157/html"; 
-	//$project="/test";
+	//$base="/var/www";
+	//$project="/erp.multinivel";
+	$base="/home/content/57/11569157/html"; 
+	$project="/test";
 	$db_config=$base.$project."/application/config/database.php";
 
 echo "\n>OK\nCargando base de datos...";
