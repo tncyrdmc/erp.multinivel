@@ -1,45 +1,24 @@
+<div id="spinner-div"></div>
+<div style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; margin-right: 0px; margin-left: 0px; padding-bottom: 3rem;" class="row">
+	
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-			<!-- MAIN CONTENT -->
-			<div id="content">
+		<form action="/bo/comercial/add_sub_billetera_afiliado" onmouseenter="" method="POST" id="edit" role="form" class="smart-form">
+		
+			<legend>Modificar Saldo del Afiliado</legend>
+
+			<br><br>
+
+			<div class="form-group">
+
 				<div class="row">
-					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h1 class="page-title txt-color-blueDark">
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-							<a href="/ov/billetera2/index_estado"> > Estado de Cuenta </a>
-							 > Estado actual</span>
-							
-						</h1>
-					</div>
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h1 class="page-title txt-color-blueDark">
-							<i style="color: #5B835B;" class="fa fa-money"></i> Mis Ganancias  <span class="txt-color-black"><b>$ <?=number_format($comisiones,2)?> </b></span>
-						</h1>
-					</div>
-				</div>
-				<!-- row -->
-				<div class="row">
-
-					
-				</div>
-				<!-- end row -->
-
-				<!-- row -->
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="well">
-
-							<section id="widget-grid" class="">
-							
-								<!-- row -->
-								<div class="row">
 							
 									<!-- NEW WIDGET START -->
 									<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 										<!-- Widget ID (each widget will need unique ID)-->
-										<div class="jarviswidget jarviswidget-color-purity" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="true">
-											<!-- widget options:
+										<div class="" id="" data-widget-editbutton="false" data-widget-colorbutton="true">
+											<!-- widget options:  jarviswidget jarviswidget-color-purity wid-id-1
 											usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 							
 											data-widget-colorbutton="false"
@@ -53,8 +32,9 @@
 							
 											-->
 																							<!-- widget content -->
-												<div class="widget-body">
-													<div id="myTabContent1" class="tab-content padding-10">
+												
+												<div class=""><!-- widget-body --> 
+													<div id="" class=""> <!-- myTabContent1 ; tab-content padding-50 -->
 													<h1 class="text-center"></h1>
 													
 													<div class="table-responsive">
@@ -71,7 +51,7 @@
 													$i = 0;
 													
 													$total_transact = 0;
-													
+																										
 													foreach ($ganancias as $gred){
 														if($gred[0]->valor!=0){
 														echo '<tr class="success" >
@@ -105,6 +85,8 @@
 													}
 
 													?>  
+													
+													
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
 														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
@@ -148,7 +130,7 @@
 																	$retenciones_total=0;
 																	foreach ($retenciones as $retencion) {?>
 																	<tr class="danger">
-																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></b></td>
+																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></td>
 																		<td></td>
 																		<td>$ <?php 
 																		$retenciones_total+=$retencion['valor'];
@@ -202,34 +184,151 @@
 											<!-- end widget div -->
 										</div>
 										<!-- end widget -->
-							
-									</article>
+									
+									</article>								
+									
+											
+									
+									
 								</div>
-							</section>
 						<!-- end widget grid -->
+							
 						</div>
-					</div>
-				<!-- row -->
+			<input required type="hidden" id="id" name="id" value="<?=$id?>">
+			<div class="row">
+				<div class="form-group">				
+					<legend> </legend>
+					<br/>
+					<section class="col col-12">
+						<label class="textarea"> 	
+							Descripción									
+							<textarea id="descripcion" name="descripcion" rows="3" cols="60" class="custom-scroll" required></textarea> 
+						</label>
+					</section>
+					<section class="col col-3"></section>
+					<section class="col col-3">Digite monto:</section>
+					<section class="col col-6">		
+						<label class="input">
+							<i class="icon-prepend fa fa-money"></i>
+							<input name="cobro" type="number" min="1" class="from-control" id="cobro" required />
+						</label>
+					</section>					
 				</div>
-				<div class="row">
-			        <div class="col-sm-12">
-			            <br />
-			            <br />
-			        </div>
-		        </div>
-				<!-- end row -->
-
+			</div>			
+						
+			<div class="row">
+				<div class="form-group">				
+					<legend> </legend>
+					<br/>					
+					<section class="col col-8"></section>
+					<section class="col col-2">
+							<button type="submit" id="ADD" class="btn btn-success  btn-next"  >Agregar</button>				
+					</section>
+					<section class="col col-2">
+							<button type="submit" id="SUB" class="btn btn-danger btn-prev"  >Quitar</button>						
+					</section>						
+					
+				</div>
 			</div>
-			<!-- END MAIN CONTENT -->
+			
+						
+		</form>	<!-- /form -->
+	</div>
+					
+						
+</div>
+									
+		
+		
 
-		<!-- PAGE RELATED PLUGIN(S) 
-		<!-- Morris Chart Dependencies -->
-		<script src="/template/js/plugin/morris/raphael.min.js"></script>
-		<script src="/template/js/plugin/morris/morris.min.js"></script>
 
-		<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-		<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-	
+
+
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+<script type="text/javascript">
+var tipo = "";
+$( "#ADD" ).click(function( event ) {
+	tipo = "ADD";
+});
+
+$( "#SUB" ).click(function( event ) {
+	tipo = "SUB";
+});
+
+$( "#edit" ).submit(function( event ) {
+	event.preventDefault();	
+	enviar();
+});
+
+function enviar(){
+	$.ajax({
+		type: "POST",
+		url: "/auth/show_dialog",
+		data: {message: '¿ Esta seguro que desea Realizar la Transacción ?'},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+		message: msg,
+		title: 'Eliminar Afiliado',
+		buttons: {
+			success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+						setiniciarSpinner();	
+						$("#edit").append("<input value='"+tipo+"' type='hidden' name='tipo'>");
+						$.ajax({
+							type: "POST",
+							url: "/bo/comercial/add_sub_billetera_afiliado",
+							data: $('#edit').serialize()
+						}).done(function( msg ) {				
+							bootbox.dialog({
+								message: msg,
+								title: 'ATENCION',
+								buttons: {
+									success: {
+										label: "Aceptar",
+										className: "btn-success",
+										callback: function() {
+												location.href="/bo/comercial/red_tabla";
+												FinalizarSpinner();
+										}
+									}
+								}
+							})
+						});//fin Done ajax	
+					}
+				},
+			danger: {
+					label: "Cancelar!",
+					className: "btn-danger",
+					callback: function() {
+
+					}
+				}
+			}
+		})
+	});	
+}
+
+
+
+</script>
+<!-- 
+select U.id, UP.nombre, UP.apellido, U.username, U.email, CS.descripcion as sexo,
+CEC.descripcion as estado_civil, CTU.descripcion as tipo_usuario, CE.descripcion as estudio,
+CO.descripcion as ocupacion, CTD.descripcion as tiempo_dedicado, CEA.descripcion
+
+from users U, user_profiles UP, cat_sexo CS, cat_edo_civil CEC, cat_tipo_usuario CTU,
+cat_estudios CE, cat_ocupacion CO, cat_tiempo_dedicado CTD, cat_estatus_afiliado CEA
+ 
+where UP.id_sexo = CS.id_sexo and UP.id_edo_civil = CEC.id_edo_civil and UP.id_tipo_usuario = CTU.id_tipo_usuario
+and UP.id_estudio = CE.id_estudio and UP.id_ocupacion = CO.id_ocupacion and U.id = UP.user_id 
+and UP.id_tiempo_dedicado = CTD.id_tiempo_dedicado and UP.id_estatus = CEA.id_estatus
+
+ group by (U.id);
+ -->

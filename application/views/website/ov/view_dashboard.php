@@ -418,11 +418,11 @@
 										<div class="row">
 											<fieldset>
 												<legend><b>Comunicación</b></legend>
-												<div class="col-sm-3">
+												<div class="col-sm-2">
 												</div>
 												<div class="col-sm-2">
 													<a href="cgeneral/autoresponder">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-globe fa-3x"></i>
 															<h5>Autoresponder</h5>
 														</div>
@@ -431,7 +431,7 @@
 												<div class="col-sm-2">
 													<a href="cgeneral/invitacion_afiliar">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-envelope fa-3x"></i>
+															<i class="fa fa-envelope fa-3x"></i><i class="fa fa-sitemap fa-3x"></i>
 															<h5>Invitacion Afiliar</h5>
 														</div>
 													</a>

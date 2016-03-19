@@ -285,4 +285,81 @@ class modelo_billetera extends CI_Model
 		where v.id_user = a.id_afiliado and v.id_venta = c.id_venta  and a.id_red = ".$id_red." and c.id_red = ".$id_red." and  c.id_afiliado = ".$id_afiliado." and  a.debajo_de = ".$id_afiliado." and (MONTH('".$fecha."') = MONTH(c.fecha))");
 		return $q->result();
 	}
+	
+	function add_sub_billetera($tipo,$id,$monto,$descripcion){
+		
+		$dato_cobro=array(
+				"id_user"		=>	$id,
+				"tipo"			=> 	$tipo,
+				"descripcion"	=> 	$descripcion,
+				"monto"			=> 	$monto
+		);
+			
+		$this->db->insert("transaccion_billetera",$dato_cobro);
+		return $this->get_id_transaccion($id,$monto,$descripcion,$tipo);
+	}
+	
+	function get_total_transacciones_id_fecha($id,$fecha){
+		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." and date_format(fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."' group by tipo ");
+		$q2=$q->result();
+		
+		return $this->set_transacciones_format($q2);
+	}
+	
+	function get_id_transaccion($id,$monto,$descripcion,$tipo){
+		$q=$this->db->query("select max(id) as id from transaccion_billetera 
+				where id_user = ".$id." and monto = ".number_format($monto,2)./*" and descripcion = '".$descripcion."'".*/" and tipo = '".$tipo."'");
+		$q2=$q->result();
+	
+		return $q2[0]->id ;
+	}
+	
+	function get_total_transacciones_id($id){
+		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." group by tipo ");
+		$q2=$q->result();			
+		
+		return $this->set_transacciones_format($q2) ;
+	}
+	
+	function get_total_transact_id($id){
+		$q=$this->get_total_transacciones_id($id);
+		$total_transact = 0;
+		
+		if ($q) {
+			if ($q['add']) {
+				$total_transact+=$q['add'];
+			} 
+			if ($q['sub']) {
+				$total_transact-=$q['sub'];
+			}
+		}
+		 
+		return $total_transact;
+	}
+	
+	function set_transacciones_format($q2){
+		
+		if(!$q2) {
+			return null;
+		}
+		
+		$i=0;
+		$add=null;
+		$sub=null;
+		
+		foreach ($q2 as $key){
+			switch ($key->tipo){
+				case "ADD" : $add=$key->valor;break;
+				case "SUB" : $sub=$key->valor;break;
+			}
+		}
+		
+		$q3=array(
+				'add'=>$add ,
+				'sub'=>$sub
+		);
+		
+		return $q3;		
+	}
+	
 }

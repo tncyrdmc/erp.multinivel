@@ -83,10 +83,11 @@ class Cemail extends CI_Model
 				"CONFIRMACIÓN NUEVO EMAIL", //change-email
 				"PAGO DE SOLICITUD DE DINERO", //cobros
 				"CONFIRMACIÓN DE PAGO POR BANCO", //cuentas-cobrar
-				"RECUPERACIÓN DE CONTRASEÑA", //forgot password
-				"CONFIRMACIÓN DE NUEVA CONTRASEÑA", //reset password
+				"RECUPERACIÓN DE CONTRASEÑA", //forgot-password
+				"CONFIRMACIÓN DE NUEVA CONTRASEÑA", //reset-password
 				"INVITACION AL MULTINIVEL", //invitacion
-				"BANNER PROMOCIONAL" //autoresponder
+				"BANNER PROMOCIONAL", //autoresponder
+				"TRANSACCION DE BILLETERA" //transaccion-empresa
 		);
 		
 		return $q[$type]; 		
@@ -99,10 +100,11 @@ class Cemail extends CI_Model
 				($type==2) ? "Your new email address on ".$data['site_name']."." : "", //change-email
 				($type==3) ? "Hola ".$data['username'].", Su peticion de pago esta siendo procesada." : "", //cobros
 				($type==4) ? "Hola ".$data['username'].", Su pago se ha recibido." : "", //cuentas-cobrar
-				($type==5) ? "Hi, ".$data['username']."." : "", //forgot password
-				($type==6) ? "Tu nueva contraseña en ".$data['site_name']."." : "", //reset password
+				($type==5) ? "Hi, ".$data['username']."." : "", //forgot-password
+				($type==6) ? "Tu nueva contraseña en ".$data['site_name']."." : "", //reset-password
 				($type==7) ? "Hola, ".$data['email'].", Te han invitado a afiliarte." : "", //invitacion
-				($type==8) ? "Gusto en Conocerte, ".$data['email']."." : ""//autoresponder
+				($type==8) ? "Gusto en Conocerte, ".$data['email']."." : "" , //autoresponder
+				($type==9) ? "Apreciado ".$data['username'].", Se ha realizado una transacción por parte de la Empresa." : "" //transaccion-empresa
 		);
 	
 		return $q[$type];
@@ -121,10 +123,11 @@ class Cemail extends CI_Model
 		);
 		
 		$validar = array (
-				'username' 	=>(strlen($data['username']) > 0) ? "Nombre de usuario: ".$data['username'] : "",
+				'username' 	=>isset($data['username']) ? "Nombre de usuario: ".$data['username'] : "",
 				'password' 	=>isset($data['password']) ? "Contraseña: ".$data['password'] : "",
 				'id_cobro'	=>isset($data['id_cobro']) ? "ID de Cobro: ".$data['id_cobro'] : "",
 				'id_venta'	=>isset($data['id_venta']) ? "ID venta: ".$data['id_venta'] : "",
+				'id_transaccion'	=>isset($data['id_transaccion']) ? "ID de Transacción: ".$data['id_transaccion'] : "",
 				'fecha'		=>isset($data['fecha']) ? "Fecha de Solicitud: ".$data['fecha'] : "",
 				'nombres'	=>isset($data['nombre']) &&  ($data['apellido'])  ? "Nombre y apellido: ".$data['nombre']." ".$data['apellido'] : "",
 				'banco'		=>isset($data['banco']) ? "Banco: ".$data['banco'] : "",
@@ -132,8 +135,11 @@ class Cemail extends CI_Model
 				'titular'	=>isset($data['titular']) ? "Titular de cuenta: ".$data['titular'] : "",
 				'clave'		=>isset($data['clave']) ? "CLABE: ".$data['clave'] : "",
 				'monto'		=>isset($data['monto']) ? "Valor de Cobro: $ ".$data['monto'] : "",
+				'monto_t'		=>isset($data['monto_t']) ? "Valor de la transacción: $ ".$data['monto_t'] : "",
+				'descripcion_t'		=>isset($data['descripcion_t']) ? "Motivo la transacción: <br/><em class='callout'> ".$data['descripcion_t']."<em/>" : "",
 				'valor'		=>isset($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
-				'sponsor_tel'	=>isset($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : ""
+				'sponsor_tel'	=>isset($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : "",
+				'tipo_t'	=>isset($data['tipo_t']) ? "Informamos que la empresa le ha <strong>".$data['tipo_t']." Dinero</strong> a su billetera," : ""
 		);
 		
 		$welcome = ($type==0) ? '<p class="callout">
@@ -241,6 +247,13 @@ class Cemail extends CI_Model
 						<p>Si el link no funciona copie y pegue la siguiente direccion en su navegador
 						<a href="'.$data['b_link'].'">'.$data['b_link'].'</a></p><br /><br />': '';
 		
+		$transaccion = ($type==9) ? '<p class="callout">
+							'.$validar['tipo_t'].' los siguientes son los datos de la transacción:
+						</p><!-- /Callout Panel -->
+						<p>'. $validar['id_transaccion'].'<br /></p>
+						<p>'. $validar['descripcion_t'].'<br /></p>
+						<p>'. $validar['monto_t'].'<br /></p>' : '';
+		
 		
 		$q = array(			//welcome
 						$welcome, 
@@ -259,7 +272,9 @@ class Cemail extends CI_Model
 							//invitacion
 						$invitacion, 
 							//autoresponder
-						$autoresponder
+						$autoresponder, 
+							//transaccion-empresa
+						$transaccion
 		);
 	
 		return $q[$type];

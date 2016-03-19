@@ -101,6 +101,7 @@
 													<th data-class="expand">NOMBRE</th>
 													<th data-hide="phone">IMAGEN</th>
 													<th data-hide="phone,tablet">RED</th>
+													<th data-hide="phone,tablet">CATEGORÍA</th>
 													<th data-hide="phone">PAIS</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> IMPUESTOS</th>
@@ -118,6 +119,13 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_grupo){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
@@ -156,6 +164,13 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
@@ -194,6 +209,13 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
@@ -233,6 +255,13 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
@@ -271,6 +300,13 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>

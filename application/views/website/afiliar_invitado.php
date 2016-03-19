@@ -51,14 +51,16 @@ $(document).ready(function() {
 					
 					if(validacion&&validacion)
 					{
+						var email_=$("#email").val();
 						$.ajax({
 							type: "POST",
 							url: "/key/check_espacio_invite",
-							data: {token: codigo}
+							data: {token: codigo,email:email_}
 						})
 						.done(function( msg )
 						{		
 							if (msg==="FAIL"){
+								//alert(msg);
 								$.smallBox({
 								      title: "<h1>Ups!</h1>",
 								      content: "<h3>Lamentamos Informarle que este espacio ha sido ocupado por otro afiliado</h3>"+
