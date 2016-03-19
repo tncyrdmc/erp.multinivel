@@ -122,7 +122,8 @@ class comercial extends CI_Controller
 		
 		$email = $this->cemail->send_email(10, $data['email'], $data);
 		
-		echo $transact&&$email ? "Transacción Exitosa" : "Falló la Transacción";
+		echo $transact ? "Transacción Exitosa" : "Falló la Transacción";
+		//echo $email ? "Email Enviado" : "Falló envio de Email";
 		
 	}
 	
