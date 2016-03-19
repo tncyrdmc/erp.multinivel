@@ -61,12 +61,12 @@ class comercial extends CI_Controller
 	function billetera_afiliado(){
 
 		$style=$this->modelo_dashboard->get_style(1);
-		$id              = $this->tank_auth->get_user_id();
+		$usuario = $this->tank_auth->get_user_id();
 		$id=$_POST['id'];
 
-		//$this->template->set("usuario",$usuario);
-		$usuario=$this->general->get_username($id);
-		$style=$this->general->get_style($id);
+		$this->template->set("usuario",$usuario);
+		//$usuario=$this->general->get_username($id);
+		//$style=$this->general->get_style($id);
 	
 		$redes = $this->model_tipo_red->listarTodos();
 		$ganancias=array();
@@ -76,13 +76,16 @@ class comercial extends CI_Controller
 			array_push($comision_directos, $this->modelo_billetera->getComisionDirectos($id, $red->id));
 		}
 		
+		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);		
+		
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
 		
 		$this->template->set("style",$style);
-		$this->template->set("usuario",$usuario);
+		$this->template->set("id",$id);
+		$this->template->set("transaction",$transaction);
 		$this->template->set("comisiones",$comisiones);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("comisiones_directos",$comision_directos);
@@ -95,6 +98,17 @@ class comercial extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/billetera');
+	}
+	
+	function add_sub_billetera_afiliado(){
+		
+		$id = $_POST['id'];
+		$monto = $_POST['cobro'];
+		$descripcion = $_POST['descripcion'];
+		$tipo = $_POST['tipo'];
+		
+		$transact = $this->modelo_billetera->add_sub_billetera($tipo,$id,$monto,$descripcion);
+		echo $transact ? "Transacción Exitosa" : "Falló la Transacción";
 	}
 	
 	function red_genealogica()

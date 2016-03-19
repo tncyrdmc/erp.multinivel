@@ -200,10 +200,13 @@ class billetera2 extends CI_Controller
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
 		
+		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);
+		
 		$this->template->set("style",$style);
 		$this->template->set("comisiones",$comisiones);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("transaction",$transaction);
 		$this->template->set("comisiones_directos",$comision_directos);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);
@@ -255,20 +258,22 @@ class billetera2 extends CI_Controller
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotalesAfiliado($id);
 		$cobrosPagos=$this->modelo_billetera->get_cobros_total_afiliado($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
+		$total_transact = $this->modelo_billetera->get_total_transact_id($id);
 		
-		echo $comisiones."<br>";
+	/*	echo $comisiones."<br>";
 		echo $retenciones."<br>";
 		echo $cobrosPagos."<br>";
 		echo $cobroPendientes."<br>";
-/*
+*/
+		
  
-		if(($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))>0){
+		if((($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))+($total_transact))>0){
 			$this->modelo_billetera->cobrar($id,$_POST['ncuenta'],$_POST['ctitular'],$_POST['cbanco'],$_POST['cclabe']);
 			echo "Felicitaciones<br> Tu cobro se esta procesando.";
 		}else {
 			echo "ERROR <br>No hay saldo para realizar el cobro.";
 		}
-*/
+
 	}
 	
 	function estado()
@@ -301,10 +306,13 @@ class billetera2 extends CI_Controller
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
 		
+		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);
+		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("comisiones",$comisiones);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("transaction",$transaction);
 		$this->template->set("comisiones_directos",$comision_directos);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);
@@ -342,10 +350,13 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
 
+		$transaction = $this->modelo_billetera->get_total_transacciones_id_fecha($id,$_GET['fecha']);
+		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("retenciones",$retenciones);
+		$this->template->set("transaction",$transaction);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendiente);
 		$this->template->set("comisiones_directos",$comision_directos);

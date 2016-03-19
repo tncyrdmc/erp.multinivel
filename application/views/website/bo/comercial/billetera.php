@@ -3,8 +3,9 @@
 	
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-		<form action="" onmouseenter="" method="POST" id="edit" role="form" class="smart-form">
-			<legend>Modificar saldo del Afiliado</legend>
+		<form action="/bo/comercial/add_sub_billetera_afiliado" onmouseenter="" method="POST" id="edit" role="form" class="smart-form">
+		
+			<legend>Modificar Saldo del Afiliado</legend>
 
 			<br><br>
 
@@ -16,8 +17,8 @@
 									<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 										<!-- Widget ID (each widget will need unique ID)-->
-										<div class="jarviswidget jarviswidget-color-purity" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="true">
-											<!-- widget options:
+										<div class="" id="" data-widget-editbutton="false" data-widget-colorbutton="true">
+											<!-- widget options:  jarviswidget jarviswidget-color-purity wid-id-1
 											usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 							
 											data-widget-colorbutton="false"
@@ -32,8 +33,8 @@
 											-->
 																							<!-- widget content -->
 												
-												<div class="widget-body">
-													<div id="myTabContent1" class="tab-content padding-50">
+												<div class=""><!-- widget-body --> 
+													<div id="" class=""> <!-- myTabContent1 ; tab-content padding-50 -->
 													<h1 class="text-center"></h1>
 													
 													<div class="table-responsive">
@@ -48,6 +49,9 @@
 												<?php 
 													$total = 0; 
 													$i = 0;
+													
+													$total_transact = 0;
+																										
 													foreach ($ganancias as $gred){
 														if($gred[0]->valor!=0){
 														echo '<tr class="success" >
@@ -81,10 +85,39 @@
 													}
 
 													?>  
+													
+													
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
 														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
 													</tr>
+													
+													<?php if ($transaction) { ?>	
+														<tr class="warning">
+															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+														</tr>
+													<?php if ($transaction['add']) {
+															$total_transact+=$transaction['add'];
+														?>
+														<tr class="warning">
+															<td ><b>Total Agregado</b></td>
+															<td ><b style="color: green">$ <?php echo number_format($transaction['add'],2);?></b></td>
+														</tr>
+													<?php } 
+													if ($transaction['sub']) {
+														$total_transact-=$transaction['sub'];
+														?>
+														<tr class="warning" >
+															<td ><b>Total Quitado</b></td>
+															<td ><b style="color: red">$ <?php echo number_format($transaction['sub'],2);?></b></td>
+														</tr>
+													<?php } ?>
+														<tr class="warning">
+															<td ><b>TOTAL:</b></td>
+															<td ><h4><b >$ <?php echo number_format($total_transact,2);?></b></h4></td>
+														</tr>
+													<?php	} ?>
+													
 													</tbody>
 													</table>
 														
@@ -97,7 +130,7 @@
 																	$retenciones_total=0;
 																	foreach ($retenciones as $retencion) {?>
 																	<tr class="danger">
-																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></b></td>
+																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></td>
 																		<td></td>
 																		<td>$ <?php 
 																		$retenciones_total+=$retencion['valor'];
@@ -139,7 +172,7 @@
 																	<tr class="info">
 																		<td><h4><b>Saldo Neto</b></h4>
 																		<td></td>
-																		<td><h4><b>$ <?php echo number_format($total-($cobro+$retenciones_total+$cobroPendientes),2); ?></b></h4></td>
+																		<td><h4><b>$ <?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)+($total_transact)),2); ?></b></h4></td>
 																	</tr>
 																</table>
 														
@@ -151,30 +184,79 @@
 											<!-- end widget div -->
 										</div>
 										<!-- end widget -->
-							
-									</article>
+									
+									</article>								
+									
+											
+									
+									
 								</div>
-							</section>
 						<!-- end widget grid -->
-
+							
 						</div>
-					</div>
+			<input required type="hidden" id="id" name="id" value="<?=$id?>">
+			<div class="row">
+				<div class="form-group">				
+					<legend> </legend>
+					<br/>
+					<section class="col col-12">
+						<label class="textarea"> 	
+							Descripción									
+							<textarea id="descripcion" name="descripcion" rows="3" cols="60" class="custom-scroll" required></textarea> 
+						</label>
+					</section>
+					<section class="col col-3"></section>
+					<section class="col col-3">Digite monto:</section>
+					<section class="col col-6">		
+						<label class="input">
+							<i class="icon-prepend fa fa-money"></i>
+							<input name="cobro" type="number" min="1" class="from-control" id="cobro" required />
+						</label>
+					</section>					
+				</div>
+			</div>			
 						
-						
-				
+			<div class="row">
+				<div class="form-group">				
+					<legend> </legend>
+					<br/>					
+					<section class="col col-8"></section>
+					<section class="col col-2">
+							<button type="submit" id="ADD" class="btn btn-success  btn-next"  >Agregar</button>				
+					</section>
+					<section class="col col-2">
+							<button type="submit" id="SUB" class="btn btn-danger btn-prev"  >Quitar</button>						
+					</section>						
+					
+				</div>
 			</div>
-									<button type="submit" class="btn btn-success pull-right btn-next"  disabled="disabled">Actualizar</button>
-		</form>
+			
+						
+		</form>	<!-- /form -->
+	</div>
+					
+						
+</div>
+									
+		
 		
 
-</div>
-</div>
+
+
 
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 
 <script type="text/javascript">
+var tipo = "";
+$( "#ADD" ).click(function( event ) {
+	tipo = "ADD";
+});
+
+$( "#SUB" ).click(function( event ) {
+	tipo = "SUB";
+});
 
 $( "#edit" ).submit(function( event ) {
 	event.preventDefault();	
@@ -182,133 +264,58 @@ $( "#edit" ).submit(function( event ) {
 });
 
 function enviar(){
-	setiniciarSpinner();	
 	$.ajax({
 		type: "POST",
-		url: "/bo/comercial/actualizar_afiliado",
-		data: $('#edit').serialize()
-	}).done(function( msg ) {				
+		url: "/auth/show_dialog",
+		data: {message: '¿ Esta seguro que desea Realizar la Transacción ?'},
+	})
+	.done(function( msg )
+	{
 		bootbox.dialog({
-			message: msg,
-			title: 'ATENCION',
-			buttons: {
-				success: {
-					label: "Aceptar",
-					className: "btn-success",
+		message: msg,
+		title: 'Eliminar Afiliado',
+		buttons: {
+			success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+						setiniciarSpinner();	
+						$("#edit").append("<input value='"+tipo+"' type='hidden' name='tipo'>");
+						$.ajax({
+							type: "POST",
+							url: "/bo/comercial/add_sub_billetera_afiliado",
+							data: $('#edit').serialize()
+						}).done(function( msg ) {				
+							bootbox.dialog({
+								message: msg,
+								title: 'ATENCION',
+								buttons: {
+									success: {
+										label: "Aceptar",
+										className: "btn-success",
+										callback: function() {
+												location.href="/bo/comercial/red_tabla";
+												FinalizarSpinner();
+										}
+									}
+								}
+							})
+						});//fin Done ajax	
+					}
+				},
+			danger: {
+					label: "Cancelar!",
+					className: "btn-danger",
 					callback: function() {
-							location.href="/bo/comercial/red_tabla";
-							FinalizarSpinner();
+
 					}
 				}
 			}
 		})
-	});//fin Done ajax	
+	});	
 }
 
-$(function()
-{
-	var a = new Date();
- 	año = a.getFullYear()-19;
-	$( "#datepicker" ).datepicker({
-		changeMonth: true,
-		numberOfMonths: 2,
-		dateFormat:"yy-mm-dd",
-		maxDate: año+"-12-31",
-		changeYear: true
-	});
-});
 
-/*function mensaje_notificacion(){
-	bootbox.dialog({
-		  message: "La modificación del afiliado ha sido exitosa.",
-		  title: "Modificación del afiliado",
-		  buttons: {
-		    success: {
-		      label: "Ok",
-		      className: "hide",
-		      callback: function() {
-		    	  location.href="/bo/comercial/red_tabla?id_red";
-		      }
-		    }
-		  }
-		})
-}*/
-
-/*function use_username()
-{
-	$("#msg_usuario").remove();
-	var username=$("#username").val();
-	var id=$("#id").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_username_modificar",
-		data: {username: username,id: id},
-	})
-	.done(function( msg )
-	{
-		$("#msg_usuario").remove();
-		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
-	});
-	validate_user_data()
-}
-function use_mail()
-{
-	$("#msg_correo").remove();
-	var mail=$("#mail").val();
-	var id=$("#id").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_mail_modificar",
-		data: {mail: mail, id:id},
-	})
-	.done(function( msg )
-	{
-		$("#msg_correo").remove();
-		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
-	});
-	validate_user_data()
-}
-
-function confirm_pass()
-{
-	var password=$("#password").val();
-	var confirm_password=$("#confirm_password").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/confirm_password",
-		data: {password: password,confirm_password: confirm_password},
-	})
-	.done(function( msg )
-	{
-		$("#msg_confirm_password").remove();
-		$("#confirmar_password").append("<div id='msg_confirm_password'>"+msg+"</div>")
-	});
-	validate_user_data()
-}
-
-function validate_user_data()
-{
-	var id=$("#id").val();
-	var nombre=$("#nombre").val();
-	var mail=$("#mail").val();
-	var username=$("#username").val();
-
-	var password=$("#password").val();
-	var confirm_password=$("#confirm_password").val();
-
-	$("#validate_user_data").remove();
-
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/validate_user_data2",
-		data: {id: id,nombre: nombre,mail: mail,username: username,password: password,confirm_password: confirm_password},
-	})
-	.done(function( msg )
-	{
-		$("#validate_user_data").remove();
-		$("#edit").append("<div id='validate_user_data'>"+msg+"</div>")
-	});
-}*/
 
 </script>
 <!-- 

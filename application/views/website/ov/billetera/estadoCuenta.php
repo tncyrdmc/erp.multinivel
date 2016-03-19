@@ -69,6 +69,9 @@
 												<?php 
 													$total = 0; 
 													$i = 0;
+													
+													$total_transact = 0;
+													
 													foreach ($ganancias as $gred){
 														if($gred[0]->valor!=0){
 														echo '<tr class="success" >
@@ -106,6 +109,33 @@
 														<td><h4><b>TOTAL</b></h4></td>
 														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
 													</tr>
+													
+													<?php if ($transaction) { ?>	
+														<tr class="warning">
+															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+														</tr>
+													<?php if ($transaction['add']) {
+															$total_transact+=$transaction['add'];
+														?>
+														<tr class="warning">
+															<td ><b>Total Agregado</b></td>
+															<td ><b style="color: green">$ <?php echo number_format($transaction['add'],2);?></b></td>
+														</tr>
+													<?php } 
+													if ($transaction['sub']) {
+														$total_transact-=$transaction['sub'];
+														?>
+														<tr class="warning" >
+															<td ><b>Total Quitado</b></td>
+															<td ><b style="color: red">$ <?php echo number_format($transaction['sub'],2);?></b></td>
+														</tr>
+													<?php } ?>
+														<tr class="warning">
+															<td ><b>TOTAL:</b></td>
+															<td ><h4><b >$ <?php echo number_format($total_transact,2);?></b></h4></td>
+														</tr>
+													<?php	} ?>
+													
 													</tbody>
 													</table>
 														
@@ -160,7 +190,7 @@
 																	<tr class="info">
 																		<td><h4><b>Saldo Neto</b></h4>
 																		<td></td>
-																		<td><h4><b>$ <?php echo number_format($total-($cobro+$retenciones_total+$cobroPendientes),2); ?></b></h4></td>
+																		<td><h4><b>$ <?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)+($total_transact)),2); ?></b></h4></td>
 																	</tr>
 																</table>
 														
