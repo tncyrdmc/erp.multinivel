@@ -299,6 +299,23 @@ class modelo_billetera extends CI_Model
 		return $this->get_id_transaccion($id,$monto,$descripcion,$tipo);
 	}
 	
+	function get_transacciones_fecha($inicio,$fin){
+		$q=$this->db->query("select t.id, u.username, concat(p.nombre,' ',p.apellido) as nombres , (case when (t.tipo = 'ADD') then 'plus' else 'minus' end) as tipo, t.descripcion , t.monto
+from transaccion_billetera t, users u, user_profiles p
+ where u.id = t.id_user and p.user_id = t.id_user and t.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' order by fecha ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function get_transacciones_id($id){
+		$q=$this->db->query("select id, fecha, (case when (tipo = 'ADD') then 'plus' else 'minus' end) as tipo, descripcion , monto
+from transaccion_billetera where id_user = ".$id." order by fecha desc ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
 	function get_total_transacciones_id_fecha($id,$fecha){
 		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." and date_format(fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."' group by tipo ");
 		$q2=$q->result();
@@ -319,6 +336,12 @@ class modelo_billetera extends CI_Model
 		$q2=$q->result();			
 		
 		return $this->set_transacciones_format($q2) ;
+	}
+	
+	function kill_transaccion($id){
+		$this->db->query("delete from transaccion_billetera where id = ".$id);
+	
+		return true ;
 	}
 	
 	function get_total_transact_id($id){

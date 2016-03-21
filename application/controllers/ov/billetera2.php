@@ -309,6 +309,7 @@ class billetera2 extends CI_Controller
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("id",$id);
 		$this->template->set("comisiones",$comisiones);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("transaction",$transaction);
@@ -370,4 +371,46 @@ class billetera2 extends CI_Controller
 		$this->template->build('website/ov/billetera/dashboard');
 		$this->template->build('website/ov/billetera/estado');
 	}
+	
+	function historial_transaccion(){
+	
+		
+		$id=$_POST['id'];
+	
+		//echo "dentro de historial : ".$id;
+		
+		$transactions = $this->modelo_billetera->get_transacciones_id($id);
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Tipo de Transacción</th>
+					<th data-hide='phone,tablet'>Motivo</th>
+					<th data-hide='phone,tablet'>Valor</th>
+				</thead>
+				<tbody>";
+		
+		
+			foreach($transactions as $transaction)
+			{
+				$color = ($transaction->tipo=="plus") ? "green" : "red";
+				echo "<tr>
+			<td class='sorting_1'>".$transaction->id."</td>
+			<td>".$transaction->fecha."</td>
+			<td style='color: ".$color.";'><i class='fa fa-".$transaction->tipo."-circle fa-3x'></i></td>
+			<td>".$transaction->descripcion."</td>
+			<td> $	".number_format($transaction->monto, 2)."</td>			
+			</tr>";
+					
+				
+			}		
+			
+		
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
 }

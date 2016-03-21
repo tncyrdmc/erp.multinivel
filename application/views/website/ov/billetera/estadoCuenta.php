@@ -112,7 +112,12 @@
 													
 													<?php if ($transaction) { ?>	
 														<tr class="warning">
-															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+															<td ><b>TRANSACCIONES EMPRESA</b></td>
+															<td >
+																<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ver(<?=$id?>);'>
+																				<i class='fa fa-eye fa-3x'></i>
+																</a>
+															</td>
 														</tr>
 													<?php if ($transaction['add']) {
 															$total_transact+=$transaction['add'];
@@ -224,6 +229,32 @@
 
 		<!-- PAGE RELATED PLUGIN(S) 
 		<!-- Morris Chart Dependencies -->
+		<script type="text/javascript">
+
+			function ver(id){
+				$.ajax({
+					type: "POST",
+					url: "/ov/billetera2/historial_transaccion",
+					data: {id: id}
+				})
+				.done(function( msg )
+				{					
+					bootbox.dialog({
+						message: msg,
+						title: 'Historial de Transacciones',
+						buttons: {
+							danger: {
+								label: "Cerrar",
+								className: "btn-danger",
+								callback: function() {
+
+									}
+						}
+					}})//fin done ajax
+				});//Fin callback bootbox
+			}
+
+		</script>
 		<script src="/template/js/plugin/morris/raphael.min.js"></script>
 		<script src="/template/js/plugin/morris/morris.min.js"></script>
 
