@@ -11,8 +11,9 @@
 													<abbr title="Phone">Tel:</abbr>&nbsp;<?=$empresa[0]->fijo?>
 												</address>
 											</div>
+											</br>
 											<div class="pull-right">
-												<h1 class="font-400">Factura</h1>
+												<h1 class="font-300">Factura de venta</h1>
 											</div>
 											<div class="clearfix"></div>
 											<br>

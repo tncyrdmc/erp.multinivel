@@ -55,7 +55,7 @@
 													</section>
 														<section class="col col-2">
 														<label class="input">Tiempo de caducidad
-															<input required placeholder="En días" type="text" id="caducidad" name="caducidad">
+															<input required placeholder="En días" type="number" id="caducidad" name="caducidad">
 														</label>
 													</section>
 													<section class="col col-3">Categoria
@@ -108,7 +108,7 @@
 
 													<fieldset>
 													<div class="row" id="impuesto_agregar">
-														<section class="col col-2">País del servicio
+														<section class="col col-2">País de la membresía
 														<label class="select">
 															<select id="pais" required name="pais" onChange="select_pais()">
 															<option value="-" selected>-- Seleciona un pais --</option>

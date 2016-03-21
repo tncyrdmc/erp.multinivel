@@ -154,7 +154,7 @@ $porcentajeContador=0;
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">
 														Tiempo mínimo de entrega
-															<input placeholder="En días" required type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
+															<input placeholder="En días" type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
 														</label>
 													</section>
 													

@@ -46,7 +46,7 @@ $porcentajeContador=0;
 							<fieldset>
 							<section class="col col-12" style="width: 50%;">País de la mercancía
 											<label class="select">
-												<select id="pais2" required name="pais" onChange="select_pais()">
+												<select id="pais2" required name="pais" onChange="select_pais()" required>
 													<?foreach ($pais as $key)
 													{	if ($mercancia[0]->pais == $key->Code){?>
 															<option selected value="<?=$key->Code?>">
@@ -230,7 +230,7 @@ $porcentajeContador=0;
 
 										<section class="col col-2" style="width: 50%;">
 											<label class="input"> Tiempo mínimo de entrega 
-												<input required placeholder="En días" type="number" name="entrega" id="entrega" value='<? echo $mercancia[0]->entrega?>' onchange="calcular_precio_total()">
+												<input placeholder="En días" type="number" name="entrega" id="entrega" value='<? echo $mercancia[0]->entrega?>' onchange="calcular_precio_total()">
 											</label>
 										</section>
 													
@@ -238,7 +238,7 @@ $porcentajeContador=0;
 
 										<section class="col col-3" style="width: 50%;">
 											<label class="input"> Puntos comisionables 
-												<input required type="number" min="1" max="" name="puntos_com" id="puntos_com" value='<? echo $mercancia[0]->puntos_comisionables?>'>
+												<input type="number" min="1" max="" name="puntos_com" id="puntos_com" value='<? echo $mercancia[0]->puntos_comisionables?>'>
 											</label>
 										</section>
 										<?$i=0?>

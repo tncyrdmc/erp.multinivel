@@ -54,7 +54,7 @@
 												<section class="col col-2">
 													<label class="input">
 														Nombre
-														<input required type="text" id="nombre_p" name="nombre">
+														<input  type="text" id="nombre_p" name="nombre" required>
 													</label>
 												</section>
 
