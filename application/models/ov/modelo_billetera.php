@@ -308,6 +308,66 @@ from transaccion_billetera t, users u, user_profiles p
 		return $q2;
 	}
 	
+	function get_ventas_comision_id($id){
+		$q=$this->db->query("SELECT c.id_venta, v.fecha, t.nombre as red, c.id_afiliado,
+								concat(p.nombre,' ',p.apellido) as nombres,
+								(select group_concat(
+										concat((
+										select 
+											item
+										from items 
+										where id = s.id_mercancia
+											),' (',cantidad,') ')
+									) 
+									from cross_venta_mercancia s
+									where s.id_venta = c.id_venta) as items,
+								(select sum(costo_total) 
+									from cross_venta_mercancia 
+									where id_venta = c.id_venta) as total,
+								c.valor as comision
+							FROM comision c , user_profiles p , venta v, tipo_red t
+							WHERE 	
+								p.user_id = v.id_user
+								and v.id_venta = c.id_venta
+								and	t.id = c.id_red
+								and c.id_afiliado = ".$id."
+								-- and date_format(v.fecha,'%Y-%m') = ''
+							ORDER BY c.id ;");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function get_ventas_comision_fecha($id,$fecha){
+		$q=$this->db->query("SELECT c.id_venta, v.fecha, t.nombre as red, c.id_afiliado,
+								concat(p.nombre,' ',p.apellido) as nombres,
+								(select group_concat(
+										concat((
+										select
+											item
+										from items
+										where id = s.id_mercancia
+											),' (',cantidad,') ')
+									)
+									from cross_venta_mercancia s
+									where s.id_venta = c.id_venta) as items,
+								(select sum(costo_total)
+									from cross_venta_mercancia
+									where id_venta = c.id_venta) as total,
+								c.valor as comision
+							FROM comision c , user_profiles p , venta v, tipo_red t
+							WHERE
+								p.user_id = v.id_user
+								and v.id_venta = c.id_venta
+								and	t.id = c.id_red
+								and c.id_afiliado = ".$id."
+								and date_format(v.fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."'
+							ORDER BY c.id ;");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
 	function get_transacciones_id($id){
 		$q=$this->db->query("select id, fecha, (case when (tipo = 'ADD') then 'plus' else 'minus' end) as tipo, descripcion , monto
 from transaccion_billetera where id_user = ".$id." order by fecha desc ");

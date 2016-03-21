@@ -357,10 +357,12 @@ class billetera2 extends CI_Controller
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("id",$id);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("retenciones",$retenciones);
 		$this->template->set("transaction",$transaction);
 		$this->template->set("cobro",$cobro);
+		$this->template->set("fecha",$_GET['fecha']);
 		$this->template->set("cobroPendientes",$cobroPendiente);
 		$this->template->set("comisiones_directos",$comision_directos);
 	
@@ -408,6 +410,71 @@ class billetera2 extends CI_Controller
 			}		
 			
 		
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function ventas_comision(){
+	
+	
+		$id=$_POST['id'];
+	
+		//echo "dentro de historial : ".$id;
+	
+		$ventas = ($_POST['fecha']) 
+		 	? $this->modelo_billetera->get_ventas_comision_fecha($id,$_POST['fecha']) 
+		 	: $this->modelo_billetera->get_ventas_comision_id($id);
+		
+		$total = 0 ;
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Venta</th>
+					<th data-hide='phone,tablet'>Afiliado</th>
+					<th data-hide='phone,tablet'>Red</th>
+					<th data-hide='phone,tablet'>Items</th>
+					<th data-hide='phone,tablet'>Total</th>
+					<th data-hide='phone,tablet'>Comision</th>
+				</thead>
+				<tbody>";
+	
+	
+		foreach($ventas as $venta)
+		{
+			
+			echo "<tr>
+			<td class='sorting_1'>".$venta->id_venta."</td>
+			<td>".$venta->nombres."</td>
+			<td>".$venta->red."</td>
+			<td>".$venta->items."</td>
+			<td>".number_format($venta->total, 2)."</td>
+			<td> $	".number_format($venta->comision, 2)."</td>
+			</tr>";
+				
+			$total += ($venta->comision);
+	
+		}
+			
+		echo "<tr>
+			<td class='sorting_1'></td>			
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+		
+		echo "<tr>			
+			<td></td>			
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class='sorting_1'><b>TOTAL:</b></td>
+			<td><b> $	".number_format($total, 2)."</b></td>
+			</tr>";
+	
 		echo "</tbody>
 		</table><tr class='odd' role='row'>";
 	
