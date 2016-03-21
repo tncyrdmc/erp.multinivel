@@ -173,7 +173,8 @@ class ventas extends CI_Controller
 
 
 		$id = $this->modelo_compras->get_datos_venta($_POST['id']);
-		$fecha=$id[0]->fecha;
+		$fecha_1=date_create($id[0]->fecha);
+		$fecha=date_format($fecha_1,'Y-m-d');
 		$id=$id[0]->id_user;
 
 		$datos_afiliado = $this->model_perfil_red->datos_perfil($id);
