@@ -55,7 +55,7 @@
 						 <legend>Información de la factura de la Empresa</legend>
 						 <input type="hidden" value="<?=$empresa[0]->id_tributaria;?>" name="id" >
 						 <section id="usuario" class="col col-3">
-							 <label class="input">Identificacion Tributaria
+							 <label class="input">Identificacion Tributario
 								 <input required type="text" name="id_tributaria"  placeholder="Empresa" value="<?=$empresa[0]->id_tributaria;?>" > 
 							 </label>
 						 </section>
@@ -70,13 +70,13 @@
 							 </label>
 						 </section>
 						 <section id="usuario" class="col col-3">
-							 <label class="input">Resolución
-								 <input required type="text" name="resolucion" value="<?=$empresa[0]->resolucion;?>">
+							 <label class="textarea">Resolución
+								 <textarea required type="text" name="resolucion" value=""><?=$empresa[0]->resolucion;?></textarea>
 							 </label>
 						 </section>
 						 <section id="usuario" class="col col-3">
-							 <label class="input">Comentarios
-								 <input required type="text" name="comentarios" value="<?=$empresa[0]->comentarios?>">
+							 <label class="textarea">Comentarios
+								 <textarea required type="text" name="comentarios" value=""><?=$empresa[0]->comentarios?></textarea>
 							 </label>
 						 </section>
 

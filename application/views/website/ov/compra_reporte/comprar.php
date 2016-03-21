@@ -45,26 +45,32 @@
 				
 												<address>
 													<h4 class="semi-bold"><?=$empresa[0]->nombre?></h4>
-													<?=$empresa[0]->direccion?>
+													<abbr title="Phone">Identificador tributario:</abbr><?="\t".$empresa[0]->id_tributaria?>
 													<br>
-													<?=$empresa[0]->ciudad?>
+													<abbr title="Phone">Dirección:</abbr><?=$empresa[0]->direccion?>
+													<br>
+													<abbr title="Phone">Ciudad:</abbr><?=$empresa[0]->ciudad?>
 													<br>
 													<abbr title="Phone">Tel:</abbr>&nbsp;<?=$empresa[0]->fijo?>
 												</address>
 											</div>
 											<div class="pull-right">
-												<h1 class="font-400">Factura</h1>
+												<h1 class="font-400">Factura de venta</h1>
 											</div>
 											<div class="clearfix"></div>
 											<br>
 											<div class="row">
 												<div class="col-sm-9">
 													<address>
+														<strong>Facturar a:</strong>
+														<br>
 														<strong>Señor (a). <?php echo $datos_afiliado[0]->nombre." ".$datos_afiliado[0]->apellido;?></strong>
 														<br>
-														<?php echo $pais_afiliado[0]->direccion;?>
+														<abbr title="Phone">DNI:</abbr> <?php echo $datos_afiliado[0]->keyword;?>
 														<br>
-														<?php echo $pais_afiliado[0]->nombrePais;?> <img class="flag flag-<?=strtolower($pais_afiliado[0]->codigo)?>">
+														<abbr title="Phone">Dirección:</abbr> <?php echo $pais_afiliado[0]->direccion;?>
+														<br>
+														<abbr title="Phone">País:</abbr> <?php echo $pais_afiliado[0]->nombrePais;?> <img class="flag flag-<?=strtolower($pais_afiliado[0]->codigo)?>">
 														<br>
 														<abbr title="Phone">Email:</abbr> <?php echo $datos_afiliado[0]->email;?>
 													</address>
@@ -79,8 +85,11 @@
 													</div>
 													<div>
 														<div class="font-md">
-															<strong>FECHA :</strong>
-															<span class="pull-right"> <i class="fa fa-calendar"></i> <?php echo date("Y-m-d");?> </span>
+
+															<abbr title="Phone"><strong>Fecha de expedición:</strong></abbr><span class="pull-right"> <i></i> <?php echo date("Y-m-d");?> </span>
+															<br>
+															<br>
+															<abbr title="Phone"><strong>Fecha de vencimiento:</strong></abbr><span class="pull-right"> <i></i> <?php echo date("Y-m-d");?> </span>
 														</div>
 				
 													</div>
@@ -94,6 +103,11 @@
 													</div>
 												</div>
 											</div>
+																							<div class="panel panel-default">
+  													<div class="panel-body">
+														<span class="center"> <?php echo $empresa[0]->resolucion;?> </span>
+  													</div>
+												</div>
 											<table class="table table-hover">
 												<thead>
 													<tr>
@@ -172,7 +186,11 @@
 													</tr>   -->
 												</tbody>
 											</table>
-				
+															<div class="panel panel-default">
+  												<div class="panel-body">
+													<abbr title="Phone">Observaciones:</abbr><span class="center"> <?php echo $empresa[0]->comentarios;?> </span>
+  												</div>
+											</div>
 											<div class="invoice-footer">
 				
 												<div class="row">
@@ -195,6 +213,7 @@
 															<?php }?>
 														</div>
 													</div>
+													
 													<div class="col-sm-4">
 														<div class="invoice-sum-total pull-right">
 															<h3><strong>Total a Pagar: <span class="text-success">$ <?php echo $total;?> USD</span></strong></h3>
@@ -210,6 +229,7 @@
 												</div>
 				
 											</div>
+
 										</div>
 </div>
 
