@@ -1520,7 +1520,11 @@ function index()
 			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
 			<td>				<a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura(".$venta->id_venta.");'>
 				<i class='fa fa-eye fa-3x'></i>
-				</a></td>
+				</a>
+					<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='factura(".$venta->id_venta.");'>
+				<i class='fa fa-file-pdf-o fa-3x'></i>
+				</a>
+				</td>
 			</tr>";
 					
 				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);

@@ -350,7 +350,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				$qp=$this->db->query('SELECT a.nombre as nombre
 										FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$mercancia->id_mercancia);
 				$prod=$qp->result();
-				$descripcionMercancias.=$descripcionMercancias." ✓ ".$mercancia->cantidad." ".$prod[0]->nombre."";
+				$descripcionMercancias.=" ✓ ".$mercancia->cantidad." ".$prod[0]->nombre."";
 			}
 			
 			if($mercancia->id_tipo_mercancia==2)

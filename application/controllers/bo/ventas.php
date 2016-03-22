@@ -34,6 +34,7 @@ class ventas extends CI_Controller
 		$this->load->model('model_excel');
 		$this->load->model('cemail');
 		$this->load->model('model_servicio');
+		$this->load->library('html2pdf');
 	}
 
 	function index(){
@@ -122,6 +123,9 @@ class ventas extends CI_Controller
 				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$venta->id_venta.");'>
 				<i class='fa fa-trash-o fa-3x'></i>
 				</a>
+				<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir();'>
+				<i class='fa fa-file-pdf-o fa-3x'></i>
+				</a>
 			</td>
 			</tr>";
 					
@@ -162,6 +166,62 @@ class ventas extends CI_Controller
 		echo "</tbody>
 		</table><tr class='odd' role='row'>";
 	}
+
+
+	////////////////////////////////////Factura Ventas//////////////////////
+
+
+public function createFolder()
+    {
+        if(!is_dir("./files"))
+        {
+            mkdir("./files", 0777);
+            mkdir("./files/pdfs", 0777);
+        }
+    }
+
+  public function imprimirfactura()
+    {
+    
+        //establecemos la carpeta en la que queremos guardar los pdfs,
+        //si no existen las creamos y damos permisos
+        $this->createFolder();
+ 
+        //importante el slash del final o no funcionará correctamente
+        $this->html2pdf->folder('./files/pdfs/');
+        
+        //establecemos el nombre del archivo
+        $this->html2pdf->filename('factura.pdf');
+        
+        //establecemos el tipo de papel
+        $this->html2pdf->paper('a4', 'portrait');
+
+        //hacemos que coja la vista como datos a imprimir
+        //importante utf8_decode para mostrar bien las tildes, ñ y demás
+        $this->html2pdf->html(utf8_decode($this->load->view('/website/bo/administracion/ventas/factura',true)));
+        
+        //si el pdf se guarda correctamente lo mostramos en pantalla
+        if($this->html2pdf->create('save')) 
+        {
+            $this->show();
+        }
+    }    
+
+        public function show()
+    {
+        if(is_dir("./files/pdfs"))
+        {
+            $filename = "factura.pdf"; 
+            $route = base_url("files/pdfs/factura.pdf"); 
+            if(file_exists("./files/pdfs/".$filename))
+            {
+                header('Content-type: application/pdf'); 
+                readfile($route);
+            }
+        }
+    }
+
+    ///////////////////////////////////Finalizar Factura ventas////////////
 	
 	function kill_venta()
 	{
