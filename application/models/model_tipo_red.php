@@ -9,14 +9,14 @@ class Model_tipo_red extends CI_Model{
 	}
 	
 	
-	function insertar($nombre, $descripcion, $frontal, $profundidad, $plan){
+	function insertar($nombre, $descripcion, $frontal, $profundidad, $plan, $punto){
 		$datos = array('id' => 0,
 						'nombre' => $nombre,
 						'descripcion' => $descripcion,
 						'frontal' => $frontal,
 						'profundidad' => $profundidad,
 						'plan' => $plan,
-						'valor_punto' => 1
+						'valor_punto' => $punto
 		);
 		$this->db->insert("tipo_red",$datos);
 		$id_red = mysql_insert_id();
@@ -90,13 +90,14 @@ class Model_tipo_red extends CI_Model{
 		$this->db->update('tipo_red', $datos, array('id' => $id_red));
 	}
 	
-	function actualizar($id, $nombre, $descripcion,  $frontal,$profundidad, $plan){
+	function actualizar($id, $nombre, $descripcion,  $frontal,$profundidad, $plan , $punto){
 		$datos = array(
 				'nombre' => $nombre,
 				'descripcion' => $descripcion,
 				'frontal' => $frontal,
 				'profundidad' => $profundidad,
-				'plan' => $plan
+				'plan' => $plan,
+				'valor_punto' => $punto
 		);
 		$this->db->update("tipo_red",$datos,"id = ".$id);
 		return true; 

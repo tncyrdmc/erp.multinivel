@@ -247,28 +247,28 @@
 													</a>
 												</div>
 
-												<?php }$permiso=$ci->model_permissions->check($id,'foto');
+												<?php }$permiso=$ci->model_permissions->check($id,'afiliar'); //foto
 												if($permiso){
 												?>
-												<div class="col-sm-6">
-													<a href="perfil_red/foto">
+											  	<div class="col-sm-6">
+													<a href="/ov/perfil_red/afiliar?tipo=1"> <!-- perfil_red/foto -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-camera fa-3x"></i>
-															<h5>Foto</h5>
+															<i class="fa fa-edit fa-3x"></i> <!-- fa-camera -->
+															<h5>Afiliar</h5> <!-- Foto -->
 														</div>
 													</a>
-												</div>
+												</div> 
 												<?php }?>
 											</div>
 											<div class="row">
-												<?php $permiso= $ci->model_permissions->check($id,'afiliar');
+												<?php $permiso= $ci->model_permissions->check($id,'reportes'); //afiliar
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="/ov/perfil_red/afiliar?tipo=1">
+													<a href="compras/reportes"> <!-- /ov/perfil_red/afiliar?tipo=1 -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-edit fa-3x"></i>
-															<h5>Afiliar</h5>
+															<i class="fa fa-table fa-3x"></i> <!-- fa-edit -->
+															<h5>Reportes</h5> <!-- Afiliar -->
 														</div>
 													</a>
 												</div>
@@ -322,14 +322,14 @@
 												<?php }?>
 											</div>
 											<div class="row">
-                        <?php $permiso=$ci->model_permissions->check($id,'reportes');
+                        <?php $permiso=$ci->model_permissions->check($id,'afiliar'); //reportes
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="compras/reportes"> 
+													<a href="javascript:void(0);"> <!-- compras/reportes -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-table fa-3x"></i>
-															<h5>Reportes</h5>
+															<i class="fa fa-ticket fa-3x"></i><!-- fa-table -->
+															<h5>Boletos/Tickets</h5> <!-- Reportes -->
 														</div>
 													</a>
 												</div>
@@ -411,18 +411,41 @@
 								  <!--Termina la secciion de compras y reportes-->
 								</div>
 							</div>
-														<div class="row">
+							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
 									<!--Inicia la secciion de escuela y negocios-->
 									<div class="well">
 										<div class="row">
 											<fieldset>
 												<legend><b>Comunicación</b></legend>
+												<div class="col-sm-1">
+												</div>
 												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<div class="row">
+																<i class="fa fa-facebook fa-1x"></i>
+																<i class="fa fa-twitter fa-1x"></i>
+															</div>
+															<div class="row">
+																<i class="fa fa-skype fa-1x"></i>
+																<i class="fa fa-youtube fa-1x"></i>
+															</div>
+															<h5>Redes Sociales</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-gift fa-3x"></i>
+															<h5>Promociones</h5>
+														</div>
+													</a>
 												</div>
 												<div class="col-sm-2">
 													<a href="cgeneral/autoresponder">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-globe fa-3x"></i>
 															<h5>Autoresponder</h5>
 														</div>
@@ -430,8 +453,8 @@
 												</div>	
 												<div class="col-sm-2">
 													<a href="cgeneral/invitacion_afiliar">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-envelope fa-3x"></i><i class="fa fa-sitemap fa-3x"></i>
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-envelope fa-2x"></i>&nbsp;&nbsp;<i class="fa fa-sitemap fa-3x"></i>
 															<h5>Invitacion Afiliar</h5>
 														</div>
 													</a>
@@ -451,14 +474,14 @@
 												<?php $permiso=$ci->model_permissions->check($id,'chat');
 												if($permiso){
 												?>
-												<div class="col-sm-2">
+											<!--  	<div class="col-sm-2">
 													<a href="cgeneral/chat">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-weixin fa-3x"></i>
 															<h5>Chat Mi Red</h5>
 														</div>
 													</a>
-												</div>
+												</div> -->
 												<?php }?>
 												<?php $permiso=$ci->model_permissions->check($id,'e_mail');
 												if($permiso){
@@ -546,7 +569,7 @@
 										<div class="row">
 											<fieldset>
 												<legend><b>Información y capacitación</b></legend>
-												<div class="col-sm-1">
+												<div class="col-sm-2">
 												</div>
 												<?php $permiso=$ci->model_permissions->check($id,'informacion');
 												if($permiso){
@@ -595,19 +618,19 @@
 												<?php }$permiso=$ci->model_permissions->check($id,'promociones');
 												if($permiso){
 												?>
-												<div class="col-sm-2">
-													<a href="escuela_negocios/bonos"><!-- escuela_negocios/promociones -->
+											<!--  	<div class="col-sm-2">
+													<a href="escuela_negocios/bonos"><! escuela_negocios/promociones >
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-gift  fa-3x"></i>
 															<h5>Bonos</h5>
 														</div>
 													</a>
-												</div>
+												</div>  -->
 												<?php }?>
 											</fieldset>
 										</div>
 										<div class="row">
-											<div class="col-sm-1">
+											<div class="col-sm-2">
 											</div>
 											<?php $permiso=$ci->model_permissions->check($id,'eventos');
 											if($permiso){
@@ -645,21 +668,21 @@
 											<?php }$permiso=$ci->model_permissions->check($id,'reconocimientos');
 											if($permiso){
 											?>
-											<div class="col-sm-2">
+										<!--  	<div class="col-sm-2">
 												<a href="escuela_negocios/reconocimientos">
 													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-star fa-3x"></i>
 														<h5>Reconocimientos</h5>
 													</div>
 												</a>
-											</div>
+											</div> -->
                       <?php } ?>
                     	<?php $permiso=$ci->model_permissions->check($id,'estadisticas');
 												if($permiso){
 												?>
 												<div class="col-sm-2">
 													<a href="compras/estadistica">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-bar-chart-o fa-3x"></i>
 															<h5>Estadisticas</h5>
 														</div>
@@ -671,6 +694,70 @@
 									<!--Termina la secciion de escuela y negocios-->
 								</div>
 							</div>
+							<?php if($id==2){  
+												?>
+							<div class="row">
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<!--Inicia la secciion de otros-->
+									<div class="well">
+										<div class="row">
+											<fieldset>
+												<legend><b>Premium</b></legend>
+												<div class="col-sm-1">
+												</div>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-globe fa-3x"></i>
+															<h5>Web Personal</h5>
+														</div>
+													</a>
+												</div>	
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-stack-overflow  fa-3x"></i>
+															<h5>Revista Digital</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-video-camera fa-3x"></i>
+															<h5>Vídeollamadas</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-mortar-board fa-3x"></i>
+															<h5>Aula Virtual</h5>
+														</div>
+													</a>
+												</div>	
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-support fa-3x"></i>
+															<h5>Soporte Técnico</h5>
+														</div>
+													</a>
+												</div>
+												
+											 	
+												
+											
+
+											
+										</div>
+										</div>
+									<!--Termina la secciion de otros-->
+								</div>
+							</div>
+							
+							<?php }?>
 						</div>
 
 					</div>

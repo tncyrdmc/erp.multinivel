@@ -65,7 +65,11 @@
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="UNI" placeholder="tipo de plan">
 	        <i></i>Unilevel</label>
-																		
+			<br>
+			<p>Valor del Punto Comisionable.</p><br>
+			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-dollar"></i>
+				<input type="number" class="form-control" min="1" name="valor_punto" size="30" placeholder="Valor del Punto" required>
+	        </label>															
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Crear</button>
 			</div>
 		</form>
