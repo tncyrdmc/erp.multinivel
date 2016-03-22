@@ -12,7 +12,7 @@
 			<input type="text" class="form-control" required name="nombre" value = '<?= $datosDeRed[0]->nombre;?>'>
 
 			<label for="">Descripcion</label>
-			<textarea class="form-control" required name="descripcion" ><?= $datosDeRed[0]->descripcion;?></textarea>
+			<textarea class="form-control" rows="5" required name="descripcion" ><?= $datosDeRed[0]->descripcion;?></textarea>
 		</div>		
 		<div class="form-group">			
 			<div class="col-md-5"><br>
@@ -40,9 +40,20 @@
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="UNI" <?=($datosDeRed[0]->plan=="UNI") ? 'checked' : '' ?> placeholder="tipo de plan">
 	        <i></i>Unilevel</label></div>
+	       
 		</div>
+		</div>		
+			<div class="row">	
+		<div class="form-group">
+			<br><p>Valor del Punto Comisionable.</p><br>
+			<div class="col-md-5">
+				<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-dollar"></i>
+					<input type="number" min="1" class="form-control" name="valor_punto" size="10" placeholder="Valor del Punto" value="<?= $datosDeRed[0]->valor_punto;?>" required>
+		      </label></div>
+		</div>
+		</div>
+		 
 		
-		</div>	
 			
 			
 		<div class="row pull-right"><button type="submit" class="btn btn-success"  >Actualizar</button>	</div>
