@@ -653,6 +653,206 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 	}
 	
 	public function testGetComprasPersonalesIntervalosDeTiempo(){
+
+		$this->venta->eliminarVentas();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		
+		$datosCategoria = array(
+				'id_categoria' => 250,
+				'id_red'   => 300,
+		);
+		
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+		
+		$datosCategoria = array(
+				'id_categoria' => 251,
+				'id_red'   => 301,
+		);
+		
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+		
+		$usuario=$this->afiliado;
+		
+		$servicios=2;
+		
+		$datosMercancia = array(
+				'id_mercancia' => 500,
+				'id_tipo_mercancia'   => $servicios,
+				'costo'    => 150,
+				'puntos_comisionables' => 100,
+				'id_categoria' => 250,
+				'id_red'   => 300
+		);
+		
+		$this->mercancia->nuevaMercancia ($datosMercancia);
+		$this->mercancia->ingresarMercancia ();
+		
+		$servicios=2;
+		
+		$datosMercancia = array(
+				'id_mercancia' => 501,
+				'id_tipo_mercancia'   => $servicios,
+				'costo'    => 200,
+				'puntos_comisionables' => 250,
+				'id_categoria' => 251,
+				'id_red'   => 301
+		);
+		
+		$this->mercancia->nuevaMercancia ($datosMercancia);
+		$this->mercancia->ingresarMercancia ();
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array(
+				'id_mercancia' => 500,
+				'costo_total'   => 150,
+				'puntos_comisionables'    => 100,
+		);
+		
+		$datosMercancia2 = array(
+				'id_mercancia' => 501,
+				'costo_total'   => 200,
+				'puntos_comisionables'    => 250,
+		);
+		
+		
+		array_push($datosMercanciasVendidas,$datosMercancia1,$datosMercancia2);
+		
+		$datosVenta = array(
+				'id_venta' =>700,
+				'id_usuario'   => 10000,
+				'estatus'    => 'ACT',
+				'fecha' => '2016-02-01',
+				'mercancia'=>$datosMercanciasVendidas
+		);
+		
+		$this->venta->nuevaVenta ($datosVenta);
+		$this->venta->ingresarVenta ();
+		
+		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-16';$fechaFin='2016-03-31';
+		
+		
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		echo $this->unit->run(0,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		
+		$this->venta->eliminarVentas();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		
+		$datosCategoria = array(
+				'id_categoria' => 250,
+				'id_red'   => 300,
+		);
+		
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+		
+		$datosCategoria = array(
+				'id_categoria' => 251,
+				'id_red'   => 301,
+		);
+		
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+		
+		$usuario=$this->afiliado;
+		
+		$servicios=2;
+		
+		$datosMercancia = array(
+				'id_mercancia' => 500,
+				'id_tipo_mercancia'   => $servicios,
+				'costo'    => 150,
+				'puntos_comisionables' => 100,
+				'id_categoria' => 250,
+				'id_red'   => 300
+		);
+		
+		$this->mercancia->nuevaMercancia ($datosMercancia);
+		$this->mercancia->ingresarMercancia ();
+		
+		$servicios=2;
+		
+		$datosMercancia = array(
+				'id_mercancia' => 501,
+				'id_tipo_mercancia'   => $servicios,
+				'costo'    => 200,
+				'puntos_comisionables' => 250,
+				'id_categoria' => 250,
+				'id_red'   => 300
+		);
+		
+		$this->mercancia->nuevaMercancia ($datosMercancia);
+		$this->mercancia->ingresarMercancia ();
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array(
+				'id_mercancia' => 500,
+				'costo_total'   => 150,
+				'puntos_comisionables'    => 100,
+		);
+		
+		$datosMercancia2 = array(
+				'id_mercancia' => 501,
+				'costo_total'   => 200,
+				'puntos_comisionables'    => 250,
+		);
+		
+		
+		array_push($datosMercanciasVendidas,$datosMercancia1,$datosMercancia2);
+		
+		$datosVenta = array(
+				'id_venta' =>700,
+				'id_usuario'   => 10000,
+				'estatus'    => 'ACT',
+				'fecha' => '2016-03-01',
+				'mercancia'=>$datosMercanciasVendidas
+		);
+		
+		$this->venta->nuevaVenta ($datosVenta);
+		$this->venta->ingresarVenta ();
+		
+		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-01';$fechaFin='2016-03-31';
+		
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		echo $this->unit->run(350,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$this->venta->eliminarVentas();
+		
+		$datosVenta = array(
+				'id_venta' =>700,
+				'id_usuario'   => 10000,
+				'estatus'    => 'ACT',
+				'fecha' => '2016-03-06',
+				'mercancia'=>$datosMercanciasVendidas
+		);
+		
+		$this->venta->nuevaVenta ($datosVenta);
+		$this->venta->ingresarVenta ();
+		
+		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-01';$fechaFin='2016-03-06';
+		
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		echo $this->unit->run(350,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$this->venta->eliminarVentas();
+		
+		array_push($datosMercanciasVendidas,$datosMercancia1,$datosMercancia2);
+		
+		$datosVenta = array(
+				'id_venta' =>700,
+				'id_usuario'   => 10000,
+				'estatus'    => 'ACT',
+				'fecha' => '2016-03-06',
+				'mercancia'=>$datosMercanciasVendidas
+		);
+		
+		$this->venta->nuevaVenta ($datosVenta);
+		$this->venta->ingresarVenta ();
+		
+		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-07';$fechaFin='2016-03-13';
+		
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		echo $this->unit->run(0,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 	}
 }

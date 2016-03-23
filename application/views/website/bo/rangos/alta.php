@@ -50,10 +50,15 @@
 			<label style="margin: 1rem;">
 				<textarea id='desc' class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required></textarea>
 	        </label>
-
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
 									<header>Condiciones</header><br><br>
+									<label style="margin: 1rem;width: 10rem;" class="select">Condicion Red
+										<select id="condicion_red_afilacion" name="condicion_red_afilacion" style="margin: 1rem;width: 10rem;">
+											<option value='EQU'>Equilibrada</option>
+											<option value='DEB'>Pata Débil</option>
+										</select>
+									</label>
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>																	

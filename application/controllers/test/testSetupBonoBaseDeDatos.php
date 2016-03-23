@@ -26,6 +26,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_rango' => 60,
 				'nombre_rango'   => "Bluetooth",
 				'descripcion_rango'    => "Bluetooth",
+				'condicion_red_afilacion'    => "DEB",
 				'id_tipo_rango' => $puntosComisionables,
 				'valor'   => 110,
 				'condicion_red'    => "RED",

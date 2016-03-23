@@ -133,7 +133,7 @@ class afiliado extends CI_Model
 		}
 	}
 	
-	public function getComprasPersonales($id_afiliado,$id_red){
+	function getComprasPersonales($id_afiliado,$id_red){
 		$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
@@ -146,6 +146,22 @@ class afiliado extends CI_Model
 		else
 			$this->setTotalCompras($datos[0]->total);
 		
+		return $this->getTotalCompras();
+	}
+	
+	function getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin){
+		$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+		$datos= $q->result();
+	
+		if($datos[0]->total==null)
+			$this->setTotalCompras(0);
+		else
+			$this->setTotalCompras($datos[0]->total);
+	
 		return $this->getTotalCompras();
 	}
 	

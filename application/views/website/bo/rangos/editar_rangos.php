@@ -16,9 +16,24 @@
 								<label class="input"> Descripción
 								<textarea type="text" name="descripcion" required placeholder="Descripción" id="descripcion" style="width: 50%;" class="form-control" value="" required><?php echo $rangos[0]->descripcion; ?></textarea>
 								<label class="input"> Condiciones
-								<br>
+								<br><br><br>
 								</label>
-
+									<label style="width: 10rem;" class="select">Condicion Red
+										<select id="condicion_red_afilacion" name="condicion_red_afilacion" style="margin: 1rem;width: 10rem;">
+											<?php 
+											if($rangos[0]->condicion_red_afilacion=="EQU")
+												echo "<option value='EQU' selected>Equilibrada</option>";
+											else 
+												echo "<option value='EQU'>Equilibrada</option>";
+											
+											if($rangos[0]->condicion_red_afilacion=="DEB")
+												echo "<option value='DEB' selected>Pata Débil</option>";
+											else
+												echo "<option value='DEB'>Pata Débil</option>";
+												
+											?>
+										</select>
+									</label>
 								<div class="row" id="rango">
 										<div class="row">
 										<div class="col col-lg-3 col-xs-2">
