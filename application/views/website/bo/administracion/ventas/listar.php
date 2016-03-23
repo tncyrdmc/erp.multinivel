@@ -271,7 +271,13 @@
 									url: "imprimirfactura",
 									success: function( msg )
 									{
-										
+									bootbox.dialog({
+									message: msg,
+									title: "Factura",
+									className: "",
+
+									
+								})
 							    
 									}
 								});
