@@ -123,7 +123,7 @@ class ventas extends CI_Controller
 				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$venta->id_venta.");'>
 				<i class='fa fa-trash-o fa-3x'></i>
 				</a>
-				<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir();'>
+				<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir(".$venta->id_venta.");'>
 				<i class='fa fa-file-pdf-o fa-3x'></i>
 				</a>
 			</td>
@@ -199,7 +199,7 @@ public function createFolder()
 	    //	'title' => 'PDF Created',
 	    //	'message' => 'Hello World!'
     	    //);
-	    $data=$this->facturaImprimir(358);
+	    $data=$this->facturaImprimir($_POST['id']);
 	    //Load html view
 
     	$this->html2pdf->html(utf8_decode("".(string)$data.""));
@@ -344,6 +344,6 @@ public function createFolder()
 		$this->template->set("fecha",$fecha);
 		
 		$this->template->set_theme('desktop');
-		return $this->template->build('website/bo/administracion/ventas/factura');
+		return $this->template->build('website/bo/administracion/ventas/factura_2');
 	}
 }
