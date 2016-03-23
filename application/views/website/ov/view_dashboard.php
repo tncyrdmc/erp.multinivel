@@ -722,13 +722,13 @@
 													</a>
 												</div>
 												<div class="col-sm-2">
-													<a href="javascript:void(0);">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-video-camera fa-3x"></i>
-															<h5>Vídeollamadas</h5>
+													<a href="cgeneral/redes_afiliado_chat?id=red_personal">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-weixin fa-3x"></i>
+															<h5>Chat</h5>
 														</div>
 													</a>
-												</div>
+												</div> 
 												<div class="col-sm-2">
 													<a href="javascript:void(0);">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">

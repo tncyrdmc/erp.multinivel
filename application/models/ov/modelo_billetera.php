@@ -296,7 +296,8 @@ class modelo_billetera extends CI_Model
 		);
 			
 		$this->db->insert("transaccion_billetera",$dato_cobro);
-		return $this->get_id_transaccion($id,$monto,$descripcion,$tipo);
+		$id = mysql_insert_id();
+		return $id;
 	}
 	
 	function get_transacciones_fecha($inicio,$fin){
@@ -385,7 +386,7 @@ from transaccion_billetera where id_user = ".$id." order by fecha desc ");
 	
 	function get_id_transaccion($id,$monto,$descripcion,$tipo){
 		$q=$this->db->query("select max(id) as id from transaccion_billetera 
-				where id_user = ".$id." and monto = ".number_format($monto,2)./*" and descripcion = '".$descripcion."'".*/" and tipo = '".$tipo."'");
+				where id_user = ".$id./*" and monto = ".number_format($monto,2)." and descripcion = '".$descripcion."'".*/" and tipo = '".$tipo."'");
 		$q2=$q->result();
 	
 		return $q2[0]->id ;
