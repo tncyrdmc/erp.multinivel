@@ -579,7 +579,9 @@ where(a.id_pais=b.Code)");
 				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
 				"pais"          	=> $_POST['pais'],
 				"fijo" 				=> $_POST['fijo'],
-				"movil" 			=> $_POST['movil']
+				"movil" 			=> $_POST['movil'],
+				"resolucion" 		=> $_POST['resolucion'],
+				"comentarios" 		=> $_POST['comentarios']
 		);
 	
 		$this->db->where('id_tributaria', $_POST['id']);

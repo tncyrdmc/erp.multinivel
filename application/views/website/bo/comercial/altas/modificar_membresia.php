@@ -52,7 +52,7 @@ $porcentajeContador=0;
 													
 													<section class="col col-2" style="width: 50%;">
 														<label class="input">caducidad
-															<input placeholder="En días" required type="number" value='<?php echo $data_merc[0]->caducidad?>' id="caducidad" name="caducidad">
+															<input placeholder="En días" required type="number" value='<?php echo $data_merc[0]->caducidad?>' id="caducidad" name="caducidad" required>
 														</label>
 													</section>
 													
@@ -107,7 +107,7 @@ $porcentajeContador=0;
 															</label>
 																<div class="input input-file">
 																	<span class="button">
-																		<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" type="text">
+																		<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" type="text" >
 																</div>
 															<small>
 																<cite title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite>
@@ -131,7 +131,7 @@ $porcentajeContador=0;
 													<section class="col col-3" style="width: 50%;">
 														<label class="input">
 														Puntos comisionables
-															<input required type="number" min="1" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
+															<input type="number" min="1" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
 													</fieldset>

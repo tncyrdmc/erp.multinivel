@@ -67,7 +67,7 @@
 									</legend>
 									<fieldset>
 													<section class="col col-xs-12 col-md-6 col-lg-3">
-																País del producto <label class="select"> <select
+																País del paquete <label class="select"> <select
 																	id="pais" required name="pais" id="pais"
 																	onChange="select_pais()">
 																		<option value="-" selected>-- Seleciona un pais --</option>

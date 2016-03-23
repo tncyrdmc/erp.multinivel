@@ -265,6 +265,19 @@
 				});
 		}
 
+		function imprimir(){
+								$.ajax({
+									type: "POST",
+									url: "imprimirfactura",
+									success: function( msg )
+									{
+										
+							    
+									}
+								});
+
+		}
+
 			function factura(id) {
 				iniciarSpinner();
 				$.ajax({

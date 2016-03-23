@@ -127,6 +127,94 @@ class comercial extends CI_Controller
 		
 	}
 	
+	function transacciones_billetera(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style($id);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/transacciones');
+		
+	}
+	
+	function listar_transacciones(){
+	
+		$fecha_inicio = $_POST['startdate'];
+		$fecha_fin = $_POST['finishdate'];
+	
+		if($fecha_inicio&&$fecha_fin){
+			$transactions = $this->modelo_billetera->get_transacciones_fecha($fecha_inicio,$fecha_fin);	
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Transacción</th>
+					<th data-hide='phone,tablet'>Username</th>
+					<th data-hide='phone,tablet'>Nombre Completo </th>
+					<th data-hide='phone,tablet'>Tipo de Transacción</th>
+					<th data-hide='phone,tablet'>Motivo</th>
+					<th data-hide='phone,tablet'>Valor</th>
+					<th data-hide='phone,tablet'>Accion</th>
+				</thead>
+				<tbody>";
+		
+		
+			foreach($transactions as $transaction)
+			{
+				$color = ($transaction->tipo=="plus") ? "green" : "red";
+				echo "<tr>
+			<td class='sorting_1'>".$transaction->id."</td>
+			<td>".$transaction->username."</td>
+			<td>".$transaction->nombres."</td>
+			<td style='color: ".$color.";'><i class='fa fa-".$transaction->tipo."-circle fa-3x'></i></td>
+			<td>".$transaction->descripcion."</td>
+			<td> $	".number_format($transaction->monto, 2)."</td>
+			<td>
+				
+				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$transaction->id.");'>
+				<i class='fa fa-trash-o fa-3x'></i>
+				</a>
+			</td>
+			</tr>";
+					
+				
+			}		
+			
+		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function kill_transaccion()
+	{
+		//echo "dentro de kill controller ";
+		$q=$this->modelo_billetera->kill_transaccion($_POST['id']);
+		if($q){
+			echo "La transacción ha sido eliminado con exito";
+		}else{
+			echo "La transacción no pudo ser eliminado";
+		}
+	
+	}
+	
 	function red_genealogica()
 	{
 		if (!$this->tank_auth->is_logged_in())

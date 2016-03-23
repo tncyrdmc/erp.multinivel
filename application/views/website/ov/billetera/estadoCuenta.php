@@ -62,10 +62,12 @@
 													<thead>
 														<tr>
 															<th> <i class="fa fa-sitemap"></i> Red</th>
-															<th> <i class="fa fa-money"></i> Comision</th>
+															<th> <i class="fa fa-money"></i> Comision</th>															
 														</tr>
 													</thead>
 													<tbody>
+																													
+													
 												<?php 
 													$total = 0; 
 													$i = 0;
@@ -107,12 +109,26 @@
 													?>  
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
-														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
+														<td>
+														<div class="col-md-3">
+															<h4><b>$ <?php echo number_format($total,2);?></b></h4>
+														</div>
+														<div class="col-md-1">
+															<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ventas(<?=$id?>);'>
+																<i class='fa fa-eye fa-3x'></i>
+															</a>
+														</div>																												
+														</td>
 													</tr>
 													
 													<?php if ($transaction) { ?>	
 														<tr class="warning">
-															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+															<td ><b>TRANSACCIONES EMPRESA</b></td>
+															<td >
+																<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ver(<?=$id?>);'>
+																				<i class='fa fa-eye fa-3x'></i>
+																</a>
+															</td>
 														</tr>
 													<?php if ($transaction['add']) {
 															$total_transact+=$transaction['add'];
@@ -148,7 +164,7 @@
 																	$retenciones_total=0;
 																	foreach ($retenciones as $retencion) {?>
 																	<tr class="danger">
-																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></b></td>
+																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></td>
 																		<td></td>
 																		<td>$ <?php 
 																		$retenciones_total+=$retencion['valor'];
@@ -224,6 +240,55 @@
 
 		<!-- PAGE RELATED PLUGIN(S) 
 		<!-- Morris Chart Dependencies -->
+		<script type="text/javascript">
+
+			function ver(id){
+				$.ajax({
+					type: "POST",
+					url: "/ov/billetera2/historial_transaccion",
+					data: {id: id}
+				})
+				.done(function( msg )
+				{					
+					bootbox.dialog({
+						message: msg,
+						title: 'Historial de Transacciones',
+						buttons: {
+							danger: {
+								label: "Cerrar",
+								className: "btn-danger",
+								callback: function() {
+
+									}
+						}
+					}})//fin done ajax
+				});//Fin callback bootbox
+			}
+
+			function ventas(id){
+				$.ajax({
+					type: "POST",
+					url: "/ov/billetera2/ventas_comision",
+					data: {id: id}
+				})
+				.done(function( msg )
+				{					
+					bootbox.dialog({
+						message: msg,
+						title: 'Detalles de la Comisiones',
+						buttons: {
+							danger: {
+								label: "Cerrar",
+								className: "btn-danger",
+								callback: function() {
+
+									}
+						}
+					}})//fin done ajax
+				});//Fin callback bootbox
+			}
+
+		</script>
 		<script src="/template/js/plugin/morris/raphael.min.js"></script>
 		<script src="/template/js/plugin/morris/morris.min.js"></script>
 

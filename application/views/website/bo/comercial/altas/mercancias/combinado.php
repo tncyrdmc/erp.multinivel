@@ -44,7 +44,7 @@
 								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
 								<fieldset>
 									<legend>País</span></legend>
-												<section class="col col-2">País del producto
+												<section class="col col-2">País del combinado
 												<label class="select">
 													
 													<select id="pais" required name="pais" id="pais" onChange="select_pais()">

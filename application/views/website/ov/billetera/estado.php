@@ -100,7 +100,17 @@
 													?>  
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
-														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
+														<td>
+															<div class="col-md-3">
+																<h4><b>$ <?php echo number_format($total,2);?></b></h4>
+															</div>
+															<div class="col-md-1">
+																<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' 
+																		onclick='ventas(<?=$id?>,"<?=$fecha?>");'>
+																	<i class='fa fa-eye fa-3x'></i>
+																</a>
+															</div>	
+														</td>
 													</tr>
 													
 													<?php if ($transaction) { ?>	
@@ -217,6 +227,55 @@
 
 		<!-- PAGE RELATED PLUGIN(S) 
 		<!-- Morris Chart Dependencies -->
+		<script type="text/javascript">
+
+			function ver(id){
+				$.ajax({
+					type: "POST",
+					url: "/ov/billetera2/historial_transaccion",
+					data: {id: id}
+				})
+				.done(function( msg )
+				{					
+					bootbox.dialog({
+						message: msg,
+						title: 'Historial de Transacciones',
+						buttons: {
+							danger: {
+								label: "Cerrar",
+								className: "btn-danger",
+								callback: function() {
+
+									}
+						}
+					}})//fin done ajax
+				});//Fin callback bootbox
+			}
+
+			function ventas(id,fecha){
+				$.ajax({
+					type: "POST",
+					url: "/ov/billetera2/ventas_comision",
+					data: {id: id, fecha: fecha}
+				})
+				.done(function( msg )
+				{					
+					bootbox.dialog({
+						message: msg,
+						title: 'Detalles de la Comisiones',
+						buttons: {
+							danger: {
+								label: "Cerrar",
+								className: "btn-danger",
+								callback: function() {
+
+									}
+						}
+					}})//fin done ajax
+				});//Fin callback bootbox
+			}
+
+		</script>
 		<script src="/template/js/plugin/morris/raphael.min.js"></script>
 		<script src="/template/js/plugin/morris/morris.min.js"></script>
 

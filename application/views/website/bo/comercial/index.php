@@ -68,10 +68,10 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/reportes">
+													<a href="/bo/comercial/transacciones_billetera"> <!-- /bo/reportes -->
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-book fa-3x"></i>
-															<h1>Reportes<br>&nbsp</h1>
+															<i class="fa fa-hand-o-right fa-3x"></i>&nbsp&nbsp&nbsp<i class="fa fa-money fa-3x"></i>
+															<h1>Transacciones <br> en Billetera</h1><!-- Reportes -->
 														</div>
 													</a>
 												</div>
