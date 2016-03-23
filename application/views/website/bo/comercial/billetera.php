@@ -210,7 +210,7 @@
 					<section class="col col-6">		
 						<label class="input">
 							<i class="icon-prepend fa fa-money"></i>
-							<input name="cobro" type="number" min="1" class="from-control" id="cobro" required />
+							<input name="cobro" type="number" min="1" size="30" class="from-control" id="cobro" required />
 						</label>
 					</section>					
 				</div>

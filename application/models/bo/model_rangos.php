@@ -18,6 +18,7 @@ function ingresar_rango(){
 		$rango = array(
 				'nombre' => $_POST['nombre'],
 				'descripcion' => $_POST['desc'],
+				'condicion_red_afilacion' => $_POST['condicion_red_afilacion'],
 				'estatus' => 'ACT'
 		);
 
@@ -85,7 +86,8 @@ function get_rangos_id($id){
 }
 function actualizar_rangos(){
 	$datos=array('nombre' =>$_POST['nombre'] ,
-				 'descripcion' =>$_POST['descripcion'] 
+				 'descripcion' =>$_POST['descripcion'],
+				 'condicion_red_afilacion' =>$_POST['condicion_red_afilacion']
 	 );
 		$this->db->where('id_rango', $_POST['id']);
 		$this->db->update('cat_rango', $datos);

@@ -419,11 +419,12 @@ class billetera2 extends CI_Controller
 	
 	
 		$id=$_POST['id'];
+		$fecha =isset($_POST['fecha']) ? $_POST['fecha'] : null;
 	
 		//echo "dentro de historial : ".$id;
 	
-		$ventas = ($_POST['fecha']) 
-		 	? $this->modelo_billetera->get_ventas_comision_fecha($id,$_POST['fecha']) 
+		$ventas = ($fecha) 
+		 	? $this->modelo_billetera->get_ventas_comision_fecha($id,$fecha) 
 		 	: $this->modelo_billetera->get_ventas_comision_id($id);
 		
 		$total = 0 ;

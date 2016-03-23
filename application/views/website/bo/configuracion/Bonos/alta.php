@@ -183,7 +183,7 @@
 										</div>
 										<div class="col col-lg-2">
 		        							<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>
-												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number">
+												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number" step="any">
 											</label>
 										</div>
 									</div>
@@ -370,7 +370,7 @@ function add_nivel()
 	+' </div>'
 	+'<div class="col col-lg-2">'
 	+'	<label class="input" style="margin: 2rem;"><i class="icon-prepend fa fa-money"></i>'
-	+'		<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number">'
+	+'		<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'	</label>'
 	+'<a style="cursor: pointer;color: red;" onclick="delete_nivel('+j+')">Eliminar Nivel <i class="fa fa-minus"></i></a>'
 	+'</div>'
@@ -412,7 +412,7 @@ var code='<div class="row">'
 	+' </div>'
 	+'<div class="col col-lg-2">'
 	+'<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>'
-	+'<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number">'
+	+'<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'</label>'
 	+'</div>'
 	+'</div>'
