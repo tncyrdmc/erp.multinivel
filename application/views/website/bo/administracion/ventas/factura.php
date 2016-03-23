@@ -1,6 +1,6 @@
  <div class="padding-10">
 											<div class="pull-left">
-												<img alt="">
+												<img style="width: 18rem; height: auto; padding: 1rem;" src="" alt="">
 				
 												<address>
 													<h4 class="semi-bold"><?=$empresa[0]->nombre?></h4>
