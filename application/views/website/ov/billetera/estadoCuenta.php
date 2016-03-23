@@ -113,11 +113,13 @@
 														<div class="col-md-3">
 															<h4><b>$ <?php echo number_format($total,2);?></b></h4>
 														</div>
+														<?php if($total !== 0){?>
 														<div class="col-md-1">
 															<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ventas(<?=$id?>);'>
 																<i class='fa fa-eye fa-3x'></i>
 															</a>
-														</div>																												
+														</div>		
+														<?php }?>																										
 														</td>
 													</tr>
 													
