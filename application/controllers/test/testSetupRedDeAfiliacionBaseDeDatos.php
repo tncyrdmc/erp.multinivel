@@ -64,7 +64,7 @@ class testSetupRedDeAfiliacionBaseDeDatos extends CI_Controller {
 		$this->crearNuevoUsuario (10003,"camilo","2016-03-17",20003,300,10001,10001,0);
 		$this->crearNuevoUsuario (10004,"nicolas","2016-03-17",20004,300,10001,10001,1);
 		$this->crearNuevoUsuario (10005,"esperanza","2016-03-17",20005,300,10002,10000,0);
-		$this->crearNuevoUsuario (10006,"maria","2016-03-17",20006,100,30002,10002,1);
+		$this->crearNuevoUsuario (10006,"maria","2016-03-17",20006,300,30002,10002,1);
 		$this->crearNuevoUsuario (10007,"fernando","2016-03-17",20007,300,10003,10003,0);
 		$this->crearNuevoUsuario (10008,"andres","2016-03-17",20008,300,10003,10003,1);
 		$this->crearNuevoUsuario (10009,"ricardo","2016-03-17",20009,300,10005,10002,0);

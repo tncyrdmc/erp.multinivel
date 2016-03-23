@@ -16,6 +16,10 @@ class afiliado extends CI_Model
 	private $id_sponsor;
 	private $lado_red;
 
+	private $totalAfiliados=0;
+	private $totalCompras=0;
+	private $totalVentas=0;
+	private $totalPuntosComisionables=0;
 
 	function setUpAfiliado($id_afiliado){
 		$q=$this->db->query("SELECT id as id_afiliado,username,created FROM users where id=".$id_afiliado);
@@ -85,6 +89,66 @@ class afiliado extends CI_Model
 		$this->db->query('delete from afiliar where id >= 20000');
 	}
 
+	function getAfiliados($id_afiliado,$red,$tipo,$nivel){
+		
+		$this->getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel);
+
+		return $this->getTotalAfiliados();
+	}
+	
+	function getAfiliadosIntervaloDeTiempo($id_afiliado,$red,$tipo,$nivel,$fechaInicio,$fechaFin){
+			$q=$this->db->query("SELECT count(*) as directos FROM users u,afiliar a
+								where u.id=a.id_afiliado and a.directo = ".$id_afiliado." and a.id_red = ".$red." and (u.created BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			$datos= $q->result();
+
+			$this->setTotalAfiliados($datos[0]->directos);
+
+			return $this->getTotalAfiliados();
+	}
+	
+	function getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel){
+		
+		if($tipo=='DIRECTOS'){
+			$q=$this->db->query("select count(*) as directos
+							from afiliar A
+							where A.directo = ".$id_afiliado." and A.id_red = ".$red);
+			$datos= $q->result();
+			$this->setTotalAfiliados($datos[0]->directos);
+			return true;
+		}
+		
+		
+		$q=$this->db->query("select A.id_afiliado
+							from afiliar A
+							where A.debajo_de = ".$id_afiliado." and A.id_red = ".$red);
+
+		$datos= $q->result();
+		
+		foreach ($datos as $dato){
+		
+			if ($dato!=NULL){
+				$this->setTotalAfiliados($this->totalAfiliados+1);
+				$this->getAfiliadosDebajoDe($dato->id_afiliado,$red,$tipo,$nivel);
+			}
+		}
+	}
+	
+	public function getComprasPersonales($id_afiliado,$id_red){
+		$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.")");
+		$datos= $q->result();
+		
+		if($datos[0]->total==null)
+			$this->setTotalCompras(0);
+		else
+			$this->setTotalCompras($datos[0]->total);
+		
+		return $this->getTotalCompras();
+	}
+	
 	public function getIdUsuario() {
 		return $this->id_usuario;
 	}
@@ -141,5 +205,34 @@ class afiliado extends CI_Model
 		$this->lado_red = $lado_red;
 		return $this;
 	}
+	public function getTotalAfiliados() {
+		return $this->totalAfiliados;
+	}
+	public function setTotalAfiliados($totalAfiliados) {
+		$this->totalAfiliados = $totalAfiliados;
+		return $this;
+	}
+	public function getTotalCompras() {
+		return $this->totalCompras;
+	}
+	public function setTotalCompras($totalCompras) {
+		$this->totalCompras = $totalCompras;
+		return $this;
+	}
+	public function getTotalVentas() {
+		return $this->totalVentas;
+	}
+	public function setTotalVentas($totalVentas) {
+		$this->totalVentas = $totalVentas;
+		return $this;
+	}
+	public function getTotalPuntosComisionables() {
+		return $this->totalPuntosComisionables;
+	}
+	public function setTotalPuntosComisionables($totalPuntosComisionables) {
+		$this->totalPuntosComisionables = $totalPuntosComisionables;
+		return $this;
+	}
+	
 	
 }

@@ -39,6 +39,12 @@ class modelo_bono extends CI_Model
 	//Bono Valor
 	private $valoresBono=array();
 
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('/bo/bonos/afiliado');
+	}
+	
 	function  nuevoBono($datosRango,$datosBono,$datosValoresBono){
 		$this->setIdRango($datosRango["id_rango"]);
 		$this->setNombreRango($datosRango["nombre_rango"]);
@@ -171,6 +177,22 @@ class modelo_bono extends CI_Model
 	
 	function eliminarBonoValor($id_bono){
 		$this->db->query('delete from cat_bono_valor_nivel where id_bono = '.$id_bono);
+	}
+	
+	function crearNuevoUsuario($id_usuario,$username,$created,$id_afiliacion,$id_red,$id_padre,$id_sponsor,$lado_red) {
+		$datosUsuario = array(
+				'id_usuario' => $id_usuario,
+				'username'   => $username,
+				'created'    => $created,
+				'id_afiliacion' => $id_afiliacion,
+				'id_red'   => $id_red,
+				'id_padre'    => $id_padre,
+				'id_sponsor'   => $id_sponsor,
+				'lado_red' => $lado_red
+		);
+	
+		$this->afiliado->nuevoAfiliado ($datosUsuario);
+		$this->afiliado->ingresarUsuario ();
 	}
 	
 	public function getId() {

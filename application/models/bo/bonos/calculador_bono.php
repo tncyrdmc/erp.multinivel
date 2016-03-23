@@ -2,6 +2,7 @@
 
 class calculador_bono extends CI_Model
 {
+	private $usuariosRed=array();
 	
 	function __construct()
 	{
@@ -36,4 +37,71 @@ class calculador_bono extends CI_Model
 		}
 		return false;
 	}
+
+	public function isBonoBinario($tipo_bono){
+		if($tipo_bono=='SI')
+			return true;
+		return false;
+	}
+	
+	public function getFinSemana($date) {
+		$ts = strtotime($date);
+		$start = (date('w', $ts) == 0) ? $ts : strtotime('next sunday', $ts);
+		return date('Y-m-d', $start);
+	}
+	
+	public function getInicioSemana($date) {
+		$ts = strtotime($date);
+		$start = strtotime('last monday', $ts);
+		return date('Y-m-d', $start);
+	}
+	
+	public function getInicioQuincena($date) {
+		$dateAux = new DateTime();
+		
+		if(date('d',strtotime($date))<=15){
+			$dateAux->setDate(date('Y',strtotime($date)),date('m',strtotime($date)), 1);
+			return date_format($dateAux, 'Y-m-d');
+		}else {
+			$dateAux->setDate(date('Y',strtotime($date)),date('m',strtotime($date)), 16);
+			return date_format($dateAux, 'Y-m-d');
+		}
+	}
+	
+
+	public function getFinQuincena($date) {
+		
+		$dateAux = new DateTime();
+		
+		if(date('d',strtotime($date))<=15){
+			$dateAux->setDate(date('Y',strtotime($date)),date('m',strtotime($date)), 15);
+			return date_format($dateAux, 'Y-m-d');
+		}else {
+			return date('Y-m-t',strtotime($date));
+		}
+	}
+	
+	public function getInicioMes($date) {
+		$dateAux = new DateTime();
+		$dateAux->setDate(date('Y',strtotime($date)),date('m',strtotime($date)), 1);
+		return date_format($dateAux, 'Y-m-d');
+	}
+	
+	public function getFinMes($date) {
+		return date('Y-m-t',strtotime($date));
+	}
+	
+	public function getUsuariosRed($id_red) {
+		$q=$this->db->query("SELECT u.id as id_afiliado,u.username,u.created FROM users u,afiliar a
+								where (u.id=a.id_afiliado) and id_red=".$id_red);
+		$datosAfiliado=$q->result();
+		$this->setUsuariosRed($datosAfiliado);
+
+		return $this->usuariosRed;
+	}
+	public function setUsuariosRed($usuariosRed) {
+		$this->usuariosRed = $usuariosRed;
+		return $this;
+	}
+	
 }

@@ -21,6 +21,15 @@ class testSetupVentaBaseDeDatos extends CI_Controller {
 		
 		$this->venta->eliminarVentas();
 		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		
+		$datosCategoria = array(
+				'id_categoria' => 250,
+				'id_red'   => 300,
+		);
+		
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+		
 		
 		$servicios=2;
 		
@@ -28,7 +37,9 @@ class testSetupVentaBaseDeDatos extends CI_Controller {
 				'id_mercancia' => 500,
 				'id_tipo_mercancia'   => $servicios,
 				'costo'    => 150,
-				'puntos_comisionables' => 100
+				'puntos_comisionables' => 100,
+				'id_categoria' => 250,
+				'id_red' => 300
 		);
 		
 		$this->mercancia->nuevaMercancia ($datosMercancia);
@@ -40,7 +51,9 @@ class testSetupVentaBaseDeDatos extends CI_Controller {
 				'id_mercancia' => 501,
 				'id_tipo_mercancia'   => $servicios,
 				'costo'    => 200,
-				'puntos_comisionables' => 250
+				'puntos_comisionables' => 250,
+				'id_categoria' => 250,
+				'id_red' => 300
 		);
 		
 		$this->mercancia->nuevaMercancia ($datosMercancia);
@@ -77,6 +90,8 @@ class testSetupVentaBaseDeDatos extends CI_Controller {
 
 	private function after(){
 		$this->venta->eliminarVentas();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
 	}
 
 
