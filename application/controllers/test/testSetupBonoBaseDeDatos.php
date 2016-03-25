@@ -26,13 +26,13 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_rango' => 60,
 				'nombre_rango'   => "Bluetooth",
 				'descripcion_rango'    => "Bluetooth",
-				'condicion_red_afilacion'    => "DEB",
 				'id_tipo_rango' => $puntosComisionables,
 				'valor'   => 110,
 				'condicion_red'    => "RED",
 				'nivel_red'   => $infinito,
 				'id_condicion' => 1,
 				'id_red'   => 26,
+				'condicion_afiliados_red'    => "EQU",
 				'condicion1'    => $servicios,
 				'condicion2'	=> $id_mercancia,
 				'estatus_rango'	=> "ACT"
@@ -149,7 +149,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 	
 		$resultado=$bono->getCondicionesBono()->getValor();
 		echo $this->unit->run(110,$resultado, 'Test set Base de datos Condiciones Valor','Resultado es :'.$resultado);
-	
+		
 		$resultado=$bono->getCondicionesBono()->getCondicionBono1();
 		echo $this->unit->run(2,$resultado, 'Test set Base de datos Condicion1','Resultado es :'.$resultado);
 		
@@ -287,6 +287,11 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		
 		$resultado=$bono->getCondicionesBono()->getValor();
 		echo $this->unit->run(110,$resultado, 'Test set Base de datos Condiciones Valor','Resultado es :'.$resultado);
+		
+
+		$resultado=$bono->getCondicionesBono()->getCondicionAfiliadosRed();
+		echo $this->unit->run('EQU',$resultado, 'Test set Base de datos Condicion Red Afiliacion','Resultado es :'.$resultado);
+		
 		
 		$resultado=$bono->getCondicionesBono()->getCondicionBono1();
 		echo $this->unit->run(2,$resultado, 'Test set Base de datos Condicion1','Resultado es :'.$resultado);

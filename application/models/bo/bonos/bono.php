@@ -142,6 +142,11 @@ class bono extends CI_Model
 			$condicionesBono->setIdRango(intval($condicion->id_rango));
 			$condicionesBono->setIdTipoRango(intval($condicion->id_tipo_rango));
 			$condicionesBono->setIdRed(intval($condicion->id_red));
+			
+			$q=$this->db->query("SELECT condicion_red_afilacion FROM cat_rango where id_rango=".$condicion->id_rango);
+			$datosCondicionRedAfiliacionRango=$q->result();
+			$condicionesBono->setCondicionAfiliadosRed($datosCondicionRedAfiliacionRango[0]->condicion_red_afilacion);
+
 			$condicionesBono->setCondicionRed($condicion->condicion_red);
 			$condicionesBono->setNivelRed(intval($condicion->nivel_red));
 			$condicionesBono->setValor(intval($condicion->valor));

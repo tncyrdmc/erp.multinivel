@@ -34,6 +34,7 @@ class modelo_bono extends CI_Model
 	private $id_condicion;
 	private $condicion_1;
 	private $condicion_2;
+	private $condicion_afiliados_red;
 	private $id_red;
 	
 	//Bono Valor
@@ -55,6 +56,7 @@ class modelo_bono extends CI_Model
 		$this->setNivelRed($datosRango["nivel_red"]);
 		$this->setIdCondicion($datosRango["id_condicion"]);
 		$this->setIdRed($datosRango["id_red"]);
+		$this->setCondicionAfiliadosRed($datosRango["condicion_afiliados_red"]);
 		$this->setCondicion1($datosRango["condicion1"]);
 		$this->setCondicion2($datosRango["condicion2"]);
 		$this->setEstatusRango($datosRango["estatus_rango"]);
@@ -77,7 +79,7 @@ class modelo_bono extends CI_Model
 	}
 	
 	function ingresarBono() {
-		$this->modelo_bono->insertarRango($this->id_rango,$this->nombre_rango,$this->descripcion_rango,$this->estatus_rango);
+		$this->modelo_bono->insertarRango($this->id_rango,$this->nombre_rango,$this->descripcion_rango,$this->condicion_afiliados_red,$this->estatus_rango);
 		$this->modelo_bono->insertarRangoTipo($this->id_rango,$this->id_tipo_rango,$this->valor,$this->condicion_red,$this->nivel_red);
 		$this->modelo_bono->insertarBono($this->id_bono,$this->nombre_bono,$this->descripcion_bono,$this->inicio,$this->fin,$this->mes_desde_afiliacion,$this->mes_desde_activacion,$this->frecuencia,$this->plan,$this->estatus_bono);
 		$this->modelo_bono->insertarBonoCondicion($this->id_condicion,$this->id_bono,$this->id_rango,$this->id_tipo_rango,$this->valor,$this->id_red,$this->condicion_1,$this->condicion_2);
@@ -92,11 +94,12 @@ class modelo_bono extends CI_Model
 		$this->modelo_bono->eliminarBonoValor($this->id_bono);
 	}
 	
-	function insertarRango($id_rango,$nombre_rango,$descripcion_rango,$estatus_rango){
+	function insertarRango($id_rango,$nombre_rango,$descripcion_rango,$condicion_red_afiliacion,$estatus_rango){
 		$datos = array(
 				'id_rango' => $id_rango,
 				'nombre'   => $nombre_rango,
 				'descripcion'    => $descripcion_rango,
+				'condicion_red_afilacion' =>$condicion_red_afiliacion,
 				'estatus'	=> $estatus_rango
 		);
 		$this->db->insert('cat_rango',$datos);
@@ -441,5 +444,13 @@ class modelo_bono extends CI_Model
 		$this->valor = $valor;
 		return $this;
 	}
+	public function getCondicionAfiliadosRed() {
+		return $this->condicion_afiliados_red;
+	}
+	public function setCondicionAfiliadosRed($condicion_afiliados_red) {
+		$this->condicion_afiliados_red = $condicion_afiliados_red;
+		return $this;
+	}
+	
 	
 }

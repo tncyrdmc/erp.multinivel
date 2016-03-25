@@ -11,6 +11,7 @@ class condiciones_bono extends CI_Model
 	private $condicion_red;
 	private $nivel_red;
 	private $valor;
+	private $condicion_afiliados_red;
 	private $condicion_bono1;
 	private $condicion_bono2;
 	
@@ -88,6 +89,14 @@ class condiciones_bono extends CI_Model
 		$this->condicion_bono2 = $condicion_bono2;
 		return $this;
 	}
+	public function getCondicionAfiliadosRed() {
+		return $this->condicion_afiliados_red;
+	}
+	public function setCondicionAfiliadosRed($condicion_afiliados_red) {
+		$this->condicion_afiliados_red = $condicion_afiliados_red;
+		return $this;
+	}
+	
 	
 
 }
