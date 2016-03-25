@@ -265,13 +265,20 @@
 				});
 		}
 
-		function imprimir(){
+		function imprimir(id){
 								$.ajax({
 									type: "POST",
 									url: "imprimirfactura",
+									data: {id: id},
 									success: function( msg )
 									{
-										
+									bootbox.dialog({
+									message: msg,
+									title: "Factura",
+									className: "",
+
+									
+								})
 							    
 									}
 								});

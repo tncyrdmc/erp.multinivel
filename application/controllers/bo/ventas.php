@@ -123,7 +123,7 @@ class ventas extends CI_Controller
 				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$venta->id_venta.");'>
 				<i class='fa fa-trash-o fa-3x'></i>
 				</a>
-				<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir();'>
+				<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir(".$venta->id_venta.");'>
 				<i class='fa fa-file-pdf-o fa-3x'></i>
 				</a>
 			</td>
@@ -182,29 +182,32 @@ public function createFolder()
 
   public function imprimirfactura()
     {
-    
-        //establecemos la carpeta en la que queremos guardar los pdfs,
-        //si no existen las creamos y damos permisos
-        $this->createFolder();
- 
-        //importante el slash del final o no funcionará correctamente
-        $this->html2pdf->folder('./files/pdfs/');
-        
-        //establecemos el nombre del archivo
-        $this->html2pdf->filename('factura.pdf');
-        
-        //establecemos el tipo de papel
-        $this->html2pdf->paper('a4', 'portrait');
 
-        //hacemos que coja la vista como datos a imprimir
-        //importante utf8_decode para mostrar bien las tildes, ñ y demás
-        $this->html2pdf->html(utf8_decode($this->load->view('/website/bo/administracion/ventas/factura',true)));
-        
-        //si el pdf se guarda correctamente lo mostramos en pantalla
-        if($this->html2pdf->create('save')) 
-        {
-            $this->show();
-        }
+	    //Load the library
+	    $this->load->library('html2pdf');
+	    
+	    //Set folder to save PDF to
+	    $this->html2pdf->folder('./assets/pdfs/');
+	    
+	    //Set the filename to save/download as
+	    $this->html2pdf->filename('factura.pdf');
+	    
+	    //Set the paper defaults
+	    $this->html2pdf->paper('a4', 'portrait');
+	    
+	    //$data = array(
+	    //	'title' => 'PDF Created',
+	    //	'message' => 'Hello World!'
+    	    //);
+	    $data=$this->facturaImprimir($_POST['id']);
+	    //Load html view
+
+    	$this->html2pdf->html(utf8_decode("".(string)$data.""));
+ 	    
+	    if($this->html2pdf->create('save')) {
+	    	//PDF was successfully saved or downloaded
+	    	echo 'PDF saved';
+	    }
     }    
 
         public function show()
@@ -285,5 +288,62 @@ public function createFolder()
 		
 		$this->template->set_theme('desktop');
 		$this->template->build('website/bo/administracion/ventas/factura');
+	}
+
+	function facturaImprimir($id_venta){
+
+		$id = $this->modelo_compras->get_datos_venta($id_venta);
+		$fecha_1=date_create($id[0]->fecha);
+		$fecha=date_format($fecha_1,'Y-m-d');
+		$id=$id[0]->id_user;
+
+		$datos_afiliado = $this->model_perfil_red->datos_perfil($id);
+		$this->template->set("datos_afiliado",$datos_afiliado);
+		
+		$mercanciaFactura = $this->modelo_compras->get_mercancia_venta($id_venta);
+		
+		$data=array();
+		$contador=0;
+		$info_compras=Array();
+		
+		foreach ($mercanciaFactura as $items)
+		{
+		
+			$imagenes=$this->modelo_compras->get_imagenes($items->id_mercancia);
+			$id_tipo_mercancia=$this->modelo_compras->get_tipo_mercancia($items->id_mercancia);
+			$id_tipo_mercancia=$id_tipo_mercancia[0]->id_tipo_mercancia;
+			if($id_tipo_mercancia==1)
+				$detalles=$this->modelo_compras->detalles_productos($items->id_mercancia);
+			else if($id_tipo_mercancia==2)
+				$detalles=$this->modelo_compras->detalles_servicios($items->id_mercancia);
+			else if($id_tipo_mercancia==3)
+				$detalles=$this->modelo_compras->detalles_combinados($items->id_mercancia);
+			else if($id_tipo_mercancia==4)
+				$detalles=$this->modelo_compras->detalles_paquete($items->id_mercancia);
+			else if($id_tipo_mercancia==5)
+				$detalles=$this->modelo_compras->detalles_membresia($items->id_mercancia);
+
+			$info_mercancia[$contador]=Array(
+					"imagen" => $imagenes[0]->url,
+					"nombre" => $detalles[0]->nombre,
+					"descripcion" => $detalles[0]->descripcion
+			);
+			$contador++;
+		
+		}
+		$this->template->set("id_venta",$id_venta);
+		$this->template->set("mercanciaFactura",$mercanciaFactura);
+		$this->template->set("info_mercancia",$info_mercancia);
+		
+		$pais = $this->general->get_pais($id);
+		$this->template->set("pais_afiliado",$pais);
+		
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+
+		$this->template->set("fecha",$fecha);
+		
+		$this->template->set_theme('desktop');
+		return $this->template->build('website/bo/administracion/ventas/factura_2');
 	}
 }
