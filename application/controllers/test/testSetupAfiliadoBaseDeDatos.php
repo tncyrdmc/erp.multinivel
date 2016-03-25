@@ -739,7 +739,7 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-16';$fechaFin='2016-03-31';
 		
 		
-		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		
@@ -820,7 +820,7 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 		
 		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-01';$fechaFin='2016-03-31';
 		
-		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(350,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$this->venta->eliminarVentas();
@@ -838,7 +838,7 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 		
 		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-01';$fechaFin='2016-03-06';
 		
-		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(350,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$this->venta->eliminarVentas();
@@ -858,7 +858,7 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 		
 		$id_afiliado=10000;$id_red=300;$fechaInicio='2016-03-07';$fechaFin='2016-03-13';
 		
-		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get Compras personales Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 	}
@@ -1070,104 +1070,104 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(2000,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(800,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(700,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(500,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10004;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10005;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(300,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10006;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10007;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(300,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10008;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10009;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red equilibrado','Resultado es :'.$resultado);
 		
 		// PATA DEBIL
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(850,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(200,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(200,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10004;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10005;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10006;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10007;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10008;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10009;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil','Resultado es :'.$resultado);
 		
 		
@@ -1380,52 +1380,52 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(1700,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(650,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(550,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(350,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10004;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10005;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10006;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10007;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10008;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10009;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		//Equilibrada Niveles
@@ -1434,54 +1434,54 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=2;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(1200,$resultado, 'Test get ventas toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=4;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(1700,$resultado, 'Test get ventas toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=5;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(1700,$resultado, 'Test get ventas toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=3;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(650,$resultado, 'Test get ventas toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=1;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(400,$resultado, 'Test get ventas toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=1;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(200,$resultado, 'Test get ventas toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		//Equilibrada Directos
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=1;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(550,$resultado, 'Test get ventas Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=2;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(700,$resultado, 'Test get ventas Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(700,$resultado, 'Test get ventas Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10005;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		
@@ -1489,80 +1489,464 @@ class testSetupAfiliadoBaseDeDatos extends CI_Controller {
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(700,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=1;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=2;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(550,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(200,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10004;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10005;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10006;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10007;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10008;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10009;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin);
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"COSTO");
 		echo $this->unit->run(0,$resultado, 'Test get ventas toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
 	
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='DIRECTOS';$condicionRed='DEB';$nivel=0;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(850,$resultado, 'Test get ventas Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 		$usuario= new $this->afiliado ();
 		$id_afiliado=10000;$red=300;$tipo='DIRECTOS';$condicionRed='DEB';$nivel=1;
-		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01');
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"COSTO");
 		echo $this->unit->run(150,$resultado, 'Test get ventas Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 		
 	
 	}
 	
 	public function testGetPuntosComisionablesTodaMiredIntervalosDeTiempo(){
+		$this->afiliado->eliminarUsuarios();
+		$this->red->eliminarRed();
+		$this->venta->eliminarVentas();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		
+		$red=$this->red;
+		$infinito=0;
+		$datosRed = array(
+				'id_red' => "300",
+				'nombre'   => "Binario",
+				'descripcion'    => "Test de Red Binaria",
+				'frontal' => 2,
+				'profundidad'   => $infinito,
+				'valor_punto'    => 1,
+				'estatus'   => 'ACT',
+				'plan' => 'BIN'
+		);
+		
+		$red->nuevaRed($datosRed);
+		$red->ingresarRed();
+		
+		$datosCategoria = array(
+				'id_categoria' => 250,
+				'id_red'   => 300,
+		);
+		
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+		
+		$usuario=$this->afiliado;
+		
+		$servicios=2;
+		
+		$datosMercancia = array(
+				'id_mercancia' => 500,
+				'id_tipo_mercancia'   => $servicios,
+				'costo'    => 150,
+				'puntos_comisionables' => 15,
+				'id_categoria' => 250,
+				'id_red'   => 300
+		);
+		
+		$this->mercancia->nuevaMercancia ($datosMercancia);
+		$this->mercancia->ingresarMercancia ();
+		
+		$servicios=2;
+		
+		$datosMercancia = array(
+				'id_mercancia' => 501,
+				'id_tipo_mercancia'   => $servicios,
+				'costo'    => 200,
+				'puntos_comisionables' => 20,
+				'id_categoria' => 250,
+				'id_red'   => 300
+		);
+		
+		$this->mercancia->nuevaMercancia ($datosMercancia);
+		$this->mercancia->ingresarMercancia ();
+		
+		
+		/*							RED DE AFILIACION PRUEBA
+		 *           	                 __________
+		 *           	               	|  10000   |
+		 *        	   	               /| giovanny | \
+		 *           	              / |_____2____|  \
+		 *           	        _____/__             __\___
+		 *           	       | 10001  |   	    | 10002 |
+		 *       	           | carlos |   	    | pedro |
+		 *       	           | 10000  |   	    | 10000 |\
+		 *					   |__$350__|           |_$150__| \
+		 *  	          ______ /       _\_____    __/_____   \_______
+		 *  	         |10003 |   	 | 10004 | |   10005 |  |10006 |
+		 * 	           	 |camilo|   	 |nicolas| |esperanza|  |maria |
+		 * 	         	 |10001 |   	 |10001  | | 10002   |  |10002 |
+		 *               |_$150_|        |_$150__| |__$200___|  |$200__|
+		 *	       ____/___    __\____       		  ____/__
+		 *   	   |10007 	|  | 10008 |      		 |10009  |
+		 *	 	   |fernando|  |andres |      	     |ricardo|
+		 *	 	   |10003   |  | 10003 |      	     | 10002 |
+		 *        /|__$0____|\ |_$200__|             |__$150_|
+		 *  _____/___   ______\                      ____|__
+		 *	|10010 	 | | 10011 |      		 		|10012  |
+		 *	|manuel  | | mario |      	     		|andrea |
+		 *	|10007   | | 10007 |      	     		| 10009 |
+		 *  |__$150__| |_$150__|             		|__$150_|
+		 *
+		 */
+		
+		
+		
+		$this->modelo_bono->crearNuevoUsuario (10000,"giovanny","2016-03-17",20000,300,2,2,0);
+		
+		$this->modelo_bono->crearNuevoUsuario (10001,"carlos","2016-03-17",20001,300,10000,10000,0);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		$datosMercancia2 = array('id_mercancia' => 501,'costo_total'   => 200,
+				'puntos_comisionables'    => 20);
+		array_push($datosMercanciasVendidas,$datosMercancia1,$datosMercancia2);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,700,'ACT',10001,'2016-03-01');
+			
+		$this->modelo_bono->crearNuevoUsuario (10002,"pedro","2016-03-17",20002,300,10000,10000,1);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,701,'ACT',10002,'2016-03-02');
+			
+		
+		$this->modelo_bono->crearNuevoUsuario (10003,"camilo","2016-03-17",20003,300,10001,10001,0);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,702,'ACT',10003,'2016-03-03');
+		
+		
+		$this->modelo_bono->crearNuevoUsuario (10004,"nicolas","2016-03-17",20004,300,10001,10001,1);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,703,'ACT',10004,'2016-03-04');
+		
+		
+		$this->modelo_bono->crearNuevoUsuario (10005,"esperanza","2016-03-17",20005,300,10002,10002,0);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia2 = array('id_mercancia' => 501,'costo_total'   => 200,
+				'puntos_comisionables'    => 20);
+		array_push($datosMercanciasVendidas,$datosMercancia2);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,704,'ACT',10005,'2016-03-05');
+			
+		
+		$this->modelo_bono->crearNuevoUsuario (10006,"maria","2016-03-17",20006,300,10002,10002,1);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia2 = array('id_mercancia' => 501,'costo_total'   => 200,
+				'puntos_comisionables'    => 20);
+		array_push($datosMercanciasVendidas,$datosMercancia2);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,707,'ACT',10006,'2016-03-04');
+		
+		$this->modelo_bono->crearNuevoUsuario (10007,"fernando","2016-03-17",20007,300,10003,10003,0);
+		$this->modelo_bono->crearNuevoUsuario (10008,"andres","2016-03-17",20008,300,10003,10003,1);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia2 = array('id_mercancia' => 501,'costo_total'   => 200,
+				'puntos_comisionables'    => 20);
+		array_push($datosMercanciasVendidas,$datosMercancia2);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,705,'ACT',10008,'2016-03-07');
+			
+		
+		$this->modelo_bono->crearNuevoUsuario (10009,"ricardo","2016-03-17",20009,300,10005,10002,0);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,706,'ACT',10009,'2016-03-08');
+		
+		
+		$this->modelo_bono->crearNuevoUsuario (10010,"manuel","2016-03-17",20010,300,10007,10007,0);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,710,'ACT',10010,'2016-02-29');
+		
+		$this->modelo_bono->crearNuevoUsuario (10011,"mario","2016-03-17",20011,300,10007,10007,1);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,711,'ACT',10011,'2016-03-10');
+		
+		$this->modelo_bono->crearNuevoUsuario (10012,"andrea","2016-03-17",20012,300,10009,10009,0);
+		
+		$datosMercanciasVendidas=array();
+		$datosMercancia1 = array('id_mercancia' => 500,'costo_total'   => 150,
+				'puntos_comisionables'    => 15);
+		array_push($datosMercanciasVendidas,$datosMercancia1);
+		
+		$this->nuevaCompraUsuario ($datosMercanciasVendidas,712,'ACT',10012,'2016-03-16');
+		
+		//	EQUILIBRADA
+		
+		$fechaInicio='2016-03-01';$fechaFin="2016-03-15";
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(170,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(65,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(55,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(35,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10004;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10005;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(15,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10006;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10007;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(15,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10008;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10009;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red equilibrado Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		//Equilibrada Niveles
+		
+		$fechaInicio='2016-03-01';$fechaFin="2016-03-15";
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=2;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(120,$resultado, 'Test get Puntos toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=4;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(170,$resultado, 'Test get Puntos toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=5;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(170,$resultado, 'Test get Puntos toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=3;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(65,$resultado, 'Test get Puntos toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=1;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(40,$resultado, 'Test get Puntos toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='EQU';$nivel=1;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(20,$resultado, 'Test get Puntos toda la red equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		//Equilibrada Directos
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10002;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=1;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(55,$resultado, 'Test get Puntos Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10002;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=2;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(70,$resultado, 'Test get Puntos Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10002;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(70,$resultado, 'Test get Puntos Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10005;$red=300;$tipo='DIRECTOS';$condicionRed='EQU';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		
+		// PATA DEBIL
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(70,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=1;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(15,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=2;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(55,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10001;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(15,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10002;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(20,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10003;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(15,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10004;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10005;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10006;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10007;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10008;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10009;$red=300;$tipo='RED';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,"PUNTOS");
+		echo $this->unit->run(0,$resultado, 'Test get Puntos toda la red pata debil Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='DIRECTOS';$condicionRed='DEB';$nivel=0;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(85,$resultado, 'Test get Puntos Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
+		
+		$usuario= new $this->afiliado ();
+		$id_afiliado=10000;$red=300;$tipo='DIRECTOS';$condicionRed='DEB';$nivel=1;
+		$resultado=$usuario->getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,'2016-03-01','2017-03-01',"PUNTOS");
+		echo $this->unit->run(15,$resultado, 'Test get Puntos Directos equilibrado Niveles Intervalos de Tiempo','Resultado es :'.$resultado);
 
 	}
 	

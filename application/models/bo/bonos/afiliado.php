@@ -43,7 +43,7 @@ class afiliado extends CI_Model
 		$this->setLadoRed(intval($datosAfiliacion[0]->lado_red));
 	}
 	
-	function  nuevoAfiliado($datosUsuario){
+	function nuevoAfiliado($datosUsuario){
 
 		$this->setIdUsuario($datosUsuario["id_usuario"]);
 		$this->setUsername($datosUsuario["username"]);
@@ -188,45 +188,58 @@ class afiliado extends CI_Model
 
 	}
 	
-	function getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin){
-		$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
-							 where (v.id_venta=cvm.id_venta)
-							 and  (i.id=cvm.id_mercancia)
-							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
-		$datos= $q->result();
+	function getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,$datosVenta){
+		
+		$datos=array();
+		
+		if($datosVenta=="COSTO"){
+			
+			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+								 where (v.id_venta=cvm.id_venta)
+								 and  (i.id=cvm.id_mercancia)
+								 and(v.id_user=".$id_afiliado.")
+								 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			$datos= $q->result();
+		} else if($datosVenta=="PUNTOS"){
+			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
+								 where (v.id_venta=cvm.id_venta)
+								 and  (i.id=cvm.id_mercancia)
+								 and(v.id_user=".$id_afiliado.")
+								 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			$datos= $q->result();
+		}
 	
-		if($datos[0]->total==null)
+		if($datos==null)
 			return 0;
 		else
 			return $datos[0]->total;
 	}
 	
-	function getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin){
+	function getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,$datoVenta){
 
 		if($condicionRed=="EQU"){
 			$limite=$nivel;
-			return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite);
+			return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$datoVenta);
 
 		}else if($condicionRed=="DEB") {
 			
-			return $this->getVentasTodaLaRedPataDebil ($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin);
+			return $this->getVentasTodaLaRedPataDebil ($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$datoVenta);
 
 		}
 	}
 	
-	private function getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin) {
+	private function getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$datoVenta) {
 		$totalPata1=0;
 		$totalPata2=0;
 		
 		$idAfiliadopata1=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,0);
-		$totalPata1=$this->getVentasTodaLaRedPata($idAfiliadopata1, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin);
-		$totalPata1+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata1, $red,$fechaInicio,$fechaFin);
+		$totalPata1=$this->getVentasTodaLaRedPata($idAfiliadopata1, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin,$datoVenta);
+		$totalPata1+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata1, $red,$fechaInicio,$fechaFin,$datoVenta);
 		
 		$this->setIdAfiliadosRed(array());
 		$idAfiliadopata2=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,1);
-		$totalPata2=$this->getVentasTodaLaRedPata($idAfiliadopata2, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin);
-		$totalPata2+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata2, $red,$fechaInicio,$fechaFin);
+		$totalPata2=$this->getVentasTodaLaRedPata($idAfiliadopata2, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin,$datoVenta);
+		$totalPata2+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata2, $red,$fechaInicio,$fechaFin,$datoVenta);
 
 		
 		if($totalPata1>=$totalPata2)
@@ -234,21 +247,21 @@ class afiliado extends CI_Model
 		return $totalPata1;
 	}
 
-	private function getVentasTodaLaRedEquilibrada($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite) {
+	private function getVentasTodaLaRedEquilibrada($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$datosVenta) {
 		$total=0;
 		
 		$this->getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite);
 	
 		foreach ($this->getIdAfiliadosRed() as $id_afiliado){
-			$total+=$this->getComprasPersonalesIntervaloDeTiempo($id_afiliado, $red,$fechaInicio,$fechaFin);
+			$total+=$this->getComprasPersonalesIntervaloDeTiempo($id_afiliado, $red,$fechaInicio,$fechaFin,$datosVenta);
 		}
 		return $total;
 	}
 
-	function getVentasTodaLaRedPata($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin){
+	function getVentasTodaLaRedPata($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,$datoVenta){
 	
 		$limite=$nivel-1;
-		return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite);
+		return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$datoVenta);
 	
 	}
 	
