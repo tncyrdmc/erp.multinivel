@@ -36,6 +36,7 @@ class testActivacionBono extends CI_Controller {
 				'id_tipo_rango' => $puntosComisionables,
 				'valor'   => 110,
 				'condicion_red'    => "RED",
+				'condicion_red_afilacion'=>"EQU",
 				'nivel_red'   => $infinito,
 				'id_condicion' => 1,
 				'id_red'   => 26,

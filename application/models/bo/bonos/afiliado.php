@@ -88,7 +88,7 @@ class afiliado extends CI_Model
 
 	function eliminarUsuarios(){
 		$this->db->query('delete from users where id >= 10000');
-		$this->db->query('delete from afiliar where id >= 20000');
+		$this->db->query('delete from afiliar where id >= 10000');
 	}
 
 	function getAfiliados($id_afiliado,$red,$tipo,$nivel){

@@ -75,7 +75,7 @@
 		<br><br>
 		<label class="toggle" style="width: 4rem;">
 			<input name="plan" type="checkbox">
-			<i data-swchon-text="SI" data-swchoff-text="NO"></i>Plan
+			<i data-swchon-text="SI" data-swchoff-text="NO"></i>Binario
 		</label>
 		</div>
 		<div class="form-group" style="width: 100rem;">
@@ -101,7 +101,7 @@
 										<div class="col col-xs-12 col-sm-12 col-lg-10" id="tipo_condicion">
 											<label class="select">Nombre Rango
 											<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
-											<option value='0'>--- Seleccione Rango ---</option>
+											<option value='0' selected>--- Seleccione Rango ---</option>
 													<?php	
 														foreach($rangosActivos as $categoria){
 															echo "<option value='".$categoria->id_rango."'>".$categoria->nombre_rango."</option>";
@@ -180,6 +180,14 @@
 											</label>
 										</div>
 										<div class="col col-lg-1">
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
+											<label class="select">Condición Red
+											<select name="condicion_red[]">
+												<option value="RED">Toda La red</option>
+												<option value="DIRECTOS">Directos Afiliado</option>
+											</select>
+											</label>
 										</div>
 										<div class="col col-lg-2">
 		        							<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>
@@ -368,6 +376,14 @@ function add_nivel()
 	+' </div>'
 	+'<div class="col col-lg-1">'
 	+' </div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición Red'
+		+'<select name="condicion_red[]">'
+			+'<option value="RED">Toda La red</option>'
+			+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'	<label class="input" style="margin: 2rem;"><i class="icon-prepend fa fa-money"></i>'
 	+'		<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
@@ -410,6 +426,14 @@ var code='<div class="row">'
 	+'</div>'
 	+'<div class="col col-lg-1">'
 	+' </div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición Red'
+		+'<select name="condicion_red[]">'
+			+'<option value="RED">Toda La red</option>'
+			+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>'
 	+'<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'

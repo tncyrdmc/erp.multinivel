@@ -56,7 +56,7 @@ class modelo_bono extends CI_Model
 		$this->setNivelRed($datosRango["nivel_red"]);
 		$this->setIdCondicion($datosRango["id_condicion"]);
 		$this->setIdRed($datosRango["id_red"]);
-		$this->setCondicionAfiliadosRed($datosRango["condicion_afiliados_red"]);
+		$this->setCondicionAfiliadosRed($datosRango["condicion_red_afilacion"]);
 		$this->setCondicion1($datosRango["condicion1"]);
 		$this->setCondicion2($datosRango["condicion2"]);
 		$this->setEstatusRango($datosRango["estatus_rango"]);
@@ -71,10 +71,10 @@ class modelo_bono extends CI_Model
 		$this->setMesDesdeAfiliacion($datosBono["mes_desde_afiliacion"]);
 		$this->setMesDesdeActivacion($datosBono["mes_desde_activacion"]);
 		$this->setEstatusBono($datosBono["estatus_bono"]);
-		
+
 		foreach ($datosValoresBono as $valorBono){
 			$this->setValoresBono(intval($valorBono["id_valor"]),intval($valorBono["id_rango"]),
-				intval($valorBono["nivel"]),$valorBono["valor"]);
+				$valorBono["condicion_red"],intval($valorBono["nivel"]),$valorBono["valor"]);
 		}
 	}
 	
@@ -92,6 +92,15 @@ class modelo_bono extends CI_Model
 		$this->modelo_bono->eliminarBono($this->id_bono);
 		$this->modelo_bono->eliminarBonoCondicion($this->id_condicion);
 		$this->modelo_bono->eliminarBonoValor($this->id_bono);
+	}
+	
+	function limpiarTodosLosBonos() {
+		$this->db->query('delete from cat_rango where id_rango >= 60');
+		$this->db->query('delete from cross_rango_tipos where id_rango >= 60');
+		$this->db->query('delete from bono where id >= 50');
+		$this->db->query('delete from cat_bono_condicion where id >= 1');
+		$this->db->query('delete from cat_bono_valor_nivel where id >= 1');
+		
 	}
 	
 	function insertarRango($id_rango,$nombre_rango,$descripcion_rango,$condicion_red_afiliacion,$estatus_rango){
@@ -155,6 +164,7 @@ class modelo_bono extends CI_Model
 			$datos = array(
 					'id' => $valor['id_condicion'],
 					'id_bono'   => $valor['id_bono'],
+					'condicion_red'    => $valor['condicion_red'],
 					'nivel'    => $valor['nivel'],
 					'valor'	=> $valor['valor']
 			);
@@ -193,7 +203,7 @@ class modelo_bono extends CI_Model
 				'id_sponsor'   => $id_sponsor,
 				'lado_red' => $lado_red
 		);
-	
+
 		$this->afiliado->nuevoAfiliado ($datosUsuario);
 		$this->afiliado->ingresarUsuario ();
 	}
@@ -258,8 +268,8 @@ class modelo_bono extends CI_Model
 	public function getValores() {
 		return $this->valores;
 	}
-	public function setValores($id_bono,$nivel,$valor) {
-		$this->valores = array('id_bono' => $id_bono,'nivel' => $nivel,
+	public function setValores($id_bono,$condicion_red,$nivel,$valor) {
+		$this->valores = array('id_bono' => $id_bono,'condicion_red'=>$condicion_red,'nivel' => $nivel,
 				'valor' => $valor
 		);
 		return $this;
@@ -426,10 +436,11 @@ class modelo_bono extends CI_Model
 		return $this;
 	}
 	
-	public function setValoresBono($id_condicion,$id_bono,$nivel,$valor) {
+	public function setValoresBono($id_condicion,$id_bono,$condicion_red,$nivel,$valor) {
 		$datos = array(
 				'id_condicion' => $id_condicion,
 				'id_bono'   => $id_bono,
+				'condicion_red'    => $condicion_red,
 				'nivel'    => $nivel,
 				'valor'	=> $valor
 		);

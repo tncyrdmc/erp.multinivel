@@ -19,12 +19,13 @@ function setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desd
 	return $bono;
 }
 
-function setUpValoresBones($idBono,$nivel,$valor){
+function setUpValoresBones($idBono,$nivel,$condicion_red,$valor){
 
 	$bono_valores = array(
 			'id_bono' => $idBono,
 			'nivel' => $nivel,
 			'valor' => $valor,
+			'condicion_red'=>$condicion_red
 	);
 	return $bono_valores;
 }
@@ -69,6 +70,7 @@ function cambiar_estado_bono($estado,$id_bono){
 }
 
 function insert_bono_valor_niveles($valoresBono){
+
 	$this->db->insert("cat_bono_valor_nivel",$valoresBono);
 
 }

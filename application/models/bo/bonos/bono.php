@@ -88,8 +88,8 @@ class bono extends CI_Model
 	public function getValores() {
 		return $this->valores;
 	}
-	public function setValores($id_bono,$nivel,$valor) {
-		$this->valores = array('id_bono' => $id_bono,'nivel' => $nivel,
+	public function setValores($id_bono,$condicion_red,$nivel,$valor) {
+		$this->valores = array('id_bono' => $id_bono,'condicion_red'=>$condicion_red,'nivel' => $nivel,
 				              'valor' => $valor
 		);
 		return $this;
@@ -136,7 +136,7 @@ class bono extends CI_Model
 		$datosCondicioneBono=$q->result();
 	
 		foreach ($datosCondicioneBono as $condicion){
-			$condicionesBono=$this->condiciones_bono;
+			$condicionesBono=new $this->condiciones_bono();
 			$condicionesBono->setIdCondicion(intval($condicion->id_condicion));
 			$condicionesBono->setIdBono(intval($condicion->id_bono));
 			$condicionesBono->setIdRango(intval($condicion->id_rango));
@@ -161,7 +161,7 @@ class bono extends CI_Model
 	
 	public function setDatosValorBono($id_bono){
 		
-		$q=$this->db->query("SELECT id,id_bono,nivel,valor FROM cat_bono_valor_nivel where id_bono=".$id_bono);
+		$q=$this->db->query("SELECT id,id_bono,condicion_red,nivel,valor FROM cat_bono_valor_nivel where id_bono=".$id_bono);
 		$datosValoresBono=$q->result();
 
 		
@@ -169,6 +169,7 @@ class bono extends CI_Model
 			$valoresBono=new $this->valores_bono();
 			$valoresBono->setId($valorNivel->id);
 			$valoresBono->setIdBono($valorNivel->id_bono);
+			$valoresBono->setCondicionRed($valorNivel->condicion_red);
 			$valoresBono->setNivel($valorNivel->nivel);
 			$valoresBono->setValor($valorNivel->valor);
 			$myArray[] = $valoresBono;
@@ -183,7 +184,7 @@ class bono extends CI_Model
 		$datosActivacionBono=$q->result();
 		
 		foreach ($datosActivacionBono as $activacionBono){
-			$activacion=$this->activacion_bono;
+			$activacion=new $this->activacion_bono();
 			$activacion->setIdBono(intval($activacionBono->id));
 			$activacion->setInicio($activacionBono->inicio);
 			$activacion->setFin($activacionBono->fin);

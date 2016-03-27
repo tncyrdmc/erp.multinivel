@@ -5,6 +5,7 @@ class valores_bono extends CI_Model
 
 	private $id;
 	private $id_bono;
+	private $condicion_red;
 	private $nivel;
 	private $valor;
 	
@@ -41,6 +42,14 @@ class valores_bono extends CI_Model
 		$this->id = $id;
 		return $this;
 	}
+	public function getCondicionRed() {
+		return $this->condicion_red;
+	}
+	public function setCondicionRed($condicion_red) {
+		$this->condicion_red = $condicion_red;
+		return $this;
+	}
+	
 	
 	
 	

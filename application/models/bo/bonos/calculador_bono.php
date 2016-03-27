@@ -7,13 +7,28 @@ class calculador_bono extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('/bo/bonos/bono');
 		$this->load->model('/bo/bonos/condiciones_bono');
 		$this->load->model('/bo/bonos/valores_bono');
 		$this->load->model('/bo/bonos/activacion_bono');
 	}
 	
+	public function getTodosLosBonos(){
+		$q=$this->db->query("SELECT id FROM bono order by id");
+		$bonosBaseDeDatos=$q->result();
+		$todosLosBonos=array();
+		foreach ($bonosBaseDeDatos as $bonoBaseDeDatos){
+			$bono=new $this->bono();
+			$bono->setUpBono($bonoBaseDeDatos->id);
+			array_push($todosLosBonos, $bono);
+		}
+
+		return $todosLosBonos;
+	}
+	
 	public function isActivo($bono){
 		$estadoBono=$bono->getActivacionBono()->getEstado();
+
 		if($estadoBono=='ACT')
 			return true;
 		return false;
@@ -67,7 +82,6 @@ class calculador_bono extends CI_Model
 			return date_format($dateAux, 'Y-m-d');
 		}
 	}
-	
 
 	public function getFinQuincena($date) {
 		
@@ -92,7 +106,7 @@ class calculador_bono extends CI_Model
 	}
 	
 	public function getUsuariosRed($id_red) {
-		$q=$this->db->query("SELECT u.id as id_afiliado,u.username,u.created FROM users u,afiliar a
+		$q=$this->db->query("SELECT u.id as id_afiliado,u.username,u.created,a.debajo_de,a.directo,a.lado FROM users u,afiliar a
 								where (u.id=a.id_afiliado) and id_red=".$id_red);
 		$datosAfiliado=$q->result();
 		$this->setUsuariosRed($datosAfiliado);

@@ -32,7 +32,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'nivel_red'   => $infinito,
 				'id_condicion' => 1,
 				'id_red'   => 26,
-				'condicion_afiliados_red'    => "EQU",
+				'condicion_red_afilacion'    => "EQU",
 				'condicion1'    => $servicios,
 				'condicion2'	=> $id_mercancia,
 				'estatus_rango'	=> "ACT"
@@ -61,6 +61,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_valor' => 4,
 				'id_rango'   => 50,
 				'nivel'    => 0,
+				'condicion_red'    => "RED",
 				'valor'	=> 0
 		);
 		
@@ -68,6 +69,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_valor' => 3,
 				'id_rango'   => 50,
 				'nivel'    => 1,
+				'condicion_red'    => "DIRECTOS",
 				'valor'	=> 1.6
 		);
 		
@@ -75,6 +77,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_valor' => 2,
 				'id_rango'   => 50,
 				'nivel'    => 2,
+				'condicion_red'    => "RED",
 				'valor'	=> 0.8
 		);
 		
@@ -82,6 +85,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_valor' => 1,
 				'id_rango'   => 50,
 				'nivel'    => 3,
+				'condicion_red'    => "DIRECTOS",
 				'valor'	=> 0.8
 		);
 		
@@ -163,7 +167,6 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		
 		$this->bono->setDatosValorBono(50);
 
-		
 		// Nivel 3
 		$resultado=$bono->getValoresBono()[3]->getId();
 		echo $this->unit->run(4,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
@@ -171,6 +174,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[3]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
 		
+		$resultado=$bono->getValoresBono()[3]->getCondicionRed();
+		echo $this->unit->run("RED",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
+
 		$resultado=$bono->getValoresBono()[3]->getNivel();
 		echo $this->unit->run(0,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
 		
@@ -183,6 +189,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		
 		$resultado=$bono->getValoresBono()[2]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
+	
+		$resultado=$bono->getValoresBono()[2]->getCondicionRed();
+		echo $this->unit->run("DIRECTOS",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[2]->getNivel();
 		echo $this->unit->run(1,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
@@ -197,6 +206,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[1]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
 		
+		$resultado=$bono->getValoresBono()[1]->getCondicionRed();
+		echo $this->unit->run("RED",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
+				
 		$resultado=$bono->getValoresBono()[1]->getNivel();
 		echo $this->unit->run(2,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
 		
@@ -209,6 +221,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		
 		$resultado=$bono->getValoresBono()[0]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
+		
+		$resultado=$bono->getValoresBono()[0]->getCondicionRed();
+		echo $this->unit->run("DIRECTOS",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[0]->getNivel();
 		echo $this->unit->run(3,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
@@ -300,6 +315,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		echo $this->unit->run(145,$resultado, 'Test set Base de datos Condicion2','Resultado es :'.$resultado);
 		
 		
+		
 		// Nivel 3
 		$resultado=$bono->getValoresBono()[3]->getId();
 		echo $this->unit->run(4,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
@@ -307,25 +323,31 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[3]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
 		
+		$resultado=$bono->getValoresBono()[3]->getCondicionRed();
+		echo $this->unit->run("RED",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
+
 		$resultado=$bono->getValoresBono()[3]->getNivel();
 		echo $this->unit->run(0,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[3]->getValor();
 		echo $this->unit->run(0,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
-		
+
 		// Nivel 2
 		$resultado=$bono->getValoresBono()[2]->getId();
 		echo $this->unit->run(3,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[2]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
+	
+		$resultado=$bono->getValoresBono()[2]->getCondicionRed();
+		echo $this->unit->run("DIRECTOS",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[2]->getNivel();
 		echo $this->unit->run(1,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[2]->getValor();
 		echo $this->unit->run(1.6,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
-		
+	
 		// Nivel 1
 		$resultado=$bono->getValoresBono()[1]->getId();
 		echo $this->unit->run(2,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
@@ -333,6 +355,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[1]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
 		
+		$resultado=$bono->getValoresBono()[1]->getCondicionRed();
+		echo $this->unit->run("RED",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
+				
 		$resultado=$bono->getValoresBono()[1]->getNivel();
 		echo $this->unit->run(2,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
 		
@@ -346,15 +371,15 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[0]->getIdBono();
 		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
 		
+		$resultado=$bono->getValoresBono()[0]->getCondicionRed();
+		echo $this->unit->run("DIRECTOS",$resultado, 'Test set Base de datos Condicion Red','Resultado es :'.$resultado);
+		
 		$resultado=$bono->getValoresBono()[0]->getNivel();
 		echo $this->unit->run(3,$resultado, 'Test set Base de datos Nivel','Resultado es :'.$resultado);
 		
 		$resultado=$bono->getValoresBono()[0]->getValor();
 		echo $this->unit->run(0.8,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
-		
-		$resultado=$bono->getActivacionBono()->getIdBono();
-		echo $this->unit->run(50,$resultado, 'Test set Base de datos Id Bono','Resultado es :'.$resultado);
-		
+	
 		$resultado=$bono->getActivacionBono()->getInicio();
 		echo $this->unit->run("2016-03-01",$resultado, 'Test set Base de datos Inicio','Resultado es :'.$resultado);
 		
