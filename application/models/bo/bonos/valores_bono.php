@@ -6,6 +6,7 @@ class valores_bono extends CI_Model
 	private $id;
 	private $id_bono;
 	private $condicion_red;
+	private $verticalidad;
 	private $nivel;
 	private $valor;
 	
@@ -49,6 +50,14 @@ class valores_bono extends CI_Model
 		$this->condicion_red = $condicion_red;
 		return $this;
 	}
+	public function getVerticalidad() {
+		return $this->verticalidad;
+	}
+	public function setVerticalidad($verticalidad) {
+		$this->verticalidad = $verticalidad;
+		return $this;
+	}
+	
 	
 	
 	

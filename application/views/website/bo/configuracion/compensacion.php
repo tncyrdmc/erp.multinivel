@@ -63,8 +63,8 @@
 												<div class="col-sm-2 link">
 												<a href="/bo/rangos">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-graduation-cap fa-3x"></i>
-														<h1>Rangos<br/><br/></h1>
+														<i class="fa fa-road fa-3x"></i>
+														<h1>Condiciones<br/><br/></h1>
 													</div>
 												</a>
 												</div>
@@ -79,9 +79,8 @@
 												<div class="col-sm-2 link">
 												<a href="/bo/planes">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-gift fa-2x"></i><i class="fa fa-gift fa-3x"></i><i class="fa fa-gift fa-2x"></i>
-														<h4>Planes</h4>
-														<h4>de Bonos</h4>
+														<i class="fa fa-sort-amount-asc fa-3x"></i>
+														<h1>Binarios<br/><br/></h1>
 													</div>
 												</a>
 												</div>

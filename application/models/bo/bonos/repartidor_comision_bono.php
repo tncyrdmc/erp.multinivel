@@ -59,12 +59,18 @@ class repartidor_comision_bono extends CI_Model
 		);
 		$this->db->insert('comision_bono',$datos);
 	}
+
 	
 	function eliminarHistorialComisionBono(){
-		$this->db->query('delete from comision_bono_historial where id >= 900');
-		$this->db->query('delete from comision_bono where id >= 200');
+		$this->db->query('delete from comision_bono_historial where id >= 1');
+		$this->db->query('delete from comision_bono where id >= 1');
 	}
 	
+	function getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario){
+		$q=$this->db->query("SELECT * FROM comision_bono where id_bono=".$id_bono." and id_usuario=".$id_usuario);
+		$datosTransaccion=$q->result();
+		return $datosTransaccion;
+	}
 	public function getId() {
 		return $this->id;
 	}

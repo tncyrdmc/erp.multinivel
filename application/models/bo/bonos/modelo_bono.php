@@ -74,7 +74,7 @@ class modelo_bono extends CI_Model
 
 		foreach ($datosValoresBono as $valorBono){
 			$this->setValoresBono(intval($valorBono["id_valor"]),intval($valorBono["id_rango"]),
-				$valorBono["condicion_red"],intval($valorBono["nivel"]),$valorBono["valor"]);
+				$valorBono["condicion_red"],intval($valorBono["nivel"]),$valorBono["valor"],$valorBono["verticalidad"]);
 		}
 	}
 	
@@ -166,7 +166,8 @@ class modelo_bono extends CI_Model
 					'id_bono'   => $valor['id_bono'],
 					'condicion_red'    => $valor['condicion_red'],
 					'nivel'    => $valor['nivel'],
-					'valor'	=> $valor['valor']
+					'valor'	=> $valor['valor'],
+					'verticalidad'	=> $valor['verticalidad']
 			);
 			$this->db->insert('cat_bono_valor_nivel',$datos);
 		}
@@ -436,12 +437,13 @@ class modelo_bono extends CI_Model
 		return $this;
 	}
 	
-	public function setValoresBono($id_condicion,$id_bono,$condicion_red,$nivel,$valor) {
+	public function setValoresBono($id_condicion,$id_bono,$condicion_red,$nivel,$valor,$verticalidad) {
 		$datos = array(
 				'id_condicion' => $id_condicion,
 				'id_bono'   => $id_bono,
 				'condicion_red'    => $condicion_red,
 				'nivel'    => $nivel,
+				'verticalidad'    => $verticalidad,
 				'valor'	=> $valor
 		);
 	

@@ -62,6 +62,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_rango'   => 50,
 				'nivel'    => 0,
 				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0
 		);
 		
@@ -70,6 +71,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_rango'   => 50,
 				'nivel'    => 1,
 				'condicion_red'    => "DIRECTOS",
+				'verticalidad'    => "ASC",
 				'valor'	=> 1.6
 		);
 		
@@ -78,6 +80,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_rango'   => 50,
 				'nivel'    => 2,
 				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0.8
 		);
 		
@@ -86,6 +89,7 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 				'id_rango'   => 50,
 				'nivel'    => 3,
 				'condicion_red'    => "DIRECTOS",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0.8
 		);
 		
@@ -183,6 +187,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[3]->getValor();
 		echo $this->unit->run(0,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
 
+		$resultado=$bono->getValoresBono()[3]->getVerticalidad();
+		echo $this->unit->run("ASC",$resultado, 'Test set Base de datos Verticalidad','Resultado es :'.$resultado);
+		
 		// Nivel 2
 		$resultado=$bono->getValoresBono()[2]->getId();
 		echo $this->unit->run(3,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
@@ -199,6 +206,10 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[2]->getValor();
 		echo $this->unit->run(1.6,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
 	
+		$resultado=$bono->getValoresBono()[2]->getVerticalidad();
+		echo $this->unit->run("ASC",$resultado, 'Test set Base de datos Verticalidad','Resultado es :'.$resultado);
+		
+		
 		// Nivel 1
 		$resultado=$bono->getValoresBono()[1]->getId();
 		echo $this->unit->run(2,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
@@ -215,6 +226,9 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		$resultado=$bono->getValoresBono()[1]->getValor();
 		echo $this->unit->run(0.8,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
 		
+		$resultado=$bono->getValoresBono()[1]->getVerticalidad();
+		echo $this->unit->run("ASC",$resultado, 'Test set Base de datos Verticalidad','Resultado es :'.$resultado);
+		
 		// Nivel 0
 		$resultado=$bono->getValoresBono()[0]->getId();
 		echo $this->unit->run(1,$resultado, 'Test set Base de datos Id Valor','Resultado es :'.$resultado);
@@ -230,6 +244,10 @@ class testSetupBonoBaseDeDatos extends CI_Controller {
 		
 		$resultado=$bono->getValoresBono()[0]->getValor();
 		echo $this->unit->run(0.8,$resultado, 'Test set Base de datos Valor','Resultado es :'.$resultado);
+	
+		$resultado=$bono->getValoresBono()[0]->getVerticalidad();
+		echo $this->unit->run("ASC",$resultado, 'Test set Base de datos Verticalidad','Resultado es :'.$resultado);
+		
 	}
 	
 	public function testSetValoresActivacionBonoBaseDeDatos(){
