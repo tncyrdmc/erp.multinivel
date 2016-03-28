@@ -1,5 +1,41 @@
-<div class="padding-10">
-											<div class="pull-left">
+<style type="text/css">
+	.tabl {
+width: 100%;
+max-width: 100%;
+margin-bottom: 18px;
+}
+
+.pull-lef {
+    float: left !important;
+}
+
+.pull-righ {
+    float: right;
+}
+.padding-1 {
+    padding: 10px !important;
+}
+
+.panel-defaul {
+    border-color: #DDD;
+}
+.pane {
+    margin-bottom: 18px;
+    background-color: #FFF;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.panel-bod {
+    padding: 15px;
+}
+
+</style>
+
+
+<div class="padding-1">
+											<div class="pull-lef">
 												<img style="width: 18rem; height: auto; padding: 1rem;" src="" alt="">
 				
 												<address>
@@ -14,7 +50,7 @@
 												</address>
 											</div>
 											</br>
-											<div class="pull-right">
+											<div class="pull-righ">
 												<h1 class="font-300">Factura de venta</h1>
 											</div>
 											<div class="clearfix"></div>
@@ -58,12 +94,12 @@
 
 											</div>
 
-												<div class="panel panel-default">
-  													<div class="panel-body">
+												<div class="pane panel-defaul">
+  													<div class="panel-bod">
 														<span class="center"> <?php echo $empresa[0]->resolucion;?> </span>
   													</div>
 												</div>
-											<table class="table table-hover">
+											<table class="table">
 												<thead>
 													<tr>
 														<th class="text-center">Cantidad</th>

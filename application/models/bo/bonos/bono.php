@@ -161,7 +161,7 @@ class bono extends CI_Model
 	
 	public function setDatosValorBono($id_bono){
 		
-		$q=$this->db->query("SELECT id,id_bono,condicion_red,nivel,valor FROM cat_bono_valor_nivel where id_bono=".$id_bono);
+		$q=$this->db->query("SELECT id,id_bono,condicion_red,nivel,valor,verticalidad FROM cat_bono_valor_nivel where id_bono=".$id_bono);
 		$datosValoresBono=$q->result();
 
 		
@@ -172,6 +172,7 @@ class bono extends CI_Model
 			$valoresBono->setCondicionRed($valorNivel->condicion_red);
 			$valoresBono->setNivel($valorNivel->nivel);
 			$valoresBono->setValor($valorNivel->valor);
+			$valoresBono->setVerticalidad($valorNivel->verticalidad);
 			$myArray[] = $valoresBono;
 			$this->setValoresBono($myArray);
 		}

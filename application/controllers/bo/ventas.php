@@ -184,7 +184,7 @@ public function createFolder()
     {
 
 	    //Load the library
-	    $this->load->library('html2pdf');
+	    /*$this->load->library('html2pdf');
 	    
 	    //Set folder to save PDF to
 	    $this->html2pdf->folder('./assets/pdfs/');
@@ -208,6 +208,18 @@ public function createFolder()
 	    	//PDF was successfully saved or downloaded
 	    	echo 'PDF saved';
 	    }
+*/
+	 $this->load->helper(array('dompdf', 'file'));
+	 $this->load->helper('file'); 
+     // page info here, db calls, etc.     
+     $html = $this->facturaImprimir($_POST['id']);
+     //pdf_create(utf8_decode("".(string)$html.""), 'filename');
+     //or
+     $data = pdf_create($html, '', false);
+     write_file('factura', $data);
+
+ 
+
     }    
 
         public function show()

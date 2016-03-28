@@ -68,6 +68,8 @@ class testActivacionBono extends CI_Controller {
 				'id_valor' => 4,
 				'id_rango'   => 50,
 				'nivel'    => 0,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0
 		);
 		
@@ -75,6 +77,8 @@ class testActivacionBono extends CI_Controller {
 				'id_valor' => 3,
 				'id_rango'   => 50,
 				'nivel'    => 1,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 1.6
 		);
 		
@@ -82,6 +86,8 @@ class testActivacionBono extends CI_Controller {
 				'id_valor' => 2,
 				'id_rango'   => 50,
 				'nivel'    => 2,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0.8
 		);
 		
@@ -89,6 +95,8 @@ class testActivacionBono extends CI_Controller {
 				'id_valor' => 1,
 				'id_rango'   => 50,
 				'nivel'    => 3,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0.8
 		);
 		
