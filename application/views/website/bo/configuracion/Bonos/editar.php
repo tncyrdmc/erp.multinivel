@@ -126,9 +126,9 @@ var j=0;
 
 									<div class="row" id="niveles">
 									<div class="row">
-										<div class="col col-lg-3 col-xs-2">
+										<div class="col col-lg-1 col-xs-2">
 										</div>
-										<div class="col col-lg-2 col-xs-2">
+										<div class="col col-lg-4 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_nivel()"> Agregar Nivel <i class="fa fa-plus"></i></a>
 											<a style="cursor: pointer;" onclick="reload_niveles()">&nbsp&nbsp&nbsp<i style="font-size: 2rem;color: #60A917 !important;" class="fa fa-refresh"></i></a>
 										</div>
@@ -149,9 +149,25 @@ var j=0;
 										</div>
 									<div class="col col-lg-1">
 									</div>
-										<div class="col col-lg-3">
-										<label style="margin: 0.2rem;" class="select">Condicion Red
-											<select name="condicion_red[]" style="width: 15rem;">
+										<div class="col col-lg-2">
+										<label style="margin: 0.2rem;" class="select">Repartir
+											<select name="verticalidad_red[]" style="width: 10rem;">
+												
+												<?php
+												if($nivel->verticalidad=="ASC")
+													echo "<option value='ASC' selected>Hacia Arriba</option>
+														<option value='DESC'>Hacia Abajo</option>";
+												else
+													echo "<option value='DESC' selected>Hacia Abajo</option>
+															<option value='ASC'>Hacia Arriba</option>";												
+													
+												?>
+											</select>
+										</label>
+										</div>
+										<div class="col col-lg-2">
+										<label style="margin: 0.2rem;" class="select">Condicion
+											<select name="condicion_red[]" style="width: 10rem;">
 												
 												<?php
 												if($nivel->condicion_red=="RED")
@@ -168,9 +184,9 @@ var j=0;
 											</select>
 										</label>
 										</div>
-										<div class="col col-lg-2">
+										<div class="col col-lg-4">
 		        							<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>
-												<input class="form-control" style="width:100px; height:30px;" name="valor[]" step="any" size="20" placeholder="Valor del Bono" required type="number" value="<?php echo $nivel->valor;?>">
+												<input class="form-control" style="width:150px; height:30px;" name="valor[]" step="any" size="20" placeholder="Valor del Bono" required type="number" value="<?php echo $nivel->valor;?>">
 											</label>
 											<?php if($contador>0){?>
 											<a style="cursor: pointer;color: red;" onclick="delete_nivel(<?php echo $contador;?>)">Eliminar Nivel <i class="fa fa-minus"></i></a>
@@ -309,26 +325,34 @@ function add_rango()
 
 function add_nivel()
 {
-	var code=	'<div id="nivel'+j+'" class="row"><br>'
+	var code=	'<div id="nivel'+j+'" class="row">'
 	+'<div class="col col-lg-1">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<span >Nivel</span>'
 		+'<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>'
-		+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" readonly>'
+		+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" >'
 		+'</label>'
 	+' </div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo_condicion">'
-	+'<label class="select">Condición Red'
-		+'<select name="condicion_red[]">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
+	+'<label class="select">Repartir'
+		+'<select name="verticalidad_red[]" style="width: 10rem;">'
+			+'<option value="ASC">Hacia Arriba</option>'
+			+'<option value="DESC">Hacia Abajo</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición'
+		+'<select name="condicion_red[]" style="width: 10rem;">'
 			+'<option value="RED">Toda La red</option>'
 			+'<option value="DIRECTOS">Directos Afiliado</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'
-	+'<div class="col col-lg-1">'
+	+'<div class="col col-lg-4">'
 	+'	<label class="input" style="margin: 2rem;"><i class="icon-prepend fa fa-money"></i>'
-	+'		<input class="form-control" style="width:100px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
+	+'		<input class="form-control" style="width:150px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'	</label>'
 	+'<a style="cursor: pointer;color: red;" onclick="delete_nivel('+j+')">Eliminar Nivel <i class="fa fa-minus"></i></a>'
 	+'</div>'
@@ -352,7 +376,7 @@ function reload_niveles(){
 var code='<div class="row">'
 	+'<div class="col col-lg-1 col-xs-1">'
 	+'</div>'
-	+'<div class="col col-lg-2 col-xs-2">'
+	+'<div class="col col-lg-4 col-xs-2">'
 	+'<a style="cursor: pointer;" onclick="add_nivel()"> Agregar Nivel <i class="fa fa-plus"></i></a>'
 	+'<a style="cursor: pointer;" onclick="reload_niveles()">&nbsp&nbsp&nbsp<i style="font-size: 2rem;color: #60A917 !important;" class="fa fa-refresh"></i></a>'
 	+'</div>'
@@ -366,9 +390,17 @@ var code='<div class="row">'
 	+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="0" required="" type="number" readonly>'
 	+'</label>'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo_condicion">'
-	+'<label class="select">Condición Red'
-		+'<select name="condicion_red[]">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
+	+'<label class="select">Repartir'
+		+'<select name="verticalidad_red[]" style="width: 10rem;">'
+			+'<option value="ASC">Hacia Arriba</option>'
+			+'<option value="DESC">Hacia Abajo</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición'
+		+'<select name="condicion_red[]" style="width: 10rem;">'
 			+'<option value="RED">Toda La red</option>'
 			+'<option value="DIRECTOS">Directos Afiliado</option>'
 		+'</select>'

@@ -19,13 +19,14 @@ function setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desd
 	return $bono;
 }
 
-function setUpValoresBones($idBono,$nivel,$condicion_red,$valor){
+function setUpValoresBones($idBono,$nivel,$condicion_red,$valor,$verticalidad){
 
 	$bono_valores = array(
 			'id_bono' => $idBono,
 			'nivel' => $nivel,
 			'valor' => $valor,
-			'condicion_red'=>$condicion_red
+			'condicion_red'=>$condicion_red,
+			'verticalidad'=>$verticalidad
 	);
 	return $bono_valores;
 }

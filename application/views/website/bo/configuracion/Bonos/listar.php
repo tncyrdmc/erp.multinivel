@@ -118,9 +118,10 @@
 														</td>
 														<td>
 														<?php foreach ($valorNiveles as $valorNivel){
+															$hacia = ($valorNivel->verticalidad == "ASC") ? "up" : "down";
 															if($valorNivel->id_bono==$bono->id){
-																
-																echo "Nivel ".$valorNivel->nivel." : <br> <b>$ ".$valorNivel->valor."</b><br>";
+																$hacia = ($valorNivel->nivel==0) ? "" : $hacia;
+																echo "Nivel ".$valorNivel->nivel." <i class='fa fa-long-arrow-".$hacia."'></i> : <br> <b>$ ".$valorNivel->valor."</b><br>";
 															}
 														}
 														?>
