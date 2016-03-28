@@ -130,9 +130,10 @@ class bonos extends CI_Controller
 
 		$id_niveles_bonos = $_POST['id_niveles_bonos'];
 		$valores = $_POST['valor'];
-			
+		$condicion_red = $_POST['condicion_red'];
+		$verticalidad_red = $_POST['verticalidad_red'];
 		for ($i=0;$i<sizeof($valores);$i++){
-			$valoresBono = $this->model_bonos->setUpValoresBones($idBono,$id_niveles_bonos[$i],$valores[$i]);
+			$valoresBono = $this->model_bonos->setUpValoresBones($idBono,$id_niveles_bonos[$i],$condicion_red[$i],$valores[$i],$verticalidad_red[$i]);
 			$this->model_bonos->insert_bono_valor_niveles($valoresBono);
 		}
 		
@@ -188,10 +189,12 @@ class bonos extends CI_Controller
 	
 		$id_niveles_bonos = $_POST['id_niveles_bonos'];
 		$valores = $_POST['valor'];
+		$condicion_red = $_POST['condicion_red'];
+		$verticalidad_red = $_POST['verticalidad_red'];
 		$this->model_bonos->kill_bono_valor_nivel($id_bono);
 		
 		for ($i=0;$i<sizeof($valores);$i++){
-			$valoresBono = $this->model_bonos->setUpValoresBones($id_bono,$id_niveles_bonos[$i],$valores[$i]);
+			$valoresBono = $this->model_bonos->setUpValoresBones($id_bono,$id_niveles_bonos[$i],$condicion_red[$i],$valores[$i],$verticalidad_red[$i]);
 			$this->model_bonos->actualizar_bono_valor_niveles($id_bono,$valoresBono);
 		}
 

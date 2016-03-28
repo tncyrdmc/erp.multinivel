@@ -4,209 +4,309 @@ class testSetupBono extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('unit_test');
+		$this->load->model('/bo/bonos/calculador_bono');
 		$this->load->model('/bo/bonos/condiciones_bono');
 		$this->load->model('/bo/bonos/valores_bono');
 		$this->load->model('/bo/bonos/activacion_bono');
 		$this->load->model('/bo/bonos/bono');
+		$this->load->model('/bo/bonos/red');
+		$this->load->model('/bo/bonos/modelo_bono');
 
 	}
 	
 	public function index(){
 		
-		$this->testSetValoresRango();
-		$this->testSetValoresCondicionBono();
-		$this->testSetValoresValoresBono();
-		$this->testSetValoresActivacionBono();
-		$this->testSetValoresBonosCondicionesBono();
-		$this->testSetValoresBonosValoresBono();
-		$this->testSetValoresBonosActivacionBono();
-		$this->testSetBono();
+		$this->ingresarBono ();
+		$this->ingresarRedDeAfiliacion();
+		
+		$this->testGetTipoDeBono();
+		$this->testBuscarUsuariosRed();
+		$this->testGetDiasInicioYFinSemana();
+		$this->testGetDiasInicioYFinQuincena();
+		$this->testGetDiasInicioYFinMes();
+		
+		$this->afiliado->eliminarUsuarios();
+		$this->red->eliminarRed();
+		$this->modelo_bono->limpiarBono ();
 	}
 	
-	public function testSetValoresRango(){
-		$condicionBono=$this->condiciones_bono;
-		
-		$id_rango=15;
-		$tipo_rango=4;
-		$valor=5;
-		$condicion_red='RED';
-		$nivel_red=0;
-		
-		$condicionBono->setRango($id_rango,$tipo_rango,$valor,$condicion_red,$nivel_red);
-		
-		echo $this->unit->run(15,$condicionBono->getRango()["id_rango"], 'Test set Id Rango');
-		echo $this->unit->run(4,$condicionBono->getRango()["tipo_rango"], 'Test set tipo_rango');
-		echo $this->unit->run(5,$condicionBono->getRango()["valor"], 'Test set valor');
-		echo $this->unit->run('RED',$condicionBono->getRango()["condicion_red"], 'Test condicion_red');
-		echo $this->unit->run(0,$condicionBono->getRango()["nivel_red"], 'Test nivel_red');
-
+	public function testGetTipoDeBono(){
+		$calculadorBono=$this->calculador_bono;
+	
+		$bono=new $this->bono ();
+		$bono->setUpBono(50);
+	
+		$resultado=$calculadorBono->isBonoBinario($bono->getTipoBono());
+		echo $this->unit->run(false,$resultado, 'Test set Base de datos Tipo de Bono','Resultado es :'.$resultado);
+	
+		$calculadorBono=$this->calculador_bono;
+	
+		$bono=new $this->bono ();
+		$bono->setUpBono(50);
+		$bono->setTipoBono('SI');
+	
+		$resultado=$calculadorBono->isBonoBinario($bono->getTipoBono());
+		echo $this->unit->run(true,$resultado, 'Test set Base de datos Tipo de Bono','Resultado es :'.$resultado);
+	
 	}
 	
-	public function testSetValoresCondicionBono(){
-		$condicionBono=$this->condiciones_bono;
-
-		$id_bono=85;
-		$id_red=26;
-		$condicion_1=1;
-		$condicion_2=131;
-		
-		$id_rango=19;
-		$tipo_rango=6;
-		$valor=8;
-		$condicion_red='DIRECTOS';
-		$nivel_red=3;
+	public function testBuscarUsuariosRed(){
+		$calculadorBono=$this->calculador_bono;
 	
-		$condicionBono->setRango($id_rango,$tipo_rango,$valor,$condicion_red,$nivel_red);
-		
-		
-		echo $this->unit->run(19,$condicionBono->getRango()["id_rango"], 'Test set Id Rango');
-		echo $this->unit->run(6,$condicionBono->getRango()["tipo_rango"], 'Test set tipo_rango');
-		echo $this->unit->run(8,$condicionBono->getRango()["valor"], 'Test set valor');
-		echo $this->unit->run('DIRECTOS',$condicionBono->getRango()["condicion_red"], 'Test condicion_red');
-		echo $this->unit->run(3,$condicionBono->getRango()["nivel_red"], 'Test nivel_red');
-		
-		$condicionBono->setIdBono($id_bono);
-		$condicionBono->setIdRed($id_red);
-		$condicionBono->setCondicionBono1($condicion_1);
-		$condicionBono->setCondicionBono2($condicion_2);
-		
-		echo $this->unit->run(85,$condicionBono->getIdBono(), 'Test set Id Bono');
-		echo $this->unit->run(26,$condicionBono->getIdRed(), 'Test set Id Red');
-		echo $this->unit->run(1,$condicionBono->getCondicionBono1(), 'Test set Condicion 1');
-		echo $this->unit->run(131,$condicionBono->getCondicionBono2(), 'Test set Condicion 2');
+		$resultado=$calculadorBono->getUsuariosRed(300)[0]->id_afiliado;
+		echo $this->unit->run(10000,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[1]->id_afiliado;
+		echo $this->unit->run(10001,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[2]->id_afiliado;
+		echo $this->unit->run(10002,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[3]->id_afiliado;
+		echo $this->unit->run(10003,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[4]->id_afiliado;
+		echo $this->unit->run(10004,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[5]->id_afiliado;
+		echo $this->unit->run(10005,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[6]->id_afiliado;
+		echo $this->unit->run(10006,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[7]->id_afiliado;
+		echo $this->unit->run(10007,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[8]->id_afiliado;
+		echo $this->unit->run(10008,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getUsuariosRed(300)[9]->id_afiliado;
+		echo $this->unit->run(10009,$resultado, 'Test get todos los afiliados de la red','Resultado es :'.$resultado);
+	
+	
 	}
 	
-	public function testSetValoresValoresBono(){
-		$valoresBono=$this->valores_bono;
 
-		$id_bono=15;
-		$nivel=4;
-		$valor=5;
-		
-		$valoresBono->setIdBono($id_bono);
-		$valoresBono->setNivel($nivel);
-		$valoresBono->setValor($valor);
-
-		echo $this->unit->run(15,$valoresBono->getIdBono(), 'Test set Id Bono');
-		echo $this->unit->run(4,$valoresBono->getNivel(), 'Test set Nivel');
-		echo $this->unit->run(5,$valoresBono->getValor(), 'Test set Valor');
-
+	public function testGetDiasInicioYFinSemana(){
+		$calculadorBono=$this->calculador_bono;
+	
+		$resultado=$calculadorBono->getInicioSemana('2016-03-13');
+		echo $this->unit->run('2016-03-07',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinSemana('2016-03-13');
+		echo $this->unit->run('2016-03-13',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioSemana('2016-03-01');
+		echo $this->unit->run('2016-02-29',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinSemana('2016-03-01');
+		echo $this->unit->run('2016-03-06',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioSemana('2016-07-03');
+		echo $this->unit->run('2016-06-27',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinSemana('2016-07-03');
+		echo $this->unit->run('2016-07-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+	
+	
+		$resultado=$calculadorBono->getInicioSemana('2016-03-10');
+		echo $this->unit->run('2016-03-07',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinSemana('2016-03-10');
+		echo $this->unit->run('2016-03-13',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+	
 	}
 	
-	public function testSetValoresActivacionBono(){
-		$activacionBono=$this->activacion_bono;
-		
-		$id_bono=15;
-		$inicio='2016-03-01';
-		$fin='2026-03-01';
-		$mes_desde_afiliacion_afiliado=0;
-		$mes_desde_activacion_afiliado=0;
-		$estado='ACT';
-		$frecuencia='MES';
-		
-		$activacionBono->setIdBono($id_bono);
-		$activacionBono->setInicio($inicio);
-		$activacionBono->setFin($fin);
-		$activacionBono->setMesDesdeAfiliacionAfiliado($mes_desde_afiliacion_afiliado);
-		$activacionBono->setMesDesdeActivacionAfiliado($mes_desde_activacion_afiliado);
-		$activacionBono->setEstado($estado);
-		$activacionBono->setFrecuencia($frecuencia);
-		
-		echo $this->unit->run(15,$activacionBono->getIdBono(), 'Test set Id Bono');
-		echo $this->unit->run('2016-03-01',$activacionBono->getInicio(), 'Test set Inicio');
-		echo $this->unit->run('2026-03-01',$activacionBono->getFin(), 'Test set Fin');
-		echo $this->unit->run(0,$activacionBono->getMesDesdeAfiliacionAfiliado(), 'Test set MesDesdeAfiliacionAfiliado');
-		echo $this->unit->run(0,$activacionBono->getMesDesdeActivacionAfiliado(), 'Test set MesDesdeActivacionAfiliado');
-		echo $this->unit->run('ACT',$activacionBono->getEstado(), 'Test set Estado');
-		echo $this->unit->run('MES',$activacionBono->getFrecuencia(), 'Test set Frecuencia');
+	public function testGetDiasInicioYFinQuincena(){
+		$calculadorBono=$this->calculador_bono;
+	
+		$resultado=$calculadorBono->getInicioQuincena('2016-03-13');
+		echo $this->unit->run('2016-03-01',$resultado, 'Test Inicio de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinQuincena('2016-03-13');
+		echo $this->unit->run('2016-03-15',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioQuincena('2016-03-16');
+		echo $this->unit->run('2016-03-16',$resultado, 'Test Inicio de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinQuincena('2016-03-16');
+		echo $this->unit->run('2016-03-31',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioQuincena('2016-03-21');
+		echo $this->unit->run('2016-03-16',$resultado, 'Test Inicio de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinQuincena('2016-03-21');
+		echo $this->unit->run('2016-03-31',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioQuincena('2016-03-01');
+		echo $this->unit->run('2016-03-01',$resultado, 'Test Inicio de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinQuincena('2016-03-01');
+		echo $this->unit->run('2016-03-15',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioQuincena('2016-02-16');
+		echo $this->unit->run('2016-02-16',$resultado, 'Test Inicio de Quincena','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinQuincena('2016-02-16');
+		echo $this->unit->run('2016-02-29',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
 	}
 	
-	public function testSetValoresBonosCondicionesBono(){
-		$bono=$this->bono;
-		
-		$condicionBono=$this->condiciones_bono;
-		
-		$id_bono=85;
-		$id_red=26;
-		$condicion_1=1;
-		$condicion_2=131;
-		
-		$id_rango=19;
-		$tipo_rango=6;
-		$valor=8;
-		$condicion_red='DIRECTOS';
-		$nivel_red=3;
-		
-		$condicionBono->setRango($id_rango,$tipo_rango,$valor,$condicion_red,$nivel_red);
-		
-		$bono->setCondiciones($id_bono,$condicionBono->getRango(),$id_red,$condicion_1,$condicion_2);
+	public function testGetDiasInicioYFinMes(){
+		$calculadorBono=$this->calculador_bono;
+	
+		$resultado=$calculadorBono->getInicioMes('2016-03-13');
+		echo $this->unit->run('2016-03-01',$resultado, 'Test Inicio de Mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinMes('2016-03-13');
+		echo $this->unit->run('2016-03-31',$resultado, 'Test Fin de mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioMes('2016-02-01');
+		echo $this->unit->run('2016-02-01',$resultado, 'Test Inicio de Mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinMes('2016-02-01');
+		echo $this->unit->run('2016-02-29',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioMes('2016-02-01');
+		echo $this->unit->run('2016-02-01',$resultado, 'Test Inicio de Mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinMes('2016-02-01');
+		echo $this->unit->run('2016-02-29',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioMes('2016-08-31');
+		echo $this->unit->run('2016-08-01',$resultado, 'Test Inicio de Mes','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinMes('2016-08-31');
+		echo $this->unit->run('2016-08-31',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+	}
+	
+	private function ingresarBono() {
+		$puntosComisionables=4;
+		$infinito=0;
+		$servicios=2;
+		$id_mercancia=145;
+	
+		$datosRango = array(
+				'id_rango' => 60,
+				'nombre_rango'   => "Bluetooth",
+				'descripcion_rango'    => "Bluetooth",
+				'id_tipo_rango' => $puntosComisionables,
+				'valor'   => 110,
+				'condicion_red'    => "RED",
+				'condicion_red_afilacion'    => "EQU",
+				'nivel_red'   => $infinito,
+				'id_condicion' => 1,
+				'id_red'   => 26,
+				'condicion1'    => $servicios,
+				'condicion2'	=> $id_mercancia,
+				'estatus_rango'	=> "ACT"
+		);
 
-		echo $this->unit->run(85,$bono->getCondiciones()["id_bono"], 'Test set Id bono');
-		
-		echo $this->unit->run(19,$bono->getCondiciones()["rango"]["id_rango"], 'Test set Rango');
-		echo $this->unit->run(6,$bono->getCondiciones()["rango"]["tipo_rango"], 'Test set Tipo Rango');
-		echo $this->unit->run(8,$bono->getCondiciones()["rango"]["valor"], 'Test set valor');
-		echo $this->unit->run('DIRECTOS',$bono->getCondiciones()["rango"]["condicion_red"], 'Test set condicion_red');
-		echo $this->unit->run(3,$bono->getCondiciones()["rango"]["nivel_red"], 'Test set nivel_red');
-		
-		
-		echo $this->unit->run(26,$bono->getCondiciones()["id_red"], 'Test set Id red');
-		echo $this->unit->run(1,$bono->getCondiciones()["condicion_1"], 'Test set condicion_1');
-		echo $this->unit->run(131,$bono->getCondiciones()["condicion_2"], 'Test set condicion_2');
+		$inicioAfiliacion=0;
+		$fechaActual=0;
+	
+		$datosBono = array(
+				'id_bono' => 50,
+				'nombre_bono'   => "Bono Bluetooth",
+				'descripcion_bono'    => "Bono Bluetooth",
+				'plan'	=> "NO",
+				'inicio' => '2016-03-01',
+				'fin'   => '2026-03-01',
+				'frecuencia'    => "MES",
+				'mes_desde_afiliacion'	=> $inicioAfiliacion,
+				'mes_desde_activacion'	=> $fechaActual,
+				'estatus_bono' => 'ACT'
+		);
+	
+	
+		$datosValoresBono=array();
+	
+		$datosValoresBonoAfiliado = array(
+				'id_valor' => 4,
+				'id_rango'   => 50,
+				'nivel'    => 0,
+				'valor'	=> 0
+		);
+	
+		$datosValoresBonoPadreAfiliado = array(
+				'id_valor' => 3,
+				'id_rango'   => 50,
+				'nivel'    => 1,
+				'valor'	=> 1.6
+		);
+	
+		$datosValoresBonoAbueloAfiliado = array(
+				'id_valor' => 2,
+				'id_rango'   => 50,
+				'nivel'    => 2,
+				'valor'	=> 0.8
+		);
+	
+		$datosValoresBonoBisAbueloAfiliado = array(
+				'id_valor' => 1,
+				'id_rango'   => 50,
+				'nivel'    => 3,
+				'valor'	=> 0.8
+		);
+	
+		array_push($datosValoresBono, $datosValoresBonoAfiliado , $datosValoresBonoPadreAfiliado ,$datosValoresBonoAbueloAfiliado ,$datosValoresBonoBisAbueloAfiliado);
+	
+		$this->modelo_bono->nuevoBono ($datosRango,$datosBono,$datosValoresBono);
+		$this->modelo_bono->limpiarBono ();
+		$this->modelo_bono->ingresarBono ();
 	}
 	
-	public function testSetValoresBonosValoresBono(){
-		$bono=$this->bono;
-		
-		$id_bono=15;
-		$nivel=4;
-		$valor=5;
-		
-		$bono->setValores($id_bono,$nivel,$valor);
-		
-		echo $this->unit->run(15,$bono->getValores()["id_bono"], 'Test set Id bono');
-		echo $this->unit->run(4,$bono->getValores()["nivel"], 'Test set nivel');
-		echo $this->unit->run(5,$bono->getValores()["valor"], 'Test set valor');
-	}
+	private function ingresarRedDeAfiliacion() {
+		$this->afiliado->eliminarUsuarios();
+		$this->red->eliminarRed();
 	
-	public function testSetValoresBonosActivacionBono(){
-		$bono=$this->bono;
+		$red=$this->red;
+		$infinito=0;
+		$datosRed = array(
+				'id_red' => "300",
+				'nombre'   => "Binario",
+				'descripcion'    => "Test de Red Binaria",
+				'frontal' => 2,
+				'profundidad'   => $infinito,
+				'valor_punto'    => 1,
+				'estatus'   => 'ACT',
+				'plan' => 'BIN'
+		);
 	
-		$id_bono=15;
-		$inicio='2016-03-01';
-		$fin='2026-03-01';
-		$mes_desde_afiliacion_afiliado=0;
-		$mes_desde_activacion_afiliado=0;
-		$estado='ACT';
-		$frecuencia='MES';
+		$red->nuevaRed($datosRed);
+		$red->ingresarRed();
 	
-		$bono->setActivacion($id_bono,$inicio,$fin,$mes_desde_afiliacion_afiliado,$mes_desde_activacion_afiliado,
-				$estado,$frecuencia);
+		/*							RED DE AFILIACION PRUEBA
+		 *           	                 __________
+		 *           	               	|  10000   |
+		 *        	   	               /| giovanny | \
+		 *           	              / |_____2____|  \
+		 *           	        _____/__             __\___
+		 *           	       | 10001  |   	    | 10002 |
+		 *       	           | carlos |   	    | pedro |\
+		 *       	           |_10000__|   	    |_10000_| \
+		 *  	          ______ /  	   _\_____    __/_____     \_______
+		 *  	         |10003 |   	  | 10004 | |   10005 |   	|10006 |
+		 * 	         |camilo|   	  |nicolas| |esperanza|   	|pedro |
+		 * 	         |10001_|   	  |_10001_| |__10002__|   	|_10002|
+		 *       ____/___    __\____         ____/__
+		 *  	   |10007 	|  | 10008 |       |10009  |
+		 * 	   |fernando|  |andres |       |ricardo|
+		 * 	   |10003___|  |_10003_|       |_10002_|
+		*/
 	
-		echo $this->unit->run(15,$bono->getActivacion()["id_bono"], 'Test set Id bono');
-		echo $this->unit->run('2016-03-01',$bono->getActivacion()["inicio"], 'Test set nivel');
-		echo $this->unit->run('2026-03-01',$bono->getActivacion()["fin"], 'Test set valor');
-		echo $this->unit->run(0,$bono->getActivacion()["mes_desde_afiliacion_afiliado"], 'Test set mes_desde_afiliacion_afiliado');
-		echo $this->unit->run(0,$bono->getActivacion()["mes_desde_activacion_afiliado"], 'Test set mes_desde_activacion_afiliado');
-		echo $this->unit->run('ACT',$bono->getActivacion()["estado"], 'Test set estado');
-		echo $this->unit->run('MES',$bono->getActivacion()["frecuencia"], 'Test set frecuencia');
-
-	}
-
-	public function testSetBono(){
-		$bono=$this->bono;
-		
-		$id_bono=20;
-		$nombre="Asociado";
-		$descripcion="Descripcion Asociado";
-		
-		$bono->setId($id_bono);
-		$bono->setNombre($nombre);
-		$bono->setDescripcion($descripcion);
-		
-		echo $this->unit->run(20,$bono->getId(), 'Test set Id bono');
-		echo $this->unit->run("Asociado",$bono->getNombre(), 'Test set Nombre');
-		echo $this->unit->run("Descripcion Asociado",$bono->getDescripcion(), 'Test set Descripcion');
-		
+	
+		$this->modelo_bono->crearNuevoUsuario (10000,"giovanny","2016-03-17",20000,300,2,2,0);
+		$this->modelo_bono->crearNuevoUsuario (10001,"carlos","2016-03-17",20001,300,10000,10000,0);
+		$this->modelo_bono->crearNuevoUsuario (10002,"pedro","2016-03-17",20002,300,10000,10000,1);
+		$this->modelo_bono->crearNuevoUsuario (10003,"camilo","2016-03-17",20003,300,10001,10001,0);
+		$this->modelo_bono->crearNuevoUsuario (10004,"nicolas","2016-03-17",20004,300,10001,10001,1);
+		$this->modelo_bono->crearNuevoUsuario (10005,"esperanza","2016-03-17",20005,300,10002,10000,0);
+		$this->modelo_bono->crearNuevoUsuario (10006,"maria","2016-03-17",20006,300,30002,10002,1);
+		$this->modelo_bono->crearNuevoUsuario (10007,"fernando","2016-03-17",20007,300,10003,10003,0);
+		$this->modelo_bono->crearNuevoUsuario (10008,"andres","2016-03-17",20008,300,10003,10003,1);
+		$this->modelo_bono->crearNuevoUsuario (10009,"ricardo","2016-03-17",20009,300,10005,10002,0);
+	
 	}
 }
