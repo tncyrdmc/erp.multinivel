@@ -427,4 +427,21 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		$query = $this->db->query('select * from cat_bono_condicion where id_red='.$id_red.'');
 		return $query->result();
 	}
+	
+	function ver_total_bonos_id($id,$red,$fecha){
+		$query = $this->db->query('select 
+										c.id_red, t.nombre red, b.id_bono, o.nombre,  
+										(select sum(valor) 
+											from comision_bono 
+											where id_bono = b.id_bono and id_usuario = b.id_usuario) valor
+									from 
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o
+									where 
+										b.id_usuario = '.$id.' 
+										and b.id_bono = c.id_bono
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red = '.$red.'				
+									group by b.id_bono');		#in (select id_red from afiliar where id_afiliado = $id)
+		return $query->result();
+	}
 }

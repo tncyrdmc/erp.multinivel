@@ -55,7 +55,7 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function get_comisiones($id,$id_red){
-		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t 
+		$q=$this->db->query('SELECT t.id as red, sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t 
 		where (c.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.'');
 		return $q->result();
 	}

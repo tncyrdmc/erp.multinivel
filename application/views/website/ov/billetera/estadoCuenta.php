@@ -71,10 +71,35 @@
 												<?php 
 													$total = 0; 
 													$i = 0;
-													
+													$valor_bono = 0;
 													$total_transact = 0;
 													
-													foreach ($ganancias as $gred){
+													for($j=0;$j<sizeof($bonos);$j++){
+														echo '<tr class="success" >
+																<td colspan="2">'.$bonos[$j][0]->red.'</td>
+															</tr><tr class="success" >
+																<td colspan="2">Bonos</td>
+															</tr>';
+														for ($k=0;$k<sizeof($bonos[$j]);$k++){
+															if($bonos[$j][$k]->valor!=0){
+																$valor_bono +=  $bonos[$j][$k]->valor;															
+																echo '<tr class="success">
+																<td>'.$bonos[$i][$k]->nombre.'</td>
+																	<td>$ '.number_format($bonos[$j][$k]->valor,2).'</td>
+																</tr>';
+															}
+														}														
+														
+														//	$valor_bono = 0;
+													}
+													
+													echo '<tr><td><h4><b>TOTAL BONOS</b></h4></td>
+														<td>
+														<div class="col-md-3">
+															<h4><b>'.number_format($valor_bono,2).'</b></h4>
+														</div></tr>';
+													
+													 /*foreach ($ganancias as $gred){
 														if($gred[0]->valor!=0){
 														echo '<tr class="success" >
 																<td colspan="2">'.$gred[0]->nombre.'</td>
@@ -93,18 +118,19 @@
 														if($gred[0]->valor){
 														echo '<tr class="warning">
 																<td>Total</td>
-																<td>$ '.number_format($gred[0]->valor,2).'</td>
+																<td>$ '.number_format(($gred[0]->valor+$valor_bono),2).'</td>
 															</tr>';
-														$total += $gred[0]->valor;
+														$total += ($gred[0]->valor+$valor_bono);
 														}else {
 															echo '<tr class="warning">
 																<td> Total </td>
 																<td>$ 0</td>
 															</tr>';
 														}
+														
 														$i++;
 													}
-													}
+													}*/
 
 													?>  
 													<tr class="success">
