@@ -181,19 +181,32 @@ class billetera2 extends CI_Controller
 		
 		if($this->general->isActived($id)!=0){
 			redirect('/ov/compras/carrito');
-		}
-	
+		}	
 	
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
 		$redes = $this->model_tipo_red->listarTodos();
+		$redesUsuario = $this->model_tipo_red->RedesUsuario($id);
+		
 		$ganancias=array();
 		$comision_directos = array();
-		foreach ($redes as $red){
+		$bonos = array();		
+		
+		foreach ($redesUsuario as $red){
+			array_push($bonos,$this->model_bonos->ver_total_bonos_id_red($id,$red->id));
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
-			array_push($comision_directos, $this->modelo_billetera->getComisionDirectos($id, $red->id));
+			array_push($comision_directos,$this->modelo_billetera->getComisionDirectos($id, $red->id));
 		}
+		
+		$comision_todo= array(
+				'directos' => $comision_directos,
+				'ganancias' => $ganancias,
+				'bonos' => $bonos,
+				'redes' => $redesUsuario
+		);
+		
+		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
 		
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
@@ -207,6 +220,10 @@ class billetera2 extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("transaction",$transaction);
+		$this->template->set("redes",$redesUsuario);
+		$this->template->set("bonos",$bonos);
+		$this->template->set("total_bonos",$total_bonos);
+		$this->template->set("comision_todo",$comision_todo);
 		$this->template->set("comisiones_directos",$comision_directos);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);
@@ -295,23 +312,33 @@ class billetera2 extends CI_Controller
 	
 		$redes = $this->model_tipo_red->listarTodos();
 		$redesUsuario = $this->model_tipo_red->RedesUsuario($id);
+		
 		$ganancias=array();
 		$comision_directos = array();
-		$bonos = array();
+		$bonos = array();		
 		
 		foreach ($redesUsuario as $red){
-			$r = $this->model_bonos->ver_total_bonos_id($id,$red->id,'');
-			if($r){
-				array_push($bonos, $r);
-			}
+			//$array_bono = $this->model_bonos->ver_total_bonos_id($id,$red->id,'');
+			//$array_ganancias = $this->modelo_billetera->get_comisiones($id,$red->id);
+			//$array_comision = $this->modelo_billetera->getComisionDirectos($id, $red->id);
+
+			array_push($bonos,$this->model_bonos->ver_total_bonos_id_red($id,$red->id));
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
-			array_push($comision_directos, $this->modelo_billetera->getComisionDirectos($id, $red->id));
+			array_push($comision_directos,$this->modelo_billetera->getComisionDirectos($id, $red->id));
 		}
+		
+		$comision_todo= array(
+				'directos' => $comision_directos,
+				'ganancias' => $ganancias,
+				'bonos' => $bonos,
+				'redes' => $redesUsuario
+		);
 		
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
+		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
 		
 		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);	
 		
@@ -321,7 +348,9 @@ class billetera2 extends CI_Controller
 		$this->template->set("id",$id);
 		$this->template->set("redes",$redesUsuario);
 		$this->template->set("bonos",$bonos);
+		$this->template->set("total_bonos",$total_bonos);
 		$this->template->set("comisiones",$comisiones);
+		$this->template->set("comision_todo",$comision_todo);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("transaction",$transaction);
 		$this->template->set("comisiones_directos",$comision_directos);
@@ -350,17 +379,31 @@ class billetera2 extends CI_Controller
 		$style=$this->general->get_style($id);
 	
 		$redes = $this->model_tipo_red->listarTodos();
+		$redesUsuario = $this->model_tipo_red->RedesUsuario($id);
+		
 		$ganancias=array();
 		$comision_directos = array();
+		$bonos = array();		
+		
 		foreach ($redes as $red){
+			array_push($bonos,$this->model_bonos->ver_total_bonos_id_red_fecha($id,$red->id,$_GET['fecha']));
 			array_push($ganancias,$this->modelo_billetera->get_comisiones_mes($id,$red->id,$_GET['fecha']));
 			array_push($comision_directos, $this->modelo_billetera->getComisionDirectosMes($id, $red->id, $_GET['fecha']));
 		}
+		
+		$comision_todo= array(
+				'directos' => $comision_directos,
+				'ganancias' => $ganancias,
+				'bonos' => $bonos,
+				'redes' => $redesUsuario
+		);		
 
 		$retenciones = $this->modelo_billetera->ValorRetenciones_historial($_GET['fecha'],$id);
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
 
+		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
+		
 		/*echo date("Y-m", strtotime($_GET['fecha'])) ;
 		exit();*/
 		
@@ -369,6 +412,10 @@ class billetera2 extends CI_Controller
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("id",$id);
+		$this->template->set("redes",$redesUsuario);
+		$this->template->set("bonos",$bonos);
+		$this->template->set("total_bonos",$total_bonos);
+		$this->template->set("comision_todo",$comision_todo);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("retenciones",$retenciones);
 		$this->template->set("transaction",$transaction);

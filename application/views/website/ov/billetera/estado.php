@@ -65,36 +65,66 @@
 													
 													$total_transact = 0;
 													
-													foreach ($ganancias as $gred){
-														if($gred[0]->valor!=0){
-														echo '<tr class="success" >
-																<td colspan="2">'.$gred[0]->nombre.'</td>
-															</tr>'; 
-
-														echo '<tr class="success">
-															<td>Comisiones Directas</td>
-																<td>$ '.number_format($comisiones_directos[$i][0]->valor,2).'</td>
-															</tr>'; 
+//var_dump($comision_todo);
+													
+													for ($i = 0 ; $i<sizeof($comision_todo["redes"]);$i++){
 														
-														echo '<tr class="success">
-															<td>Comisiones Indirectas</td>
-																<td>$ '.number_format($gred[0]->valor - $comisiones_directos[$i][0]->valor,2).'</td>
-															</tr>'; 
-
-														if($gred[0]->valor){
-														echo '<tr class="warning">
-																<td>Total</td>
-																<td>$ '.number_format($gred[0]->valor,2).'</td>
-															</tr>';
-														$total += $gred[0]->valor;
-														}else {
-															echo '<tr class="warning">
-																<td> Total </td>
-																<td>$ 0</td>
+														$totales = (intval($comision_todo["ganancias"][$i][0]->valor)<>0||sizeof($comision_todo["bonos"][$i])<>0) ? 0 : 'FAIL';													
+														
+														//echo $totales."|";
+														
+														if($totales!=='FAIL'){
+															echo '<tr class="success" >
+																<td colspan="2"><b>'.$comision_todo["redes"][$i]->nombre.'</b></td>
 															</tr>';
 														}
-														$i++;
-													}
+														
+														
+														if($comision_todo["ganancias"][$i][0]->valor<>0){
+															echo '<tr class="success" >
+																<td colspan="2"><i class="fa fa-money"></i>Comisiones</td>
+															</tr>';
+														
+															echo '<tr class="success">
+															<td>&nbsp;&nbsp;Comisiones Directas</td>
+																<td>$ '.number_format($comision_todo["directos"][$i][0]->valor,2).'</td>
+															</tr>';
+														
+															echo '<tr class="success">
+															<td>&nbsp;&nbsp;Comisiones Indirectas</td>
+																<td>$ '.number_format($comision_todo["ganancias"][$i][0]->valor - $comision_todo["directos"][$i][0]->valor,2).'</td>
+															</tr>';
+														
+															if($comision_todo["ganancias"][$i][0]->valor){
+																$totales += ($comision_todo["ganancias"][$i][0]->valor);
+															}
+														
+															
+														}
+														
+														if($comision_todo["bonos"][$i]){
+															echo '<tr class="success" >
+																<td colspan="2"><i class="fa fa-gift"></i>Bonos</td>
+															</tr>';
+															for ($k=0;$k<sizeof($comision_todo["bonos"][$i]);$k++){
+																if($comision_todo["bonos"][$i][$k]->valor<>0){
+																	$totales += ($comision_todo["bonos"][$i][$k]->valor);
+																	echo '<tr class="success">
+																<td>&nbsp;&nbsp;'.$comision_todo["bonos"][$i][$k]->nombre.'</td>
+																	<td>$ '.number_format($comision_todo["bonos"][$i][$k]->valor,2).'</td>
+																</tr>';
+																}
+															}
+														}
+														
+														if($totales<>0){
+															echo '<tr class="warning">
+																<td>&nbsp; Total </td>
+																<td>$ '.number_format($totales,2).'</td>
+															</tr>';
+															$total += ($totales);
+														}
+														
 													}
 
 													?>  

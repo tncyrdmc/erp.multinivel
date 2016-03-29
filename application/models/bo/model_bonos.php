@@ -428,7 +428,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $query->result();
 	}
 	
-	function ver_total_bonos_id($id,$red,$fecha){
+	function ver_total_bonos_id_red($id,$red){
 		$query = $this->db->query('select 
 										c.id_red, t.nombre red, b.id_bono, o.nombre,  
 										(select sum(valor) 
@@ -444,4 +444,30 @@ function get__condicioneses_bonos_id_bono($id_bono){
 									group by b.id_bono');		#in (select id_red from afiliar where id_afiliado = $id)
 		return $query->result();
 	}
+	
+	function ver_total_bonos_id_red_fecha($id,$red,$fecha){
+		$query = $this->db->query('select 
+										h.id, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,  
+										(select sum(valor) 
+											from comision_bono 
+											where id_bono = b.id_bono and id_usuario = b.id_usuario) valor
+									from 
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o, comision_bono_historial h
+									where 
+										b.id_usuario = '.$id.' 
+										and b.id_bono = c.id_bono
+										and b.id_bono_historial = h.id
+										and b.id_bono = h.id_bono
+									    and date_format(h.fecha,"%Y-%m") = "'.date("Y-m", strtotime($fecha)).'"
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red = '.$red.'	
+									group by b.id_bono');	
+		return $query->result();
+	}
+	function ver_total_bonos_id($id){
+		$query = $this->db->query('select sum(valor) valor from comision_bono where id_usuario = '.$id);		
+		$q=$query->result();
+		return $q[0]->valor;
+	}
+	
 }
