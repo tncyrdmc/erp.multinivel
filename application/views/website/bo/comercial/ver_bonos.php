@@ -5,7 +5,7 @@
 			<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/comercial">Comercial</a> > Transacciones en billetera
+								<a href="/bo/comercial">Comercial</a> > Bonos Pagados
 							</span>
 			</h1>
 		</div>
@@ -186,7 +186,7 @@
 								iniciarSpinner();
 								$.ajax({
 									type: "POST",
-									url: "listar_transacciones",
+									url: "listar_historial",
 									data: {
 										startdate : inicio,
 										finishdate : fin
@@ -209,13 +209,13 @@
 				$.ajax({
 					type: "POST",
 					url: "/auth/show_dialog",
-					data: {message: '¿ Esta seguro que desea Eliminar la Transacción ?'},
+					data: {message: '¿ Esta seguro que desea Eliminar El Historial del Bono ?'},
 				})
 				.done(function( msg )
 				{
 					bootbox.dialog({
 					message: msg,
-					title: 'Eliminar Transacción',
+					title: 'Eliminar Historial de Bono',
 					buttons: {
 						success: {
 						label: "Aceptar",
@@ -225,7 +225,7 @@
 							iniciarSpinner();
 								$.ajax({
 									type: "POST",
-									url: "/bo/comercial/kill_transaccion",
+									url: "/bo/bonos/kill_historial",
 									data: {id: id}
 								})
 								.done(function( msg )
@@ -239,7 +239,7 @@
 										label: "Aceptar",
 										className: "btn-success",
 										callback: function() {
-											location.href="/bo/comercial/transacciones_billetera";
+											location.href="/bo/bonos/historial";
 											}
 										}
 									}

@@ -462,5 +462,93 @@ class bonos extends CI_Controller
 		}
 
 	}
+	
+	function historial(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/ver_bonos');
+	
+	}
+	
+	function listar_historial(){
+	
+		$fecha_inicio = $_POST['startdate'];
+		$fecha_fin = $_POST['finishdate'];
+	
+		if($fecha_inicio&&$fecha_fin){
+			$historial = $this->model_bonos->get_historial_fecha($fecha_inicio,$fecha_fin);
+	
+			echo
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Historial</th>
+					<th data-hide='phone,tablet'>Fecha Corte</th>
+					<th data-hide='phone,tablet'>Bono</th>					
+					<th data-hide='phone,tablet'># Pagados </th>
+					<th data-hide='phone,tablet'>Total Pagado</th>
+					<th data-hide='phone,tablet'>Accion</th>
+				</thead>
+				<tbody>";
+	
+	
+			foreach($historial as $hist)
+			{
+				if($hist->id){
+				echo "<tr>
+			<td class='sorting_1'>".$hist->id."</td>
+			<td>".$hist->fecha."</td>
+			<td>".$hist->bono."</td>
+			<td>".$hist->afiliados."</td>
+			<td> $	".number_format($hist->total, 2)."</td>
+			<td>
+	
+				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$hist->id.");'>
+				<i class='fa fa-trash-o fa-3x'></i>
+				</a>
+			</td>
+			</tr>";
+				}else{
+					echo "<td colspan='6' style='text-align: center'> NO HAY HISTORIAL DISPONIBLE</td>";
+				}	
+	
+			}
+				
+		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function kill_historial()
+	{
+		//echo "dentro de kill controller ";
+		$q=$this->model_bonos->kill_historial($_POST['id']);
+		if($q){
+			echo "El Historial del Bono ha sido eliminado con exito";
+		}else{
+			echo " Historial del Bono no pudo ser eliminado";
+		}
+	
+	}
 
 }

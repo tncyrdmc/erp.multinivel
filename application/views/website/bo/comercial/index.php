@@ -67,6 +67,14 @@
 														</div>
 													</a>
 												</div>
+												<div class="col-sm-3 link">	
+													<a href="/bo/bonos/historial">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-gift fa-3x"></i>&nbsp&nbsp&nbsp<i class="fa fa-check fa-3x"></i>
+															<h1>Bonos <br>Pagados</h1>
+														</div>
+													</a>
+												</div>
 												<div class="col-sm-3 link">
 													<a href="/bo/comercial/transacciones_billetera"> <!-- /bo/reportes -->
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
@@ -74,15 +82,7 @@
 															<h1>Transacciones <br> en Billetera</h1><!-- Reportes -->
 														</div>
 													</a>
-												</div>
-												<div class="col-sm-3 link">	
-													<a href="/bo/CuentasPagar/Archivero">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-folder fa-3x"></i>
-															<h1>Archivero<br>&nbsp</h1>
-														</div>
-													</a>
-												</div>
+												</div>												
 											</div>
 										 </div>
 									</div>

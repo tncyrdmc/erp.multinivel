@@ -470,4 +470,26 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $q[0]->valor;
 	}
 	
+	function get_historial_fecha($inicio,$fin){
+		$q=$this->db->query("SELECT 
+									h.id ,  h.fecha, h.id_bono,
+									b.nombre bono , count(distinct c.id_usuario) afiliados,
+									sum(c.valor) total
+								FROM comision_bono_historial h , bono b , comision_bono c
+								WHERE 
+									fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' 
+									and b.id = h.id_bono
+									and c.id_bono_historial = h.id
+									and c.id_bono = h.id_bono ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function kill_historial($id){
+		$this->db->query("delete from comision_bono_historial where id = ".$id);
+		$this->db->query("delete from comision_bono where id_bono_historial = ".$id);
+		return true ;
+	}
+	
 }
