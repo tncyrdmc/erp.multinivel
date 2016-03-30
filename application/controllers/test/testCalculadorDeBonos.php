@@ -17,7 +17,6 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->load->model('/bo/bonos/modelo_bono');
 
 	}
-	
 
 	private function before(){
 		$this->modelo_bono->limpiarTodosLosBonos();
@@ -103,7 +102,6 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
-
 
 		$this->before();
 		$this->testCalcularComisionesAfiliadosTodosLosBonos();

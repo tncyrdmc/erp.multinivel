@@ -18,7 +18,6 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 
 	}
 	
-
 	private function before(){
 		$this->modelo_bono->limpiarTodosLosBonos();
 		$this->afiliado->eliminarUsuarios();
@@ -67,48 +66,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionPuntosRedBono();
 		$this->after();
-/*	
 
-	
-		$this->before();
-		$this->testGetUsuarioCumpleCondicionComprasPersonalesBono();
-		$this->after();
-		
-
-		
-		$this->before();
-		$this->testGetUsuarioCumpleCondicionPuntosRedBono();
-		$this->after();
-
-		$this->before();
-		$this->testRepartirComisionBonoRedHaciaAbajo();
-		$this->after();
-
-		$this->before();
-		$this->testRepartirComisionBonoDirectosHaciaAbajo();
-		$this->after();
-		
-		$this->before();
-		$this->testRepartirComisionBonoRedHaciaArriba();
-		$this->after();
-		 
-		$this->before();
-		$this->testRepartirComisionBonoDirectosHaciaArriba();
-		$this->after();
-
-		$this->before();
-		$this->testValidarSiUsuarioYaCobroBonoUnicoFalso();
-		$this->after();
-		
-		$this->before();
-		$this->testValidarSiElBonoYaCobroFalso();
-		$this->after();
-
-		$this->before();
-		$this->testCalcularComisionesAfiliadosTodosLosBonos();
-		$this->testValidarSiElBonoYaCobroVerdadero();
-		$this->testValidarSiUsuarioYaCobroBonoUnicoVerdadero();
-		$this->after();*/
 	}
 
 	public function testGetAfiliadosPataDebil(){
@@ -635,7 +593,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
@@ -694,114 +652,114 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 	}
 	
 	public function testGetUsuarioCumpleCondicionPuntosRedBono(){
-	/*
+
 		$calculadorBono=new $this->calculador_bono();
 		$id_red=300;
 		$id_bono=58;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado);
-		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado);
-		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Equilibrada','Resultado es :'.$resultado);
-	*/
+		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
+	
 	}
 	
 	public function testRepartirComisionBonoRedHaciaAbajo(){
@@ -1759,7 +1717,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 				'nombre_rango'   => "Bluetooth",
 				'descripcion_rango'    => "Bluetooth",
 				'id_tipo_rango' => $puntosRed,
-				'valor'   => 100,
+				'valor'   => 25,
 				'condicion_red'    => "RED",
 				'nivel_red'   => 0,
 				'id_condicion' => 9,
