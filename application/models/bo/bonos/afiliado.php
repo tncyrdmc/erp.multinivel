@@ -98,8 +98,9 @@ class afiliado extends CI_Model
 		return $this->getTotalAfiliados();
 	}
 	
-	function getAfiliadosIntervaloDeTiempo($id_afiliado,$red,$tipo,$nivel,$fechaInicio,$fechaFin){
+	function getAfiliadosIntervaloDeTiempo($id_afiliado,$red,$tipo,$tipoDeBusquedaEnLaRed,$nivel,$fechaInicio,$fechaFin){
 			
+		if($tipoDeBusquedaEnLaRed=="EQU"){
 			$q=$this->db->query("SELECT count(*) as directos FROM users u,afiliar a
 								where u.id=a.id_afiliado and a.directo = ".$id_afiliado." and a.id_red = ".$red." and (u.created BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			$datos= $q->result();
@@ -107,6 +108,37 @@ class afiliado extends CI_Model
 			$this->setTotalAfiliados($datos[0]->directos);
 
 			return $this->getTotalAfiliados();
+			
+		}else if($tipoDeBusquedaEnLaRed=="DEB") {
+
+			$totalPata1=0;
+			$totalPata2=0;
+			$this->setTotalAfiliados(0);
+				
+			$idAfiliadopata1=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,0);
+
+			if($this->getDirectoAfiliado($idAfiliadopata1,$red)==$id_afiliado)
+				$totalPata1=1;
+				
+			$this->getCantidadDeAfiliadosDebajoDeHijo($idAfiliadopata1,$id_afiliado,$red,$tipo,$nivel);
+			$totalPata1+=$this->getTotalAfiliados();
+			
+			$this->setTotalAfiliados(0);
+			
+			$idAfiliadopata2=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,1);
+
+			if($this->getDirectoAfiliado($idAfiliadopata2,$red)==$id_afiliado)
+				$totalPata2=1;
+					
+			$this->getCantidadDeAfiliadosDebajoDeHijo($idAfiliadopata2,$id_afiliado,$red,$tipo,$nivel);
+			$totalPata2+=$this->getTotalAfiliados();
+				
+			if($totalPata1>=$totalPata2)
+				return $totalPata2;
+			return $totalPata1;
+		}
+
+
 	}
 	
 	function getCantidadDeAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel){
@@ -132,6 +164,26 @@ class afiliado extends CI_Model
 			if ($dato!=NULL){
 				$this->setTotalAfiliados($this->totalAfiliados+1);
 				$this->getCantidadDeAfiliadosDebajoDe($dato->id_afiliado,$red,$tipo,$nivel);
+			}
+		}
+	}
+	
+	function getCantidadDeAfiliadosDebajoDeHijo($id_afiliado,$id_padre,$red,$tipo,$nivel){
+	
+		$q=$this->db->query("select A.id_afiliado,A.directo
+							from afiliar A
+							where A.debajo_de = ".$id_afiliado." and A.id_red = ".$red);
+	
+		$datos= $q->result();
+	
+		foreach ($datos as $dato){
+	
+			if ($dato!=NULL){
+
+				if($dato->directo==$id_padre){
+					$this->setTotalAfiliados($this->totalAfiliados+1);
+				}
+					$this->getCantidadDeAfiliadosDebajoDeHijo($dato->id_afiliado,$id_padre,$red,$tipo,$nivel);
 			}
 		}
 	}
@@ -306,7 +358,6 @@ class afiliado extends CI_Model
 			return array();
 		return $datos;
 	}
-
 	
 	private function getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta) {
 		$totalPata1=0;
@@ -354,6 +405,18 @@ class afiliado extends CI_Model
 		if($datos==null)
 			return 0;
 		
+		return intval($datos[0]->id_afiliado);
+	}
+	
+	function getDirectoAfiliado($id_afiliado,$red){
+		$q=$this->db->query("select A.directo as id_afiliado
+							from afiliar A
+							where A.id_afiliado = ".$id_afiliado." and A.id_red = ".$red);
+	
+		$datos= $q->result();
+		if($datos==null)
+			return 0;
+	
 		return intval($datos[0]->id_afiliado);
 	}
 	

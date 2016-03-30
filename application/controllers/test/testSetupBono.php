@@ -15,6 +15,7 @@ class testSetupBono extends CI_Controller {
 	}
 	
 	public function index(){
+		$this->modelo_bono->limpiarTodosLosBonos();
 		
 		$this->ingresarBono ();
 		$this->ingresarRedDeAfiliacion();
@@ -24,6 +25,9 @@ class testSetupBono extends CI_Controller {
 		$this->testGetDiasInicioYFinSemana();
 		$this->testGetDiasInicioYFinQuincena();
 		$this->testGetDiasInicioYFinMes();
+		
+		$this->testgetFechaInicioPagoDeBono();
+		$this->testgetFechaFinPagoDeBono();
 		
 		$this->afiliado->eliminarUsuarios();
 		$this->red->eliminarRed();
@@ -85,7 +89,6 @@ class testSetupBono extends CI_Controller {
 	
 	
 	}
-	
 
 	public function testGetDiasInicioYFinSemana(){
 		$calculadorBono=$this->calculador_bono;
@@ -181,6 +184,64 @@ class testSetupBono extends CI_Controller {
 	
 	}
 	
+	public function testgetFechaInicioPagoDeBono(){
+		$calculadorBono=$this->calculador_bono;
+		$fechaActual='2016-03-29';$frecuencia="MES";
+		$resultado=$calculadorBono->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-03-01',$resultado, 'Test Inicio de Mes','Resultado es :'.$resultado);
+		
+		$fechaActual='2016-03-29';$frecuencia="QUI";
+		$resultado=$calculadorBono->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-03-16',$resultado, 'Test inicio de Quincena','Resultado es :'.$resultado);
+		
+		$fechaActual='2016-03-29';$frecuencia="SEM";
+		$resultado=$calculadorBono->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-03-28',$resultado, 'Test inicio de Semana','Resultado es :'.$resultado);
+
+		
+		$fechaActual='2016-04-2';$frecuencia="MES";
+		$resultado=$calculadorBono->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-04-01',$resultado, 'Test Inicio de Mes','Resultado es :'.$resultado);
+		
+		$fechaActual='2016-04-2';$frecuencia="QUI";
+		$resultado=$calculadorBono->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-04-01',$resultado, 'Test inicio de Quincena','Resultado es :'.$resultado);
+		
+		$fechaActual='2016-04-2';$frecuencia="SEM";
+		$resultado=$calculadorBono->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-03-28',$resultado, 'Test inicio de Semana','Resultado es :'.$resultado);
+		
+	}
+
+	public function testgetFechaFinPagoDeBono(){
+		$calculadorBono=$this->calculador_bono;
+		$fechaActual='2016-03-29';$frecuencia="MES";
+		$resultado=$calculadorBono->getFechaFinPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-03-31',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+		$fechaActual='2016-03-29';$frecuencia="QUI";
+		$resultado=$calculadorBono->getFechaFinPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-03-31',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
+		$fechaActual='2016-03-29';$frecuencia="SEM";
+		$resultado=$calculadorBono->getFechaFinPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+	
+	
+		$fechaActual='2016-04-2';$frecuencia="MES";
+		$resultado=$calculadorBono->getFechaFinPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-04-30',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+		$fechaActual='2016-04-2';$frecuencia="QUI";
+		$resultado=$calculadorBono->getFechaFinPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-04-15',$resultado, 'Test Fin de Quincena','Resultado es :'.$resultado);
+	
+		$fechaActual='2016-04-2';$frecuencia="SEM";
+		$resultado=$calculadorBono->getFechaFinPagoDeBono($frecuencia,$fechaActual);
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+	
+	}
+	
 	private function ingresarBono() {
 		$puntosComisionables=4;
 		$infinito=0;
@@ -226,6 +287,8 @@ class testSetupBono extends CI_Controller {
 				'id_valor' => 4,
 				'id_rango'   => 50,
 				'nivel'    => 0,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0
 		);
 	
@@ -233,6 +296,8 @@ class testSetupBono extends CI_Controller {
 				'id_valor' => 3,
 				'id_rango'   => 50,
 				'nivel'    => 1,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 1.6
 		);
 	
@@ -240,6 +305,8 @@ class testSetupBono extends CI_Controller {
 				'id_valor' => 2,
 				'id_rango'   => 50,
 				'nivel'    => 2,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0.8
 		);
 	
@@ -247,6 +314,8 @@ class testSetupBono extends CI_Controller {
 				'id_valor' => 1,
 				'id_rango'   => 50,
 				'nivel'    => 3,
+				'condicion_red'    => "RED",
+				'verticalidad'    => "ASC",
 				'valor'	=> 0.8
 		);
 	

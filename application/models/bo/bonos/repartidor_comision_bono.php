@@ -47,6 +47,7 @@ class repartidor_comision_bono extends CI_Model
 				'fecha' => $fecha
 		);
 		$this->db->insert('comision_bono_historial',$datos);
+		return $this->db->insert_id();;
 	}
 	
 	function repartirComisionBono($id_transaccion,$id_usuario,$id_bono,$id_bono_historial,$valor){
@@ -71,6 +72,27 @@ class repartidor_comision_bono extends CI_Model
 		$datosTransaccion=$q->result();
 		return $datosTransaccion;
 	}
+	
+
+	public function getIdTransaccionPagoBono(){
+		$q=$this->db->query("SELECT id FROM comision_bono order by id desc limit 0,1");
+		$idTransaccion=$q->result();
+		if($idTransaccion==NULL)
+			return 1;
+		return $idTransaccion[0]->id+1;
+	
+	}
+	
+	public function getIdHistorialTransaccion(){
+		$q=$this->db->query("SELECT id FROM comision_bono_historial order by id desc limit 0,1");
+		$idTransaccion=$q->result();
+		if($idTransaccion==NULL)
+			return 1;
+		return $idTransaccion[0]->id+1;
+	
+	}
+
+	
 	public function getId() {
 		return $this->id;
 	}
