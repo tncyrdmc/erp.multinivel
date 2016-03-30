@@ -57,28 +57,31 @@
 
 		<header id="header" class="fade in">
 		<br />
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<img id="compania" src="/logo.png" alt="">
+			</div>
+			<div class="hidden-xs col-sm-6 col-md-6 col-lg-6">
 				<h1>Sistema Integral de Operaciones NetworkSoft &reg;</h1>
 			</div>
 		</header>
 
-		<div id="main" role="main">
+		<div id="main" role="main" class="fondo">
 
 			<!-- MAIN CONTENT -->
 			<div id="content" class="container">
 
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 hidden-xs hidden-sm">
-						<img src="/template/img/login.jpg" class="img2" alt="" >
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 hidden-xs hidden-sm">
+					<!--  	<img src="/template/img/login.jpg" class="img2" alt="" >-->
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-						<div class="header2">
-							<img id="compania" src="/logo.png" alt="">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="hidden-xs header2">
+							<!-- <img id="compania" src="/logo.png" alt=""> -->
 						</div>
 						<div class="well no-padding">
 							<form id="login-form" method="POST" action="/auth/login" class="smart-form client-form">
 								<header>
-									Iniciar sesión
+									<h2>Iniciar sesión</h2>
 								</header>
 								<fieldset>
 								<?php
@@ -109,10 +112,10 @@
 
 									<span style="color: red;"><?php if(isset($login)) echo $login?></span>
 									<span style="color: red;"><?php if(isset($pswd)) echo $pswd?></span>
-									<div class="hidden-xs hidden-md hidden-sm col-lg-6">
-										<img src="/template/img/empresario.jpg" alt="Empresario">
-									</div>
-									<div class="col-xs-12 col-md-12 col-sm-12 col-lg-6">
+									<!-- <div class="hidden-xs hidden-md hidden-sm col-lg-6">
+										 <img src="/template/img/empresario.jpg" alt="Empresario">
+									</div>-->
+									<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
 										<section>
 											<label class="label">Cuenta</label>
 											<label class="input"> <i class="icon-append fa fa-user"></i>
@@ -132,8 +135,8 @@
 									</div>
 								</fieldset>
 								<footer>
-									<button id="enviar" type="submit" class="btn btn-primary">
-										Iniciar
+									<button id="enviar" type="submit" class="btn btn-primary btn-block">
+										Ingresar
 									</button>
 								</footer>
 							</form>
@@ -155,25 +158,49 @@
 			#header
 			{
 				text-align: center; 
-				color: #FFF !important;
-				background: #2A9BDD !important;
+				color: #17222d !important;				
+				background: #fff !important;
 
 			}
-			#compania{width: 45%; margin: 0 auto;}
-			#header h1{margin-top: -5px;}
+			#compania{width: 70%; margin: 0 auto;}
+			#header h1{margin-top: -5px;font-weight: bold !important;}
+			header h2{text-align: center; color: rgb(41, 124, 255) ;font-weight: bold !important;font-size: 2em;}
 			#login-form{
-				-webkit-box-shadow: inset 0px 0px 10px #000;
+				/* -webkit-box-shadow: inset 0px 0px 10px #000;
 				-moz-box-shadow: inset 0px 0px 10px #000;
-				box-shadow: inset 0px 0px 10px #000;
+				box-shadow: inset 0px 0px 10px #000; */
+				    padding: 1em 3em;
 			}
-			#enviar{color: #FFF; font-weight: initial;}
+			#enviar{	
+						color: #FFF;
+						font-weight: initial; 
+						height: 2.5em; 
+						background-color: #005ef5;
+						border-color: #004ac2;
+						font-size: 1.5em;
+			}			
+			#enviar:hover{							
+						border-bottom: medium solid #00b4dc;
+			}			
 			.header2{text-align: center; padding-bottom: 10px;}
 			.img2{margin-top: 8%}
 			#footer
 			{
-				height: 102px;
-				text-align: center;color: #FFF !important;
-				background: #2A9BDD !important;
+				height: 5em;
+				text-align: center;
+				color: #FFF !important;
+				background-color: #005ef5;
+			}
+			#extr-page #main{
+				background-image: url('/template/img/login.jpg');
+				padding: 2% 5% 10% 5%;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-attachment: fixed;
+				background-position: 0px 0px;
+			}
+			.smart-form .label {
+				font-size: 1.5em;
 			}
 		</style>
 		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->

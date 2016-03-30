@@ -40,6 +40,8 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->mercancia->eliminarCategorias();
 		$this->venta->eliminarVentas();
 		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+
 	}
 	
 	public function index(){
@@ -101,6 +103,7 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
+
 
 		$this->before();
 		$this->testCalcularComisionesAfiliadosTodosLosBonos();

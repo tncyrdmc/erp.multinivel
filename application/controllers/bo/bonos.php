@@ -219,7 +219,8 @@ class bonos extends CI_Controller
 				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
 			else if($tipoRango->tipo_rango==4)
 				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
-			
+			else if($tipoRango->tipo_rango==5)
+				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
 		}
 
 	}

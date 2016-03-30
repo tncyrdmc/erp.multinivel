@@ -379,7 +379,7 @@ function add_nivel()
 	+'<div class="col col-lg-2">'
 	+'<span style="margin: 2rem;">Siguiente Nivel</span>'
 		+'<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>'
-		+'<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" >'
+		+'<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" min="1" >'
 		+'</label>'
 	+' </div>'
 	+'<div class="col col-lg-1">'
