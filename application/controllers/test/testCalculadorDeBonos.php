@@ -33,17 +33,17 @@ class testCalculadorDeBonos extends CI_Controller {
 	}
 	
 	private function after(){
-		$this->modelo_bono->limpiarTodosLosBonos();
+	/*	$this->modelo_bono->limpiarTodosLosBonos();
 		$this->afiliado->eliminarUsuarios();
 		$this->red->eliminarRed();
 		$this->mercancia->eliminarMercancias();
 		$this->mercancia->eliminarCategorias();
 		$this->venta->eliminarVentas();
-	//	$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+	*/ //	$this->repartidor_comision_bono->eliminarHistorialComisionBono();
 	}
 	
 	public function index(){
-/*
+
 		$this->before();
 		$this->testGetAfiliadosPorNivel();
 		$this->after();
@@ -93,7 +93,7 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->before();
 		$this->testRepartirComisionBonoDirectosHaciaArriba();
 		$this->after();
-		*/
+		
 		$this->before();
 		$this->testCalcularComisionesAfiliadosTodosLosBonos();
 		$this->after();
