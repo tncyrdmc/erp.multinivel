@@ -95,7 +95,7 @@
 											<fieldset>
 											<section class="col col-2">
 											<label class="input"><span id="labelextra">Descuento del servicio</span>
-												<input required id="precio_promo" type="number" name="descuento">
+												<input required id="precio_promo" type="number" min="0" name="descuento">
 											</label>
 											</section>
 											</fieldset>
@@ -121,23 +121,23 @@
 													<section class="col col-2">
 														<label class="input">
 														Costo real
-														<input type="text" name="real" id="real" onchange="calcular_precio_total()" required>
+														<input type="number" min="1" name="real" id="real" onchange="calcular_precio_total()" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">Costo distribuidores
-														<input type="text" name="costo" id="costo" onchange="calcular_precio_total()" required>
+														<input type="number" min="1" name="costo" id="costo" onchange="calcular_precio_total()" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">Costo publico
-														<input type="text" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()" required>
+														<input type="number" min="1" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 														Tiempo mínimo de entrega
-														<input placeholder="En días" type="text" name="entrega" id="entrega">
+														<input placeholder="En días" type="number" min="1" name="entrega" id="entrega">
 														</label>
 													</section>
 
@@ -159,7 +159,7 @@
 													<section class="col col-3">
 														<label class="input">
 														Puntos comisionables
-															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+															<input type="number" min="1" max="" name="puntos_com" id="puntos_com" required>
 														</label>
 													</section>
 													<legend>Impuestos</legend>

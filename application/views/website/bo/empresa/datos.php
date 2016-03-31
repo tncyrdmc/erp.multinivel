@@ -154,7 +154,7 @@
 							</div>
 						</fieldset>
 						<footer>
-<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Guardar</button>
+<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Actualizar</button>
 							</footer>
 				</form>
 					</div>

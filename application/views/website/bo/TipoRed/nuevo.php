@@ -47,10 +47,10 @@
 			<br>
 			<p>Nota: Si la red es de frontalidad o profundidad infinita colocar 0.</p><br>
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
-				<input type="number" class="form-control" name="frontal" size="30" placeholder="frontalidad" required>
+				<input type="number" class="form-control" name="frontal" size="30" min="0" placeholder="frontalidad" required>
 	        </label>
 	        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
-				<input type="number" class="form-control" name="profundidad" size="30" placeholder="profundidad" required>
+				<input type="number" class="form-control" name="profundidad" size="30" min="0" placeholder="profundidad" required>
 	        </label><br>
 	        <p>Elije tipo de plan de compensación.</p><br>
 	        <label class="radio">

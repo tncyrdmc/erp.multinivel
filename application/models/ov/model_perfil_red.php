@@ -439,12 +439,13 @@ where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id
 		
 	function get_tabla_por_id_buscado($id_buscado, $id_red)
 	{
-			$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
+			$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R 
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
 
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus 
-= UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." 
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 and U.id like ".$id_buscado." 
 
 group by (U.id) 
 order by (U.id);");
@@ -453,12 +454,13 @@ order by (U.id);");
 	
 	function get_tabla_por_nombre_buscado($nombre_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus, R.id_red
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2  and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
 
 group by (U.id) 
 order by (U.id);");
@@ -467,12 +469,13 @@ order by (U.id);");
 	
 	function get_tabla_por_apellido_buscado($apellido_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
 
 group by (U.id) 
 order by (U.id);");
@@ -481,12 +484,13 @@ order by (U.id);");
 	
 	function get_tabla_por_username_buscado($username_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(U.username) like upper('".$username_buscado.'%'."') 
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2  and upper(U.username) like upper('".$username_buscado.'%'."') 
 group by (U.id) 
 order by (U.id);");
 		return  $q->result();
@@ -494,12 +498,13 @@ order by (U.id);");
 	
 	function get_tabla_por_email_buscado($email_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(U.email) like upper('".$email_buscado.'%'."') 
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 and upper(U.email) like upper('".$email_buscado.'%'."') 
 
 group by (U.id) 
 order by (U.id);");
