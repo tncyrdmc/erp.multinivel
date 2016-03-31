@@ -22,13 +22,12 @@ class calculador_bono extends CI_Model
 			$bono=new $this->bono();
 			$bono->setUpBono($datosBono->getId());
 			if($this->isDisponibleCobrar($bono)){
-				$this->pagarComisionesBono($datosBono->getId());
+				$this->pagarComisionesBono($bono);
 			}
 		}
 	}
-	private function pagarComisionesBono($id_bono) {
-		$bono=new $this->bono();
-		$bono->setUpBono($id_bono);
+	private function pagarComisionesBono($bono) {
+		$id_bono=$bono->getId();
 		$red=$bono->getCondicionesBono()->getIdRed();
 		$usuarios=$this->getUsuariosRed($red);
 
@@ -47,9 +46,7 @@ class calculador_bono extends CI_Model
 		
 		foreach ($usuarios as $usuario){
 			$id_afiliado=$usuario->id_afiliado;
-			if ($this->usuarioPuedeCobrarBono($id_bono, $id_afiliado)){
-				$this->darComisionRedDeAfiliado($id_bono,$id_historial_pago_bono,$id_afiliado);
-			}
+			$this->darComisionRedDeAfiliado($bono,$id_historial_pago_bono,$id_afiliado);
 		}
 	}
 
@@ -126,28 +123,31 @@ class calculador_bono extends CI_Model
 		
 	}
 	
-	public function darComisionRedDeAfiliado($id_bono,$id_bono_historial,$id_usuario){
-
+	public function darComisionRedDeAfiliado($bono,$id_bono_historial,$id_usuario){
+		$id_bono=$bono->getId();
 		if($this->usuarioPuedeCobrarBono($id_bono,$id_usuario)){
-			
-			$bono=new $this->bono();
-			$bono->setUpBono($id_bono);
+
 			$red=$bono->getCondicionesBono()->getIdRed();
 
 			$valores=$bono->getValoresBono();
 
 			foreach ($valores as $valor){
-				if($valor->getNivel()==0){
-					$repartidorComisionBono=new $this->repartidor_comision_bono();
-					$repartidorComisionBono->repartirComisionBono($repartidorComisionBono->getIdTransaccionPagoBono(),$id_usuario,$id_bono,$id_bono_historial,$valor->getValor());
-				}else {
-					$this->repartirComisionesBonoEnLaRed ( $id_bono,$id_bono_historial,$id_usuario,$red,$valor->getNivel(),$valor->getValor(),$valor->getCondicionRed(),$valor->getVerticalidad());
-				}
+				$this->repartirComisionSegunTipoDeReparticion ( $id_bono,$id_bono_historial,$id_usuario,$red,$valor->getNivel(),$valor->getValor(),$valor->getCondicionRed(),$valor->getVerticalidad() );
 			}
-		
 		}
 	}
 	
+	private function repartirComisionSegunTipoDeReparticion($id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicion_red,$verticalidad) {
+		if(($verticalidad=="ASC")||($verticalidad=="DESC")){
+			if($nivel==0){
+				$repartidorComisionBono=new $this->repartidor_comision_bono();
+				$repartidorComisionBono->repartirComisionBono($repartidorComisionBono->getIdTransaccionPagoBono(),$id_usuario,$id_bono,$id_bono_historial,$valor);
+			}else {
+				$this->repartirComisionesBonoEnLaRed ( $id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicion_red,$verticalidad);
+			}
+		}
+	}
+
 	private function repartirComisionesBonoEnLaRed($id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicionRed,$verticalidad) {
 		$repartidorComisionBono=new $this->repartidor_comision_bono();
 		$usuario=new $this->afiliado();

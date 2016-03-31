@@ -110,6 +110,11 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->after();
 	}
 
+	public function testUsuarioActivo(){
+		$afiliados=new $this->afiliado();
+		$afiliados->isActivo(10000,300,1,"RED",1,"DESC");
+	}
+	 
 	public function testGetAfiliadosPorNivel(){
 		// TODA LA RED
 		//Nivel 1
@@ -1010,9 +1015,11 @@ class testCalculadorDeBonos extends CI_Controller {
 		
 		$calculadorBono=new $this->calculador_bono();
 		$id_bono=56;
+		$bono=new $this->bono();
+		$bono->setUpBono($id_bono);
 		$id_bono_historial=1;
 
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10000);
+		$calculadorBono->darComisionRedDeAfiliado($bono,$id_bono_historial,10000);
 		
 		// Nivel 0
 		$transaccion=11;$repartidorComisionBono=new$this->repartidor_comision_bono();
@@ -1112,9 +1119,11 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
 		$calculadorBono=new $this->calculador_bono();
 		$id_bono=57;
+		$bono=new $this->bono();
+		$bono->setUpBono($id_bono);
 		$id_bono_historial=1;
 
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10000);
+		$calculadorBono->darComisionRedDeAfiliado($bono,$id_bono_historial,10000);
 		
 		// Nivel 3
 		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
@@ -1278,9 +1287,11 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
 		$calculadorBono=new $this->calculador_bono();
 		$id_bono=58;
+		$bono=new $this->bono();
+		$bono->setUpBono($id_bono);
 		$id_bono_historial=1;
 		
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10007);
+		$calculadorBono->darComisionRedDeAfiliado($bono,$id_bono_historial,10007);
 		
 		// Nivel 3
 		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
@@ -1326,9 +1337,11 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
 		$calculadorBono=new $this->calculador_bono();
 		$id_bono=59;
+		$bono=new $this->bono();
+		$bono->setUpBono($id_bono);
 		$id_bono_historial=1;
 		
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10007);
+		$calculadorBono->darComisionRedDeAfiliado($bono,$id_bono_historial,10007);
 		
 		// Nivel 3
 		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
