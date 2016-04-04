@@ -1059,7 +1059,7 @@ class perfil_red extends CI_Controller
 		if($resultado)
 		{
 			$id_afiliado=$this->model_perfil_red->get_id();
-			echo "El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$id_afiliado[0]->id."</b>";
+			echo "!FINE¡ El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$id_afiliado[0]->id."</b>";
 		}
 		else
 		{

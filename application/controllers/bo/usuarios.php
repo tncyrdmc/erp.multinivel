@@ -57,7 +57,7 @@ class usuarios extends CI_Controller
 	
 		
 		$id = 2;
-		$style = $this->general->get_style($id);
+		$style = $this->general->get_style(1);
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 	
@@ -96,7 +96,7 @@ class usuarios extends CI_Controller
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
 		$pais            = $this->model_perfil_red->get_pais();
-		$style           = $this->general->get_style($id);
+		$style           = $this->general->get_style(1);
 		$dir             = $this->model_perfil_red->dir($id);
 		$civil           = $this->model_perfil_red->edo_civil();
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
