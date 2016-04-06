@@ -109,11 +109,7 @@ class model_afiliado extends CI_Model{
 		."	sponsor: ".$directo
 		."	lado: ".$lado;
 		
-		return true;*/
-		
-		/*################### ESTILO_USUARIO #########################*/
-		
-		$this->EstiloUsuario($id);	
+		return true;*/		
 		
 		/*################### USER_PROFILES #########################*/
 		
@@ -124,17 +120,21 @@ class model_afiliado extends CI_Model{
 			$this->CrearPerfil($id);
 		}		
 		
+		/*################### AFILIAR #########################*/	
+		
+		$this->insert_dato_afiliar ( $id, $mi_red, $id_debajo, $lado, $directo );
+		
+		/*################### ESTILO_USUARIO #########################*/
+		
+		$this->EstiloUsuario($id);	
+		
 		/*################### COAPLICANTE #########################*/
 		
 		$this->CrearCoaplicante($id);
 		
 		/*################### RED #########################*/
 	
-		$this->insert_dato_red ( $id );
-		
-		/*################### AFILIAR #########################*/	
-		
-		$this->insert_dato_afiliar ( $id, $mi_red, $id_debajo, $lado, $directo ); 		
+		#$this->insert_dato_red ( $id );	#!DEPRECATED		 		
 		
 		/*################### TELEFONOS #########################*/		
  		
@@ -169,14 +169,14 @@ class model_afiliado extends CI_Model{
 				"estatus"		=> "ACT",
 		);
 		
-		$this->db->insert("cat_img",$dato_rango);
+		$this->db->insert("cat_img",$dato_img);
 		$id_img = mysql_insert_id();
 		
-		$dato_rango=array(
+		$dato_cross=array(
 				"id_user"	=> $id,
 				"id_img"	=> $id_img
 		);
-		$this->db->insert("cross_img_user",$dato_rango);
+		$this->db->insert("cross_img_user",$dato_cross);
 		#return $dato_img;#true;
 		#echo "img si|";
 	}
@@ -230,7 +230,7 @@ class model_afiliado extends CI_Model{
 	private function insert_dato_tels($id) { #dato_tels
 		
 		//tipo_tel 1=fijo 2=movil
-		$dato_tels =array();
+		#$dato_tels =array();
 		if($_POST["fijo"]){
 			foreach ($_POST["fijo"] as $fijo){
 				$dato_tel=array(
@@ -303,9 +303,9 @@ class model_afiliado extends CI_Model{
 		
 		$redes = $this->db->get('tipo_red');
 		$redes = $redes->result();
-		$dato_red = array();
+		#$dato_red = array();
 		foreach ($redes as $red){
-			$dato=array(
+			$dato_red=array(
 					'id_red'        => $red->id,
 					"id_usuario"	=> $id,
 					"profundidad"	=> "0",
@@ -313,7 +313,7 @@ class model_afiliado extends CI_Model{
 					"premium"		=> '2'
 			);
 			#array_push($dato_red, $dato);
-			$this->db->insert("red",$dato_red);
+			#$this->db->insert("red",$dato_red);
 		}		
 		#return $dato_red;#true;
 		#echo "red si|";
@@ -329,7 +329,7 @@ class model_afiliado extends CI_Model{
 		$q = $this->db->query("select * from user_profiles where user_id=".$id);
 		$perfil = $q->result();
 		return ($perfil) ? $perfil[0]->user_id : null;
-		echo "perfil si|";
+		#echo "perfil si|";
 	}
 
 	private function definir_debajo(){
@@ -341,7 +341,7 @@ class model_afiliado extends CI_Model{
 		}else{
 			return intval(isset($_POST['id']) ? $_POST['id'] : $d);
 		}
-		echo "debajo si|";
+		#echo "debajo si|";
 	}
 
 	
@@ -685,7 +685,7 @@ class model_afiliado extends CI_Model{
  	}
 
 	function RedAfiliado($id, $red){
-		$query = $this->db->query('select * from red where id_red = "'.$red.'" and id_usuario = "'.$id.'" ');
+		$query = $this->db->query('select * from afiliar where id_red = "'.$red.'" and id_afiliado = "'.$id.'" ');
 		return $query->result();
 	}
 	

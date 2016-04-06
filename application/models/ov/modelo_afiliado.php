@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class model_afiliado extends CI_Model{
+class modelo_afiliado extends CI_Model{
 
 	function __construct() {
 		parent::__construct();
@@ -52,7 +52,7 @@ class model_afiliado extends CI_Model{
 			/*'id_estatus'         => */1,
 			/*"id_fiscal"       	 => */$_POST['fiscal'],
 			/*"keyword"            => */$_POST['keyword'],
-			/*"paquete"			 => */$_POST['tipo_plan'],
+			/*"paquete"			 => $_POST['tipo_plan']*/0,
 			/*"nombre"             => */$_POST['nombre'],
 			/*"apellido"           => */$_POST['apellido'],
 			/*"fecha_nacimiento"   => */$_POST['nacimiento']
@@ -99,21 +99,33 @@ class model_afiliado extends CI_Model{
 				$dato_afiliar,
 				$dato_estilo,
 				$dato_coaplicante,
-				$dato_red,
-				$dato_tels,
+				#$dato_red,
+				#$dato_tels,
 				$dato_dir,
 				$dato_billetera,
 				$dato_rango,
 				$dato_img
 			){
 		
-		#$dato_perfil = $this->general->setArrayVarchar($dato_perfil);		
+		
+		$dato_perfil = $this->general->setArrayVarchar($dato_perfil);	
+		$dato_afiliar = $this->general->setArrayVarchar($dato_afiliar);
+		$dato_estilo = $this->general->setArrayVarchar($dato_estilo);
+		$dato_coaplicante = $this->general->setArrayVarchar($dato_coaplicante);
+		#$dato_tels = $this->general->setArrayVarchar($dato_tels);
+		$dato_dir = $this->general->setArrayVarchar($dato_dir);
+		$dato_billetera = $this->general->setArrayVarchar($dato_billetera);
+		$dato_rango = $this->general->setArrayVarchar($dato_rango);
+		$dato_img = $this->general->setArrayVarchar($dato_img);
 		
 				
-		$this->db->query("CALL afiliar(".$id./*",".$dato_perfil.",".$dato_afiliar.",
-				".$dato_estilo.",".$dato_coaplicante.",".$dato_red."
-				,".$dato_tels.",".$dato_dir.",".$dato_billetera.",".$dato_rango.",".$dato_img.*/")");
-		return true;
+		$this->db->query('CALL afiliar('.$id.',"'.$dato_perfil.'","'.$dato_afiliar.'","'.
+				$dato_estilo.'","'.$dato_coaplicante./*'","'.$dato_tels.*/'","'.
+				$dato_dir.'","'.$dato_billetera.'","'.$dato_rango.'","'.$dato_img.'")');
+		
+		return true; #'1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
+				# $dato_estilo.'4|'.$dato_coaplicante.'5|'./*$dato_tels.'6|'.*/
+				# $dato_dir.'7|'.$dato_billetera.'8|'.$dato_rango.'9|'.$dato_img; 
 	}
 	
 	function crearUsuario(){	
@@ -147,8 +159,7 @@ class model_afiliado extends CI_Model{
 		//$dato_permiso=$this->Perfil($id); # USER_PERMISSIONS
 		$dato_estilo=$this->EstiloUsuario($id);	# ESTILO_USUARIO
 		$dato_coaplicante=$this->Coaplicante($id);# COAPLICANTE
-		$dato_red=$this->dato_red ( $id );# RED		
-		$dato_tels=$this->dato_tels ($id);# TELEFONOS
+		#$dato_red=$this->dato_red ( $id );# RED	#!DEPRECATED			
 		$dato_dir=$this->dato_dir ( $id );# DIRECCION
 		$dato_billetera=$this->dato_billetera ( $id ); # BILLETERA 				
 		$dato_rango=$this->dato_rango ( $id ); # RANGO 				
@@ -160,15 +171,17 @@ class model_afiliado extends CI_Model{
 			$dato_afiliar,
 			$dato_estilo,
 			$dato_coaplicante,
-			$dato_red,
-			$dato_tels,
+			#$dato_red,
+			#$dato_tels,
 			$dato_dir,
 			$dato_billetera,
 			$dato_rango,
 			$dato_img
 		);
 		
-		return /*$afiliar ? */true; #: false;
+		#($afiliar==1) ? $this->insert_dato_tels($id) : '' ;# TELEFONOS $dato_tels dato_tels($id)
+		
+		return $afiliar ? $id : null;#; #;
 	}
 	
 	private function dato_img($id) { #insert_dato_img
@@ -178,7 +191,7 @@ class model_afiliado extends CI_Model{
 				/*"nombre_completo"		=> */"empresario.jpg",
 				/*"nombre"		=> */"empresario",
 				/*"extencion"		=> */"jpg",
-				/*"estatus"		=> */"ACT",
+				/*"estatus"		=> */"ACT"
 		#);
 		
 		#$this->db->insert("cat_img",$dato_rango);
@@ -239,37 +252,37 @@ class model_afiliado extends CI_Model{
 	}
 
 	
-	private function dato_tels($id) { #insert_dato_tels
+	private function insert_dato_tels($id) { #dato_tels
 		
 		//tipo_tel 1=fijo 2=movil
-		$dato_tels =array();
+		#$dato_tels =array();
 		if($_POST["fijo"]){
 			foreach ($_POST["fijo"] as $fijo){
 				$dato_tel=array(
-					/*"id_user"		=> */$id,
-					/*"id_tipo_tel"	=> */1,
-					/*"numero"		=> */$fijo,
-					/*"estatus"		=> */"ACT"
+					"id_user"		=> $id,
+					"id_tipo_tel"	=> 1,
+					"numero"		=> $fijo,
+					"estatus"		=> "ACT"
 					);
-				array_push($dato_tels, $dato_tel);
-				#$this->db->insert("cross_tel_user",$dato_tel);
+				#array_push($dato_tels, $dato_tel);
+				$this->db->insert("cross_tel_user",$dato_tel);
 			}
 		}
 		
 		if($_POST["movil"]){
 			foreach ($_POST["movil"] as $movil){
 				$dato_tel=array(
-					/*"id_user"		=> */$id,
-					/*"id_tipo_tel"	=> */2,
-					/*"numero"		=> */$movil,
-					/*"estatus"		=> */"ACT"
+					"id_user"		=> $id,
+					"id_tipo_tel"	=> 2,
+					"numero"		=> $movil,
+					"estatus"		=> "ACT"
 					);
-				array_push($dato_tels, $dato_tel);
-				#$this->db->insert("cross_tel_user",$dato_tel);
+				#array_push($dato_tels, $dato_tel);
+				$this->db->insert("cross_tel_user",$dato_tel);
 			}
 		}
 		
-		return $dato_tels;#true;
+		return true;#$dato_tels;
 		#echo "tels si|";
 	}
 
@@ -697,7 +710,7 @@ class model_afiliado extends CI_Model{
  	}
 
 	function RedAfiliado($id, $red){
-		$query = $this->db->query('select * from red where id_red = "'.$red.'" and id_usuario = "'.$id.'" ');
+		$query = $this->db->query('select * from afiliar where id_red = "'.$red.'" and id_afiliado = "'.$id.'" ');
 		return $query->result();
 	}
 	

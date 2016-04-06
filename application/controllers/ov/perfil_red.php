@@ -2,6 +2,8 @@
 
 class perfil_red extends CI_Controller
 {
+	
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -17,11 +19,11 @@ class perfil_red extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_planes');
 		$this->load->model('ov/modelo_dashboard');
-		$this->load->model('bo/model_tipo_usuario');
+		$this->load->model('bo/model_tipo_usuario');		
 		if (!$this->tank_auth->is_logged_in()&&!$_POST['token'])
 		{																		// logged in
 		redirect('/auth');
-		}
+		}	
 		
 	}
 
@@ -1052,14 +1054,15 @@ class perfil_red extends CI_Controller
 	
 	function afiliar_nuevo()
 	{
-		
-		$resultado = $this->model_afiliado->crearUsuario();
+		$this->load->model('ov/modelo_afiliado');	//pruebas
+		$resultado = $this->modelo_afiliado->crearUsuario();
+		//echo $resultado;
 		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
 		isset($_POST['token']) ? $this->model_perfil_red->trash_token($_POST['token']) : '';
-		if($resultado)
+		if(intval($resultado))
 		{
-			$id_afiliado=$this->model_perfil_red->get_id();
-			echo "!FINE¡ El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$id_afiliado[0]->id."</b>";
+			#$id_afiliado=$this->model_perfil_red->get_id(); //$id_afiliado[0]->id
+			echo "!FINE¡ El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$resultado."</b>";
 		}
 		else
 		{
@@ -1665,5 +1668,6 @@ class perfil_red extends CI_Controller
 		$this->template->set("red",$red);
 		$this->template->set("valor_retencion",$valor_retencion);
 		$this->template->build('website/ov/perfil_red/fases');
-	}
+	}	
+	
 }
