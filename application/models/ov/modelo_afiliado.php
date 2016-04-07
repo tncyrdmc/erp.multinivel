@@ -119,9 +119,15 @@ class modelo_afiliado extends CI_Model{
 		$dato_img = $this->general->setArrayVarchar($dato_img);
 		
 				
-		$this->db->query('CALL afiliar('.$id.',"'.$dato_perfil.'","'.$dato_afiliar.'","'.
+		$query = $this->db->query('CALL afiliar('.$id.',"'.$dato_perfil.'","'.$dato_afiliar.'","'.
 				$dato_estilo.'","'.$dato_coaplicante./*'","'.$dato_tels.*/'","'.
 				$dato_dir.'","'.$dato_billetera.'","'.$dato_rango.'","'.$dato_img.'")');
+		
+
+		$res = $query->result();
+		
+		//$query->next_result(); // Dump the extra resultset.
+		//$query->free_result(); //Does what it says.
 		
 		return  true;#$q->result();'1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
 				# $dato_estilo.'4|'.$dato_coaplicante.'5|'./*$dato_tels.'6|'.*/
