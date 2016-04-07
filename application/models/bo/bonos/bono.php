@@ -134,7 +134,7 @@ class bono extends CI_Model
 							where cbc.id_rango=crt.id_rango 
 							and cbc.id_tipo_rango=crt.id_tipo_rango and cbc.id_bono=".$id_bono);
 		$datosCondicioneBono=$q->result();
-	
+		$condiciones=array();
 		foreach ($datosCondicioneBono as $condicion){
 			$condicionesBono=new $this->condiciones_bono();
 			$condicionesBono->setIdCondicion(intval($condicion->id_condicion));
@@ -152,10 +152,12 @@ class bono extends CI_Model
 			$condicionesBono->setValor(intval($condicion->valor));
 			$condicionesBono->setCondicionBono1(intval($condicion->condicion1));
 			$condicionesBono->setCondicionBono2(intval($condicion->condicion2));
+			
+			array_push($condiciones, $condicionesBono);
 
 		}
 
-		$this->setCondicionesBono($condicionesBono);
+		$this->setCondicionesBono($condiciones);
 
 	}
 	

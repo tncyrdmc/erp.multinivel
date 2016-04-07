@@ -18,6 +18,7 @@ class bonos extends CI_Controller
 		$this->load->model('bo/model_bonos');
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/bonos/calculador_bono');
 	}
 	
 	function index()
@@ -204,6 +205,52 @@ class bonos extends CI_Controller
 		foreach ($rangos as $rango){
 			$this->insertRangosRedesCondiciones($rango,$bono,$id_bono);
 		}
+	}
+	
+	function pago_bono(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$bonos=$this->model_bonos->get_bonos();
+		$this->template->set("bonos",$bonos);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/pagar');
+	}
+	
+	function pagar_bono_calculado(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$fecha=$_POST['fecha'];
+		$id_bono=$_POST['id_bono'];
+		
+		$this->calculador_bono->calcularComisionesPorBono($id_bono,$fecha);
 	}
 	
 	function set_Rango(){

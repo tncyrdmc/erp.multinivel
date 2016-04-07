@@ -4,8 +4,9 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								Administración
+							<span>
+							> <a href="/bo/administracion/"> Administración</a> 
+								> Ventas
 							</span>
 						</h1>
 					</div>
@@ -32,60 +33,24 @@
                 		<fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-2 link">
+											<div class="col-sm-3 link">
 											</div>
-											<div class="col-sm-2 link">
-													<a href="/bo/usuarios">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-user fa-3x"></i>
-															<h1>Usuarios<br>&nbsp</h1>
+											<div class="col-sm-2 link">	
+													<a href="/bo/cuentasporcobrar/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-briefcase fa-3x"></i>
+															<h1>Ventas Por Cobrar</h1>
 														</div>
 													</a>
 											</div>
 											<div class="col-sm-2 link">	
-													<a href="/bo/ventas/ventasIndex">
+													<a href="/bo/ventas/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-credit-card fa-3x"></i>
-															<h1>Ventas<br>&nbsp</h1>
+															<i class="fa fa-money fa-3x"></i>
+															<h1>Ventas Realizadas</h1>
 														</div>
 													</a>
 											</div>
-											<div class="col-sm-2 link">	
-													<a href="/bo/bonos/pago_bono">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-money fa-3x"></i>&nbsp<i class="fa fa-money fa-2x"></i>&nbsp<i class="fa fa-money fa-1x"></i>
-															<h1>Calculo de <br>Bonos</h1>
-														</div>
-													</a>
-											</div>
-											</div>
-											<div class="row">
-												<div class="col-sm-2 link">
-												</div>
-												<div class="col-sm-2 link">	
-														<a href="/bo/CuentasPagar/PorPagar">
-															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-																<i class="fa fa-money fa-3x"></i>
-																<h1>Comisiones por Pagar</h1>
-															</div>
-														</a>
-												</div>
-												<div class="col-sm-2 link">	
-														<a href="/bo/comisionesPagadas/index">
-															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-																<i class="fa fa-history fa-3x"></i>
-																<h1>Cobros Pedidos</h1>
-															</div>
-														</a>
-												</div>
-												<div class="col-sm-2 link">	
-														<a href="/bo/CuentasPagar/Archivos">
-															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-																<i class="fa fa-archive fa-3x"></i>
-																<h1>Historial Pagos</h1>
-															</div>
-														</a>
-												</div>
 											</div>
 										 </div>
 

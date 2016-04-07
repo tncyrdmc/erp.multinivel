@@ -25,6 +25,7 @@ class testSetupBono extends CI_Controller {
 		$this->testGetDiasInicioYFinSemana();
 		$this->testGetDiasInicioYFinQuincena();
 		$this->testGetDiasInicioYFinMes();
+		$this->testGetDiasInicioYFinAno();
 		
 		$this->testgetFechaInicioPagoDeBono();
 		$this->testgetFechaFinPagoDeBono();
@@ -181,6 +182,35 @@ class testSetupBono extends CI_Controller {
 	
 		$resultado=$calculadorBono->getFinMes('2016-08-31');
 		echo $this->unit->run('2016-08-31',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+	}
+	
+	public function testGetDiasInicioYFinAno(){
+		$calculadorBono=$this->calculador_bono;
+	
+		$resultado=$calculadorBono->getInicioAno('2016-03-13');
+		echo $this->unit->run('2016-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2016-03-13');
+		echo $this->unit->run('2016-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioAno('2016-02-01');
+		echo $this->unit->run('2016-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2016-02-01');
+		echo $this->unit->run('2016-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioAno('2015-02-01');
+		echo $this->unit->run('2015-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2015-02-01');
+		echo $this->unit->run('2015-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioAno('2018-08-31');
+		echo $this->unit->run('2018-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2018-08-31');
+		echo $this->unit->run('2018-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
 	
 	}
 	

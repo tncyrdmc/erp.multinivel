@@ -546,8 +546,9 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$id_red=300;
 		$id_bono=57;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
+		$fecha=date('Y-m-d');
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);

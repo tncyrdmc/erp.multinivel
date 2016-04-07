@@ -152,15 +152,33 @@ var j=0;
 										<div class="col col-lg-2">
 										<label style="margin: 0.2rem;" class="select">Repartir
 											<select name="verticalidad_red[]" style="width: 10rem;">
-												
+												 
 												<?php
-												if($nivel->verticalidad=="ASC")
-													echo "<option value='ASC' selected>Hacia Arriba</option>
-														<option value='DESC'>Hacia Abajo</option>";
-												else
-													echo "<option value='DESC' selected>Hacia Abajo</option>
-															<option value='ASC'>Hacia Arriba</option>";												
-													
+												if($nivel->verticalidad=="ASC"){
+													echo "<option value='ASC' selected>$ Hacia Arriba</option>
+														  <option value='DESC'>$ Hacia Abajo</option>
+														  <option value='PDESC'>%(Puntos) Hacia Abajo</option>
+														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
+														  ";
+												}else if($nivel->verticalidad=="DESC"){
+													echo "<option value='ASC'>$ Hacia Arriba</option>
+														  <option value='DESC' selected>$ Hacia Abajo</option>
+														  <option value='PDESC'>%(Puntos) Hacia Abajo</option>
+														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
+														  ";
+												}else if($nivel->verticalidad=="PDESC"){
+													echo "<option value='ASC'>$ Hacia Arriba</option>
+														  <option value='DESC'>$ Hacia Abajo</option>
+														  <option value='PDESC' selected>%(Puntos) Hacia Abajo</option>
+														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
+														  ";
+												}else if($nivel->verticalidad=="RDESC"){
+													echo "<option value='ASC'>$ Hacia Arriba</option>
+														  <option value='DESC'>$ Hacia Abajo</option>
+														  <option value='PDESC'>%(Puntos) Hacia Abajo</option>
+														  <option value='RDESC' selected>%(Puntos)Residual Abajo</option>
+														  ";
+												}
 												?>
 											</select>
 										</label>

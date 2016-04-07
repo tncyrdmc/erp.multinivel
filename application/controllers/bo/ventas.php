@@ -62,6 +62,31 @@ class ventas extends CI_Controller
 		$this->template->build('website/bo/administracion/ventas/listar');
 	}
 	
+	function ventasIndex(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/administracion/ventas/index');
+	}
+	
 	function reporte_ventas_oficinas_virtuales()
 	{
 		if (!$this->tank_auth->is_logged_in())

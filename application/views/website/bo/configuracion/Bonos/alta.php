@@ -184,8 +184,10 @@
 										<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">
 											<label class="select">Forma de Repartir
 											<select name="verticalidad_red[]">
-												<option value="ASC">Hacia Arriba</option>
-												<option value="DESC">Hacia Abajo</option>
+												<option value="ASC">$ Hacia Arriba</option>
+												<option value="DESC">$ Hacia Abajo</option>
+												<option value="PDESC">%(Puntos) Hacia Abajo</option>
+												<option value="RDESC">%(Puntos)Residual Abajo</option>
 											</select>
 											</label>
 										</div>
