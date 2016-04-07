@@ -141,6 +141,9 @@ class modelo_afiliado extends CI_Model{
 		$lado = $this->definir_lado ($id_debajo,$mi_red);		
 		$directo = $this->definir_sponsor ($id_debajo);
 		
+		$fijos = $_POST["fijo"];
+		$moviles = $_POST["movil"];
+		
 		/*echo "red : ".$mi_red
 		." 	afiliado: ".$_POST['mail_important']
 		."	padre: ".$id_debajo
@@ -153,6 +156,8 @@ class modelo_afiliado extends CI_Model{
 		if($existe_perfil){
 			return true;
 		}
+		
+		($fijos&&$moviles) ? $this->insert_dato_tels($id,$fijos,$moviles) : '' ; 
 		
 		$dato_perfil=$this->Perfil($id); # USER_PROFILES
 		$dato_afiliar=$this->dato_afiliar ( $id, $mi_red, $id_debajo, $lado, $directo ); # AFILIAR 
@@ -177,11 +182,11 @@ class modelo_afiliado extends CI_Model{
 			$dato_billetera,
 			$dato_rango,
 			$dato_img
-		);
+		);	
 		
-		#$this->insert_dato_tels($id); # TELEFONOS $dato_tels dato_tels($id)
+		# TELEFONOS $dato_tels dato_tels($id)
 		
-		return $afiliar ? $id /*var_dump($_POST["fijo"])."|".var_dump($_POST["movil"])*/ : null;#; #;
+		return $afiliar ? $id /*var_dump()."|".var_dump($_POST["movil"])*/ : null;#; #;
 	}
 	
 	private function dato_img($id) { #insert_dato_img
@@ -252,35 +257,35 @@ class modelo_afiliado extends CI_Model{
 	}
 
 	
-	private function insert_dato_tels($id) { #dato_tels
+	private function insert_dato_tels($id,$fijos,$moviles) { #dato_tels
 		
 		//tipo_tel 1=fijo 2=movil
 		#$dato_tels =array();
-		if(isset($_POST["fijo"])){
-			foreach ($_POST["fijo"] as $fijo){
+		#if(isset($_POST["fijo"])){
+			foreach ($fijos as $fijo){
 				$dato_tel=array(
 					"id_user"		=> $id,
 					"id_tipo_tel"	=> 1,
-					"numero"		=> "'".$fijo."'",
+					"numero"		=> $fijo ? $fijo : "",
 					"estatus"		=> "ACT"
 					);
 				#array_push($dato_tels, $dato_tel);
 				$this->db->insert("cross_tel_user",$dato_tel);
 			}
-		}
+		#}
 		
-		if(isset($_POST["movil"])){
-			foreach ($_POST["movil"] as $movil){
+		#if(isset($_POST["movil"])){
+			foreach ($moviles as $movil){
 				$dato_tel=array(
 					"id_user"		=> $id,
 					"id_tipo_tel"	=> 2,
-					"numero"		=> "'".$movil."'",
+					"numero"		=> $movil ? $movil : "",
 					"estatus"		=> "ACT"
 					);
 				#array_push($dato_tels, $dato_tel);
 				$this->db->insert("cross_tel_user",$dato_tel);
 			}
-		}
+		#}
 		
 		return true;#$dato_tels;
 		#echo "tels si|";
