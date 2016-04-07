@@ -204,6 +204,29 @@
 			
 			});
 
+			function ver(id){
+				$.ajax({
+					type: "POST",
+					url: "/bo/bonos/detalle_historial",
+					data: {id: id}
+				})
+				.done(function( msg )
+				{					
+					bootbox.dialog({
+						message: msg,
+						title: 'Historial de Bono',
+						buttons: {
+							danger: {
+								label: "Cerrar",
+								className: "btn-danger",
+								callback: function() {
+
+									}
+						}
+					}})//fin done ajax
+				});//Fin callback bootbox
+			}
+			
 			function eliminar(id) {
 
 				$.ajax({
