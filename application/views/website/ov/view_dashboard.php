@@ -231,7 +231,7 @@
 							<div class="row">
 							   <div class="col-sm-12 col-md-12 col-lg-4">
 									<!--Inica la secciion de la perfil y red-->
-									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
+									<div class="well" style=""> <!-- box-shadow: 0px 0px 0px !important;border-color: transparent; -->
 										<fieldset>
 											<legend><b>Perfil y red</b></legend>
 											<div class="row">
