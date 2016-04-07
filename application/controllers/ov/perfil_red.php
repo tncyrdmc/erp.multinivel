@@ -1056,7 +1056,7 @@ class perfil_red extends CI_Controller
 	{
 		$this->load->model('ov/modelo_afiliado');	//pruebas
 		$resultado = $this->modelo_afiliado->crearUsuario();
-		//echo $resultado;
+		#echo $resultado;
 		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
 		isset($_POST['token']) ? $this->model_perfil_red->trash_token($_POST['token']) : '';
 		if(intval($resultado))

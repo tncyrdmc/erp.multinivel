@@ -123,7 +123,7 @@ class modelo_afiliado extends CI_Model{
 				$dato_estilo.'","'.$dato_coaplicante./*'","'.$dato_tels.*/'","'.
 				$dato_dir.'","'.$dato_billetera.'","'.$dato_rango.'","'.$dato_img.'")');
 		
-		return true; #'1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
+		return  true;#$q->result();'1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
 				# $dato_estilo.'4|'.$dato_coaplicante.'5|'./*$dato_tels.'6|'.*/
 				# $dato_dir.'7|'.$dato_billetera.'8|'.$dato_rango.'9|'.$dato_img; 
 	}
@@ -179,9 +179,9 @@ class modelo_afiliado extends CI_Model{
 			$dato_img
 		);
 		
-		#($afiliar==1) ? $this->insert_dato_tels($id) : '' ;# TELEFONOS $dato_tels dato_tels($id)
+		#$this->insert_dato_tels($id); # TELEFONOS $dato_tels dato_tels($id)
 		
-		return $afiliar ? $id : null;#; #;
+		return $afiliar ? $id /*var_dump($_POST["fijo"])."|".var_dump($_POST["movil"])*/ : null;#; #;
 	}
 	
 	private function dato_img($id) { #insert_dato_img
@@ -256,12 +256,12 @@ class modelo_afiliado extends CI_Model{
 		
 		//tipo_tel 1=fijo 2=movil
 		#$dato_tels =array();
-		if($_POST["fijo"]){
+		if(isset($_POST["fijo"])){
 			foreach ($_POST["fijo"] as $fijo){
 				$dato_tel=array(
 					"id_user"		=> $id,
 					"id_tipo_tel"	=> 1,
-					"numero"		=> $fijo,
+					"numero"		=> "'".$fijo."'",
 					"estatus"		=> "ACT"
 					);
 				#array_push($dato_tels, $dato_tel);
@@ -269,12 +269,12 @@ class modelo_afiliado extends CI_Model{
 			}
 		}
 		
-		if($_POST["movil"]){
+		if(isset($_POST["movil"])){
 			foreach ($_POST["movil"] as $movil){
 				$dato_tel=array(
 					"id_user"		=> $id,
 					"id_tipo_tel"	=> 2,
-					"numero"		=> $movil,
+					"numero"		=> "'".$movil."'",
 					"estatus"		=> "ACT"
 					);
 				#array_push($dato_tels, $dato_tel);
