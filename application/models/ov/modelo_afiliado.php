@@ -1,25 +1,26 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class model_afiliado extends CI_Model{
+class modelo_afiliado extends CI_Model{
 
 	function __construct() {
 		parent::__construct();
 
 		$this->load->library('tank_auth');
+		$this->load->model('ov/general');
 	}
 	
-	function EstiloUsuario($id){
+	private function EstiloUsuario($id){
 		
 		$estilo = $this->getEstiloUsuario();
 		
 		$dato_style=array(
-				"id_usuario"		=> $id,
-				"bg_color"			=> $estilo[0]->bg_color,
-				"btn_1_color"		=> $estilo[0]->btn_1_color,
-				"btn_2_color"		=> $estilo[0]->btn_2_color
+				/*"id_usuario"		=> */$id,
+				/*"bg_color"			=> */$estilo[0]->bg_color,
+				/*"btn_1_color"		=> */$estilo[0]->btn_1_color,
+				/*"btn_2_color"		=> */$estilo[0]->btn_2_color
 		);
-		$this->db->insert("estilo_usuario",$dato_style);
-		#return $dato_style;
+		#$this->db->insert("estilo_usuario",$dato_style);
+		return $dato_style;
 	}
 	
 	function getEstiloUsuario() {
@@ -29,7 +30,7 @@ class model_afiliado extends CI_Model{
 	}
 
 	
-	function CrearPerfil($id){ #Perfil
+	private function Perfil($id){ #CrearPerfil
 		$_POST['tipo_afiliado'] = 2;
 		
 		if(!isset($_POST['tipo_plan']))
@@ -38,63 +39,106 @@ class model_afiliado extends CI_Model{
 		if(!isset($_POST['fiscal'])){
 			$_POST['fiscal']=1;
 		}
-		$profile = array();
+		#$profile = array();
 		
 		$dato_profile = array(
-			"user_id"            => $id,
-			"id_sexo"            => $_POST['sexo'],
-			"id_edo_civil"       => $_POST['civil'],
-			"id_tipo_usuario"    => $_POST['tipo_afiliado'],
-			"id_estudio"         => $_POST['estudios'],
-			"id_ocupacion"       => $_POST['ocupacion'],
-			"id_tiempo_dedicado" => $_POST['tiempo_dedicado'],
-			'id_estatus'         => 1,
-			"id_fiscal"       	 => $_POST['fiscal'],
-			"keyword"            => $_POST['keyword'],
-			"paquete"			 => $_POST['tipo_plan'],
-			"nombre"             => $_POST['nombre'],
-			"apellido"           => $_POST['apellido'],
-			"fecha_nacimiento"   => $_POST['nacimiento']
+			/*"user_id"            => */$id,
+			/*"id_sexo"            => */$_POST['sexo'],
+			/*"id_edo_civil"       => */$_POST['civil'],
+			/*"id_tipo_usuario"    => */$_POST['tipo_afiliado'],
+			/*"id_estudio"         => */$_POST['estudios'],
+			/*"id_ocupacion"       => */$_POST['ocupacion'],
+			/*"id_tiempo_dedicado" => */$_POST['tiempo_dedicado'],
+			/*'id_estatus'         => */1,
+			/*"id_fiscal"       	 => */$_POST['fiscal'],
+			/*"keyword"            => */$_POST['keyword'],
+			/*"paquete"			 => $_POST['tipo_plan']*/0,
+			/*"nombre"             => */$_POST['nombre'],
+			/*"apellido"           => */$_POST['apellido'],
+			/*"fecha_nacimiento"   => */$_POST['nacimiento']
 			);
 		#array_push($profile, $dato_profile);
-		$this->db->insert("user_profiles",$dato_profile);
+		#$this->db->insert("user_profiles",$dato_profile);
 		
-		$perfil=2;
+		#$perfil=2;
 		/*if($_POST['tipo_plan']==0){
 			$perfil=3;
 // 		}*/
+		return $dato_profile;
+	}
 		
+		
+	private function Permiso($id){ #CrearPerfil
 		$dato_permiso=array(
-			"id_user"   => $id,
-			"id_perfil" => $perfil
+			/*"id_user"   => */$id,
+			/*"id_perfil" => */2//$perfil
 			);
-		$this->db->insert("cross_perfil_usuario",$dato_permiso);
+		#$this->db->insert("cross_perfil_usuario",$dato_permiso);
 		#array_push($profile, $dato_permiso);
-		#return $profile;
+		return $dato_permiso;
 	}
 	
-	function CrearCoaplicante($id){ #Coaplicante
+	private function Coaplicante($id){ #CrearCoaplicante
 		if(isset($_POST['nombre_co'])){
 
 			$dato_coaplicante=array(
-				"id_user"   => $id,
-				"nombre" => $_POST['nombre_co'],
-				"apellido"   => $_POST['apellido_co'],
-				"keyword"   => $_POST['keyword_co']
+				/*"id_user"   => */$id,
+				/*"nombre" => */$_POST['nombre_co'],
+				/*"apellido"   => */$_POST['apellido_co'],
+				/*"keyword"   => */$_POST['keyword_co']
 				);
-			$this->db->insert("coaplicante",$dato_coaplicante);
-			#return $dato_coaplicante;
+			#$this->db->insert("coaplicante",$dato_coaplicante);
+			return $dato_coaplicante;
 			
 		}		
+	}
+	
+	function afiliar_procedure(
+				$id,
+				$dato_perfil,
+				$dato_afiliar,
+				$dato_estilo,
+				$dato_coaplicante,
+				#$dato_red,
+				#$dato_tels,
+				$dato_dir,
+				$dato_billetera,
+				$dato_rango,
+				$dato_img
+			){
+		
+		
+		$dato_perfil = $this->general->setArrayVarchar($dato_perfil);	
+		$dato_afiliar = $this->general->setArrayVarchar($dato_afiliar);
+		$dato_estilo = $this->general->setArrayVarchar($dato_estilo);
+		$dato_coaplicante = $this->general->setArrayVarchar($dato_coaplicante);
+		#$dato_tels = $this->general->setArrayVarchar($dato_tels);
+		$dato_dir = $this->general->setArrayVarchar($dato_dir);
+		$dato_billetera = $this->general->setArrayVarchar($dato_billetera);
+		$dato_rango = $this->general->setArrayVarchar($dato_rango);
+		$dato_img = $this->general->setArrayVarchar($dato_img);
+		
+				
+		$query = $this->db->query('CALL afiliar('.$id.',"'.$dato_perfil.'","'.$dato_afiliar.'","'.
+				$dato_estilo.'","'.$dato_coaplicante./*'","'.$dato_tels.*/'","'.
+				$dato_dir.'","'.$dato_billetera.'","'.$dato_rango.'","'.$dato_img.'")');
+		
+
+		$res = $query->result();
+		
+		//$query->next_result(); // Dump the extra resultset.
+		//$query->free_result(); //Does what it says.
+		
+		return  true;#$q->result();'1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
+				# $dato_estilo.'4|'.$dato_coaplicante.'5|'./*$dato_tels.'6|'.*/
+				# $dato_dir.'7|'.$dato_billetera.'8|'.$dato_rango.'9|'.$dato_img; 
 	}
 	
 	function crearUsuario(){	
 		
 		$id = $this->obtenrIdUser($_POST['mail_important']);
 		
-		if ($id){
-			$this->activar_user($id);
-		}else{
+		if (!$id){
 			return false;
 		}
 		
@@ -103,177 +147,169 @@ class model_afiliado extends CI_Model{
 		$lado = $this->definir_lado ($id_debajo,$mi_red);		
 		$directo = $this->definir_sponsor ($id_debajo);
 		
+		$fijos = $_POST["fijo"];
+		$moviles = $_POST["movil"];
+		
 		/*echo "red : ".$mi_red
 		." 	afiliado: ".$_POST['mail_important']
 		."	padre: ".$id_debajo
 		."	sponsor: ".$directo
 		."	lado: ".$lado;
 		
-		return true;*/		
-		
-		/*################### USER_PROFILES #########################*/
+		return true;*/				
 		
 		$existe_perfil = $this->perfil_existe($id);
 		if($existe_perfil){
-			return true; 
-		}else {
-			$this->CrearPerfil($id);
-		}		
+			return true;
+		}
 		
-		/*################### AFILIAR #########################*/	
+		($fijos&&$moviles) ? $this->insert_dato_tels($id,$fijos,$moviles) : '' ; 
 		
-		$this->insert_dato_afiliar ( $id, $mi_red, $id_debajo, $lado, $directo );
+		$dato_perfil=$this->Perfil($id); # USER_PROFILES
+		$dato_afiliar=$this->dato_afiliar ( $id, $mi_red, $id_debajo, $lado, $directo ); # AFILIAR 
+		//$dato_permiso=$this->Perfil($id); # USER_PERMISSIONS
+		$dato_estilo=$this->EstiloUsuario($id);	# ESTILO_USUARIO
+		$dato_coaplicante=$this->Coaplicante($id);# COAPLICANTE
+		#$dato_red=$this->dato_red ( $id );# RED	#!DEPRECATED			
+		$dato_dir=$this->dato_dir ( $id );# DIRECCION
+		$dato_billetera=$this->dato_billetera ( $id ); # BILLETERA 				
+		$dato_rango=$this->dato_rango ( $id ); # RANGO 				
+		$dato_img=$this->dato_img ( $id ); # IMAGEN 
 		
-		/*################### ESTILO_USUARIO #########################*/
+		$afiliar = $this->afiliar_procedure(
+			$id,
+			$dato_perfil,
+			$dato_afiliar,
+			$dato_estilo,
+			$dato_coaplicante,
+			#$dato_red,
+			#$dato_tels,
+			$dato_dir,
+			$dato_billetera,
+			$dato_rango,
+			$dato_img
+		);	
 		
-		$this->EstiloUsuario($id);	
+		# TELEFONOS $dato_tels dato_tels($id)
 		
-		/*################### COAPLICANTE #########################*/
-		
-		$this->CrearCoaplicante($id);
-		
-		/*################### RED #########################*/
-	
-		#$this->insert_dato_red ( $id );	#!DEPRECATED		 		
-		
-		/*################### TELEFONOS #########################*/		
- 		
-		$this->insert_dato_tels ($id);		
-		
-		/*################### DIRECCION #########################*/
-		
-		$this->insert_dato_dir ( $id );
-		
-		/*################### BILLETERA #########################*/
-		
-		$this->insert_dato_billetera ( $id );		
-
-		/*################### RANGO #########################*/
-		
-		$this->insert_dato_rango ( $id );
-		
-		/*################### IMAGEN #########################*/
-		
-		$this->insert_dato_img ( $id );
-		
-		return true;
+		return $afiliar ? $id /*var_dump()."|".var_dump($_POST["movil"])*/ : null;#; #;
 	}
 	
-	private function insert_dato_img($id) { #dato_img
+	private function dato_img($id) { #insert_dato_img
 		
 		$dato_img=array(
-				"url"		=> "/template/img/empresario.jpg",
-				"nombre_completo"		=> "empresario.jpg",
-				"nombre"		=> "empresario",
-				"extencion"		=> "jpg",
-				"estatus"		=> "ACT",
-		);
+				/*"url"		=> */"/template/img/empresario.jpg",
+				/*"nombre_completo"		=> */"empresario.jpg",
+				/*"nombre"		=> */"empresario",
+				/*"extencion"		=> */"jpg",
+				/*"estatus"		=> */"ACT"
+		#);
 		
-		$this->db->insert("cat_img",$dato_img);
-		$id_img = mysql_insert_id();
+		#$this->db->insert("cat_img",$dato_rango);
+		#$id_img = mysql_insert_id();
 		
-		$dato_cross=array(
-				"id_user"	=> $id,
-				"id_img"	=> $id_img
+		#$dato_rango=array(
+				#"id_user"	=> $id,
+				#"id_img"	=> $id_img
 		);
-		$this->db->insert("cross_img_user",$dato_cross);
-		#return $dato_img;#true;
+		#$this->db->insert("cross_img_user",$dato_rango);
+		return $dato_img;#true;
 		#echo "img si|";
 	}
 
 	
-	private function insert_dato_rango($id) { #dato_rango
+	private function dato_rango($id) { #insert_dato_rango
 		$dato_rango=array(
-			"id_user"	=> $id,
-			"id_rango"		=> 1,
-			"entregado"		=> 1,
-			"estatus"		=> "ACT"
+			/*"id_user"	=> */$id,
+			/*"id_rango"		=> */1,
+			/*"entregado"		=> */1,
+			/*"estatus"		=> */"ACT"
 			);
 		
-		$this->db->insert("cross_rango_user",$dato_rango);
-		#return $dato_rango;#true;
+		#$this->db->insert("cross_rango_user",$dato_rango);
+		return $dato_rango;#true;
 		#echo "rango si|";
 	}
 
 	
-	private function insert_dato_billetera($id) { #dato_billetera
+	private function dato_billetera($id) { #insert_dato_billetera
 		
 		$dato_billetera=array(
-			"id_user"	=> $id,
-			"estatus"		=> "DES",
-			"activo"		=> "No"
+			/*"id_user"	=> */$id,
+			/*"estatus"		=> */"DES",
+			/*"activo"		=> */"No"
 			);
-		$this->db->insert("billetera",$dato_billetera);
-		#return $dato_billetera;#true;
+		#$this->db->insert("billetera",$dato_billetera);
+		return $dato_billetera;#true;
 		#echo "bill si|";
 	}
 
 	
 
-	private function insert_dato_dir($id) {#dato_dir
+	private function dato_dir($id) {#insert_dato_dir
 		
 		$dato_dir=array(
-			"id_user"   => $id,
-			"cp"        => $_POST['cp'],
-			"calle"     => $_POST['calle'],
-			"colonia"   => $_POST['colonia'],
-			"municipio" => $_POST['municipio'],
-			"estado"    => $_POST['estado'],
-			"pais"      =>$_POST['pais']
+			/*"id_user"   => */$id,
+			/*"cp"        => */$_POST['cp'],
+			/*"calle"     => */$_POST['calle'],
+			/*"colonia"   => */$_POST['colonia'],
+			/*"municipio" => */$_POST['municipio'],
+			/*"estado"    => */$_POST['estado'],
+			/*"pais"      => */$_POST['pais']
 			);
-		$this->db->insert("cross_dir_user",$dato_dir);
-		#return $dato_dir;#true;
+		#$this->db->insert("cross_dir_user",$dato_dir);
+		return $dato_dir;#true;
 		#echo "dir si|";
 	}
 
 	
-	private function insert_dato_tels($id) { #dato_tels
+	private function insert_dato_tels($id,$fijos,$moviles) { #dato_tels
 		
 		//tipo_tel 1=fijo 2=movil
 		#$dato_tels =array();
-		if($_POST["fijo"]){
-			foreach ($_POST["fijo"] as $fijo){
+		#if(isset($_POST["fijo"])){
+			foreach ($fijos as $fijo){
 				$dato_tel=array(
 					"id_user"		=> $id,
 					"id_tipo_tel"	=> 1,
-					"numero"		=> $fijo,
+					"numero"		=> $fijo ? $fijo : "",
 					"estatus"		=> "ACT"
 					);
 				#array_push($dato_tels, $dato_tel);
 				$this->db->insert("cross_tel_user",$dato_tel);
 			}
-		}
+		#}
 		
-		if($_POST["movil"]){
-			foreach ($_POST["movil"] as $movil){
+		#if(isset($_POST["movil"])){
+			foreach ($moviles as $movil){
 				$dato_tel=array(
 					"id_user"		=> $id,
 					"id_tipo_tel"	=> 2,
-					"numero"		=> $movil,
+					"numero"		=> $movil ? $movil : "",
 					"estatus"		=> "ACT"
 					);
 				#array_push($dato_tels, $dato_tel);
 				$this->db->insert("cross_tel_user",$dato_tel);
 			}
-		}
+		#}
 		
-		#return $dato_tels;#true;
+		return true;#$dato_tels;
 		#echo "tels si|";
 	}
 
 	
-	private function insert_dato_afiliar($id, $mi_red, $id_debajo, $lado, $directo) { #dato_afiliar
+	private function dato_afiliar($id, $mi_red, $id_debajo, $lado, $directo) { #insert_dato_afiliar
 		$dato_afiliar =array(
-			"id_red"      => $mi_red,
-			"id_afiliado" => $id,
-			"debajo_de"   => $id_debajo,
-			"directo"     => $directo,
-			"lado"        => $lado
+			/*"id_red"      => */$mi_red,
+			/*"id_afiliado" => */$id,
+			/*"debajo_de"   => */$id_debajo,
+			/*"directo"     => */$directo,
+			/*"lado"        => */$lado
 			);
 		
 		//var_dump($dato_afiliar); exit;
- 		$this->db->insert("afiliar",$dato_afiliar); 		
- 		#return $dato_afiliar;#true;
+ 		#$this->db->insert("afiliar",$dato_afiliar); 		
+ 		return $dato_afiliar;#true;
  		#echo "afiliar si|";
 	}
 
@@ -299,23 +335,23 @@ class model_afiliado extends CI_Model{
 		echo "lado si|";
 	}
 	
-	private function insert_dato_red($id) { #dato_red
+	private function dato_red($id) { #insert_dato_red
 		
 		$redes = $this->db->get('tipo_red');
 		$redes = $redes->result();
-		#$dato_red = array();
+		$dato_red = array();
 		foreach ($redes as $red){
-			$dato_red=array(
-					'id_red'        => $red->id,
-					"id_usuario"	=> $id,
-					"profundidad"	=> "0",
-					"estatus"		=> "ACT",
-					"premium"		=> '2'
+			$dato=array(
+					/*'id_red'        => */$red->id,
+					/*"id_usuario"	=> */$id,
+					/*"profundidad"	=> */"0",
+					/*"estatus"		=> */"ACT",
+					/*"premium"		=> */'2'
 			);
-			#array_push($dato_red, $dato);
+			array_push($dato_red, $dato);
 			#$this->db->insert("red",$dato_red);
 		}		
-		#return $dato_red;#true;
+		return $dato_red;#true;
 		#echo "red si|";
 	}
 
@@ -329,7 +365,7 @@ class model_afiliado extends CI_Model{
 		$q = $this->db->query("select * from user_profiles where user_id=".$id);
 		$perfil = $q->result();
 		return ($perfil) ? $perfil[0]->user_id : null;
-		#echo "perfil si|";
+		echo "perfil si|";
 	}
 
 	private function definir_debajo(){
@@ -341,7 +377,7 @@ class model_afiliado extends CI_Model{
 		}else{
 			return intval(isset($_POST['id']) ? $_POST['id'] : $d);
 		}
-		#echo "debajo si|";
+		echo "debajo si|";
 	}
 
 	
@@ -787,4 +823,3 @@ class model_afiliado extends CI_Model{
 		}
 	}
 }
-

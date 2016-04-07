@@ -63,7 +63,7 @@
 													<a href="/bo/comercial/red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-sitemap fa-3x"></i>
-															<h1>Red de Afiliacion</h1>
+															<h1>Red de <br>Afiliacion</h1>
 														</div>
 													</a>
 												</div>

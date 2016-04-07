@@ -672,7 +672,7 @@ $(document).ready(function() {
 							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
 							$.ajax({
 								type: "POST",
-								url: "/bo/usuarios/afiliar_nuevo",
+								url: "/ov/perfil_red/afiliar_nuevo",
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
