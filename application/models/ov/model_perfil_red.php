@@ -561,7 +561,7 @@ order by (U.id);");
 	
 	function use_keyword()
 	{
-		$q=$this->db->query("select * from user_profiles where keyword like '".$_POST['keyword']."'");
+		$q=$this->db->query("select * from user_profiles where keyword = '".$_POST['keyword']."'");
 		return $q->result();
 	}
 	function telefonos($id)

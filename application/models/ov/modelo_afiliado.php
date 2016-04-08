@@ -129,9 +129,9 @@ class modelo_afiliado extends CI_Model{
 		//$query->next_result(); // Dump the extra resultset.
 		//$query->free_result(); //Does what it says.
 		
-		return  true;#$q->result();'1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
+		return  true;# '1|'.$dato_perfil.'2|'.$dato_afiliar.'3|'.
 				# $dato_estilo.'4|'.$dato_coaplicante.'5|'./*$dato_tels.'6|'.*/
-				# $dato_dir.'7|'.$dato_billetera.'8|'.$dato_rango.'9|'.$dato_img; 
+				# $dato_dir.'7|'.$dato_billetera.'8|'.$dato_rango.'9|'.$dato_img;#$q->result();
 	}
 	
 	function crearUsuario(){	
