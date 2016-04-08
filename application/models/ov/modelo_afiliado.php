@@ -388,6 +388,13 @@ class modelo_afiliado extends CI_Model{
 		return $id_afiliador[0]->id;
 	}
 	
+	function obtenrIdUsername($username){
+		$id_afiliador= $this->db->query('select id from users where username like "'.$username.'"');
+	
+		$id_afiliador = $id_afiliador->result();
+		return $id_afiliador[0]->id;
+	}
+	
 	function obtenrIdUserby($usuario){
 		$id_afiliador= $this->db->query('select id from users where username ="'.$usuario.'"');
 		$id_afiliador = $id_afiliador->result();
