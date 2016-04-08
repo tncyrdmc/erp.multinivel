@@ -606,12 +606,14 @@ class bonos extends CI_Controller
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
 				<thead id='tablacabeza'>
-					<th data-class='expand'>ID Venta</th>
+					<th data-class='expand'>ID Afiliado</th>
 					<th data-hide='phone,tablet'>Afiliado</th>
-					<th data-hide='phone,tablet'>Red</th>
-					<th data-hide='phone,tablet'>Items</th>
-					<th data-hide='phone,tablet'>Total</th>
-					<th data-hide='phone,tablet'>Comision</th>
+					<th data-hide='phone,tablet'>Bono</th>
+					<th data-hide='phone,tablet'>Dia</th>
+					<th data-hide='phone,tablet'>Mes</th>
+					<th data-hide='phone,tablet'>Año</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Valor</th>
 				</thead>
 				<tbody>";
 	
@@ -620,15 +622,17 @@ class bonos extends CI_Controller
 		{
 				
 			echo "<tr>
-			<td class='sorting_1'>".$hist->id_venta."</td>
+			<td class='sorting_1'>".$hist->id_usuario."</td>
 			<td>".$hist->nombres."</td>
-			<td>".$hist->red."</td>
-			<td>".$hist->items."</td>
-			<td>".number_format($hist->total, 2)."</td>
-			<td> $	".number_format($hist->comision, 2)."</td>
+			<td>".$hist->bono."</td>
+			<td>".$hist->dia."</td>
+			<td>".$hist->mes."</td>
+			<td>".$hist->ano."</td>
+			<td>".$hist->fecha."</td>
+			<td> $	".number_format($hist->valor, 2)."</td>
 			</tr>";
 	
-			$total += ($hist->comision);
+			$total += ($hist->valor);
 	
 		}
 			
@@ -639,9 +643,13 @@ class bonos extends CI_Controller
 			<td></td>
 			<td></td>
 			<td></td>
+			<td></td>
+			<td></td>
 			</tr>";
 	
 		echo "<tr>
+			<td></td>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
