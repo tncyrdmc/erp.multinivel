@@ -797,7 +797,7 @@ order by (U.id);");
 	}
 	
 	function kill_afiliado($id){
-		$this->db->query("delete from afiliar where id_afiliado = ".$id);
+		$this->db->query("delete from users where id = ".$id);
 		$this->db->query("delete from user_profiles where user_id not in (select id from users)");
 		$this->db->query("delete from afiliar where id_afiliado not in (select id from users)");
 		$this->db->query("delete from cross_perfil_usuario where id_user not in (select id from users)");
