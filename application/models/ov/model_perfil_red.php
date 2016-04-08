@@ -798,13 +798,23 @@ order by (U.id);");
 	
 	function kill_afiliado($id){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id);
-		$this->db->query("delete from user_profiles where user_id = ".$id);
-		$this->db->query("delete from users where id = ".$id);
-		$this->db->query("delete from red where id_usuario = ".$id);
+		$this->db->query("delete from user_profiles where user_id not in (select id from users)");
+		$this->db->query("delete from afiliar where id_afiliado not in (select id from users)");
+		$this->db->query("delete from cross_perfil_usuario where id_user not in (select id from users)");
+		$this->db->query("delete from estilo_usuario where id_usuario not in (select id from users)");
+		$this->db->query("delete from coaplicante where id_user not in (select id from users)");
+		$this->db->query("delete from cross_tel_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_dir_user where id_user not in (select id from users)");
+		$this->db->query("delete from billetera where id_user not in (select id from users)");
+		$this->db->query("delete from cross_rango_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_img_user where id_user not in (select id from users)");
+		$this->db->query("delete from cat_img where id_img not in (select id_img from cross_img_user)");
+		//$this->db->query("delete from red where id_usuario = ".$id);
+		return true;
 	}
 	function kill_afiliadonred($id,$red){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id." and id_red = ".$red);
-		$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
+		//$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
 	}
 	
 	function ocupado($temp){
