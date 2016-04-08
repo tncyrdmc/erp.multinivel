@@ -569,7 +569,9 @@ class bonos extends CI_Controller
 			<td>".$hist->afiliados."</td>
 			<td> $	".number_format($hist->total, 2)."</td>
 			<td>
-	
+				<a title='Ver Detalle' style='cursor: pointer;' class='txt-color-blue' onclick='ver(".$hist->id.");'>
+				<i class='fa fa-eye fa-3x'></i>
+				</a>
 				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$hist->id.");'>
 				<i class='fa fa-trash-o fa-3x'></i>
 				</a>
@@ -582,6 +584,72 @@ class bonos extends CI_Controller
 			}
 				
 		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function detalle_historial(){
+	
+	
+		$id=$_POST['id'];
+		$fecha =isset($_POST['fecha']) ? $_POST['fecha'] : null;
+	
+		//echo "dentro de historial : ".$id;
+	
+		$historial = ($fecha)
+		? $this->model_bonos->detalle_historial_fecha($id,$fecha)
+		: $this->model_bonos->detalle_historial_id($id);
+	
+		$total = 0 ;
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Venta</th>
+					<th data-hide='phone,tablet'>Afiliado</th>
+					<th data-hide='phone,tablet'>Red</th>
+					<th data-hide='phone,tablet'>Items</th>
+					<th data-hide='phone,tablet'>Total</th>
+					<th data-hide='phone,tablet'>Comision</th>
+				</thead>
+				<tbody>";
+	
+	
+		foreach($historial as $hist)
+		{
+				
+			echo "<tr>
+			<td class='sorting_1'>".$hist->id_venta."</td>
+			<td>".$hist->nombres."</td>
+			<td>".$hist->red."</td>
+			<td>".$hist->items."</td>
+			<td>".number_format($hist->total, 2)."</td>
+			<td> $	".number_format($hist->comision, 2)."</td>
+			</tr>";
+	
+			$total += ($hist->comision);
+	
+		}
+			
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+	
+		echo "<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class='sorting_1'><b>TOTAL:</b></td>
+			<td><b> $	".number_format($total, 2)."</b></td>
+			</tr>";
+	
 		echo "</tbody>
 		</table><tr class='odd' role='row'>";
 	
