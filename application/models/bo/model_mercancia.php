@@ -45,7 +45,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "servicio", $dato_servicio );
 		
-		$sku = mysql_insert_id ();
+		$sku = $this->db->insert_id ();
 		
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		$iva=$this->validar_iva();
@@ -64,7 +64,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "membresia", $dato_membresia );
 		
-		$sku = mysql_insert_id ();
+		$sku = $this->db->insert_id ();
 		
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		$iva=$this->validar_iva();
@@ -98,7 +98,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "producto", $dato_producto );
 		
-		$sku = mysql_insert_id ();
+		$sku = $this->db->insert_id ();
 		
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		
@@ -125,7 +125,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "combinado", $dato_combinado );
 		
-		$combinado = mysql_insert_id ();
+		$combinado = $this->db->insert_id ();
 		$n = 0;
 		
 		if (! isset ( $_POST ['n_productos'] ))
@@ -286,7 +286,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "paquete_inscripcion", $dato_paquete );
 	
-		$paquete = mysql_insert_id ();
+		$paquete = $this->db->insert_id ();
 		$n = 0;
 	
 		if (! isset ( $_POST ['n_productos'] ))
@@ -452,7 +452,7 @@ class model_mercancia extends CI_Model {
 				"descuento" => $descuento 
 		);
 		$this->db->insert ( "mercancia", $dato_mercancia );
-		return mysql_insert_id ();
+		return $this->db->insert_id ();
 	}
 	
 	function ingresarimpuestos($impuestos, $mercancia) {
@@ -491,7 +491,7 @@ class model_mercancia extends CI_Model {
 			);
 			$this->db->insert ( "cat_img", $dato_img );
 			
-			$id_foto = mysql_insert_id ();
+			$id_foto = $this->db->insert_id ();
 			
 			$dato_cross_img = array (
 					"id_mercancia" => $id,
@@ -515,7 +515,7 @@ class model_mercancia extends CI_Model {
 					"estatus" => "ACT" 
 			);
 			$this->db->insert ( "cat_img", $dato_img );
-			$id_foto = mysql_insert_id ();
+			$id_foto = $this->db->insert_id ();
 			
 			$dato_cross_img = array (
 					"id_promo" => $id,
@@ -587,7 +587,7 @@ class model_mercancia extends CI_Model {
 		
 		$this->db->insert("proveedor", $dato_proveedor );
 		
-		$id_nuevo = mysql_insert_id();
+		$id_nuevo = $this->db->insert_id();
 		
 		
 		$dato_proveedor = array (

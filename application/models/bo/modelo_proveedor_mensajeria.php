@@ -54,7 +54,7 @@ class modelo_proveedor_mensajeria extends CI_Model
 	
 	function crear_proveedor_mensajeria($proveedor){
 		$this->db->insert('proveedor_mensajeria',$proveedor);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function crear_contacto_mensajeria($contacto){
@@ -64,7 +64,7 @@ class modelo_proveedor_mensajeria extends CI_Model
 	
 	function crear_tarifa_mensajeria($tarifa){
 		$this->db->insert('proveedor_tarifas',$tarifa);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function eliminar_proveedor_mensajeria($id){
@@ -116,12 +116,12 @@ class modelo_proveedor_mensajeria extends CI_Model
 	
 	function crear_departamento($departamento){
 		$this->db->insert('estate',$departamento);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function crear_ciudad($ciudad){
 		$this->db->insert('City',$ciudad);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function consultar_envios_mensajeria($id){

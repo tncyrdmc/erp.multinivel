@@ -584,7 +584,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			"id_estatus"	=> 1
 		);
 		$this->db->insert("movimiento",$dato_mov);
-		$insert_mov=mysql_insert_id();
+		$insert_mov=$this->db->insert_id();
 		$dato_surtido=array(
 			"id_almacen_origen"	=> $origen,
 			"id_movimiento"		=> $insert_mov,
@@ -650,7 +650,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			"id_metodo_pago" 	=> $_POST["pago"]
 		);
 		$this->db->insert("venta",$dato_venta);
-		$venta = mysql_insert_id();
+		$venta = $this->db->insert_id();
 		if($_GET["tipo"]==3)
 		{
 			$this->db->query("insert into autocompra (fecha,id_usuario) values ('".$_POST['startdate']."',".$id_user.")");
@@ -754,7 +754,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 			);
 		
 			$this->db->insert("movimiento",$dato_mov);
-			$insert_mov=mysql_insert_id();
+			$insert_mov=$this->db->insert_id();
 			$dato_surtido=array(
 				"id_almacen_origen"	=> $origen,
 				"id_movimiento"		=> $insert_mov,
@@ -974,7 +974,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"fecha" 			=> $fecha
 		);
 		$this->db->insert("venta",$dato_venta);
-		$venta = mysql_insert_id();
+		$venta = $this->db->insert_id();
 		return $venta;*/
 	}
 	
@@ -1077,7 +1077,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"fecha" 			=> $fecha
 		);
 		$this->db->insert("venta",$dato_venta);
-		$venta = mysql_insert_id();
+		$venta = $this->db->insert_id();
 		return $venta;
 	}
 	
@@ -1089,7 +1089,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"fecha" 			=> $fecha
 		);
 		$this->db->insert("venta",$dato_venta);
-		$venta = mysql_insert_id();
+		$venta = $this->db->insert_id();
 		return $venta;
 	}
 	
@@ -1108,7 +1108,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"payment_method_name" => $medio_pago
 		);
 		$this->db->insert("pago_online_transaccion",$dato_venta);
-		$venta = mysql_insert_id();
+		$venta = $this->db->insert_id();
 		return $venta;
 	}
 	
@@ -1119,7 +1119,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				"carrito"		=> $carrito
 		);
 		$this->db->insert("pago_online_proceso",$dato_venta);
-		$id_pago_proceso = mysql_insert_id();
+		$id_pago_proceso = $this->db->insert_id();
 		return $id_pago_proceso;
 	}
 	
@@ -1183,7 +1183,7 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 				);
 				
 				$this->db->insert("movimiento",$dato_mov);
-				$insert_mov = mysql_insert_id();
+				$insert_mov = $this->db->insert_id();
 				
 				$dato_surtido=array(
 						"id_almacen_origen"	=> $origen,
