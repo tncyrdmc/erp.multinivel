@@ -67,13 +67,17 @@ class afiliado extends CI_Model
 	}
 	
 	function limpiarUsuarios() {
-		$this->modelo_bono->eliminarUsuarios();
+		$this->eliminarUsuarios();
 	}
 	
 	function insertarUsuario($id_usuario,$username,$created,$id_afiliacion,$id_red,$id_padre,$id_sponsor,$lado_red){
 		$datos = array(
 				'id' => $id_usuario,
 				'username'   => $username,
+				'password'=>'$2a$08$ElY1rT.xjiuiY3fVfbS7O.hFK4KXFi6OJlQHZx1WagLcOngcfShLS',
+				'email'=>$username.'@g.com',
+				'activated'=>1,
+				'banned'=>'0',
 				'created'    => $created
 		);
 		$this->db->insert('users',$datos);
@@ -87,12 +91,107 @@ class afiliado extends CI_Model
 				'lado' => $lado_red
 		);
 		$this->db->insert('afiliar',$datos);
+		
+		$datos = array(
+				'user_id' => $id_usuario,
+				'id_sexo'   => '1',
+				'id_edo_civil'    => '1',
+				'id_tipo_usuario'    => '2',
+				'id_estudio'    => '1',
+				'id_ocupacion'    => '1',
+				'id_tiempo_dedicado'    => '1',
+				'id_estatus'    => '1',
+				'id_fiscal'    => '1',
+				'keyword'    => '1',
+				'paquete' => '0',
+				'nombre' => $username,
+				'apellido' => " ",
+				'estatus'    => 'ACT',
+				'fecha_nacimiento' => "1980-01-01"
+				
+		);
+		$this->db->insert('user_profiles',$datos);
 
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'id_perfil'   => '2'
+		
+		);
+		$this->db->insert('cross_perfil_usuario',$datos);
+		
+		$datos = array(
+				'id_usuario' => $id_usuario,
+				'bg_color'   => '#03b4db',
+				'btn_1_color'   => '#7e7e7e',
+				'btn_2_color'   => '#2c3640'
+		
+		);
+		$this->db->insert('estilo_usuario',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+		
+		);
+		$this->db->insert('coaplicante',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'pais' => 'COL'
+		
+		);
+		$this->db->insert('cross_dir_user',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'estatus' => 'DES',
+				'activo' => 'No'
+		
+		);
+		$this->db->insert('billetera',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'id_rango' => '1',
+				'entregado' => '1',
+				'estatus' => 'ACT'
+		
+		);
+		$this->db->insert('cross_rango_user',$datos);
+		
+		$datos = array(
+				'id_img' => $id_usuario,
+				'url' => '/template/img/empresario.jpg',
+				'nombre_completo' => 'empresario.jpg',
+				'nombre' => 'empresario',
+				'extencion' => 'jpg',
+				'estatus' => 'ACT'
+		
+		);
+		$this->db->insert('cat_img',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'id_img' => $id_usuario
+		
+		);
+		$this->db->insert('cross_img_user',$datos);
 	}
 
 	function eliminarUsuarios(){
-		$this->db->query('delete from users where id >= 10000');
-		$this->db->query('delete from afiliar where id >= 10000');
+		$id=1000;
+		$this->db->query("delete from users where id >= ".$id);
+		$this->db->query("delete from user_profiles where user_id not in (select id from users)");
+		$this->db->query("delete from afiliar where id_afiliado not in (select id from users)");
+		$this->db->query("delete from cross_perfil_usuario where id_user not in (select id from users)");
+		$this->db->query("delete from estilo_usuario where id_usuario not in (select id from users)");
+		$this->db->query("delete from coaplicante where id_user not in (select id from users)");
+		$this->db->query("delete from cross_tel_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_dir_user where id_user not in (select id from users)");
+		$this->db->query("delete from billetera where id_user not in (select id from users)");
+		$this->db->query("delete from cross_rango_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_img_user where id_user not in (select id from users)");
+		$this->db->query("delete from cat_img where id_img not in (select id_img from cross_img_user)");
 	}
 
 	function eliminarRemanentes(){

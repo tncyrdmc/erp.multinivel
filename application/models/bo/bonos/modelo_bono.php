@@ -133,7 +133,7 @@ class modelo_bono extends CI_Model
 				'estatus'	=> $estatus_rango
 		);
 		$this->db->insert('cat_rango',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarRangoTipo($id_rango,$id_tipo_rango,$valor,$condicion_red,$nivel_red){
@@ -145,7 +145,7 @@ class modelo_bono extends CI_Model
 				'nivel_red'	=> $nivel_red
 		);
 		$this->db->insert('cross_rango_tipos',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarBono($id_bono,$nombre_bono,$descripcion_bono,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$plan,$estatus_bono){
@@ -162,7 +162,7 @@ class modelo_bono extends CI_Model
 				'estatus'	=> $estatus_bono
 		);
 		$this->db->insert('bono',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarBonoCondicion($id_condicion,$id_bono,$id_rango,$id_tipo_rango,$valor,$id_red,$condicion_1,$condicion_2){
@@ -177,7 +177,7 @@ class modelo_bono extends CI_Model
 				'condicion2'	=> $condicion_2
 		);
 		$this->db->insert('cat_bono_condicion',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarBonoValor($valores){

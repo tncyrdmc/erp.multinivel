@@ -50,7 +50,9 @@ class mercancia extends CI_Model
 	function ingresarCategoria($datosCategoria) {
 		$datos = array(
 				'id_grupo' => $datosCategoria["id_categoria"],
-				'id_red'   => $datosCategoria["id_red"]
+				'id_red'   => $datosCategoria["id_red"],
+				'descripcion'   => "Catgoria ".$datosCategoria["id_categoria"],
+				'estatus'   => "ACT"
 				
 		);
 		$this->db->insert('cat_grupo_producto',$datos);
