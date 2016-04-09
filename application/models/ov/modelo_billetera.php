@@ -296,7 +296,7 @@ class modelo_billetera extends CI_Model
 		);
 			
 		$this->db->insert("transaccion_billetera",$dato_cobro);
-		$id = mysql_insert_id();
+		$id = $this->db->insert_id();
 		return $id;
 	}
 	

@@ -101,7 +101,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 	            );
 		$this->db->insert("cat_perfil_permiso",$dato_perfil);
 
-		$id_perfil=mysql_insert_id();
+		$id_perfil=$this->db->insert_id();
 
 		$dato_grupo=array(
 					"id_grupo"  => $_POST['grupo'],

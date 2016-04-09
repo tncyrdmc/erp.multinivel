@@ -19,7 +19,7 @@ class Model_tipo_red extends CI_Model{
 						'valor_punto' => $punto
 		);
 		$this->db->insert("tipo_red",$datos);
-		$id_red = mysql_insert_id();
+		$id_red = $this->db->insert_id();
 		$datos = array('id_red' => $id_red,'id_afiliado' => 2,'debajo_de' => 1,'directo' => 1,'lado' => 0);
 		$this->db->insert("afiliar",$datos);
 		$datos = array('id_red' => $id_red,'id_usuario' => 2,'profundidad' => 0,'estatus' => 'ACT','premium' => 2);

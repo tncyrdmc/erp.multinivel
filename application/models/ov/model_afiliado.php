@@ -170,7 +170,7 @@ class model_afiliado extends CI_Model{
 		);
 		
 		$this->db->insert("cat_img",$dato_img);
-		$id_img = mysql_insert_id();
+		$id_img = $this->db->insert_id();
 		
 		$dato_cross=array(
 				"id_user"	=> $id,
@@ -554,7 +554,7 @@ class model_afiliado extends CI_Model{
 				"estatus"		=> "ACT"
 		);
 		$this->db->insert("cat_img",$dato_rango);
-		$id_img = mysql_insert_id();
+		$id_img = $this->db->insert_id();
 		$dato_rango=array(
 				"id_user"	=> $id,
 				"id_img"	=> $id_img
