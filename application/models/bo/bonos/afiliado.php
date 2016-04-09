@@ -374,8 +374,9 @@ class afiliado extends CI_Model
 	}
 	
 	function getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datosVenta){
-		
+
 		$datos=array();
+		
 		
 		
 		if($datosVenta=="COSTO")
@@ -402,7 +403,7 @@ class afiliado extends CI_Model
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia<$cualquiera&&$id_tipo_mercancia==$cualquiera){
+		}else if($id_mercancia>$cualquiera&&$id_tipo_mercancia==$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
@@ -432,6 +433,7 @@ class afiliado extends CI_Model
 
 
 	private function getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
+
 		if($id_mercancia==0&&$id_tipo_mercancia==0){
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
@@ -479,7 +481,6 @@ class afiliado extends CI_Model
 			return $this->getVentasTodaLaRedEquilibrada( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_tipo_mercancia,$id_mercancia,$datoVenta);
 
 		}else if($condicionRed=="DEB") {
-			
 			return $this->getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta)["total"];
 
 		}
@@ -525,7 +526,6 @@ class afiliado extends CI_Model
 		}
 		
 		$pataMasdebil = $this->getValorPataMasDebil ( $patas );
-
 		return $pataMasdebil;
 	}
 	

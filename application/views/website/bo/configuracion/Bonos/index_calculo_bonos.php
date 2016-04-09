@@ -4,8 +4,9 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								Comercial
+							<span>
+							> <a href="/bo/administracion/"> Administración</a> 
+								> Bonos
 							</span>
 						</h1>
 					</div>
@@ -32,57 +33,25 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-2 link">
+											<div class="col-sm-3 link">
 											</div>
-											<div class="col-sm-8 link">
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/actionProveedor">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Proveedores <br>&nbsp</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/categorias">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-th fa-3x"></i>
-															<h1>Categorias<br>&nbsp</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito_de_compras?co=c">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-shopping-cart fa-3x"></i>
-															<h1>Carrito de Compras</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/red">
+											<div class="col-sm-6 link">
+											<div class="col-sm-4 link">	
+													<a href="/bo/bonos/pago_bono">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-sitemap fa-3x"></i>
-															<h1>Red de <br>Afiliacion</h1>
+															<i class="fa fa-money fa-3x"></i>&nbsp<i class="fa fa-money fa-2x"></i>&nbsp<i class="fa fa-money fa-1x"></i>
+															<h1>Calculo de <br>Bonos</h1>
+														</div>
+													</a>
+											</div>
+												<div class="col-sm-4 link">	
+													<a href="/bo/bonos/historial">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-gift fa-3x"></i>&nbsp&nbsp&nbsp<i class="fa fa-check fa-3x"></i>
+															<h1>Bonos <br>Pagados</h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/comercial/transacciones_billetera"> <!-- /bo/reportes -->
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-hand-o-right fa-3x"></i>&nbsp&nbsp&nbsp<i class="fa fa-money fa-3x"></i>
-															<h1>Transacciones <br> en Billetera</h1><!-- Reportes -->
-														</div>
-													</a>
-												</div>	
-												<div class="col-sm-3 link">	
-														<a href="#">
-															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-																<i class="fa fa-archive fa-3x"></i>
-																<h1>Archivero</h1>
-															</div>
-														</a>
-												</div>											
 											</div>
 										 </div>
 									</div>
@@ -120,3 +89,4 @@
 	text-decoration: none !important;
 }
 </style>
+			

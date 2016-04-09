@@ -50,9 +50,7 @@ class mercancia extends CI_Model
 	function ingresarCategoria($datosCategoria) {
 		$datos = array(
 				'id_grupo' => $datosCategoria["id_categoria"],
-				'id_red'   => $datosCategoria["id_red"],
-				'descripcion'   => "Catgoria ".$datosCategoria["id_categoria"],
-				'estatus'   => "ACT"
+				'id_red'   => $datosCategoria["id_red"]
 				
 		);
 		$this->db->insert('cat_grupo_producto',$datos);
@@ -63,11 +61,20 @@ class mercancia extends CI_Model
 	}
 	
 	function insertarMercancia($id_mercancia,$id_tipo_mercancia,$id_categoria,$id_red,$costo,$puntos_comisionables){
-		$datos = array(
+	$datos = array(
 				'id' => $id_mercancia,
 				'sku' => $id_mercancia,
+				'sku_2' => $id_mercancia,
 				'id_tipo_mercancia'   => $id_tipo_mercancia,
+				'pais' => "AAA",
+				'estatus' => "ACT",
+				'id_proveedor' => "0",
+				'real'    => $costo,
 				'costo'    => $costo,
+				'costo_publico'    => $costo,
+				'entrega'    =>0,
+				'iva'    =>"MAS",
+				'descuento'    =>"0",
 				'puntos_comisionables'=>$puntos_comisionables
 				
 		);
@@ -76,6 +83,15 @@ class mercancia extends CI_Model
 
 		
 		$this->db->insert('mercancia',$datos);
+		
+		
+		$datos = array(
+				'id_mercancia' => $id_mercancia,
+				'id_cat_imagen' => "10000",
+		
+		);
+		
+		$this->db->insert('cross_merc_img',$datos);
 	}
 
 	private function ingresarTipoMercancia($id_mercancia, $id_tipo_mercancia, $id_categoria) {
@@ -126,6 +142,7 @@ class mercancia extends CI_Model
 		$this->db->query('delete from combinado where id >= 500');
 		$this->db->query('delete from paquete_inscripcion where id_paquete >= 500');
 		$this->db->query('delete from membresia where id >= 500'); 
+		$this->db->query('delete from cross_merc_img where id_mercancia >= 500');
 	}
 	function eliminarCategorias(){
 		$this->db->query('delete from cat_grupo_producto where id_grupo >= 250');

@@ -7,6 +7,7 @@
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 							> <a href="/bo/administracion/"> Administración</a> 
+							> <a href="/bo/bonos/index_calculo_bonos"> Bonos</a> 
 								> Calculo de Bonos
 							</span>
 						</h1>
@@ -183,7 +184,7 @@ function enviar() {
 							className: "btn-success",
 							callback: function() {
 								
-								location.href="/bo/bonos/listar";
+								location.href="/bo/bonos/historial";
 								FinalizarSpinner();
 								}
 							}

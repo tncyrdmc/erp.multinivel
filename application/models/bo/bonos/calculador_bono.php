@@ -243,7 +243,7 @@ class calculador_bono extends CI_Model
 	
 		$fechaInicio=$this->getFechaInicioPagoDeBono($frecuencia,$fechaActual);
 		$fechaFin=$this->getFechaFinPagoDeBono($frecuencia,$fechaActual);
-		
+
 		$resultadoBinario=true;
 		
 		foreach ($bono->getCondicionesBono() as $condicionBono){
@@ -317,6 +317,7 @@ class calculador_bono extends CI_Model
 		$usuario->setIdBono($id_bono);
 		$valor=0;
 		
+		
 		/* Afiliados a la red   =1;
 		 * Ventas de la red     =2;
 		 * Compras Personales   =3;
@@ -330,35 +331,50 @@ class calculador_bono extends CI_Model
 			}
 			case 2:{
 				$valor=$usuario->getVentasTodaLaRed($id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin,$condicion1,$condicion2,"COSTO");
+				$this->setValorCondicion($valor);
 				break;
 			}
 			case 3:{
 				$valor=$usuario->getComprasPersonalesIntervaloDeTiempo($id_usuario,$red,$fechaInicio,$fechaFin,$condicion1,$condicion2,"COSTO");
+				$this->setValorCondicion($valor);
 				break;
 			}
 			case 4:{
 				$valor=$usuario->getComprasPersonalesIntervaloDeTiempo($id_usuario,$red,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
+				$this->setValorCondicion($valor);
 				break;
 			}
 			case 5:{
 				$valor=$usuario->getVentasTodaLaRed($id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
+				$this->setValorCondicion($valor);
 				break;
 			}
 		}
-		$this->setValorCondicion($valor);
+
 		return $valor;
 	}
 	
 	public function getFinSemana($date) {
-		$ts = strtotime($date);
-		$start = (date('w', $ts) == 0) ? $ts : strtotime('next sunday', $ts);
-		return date('Y-m-d', $start);
+		$offset = strtotime($date);
+
+		if(date('w',$offset) == 0){
+			return $date;
+		}
+		else{
+			return date("Y-m-d", strtotime('next Sunday', strtotime($date)));
+		}
 	}
 	
 	public function getInicioSemana($date) {
-		$ts = strtotime($date);
-		$start = strtotime('last monday', $ts);
-		return date('Y-m-d', $start);
+		$offset = strtotime($date);
+
+		if(date('w',$offset) == 1)
+		{
+			return $date;
+		}
+		else{
+			return date("Y-m-d", strtotime('last Monday', strtotime($date)));
+		}
 	}
 	
 	public function getInicioQuincena($date) {

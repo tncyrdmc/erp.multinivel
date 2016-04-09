@@ -42,6 +42,27 @@ class bonos extends CI_Controller
 		$this->template->build('website/bo/configuracion/Bonos/index');
 	}
 	
+	function index_calculo_bonos()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario = $this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/index_calculo_bonos');
+	}
+	
 	function alta()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -534,7 +555,7 @@ class bonos extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/comercial/ver_bonos');
+		$this->template->build('website/bo/configuracion/Bonos/ver_bonos');
 	
 	}
 	

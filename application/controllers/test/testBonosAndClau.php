@@ -42,22 +42,32 @@ class testBonosAndClau extends CI_Controller {
 		$this->mercancia->eliminarCategorias();
 		$this->venta->eliminarVentas();
 		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
-		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
 
 	}
 	
 	public function index(){
 		
-		$this->before();
+		$this->pruebaProduccion();
+	/*	$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
 		
 		$this->before();
-	//	$this->testCalcularComisionesAfiliadosBonoDeEquipo();
-	//	$this->testCalcularComisionesAfiliadosBonoDeEquipoRemanente();
-	//	$this->testValidarSiElBonoYaCobroVerdadero();
-	//	$this->after();
+		$this->testCalcularComisionesAfiliadosBonoDeEquipo();
+		$this->testCalcularComisionesAfiliadosBonoDeEquipoRemanente();
+		$this->testValidarSiElBonoYaCobroVerdadero();
+		$this->after();*/
 
+	}
+	
+	public function pruebaProduccion(){
+		$this->before();
+		
+		$fecha=date('Y-m-d');
+		$effectiveDate = strtotime("+1 weeks", strtotime($fecha));
+		$fecha = strftime ( '%Y-%m-%d' , $effectiveDate );
+		
+		$this->ingresarVentasFecha($fecha);
 	}
 
 	public function testValidarSiElBonoYaCobroFalso(){
@@ -81,7 +91,7 @@ class testBonosAndClau extends CI_Controller {
 		$id_bono=$this->idBonoDeEquipo;
 		
 		$calculadorBono=new $this->calculador_bono();
-		$calculadorBono->calcularComisionesPorBono(56,$fecha);
+		$calculadorBono->calcularComisionesPorBono($id_bono,$fecha);
 
 		$usuario=new $this->afiliado();
 		//BONO De Equipo
@@ -290,7 +300,7 @@ class testBonosAndClau extends CI_Controller {
 
 		$calculadorBono=new $this->calculador_bono();
 
-		$calculadorBono->calcularComisionesPorBono(56,$fecha);
+		$calculadorBono->calcularComisionesPorBono($id_bono,$fecha);
 		
 		$usuario=new $this->afiliado();
 		//BONO De Equipo
@@ -546,7 +556,7 @@ class testBonosAndClau extends CI_Controller {
 		);
 		
 		$puntosRed=5;
-		$paquetesDeinscripcion=4;
+		$membresia=5;
 		$id_mercancia=0;
 		
 		$datosRango2 = array(
@@ -560,7 +570,7 @@ class testBonosAndClau extends CI_Controller {
 				'id_condicion' => 7,
 				'id_red'   => 300,
 				'condicion_red_afilacion'    => "DEB",
-				'condicion1'    => $paquetesDeinscripcion,
+				'condicion1'    => $membresia,
 				'condicion2'	=> $id_mercancia,
 				'estatus_rango'	=> 'ACT'
 		);
@@ -698,19 +708,76 @@ class testBonosAndClau extends CI_Controller {
 		$afiliador->crearNuevoUsuario ($id,$nombre,"2016-03-17",$id,300,$debajo_de,$sponsor,$lado);
 	}
 	
-	private function ingresarMercancia($id,$tipo,$costo,$puntos){
-		
-		$datosMercancia = array(
-				'id_mercancia' => $id,
-				'id_tipo_mercancia'   => $tipo,
+	private function ingresarMercancia($id_mercancia,$nombre,$id_categoria,$id_tipo_mercancia,$costo,$puntos_comisionables){
+		$datos = array(
+				'id' => $id_mercancia,
+				'sku' => $id_mercancia,
+				'sku_2' => $id_mercancia,
+				'id_tipo_mercancia'   => $id_tipo_mercancia,
+				'pais' => "AAA",
+				'estatus' => "ACT",
+				'id_proveedor' => "0",
+				'real'    => $costo,
 				'costo'    => $costo,
-				'puntos_comisionables' => $puntos,
-				'id_categoria' => 250,
-				'id_red' => 300
+				'costo_publico'    => $costo,
+				'entrega'    =>0,
+				'iva'    =>"MAS",
+				'descuento'    =>"0",
+				'puntos_comisionables'=>$puntos_comisionables
+		
+		);
+		$this->db->insert('mercancia',$datos);
+		
+		$datos = array(
+				'id_mercancia' => $id_mercancia,
+				'id_cat_imagen' => "10000",
+		
 		);
 		
-		$this->mercancia->nuevaMercancia ($datosMercancia);
-		$this->mercancia->ingresarMercancia ();
+		$this->db->insert('cross_merc_img',$datos);
+		
+		if($id_tipo_mercancia==1){
+			$datos = array(
+					'id' => $id_mercancia,
+					'nombre'=>$nombre,
+					'id_grupo'   => $id_categoria
+						
+			);
+			$this->db->insert('producto',$datos);
+				
+		}else if($id_tipo_mercancia==2){
+			$datos = array(
+					'id' => $id_mercancia,
+					'nombre'=>$nombre,
+					'id_red'   => $id_categoria
+						
+			);
+			$this->db->insert('servicio',$datos);
+		}else if($id_tipo_mercancia==3){
+			$datos = array(
+					'id' => $id_mercancia,
+					'nombre'=>$nombre,
+					'id_red'   => $id_categoria
+						
+			);
+			$this->db->insert('combinado',$datos);
+		}else if($id_tipo_mercancia==4){
+			$datos = array(
+					'id_paquete' => $id_mercancia,
+					'nombre'=>$nombre,
+					'id_red'   => $id_categoria
+						
+			);
+			$this->db->insert('paquete_inscripcion',$datos);
+		}else if($id_tipo_mercancia==5){
+			$datos = array(
+					'id' => $id_mercancia,
+					'nombre'=>$nombre,
+					'id_red'   => $id_categoria
+						
+			);
+			$this->db->insert('membresia',$datos);
+		}
 	}
 
 	private function ingresarVentaMercanciaUsuario($id_venta,$id_usuario,$fecha,$mercanciasVendidas){
@@ -745,6 +812,8 @@ class testBonosAndClau extends CI_Controller {
 
 	private function ingresarVentas(){
 
+		$id_categoria=250;
+		
 		$datosCategoria = array(
 				'id_categoria' => 250,
 				'id_red'   => 300,
@@ -760,19 +829,20 @@ class testBonosAndClau extends CI_Controller {
 		 * 	Membresia = 5
 		 * 
 		 */
-		$paqueteDeInscripcion=4;
+		
+		$membresia=5;
 		
 		$id=500;$costo=35;$puntos=5;
-		$this->ingresarMercancia($id,$paqueteDeInscripcion,$costo,$puntos);
+		$this->ingresarMercancia($id,"Membresia Asociado",$id_categoria,$membresia,$costo,$puntos);
 		
 		$id=501;$costo=80;$puntos=20;
-		$this->ingresarMercancia($id,$paqueteDeInscripcion,$costo,$puntos);
+		$this->ingresarMercancia($id,"Membresia Infrarojo",$id_categoria,$membresia,$costo,$puntos);
 		
 		$id=502;$costo=50;$puntos=10;
-		$this->ingresarMercancia($id,$paqueteDeInscripcion,$costo,$puntos);
+		$this->ingresarMercancia($id,"Paquete Streamen",$id_categoria,$membresia,$costo,$puntos);
 		
 		$id=503;$costo=5;$puntos=10;
-		$this->ingresarMercancia($id,$paqueteDeInscripcion,$costo,$puntos);
+		$this->ingresarMercancia($id,"Recarga",$id_categoria,$membresia,$costo,$puntos);
 
 /*							RED DE AFILIACION
 *           	                      __________
