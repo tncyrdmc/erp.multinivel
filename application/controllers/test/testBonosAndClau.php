@@ -582,8 +582,8 @@ class testBonosAndClau extends CI_Controller {
 		
 		$datosBono = array(
 				'id_bono' => $this->idBonoDeEquipo,
-				'nombre_bono'   => "Bono Bluetooth",
-				'descripcion_bono'    => "Bono Bluetooth",
+				'nombre_bono'   => "Bono Binario",
+				'descripcion_bono'    => "Bono Binario",
 				'plan'	=> "SI",
 				'inicio' => '2016-03-01',
 				'fin'   => '2026-03-25',
@@ -958,7 +958,7 @@ class testBonosAndClau extends CI_Controller {
 		 *        	   	                     |  Spr:_2  |
 		 *        							 |Total:$165|
 		 *        							 |Puntos: 35|
-		 *                  	       __________/           \____________
+		 *                  	   __________/         \____________
 		 *           	          |  CARLOS  |        	  |   PEDRO  |
 		 *           	          | ID:10001 |   		  | ID:10002 |
 		 *        	   	          | Spr:10000|			  |Spr:10000 |
@@ -1000,9 +1000,9 @@ class testBonosAndClau extends CI_Controller {
 		 *|_Spr:10019| |_Spr:10019| |_Spr:10016| |_Spr:10020|                        |_Spr:10022| |_Spr:10022|
 		 *|Total:$ 80| |Total:$35 | |Total:$ 35| |Total:$80 |                        |Total:$80 | |Total:$80 |
 		 *|Puntos: 20| |Puntos: 5 | |Puntos:  5| |Puntos:20 |                        |Puntos:20 | |Puntos:20 |
-		 *_____|_____     ____|_____               ____|_____             __________/   ____\______
-		 *|  RUBEN   |   |   MARCELA|             |  NELLY   |    	     |  JOSE    | | JOHANA   |
-		 *| ID:10029 |   | ID:10030 |       	     | ID:10031 |            | ID:10032 | | ID:10033 |
+		 *_____|_____     ____|_____               ____|_____              __________/   ____\______
+		 *|  RUBEN   |   |   MARCELA|             |  NELLY   |    	      |  JOSE    | | JOHANA   |
+		 *| ID:10029 |   | ID:10030 |       	  | ID:10031 |            | ID:10032 | | ID:10033 |
 		 *|Spr:10001 |   |Spr:10001 |             |Spr:10026 |            |_Spr:10027| |_Spr:10027|
 		 *|Total:$35 |   |Total:$35 |             |Total:$35 |            |Total:$35 | |Total:$35 |
 		 *|Puntos: 5 |   |Puntos: 5 |             |Puntos: 5 |            |Puntos: 5 | |Puntos: 5 |

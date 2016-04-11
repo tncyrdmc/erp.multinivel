@@ -13,7 +13,7 @@ class repartidor_comision_bono extends CI_Model
 	private $id_transaccion;
 	private $id_usuario;
 	private $valor;
-	
+
 	
 	function setUpHistorial($id_historial){
 		$q=$this->db->query("SELECT * FROM comision_bono_historial where id=".$id_historial);
@@ -38,6 +38,7 @@ class repartidor_comision_bono extends CI_Model
 	}
 	
 	function ingresarHistorialComisionBono($id,$id_bono,$dia,$mes,$ano,$fecha){
+
 		$datos = array(
 				'id' => $id,
 				'id_bono'   => $id_bono,
@@ -162,6 +163,4 @@ class repartidor_comision_bono extends CI_Model
 		$this->valor = $valor;
 		return $this;
 	}
-	
-	
 }

@@ -26,6 +26,7 @@ class afiliado extends CI_Model
 	//BONO BINARIOS 
 	private $id_bono;
 	private $tipoDeBono;
+	private $id_bono_historial=0;
 
 	function setUpAfiliado($id_afiliado){
 		$q=$this->db->query("SELECT id as id_afiliado,username,created FROM users where id=".$id_afiliado);
@@ -541,6 +542,7 @@ class afiliado extends CI_Model
 				$pata["total"]=($pata["total"]-$total_pata_debil);
 				$pata["id_usuario"]=$id_afiliado;
 				$pata["id_bono"]=$id_bono;
+				$pata["id_bono_historial"]=$this->getIdBonoHistorial();
 				$pata["fecha"]=date('Y-m-d');
 				array_push($patasRemanentes, $pata);
 			}
@@ -773,6 +775,14 @@ class afiliado extends CI_Model
 		$this->id_bono = $id_bono;
 		return $this;
 	}
+	public function getIdBonoHistorial() {
+		return $this->id_bono_historial;
+	}
+	public function setIdBonoHistorial($id_bono_historial) {
+		$this->id_bono_historial = $id_bono_historial;
+		return $this;
+	}
+	
 	
 	
 

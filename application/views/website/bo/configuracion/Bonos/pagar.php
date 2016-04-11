@@ -176,8 +176,8 @@ function enviar() {
 						.done(function( msg ) {
 
 							bootbox.dialog({
-						message: "Se ha Calculado y Pagado el Bono."+msg,
-						title: 'Felicitaciones',
+						message: msg,
+						title: 'Calculo de Bonos',
 						buttons: {
 							success: {
 							label: "Aceptar",
