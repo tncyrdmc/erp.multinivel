@@ -1,8 +1,5 @@
 
-<?php
-include("/application/helpers/dompdf_helper.php");
-$sg='';
-$sg.='<style type="text/css">
+<style type="text/css">
 	.tabl {
 width: 100%;
 max-width: 100%;
@@ -38,8 +35,8 @@ margin-bottom: 18px;
 </style>
 
 
-<div class="padding-1">
-											<div class="pull-lef">
+<div class="padding-10">
+											<div class="pull-left">
 												<img style="width: 18rem; height: auto; padding: 1rem;" src="" alt="">
 				
 												<address>
@@ -54,7 +51,7 @@ margin-bottom: 18px;
 												</address>
 											</div>
 											</br>
-											<div class="pull-righ">
+											<div class="pull-right">
 												<h1 class="font-300">Factura de venta</h1>
 											</div>
 											<div class="clearfix"></div>
@@ -98,12 +95,12 @@ margin-bottom: 18px;
 
 											</div>
 
-												<div class="pane panel-defaul">
-  													<div class="panel-bod">
+												<div class="panel panel-default">
+  													<div class="panel-body">
 														<span class="center"> <?php echo $empresa[0]->resolucion;?> </span>
   													</div>
 												</div>
-											<table class="table">
+											<table class="table table-hover">
 												<thead>
 													<tr>
 														<th class="text-center">Cantidad</th>
@@ -115,12 +112,12 @@ margin-bottom: 18px;
 														<th></th>
 													</tr>
 												</thead>
-												<tbody>';
-												//<?php
+												<tbody>
+												 <?php
 												$contador=0;
 												$total=0;
 												foreach ($mercanciaFactura as $mercancia){										
-															$sg.= '<tr> 
+															echo '<tr> 
 																	<td class="text-center"><strong>'.$mercancia->cantidad.'</strong></td>
 																	<td class="miniCartProductThumb"><img style="width: 8rem;" src="'.$info_mercancia[$contador]['imagen'].'" alt="img">'.$info_mercancia[$contador]['nombre'].'</td>
 																	<td style="max-width: 25rem;"><a href="javascript:void(0);">'.$info_mercancia[$contador]['descripcion'].'</a></td>
@@ -137,8 +134,8 @@ margin-bottom: 18px;
 														$total+=(($mercancia->costo_unidad*$mercancia->cantidad)+($mercancia->impuesto_unidad*$mercancia->cantidad));
 														$contador++;
 												}
-
-												$sg.='</tbody>
+								                   ?>
+												</tbody>
 											</table>
 				
 											<div class="invoice-footer">
@@ -159,5 +156,4 @@ margin-bottom: 18px;
   												</div>
 											</div>
 										</div>
-</div>';
-?>
+</div>
