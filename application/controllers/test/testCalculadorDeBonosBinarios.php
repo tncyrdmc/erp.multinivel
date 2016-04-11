@@ -50,7 +50,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionAfiliacionesBono();
 		$this->after();
-		
+
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionVentasRedBono();
 		$this->after();
@@ -846,6 +846,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 				'condicion_red_afilacion'    => "DEB",
 				'condicion1'    => $servicios,
 				'condicion2'	=> $id_mercancia,
+				'calificado' => "DAR",
 				'estatus_rango'	=> 'ACT'
 		);
 		

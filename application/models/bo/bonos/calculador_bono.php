@@ -4,7 +4,7 @@ class calculador_bono extends CI_Model
 {
 	private $usuariosRed=array();
 	private $valorCondicion;
-	private $id_bono_historial;
+	private $id_bono_historial=0;
 
 	private $fechaCalculoBono; 
 	/*
@@ -425,6 +425,7 @@ class calculador_bono extends CI_Model
 			}
 			case 2:{
 				$valor=$usuario->getVentasTodaLaRed($id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin,$condicion1,$condicion2,"COSTO");
+
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
 				break;
@@ -437,12 +438,14 @@ class calculador_bono extends CI_Model
 			}
 			case 4:{
 				$valor=$usuario->getComprasPersonalesIntervaloDeTiempo($id_usuario,$red,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
+
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
 				break;
 			}
 			case 5:{
 				$valor=$usuario->getVentasTodaLaRed($id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
+
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
 				break;
