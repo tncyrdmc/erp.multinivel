@@ -539,6 +539,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 	function kill_historial($id){
 		$this->db->query("delete from comision_bono_historial where id = ".$id);
 		$this->db->query("delete from comision_bono where id_bono_historial = ".$id);
+		$this->db->query("delete from comisionPuntosRemanentes where id_bono_historial = ".$id);
 		return true ;
 	}
 	

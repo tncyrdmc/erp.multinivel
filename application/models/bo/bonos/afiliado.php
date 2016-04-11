@@ -26,6 +26,7 @@ class afiliado extends CI_Model
 	//BONO BINARIOS 
 	private $id_bono;
 	private $tipoDeBono;
+	private $id_bono_historial=0;
 	/*
 	 * Estado
 	 * Esta dando bono:DAR
@@ -33,6 +34,12 @@ class afiliado extends CI_Model
 	 */
 	private $estado="DAR";
 
+	function __construct()
+	{
+		parent::__construct();
+		
+	}
+	
 	function setUpAfiliado($id_afiliado){
 		$q=$this->db->query("SELECT id as id_afiliado,username,created FROM users where id=".$id_afiliado);
 		$datosAfiliado=$q->result();
@@ -397,17 +404,17 @@ class afiliado extends CI_Model
 	
 	private function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
 		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
-		
+
 		$cualquiera=0;
 		 
-		if($id_mercancia==$cualquiera&&$id_tipo_mercancia==$cualquiera){
+		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia!=$cualquiera&&$id_tipo_mercancia==$cualquiera){
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
@@ -415,7 +422,7 @@ class afiliado extends CI_Model
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia==$cualquiera&&$id_tipo_mercancia>$cualquiera){
+		}else if($id_mercancia===$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
@@ -423,7 +430,7 @@ class afiliado extends CI_Model
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia!=$cualquiera&&$id_tipo_mercancia>$cualquiera){
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
@@ -438,15 +445,16 @@ class afiliado extends CI_Model
 	private function getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
 
 		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
+
 		
-		if($id_mercancia==0&&$id_tipo_mercancia==0){
+		if($id_mercancia===0&&$id_tipo_mercancia===0){
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia!=0&&$id_tipo_mercancia==0){
+		}else if($id_mercancia!==0&&$id_tipo_mercancia===0){
 
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
@@ -455,7 +463,7 @@ class afiliado extends CI_Model
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia==0&&$id_tipo_mercancia>0){
+		}else if($id_mercancia===0&&$id_tipo_mercancia!==0){
 
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
@@ -464,7 +472,7 @@ class afiliado extends CI_Model
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia!=0&&$id_tipo_mercancia>0){
+		}else if($id_mercancia!==0&&$id_tipo_mercancia!==0){
 
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
@@ -481,13 +489,13 @@ class afiliado extends CI_Model
 	private function separarMercanciasConsulta($mercancias){
 		$mercancias =explode(", ", $mercancias);
 		
-		if(sizeof($mercancias)==1)
-			return $mercancias[0];
 		$i=0;
 		$consulta="";
 		
 		foreach ($mercancias as $mercancia){
-			if($i=0)
+			if($mercancia==="0")
+				return 0;
+			else if($i==0)
 				$consulta.="(i.id=".$mercancia.")";
 			else 
 				$consulta.="and (i.id=".$mercancia.")";
@@ -564,6 +572,7 @@ class afiliado extends CI_Model
 				$pata["total"]=($pata["total"]-$total_pata_debil);
 				$pata["id_usuario"]=$id_afiliado;
 				$pata["id_bono"]=$id_bono;
+				$pata["id_bono_historial"]=$this->getIdBonoHistorial();
 				$pata["fecha"]=date('Y-m-d');
 				array_push($patasRemanentes, $pata);
 			}
@@ -781,6 +790,13 @@ class afiliado extends CI_Model
 	public function setIdBono($id_bono) {
 		$this->id_bono = $id_bono;
 		return $this;
+	}
+
+	public function getIdBonoHistorial() {
+		return $this->id_bono_historial;
+	}
+	public function setIdBonoHistorial($id_bono_historial) {
+		$this->id_bono_historial = $id_bono_historial;
 	}
 	public function getEstado() {
 		return $this->estado;

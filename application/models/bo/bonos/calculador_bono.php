@@ -4,7 +4,9 @@ class calculador_bono extends CI_Model
 {
 	private $usuariosRed=array();
 	private $valorCondicion;
-	private $fechaCalculoBono;
+	private $id_bono_historial=0;
+
+	private $fechaCalculoBono; 
 	/*
 	 * Estado
 	 * El Afiliado Es Cobrando El bono Para Repartir :DAR
@@ -44,8 +46,10 @@ class calculador_bono extends CI_Model
 			
 		if($this->isActivo($bono)&&$this->isVigentePorFecha($bono,$fechaCalculo)&&($this->isPagado($bono, $fechaCalculo)==false)){
 			$this->pagarComisionesBonoPorFecha($bono,$fechaCalculo);
+			return true;
 		}
-			
+		
+		return false;
 	}
 	
 	private function pagarComisionesBono($bono) {
@@ -63,10 +67,13 @@ class calculador_bono extends CI_Model
 		$ano= date('Y',strtotime($fechaInicio));		
 		$mes= date('m',strtotime($fechaInicio));
 		$dia= date('d',strtotime($fechaInicio));
+		
 		$id_historial_pago_bono=$repartidorComisionBono->ingresarHistorialComisionBono($repartidorComisionBono->getIdHistorialTransaccion(),
 															   $id_bono,$dia,$mes,$ano,
 															   $fechaActual);
 		
+		$this->setIdBonoHistorial($id_historial_pago_bono);
+
 		foreach ($usuarios as $usuario){
 			$id_afiliado=$usuario->id_afiliado;
 			$this->darComisionRedDeAfiliado($bono,$id_historial_pago_bono,$id_afiliado,$fechaActual);
@@ -90,14 +97,20 @@ class calculador_bono extends CI_Model
 		$ano= date('Y',strtotime($fechaInicio));
 		$mes= date('m',strtotime($fechaInicio));
 		$dia= date('d',strtotime($fechaInicio));
+		
+
 		$id_historial_pago_bono=$repartidorComisionBono->ingresarHistorialComisionBono($repartidorComisionBono->getIdHistorialTransaccion(),
 				$id_bono,$dia,$mes,$ano,
 				$fechaActual);
 	
+		$this->setIdBonoHistorial($id_historial_pago_bono);
+		
 		foreach ($usuarios as $usuario){
 			$id_afiliado=$usuario->id_afiliado;
 			$this->darComisionRedDeAfiliado($bono,$id_historial_pago_bono,$id_afiliado,$fechaActual);
 		}
+		
+		return true;
 	}
 	
 	public function getTodosLosBonos(){
@@ -392,6 +405,8 @@ class calculador_bono extends CI_Model
 		$usuario->setTipoDeBono($esUnPlanBinario);
 		$usuario->setIdBono($id_bono);
 
+		$usuario->setIdBonoHistorial($this->getIdBonoHistorial());
+
 		$usuario->setEstado($this->getEstado());
 
 		$valor=0;
@@ -410,6 +425,7 @@ class calculador_bono extends CI_Model
 			}
 			case 2:{
 				$valor=$usuario->getVentasTodaLaRed($id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin,$condicion1,$condicion2,"COSTO");
+
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
 				break;
@@ -422,12 +438,14 @@ class calculador_bono extends CI_Model
 			}
 			case 4:{
 				$valor=$usuario->getComprasPersonalesIntervaloDeTiempo($id_usuario,$red,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
+
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
 				break;
 			}
 			case 5:{
 				$valor=$usuario->getVentasTodaLaRed($id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
+
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
 				break;
@@ -529,6 +547,14 @@ class calculador_bono extends CI_Model
 		$this->valorCondicion = $valorCondicion;
 		return $this;
 	}
+
+	public function getIdBonoHistorial() {
+		return $this->id_bono_historial;
+	}
+	public function setIdBonoHistorial($id_bono_historial) {
+		$this->id_bono_historial = $id_bono_historial;
+		return $this;
+	}
 	public function getFechaCalculoBono() {
 		return $this->fechaCalculoBono;
 	}
@@ -543,7 +569,6 @@ class calculador_bono extends CI_Model
 		$this->estado = $estado;
 		return $this;
 	}
-	
-	
+
 	
 }

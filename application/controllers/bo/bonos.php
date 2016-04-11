@@ -271,7 +271,10 @@ class bonos extends CI_Controller
 		$fecha=$_POST['fecha'];
 		$id_bono=$_POST['id_bono'];
 		
-		$this->calculador_bono->calcularComisionesPorBono($id_bono,$fecha);
+		if($this->calculador_bono->calcularComisionesPorBono($id_bono,$fecha))
+			echo "Felicitaciones!<br>Se ha Calculado y Pagado el Bono.";
+		else 
+			echo "ERROR!<br>El bono ya estaba pagado en ese corte o no esta activo.";
 	}
 	
 	function set_Rango(){
