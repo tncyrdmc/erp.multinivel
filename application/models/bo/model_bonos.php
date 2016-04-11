@@ -31,7 +31,7 @@ function setUpValoresBones($idBono,$nivel,$condicion_red,$valor,$verticalidad){
 	return $bono_valores;
 }
 
-function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicion2){
+function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicion2,$calificado){
 	$rango=$this->get_rangos_id_tipo($idRango, $idTipoRango);
 	$bonoCondiciones = array(
 			'id_bono' => $idBono,
@@ -41,6 +41,7 @@ function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicio
 			'id_red' => $red,
 			'condicion1' => $condicion1,
 			'condicion2' => $condicion2,
+			'calificado' => $calificado,
 	);
 	return $bonoCondiciones;
 }

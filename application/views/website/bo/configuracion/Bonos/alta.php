@@ -53,7 +53,10 @@
 				<textarea id="mymarkdown" name="descripcion" class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required=""></textarea>
 	        </label>
 		<div style="margin: 1rem;">
-		<h4>Frecencia</h4>
+		<h4>Frecuencia</h4>
+			        <label class="radio">
+						<input value="SIN" name="frecuencia" placeholder="frecuencia" type="radio">
+					<i></i>Sin Fecuencia</label>
 	        		<label class="radio">
 						<input value="UNI" name="frecuencia" placeholder="frecuencia" type="radio">
 					<i></i>Unica</label>
@@ -80,7 +83,7 @@
 		</div>
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
-									<header>Rangos</header><br><br>
+									<header>Condiciones</header><br><br>
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>																	
@@ -91,7 +94,7 @@
 										<div class="col col-lg-3 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Rango <i class="fa fa-plus"></i></a>
+											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condicion <i class="fa fa-plus"></i></a>
 										</div>
 										
 									</div>
@@ -99,7 +102,7 @@
 										<div class="col col-lg-2">
 										</div>
 										<div class="col col-xs-12 col-sm-12 col-lg-10" id="tipo_condicion">
-											<label class="select">Nombre Rango
+											<label class="select">Nombre Condicion
 											<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
 											<option value='0' selected>--- Seleccione Rango ---</option>
 													<?php	
@@ -186,8 +189,8 @@
 											<select name="verticalidad_red[]">
 												<option value="ASC">$ Hacia Arriba</option>
 												<option value="DESC">$ Hacia Abajo</option>
-												<option value="PDESC">%(Puntos) Hacia Abajo</option>
-												<option value="RDESC">%(Puntos)Residual Abajo</option>
+												<option value="PASC">%(Puntos) Hacia Abajo</option>
+												<option value="RDASC">%(Puntos)Residual Abajo</option>
 											</select>
 											</label>
 										</div>
@@ -358,7 +361,7 @@ function add_rango()
 	+'<div class="col col-lg-2">'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-12 col-lg-10">'
-		+'<label class="select">Nombre Rango'
+		+'<label class="select">Nombre Condicion'
 		+'<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),\'rango'+i+'\');">'
 		+'<option value="0">--- Seleccione Rango ---</option>'
 		+'<?php	echo $rangos; ?>'
@@ -389,8 +392,10 @@ function add_nivel()
 	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
 	+'<label class="select">Forma de Repartir'
 		+'<select name="verticalidad_red[]">'
-			+'<option value="ASC">Hacia Arriba</option>'
-			+'<option value="DESC">Hacia Abajo</option>'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'
@@ -447,8 +452,10 @@ var code='<div class="row">'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
 	+'<label class="select">Forma de Repartir'
 		+'<select name="verticalidad_red[]">'
-			+'<option value="ASC">Hacia Arriba</option>'
-			+'<option value="DESC">Hacia Abajo</option>'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'

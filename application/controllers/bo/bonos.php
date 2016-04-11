@@ -309,7 +309,16 @@ class bonos extends CI_Controller
 		$idDiv=$idTipoRango;
 		foreach ($rango as $tipoRango){
 			echo '<div class="widget-body col col-12">
-					<div id="divRedes" class="widget-body col col-4">
+					<div id="divRedes" class="widget-body col col-2">
+					<label class="select"><b>Calificado<br>(Dar y/o Recibir)</b>
+						<select id="calificado'.$idRango.'" name="calificado'.$idRango.'">
+							<option value="DOS">Ambos</option>
+							<option value="DAR">Dar</option>
+							<option value="REC">Recibir</option>
+						</select>
+					</label>
+					</div>
+					<div id="divRedes" class="widget-body col col-3">
 					<h3 class="semi-bold">Rango <span>( '.$tipoRango->nombre_rango.' )</span></h3>
 					<hr class="simple">
 						<ul id="myTab'.$_POST['idRango'].$tipoRango->tipo_rango.'" class="nav nav-tabs bordered">
@@ -331,7 +340,7 @@ class bonos extends CI_Controller
 								</div>
 				</div>
 											
-				<div class="widget-body col col-4">
+				<div class="widget-body col col-3">
 					<h3 class="semi-bold">Redes</h3>
 					<label class="select select-multiple">Seleccione las Redes validas para generar el bono
 						<select id="id_red'.$idRango.$idTipoRango.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_red'.$idRango.$idTipoRango.'[]" onChange="'.$nombreMetodo.'($(this).val(),'.$tipoRango->id_rango.$idDiv.','.$idRango.$idTipoRango.');">
@@ -519,15 +528,16 @@ class bonos extends CI_Controller
 	}
 	
 	private function getCondiciones2InsertBonos($tipoCondicion,$condiciones1,$idRango,$idTipoRango,$red,$bono,$idBono){
-	
+		$calificado=$_POST['calificado'.$idRango];
+		
 		foreach ($condiciones1 as $condicion1){
 			if(isset($_POST[$tipoCondicion])){
 				foreach ($_POST[$tipoCondicion] as $condicion2){
-					$condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],$condicion2);
+					$condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],$condicion2,$calificado);
 					$this->model_bonos->insert_condicion_bono($condiciones);
 				}
 			}else {
-				    $condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],0);
+				    $condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],0,$calificado);
 				    $this->model_bonos->insert_condicion_bono($condiciones);
 			}
 					
