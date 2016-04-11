@@ -1,4 +1,8 @@
-<style type="text/css">
+
+<?php
+include("/application/helpers/dompdf_helper.php");
+$sg='';
+$sg.='<style type="text/css">
 	.tabl {
 width: 100%;
 max-width: 100%;
@@ -111,12 +115,12 @@ margin-bottom: 18px;
 														<th></th>
 													</tr>
 												</thead>
-												<tbody>
-												 <?php
+												<tbody>';
+												//<?php
 												$contador=0;
 												$total=0;
 												foreach ($mercanciaFactura as $mercancia){										
-															echo '<tr> 
+															$sg.= '<tr> 
 																	<td class="text-center"><strong>'.$mercancia->cantidad.'</strong></td>
 																	<td class="miniCartProductThumb"><img style="width: 8rem;" src="'.$info_mercancia[$contador]['imagen'].'" alt="img">'.$info_mercancia[$contador]['nombre'].'</td>
 																	<td style="max-width: 25rem;"><a href="javascript:void(0);">'.$info_mercancia[$contador]['descripcion'].'</a></td>
@@ -133,8 +137,8 @@ margin-bottom: 18px;
 														$total+=(($mercancia->costo_unidad*$mercancia->cantidad)+($mercancia->impuesto_unidad*$mercancia->cantidad));
 														$contador++;
 												}
-								                   ?>
-												</tbody>
+
+												$sg.='</tbody>
 											</table>
 				
 											<div class="invoice-footer">
@@ -155,4 +159,5 @@ margin-bottom: 18px;
   												</div>
 											</div>
 										</div>
-</div>
+</div>';
+?>

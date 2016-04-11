@@ -265,7 +265,7 @@
 				});
 		}
 
-		function imprimir(id){
+		/*function imprimir(id){
 								$.ajax({
 									type: "POST",
 									url: "imprimirfactura",
@@ -283,7 +283,7 @@
 									}
 								});
 
-		}
+		}*/
 
 			function factura(id) {
 				iniciarSpinner();
