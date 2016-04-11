@@ -56,7 +56,7 @@ var j=0;
 										<div class="col col-lg-3 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Rango <i class="fa fa-plus"></i></a>
+											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condicion <i class="fa fa-plus"></i></a>
 										</div>
 										
 									</div>
@@ -64,9 +64,9 @@ var j=0;
 										<div class="col col-lg-2">
 										</div>
 										<div class="col col-xs-12 col-sm-12 col-lg-10">
-											<label class="select">Nombre Rango
+											<label class="select">Nombre Condicion
 											<select id="id_rango0" style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
-											<option value='0'>--- Seleccione Rango ---</option>
+											<option value='0'>--- Seleccione Condicion ---</option>
 													<?php	
 														foreach($rangosActivos as $categoria){
 															echo "<option value='".$categoria->id_rango."'>".$categoria->nombre_rango."</option>";
@@ -157,25 +157,25 @@ var j=0;
 												if($nivel->verticalidad=="ASC"){
 													echo "<option value='ASC' selected>$ Hacia Arriba</option>
 														  <option value='DESC'>$ Hacia Abajo</option>
-														  <option value='PDESC'>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Abajo</option>
 														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
 														  ";
 												}else if($nivel->verticalidad=="DESC"){
 													echo "<option value='ASC'>$ Hacia Arriba</option>
 														  <option value='DESC' selected>$ Hacia Abajo</option>
-														  <option value='PDESC'>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Abajo</option>
 														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
 														  ";
-												}else if($nivel->verticalidad=="PDESC"){
+												}else if($nivel->verticalidad=="PASC"){
 													echo "<option value='ASC'>$ Hacia Arriba</option>
 														  <option value='DESC'>$ Hacia Abajo</option>
-														  <option value='PDESC' selected>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC' selected>%(Puntos) Hacia Abajo</option>
 														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
 														  ";
 												}else if($nivel->verticalidad=="RDESC"){
 													echo "<option value='ASC'>$ Hacia Arriba</option>
 														  <option value='DESC'>$ Hacia Abajo</option>
-														  <option value='PDESC'>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Abajo</option>
 														  <option value='RDESC' selected>%(Puntos)Residual Abajo</option>
 														  ";
 												}
@@ -355,8 +355,10 @@ function add_nivel()
 	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
 	+'<label class="select">Repartir'
 		+'<select name="verticalidad_red[]" style="width: 10rem;">'
-			+'<option value="ASC">Hacia Arriba</option>'
-			+'<option value="DESC">Hacia Abajo</option>'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'
@@ -411,8 +413,10 @@ var code='<div class="row">'
 	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
 	+'<label class="select">Repartir'
 		+'<select name="verticalidad_red[]" style="width: 10rem;">'
-			+'<option value="ASC">Hacia Arriba</option>'
-			+'<option value="DESC">Hacia Abajo</option>'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'
