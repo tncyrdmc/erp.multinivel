@@ -66,7 +66,7 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionVentasRedBono();
 		$this->after();
-	
+
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionComprasPersonalesBono();
 		$this->after();
@@ -74,7 +74,7 @@ class testCalculadorDeBonos extends CI_Controller {
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionPuntosComisionablesPersonalesBono();
 		$this->after();
-	
+
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionPuntosRedBono();
 		$this->after();
@@ -1270,9 +1270,7 @@ class testCalculadorDeBonos extends CI_Controller {
 		echo $this->unit->run(false,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
 		
 	}
-	
 
-	
 	public function testValidarSiElBonoYaCobroVerdadero(){
 		
 		$calculadorBono=new $this->calculador_bono();

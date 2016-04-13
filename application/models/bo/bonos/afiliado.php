@@ -403,9 +403,11 @@ class afiliado extends CI_Model
 	}
 	
 	private function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
-		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
 
-		$cualquiera=0;
+		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
+		$id_tipo_mercancia=$id_tipo_mercancia;
+
+		$cualquiera="0"; 
 		 
 		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
@@ -418,7 +420,7 @@ class afiliado extends CI_Model
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
-							 and ".$id_mercancia."
+							 and (".$id_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
@@ -434,7 +436,7 @@ class afiliado extends CI_Model
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
-							 and ".$id_mercancia."
+							 and (".$id_mercancia.")
 							 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
@@ -445,25 +447,27 @@ class afiliado extends CI_Model
 	private function getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
 
 		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
+		$id_tipo_mercancia=$id_tipo_mercancia;
 
+		$cualquiera="0"; 
 		
-		if($id_mercancia===0&&$id_tipo_mercancia===0){
+		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia!==0&&$id_tipo_mercancia===0){
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){
 
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
-							 and ".$id_mercancia."
+							 and (".$id_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia===0&&$id_tipo_mercancia!==0){
+		}else if($id_mercancia===$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
@@ -472,12 +476,12 @@ class afiliado extends CI_Model
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
-		}else if($id_mercancia!==0&&$id_tipo_mercancia!==0){
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 
 			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
-							 and ".$id_mercancia."
+							 and (".$id_mercancia.")
 						 	 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
 							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
@@ -494,11 +498,11 @@ class afiliado extends CI_Model
 		
 		foreach ($mercancias as $mercancia){
 			if($mercancia==="0")
-				return 0;
+				return "0";
 			else if($i==0)
 				$consulta.="(i.id=".$mercancia.")";
 			else 
-				$consulta.="and (i.id=".$mercancia.")";
+				$consulta.="or (i.id=".$mercancia.")";
 			$i++;
 		}
 		

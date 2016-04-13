@@ -189,7 +189,7 @@
 											<select name="verticalidad_red[]">
 												<option value="ASC">$ Hacia Arriba</option>
 												<option value="DESC">$ Hacia Abajo</option>
-												<option value="PASC">%(Puntos) Hacia Abajo</option>
+												<option value="PASC">%(Puntos) Hacia Arriba</option>
 												<option value="RDASC">%(Puntos)Residual Abajo</option>
 											</select>
 											</label>

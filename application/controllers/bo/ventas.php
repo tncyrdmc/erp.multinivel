@@ -133,7 +133,7 @@ class ventas extends CI_Controller
 			{
 				echo "<tr>
 			<td class='sorting_1'>".$venta->id_venta."</td>
-			<td>".$venta->username."</td>
+			<td>(".$venta->id_usuario.") ".$venta->username."</td>
 			<td>".$venta->name."</td>
 			<td>".$venta->lastname."</td>
 			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>

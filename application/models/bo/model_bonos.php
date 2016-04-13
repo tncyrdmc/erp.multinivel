@@ -490,22 +490,22 @@ function get__condicioneses_bonos_id_bono($id_bono){
 	
 	function detalle_historial_id($id){
 		$q=$this->db->query("SELECT c.id, h.id, c.id_usuario,
-									#concat(p.nombre,' ',p.apellido) as nombres,
-									u.username nombres,
+									concat(p.nombre,' ',p.apellido) as nombres,
 									c.id_bono,
 									b.nombre bono, 
 									h.dia,
 									h.mes,
 									h.ano,
 									h.fecha,
-									c.valor
+									sum(c.valor) as valor
 									FROM 
-				comision_bono c,users u,/*user_profiles p,*/bono b,comision_bono_historial h 
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h 
 									WHERE c.id_bono_historial = ".$id."
-								#and p.user_id = c.id_usuario
+								and p.user_id = c.id_usuario
 								and u.id = c.id_usuario
 								and b.id = c.id_bono
-								and h.id = id_bono_historial");
+								and c.valor > 0
+								and h.id = id_bono_historial group by c.id_usuario");
 		$q2=$q->result();
 	
 		return $q2;

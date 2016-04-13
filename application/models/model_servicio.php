@@ -23,7 +23,7 @@ class Model_servicio extends CI_Model{
 	function listar_todos_por_venta_y_fecha($inicio, $fin)
 	{
 		
-		$q=$this->db->query('select V.id_venta,U.username,UP.nombre as name,UP.apellido as lastname,sum(CVM.costo_total) as costo
+		$q=$this->db->query('select V.id_venta,U.id as id_usuario,U.username,UP.nombre as name,UP.apellido as lastname,sum(CVM.costo_total) as costo
 							,sum(CVM.impuesto_unidad*CVM.cantidad) as impuestos,(select sum(valor) from comision where id_venta=V.id_venta)as comision
 							from venta V, cross_venta_mercancia CVM, mercancia M,users U , user_profiles UP
 							where M.id = CVM.id_mercancia 
