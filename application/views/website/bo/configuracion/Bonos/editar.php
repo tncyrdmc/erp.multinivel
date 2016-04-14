@@ -38,9 +38,9 @@ var j=0;
 						<input value="DIA" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'DIA') echo 'checked=""';?>>
 					<i></i>Diario</label>
 		<br><br>
-		<label class="toggle" style="width: 4rem;">
-			<input name="plan" type="checkbox">
-			<i data-swchoff-text="<?= $bono[0]->plan;?>" data-swchon-text="<?= ($bono[0]->plan == "SI") ? "NO" :"SI";?>"></i>Binario
+		<label class="checkbox">
+			<input name="plan" <?php if($bono[0]->plan == "SI") echo "checked='checked'";?> type="checkbox">
+			<i></i>Remanenete
 		</label>
 		</div>
 		<div class="form-group">

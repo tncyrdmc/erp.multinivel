@@ -75,11 +75,16 @@
 					<label class="radio">
 						<input value="DIA" name="frecuencia" placeholder="frecuencia" type="radio">
 					<i></i>Diario</label>
-		<br><br>
+		<br>
+		<p>Nota: Frecuencia con la que se cobra el bono.</p><br>
+		<br>
+		<b>Remanente</b>
 		<label class="toggle" style="width: 4rem;">
 			<input name="plan" type="checkbox">
-			<i data-swchon-text="SI" data-swchoff-text="NO"></i>Binario
+			<i data-swchon-text="SI" data-swchoff-text="NO"></i>
 		</label>
+		<br><br>
+		<p>Nota: El remanente guarda un historial de la resta de la pata mas debil con la pata mas fuerte y guarda el resultado para el proximo corte.</p>
 		</div>
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
@@ -141,6 +146,8 @@
 										</div>
 									</div>
 								</fieldset>
+								<br>
+								<p>Nota: Intervalo de tiempo desde que el afiliado esta afiliado en la red.</p>
 								<br>
 								<label style="margin: 1rem;"><h2>Fecha de Activacion</h2></label>
 								<div style="margin: 1rem;">
@@ -214,7 +221,17 @@
 								</div>
 								<br>
 								<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Crear</button>
-			
+								<br>
+								<p style="margin: 1.5rem;">Nota:
+									<br><b>Forma de Repartir Comisión :</b> 
+										<br>&nbsp&nbsp-($ Hacia Arriba) Monto en $ que se reparte del afiliado hacia arriba de su red.
+										<br>&nbsp&nbsp-($ Hacia Abajo) Monto en $ que se reparte del afiliado hacia abajo de su red.
+										<br>&nbsp&nbsp-(% Puntos Hacia Arriba) Se toma el porcentaje de los puntos totales que se va a entragar.
+										<br>&nbsp&nbsp-(% Puntos Residual Abajo) Bono a la medida que reparte dividiendo el total de puntos comisionables dividiendo el numero de igualaciones de la red.
+									<br><b>Condición Red:</b> 
+										<br>&nbsp&nbsp-(Directos Afiliados) Selecciona solo los directos del afiliado.
+										<br>&nbsp&nbsp-(Toda la Red) Selecciona todos los afiliados de la red Directos e Indirectos.
+								</p>
 		
     	</div>
     </div>

@@ -202,9 +202,9 @@ class bonos extends CI_Controller
 		$mes_desde_afiliacion=$_POST['mesDesdeAfiliacion'];
 		$mes_desde_activacion=$_POST['mesDesdeActivacion'];
 		$frecuencia=$_POST['frecuencia'];
-		$plan = isset($_POST['plan']) && $_POST['plan']  ? "SI" : "NO";
+
+		$plan = isset($_POST['plan']) && $_POST['plan']==="on"  ? "SI" : "NO";
 		$estatus="ACT";
-	
 
 		$bono = $this->model_bonos->setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$estatus,$plan);
 		$this->model_bonos->actualizar_bono($id_bono,$bono);

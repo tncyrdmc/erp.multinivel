@@ -355,7 +355,7 @@ class calculador_bono extends CI_Model
 			$condicion2=$condicionBono->getCondicionBono2();
 				
 			$valor = $this->getValorCondicionUsuario ($id_bono,$esUnPlanBinario, $tipoDeCondicion,$id_usuario,$red,$tipoDeAfiliados,$tipoDeBusquedaEnLaRed,$profundidadRed,$fechaInicio,$fechaFin ,$condicion1,$condicion2);
-			
+
 			if($valor<$valorCondicion)
 					return false;
 		}
@@ -439,9 +439,9 @@ class calculador_bono extends CI_Model
 			}
 			case 4:{
 				$valor=$usuario->getComprasPersonalesIntervaloDeTiempo($id_usuario,$red,$fechaInicio,$fechaFin,$condicion1,$condicion2,"PUNTOS");
-
 				if($this->getEstado()=="DAR")
 					$this->setValorCondicion($valor);
+
 				break;
 			}
 			case 5:{

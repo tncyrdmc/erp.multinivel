@@ -121,9 +121,9 @@ class modelo_bono extends CI_Model
 	}
 	
 	function limpiarTodosLosBonos() {
-		$this->db->query('delete from cat_rango where id_rango >= 60');
-		$this->db->query('delete from cross_rango_tipos where id_rango >= 60');
-		$this->db->query('delete from bono where id >= 50');
+		$this->db->query('delete from cat_rango where id_rango >= 1');
+		$this->db->query('delete from cross_rango_tipos where id_rango >= 1');
+		$this->db->query('delete from bono where id >= 1');
 		$this->db->query('delete from cat_bono_condicion where id >= 1');
 		$this->db->query('delete from cat_bono_valor_nivel where id >= 1');
 		
