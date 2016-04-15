@@ -126,11 +126,11 @@ class encuestas extends CI_Controller
 		$keys=array_keys($data);
 		//print_r($keys);
 		$this->db->query('insert into encuesta (nombre,descripcion,id_usuario,estatus) values ("'.$data['nombre'].'","'.$data['desc'].'",'.$id_usuario.',"DES")');
-		$enc_id=mysql_insert_id();
+		$enc_id=$this->db->insert_id();
 		for($i=0 ; $i<$data['cantidad']; $i++)
 		{
 			$this->db->query('insert into encuesta_pregunta (id_encuesta,pregunta) values ('.$enc_id.',"'.$data[$keys[$i]]["pregunta"].'")');
-			$preg_id = mysql_insert_id();
+			$preg_id = $this->db->insert_id();
 			//print_r($data[$keys[$i]]);
 			//echo $data[$keys[$i]]["pregunta"];
 			$resp_keys=array_keys($data[$keys[$i]]["respuestas"]);

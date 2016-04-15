@@ -332,7 +332,7 @@ class cabecera extends CI_Controller
 		{
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_cabecera->file_user($id,$data["upload_data"]);
-			$id_archivero=mysql_insert_id();
+			$id_archivero=$this->db->insert_id();
 			$this->model_cabecera->compartir($id_archivero);
 
 

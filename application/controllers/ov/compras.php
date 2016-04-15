@@ -2969,7 +2969,7 @@ function index()
 						codigo_seguridad,estatus) values (".$data['tipo'].",".$id_user.",".$data['banco'].",'".$data['numero']."',
 						'".$fecha."','".$data['titular']."','".$data['codigo']."','".$status."')");
 				$this->db->query("insert into venta (id_user,id_estatus,costo,id_metodo_pago) values (".$id_user.",2,".$this->cart->total().",1)");
-				$venta=mysql_insert_id();
+				$venta=$this->db->insert_id();
 				$puntos=0;
 				foreach ($this->cart->contents() as $items) 
 				{
@@ -3001,7 +3001,7 @@ function index()
 						codigo_seguridad,estatus) values (".$data['tipo'].",".$id_user.",".$data['banco'].",'".$data['numero']."',
 						'".$fecha."','".$data['titular']."','".$data['codigo']."','".$status."')");
 				$this->db->query("insert into autocompra (fecha,id_usuario) values ('".$data['fecha']."',".$id_user.")");
-				$autocompra=mysql_insert_id();
+				$autocompra=$this->db->insert_id();
 				foreach ($this->cart->contents() as $items) 
 				{
 					$this->db->query("insert into cross_autocompra_mercancia values (".$autocompra.",".$items['id'].",".$items['qty'].")");
