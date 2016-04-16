@@ -246,63 +246,57 @@ public function createFolder()
 */
 
 
-     $this->load->library('Pdf');
-        $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Israel Parra');
-        $pdf->SetTitle('Ejemplo de provincías con TCPDF');
-        $pdf->SetSubject('Tutorial TCPDF');
-        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+    // Creacion del PDF
  
-// datos por defecto de cabecera, se pueden modificar en el archivo tcpdf_config_alt.php de libraries/config
-        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 001', PDF_HEADER_STRING, array(0, 64, 255), array(0, 64, 128));
-        $pdf->setFooterData($tc = array(0, 64, 0), $lc = array(0, 64, 128));
+    /*
+     * Se crea un objeto de la clase Pdf, recuerda que la clase Pdf
+     * heredó todos las variables y métodos de fpdf
+     */
+    $this->load->library('Pdf');
+    $this->pdf = new Pdf();
+    // Agregamos una página
+    $this->pdf->AddPage();
+    // Define el alias para el número de página que se imprimirá en el pie
+    $this->pdf->AliasNbPages();
  
-// datos por defecto de cabecera, se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+    /* Se define el titulo, márgenes izquierdo, derecho y
+     * el color de relleno predeterminado
+     */
+    $this->pdf->SetTitle("Lista de alumnos");
+    $this->pdf->SetLeftMargin(15);
+    $this->pdf->SetRightMargin(15);
+    $this->pdf->SetFillColor(200,200,200);
  
-// se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+    // Se define el formato de fuente: Arial, negritas, tamaño 9
+    $this->pdf->SetFont('Arial', 'B', 9);
+    /*
+     * TITULOS DE COLUMNAS
+     *
+     * $this->pdf->Cell(Ancho, Alto,texto,borde,posición,alineación,relleno);
+     */
  
-// se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
- 
-// se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
- 
-//relación utilizada para ajustar la conversión de los píxeles
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
- 
- 
-// ---------------------------------------------------------
-// establecer el modo de fuente por defecto
-        $pdf->setFontSubsetting(true);
- 
-// Establecer el tipo de letra
- 
-//Si tienes que imprimir carácteres ASCII estándar, puede utilizar las fuentes básicas como
-// Helvetica para reducir el tamaño del archivo.
-        $pdf->SetFont('freemono', '', 14, '', true);
- 
-// Añadir una página
-// Este método tiene varias opciones, consulta la documentación para más información.
-        $pdf->AddPage();
- 
-//fijar efecto de sombra en el texto
-        $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
- 
- $html='<h1>Hola mundo</h1>';
+    $this->pdf->Cell(15,7,'NUM','TBL',0,'C','1');
+    $this->pdf->Cell(25,7,'PATERNO','TB',0,'L','1');
+    $this->pdf->Cell(25,7,'MATERNO','TB',0,'L','1');
+    $this->pdf->Cell(25,7,'NOMBRE','TB',0,'L','1');
+    $this->pdf->Cell(40,7,'FECHA DE NACIMIENTO','TB',0,'C','1');
+    $this->pdf->Cell(25,7,'GRADO','TB',0,'L','1');
+    $this->pdf->Cell(25,7,'GRUPO','TBR',0,'C','1');
+    $this->pdf->Ln(7);
+    // La variable $x se utiliza para mostrar un número consecutivo
+    $x = 1;
 
- $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
- 
-// ---------------------------------------------------------
-// Cerrar el documento PDF y preparamos la salida
-// Este método tiene varias opciones, consulte la documentación para más información.
-        $nombre_archivo = utf8_decode("Localidades.pdf");
-        $pdf->Output($nombre_archivo, 'D');
+    /*
+     * Se manda el pdf al navegador
+     *
+     * $this->pdf->Output(nombredelarchivo, destino);
+     *
+     * I = Muestra el pdf en el navegador
+     * D = Envia el pdf para descarga
+     *
+     */
+    $this->pdf->Output("alumnos.pdf", 'I');
+    
 
     }    
 

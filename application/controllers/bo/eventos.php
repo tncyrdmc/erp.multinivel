@@ -142,7 +142,7 @@ class eventos extends CI_Controller
 		$this->db->query('insert into evento (id_tipo,id_color,id_usuario,nombre,descripcion,inicio,fin,lugar,costo,direccion,latitud,longitud,observaciones,url)
 						values('.$tipo.','.$color.','.$id.',"'.$nombre.'","'.$desc.'","'.$inicio.'","'.$fin.'","'.$data["lugar"].'",'.$data["costo"].'
 						,"'.$data["direccion"].'","0.00000","0.00000","'.$data["observacion"].'","'.$url.'")');
-		$id_evento=mysql_insert_id();
+		$id_evento=$this->db->insert_id();
 	}
 	
 	function cambiar_estado_evento(){
