@@ -722,7 +722,7 @@ class cgeneral extends CI_Controller
 	
 		}
 	
-		$premium         = $red[0]->premium;
+		//$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		$planes 		 = $this->model_planes->Planes();
 	
@@ -750,7 +750,7 @@ class cgeneral extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		//$this->template->set("premium",$premium);
 		$this->template->set("planes",$planes);
 		
 		$this->template->set_theme('desktop');

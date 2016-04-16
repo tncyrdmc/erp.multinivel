@@ -73,7 +73,7 @@
 												<section class="col col-2">
 													<label class="input">
 														Código de barras
-														<input type="text" name="codigo_barras" id="codigo_barras">
+														<input type="number" min="1" name="codigo_barras" id="codigo_barras">
 													</label>
 												</section>
 												<section class="col col-3">Categoria
@@ -91,7 +91,7 @@
 											<fieldset>
 											<section class="col col-2">
 											<label class="input"><span id="labelextra">Descuento del producto</span>
-												<input required id="precio_promo" type="number" name="descuento">
+												<input required id="precio_promo" type="number" min="0" name="descuento">
 											</label>
 											</section>
 											</fieldset>
@@ -149,37 +149,37 @@
 													<section class="col col-2">
 														<label class="input">
 															Cantidad mínima de venta
-															<input type="text" name="min_venta" id="min_venta">
+															<input type="number" name="min_venta" min="1" id="min_venta" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Cantidad máxima de venta
-															<input type="text" name="max_venta" id="max_venta">
+															<input type="number" name="max_venta" min="1" id="max_venta" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input" >
 															Costo real
-															<input type="number" name="real" id="real" onchange="calcular_precio_total()" required>
+															<input type="number" name="real" id="real" onchange="calcular_precio_total()" min="1" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" name="costo" id="costo" onchange="calcular_precio_total()" required>
+															<input type="number" name="costo" id="costo" onchange="calcular_precio_total()" min="1"required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo publico
-															<input type="text" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()" required>
+															<input type="number" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()" min="1" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Tiempo mínimo de entrega
-															<input placeholder="En días" type="text" name="entrega" id="entrega" >
+															<input placeholder="En días" type="number" name="entrega" min="1" id="entrega" >
 														</label>
 													</section>
 													
@@ -197,7 +197,7 @@
 													<section class="col col-3">
 														<label class="input">
 															Puntos comisionables
-															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+															<input type="number" min="1" max="" name="puntos_com" id="puntos_com" required>
 														</label>
 													</section>
 													

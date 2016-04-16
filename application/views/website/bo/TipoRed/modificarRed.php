@@ -18,10 +18,10 @@
 			<div class="col-md-5"><br>
 			<p>Nota: Si tu red es de frontalidad o profundidad es infinita, en la configuracion ponle 0.</p><br>
 				<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
-					<input type="number" class="form-control" name="frontal" size="30" placeholder="frontalidad" value="<?= $datosDeRed[0]->frontal;?>" required>
+					<input type="number" class="form-control" name="frontal" size="30" min="0" placeholder="frontalidad" value="<?= $datosDeRed[0]->frontal;?>" required>
 		        </label>
 		        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
-					<input type="number" class="form-control" name="profundidad" size="30" placeholder="profundidad" value="<?= $datosDeRed[0]->profundidad;?>" required>
+					<input type="number" class="form-control" name="profundidad" size="30" min="0" placeholder="profundidad" value="<?= $datosDeRed[0]->profundidad;?>" required>
 		        </label>
 	        </div>
 			<div class="col-md-1"><br>

@@ -93,7 +93,7 @@
 
 																								<section class="col col-3">
 														<label class="input">Tiempo de caducidad
-															<input required placeholder="En días" type="text" id="caducidad" name="caducidad">
+															<input required placeholder="En días" type="number" min="0" id="caducidad" name="caducidad">
 														</label>
 														<p class="note">
 															<strong>Nota:</strong>
@@ -115,7 +115,7 @@
 													</section>
 											<section class="col col-3">
 											<label class="input"><span id="labelextra">Descuento del paquete</span>
-												<input required id="precio_promo" type="number" name="descuento">
+												<input required id="precio_promo" type="number" min="0" name="descuento">
 											</label>
 											</section>
 													
@@ -197,23 +197,23 @@
 														<fieldset id="moneda_field">
 															<legend>Moneda</legend>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input"> Costo real <input type="number"
+																<label class="input"> Costo real <input type="number" min="1"
 																	required name="real" id="real" onchange="calcular_precio_total()">
 																</label>
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Costo distribuidores <input
-																	required type="number" name="costo" id="costo" onchange="calcular_precio_total()">
+																	required type="number" min="1" name="costo" id="costo" onchange="calcular_precio_total()">
 																</label>
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input">Costo publico <input type="number"
+																<label class="input">Costo publico <input type="number" min="1"
 																	required name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 																</label>
 															</section>
 															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Tiempo mínimo de entrega <input
-																	placeholder="En días" type="text" name="entrega"
+																	placeholder="En días" type="number" min="1" name="entrega"
 																	id="entrega">
 																</label>
 															</section>
@@ -222,7 +222,7 @@
 															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Puntos comisionables <input
 																	type="number" min="1" max="" name="puntos_com"
-																	id="puntos_com">
+																	id="puntos_com" required>
 																</label>
 															</section>
 														</fieldset>
@@ -259,19 +259,19 @@
 													<section class="col col-2">
 														<label class="input">
 															Costo real con IVA
-															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+															<input type="number" min="1" max="" name="real_iva" id="real_iva" disabled value="">
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+															<input type="number" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo público con IVA
-															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+															<input type="number" min="1" max="" name="publico_iva" id="publico_iva" disabled>
 														</label>
 													</section>
 													

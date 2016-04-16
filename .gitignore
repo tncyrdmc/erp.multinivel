@@ -1,1 +1,5 @@
 /application/config/database.php
+reset_service.sh
+/nbproject
+/.projectKnowledge
+/media

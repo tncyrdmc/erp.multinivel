@@ -550,7 +550,7 @@ where(a.id_pais=b.Code)");
 				"site"       => $_POST['site']
             );
         $this->db->insert("empresa",$dato_empresa);
-        $id_nuevo=mysql_insert_id();
+        $id_nuevo=$this->db->insert_id();
 		$dato_dir=array(
 				"id_empresa"      => $id_nuevo,
 				"cp"              =>$_POST['cp'],
@@ -1221,7 +1221,7 @@ where(a.id_pais=b.Code)");
 					"estatus"     => 'ACT'
 	            );
 			$this->db->insert("combinado",$dato_combinado);
-			$combinado=mysql_insert_id();
+			$combinado=$this->db->insert_id();
 			$n=0;
 			if(!isset($_POST['n_productos']))$_POST['n_productos']=0;
 			if(!isset($_POST['n_servicios']))$_POST['n_servicios']=0;
@@ -1332,11 +1332,11 @@ where(a.id_pais=b.Code)");
 						"estatus"            => 'ACT'
 		            );
 					$this->db->insert("promocion",$dato_promo);
-					$mercancia=mysql_insert_id();;
+					$mercancia=$this->db->insert_id();;
 		}
 		else
 		{
-			$sku=mysql_insert_id();
+			$sku=$this->db->insert_id();
 			if ($_POST['tipo_mercancia']==3&&$_POST['tipo']==1)
 			$sku=$combinado;
 			$nombre_ini=substr($_POST['nombre'],0,3);
@@ -1355,7 +1355,7 @@ where(a.id_pais=b.Code)");
 					"puntos_comisionables"	=> $_POST['puntos_com']
 	            );
 			$this->db->insert("mercancia",$dato_mercancia);
-			$mercancia=mysql_insert_id();
+			$mercancia=$this->db->insert_id();
 			foreach($_POST['id_impuesto'] as $impuesto)
 			{
 				$dato_impuesto=array(
@@ -1393,7 +1393,7 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->insert("cat_img",$dato_img);
 			
-			$id_foto = mysql_insert_id();
+			$id_foto = $this->db->insert_id();
 			
 			
 			$dato_cross_img=array(
@@ -1418,7 +1418,7 @@ where(a.id_pais=b.Code)");
 	                "estatus"			=>	"ACT"
 	            );
 			$this->db->insert("cat_img",$dato_img);
-			$id_foto=mysql_insert_id();
+			$id_foto=$this->db->insert_id();
 			$dato_cross_img=array(
 	                "id_promo"		=>	$id,
 	                "id_img"	=>	$id_foto
@@ -1995,7 +1995,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 					"comision"   => $_POST['comision']
 	            );
 	    $this->db->insert("cat_proveedor",$dato_cat_proveedor);
-	    $id_proveedor=mysql_insert_id();
+	    $id_proveedor=$this->db->insert_id();
 	    $dato_proveedor=array(
 					"id_proveedor"                   => $id_proveedor,
 					"id_empresa"                     => $_POST['empresa'],
@@ -2115,7 +2115,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 			);
 			$this->db->insert("valor_comisiones",$dato_profundidad[$contador]);
 	
-			$id_nuevo=mysql_insert_id();
+			$id_nuevo=$this->db->insert_id();
 			$contador++;
 		}
 		

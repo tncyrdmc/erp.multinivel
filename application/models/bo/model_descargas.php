@@ -24,7 +24,7 @@ class model_descargas extends CI_Model
 			'nombre_publico' => $nombre
 		);
 		$this->db->insert('archivo',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function EliminarArchivo($id){

@@ -4,7 +4,7 @@ class modelo_cedi extends CI_Model
 {
 	function crear_cedi($cedi){
 		$this->db->insert('cedi',$cedi);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function consultar_departamento_activo($city){

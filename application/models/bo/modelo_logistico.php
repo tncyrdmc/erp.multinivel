@@ -84,7 +84,7 @@ class modelo_logistico extends CI_Model
 			"id_estatus"	=> 2
 		);
 		$this->db->insert("movimiento",$dato_mov);
-		$mov=mysql_insert_id();
+		$mov=$this->db->insert_id();
 		$dato_surtido=array(
 			"id_almacen_origen"	=> $_POST["origen_out"],
 			"id_movimiento"		=> $mov,
@@ -258,7 +258,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 				"n_guia"		=> $_POST["n_guia"]
 			);
 			$this->db->insert("embarque",$dato_embarque);
-			$embarque=mysql_insert_id();
+			$embarque=$this->db->insert_id();
 			$dato_cross=array(
 				"id_surtido"	=> $_POST["surtido"],
 				"id_embarque"	=> $embarque
@@ -274,7 +274,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 				"n_guia"		=> $_POST["n_guia"]
 			);
 			$this->db->insert("embarque",$dato_embarque);
-			$embarque=mysql_insert_id();
+			$embarque=$this->db->insert_id();
 			$surtidos_q=$this->db->query("SELECT * from surtido where id_venta=".$_POST["venta"]." and estatus<>2");
 			$surtidos=$surtidos_q->result();
 			foreach($surtidos as $surtido)

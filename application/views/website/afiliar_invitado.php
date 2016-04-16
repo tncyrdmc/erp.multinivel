@@ -557,9 +557,9 @@ function codpos_red()
 														<legend>Dirección del afiliado</legend>
 															<div id="dir" class="row">
 																<section class="col col-2">
-																	<div class="form-group">
-																		<label>País</label>
-																		<select style="width:100%" class="select2" id="pais" required name="pais">
+																	<div class="">País
+																		<label class="select">
+																		<select style=""  id="pais" required name="pais">
 																			<?foreach ($pais as $key)
 																			{?>
 																				<option value="<?=$key->Code?>">
@@ -567,6 +567,7 @@ function codpos_red()
 																				</option>
 																			<?}?>
 																		</select>
+																		</label>
 																	</div>
 																</section>
 																<section id="municipio" class="col col-2">

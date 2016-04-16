@@ -29,7 +29,7 @@ class modelo_dashboard extends CI_Model
   function get_user_phone($id){
 		$q=$this->db->query('select numero from cross_tel_user where id_user = '.$id);
     $q=$q->result();
-		return $q[0]->numero;
+		return $q ? $q[0]->numero : '';
   }
 
   function get_user_email($id){

@@ -25,6 +25,7 @@ class testSetupBono extends CI_Controller {
 		$this->testGetDiasInicioYFinSemana();
 		$this->testGetDiasInicioYFinQuincena();
 		$this->testGetDiasInicioYFinMes();
+		$this->testGetDiasInicioYFinAno();
 		
 		$this->testgetFechaInicioPagoDeBono();
 		$this->testgetFechaFinPagoDeBono();
@@ -93,6 +94,45 @@ class testSetupBono extends CI_Controller {
 	public function testGetDiasInicioYFinSemana(){
 		$calculadorBono=$this->calculador_bono;
 	
+		//INicio de Semana
+		$resultado=$calculadorBono->getInicioSemana('2016-03-28');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-03-29');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-03-30');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-03-31');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-04-01');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-04-02');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-04-03');
+		echo $this->unit->run('2016-03-28',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getInicioSemana('2016-04-04');
+		echo $this->unit->run('2016-04-04',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
+		
+		//Fin de Semana
+		$resultado=$calculadorBono->getFinSemana('2016-03-28');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-03-29');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-03-30');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-03-31');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-04-01');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-04-02');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-04-03');
+		echo $this->unit->run('2016-04-03',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		$resultado=$calculadorBono->getFinSemana('2016-04-04');
+		echo $this->unit->run('2016-04-10',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		
+		
+		// Los Dos
+		
 		$resultado=$calculadorBono->getInicioSemana('2016-03-13');
 		echo $this->unit->run('2016-03-07',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
 	
@@ -105,7 +145,7 @@ class testSetupBono extends CI_Controller {
 		$resultado=$calculadorBono->getFinSemana('2016-03-01');
 		echo $this->unit->run('2016-03-06',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->getInicioSemana('2016-07-03');
+		$resultado=$calculadorBono->getInicioSemana('2016-06-27');
 		echo $this->unit->run('2016-06-27',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
 	
 		$resultado=$calculadorBono->getFinSemana('2016-07-03');
@@ -117,6 +157,9 @@ class testSetupBono extends CI_Controller {
 	
 		$resultado=$calculadorBono->getFinSemana('2016-03-10');
 		echo $this->unit->run('2016-03-13',$resultado, 'Test Fin de Semana','Resultado es :'.$resultado);
+		
+		$resultado=$calculadorBono->getInicioSemana('2016-04-04');
+		echo $this->unit->run('2016-04-04',$resultado, 'Test Inicio de Semana','Resultado es :'.$resultado);
 	
 	}
 	
@@ -181,6 +224,35 @@ class testSetupBono extends CI_Controller {
 	
 		$resultado=$calculadorBono->getFinMes('2016-08-31');
 		echo $this->unit->run('2016-08-31',$resultado, 'Test Fin de Mes','Resultado es :'.$resultado);
+	
+	}
+	
+	public function testGetDiasInicioYFinAno(){
+		$calculadorBono=$this->calculador_bono;
+	
+		$resultado=$calculadorBono->getInicioAno('2016-03-13');
+		echo $this->unit->run('2016-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2016-03-13');
+		echo $this->unit->run('2016-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioAno('2016-02-01');
+		echo $this->unit->run('2016-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2016-02-01');
+		echo $this->unit->run('2016-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioAno('2015-02-01');
+		echo $this->unit->run('2015-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2015-02-01');
+		echo $this->unit->run('2015-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getInicioAno('2018-08-31');
+		echo $this->unit->run('2018-01-01',$resultado, 'Test Inicio de Ano','Resultado es :'.$resultado);
+	
+		$resultado=$calculadorBono->getFinAno('2018-08-31');
+		echo $this->unit->run('2018-12-31',$resultado, 'Test Fin de Ano','Resultado es :'.$resultado);
 	
 	}
 	

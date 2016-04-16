@@ -11,9 +11,12 @@ class bono extends CI_Model
 	private $valores;
 	private $activacion;
 	
-	private $condicionesBono;
+	private $condicionesBonoDar;
+	private $condicionesBonoRecibir;
 	private $valoresBono=array();
 	private $activacionBono;
+	
+	private $id_red;
 	
 	function __construct()
 	{
@@ -53,15 +56,7 @@ class bono extends CI_Model
 	public function getCondiciones() {
 		return $this->condiciones;
 	}
-	
-	public function getCondicionesBono() {
-		return $this->condicionesBono;
-	}
-	public function setCondicionesBono($condicionesBono) {
-		$this->condicionesBono = $condicionesBono;
-		return $this;
-	}
-	
+
 	public function getValoresBono() {
 		return $this->valoresBono;
 	}
@@ -127,14 +122,21 @@ class bono extends CI_Model
 
 	public function setDatosCondicionesBono($id_bono){
 		
+		$this->setDatosCondicionesDar ($id_bono);
+		$this->setDatosCondicionesRecibir($id_bono);
+
+
+	}
+	
+	private function setDatosCondicionesDar($id_bono) {
 		$q=$this->db->query("SELECT cbc.id as id_condicion,cbc.id_bono,cbc.id_rango,cbc.id_tipo_rango,
 							cbc.id_red,crt.condicion_red,crt.nivel_red,cbc.condicion_rango as valor,cbc.condicion1,
 							cbc.condicion2  
 							FROM cat_bono_condicion cbc,cross_rango_tipos crt
 							where cbc.id_rango=crt.id_rango 
-							and cbc.id_tipo_rango=crt.id_tipo_rango and cbc.id_bono=".$id_bono);
+							and cbc.id_tipo_rango=crt.id_tipo_rango and (cbc.calificado='DAR' or cbc.calificado='DOS') and cbc.id_bono=".$id_bono);
 		$datosCondicioneBono=$q->result();
-	
+		$condiciones=array();
 		foreach ($datosCondicioneBono as $condicion){
 			$condicionesBono=new $this->condiciones_bono();
 			$condicionesBono->setIdCondicion(intval($condicion->id_condicion));
@@ -142,6 +144,7 @@ class bono extends CI_Model
 			$condicionesBono->setIdRango(intval($condicion->id_rango));
 			$condicionesBono->setIdTipoRango(intval($condicion->id_tipo_rango));
 			$condicionesBono->setIdRed(intval($condicion->id_red));
+			$this->setIdRed($condicion->id_red);
 			
 			$q=$this->db->query("SELECT condicion_red_afilacion FROM cat_rango where id_rango=".$condicion->id_rango);
 			$datosCondicionRedAfiliacionRango=$q->result();
@@ -150,15 +153,52 @@ class bono extends CI_Model
 			$condicionesBono->setCondicionRed($condicion->condicion_red);
 			$condicionesBono->setNivelRed(intval($condicion->nivel_red));
 			$condicionesBono->setValor(intval($condicion->valor));
-			$condicionesBono->setCondicionBono1(intval($condicion->condicion1));
-			$condicionesBono->setCondicionBono2(intval($condicion->condicion2));
+			$condicionesBono->setCondicionBono1(($condicion->condicion1));
+			$condicionesBono->setCondicionBono2(($condicion->condicion2));
+			
+			array_push($condiciones, $condicionesBono);
 
 		}
 
-		$this->setCondicionesBono($condicionesBono);
-
+		$this->setCondicionesBonoDar($condiciones);
 	}
 	
+	private function setDatosCondicionesRecibir($id_bono) {
+		$q=$this->db->query("SELECT cbc.id as id_condicion,cbc.id_bono,cbc.id_rango,cbc.id_tipo_rango,
+							cbc.id_red,crt.condicion_red,crt.nivel_red,cbc.condicion_rango as valor,
+							GROUP_CONCAT(DISTINCT cbc.condicion1 SEPARATOR ', ' ) as condicion1,
+							GROUP_CONCAT(DISTINCT cbc.condicion2 SEPARATOR ', ' ) as condicion2
+							FROM cat_bono_condicion cbc,cross_rango_tipos crt
+							where cbc.id_rango=crt.id_rango
+							and cbc.id_tipo_rango=crt.id_tipo_rango and (cbc.calificado='REC' or cbc.calificado='DOS') and cbc.id_bono=".$id_bono." group by cbc.id_tipo_rango order by cbc.id_tipo_rango DESC");
+		$datosCondicioneBono=$q->result();
+		$condiciones=array();
+		foreach ($datosCondicioneBono as $condicion){
+			$condicionesBono=new $this->condiciones_bono();
+			$condicionesBono->setIdCondicion(intval($condicion->id_condicion));
+			$condicionesBono->setIdBono(intval($condicion->id_bono));
+			$condicionesBono->setIdRango(intval($condicion->id_rango));
+			$condicionesBono->setIdTipoRango(intval($condicion->id_tipo_rango));
+			$condicionesBono->setIdRed(intval($condicion->id_red));
+			$this->setIdRed($condicion->id_red);
+				
+			$q=$this->db->query("SELECT condicion_red_afilacion FROM cat_rango where id_rango=".$condicion->id_rango);
+			$datosCondicionRedAfiliacionRango=$q->result();
+			$condicionesBono->setCondicionAfiliadosRed($datosCondicionRedAfiliacionRango[0]->condicion_red_afilacion);
+	
+			$condicionesBono->setCondicionRed($condicion->condicion_red);
+			$condicionesBono->setNivelRed(intval($condicion->nivel_red));
+			$condicionesBono->setValor(intval($condicion->valor));
+			$condicionesBono->setCondicionBono1(($condicion->condicion1));
+			$condicionesBono->setCondicionBono2(($condicion->condicion2));
+				
+			array_push($condiciones, $condicionesBono);
+	
+		}
+	
+		$this->setCondicionesBonoRecibir($condiciones);
+	}
+
 	public function setDatosValorBono($id_bono){
 		
 		$q=$this->db->query("SELECT id,id_bono,condicion_red,nivel,valor,verticalidad FROM cat_bono_valor_nivel where id_bono=".$id_bono);
@@ -199,5 +239,28 @@ class bono extends CI_Model
 		
 		$this->setActivacionBono($activacion);
 	}
+	public function getCondicionesBonoDar() {
+		return $this->condicionesBonoDar;
+	}
+	public function setCondicionesBonoDar($condicionesBonoDar) {
+		$this->condicionesBonoDar = $condicionesBonoDar;
+		return $this;
+	}
+	public function getCondicionesBonoRecibir() {
+		return $this->condicionesBonoRecibir;
+	}
+	public function setCondicionesBonoRecibir($condicionesBonoRecibir) {
+		$this->condicionesBonoRecibir = $condicionesBonoRecibir;
+		return $this;
+	}
+	public function getIdRed() {
+		return $this->id_red;
+	}
+	public function setIdRed($id_red) {
+		$this->id_red = $id_red;
+		return $this;
+	}
+	
+	
 	
 }

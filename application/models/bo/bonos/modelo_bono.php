@@ -78,11 +78,37 @@ class modelo_bono extends CI_Model
 		}
 	}
 	
+	function nuevoBonoVariosRangos($datosTodosLosRangos,$datosBono,$datosValoresBono){
+
+	$this->modelo_bono->insertarBono($datosBono["id_bono"],$datosBono["nombre_bono"],$datosBono["descripcion_bono"],
+				$datosBono["inicio"],$datosBono["fin"],$datosBono["mes_desde_afiliacion"],
+				$datosBono["mes_desde_activacion"],
+				$datosBono["frecuencia"],$datosBono["plan"],$datosBono["estatus_bono"]);
+		
+		foreach ($datosTodosLosRangos as $datosRango){
+
+			$this->modelo_bono->insertarRango($datosRango["id_rango"],$datosRango["nombre_rango"],$datosRango["descripcion_rango"],$datosRango["condicion_red_afilacion"],$datosRango["estatus_rango"]);
+			$this->modelo_bono->insertarRangoTipo($datosRango["id_rango"],$datosRango["id_tipo_rango"],$datosRango["valor"],$datosRango["condicion_red"],$datosRango["nivel_red"]);
+			
+			if(!isset($datosRango["calificado"]))
+				$datosRango["calificado"]="DOS";
+			
+			$this->modelo_bono->insertarBonoCondicion($datosRango["id_condicion"],$datosBono["id_bono"],$datosRango["id_rango"],$datosRango["id_tipo_rango"],$datosRango["valor"],$datosRango["id_red"],$datosRango["condicion1"],$datosRango["condicion2"],$datosRango["calificado"]);
+		}
+		
+		foreach ($datosValoresBono as $valorBono){
+			
+			$this->setValoresBono(intval($valorBono["id_valor"]),intval($valorBono["id_rango"]),
+					$valorBono["condicion_red"],intval($valorBono["nivel"]),$valorBono["valor"],$valorBono["verticalidad"]);
+		}
+		$this->modelo_bono->insertarBonoValor($this->getValoresBono());
+	}
+	
 	function ingresarBono() {
 		$this->modelo_bono->insertarRango($this->id_rango,$this->nombre_rango,$this->descripcion_rango,$this->condicion_afiliados_red,$this->estatus_rango);
 		$this->modelo_bono->insertarRangoTipo($this->id_rango,$this->id_tipo_rango,$this->valor,$this->condicion_red,$this->nivel_red);
 		$this->modelo_bono->insertarBono($this->id_bono,$this->nombre_bono,$this->descripcion_bono,$this->inicio,$this->fin,$this->mes_desde_afiliacion,$this->mes_desde_activacion,$this->frecuencia,$this->plan,$this->estatus_bono);
-		$this->modelo_bono->insertarBonoCondicion($this->id_condicion,$this->id_bono,$this->id_rango,$this->id_tipo_rango,$this->valor,$this->id_red,$this->condicion_1,$this->condicion_2);
+		$this->modelo_bono->insertarBonoCondicion($this->id_condicion,$this->id_bono,$this->id_rango,$this->id_tipo_rango,$this->valor,$this->id_red,$this->condicion_1,$this->condicion_2,"DOS");
 		$this->modelo_bono->insertarBonoValor($this->getValoresBono());
 	}
 	
@@ -95,9 +121,9 @@ class modelo_bono extends CI_Model
 	}
 	
 	function limpiarTodosLosBonos() {
-		$this->db->query('delete from cat_rango where id_rango >= 60');
-		$this->db->query('delete from cross_rango_tipos where id_rango >= 60');
-		$this->db->query('delete from bono where id >= 50');
+		$this->db->query('delete from cat_rango where id_rango >= 1');
+		$this->db->query('delete from cross_rango_tipos where id_rango >= 1');
+		$this->db->query('delete from bono where id >= 1');
 		$this->db->query('delete from cat_bono_condicion where id >= 1');
 		$this->db->query('delete from cat_bono_valor_nivel where id >= 1');
 		
@@ -112,7 +138,7 @@ class modelo_bono extends CI_Model
 				'estatus'	=> $estatus_rango
 		);
 		$this->db->insert('cat_rango',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarRangoTipo($id_rango,$id_tipo_rango,$valor,$condicion_red,$nivel_red){
@@ -124,7 +150,7 @@ class modelo_bono extends CI_Model
 				'nivel_red'	=> $nivel_red
 		);
 		$this->db->insert('cross_rango_tipos',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarBono($id_bono,$nombre_bono,$descripcion_bono,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$plan,$estatus_bono){
@@ -141,10 +167,10 @@ class modelo_bono extends CI_Model
 				'estatus'	=> $estatus_bono
 		);
 		$this->db->insert('bono',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
-	function insertarBonoCondicion($id_condicion,$id_bono,$id_rango,$id_tipo_rango,$valor,$id_red,$condicion_1,$condicion_2){
+	function insertarBonoCondicion($id_condicion,$id_bono,$id_rango,$id_tipo_rango,$valor,$id_red,$condicion_1,$condicion_2,$calificado){
 		$datos = array(
 				'id' => $id_condicion,
 				'id_bono'   => $id_bono,
@@ -153,10 +179,11 @@ class modelo_bono extends CI_Model
 				'condicion_rango'	=> $valor,
 				'id_red'   => $id_red,
 				'condicion1'	=> $condicion_1,
-				'condicion2'	=> $condicion_2
+				'condicion2'	=> $condicion_2,
+				'calificado'	=> $calificado
 		);
 		$this->db->insert('cat_bono_condicion',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function insertarBonoValor($valores){

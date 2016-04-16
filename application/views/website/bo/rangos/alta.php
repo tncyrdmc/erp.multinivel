@@ -53,12 +53,14 @@
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
 									<header>Condiciones</header><br><br>
-									<label style="margin: 1rem;width: 10rem;" class="select">Condicion Red
+									<label style="margin: 1rem;width: 50rem;" class="select">Condicion Red
 										<select id="condicion_red_afilacion" name="condicion_red_afilacion" style="margin: 1rem;width: 10rem;">
 											<option value='EQU'>Equilibrada</option>
 											<option value='DEB'>Pata Débil</option>
 										</select>
+									<p>Nota: Seleccionan todas las patas de la red (Equilibrada) o solo la pata mas débil (Débil) para cumplir la condición.</p><br>
 									</label>
+									
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>																	
@@ -68,10 +70,10 @@
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>
-										<div class="col col-lg-2 col-xs-2">
+									<!-- <div class="col col-lg-2 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condición <i class="fa fa-plus"></i></a>
 										</div>
-										
+										-->
 									</div>
 									<div class="row">
 										<div class="col col-lg-2">
@@ -119,16 +121,27 @@
 											</select>
 											</label>
 										</div>
+										
 									</div>
-									
+						
 								</div>
-								
 								<div id="rangos">
 								
 								</div>
 
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Crear</button>
-			
+			<br>
+			<p style="margin: 1.5rem;">Nota:
+				<br><b>Tipo Condición :</b> 
+					<br>&nbsp&nbsp-(Afiliados en la red) Numero de Afiliados En toda la red del afiliado.
+					<br>&nbsp&nbsp-(Ventas en la red) Valor total en $ de las ventas de red del afiliado.
+					<br>&nbsp&nbsp-(Compras Personales) Valor total en $ de las compras personales del afiliado.
+					<br>&nbsp&nbsp-(Puntos Comisionables) Valor total de los puntos comisionables personales del afiliado.
+					<br>&nbsp&nbsp-(Puntos de la Red) Valor total de los puntos comisionables de la red del afiliado.
+				<br><b>Condición Red:</b> 
+					<br>&nbsp&nbsp-(Directos Afiliados) Selecciona solo los directos del afiliado.
+					<br>&nbsp&nbsp-(Toda la Red) Selecciona todos los afiliados de la red Directos e Indirectos.
+			</p>
 		</form>
     </fieldset>
 	</div>

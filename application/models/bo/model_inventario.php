@@ -59,7 +59,7 @@ class model_inventario extends CI_Model
    }
    function ingresar_inventario($datos){
    	$this->db->insert("inventario",$datos);
-   	return mysql_insert_id();
+   	return $this->db->insert_id();
    }
    function ingresar_inventario_historial($datos){
    	$this->db->insert("inventario_historial",$datos);

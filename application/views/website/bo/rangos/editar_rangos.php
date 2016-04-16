@@ -38,9 +38,9 @@
 										<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>
-										<div class="col col-lg-2 col-xs-2">
+								<!--  <div class="col col-lg-2 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_rango('.<?php echo $j ?>.')"> Agregar Condición <i class="fa fa-plus"></i></a>
-										</div>
+										</div> -->
 									</div>
 		
 								<?php

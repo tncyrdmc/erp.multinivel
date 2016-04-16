@@ -63,15 +63,7 @@
 													<a href="/bo/comercial/red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-sitemap fa-3x"></i>
-															<h1>Red de Afiliacion</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">	
-													<a href="/bo/bonos/historial">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-gift fa-3x"></i>&nbsp&nbsp&nbsp<i class="fa fa-check fa-3x"></i>
-															<h1>Bonos <br>Pagados</h1>
+															<h1>Red de <br>Afiliacion</h1>
 														</div>
 													</a>
 												</div>
@@ -82,7 +74,15 @@
 															<h1>Transacciones <br> en Billetera</h1><!-- Reportes -->
 														</div>
 													</a>
-												</div>												
+												</div>	
+												<div class="col-sm-3 link">	
+														<a href="#">
+															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+																<i class="fa fa-archive fa-3x"></i>
+																<h1>Archivero</h1>
+															</div>
+														</a>
+												</div>											
 											</div>
 										 </div>
 									</div>

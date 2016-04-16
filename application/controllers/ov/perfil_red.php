@@ -2,6 +2,8 @@
 
 class perfil_red extends CI_Controller
 {
+	
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -17,11 +19,11 @@ class perfil_red extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_planes');
 		$this->load->model('ov/modelo_dashboard');
-		$this->load->model('bo/model_tipo_usuario');
+		$this->load->model('bo/model_tipo_usuario');		
 		if (!$this->tank_auth->is_logged_in()&&!$_POST['token'])
 		{																		// logged in
 		redirect('/auth');
-		}
+		}	
 		
 	}
 
@@ -790,7 +792,7 @@ class perfil_red extends CI_Controller
 				
 		}
 		
-		$premium         = $red[0]->premium;
+		//$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		$planes 		 = $this->model_planes->Planes();
 	
@@ -818,7 +820,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		//$this->template->set("premium",$premium);
 		$this->template->set("planes",$planes);
 	
 		$this->template->set_theme('desktop');
@@ -896,7 +898,7 @@ class perfil_red extends CI_Controller
 		$use_username=$this->model_perfil_red->use_username();
 		
 		$email = preg_match(
-				'/^[A-z0-9_\-.]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				'/^[A-z0-9_\-.]+[A-z0-9]{1,}+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 		);
 		
 		if(!$_POST['username']||!$_POST['mail']||!$_POST['password']||!$_POST['confirm_password']){
@@ -942,7 +944,7 @@ class perfil_red extends CI_Controller
 		$use_username=$this->model_perfil_red->use_username_modificar();
 	
 		$email = preg_match(
-				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				'/^[A-z0-9_\-.]+[A-z0-9]{1,}+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 				);
 	
 		if(!$_POST['username']||!$_POST['mail']||!$email||$_POST['password']!=$_POST['confirm_password']||$use_mail||$use_username){
@@ -961,8 +963,8 @@ class perfil_red extends CI_Controller
 	function use_mail()
 	{
 		$email = preg_match(
-				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
-		);
+				'/^[A-z0-9_\-.]+[A-z0-9]{1,}+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+		); 
 		
 		$use_mail=$this->model_perfil_red->use_mail();
 		if($use_mail){
@@ -1052,14 +1054,16 @@ class perfil_red extends CI_Controller
 	
 	function afiliar_nuevo()
 	{
-		
-		$resultado = $this->model_afiliado->crearUsuario();
-		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
+		$this->load->model('ov/modelo_afiliado');	//pruebas
 		isset($_POST['token']) ? $this->model_perfil_red->trash_token($_POST['token']) : '';
-		if($resultado)
+		$resultado = $this->modelo_afiliado->crearUsuario();
+		#echo $resultado;
+		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
+		
+		if(intval($resultado))
 		{
-			$id_afiliado=$this->model_perfil_red->get_id();
-			echo "El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$id_afiliado[0]->id."</b>";
+			#$id_afiliado=$this->model_perfil_red->get_id(); //$id_afiliado[0]->id
+			echo "!FINE¡ El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$resultado."</b>";
 		}
 		else
 		{
@@ -1665,5 +1669,6 @@ class perfil_red extends CI_Controller
 		$this->template->set("red",$red);
 		$this->template->set("valor_retencion",$valor_retencion);
 		$this->template->build('website/ov/perfil_red/fases');
-	}
+	}	
+	
 }

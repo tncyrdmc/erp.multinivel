@@ -11,7 +11,7 @@ class modelo_almacen extends CI_Model
 	
 	function crear_almacen($almacen){
 		$this->db->insert('cedi',$almacen);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function eliminar_almacen($id){

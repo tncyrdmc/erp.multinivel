@@ -50,7 +50,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionAfiliacionesBono();
 		$this->after();
-		
+
 		$this->before();
 		$this->testGetUsuarioCumpleCondicionVentasRedBono();
 		$this->after();
@@ -213,107 +213,108 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$id_red=300;
 		$id_bono=54;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
+		$fecha=date('Y-m-d');
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Afiliaciones Directas','Resultado es :'.$resultado);
 		
 	}
@@ -324,107 +325,108 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$id_red=300;
 		$id_bono=55;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
+		$fecha=date('Y-m-d');
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Ventas en la red Pata debil','Resultado es :'.$resultado);
 
 	}
@@ -435,107 +437,108 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$id_red=300;
 		$id_bono=56;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
+		$fecha=date('Y-m-d');
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por compras personales','Resultado es :'.$resultado);
 		
 	}
@@ -546,107 +549,108 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$id_red=300;
 		$id_bono=57;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
+		$fecha=date('Y-m-d');
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por puntos Comisionables personales','Resultado es :'.$resultado);
 	
 	}
@@ -657,772 +661,112 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 		$id_red=300;
 		$id_bono=58;
 		$usuarios=$calculadorBono->getUsuariosRed($id_red);
+		$fecha=date('Y-m-d');
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[0]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[1]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[2]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[3]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[4]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[5]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[6]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[7]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[8]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[9]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[10]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[11]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[12]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[13]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[14]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[15]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[16]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[17]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[18]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[19]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[20]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[21]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[22]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[23]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[24]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[25]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[26]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[27]->id_afiliado,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[28]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[29]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[30]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[31]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[32]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
-		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado);
+		$resultado=$calculadorBono->usuarioPuedeCobrarBono($id_bono,$usuarios[33]->id_afiliado,$fecha);
 		echo $this->unit->run(false,$resultado, 'Test validar si Esta disponible Para Cobrar por Puntos en la red pata debil','Resultado es :'.$resultado);
 	
 	}
 	
-	public function testRepartirComisionBonoRedHaciaAbajo(){
-		
-		$calculadorBono=new $this->calculador_bono();
-		$id_bono=56;
-		$id_bono_historial=1;
-
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10000);
-		
-		// Nivel 0
-		$transaccion=11;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10000,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 1
-		$transaccion=10;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10002,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=9;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10001,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 2
-		$transaccion=8;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10006,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=7;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10005,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=6;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10004,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=5;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10003,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 3
-		$transaccion=4;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10010,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=3;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10009,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=2;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10008,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10007,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-	}
-	
-	public function testRepartirComisionBonoDirectosHaciaAbajo(){
-		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
-		$calculadorBono=new $this->calculador_bono();
-		$id_bono=57;
-		$id_bono_historial=1;
-
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10000);
-		
-		// Nivel 3
-		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10007,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=2;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10026,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$transaccion=3;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10017,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=4;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10018,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 2
-		$transaccion=5;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10003,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=6;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10004,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=7;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10008,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=8;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10020,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=9;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10029,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=10;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10030,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=11;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10013,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=12;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10014,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 1
-		$transaccion=13;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10001,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=14;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10002,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=15;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10005,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=16;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10006,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=17;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10009,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$transaccion=18;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10010,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 0
-		$transaccion=19;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(5,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10000,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-	}
-	
-	public function testRepartirComisionBonoRedHaciaArriba(){
-		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
-		$calculadorBono=new $this->calculador_bono();
-		$id_bono=58;
-		$id_bono_historial=1;
-		
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10007);
-		
-		// Nivel 3
-		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10000,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 2
-		$transaccion=2;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10001,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 1
-		
-		$transaccion=3;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10003,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		// Nivel 0
-		
-		$transaccion=4;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10007,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-	}
-	
-	public function testRepartirComisionBonoDirectosHaciaArriba(){
-		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
-		$calculadorBono=new $this->calculador_bono();
-		$id_bono=59;
-		$id_bono_historial=1;
-		
-		$calculadorBono->darComisionRedDeAfiliado($id_bono,$id_bono_historial,10007);
-		
-		// Nivel 3
-		$transaccion=1;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10000,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		// Nivel 2
-		$transaccion=2;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10001,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 1
-		$transaccion=3;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10003,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 0
-		$transaccion=4;$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$repartidorComisionBono->setUpReparticionComision($transaccion);
-		$resultado=$repartidorComisionBono->getValor();
-		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getIdUsuario();
-		echo $this->unit->run(10007,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-	}
-	
-	public function testValidarSiElBonoYaCobroFalso(){
-		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
-		
-		$calculadorBono=new $this->calculador_bono();
-
-		$id_bono=50;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
-	
-		$id_bono=53;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
-		
-		$id_bono=56;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
-	
-		$id_bono=57;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
-	
-		$id_bono=58;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
-	
-		$id_bono=59;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
-	
-	}
-	
-	public function testValidarSiUsuarioYaCobroBonoUnicoFalso(){
-		$calculadorBono=new $this->calculador_bono();
-		
-		$id_bono=54;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->buscarSiUsuarioYaReclamoBono($id_bono,10000);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-		$id_bono=54;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->buscarSiUsuarioYaReclamoBono($id_bono,10001);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-		$id_bono=54;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->buscarSiUsuarioYaReclamoBono($id_bono,10003);
-		echo $this->unit->run(false,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-	}
-	
-	public function testCalcularComisionesAfiliadosTodosLosBonos(){
-		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
-		$repartidorComisionBono=new$this->repartidor_comision_bono();
-		
-		$calculadorBono=new $this->calculador_bono();
-		
-		$calculadorBono->calcularComisionesBonos();
-
-		//BONO 56
-		// Nivel 0
-		$id_bono=56;$id_usuario=10000;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10000,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-	
-		// Nivel 1
-		$id_usuario=10002;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10002,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10001;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10001,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 2
-		$id_usuario=10006;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10006,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10005;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10005,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10004;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10004,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10003;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10003,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 3
-		$id_usuario=10010;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10010,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10009;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10009,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10008;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10008,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10007;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10007,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-
-		//BONO 57
-		// Nivel 3
-		$id_bono=57;$id_usuario=10007;
-		
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10007,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10026;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10026,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10017;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10017,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10018;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(10,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10018,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		// Nivel 2
-		$id_usuario=10003;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10003,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10004;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10004,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10008;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10008,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10020;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10020,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10029;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10029,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10030;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10030,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10013;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10013,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10014;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(20,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10014,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		// Nivel 1
-
-		$id_usuario=10001;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10001,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10002;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10002,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-		$id_usuario=10005;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10005,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10006;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10006,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10009;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10009,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-		$id_usuario=10010;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(30,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10010,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		
-	
-		// Nivel 0
-		$id_usuario=10000;
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->valor;
-		echo $this->unit->run(5,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-		$resultado=$repartidorComisionBono->getValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->id_usuario;
-		echo $this->unit->run(10000,$resultado, 'Test validar si entrega comisiones bono en red','Resultado es :'.$resultado);
-
-	
-	}
-	
-	public function testValidarSiElBonoYaCobroVerdadero(){
-		
-		$calculadorBono=new $this->calculador_bono();
-
-		$id_bono=50;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-		$id_bono=53;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-		$id_bono=56;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-
-		$id_bono=57;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-		$id_bono=58;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-		$id_bono=59;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->isPagado($bono);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-		
-	}
-	
-	public function testValidarSiUsuarioYaCobroBonoUnicoVerdadero(){
-		$calculadorBono=new $this->calculador_bono();
-	
-		$id_bono=54;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->buscarSiUsuarioYaReclamoBono($id_bono,10000);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-	
-		$id_bono=54;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->buscarSiUsuarioYaReclamoBono($id_bono,10001);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-	
-		$id_bono=54;$bono=new $this->bono();$bono->setUpBono($id_bono);
-		$resultado=$calculadorBono->buscarSiUsuarioYaReclamoBono($id_bono,10007);
-		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
-	
-	}
 	
 	private function ingresarBonos(){
 		$this->modelo_bono->limpiarTodosLosBonos();
@@ -1502,6 +846,7 @@ class testCalculadorDeBonosBinarios extends CI_Controller {
 				'condicion_red_afilacion'    => "DEB",
 				'condicion1'    => $servicios,
 				'condicion2'	=> $id_mercancia,
+				'calificado' => "DAR",
 				'estatus_rango'	=> 'ACT'
 		);
 		

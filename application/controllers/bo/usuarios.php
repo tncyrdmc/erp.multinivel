@@ -57,7 +57,7 @@ class usuarios extends CI_Controller
 	
 		
 		$id = 2;
-		$style = $this->general->get_style($id);
+		$style = $this->general->get_style(1);
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 	
@@ -96,7 +96,7 @@ class usuarios extends CI_Controller
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
 		$pais            = $this->model_perfil_red->get_pais();
-		$style           = $this->general->get_style($id);
+		$style           = $this->general->get_style(1);
 		$dir             = $this->model_perfil_red->dir($id);
 		$civil           = $this->model_perfil_red->edo_civil();
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
@@ -104,7 +104,7 @@ class usuarios extends CI_Controller
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
 		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
-		$premium         = $red[0]->premium;
+		//$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 	
 		$image 			 = $this->model_perfil_red->get_images($id);
@@ -131,7 +131,7 @@ class usuarios extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		//$this->template->set("premium",$premium);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

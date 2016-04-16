@@ -259,4 +259,16 @@ class general extends CI_Model
 		$q=$this->db->query(' SELECT email FROM emails_departamentos LIMIT 0 , 1');
 		return $q->result();
 	}
+	
+	function setArrayVarchar($array){ 
+		$ArrayVarchar = array();
+		foreach ($array as $key){
+			if(!preg_match('/^[0-9]{1,}$/', $key)){
+				$key = '\''.$key.'\'';
+			}
+			array_push($ArrayVarchar, $key);
+		}
+		return implode(',',$ArrayVarchar);
+	}
+	
 }

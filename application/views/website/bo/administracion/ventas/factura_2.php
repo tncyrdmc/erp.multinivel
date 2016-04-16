@@ -1,3 +1,4 @@
+
 <style type="text/css">
 	.tabl {
 width: 100%;
@@ -34,8 +35,8 @@ margin-bottom: 18px;
 </style>
 
 
-<div class="padding-1">
-											<div class="pull-lef">
+<div class="padding-10">
+											<div class="pull-left">
 												<img style="width: 18rem; height: auto; padding: 1rem;" src="" alt="">
 				
 												<address>
@@ -50,7 +51,7 @@ margin-bottom: 18px;
 												</address>
 											</div>
 											</br>
-											<div class="pull-righ">
+											<div class="pull-right">
 												<h1 class="font-300">Factura de venta</h1>
 											</div>
 											<div class="clearfix"></div>
@@ -94,12 +95,12 @@ margin-bottom: 18px;
 
 											</div>
 
-												<div class="pane panel-defaul">
-  													<div class="panel-bod">
+												<div class="panel panel-default">
+  													<div class="panel-body">
 														<span class="center"> <?php echo $empresa[0]->resolucion;?> </span>
   													</div>
 												</div>
-											<table class="table">
+											<table class="table table-hover">
 												<thead>
 													<tr>
 														<th class="text-center">Cantidad</th>

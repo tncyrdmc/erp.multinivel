@@ -17,7 +17,7 @@ class model_ebook extends CI_Model
 			'nombre_publico' => $nombre
 		);
 		$this->db->insert('archivo',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function CargarImagenEbook($ebook, $url, $nombre_completo, $nombre, $extencion){
@@ -31,7 +31,7 @@ class model_ebook extends CI_Model
 		);
 		$this->db->insert('cat_img',$datos);
 		
-		$img = mysql_insert_id();
+		$img = $this->db->insert_id();
 		
 		$datos2 = array(
 				'id_archivo' => $ebook,

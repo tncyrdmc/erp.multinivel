@@ -43,18 +43,18 @@
 													</a>
 											</div>
 											<div class="col-sm-2 link">	
-													<a href="/bo/cuentasporcobrar/index">
+													<a href="/bo/ventas/ventasIndex">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-briefcase fa-3x"></i>
-															<h1>Ventas Por Cobrar</h1>
+															<i class="fa fa-credit-card fa-3x"></i>
+															<h1>Ventas<br>&nbsp</h1>
 														</div>
 													</a>
 											</div>
 											<div class="col-sm-2 link">	
-													<a href="/bo/ventas/index">
+													<a href="/bo/bonos/index_calculo_bonos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-credit-card fa-3x"></i>
-															<h1>Ventas<br>&nbsp</h1>
+															<i class="fa fa-money fa-3x"></i>&nbsp<i class="fa fa-money fa-2x"></i>&nbsp<i class="fa fa-money fa-1x"></i>
+															<h1>Bonos <br>&nbsp</h1>
 														</div>
 													</a>
 											</div>

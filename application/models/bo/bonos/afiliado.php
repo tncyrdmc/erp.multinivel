@@ -22,7 +22,24 @@ class afiliado extends CI_Model
 	private $totalCompras=0;
 	private $totalVentas=0;
 	private $totalPuntosComisionables=0;
+	
+	//BONO BINARIOS 
+	private $id_bono;
+	private $tipoDeBono;
+	private $id_bono_historial=0;
+	/*
+	 * Estado
+	 * Esta dando bono:DAR
+	 * Se le esta repartiendo bono : REC
+	 */
+	private $estado="DAR";
 
+	function __construct()
+	{
+		parent::__construct();
+		
+	}
+	
 	function setUpAfiliado($id_afiliado){
 		$q=$this->db->query("SELECT id as id_afiliado,username,created FROM users where id=".$id_afiliado);
 		$datosAfiliado=$q->result();
@@ -63,13 +80,17 @@ class afiliado extends CI_Model
 	}
 	
 	function limpiarUsuarios() {
-		$this->modelo_bono->eliminarUsuarios();
+		$this->eliminarUsuarios();
 	}
 	
 	function insertarUsuario($id_usuario,$username,$created,$id_afiliacion,$id_red,$id_padre,$id_sponsor,$lado_red){
 		$datos = array(
 				'id' => $id_usuario,
 				'username'   => $username,
+				'password'=>'$2a$08$ElY1rT.xjiuiY3fVfbS7O.hFK4KXFi6OJlQHZx1WagLcOngcfShLS',
+				'email'=>$username.'@g.com',
+				'activated'=>1,
+				'banned'=>'0',
 				'created'    => $created
 		);
 		$this->db->insert('users',$datos);
@@ -83,14 +104,113 @@ class afiliado extends CI_Model
 				'lado' => $lado_red
 		);
 		$this->db->insert('afiliar',$datos);
+		
+		$datos = array(
+				'user_id' => $id_usuario,
+				'id_sexo'   => '1',
+				'id_edo_civil'    => '1',
+				'id_tipo_usuario'    => '2',
+				'id_estudio'    => '1',
+				'id_ocupacion'    => '1',
+				'id_tiempo_dedicado'    => '1',
+				'id_estatus'    => '1',
+				'id_fiscal'    => '1',
+				'keyword'    => '1',
+				'paquete' => '0',
+				'nombre' => $username,
+				'apellido' => " ",
+				'estatus'    => 'ACT',
+				'fecha_nacimiento' => "1980-01-01"
+				
+		);
+		$this->db->insert('user_profiles',$datos);
 
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'id_perfil'   => '2'
+		
+		);
+		$this->db->insert('cross_perfil_usuario',$datos);
+		
+		$datos = array(
+				'id_usuario' => $id_usuario,
+				'bg_color'   => '#03b4db',
+				'btn_1_color'   => '#7e7e7e',
+				'btn_2_color'   => '#2c3640'
+		
+		);
+		$this->db->insert('estilo_usuario',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+		
+		);
+		$this->db->insert('coaplicante',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'pais' => 'COL'
+		
+		);
+		$this->db->insert('cross_dir_user',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'estatus' => 'DES',
+				'activo' => 'No'
+		
+		);
+		$this->db->insert('billetera',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'id_rango' => '1',
+				'entregado' => '1',
+				'estatus' => 'ACT'
+		
+		);
+		$this->db->insert('cross_rango_user',$datos);
+		
+		$datos = array(
+				'id_img' => $id_usuario,
+				'url' => '/template/img/empresario.jpg',
+				'nombre_completo' => 'empresario.jpg',
+				'nombre' => 'empresario',
+				'extencion' => 'jpg',
+				'estatus' => 'ACT'
+		
+		);
+		$this->db->insert('cat_img',$datos);
+		
+		$datos = array(
+				'id_user' => $id_usuario,
+				'id_img' => $id_usuario
+		
+		);
+		$this->db->insert('cross_img_user',$datos);
 	}
 
 	function eliminarUsuarios(){
-		$this->db->query('delete from users where id >= 10000');
-		$this->db->query('delete from afiliar where id >= 10000');
+		$id=1000;
+		$this->db->query("delete from users where id >= ".$id);
+		$this->db->query("delete from user_profiles where user_id not in (select id from users)");
+		$this->db->query("delete from afiliar where id_afiliado not in (select id from users)");
+		$this->db->query("delete from cross_perfil_usuario where id_user not in (select id from users)");
+		$this->db->query("delete from estilo_usuario where id_usuario not in (select id from users)");
+		$this->db->query("delete from coaplicante where id_user not in (select id from users)");
+		$this->db->query("delete from cross_tel_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_dir_user where id_user not in (select id from users)");
+		$this->db->query("delete from billetera where id_user not in (select id from users)");
+		$this->db->query("delete from cross_rango_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_img_user where id_user not in (select id from users)");
+		$this->db->query("delete from cat_img where id_img not in (select id_img from cross_img_user)");
 	}
 
+	function eliminarRemanentes(){
+		$this->db->query('delete from comisionPuntosRemanentes where id >= 1');
+	}
+	
 	function getAfiliados($id_afiliado,$red,$tipo,$nivel){
 		
 		$this->getCantidadDeAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel);
@@ -119,8 +239,9 @@ class afiliado extends CI_Model
 
 			if($this->getDirectoAfiliado($idAfiliadopata1,$red)==$id_afiliado)
 				$totalPata1=1;
-				
+			
 			$this->getCantidadDeAfiliadosDebajoDeHijo($idAfiliadopata1,$id_afiliado,$red,$tipo,$nivel);
+			
 			$totalPata1+=$this->getTotalAfiliados();
 			
 			$this->setTotalAfiliados(0);
@@ -132,7 +253,8 @@ class afiliado extends CI_Model
 					
 			$this->getCantidadDeAfiliadosDebajoDeHijo($idAfiliadopata2,$id_afiliado,$red,$tipo,$nivel);
 			$totalPata2+=$this->getTotalAfiliados();
-				
+			
+			
 			if($totalPata1>=$totalPata2)
 				return $totalPata2;
 			return $totalPata1;
@@ -167,7 +289,7 @@ class afiliado extends CI_Model
 			}
 		}
 	}
-	
+
 	function getCantidadDeAfiliadosDebajoDeHijo($id_afiliado,$id_padre,$red,$tipo,$nivel){
 	
 		$q=$this->db->query("select A.id_afiliado,A.directo
@@ -179,14 +301,20 @@ class afiliado extends CI_Model
 		foreach ($datos as $dato){
 	
 			if ($dato!=NULL){
+				
+				if($tipo=="DIRECTOS"){
 
-				if($dato->directo==$id_padre){
+					if(($dato->directo==$id_padre))
+						$this->setTotalAfiliados($this->totalAfiliados+1);
+				}
+				else{
 					$this->setTotalAfiliados($this->totalAfiliados+1);
 				}
 					$this->getCantidadDeAfiliadosDebajoDeHijo($dato->id_afiliado,$id_padre,$red,$tipo,$nivel);
 			}
 		}
 	}
+
 
 	function getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite){
 		if($limite>0||$nivel==0){
@@ -266,66 +394,137 @@ class afiliado extends CI_Model
 
 	}
 	
-	function getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,$id_mercancia,$datosVenta){
-		
+	function getComprasPersonalesIntervaloDeTiempo($id_afiliado,$id_red,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datosVenta){
+
 		$datos=array();
+
+		if($datosVenta=="COSTO")
+			$datos=$this->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin);
 		
-		if($datosVenta=="COSTO"){
-			
-			if($id_mercancia==0){
-				$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
-								 where (v.id_venta=cvm.id_venta)
-								 and  (i.id=cvm.id_mercancia)
-								 and(v.id_user=".$id_afiliado.")
-								 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
-				$datos= $q->result();
-			}else {
+		else if($datosVenta=="PUNTOS")
+			$datos=$this->getPuntosTotalesPersonalesIntervalosDeTiempo ($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin );
 
-				$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
-								 where (v.id_venta=cvm.id_venta)
-								 and  (i.id=cvm.id_mercancia)
-								 and (i.id=".$id_mercancia.")
-								 and(v.id_user=".$id_afiliado.")
-								 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
-				$datos= $q->result();
-			}
-
-			
-		} else if($datosVenta=="PUNTOS"){
-			if($id_mercancia==0){
-				$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
-								 where (v.id_venta=cvm.id_venta)
-								 and  (i.id=cvm.id_mercancia)
-								 and(v.id_user=".$id_afiliado.")
-								 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
-				$datos= $q->result();
-			}else {
-				$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
-								 where (v.id_venta=cvm.id_venta)
-								 and  (i.id=cvm.id_mercancia)
-								 and (i.id=".$id_mercancia.")
-								 and(v.id_user=".$id_afiliado.")
-								 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
-				$datos= $q->result();
-			}
-
-		}
-	
 		if($datos==null)
 			return 0;
-		else
-			return $datos[0]->total;
+
+		return $datos[0]->total;
 	}
 	
-	function getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta){
+	 function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
+
+		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
+		$id_tipo_mercancia=$id_tipo_mercancia;
+
+		$cualquiera="0"; 
+		 
+		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
+			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){
+			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and (".$id_mercancia.")
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}else if($id_mercancia===$cualquiera&&$id_tipo_mercancia!==$cualquiera){
+			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia!==$cualquiera){
+			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and (".$id_mercancia.")
+							 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}
+	}
+
+	private function getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
+
+		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
+		$id_tipo_mercancia=$id_tipo_mercancia;
+
+		$cualquiera="0"; 
+		
+		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
+			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){
+
+			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and (".$id_mercancia.")
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}else if($id_mercancia===$cualquiera&&$id_tipo_mercancia!==$cualquiera){
+
+			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+						 	 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia!==$cualquiera){
+
+			$q=$this->db->query("SELECT sum(costo_total) as total FROM venta v,cross_venta_mercancia cvm,items i
+							 where (v.id_venta=cvm.id_venta)
+							 and  (i.id=cvm.id_mercancia)
+							 and (".$id_mercancia.")
+						 	 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
+							 and(v.id_user=".$id_afiliado.")
+							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+			return $q->result();
+		}
+
+	}
+
+	private function separarMercanciasConsulta($mercancias){
+		$mercancias =explode(", ", $mercancias);
+		
+		$i=0;
+		$consulta="";
+		
+		foreach ($mercancias as $mercancia){
+			if($mercancia==="0")
+				return "0";
+			else if($i==0)
+				$consulta.="(i.id=".$mercancia.")";
+			else 
+				$consulta.="or (i.id=".$mercancia.")";
+			$i++;
+		}
+		
+		return $consulta;
+	}
+	
+	function getVentasTodaLaRed($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta){
 
 		if($condicionRed=="EQU"){
 			$limite=$nivel;
-			return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_mercancia,$datoVenta);
+			return $this->getVentasTodaLaRedEquilibrada( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_tipo_mercancia,$id_mercancia,$datoVenta);
 
 		}else if($condicionRed=="DEB") {
-			
-			return $this->getVentasTodaLaRedPataDebil ($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta);
+			return $this->getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta)["total"];
 
 		}
 	}
@@ -359,40 +558,103 @@ class afiliado extends CI_Model
 		return $datos;
 	}
 	
-	private function getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta) {
-		$totalPata1=0;
-		$totalPata2=0;
-		
-		$idAfiliadopata1=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,0);
-		$totalPata1=$this->getVentasTodaLaRedPata($idAfiliadopata1, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta);
-		$totalPata1+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata1, $red,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta);
-		
-		$this->setIdAfiliadosRed(array());
-		$idAfiliadopata2=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,1);
-		$totalPata2=$this->getVentasTodaLaRedPata($idAfiliadopata2, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta);
-		$totalPata2+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata2, $red,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta);
+	private function getVentasTodaLaRedPataDebil($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta) {
 
+		$patas = $this->getPatasAfiliadoPorRedEnIntervaloDeTiempo ( $id_afiliado,$red,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta );
 		
-		if($totalPata1>=$totalPata2)
-			return $totalPata2;
-		return $totalPata1;
+		$esUnBonoBinario=$this->getTipoDeBono();
+
+		if(($esUnBonoBinario=="SI")&&($this->getEstado()=="DAR")){
+			$this->setRemanenteDePuntos($patas,$id_afiliado,$this->getIdBono());
+		}
+		
+		$pataMasdebil = $this->getValorPataMasDebil ( $patas );
+		return $pataMasdebil;
+	}
+	
+	private function setRemanenteDePuntos($patas,$id_afiliado,$id_bono){
+		$pataDebil=$this->getValorPataMasDebil($patas);
+		$id_pata_debil=$pataDebil["id_pata"];
+		$total_pata_debil=$pataDebil["total"];
+
+		$patasRemanentes=array();
+
+		foreach ($patas as $pata){
+			if($pata["id_pata"]!=$id_pata_debil){
+				$pata["total"]=($pata["total"]-$total_pata_debil);
+				$pata["id_usuario"]=$id_afiliado;
+				$pata["id_bono"]=$id_bono;
+				$pata["id_bono_historial"]=$this->getIdBonoHistorial();
+				$pata["fecha"]=date('Y-m-d');
+				array_push($patasRemanentes, $pata);
+			}
+		}
+
+		foreach ($patasRemanentes as $patas){
+	
+			$this->db->insert('comisionPuntosRemanentes',$patas);
+		}
+
+	}
+	
+	private function getValorPataMasDebil($patas) {
+		$pataMasdebil=array(
+					'id_pata' => $patas[0]["id_pata"],
+					'total'   => $patas[0]["total"]
+			);
+		
+		foreach ($patas as $pata){
+			
+			if($pataMasdebil["total"]>=$pata["total"]){
+				$pataMasdebil=$pata;
+			}
+		}
+		return $pataMasdebil;
+	}
+	
+	private function getPatasAfiliadoPorRedEnIntervaloDeTiempo($id_afiliado,$red,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta) {
+		$q=$this->db->query("SELECT frontal FROM tipo_red where id=".$red);
+		$datos=$q->result();
+		
+		$frontalidad=$datos[0]->frontal;
+
+		$patas=array();
+		
+		for ($i=1;$i<=$frontalidad;$i++){
+
+			$this->setIdAfiliadosRed(array());
+			$posicionEnRed=$i-1;
+
+			$idAfiliadopata=$this->getAfiliadoDirectoPorPosicion($id_afiliado,$red,$posicionEnRed);
+			$totalPata=$this->getVentasTodaLaRedPata($idAfiliadopata, $red ,"RED","DEB",$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta);
+			$totalPata+=$this->getComprasPersonalesIntervaloDeTiempo($idAfiliadopata, $red,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta);
+
+				$remanente=$this->getPatasPuntosRemanentesAfiliadoBonoPorPata($this->getIdBono(), $id_afiliado,$i);
+				$pata = array(
+						'id_pata' => $i,
+						'total'   => $totalPata+$remanente
+				);
+
+			array_push($patas, $pata);
+		}
+		return $patas;
 	}
 
-	private function getVentasTodaLaRedEquilibrada($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_mercancia,$datosVenta) {
+	private function getVentasTodaLaRedEquilibrada($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_tipo_mercancia,$id_mercancia,$datosVenta) {
 		$total=0;
 		
 		$this->getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite);
 	
 		foreach ($this->getIdAfiliadosRed() as $id_afiliado){
-			$total+=$this->getComprasPersonalesIntervaloDeTiempo($id_afiliado, $red,$fechaInicio,$fechaFin,$id_mercancia,$datosVenta);
+			$total+=$this->getComprasPersonalesIntervaloDeTiempo($id_afiliado, $red,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datosVenta);
 		}
 		return $total;
 	}
 
-	function getVentasTodaLaRedPata($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,$id_mercancia,$datoVenta){
+	function getVentasTodaLaRedPata($id_afiliado,$red,$tipo,$condicionRed,$nivel,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datoVenta){
 	
 		$limite=$nivel-1;
-		return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_mercancia,$datoVenta);
+		return $this->getVentasTodaLaRedEquilibrada ( $id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_tipo_mercancia,$id_mercancia,$datoVenta);
 	
 	}
 	
@@ -400,7 +662,7 @@ class afiliado extends CI_Model
 		$q=$this->db->query("select A.id_afiliado as id_afiliado
 							from afiliar A
 							where A.debajo_de = ".$id_afiliado." and A.lado='".$lado."' and A.id_red = ".$red);
-		
+
 		$datos= $q->result();
 		if($datos==null)
 			return 0;
@@ -418,6 +680,22 @@ class afiliado extends CI_Model
 			return 0;
 	
 		return intval($datos[0]->id_afiliado);
+	}
+	
+	function getPatasPuntosRemanentesAfiliadoBono($id_bono,$id_afiliado){
+		$q=$this->db->query("SELECT id_usuario,id_bono,total,id_pata FROM comisionPuntosRemanentes 
+							 where (id_usuario='".$id_afiliado."') and id_bono=".$id_bono." order by id desc limit 0,1");
+	
+		return $q->result();
+	}
+	
+	function getPatasPuntosRemanentesAfiliadoBonoPorPata($id_bono,$id_afiliado,$id_pata){
+		$q=$this->db->query("SELECT id_usuario,id_bono,total,id_pata FROM comisionPuntosRemanentes
+							 where (id_usuario='".$id_afiliado."') and id_bono=".$id_bono." and id_pata=".$id_pata." order by id desc limit 0,1");
+		$datos=$q->result();
+		if($datos==null)
+			return 0;
+		return $datos[0]->total;
 	}
 	
 	public function getIdUsuario() {
@@ -511,7 +789,36 @@ class afiliado extends CI_Model
 		$this->idAfiliadosRed = $idAfiliadosRed;
 		return $this;
 	}
+	public function getTipoDeBono() {
+		return $this->tipoDeBono;
+	}
+	public function setTipoDeBono($tipoDeBono) {
+		$this->tipoDeBono = $tipoDeBono;
+		return $this;
+	}
+	public function getIdBono() {
+		return $this->id_bono;
+	}
+	public function setIdBono($id_bono) {
+		$this->id_bono = $id_bono;
+		return $this;
+	}
+
+	public function getIdBonoHistorial() {
+		return $this->id_bono_historial;
+	}
+	public function setIdBonoHistorial($id_bono_historial) {
+		$this->id_bono_historial = $id_bono_historial;
+	}
+	public function getEstado() {
+		return $this->estado;
+	}
+	public function setEstado($estado) {
+		$this->estado = $estado;
+		return $this;
+	}
 	
 	
 	
+
 }

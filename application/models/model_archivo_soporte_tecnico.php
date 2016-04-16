@@ -28,7 +28,7 @@ class Model_archivo_soporte_tecnico extends CI_Model{
 				'id_red' => $id_red
 		);
 		$this->db->insert('archivo_soporte_tecnico',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function Archivos($id_red)
