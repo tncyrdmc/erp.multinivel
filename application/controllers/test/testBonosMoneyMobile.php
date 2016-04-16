@@ -17,6 +17,7 @@ class testBonosMoneyMobile extends CI_Controller {
 		$this->load->model('/bo/bonos/valores_bono');
 		$this->load->model('/bo/bonos/venta');
 		$this->load->model('/bo/bonos/modelo_bono');
+		$this->load->model('/bo/bonos/clientes/mobileMoney/bono_mobile_money');
 
 	}
 
@@ -48,14 +49,21 @@ class testBonosMoneyMobile extends CI_Controller {
 	
 	public function index(){
 		
-		$this->pruebaProduccion();
+	//	$this->pruebaProduccion();
 	/*	$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
-	
+	*/
+		$this->before();
+	//	$this->testCalcularComisionesAfiliadosBonoBinario();
+		$this->testGetTotalDeDineroARepartir();
+		$this->testARecibir();
+		$this->testRepartirComisiones();
+	/*	
 		$this->before();
 		$this->testCalcularComisionesAfiliadosBonoDeInicioRapido();
 		$this->testValidarSiElBonoYaCobroVerdadero();
+		$this->testGetAfiliadoActivosRed();
 		$this->after();*/
 
 	}
@@ -102,7 +110,7 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 		$id_usuario=10001;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
-		echo $this->unit->run(500,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		echo $this->unit->run(600,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
 		
 		$id_usuario=10002;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
@@ -146,7 +154,7 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 		$id_usuario=10012;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
-		echo $this->unit->run(100,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		echo $this->unit->run(200,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
 		
 		$id_usuario=10013;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
@@ -230,6 +238,289 @@ class testBonosMoneyMobile extends CI_Controller {
 
 	}
 
+	public function testCalcularComisionesAfiliadosBonoBinario(){
+		$this->modelo_bono->limpiarTodosLosBonos();
+		$this->afiliado->eliminarUsuarios();
+		$this->afiliado->eliminarRemanentes();
+		$this->red->eliminarRed();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		$this->venta->eliminarVentas();
+		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+		$this->ingresarBonos();
+		$this->ingresarRedDeAfiliacion2();
+		$this->ingresarVentas2();
+		
+		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+		$this->afiliado->eliminarRemanentes();
+		$repartidorComisionBono=new$this->repartidor_comision_bono();
+		
+		$fecha=date('Y-m-d');
+		$id_bono=$this->idBonoDeBinario;
+		
+		$calculadorBono=new $this->calculador_bono();
+		$calculadorBono->calcularComisionesPorBono($id_bono,$fecha);
+		
+		//BONO De Inicio Rapido
+		
+		$id_usuario=10000;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(2155,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10001;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(92,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10002;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10003;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10004;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10005;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10006;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(431,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10007;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+
+		$id_usuario=10008;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(431,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10009;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10010;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10012;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		
+	}
+
+	public function testGetTotalDeDineroARepartir(){
+		$this->modelo_bono->limpiarTodosLosBonos();
+		$this->afiliado->eliminarUsuarios();
+		$this->afiliado->eliminarRemanentes();
+		$this->red->eliminarRed();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		$this->venta->eliminarVentas();
+		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+		$this->ingresarBonos();
+		$this->ingresarRedDeAfiliacion2();
+		$this->ingresarVentas2();
+	
+		$bono=$this->bono_mobile_money;
+	
+		$id_red=300;
+		
+		$fecha=date('Y-m-d');
+		$fecha_inicio=$fecha;
+		$fecha_fin=$fecha;
+		
+		$id_usuario=2;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10000;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(5,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10001;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(2,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10002;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10003;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10004;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10005;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10006;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(1,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10007;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10008;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(1,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10009;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10010;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10011;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10012;
+		$resultado=$bono->getAfiliadosPataDebil($id_red,$id_usuario);
+		echo $this->unit->run(0,$resultado, 'Test get Total de Afiliados Activos por Afiliacion en la red '.$id_usuario,'Resultado es :'.$resultado);
+		
+		
+		$id_usuario=2;
+		$resultado=$bono->getTotalARepartir($id_red,$id_usuario,$fecha_inicio,$fecha_fin);
+		echo $this->unit->run(3120,$resultado, 'Test total de monto a repartir en la red','Resultado es :'.$resultado);
+	
+		$id_usuario=2;
+		$resultado=$bono->getTotalIgualaciones($id_red,$id_usuario);
+		echo $this->unit->run(9,$resultado, 'Test get Total de igualaciones en la red ','Resultado es :'.$resultado);
+
+		$resultado=$bono->getTotalPorIgualacion($id_red,$fecha_inicio,$fecha_fin);
+
+		echo $this->unit->run(346.7,number_format($resultado,1), 'Test total de monto a repartir para cada afiliado','Resultado es :'.number_format($resultado,1));
+		
+		$totalRepartirPorIgualacion=$bono->getTotalPorIgualacion($id_red,$fecha_inicio,$fecha_fin);
+		$resultado=$bono->getTotalAfiliadosBono3Puntos($id_red,$totalRepartirPorIgualacion,$fecha_inicio,$fecha_fin);
+
+		echo $this->unit->run(600.9,number_format($resultado["valor"],1), 'Test total de afiliados con solo 3 puntos que pueden cobrar','Resultado es :'.number_format($resultado["valor"],1));
+		echo $this->unit->run(2,$resultado["numero_igualaciones"], 'Test total de afiliados con solo 3 puntos que pueden cobrar','Resultado es :'.$resultado["numero_igualaciones"]);
+		
+		$resultado=$bono->getTotalPorIgualacionQueSobra($id_red,$fecha_inicio,$fecha_fin);
+		echo $this->unit->run(85.8,number_format($resultado,1), 'Test total de afiliados con solo 3 puntos que pueden cobrar','Resultado es :'.$resultado);
+
+	}
+
+	public function testARecibir(){
+		$this->modelo_bono->limpiarTodosLosBonos();
+		$this->afiliado->eliminarUsuarios();
+		$this->afiliado->eliminarRemanentes();
+		$this->red->eliminarRed();
+		$this->mercancia->eliminarMercancias();
+		$this->mercancia->eliminarCategorias();
+		$this->venta->eliminarVentas();
+		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+		$this->ingresarBonos();
+		$this->ingresarRedDeAfiliacion2();
+		$this->ingresarVentas2();
+		
+		$bono=$this->bono_mobile_money;
+		
+		$id_red=300;
+		
+		$fecha=date('Y-m-d');
+		$fecha_inicio=$fecha;
+		$fecha_fin=$fecha;
+		
+		$bono->setUpBono($id_red, $fecha_inicio, $fecha_fin);
+		
+		$id_usuario=10000;
+		$resultado=$bono->getTotalARecibirAfiliado($id_red,$id_usuario);
+		echo $this->unit->run("2,162.5",number_format($resultado,1), 'Test get Total a recibir por el afiliado '.$id_usuario,'Resultado es :'.number_format($resultado,1));
+		
+		$id_usuario=10001;
+		$resultado=$bono->getTotalARecibirAfiliado($id_red,$id_usuario);
+		echo $this->unit->run(92.4,number_format($resultado,1), 'Test get Total a recibir por el afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10006;
+		$resultado=$bono->getTotalARecibirAfiliado($id_red,$id_usuario);
+		echo $this->unit->run(432.5,number_format($resultado,1), 'Test get Total a recibir por el afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10008;
+		$resultado=$bono->getTotalARecibirAfiliado($id_red,$id_usuario);
+		echo $this->unit->run(432.5,number_format($resultado,1), 'Test get Total a recibir por el afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		
+	}
+
+	public function testRepartirComisiones(){
+		$this->repartidor_comision_bono->eliminarHistorialComisionBono();
+		$repartidorComisionBono=new$this->repartidor_comision_bono();
+		
+		$fecha=date('Y-m-d');
+		$id_bono=$this->idBonoDeBinario;
+		
+		$calculadorBono=new $this->calculador_bono();
+		$calculadorBono->calcularComisionesPorBono($id_bono,$fecha);
+		
+		$id_usuario=10000;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run("2,162.5",number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10001;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(92.4,number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10002;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10003;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10004;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10005;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10006;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(432.5,number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10007;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10008;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(432.5,number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10009;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10010;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10011;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+		$id_usuario=10012;
+		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
+		echo $this->unit->run(0,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		
+	}
+	
 	public function testValidarSiElBonoYaCobroVerdadero(){
 		
 		$calculadorBono=new $this->calculador_bono();
@@ -271,7 +562,6 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 		$puntosPersonales=4;
 		$cualquiera=0;
-		$membresia=5; 
 		
 		$datosRango = array(
 				'id_rango' => 57,
@@ -284,7 +574,7 @@ class testBonosMoneyMobile extends CI_Controller {
 				'id_condicion' => 1,
 				'id_red'   => 300,
 				'condicion_red_afilacion'    => "DEB",
-				'condicion1'    => $membresia,
+				'condicion1'    => $cualquiera,
 				'condicion2'	=> $cualquiera,
 				'calificado'    => "DAR",
 				'estatus_rango'	=> 'ACT'
@@ -298,8 +588,8 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 		$datosBono = array(
 				'id_bono' => $this->idBonoDeInicioRapido,
-				'nombre_bono'   => "Bono Binario",
-				'descripcion_bono'    => "Bono Binario",
+				'nombre_bono'   => "Bono Inicio rapido",
+				'descripcion_bono'    => "Bono inicio rapido",
 				'plan'	=> "NO",
 				'inicio' => '2016-03-01',
 				'fin'   => '2026-03-25',
@@ -334,15 +624,77 @@ class testBonosMoneyMobile extends CI_Controller {
 		$nuevoBono=new $this->modelo_bono();
 		$nuevoBono->nuevoBonoVariosRangos ($rangos,$datosBono,$datosValoresBono);
 
+		//----------------------------BONO Binario ------------------------------------------------
+		
+		
+		$rangos=array();
+		
+		
+		$afiliados=1;
+		$cualquiera=0;
+		
+		$datosRango = array(
+				'id_rango' => 58,
+				'nombre_rango'   => "Binario",
+				'descripcion_rango'    => "Binario",
+				'id_tipo_rango' => $afiliados,
+				'valor'   => 0,
+				'condicion_red'    => "RED",
+				'nivel_red'   => 0,
+				'id_condicion' => 2,
+				'id_red'   => 300,
+				'condicion_red_afilacion'    => "DEB",
+				'condicion1'    => $cualquiera,
+				'condicion2'	=> $cualquiera,
+				'calificado'    => "DOS",
+				'estatus_rango'	=> 'ACT'
+		);
+		
+		
+		array_push($rangos,$datosRango);
+		
+		$inicioAfiliacion=0;
+		$fechaActual=0;
+		
+		$datosBono = array(
+				'id_bono' => $this->idBonoDeBinario,
+				'nombre_bono'   => "Bono Binario",
+				'descripcion_bono'    => "Bono Binario",
+				'plan'	=> "NO",
+				'inicio' => '2016-03-01',
+				'fin'   => '2026-03-25',
+				'frecuencia'    => "MES",
+				'mes_desde_afiliacion'	=> $inicioAfiliacion,
+				'mes_desde_activacion'	=> $fechaActual,
+				'estatus_bono' => "ACT"
+		);
+		
+		
+		$datosValoresBono=array();
+		
+		$datosValoresBonoAfiliado = array(
+				'id_valor' => 10,
+				'id_rango'   => $this->idBonoDeBinario,
+				'nivel'    => 0,
+				'condicion_red'    => "DIRECTOS",
+				'verticalidad'    => "RDESC",
+				'valor'	=> 0
+		);
+		
+		array_push($datosValoresBono, $datosValoresBonoAfiliado);
+		$nuevoBono=new $this->modelo_bono();
+		$nuevoBono->nuevoBonoVariosRangos ($rangos,$datosBono,$datosValoresBono);
 		
 	}
 
 	private function ingresarRedDeAfiliacion(){
 		
+		$id_red=300;
+		
 		$red=$this->red;
 		$infinito=0;
 		$datosRed = array(
-				'id_red' => "300",
+				'id_red' => $id_red,
 				'nombre'   => "Binario",
 				'descripcion'    => "Test de Red Binaria",
 				'frontal' => 2,
@@ -393,45 +745,104 @@ class testBonosMoneyMobile extends CI_Controller {
 *| ID:10029 |   | ID:10030 |       	     | ID:10031 |            | ID:10032 | | ID:10033 |
 *|Spr:10001 |   |Spr:10001 |             |Spr:10026 |            |_Spr:10027| |_Spr:10027| 
 */
-		$this->ingresarAfiliado(10000,"giovanny",2,2,0);
-		$this->ingresarAfiliado(10001,"carlos",10000,10000,0);
-		$this->ingresarAfiliado(10002,"pedro",10000,10000,1);
-		$this->ingresarAfiliado(10003,"camilo",10001,10001,0);
-		$this->ingresarAfiliado(10004,"Nicolas",10001,10001,1);
-		$this->ingresarAfiliado(10005,"esperanza",10002,10000,0);
-		$this->ingresarAfiliado(10006,"maria",10002,10000,1);
-		$this->ingresarAfiliado(10007,"pepe",10003,10003,0);
-		$this->ingresarAfiliado(10008,"dario",10003,10001,1);
-		$this->ingresarAfiliado(10009,"diego",10006,10000,0);
-		$this->ingresarAfiliado(10010,"andres",10006,10000,1);
-		$this->ingresarAfiliado(10011,"ricardo",10007,10007,0);
-		$this->ingresarAfiliado(10012,"miguel",10007,10007,1);
-		$this->ingresarAfiliado(10013,"paola",10010,10010,0);
-		$this->ingresarAfiliado(10014,"fernando",10010,10010,1);
-		$this->ingresarAfiliado(10015,"laura",10012,10012,0);
-		$this->ingresarAfiliado(10016,"david",10012,10012,1);
-		$this->ingresarAfiliado(10017,"mario",10014,10014,0);
-		$this->ingresarAfiliado(10018,"andrea",10014,10014,1);
-		$this->ingresarAfiliado(10019,"joan",10016,10016,0);
-		$this->ingresarAfiliado(10020,"alejandro",10016,10001,1);
-		$this->ingresarAfiliado(10021,"marcel",10017,10017,0);
-		$this->ingresarAfiliado(10022,"daniel",10017,10017,1);
-		$this->ingresarAfiliado(10023,"julian",10019,10019,0);
-		$this->ingresarAfiliado(10024,"german",10019,10019,1);
-		$this->ingresarAfiliado(10025,"luis",10020,10016,0);
-		$this->ingresarAfiliado(10026,"alberto",10020,10020,1);
-		$this->ingresarAfiliado(10027,"carolina",10022,10022,0);
-		$this->ingresarAfiliado(10028,"haroll",10022,10022,1);
-		$this->ingresarAfiliado(10029,"ruben",10023,10001,0);
-		$this->ingresarAfiliado(10030,"marcela",10024,10001,0);
-		$this->ingresarAfiliado(10031,"nelly",10026,10026,0);
-		$this->ingresarAfiliado(10032,"jose",10027,10027,0);
-		$this->ingresarAfiliado(10033,"johana",10027,10027,1);
+		$this->ingresarAfiliado($id_red,10000,"giovanny",2,2,0);
+		$this->ingresarAfiliado($id_red,10001,"carlos",10000,10000,0);
+		$this->ingresarAfiliado($id_red,10002,"pedro",10000,10000,1);
+		$this->ingresarAfiliado($id_red,10003,"camilo",10001,10001,0);
+		$this->ingresarAfiliado($id_red,10004,"Nicolas",10001,10001,1);
+		$this->ingresarAfiliado($id_red,10005,"esperanza",10002,10000,0);
+		$this->ingresarAfiliado($id_red,10006,"maria",10002,10000,1);
+		$this->ingresarAfiliado($id_red,10007,"pepe",10003,10003,0);
+		$this->ingresarAfiliado($id_red,10008,"dario",10003,10001,1);
+		$this->ingresarAfiliado($id_red,10009,"diego",10006,10000,0);
+		$this->ingresarAfiliado($id_red,10010,"andres",10006,10000,1);
+		$this->ingresarAfiliado($id_red,10011,"ricardo",10007,10007,0);
+		$this->ingresarAfiliado($id_red,10012,"miguel",10007,10007,1);
+		$this->ingresarAfiliado($id_red,10013,"paola",10010,10010,0);
+		$this->ingresarAfiliado($id_red,10014,"fernando",10010,10010,1);
+		$this->ingresarAfiliado($id_red,10015,"laura",10012,10012,0);
+		$this->ingresarAfiliado($id_red,10016,"david",10012,10012,1);
+		$this->ingresarAfiliado($id_red,10017,"mario",10014,10014,0);
+		$this->ingresarAfiliado($id_red,10018,"andrea",10014,10014,1);
+		$this->ingresarAfiliado($id_red,10019,"joan",10016,10016,0);
+		$this->ingresarAfiliado($id_red,10020,"alejandro",10016,10001,1);
+		$this->ingresarAfiliado($id_red,10021,"marcel",10017,10017,0);
+		$this->ingresarAfiliado($id_red,10022,"daniel",10017,10017,1);
+		$this->ingresarAfiliado($id_red,10023,"julian",10019,10019,0);
+		$this->ingresarAfiliado($id_red,10024,"german",10019,10019,1);
+		$this->ingresarAfiliado($id_red,10025,"luis",10020,10016,0);
+		$this->ingresarAfiliado($id_red,10026,"alberto",10020,10020,1);
+		$this->ingresarAfiliado($id_red,10027,"carolina",10022,10022,0);
+		$this->ingresarAfiliado($id_red,10028,"haroll",10022,10022,1);
+		$this->ingresarAfiliado($id_red,10029,"ruben",10023,10001,0);
+		$this->ingresarAfiliado($id_red,10030,"marcela",10024,10001,0);
+		$this->ingresarAfiliado($id_red,10031,"nelly",10026,10026,0);
+		$this->ingresarAfiliado($id_red,10032,"jose",10027,10027,0);
+		$this->ingresarAfiliado($id_red,10033,"johana",10027,10027,1);
 	}
 
-	private function ingresarAfiliado($id,$nombre,$debajo_de,$sponsor,$lado){
+	private function ingresarRedDeAfiliacion2(){
+	
+		$id_red=300;
+		
+		$red=new $this->red;
+		$infinito=0;
+		$datosRed = array(
+				'id_red' => $id_red,
+				'nombre'   => "Binario",
+				'descripcion'    => "Test de Red Binaria",
+				'frontal' => 2,
+				'profundidad'   => $infinito,
+				'valor_punto'    => 1,
+				'estatus'   => 'ACT',
+				'plan' => 'BIN'
+		);
+	
+		$red->nuevaRed($datosRed);
+		$red->ingresarRed();
+	
+		/*							RED DE AFILIACION
+		 *           	                      __________
+		 *           	               	     |    TU    |
+		 *           					     | ID:10000 |
+		 *        	   	                     |_Spr:_2___|
+		 *                  	   __________/           \____________
+		 *           	          |     Z    |        	  |   PEDRO  |
+		 *           	          | ID:10001 |   		  | ID:10002 |
+		 *        	   	          |_Spr:10000|            |_Spr:10000|
+		 *              __________/       _____\____    			\_________
+		 *             |   CAMILO |      | NICOLAS  |    			|   MARIA  |
+		 *             | ID:10003 |   	 | ID:10004 |   			| ID:10005 |
+		 *        	   |_Spr:10001|      |_Spr:10001|    			|_Spr:10002|
+		 *		    ___/_____   				_\_______           ______|____
+		 *         |    Y     | 				| DARIO    |        |  X       |  
+		 *         | ID:10006 | 				| ID:10007 |        | ID:10008 |
+		 *         |_Spr:10003| 				|_Spr:10004|        |_Spr:10005|
+		 *	 _______/__   _____\____                              ____/____     _\________
+		 *	| LAURA    | | DAVID    |                            |  MARIO   |  | ANDREA   |
+		 *	| ID:10009 | | ID:10010 |                            | ID:10011 |  | ID:10012 |
+		 *	|_Spr:10006| |_Spr:10006|                            |_Spr:10008|  |_Spr:10008|
+		*/
+		
+		$this->ingresarAfiliado($id_red,10000,"Tu",2,2,0);
+		$this->ingresarAfiliado($id_red,10001,"Z",10000,10000,0);
+		$this->ingresarAfiliado($id_red,10002,"pedro",10000,10000,1);
+		$this->ingresarAfiliado($id_red,10003,"camilo",10001,10001,0);
+		$this->ingresarAfiliado($id_red,10004,"Nicolas",10001,10001,1);
+		$this->ingresarAfiliado($id_red,10005,"Maria",10002,10002,0);
+		$this->ingresarAfiliado($id_red,10006,"Y",10003,10003,0);
+		$this->ingresarAfiliado($id_red,10007,"dario",10004,10004,0);
+		$this->ingresarAfiliado($id_red,10008,"X",10005,10005,0);
+		$this->ingresarAfiliado($id_red,10009,"laura",10006,10006,0);
+		$this->ingresarAfiliado($id_red,10010,"david",10006,10006,1);
+		$this->ingresarAfiliado($id_red,10011,"mario",10008,10008,0);
+		$this->ingresarAfiliado($id_red,10012,"andrea",10008,10008,1);
+		
+	}
+	
+	private function ingresarAfiliado($id_red,$id,$nombre,$debajo_de,$sponsor,$lado){
 		$afiliador=new $this->modelo_bono();
-		$afiliador->crearNuevoUsuario ($id,$nombre,"2016-03-17",$id,300,$debajo_de,$sponsor,$lado);
+		$afiliador->crearNuevoUsuario ($id,$nombre,"2016-03-17",$id,$id_red,$debajo_de,$sponsor,$lado);
 	}
 	
 	private function ingresarMercancia($id_mercancia,$nombre,$id_categoria,$id_tipo_mercancia,$costo,$puntos_comisionables){
@@ -680,6 +1091,93 @@ class testBonosMoneyMobile extends CI_Controller {
 		$this->ingresarVentaMercanciaUsuario(732,10032,$fecha,array(500));
 		$this->ingresarVentaMercanciaUsuario(733,10033,$fecha,array(500));
 		
+	}
+	
+	private function ingresarVentas2(){
+	
+		$id_categoria=250;
+	
+		$datosCategoria = array(
+				'id_categoria' => 250,
+				'id_red'   => 300,
+		);
+	
+		$this->mercancia->ingresarCategoria ($datosCategoria);
+	
+		/*  TIPO DE MERCANCIA
+		 *  Producto  = 1
+		 *  Servicios = 2
+		 * 	Combinado = 3
+		 *  Paquete.I = 4
+		 * 	Membresia = 5
+		 *
+		*/
+	
+		$producto=1;
+		$servicio=2;
+		$membresia=5;
+	
+	
+		$id=500;$costo=410;$puntos=3;
+		$this->ingresarMercancia($id,"Membresia (3 puntos)",$id_categoria,$membresia,$costo,$puntos);
+	
+		$id=501;$costo=1230;$puntos=9;
+		$this->ingresarMercancia($id,"Membresia (9 puntos)",$id_categoria,$membresia,$costo,$puntos);
+	
+		$id=502;$costo=410;$puntos=3;
+		$this->ingresarMercancia($id,"Briut",$id_categoria,$producto,$costo,$puntos);
+	
+		$id=503;$costo=510;$puntos=3;
+		$this->ingresarMercancia($id,"Reset DNA",$id_categoria,$producto,$costo,$puntos);
+	
+		$id=504;$costo=300;$puntos=3;
+		$this->ingresarMercancia($id,"Movistar",$id_categoria,$servicio,$costo,$puntos);
+	
+		/*										Ventas
+		 *           	                      __________
+		 *           	               	     |    TU    |
+		 *           					     | ID:10000 |
+		 *        	   	                     | Spr: 2   |
+		 *        	   	                     |Puntos: 9 |
+		 *                  	   __________/           \____________
+		 *           	          |     Z    |        	  |   PEDRO  |
+		 *           	          | ID:10001 |   		  | ID:10002 |
+		 *        	   	          |_Spr:10000|            |_Spr:10000|
+		 *        	   	          |Puntos: 3 |            |Puntos: 9 |
+		 *              __________/       _____\____    			\_________
+		 *             |   CAMILO |      | NICOLAS  |    			|   MARIA  |
+		 *             | ID:10003 |   	 | ID:10004 |   			| ID:10005 |
+		 *        	   |_Spr:10001|      |_Spr:10001|    			|_Spr:10002|
+		 *        	   |Puntos: 3 |      |Puntos: 3 |    			|Puntos: 9 |
+		 *		    ___/_____   				_\_______           ______|____
+		 *         |    Y     | 				| DARIO    |        |  X       |
+		 *         | ID:10006 | 				| ID:10007 |        | ID:10008 |
+		 *         |_Spr:10003| 				|_Spr:10004|        |_Spr:10005|
+		 *         |Puntos: 9 | 				|Puntos: 9 |        |Puntos: 9 |
+		 *	 _______/__   _____\____                              ____/____     _\________
+		 *	| LAURA    | | DAVID    |                            |  MARIO   |  | ANDREA   |
+		 *	| ID:10009 | | ID:10010 |                            | ID:10011 |  | ID:10012 |
+		 *	|_Spr:10006| |_Spr:10006|                            |_Spr:10008|  |_Spr:10008|
+		 *	|Puntos: 9 | |Puntos: 9 |                            |Puntos: 9 |  |Puntos: 9 |
+		 */
+		
+		$fecha=date('Y-m-d');
+	
+		$this->ingresarVentaMercanciaUsuario(700,10000,$fecha,array(501));
+		$this->ingresarVentaMercanciaUsuario(701,10001,$fecha,array(500));
+		$this->ingresarVentaMercanciaUsuario(702,10002,$fecha,array(501));
+		$this->ingresarVentaMercanciaUsuario(703,10003,$fecha,array(500));
+		$this->ingresarVentaMercanciaUsuario(704,10004,$fecha,array(500));
+		$this->ingresarVentaMercanciaUsuario(705,10005,$fecha,array(500,500,500));
+		$this->ingresarVentaMercanciaUsuario(706,10006,$fecha,array(500,502,503));
+		$this->ingresarVentaMercanciaUsuario(707,10007,$fecha,array(500,500,500));
+		$this->ingresarVentaMercanciaUsuario(708,10008,$fecha,array(503,500,504));
+		$this->ingresarVentaMercanciaUsuario(709,10009,$fecha,array(501));
+		$this->ingresarVentaMercanciaUsuario(710,10010,$fecha,array(501));
+		$this->ingresarVentaMercanciaUsuario(711,10011,$fecha,array(501));
+		$this->ingresarVentaMercanciaUsuario(712,10012,$fecha,array(501));
+
+	
 	}
 	
 	private function ingresarVentasFecha($fecha){

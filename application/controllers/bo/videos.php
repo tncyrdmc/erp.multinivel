@@ -232,13 +232,13 @@ $id=$this->tank_auth->get_user_id();
 				{
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
 					values ('.$id.','.$_POST['grupo_frm'].',2,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'")');
-					$video=mysql_insert_id();
+					$video=$this->db->insert_id();
 				}
 				else 
 				{
 					$this->db->query('insert into cat_img (url,nombre_completo,nombre,extencion,estatus) 
 					values ("'.$ruta.$key["file_name"].'","'.$key["file_name"].'","'.$nombre.'","'.$extencion.'","ACT")');
-					$imgn=mysql_insert_id();
+					$imgn=$this->db->insert_id();
 				}
 								
 			}
@@ -296,11 +296,11 @@ function sube_video_youtube()
 			{
 				$this->db->query('insert into cat_img (url,nombre_completo,nombre,extencion,estatus)
 				values ("'.$ruta.$data["upload_data"]["file_name"].'","'.$data["upload_data"]["file_name"].'","'.$nombre.'","'.$extencion.'","ACT")');
-				$imgn=mysql_insert_id();
+				$imgn=$this->db->insert_id();
 	
 				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
 				values ('.$id.','.$_POST['grupo_frm'].',21,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'")');
-				$video=mysql_insert_id();
+				$video=$this->db->insert_id();
 				$this->db->query('insert into cross_img_archivo	values ('.$video.','.$imgn.')');
 			}
 			redirect('/bo/videos/listar');

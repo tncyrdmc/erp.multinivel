@@ -239,8 +239,9 @@ class afiliado extends CI_Model
 
 			if($this->getDirectoAfiliado($idAfiliadopata1,$red)==$id_afiliado)
 				$totalPata1=1;
-				
+			
 			$this->getCantidadDeAfiliadosDebajoDeHijo($idAfiliadopata1,$id_afiliado,$red,$tipo,$nivel);
+			
 			$totalPata1+=$this->getTotalAfiliados();
 			
 			$this->setTotalAfiliados(0);
@@ -252,7 +253,8 @@ class afiliado extends CI_Model
 					
 			$this->getCantidadDeAfiliadosDebajoDeHijo($idAfiliadopata2,$id_afiliado,$red,$tipo,$nivel);
 			$totalPata2+=$this->getTotalAfiliados();
-				
+			
+			
 			if($totalPata1>=$totalPata2)
 				return $totalPata2;
 			return $totalPata1;
@@ -287,7 +289,7 @@ class afiliado extends CI_Model
 			}
 		}
 	}
-	
+
 	function getCantidadDeAfiliadosDebajoDeHijo($id_afiliado,$id_padre,$red,$tipo,$nivel){
 	
 		$q=$this->db->query("select A.id_afiliado,A.directo
@@ -299,14 +301,20 @@ class afiliado extends CI_Model
 		foreach ($datos as $dato){
 	
 			if ($dato!=NULL){
+				
+				if($tipo=="DIRECTOS"){
 
-				if($dato->directo==$id_padre){
+					if(($dato->directo==$id_padre))
+						$this->setTotalAfiliados($this->totalAfiliados+1);
+				}
+				else{
 					$this->setTotalAfiliados($this->totalAfiliados+1);
 				}
 					$this->getCantidadDeAfiliadosDebajoDeHijo($dato->id_afiliado,$id_padre,$red,$tipo,$nivel);
 			}
 		}
 	}
+
 
 	function getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite){
 		if($limite>0||$nivel==0){
@@ -402,7 +410,7 @@ class afiliado extends CI_Model
 		return $datos[0]->total;
 	}
 	
-	private function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
+	 function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
 
 		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
 		$id_tipo_mercancia=$id_tipo_mercancia;
@@ -654,7 +662,7 @@ class afiliado extends CI_Model
 		$q=$this->db->query("select A.id_afiliado as id_afiliado
 							from afiliar A
 							where A.debajo_de = ".$id_afiliado." and A.lado='".$lado."' and A.id_red = ".$red);
-		
+
 		$datos= $q->result();
 		if($datos==null)
 			return 0;
