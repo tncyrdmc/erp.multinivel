@@ -197,7 +197,7 @@
 												<option value="ASC">$ Hacia Arriba</option>
 												<option value="DESC">$ Hacia Abajo</option>
 												<option value="PASC">%(Puntos) Hacia Arriba</option>
-												<option value="RDASC">%(Puntos)Residual Abajo</option>
+												<option value="RDESC">%(Puntos)Residual Abajo</option>
 											</select>
 											</label>
 										</div>
@@ -412,7 +412,7 @@ function add_nivel()
 			+'<option value="ASC">$ Hacia Arriba</option>'
 			+'<option value="DESC">$ Hacia Abajo</option>'
 			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
-			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'
@@ -472,7 +472,7 @@ var code='<div class="row">'
 			+'<option value="ASC">$ Hacia Arriba</option>'
 			+'<option value="DESC">$ Hacia Abajo</option>'
 			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
-			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'

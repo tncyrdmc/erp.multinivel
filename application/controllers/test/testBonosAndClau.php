@@ -49,8 +49,8 @@ class testBonosAndClau extends CI_Controller {
 	
 	public function index(){
 		
-	//	$this->pruebaProduccion();
-		$this->before();
+		$this->pruebaProduccion();
+	/*	$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
 	
@@ -60,7 +60,7 @@ class testBonosAndClau extends CI_Controller {
 		$this->testValidarSiElBonoYaCobroVerdadero();
 		$this->testCalcularComisionesAfiliadosBonoDeActividad();
 		$this->testCalcularComisionesAfiliadosBonoDeIgualacion();
-		$this->after();
+		$this->after();*/
 
 	}
 	
@@ -863,8 +863,8 @@ class testBonosAndClau extends CI_Controller {
 		
 		$datosRango2 = array(
 				'id_rango' => 67,
-				'nombre_rango'   => "Bluetooth",
-				'descripcion_rango'    => "Bluetooth",
+				'nombre_rango'   => "Puntos Red",
+				'descripcion_rango'    => "Puntos Red",
 				'id_tipo_rango' => $puntosRed,
 				'valor'   => 0,
 				'condicion_red'    => "RED",
@@ -1079,8 +1079,8 @@ class testBonosAndClau extends CI_Controller {
 		
 		$datosRango2 = array(
 				'id_rango' => 71,
-				'nombre_rango'   => "Bluetooth",
-				'descripcion_rango'    => "Bluetooth",
+				'nombre_rango'   => "puntosRed",
+				'descripcion_rango'    => "puntosRed",
 				'id_tipo_rango' => $puntosRed,
 				'valor'   => 0,
 				'condicion_red'    => "RED",
@@ -1101,8 +1101,8 @@ class testBonosAndClau extends CI_Controller {
 		
 		$datosRango3 = array(
 				'id_rango' => 72,
-				'nombre_rango'   => "Bluetooth",
-				'descripcion_rango'    => "Bluetooth",
+				'nombre_rango'   => "puntosPersonales",
+				'descripcion_rango'    => "puntosPersonales",
 				'id_tipo_rango' => $puntosPersonales,
 				'valor'   => 10,
 				'condicion_red'    => "RED",
@@ -1120,8 +1120,8 @@ class testBonosAndClau extends CI_Controller {
 		
 		$datosRango4 = array(
 				'id_rango' => 73,
-				'nombre_rango'   => "Bluetooth",
-				'descripcion_rango'    => "Bluetooth",
+				'nombre_rango'   => "puntosPersonales",
+				'descripcion_rango'    => "puntosPersonales",
 				'id_tipo_rango' => $puntosPersonales,
 				'valor'   => 10,
 				'condicion_red'    => "RED",

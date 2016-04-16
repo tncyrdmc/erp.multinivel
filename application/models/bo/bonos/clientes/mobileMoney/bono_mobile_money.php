@@ -13,11 +13,11 @@ class bono_mobile_money extends CI_Model
 
 	}
 	
-	function setUpBono($id_red, $fecha_inicio, $fecha_fin){
+	public function setUpBono($id_red, $fecha_inicio, $fecha_fin){
 
 		$totalPorIgualacion=$this->getTotalPorIgualacion($id_red, $fecha_inicio, $fecha_fin);
 		$totalQueSobra=$this->getTotalPorIgualacionQueSobra($id_red, $fecha_inicio, $fecha_fin);
-		
+
 		$this->setTotalPorIgualacionParaDar($totalPorIgualacion);
 		$this->setTotalQueSobraParaDar($totalQueSobra);
 	}
@@ -35,17 +35,19 @@ class bono_mobile_money extends CI_Model
 		$usuario->getAfiliadosDebajoDe($id_afiliado,$id_red,"RED",0,0);
 		$afiliadosRed=$usuario->getIdAfiliadosRed();
 		$totalARepartir=0;
+		$totalDePuntos=0;
 		
 		foreach ($afiliadosRed as $id_afiliado) {
-			$totalPuntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,"0","0","2016-01-01","2020-01-01")[0]->total;
+			$totalPuntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,"0","0",$fecha_inicio,$fecha_fin)[0]->total;
 			$totalPuntos=intval($totalPuntos);
+			$totalDePuntos=$totalDePuntos+$totalPuntos;
 			if(($totalPuntos>=3)&&($totalPuntos<9)){
 				$totalARepartir=$totalARepartir+40;
 			}else if(intval($totalPuntos)>=9){
 				$totalARepartir=$totalARepartir+300;
 			}
 		} 
-		
+
 		return $totalARepartir;
 	}
 	
