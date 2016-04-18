@@ -30,6 +30,7 @@ class comercial extends CI_Controller
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('ov/modelo_compras');
 		$this->load->model('ov/modelo_billetera');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('model_tipo_red');
 		$this->load->model('cemail');
 		
@@ -71,25 +72,48 @@ class comercial extends CI_Controller
 		//$style=$this->general->get_style($id);
 	
 		$redes = $this->model_tipo_red->listarTodos();
+		$redesUsuario = $this->model_tipo_red->RedesUsuario($id);
+		
 		$ganancias=array();
 		$comision_directos = array();
-		foreach ($redes as $red){
+		$bonos = array();		
+		
+		foreach ($redesUsuario as $red){
+			//$array_bono = $this->model_bonos->ver_total_bonos_id($id,$red->id,'');
+			//$array_ganancias = $this->modelo_billetera->get_comisiones($id,$red->id);
+			//$array_comision = $this->modelo_billetera->getComisionDirectos($id, $red->id);
+
+			array_push($bonos,$this->model_bonos->ver_total_bonos_id_red($id,$red->id));
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
-			array_push($comision_directos, $this->modelo_billetera->getComisionDirectos($id, $red->id));
+			array_push($comision_directos,$this->modelo_billetera->getComisionDirectos($id, $red->id));
 		}
 		
-		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);		
+		$comision_todo= array(
+				'directos' => $comision_directos,
+				'ganancias' => $ganancias,
+				'bonos' => $bonos,
+				'redes' => $redesUsuario
+		);
 		
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
+		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
+		
+		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);	
+		
 		
 		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
 		$this->template->set("id",$id);
-		$this->template->set("transaction",$transaction);
+		$this->template->set("redes",$redesUsuario);
+		$this->template->set("bonos",$bonos);
+		$this->template->set("total_bonos",$total_bonos);
 		$this->template->set("comisiones",$comisiones);
+		$this->template->set("comision_todo",$comision_todo);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("transaction",$transaction);
 		$this->template->set("comisiones_directos",$comision_directos);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);

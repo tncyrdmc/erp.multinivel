@@ -581,7 +581,7 @@ class bonos extends CI_Controller
 			$historial = $this->model_bonos->get_historial_fecha($fecha_inicio,$fecha_fin);
 	
 			echo
-			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+			"<table  id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th data-class='expand'>ID Historial</th>
 					<th data-hide='phone,tablet'>Fecha Corte</th>
@@ -638,7 +638,7 @@ class bonos extends CI_Controller
 		$total = 0 ;
 	
 		echo
-		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+		"<div style='overflow-y: scroll; height: 300px;'><table  id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
 				<thead id='tablacabeza'>
 					<th data-class='expand'>ID Afiliado</th>
 					<th data-hide='phone,tablet'>Afiliado</th>
@@ -693,7 +693,7 @@ class bonos extends CI_Controller
 			</tr>";
 	
 		echo "</tbody>
-		</table><tr class='odd' role='row'>";
+		</table><tr class='odd' role='row'></div>";
 	
 	}
 	

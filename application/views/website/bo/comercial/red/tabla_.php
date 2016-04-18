@@ -210,8 +210,8 @@
 					        <a title="Eliminar" style='cursor: pointer;' onclick="eliminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 					        </br>
 					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
-					        <a title="Arbol 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a>
-					        <a title="Arbol 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
+					        <!-- <a title="Arbol 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a> -->
+					        <a title="Arbol 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
 						</td>
 				        
 				    </tr>

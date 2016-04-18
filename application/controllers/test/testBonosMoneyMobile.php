@@ -48,9 +48,9 @@ class testBonosMoneyMobile extends CI_Controller {
 	}
 	
 	public function index(){
+
+		//$this->pruebaProduccion();
 		
-	//	$this->pruebaProduccion();
-		$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
 
@@ -64,7 +64,7 @@ class testBonosMoneyMobile extends CI_Controller {
 		$this->before();
 		$this->testCalcularComisionesAfiliadosBonoDeInicioRapido();
 		$this->testValidarSiElBonoYaCobroVerdadero($this->idBonoDeInicioRapido);
-		$this->after();
+		$this->after(); 
 
 	}
 	

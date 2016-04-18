@@ -20,10 +20,13 @@
 				Apellido: <b><?php echo $usuario[0]->apellido; ?></b>
 			</div>
 			<div class="row">
-				Compras: <b>$ <?php echo number_format($compras,2); ?></b>
+				Compras: <b>$ <?php echo number_format($compras2==0 ? $compras : $compras2,2); ?></b>
 			</div>
 			<div class="row">
-				Comision: <b>$ <?php echo number_format($comision,2); ?></b>
+				Comision: <b>$ <?php echo number_format($comision+$bonos,2); ?></b>
+			</div>
+			<div class="row">
+				Puntos personales: <b> <?php echo number_format($puntos==0 ? $puntos2 : $puntos ,2); ?></b>
 			</div>
 		</div>
 	</div>

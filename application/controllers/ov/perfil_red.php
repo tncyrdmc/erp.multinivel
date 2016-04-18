@@ -405,6 +405,8 @@ class perfil_red extends CI_Controller
 		$username = $this->general->username($_POST['id']);
 		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
 		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
+		$bonos  = $this->model_afiliado->BonosUsuario($_POST['id']);
+		$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
 		
 		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -442,8 +444,9 @@ class perfil_red extends CI_Controller
 			}
 		}
 		echo '</div><br>';
-		echo '<div class="row">Compras: $ <b>'.number_format($compras,2).'</b></div>';
-		echo '<div class="row">Comisiones: $ <b>'.number_format($comision,2).'</b></div>';
+		echo '<div class="row">Compras: $ <b>'.number_format($compras[0]->comprast==0 ? $compras[0]->compras : $compras[0]->comprast,2).'</b></div>';
+		echo '<div class="row">Comisiones: $ <b>'.number_format($comision+$bonos,2).'</b></div>';
+		echo '<div class="row">Puntos comisionables: $ <b>'.number_format($puntos[0]->puntos==0 ? $puntos[0]->puntosu : $puntos[0]->puntos,2).'</b></div>';
 		echo '</div></div></div>';
 	}
 	
@@ -457,16 +460,20 @@ class perfil_red extends CI_Controller
 		
 		$usuario = $this->model_perfil_red->datos_perfil($_POST['id']);
 		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
-		//$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
+		$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
 		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
+		$bonos  = $this->model_afiliado->BonosUsuario($_POST['id']);
 		
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("id",$_POST['id']);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("username",$username[0]->username);
-		$this->template->set("compras",$compras);
-		//$this->template->set("puntos",$puntos);
+		$this->template->set("compras",$compras[0]->compras);
+		$this->template->set("compras2",$compras[0]->comprast);
+		$this->template->set("puntos",$puntos[0]->puntos);
+		$this->template->set("puntos2",$puntos[0]->puntosu);
 		$this->template->set("comision",$comision);
+		$this->template->set("bonos",$bonos);
 		$this->template->set("pais",$pais);
 		$this->template->build('website/ov/perfil_red/detallesAfiliado2');
 		
