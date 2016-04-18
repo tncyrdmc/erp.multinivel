@@ -59,6 +59,7 @@ class perfil_red extends CI_Controller
 		$edad            = $this->model_perfil_red->edad($id);
 		$sexo            = $this->model_perfil_red->sexo();
 		$style           = $this->general->get_style($id);
+		$pais            = $this->model_perfil_red->get_pais();
 		
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
 		$dir             = $this->model_perfil_red->dir($id);
@@ -75,7 +76,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("telefonos",$telefonos);
 		$this->template->set("edad",$edad[0]->edad);
 		$this->template->set("sexo",$sexo);
-
+		$this->template->set("pais",$pais);
 		$this->template->set("tipo_fiscal",$tipo_fiscal);
 		$this->template->set("civil",$civil);
 		$this->template->set("estudios",$estudios);
@@ -446,7 +447,7 @@ class perfil_red extends CI_Controller
 		echo '</div><br>';
 		echo '<div class="row">Compras: $ <b>'.number_format($compras[0]->comprast==0 ? $compras[0]->compras : $compras[0]->comprast,2).'</b></div>';
 		echo '<div class="row">Comisiones: $ <b>'.number_format($comision+$bonos,2).'</b></div>';
-		echo '<div class="row">Puntos comisionables: $ <b>'.number_format($puntos[0]->puntos==0 ? $puntos[0]->puntosu : $puntos[0]->puntos,2).'</b></div>';
+		echo '<div class="row">Puntos comisionables:  <b>'.number_format($puntos[0]->puntos==0 ? $puntos[0]->puntosu : $puntos[0]->puntos,2).'</b></div>';
 		echo '</div></div></div>';
 	}
 	

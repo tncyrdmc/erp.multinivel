@@ -122,32 +122,6 @@
 									</div>
 								</fieldset>
 								<fieldset>
-									<legend>Datos fiscales</legend>
-									<div class="row">
-										<section class="col col-4">
-											<label class="input">
-												<input placeholder="Identificacion Fiscal" type="text" value="<?=$usuario[0]->keyword?>" name="rfc" id="keyword">
-											</label>
-										</section>
-										<section class="col col-4">
-											<label class="select">
-												<select id="tipo_fiscal" required name="tipo_fiscal">
-												<?php foreach ($tipo_fiscal as $key){if($usuario[0]->id_fiscal==$key->id){?>
-
-													<option selected value="<?=$key->id?>">
-														<?=$key->descripcion?>
-													</option>
-													<?php }else{?>
-													<option value="<?=$key->id?>">
-														<?=$key->descripcion?>
-													</option>
-												<?php }}?>
-												</select>
-											</label>
-										</section>
-									</div>
-								</fieldset>
-								<fieldset>
 								<legend>Dirección</legend>
 									<div id="dir" class="row">
 										<section id="estado" class="col col-2">
@@ -180,6 +154,100 @@
 												<input required type="text" id="cp" name="cp" value="<?=$dir[0]->cp?>">
 											</label>
 										</section>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend>Datos fiscales</legend>
+									<div class="row">
+										<section class="col col-4">
+											<label class="input">
+												<input placeholder="Identificacion Fiscal" type="text" value="<?=$usuario[0]->keyword?>" name="rfc" id="keyword">
+											</label>
+										</section>
+										<section class="col col-4">
+											<label class="select">
+												<select id="tipo_fiscal" required name="tipo_fiscal">
+												<?php foreach ($tipo_fiscal as $key){if($usuario[0]->id_fiscal==$key->id){?>
+
+													<option selected value="<?=$key->id?>">
+														<?=$key->descripcion?>
+													</option>
+													<?php }else{?>
+													<option value="<?=$key->id?>">
+														<?=$key->descripcion?>
+													</option>
+												<?php }}?>
+												</select>
+											</label>
+										</section>
+									</div>
+								</fieldset>
+								<fieldset>
+								<legend>Datos Bancarios</legend>
+									<div class="row">
+										<section class="col col-3">
+											<label class="input">
+												Nombre de titular
+												<input required type="text" name="calle" value="<?//=$dir[0]->calle?>">
+											</label>
+										</section>	
+										<section id="municipio" class="col col-3">
+											<label class="input">
+												Nombre de Banco
+												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+											</label>
+										</section>
+										<section class="col col-3">
+											País de la Cuenta
+											<label class="select">
+												<select id="tipo_fiscal" required name="tipo_fiscal">
+												<?php foreach ($pais as $key){
+													
+													//if($usuario[0]->id_fiscal==$key->id){?>
+
+													<!--  <option selected value="<?=$key->id?>">
+														<?=$key->descripcion?>
+													</option>-->
+													<?php //}else{?>
+													<option value="<?=$key->Code?>">
+														<?=$key->Name?>
+													</option>
+												<?php }//}?>
+												</select>
+											</label>
+										</section>
+										<section id="municipio" class="col col-3">
+											<label class="input">
+												Numero de la Cuenta
+												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section id="colonia" class="col col-3">
+											<label class="input">
+												Código SWIFT
+												<input type="text" name="colonia" value="<?//=$dir[0]->colonia?>">
+											</label>
+										</section>	
+										<section id="municipio" class="col col-3">
+											<label class="input">
+												ABA/IBAN/OTRO
+												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+											</label>
+										</section>
+										<section id="municipio" class="col col-3">
+											<label class="input">
+												CLABE
+												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+											</label>
+										</section>
+										<section class="col col-3">
+											<label class="input">
+												Dirección postal
+												<input required type="text" name="calle" value="<?//=$dir[0]->calle?>">
+											</label>
+										</section>										
 									</div>
 								</fieldset>
 								<fieldset>
