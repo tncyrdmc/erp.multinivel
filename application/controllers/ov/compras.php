@@ -2867,10 +2867,10 @@ function index()
 	}
 	
 	function printMercanciaPorTipoDeRed($mercancia,$tipoMercancia){
-		
+		$imprimir='';
 		for($i=0;$i<sizeof($mercancia);$i++)
 		{
-		echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+		$imprimir ='	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 					<div class="producto">
 					<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
 						<i class=""></i>
@@ -2888,7 +2888,14 @@ function index()
 					</label>
 					</section>
 					</div>
-					<div class="price"> <span>$ '.$mercancia[$i]->costo.'</span></div>
+					<div class="price">';
+					if($mercancia[$i]->puntos_comisionables!='0'){
+						$imprimir.='<span style="font-size: 1.5rem;">(Puntos  '.$mercancia[$i]->puntos_comisionables.')</span>';
+					}
+					 
+					$imprimir.='<br>
+					<span>$ '.$mercancia[$i]->costo.'</span>
+					</div>
 					<br>
 					<div class=""> 
 						<a style="font-size: 1.7rem;" class="btn btn-success" onclick="compra_prev('.$mercancia[$i]->id.','.$tipoMercancia.',0)"> 
@@ -2898,6 +2905,7 @@ function index()
 				 	</div>
 				</div>
 				';
+				echo $imprimir;
 
 		}
 	}
@@ -3740,18 +3748,19 @@ function index()
 	public function pagarComisionVenta($id_venta,$id_afiliado_comprador){
 		$MATRICIAL='MAT';
 		$UNILEVEL='UNI';	
-		
+		 
 		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
 	
 		foreach ($mercancias as $mercancia){
 				
 			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
+			$valor_punto_comisionable=$this->model_tipo_red->traerValorPuntoComisionableRed($id_red_mercancia);
 			$tipo_plan_compensacion=$this->modelo_compras->obtenerPlanDeCompensacion($id_red_mercancia);
 			
 			if($tipo_plan_compensacion[0]->plan==$MATRICIAL||$tipo_plan_compensacion[0]->plan==$UNILEVEL){
 
-				$costoVenta=$mercancia->costo_unidad_total;
-				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
+				$valorAComisionar=$valor_punto_comisionable*$mercancia->puntos_comisionables;
+				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$valorAComisionar,$id_afiliado_comprador);
 				
 			}
 

@@ -55,7 +55,7 @@
 												</address>
 											</div>
 											<div class="pull-right">
-												<h1 class="font-400">Factura de venta</h1>
+												<h1 class="font-400">Recibo de pago</h1>
 											</div>
 											<div class="clearfix"></div>
 											<br>
@@ -66,7 +66,7 @@
 														<br>
 														<strong>Señor (a). <?php echo $datos_afiliado[0]->nombre." ".$datos_afiliado[0]->apellido;?></strong>
 														<br>
-														<abbr title="Phone">DNI:</abbr> <?php echo $datos_afiliado[0]->keyword;?>
+														<abbr title="Phone">Número de identificación:</abbr> <?php echo $datos_afiliado[0]->keyword;?>
 														<br>
 														<abbr title="Phone">Dirección:</abbr> <?php echo $pais_afiliado[0]->direccion;?>
 														<br>
@@ -76,13 +76,7 @@
 													</address>
 												</div>
 												<div class="col-sm-3">
-													<div>
-														<div>
-															<strong>FACTURA NO :</strong>
-															<span class="pull-right"> #AA-454-4113-00 </span>
-														</div>
-				
-													</div>
+
 													<div>
 														<div class="font-md">
 
@@ -216,7 +210,7 @@
 													
 													<div class="col-sm-4">
 														<div class="invoice-sum-total pull-right">
-															<h3><strong>Total a Pagar: <span class="text-success">$ <?php echo $total;?> USD</span></strong></h3>
+															<h3><strong>Total a Pagar: <span class="text-success">$ <?php echo $total;?> </span></strong></h3>
 														</div>
 													</div>
 				

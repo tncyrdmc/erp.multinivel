@@ -52,6 +52,12 @@ class Model_tipo_red extends CI_Model{
 		return $q->result();
 	}
 	
+	function traerValorPuntoComisionableRed($idRed)
+	{
+		$q=$this->db->query('select valor_punto from tipo_red where id = '.$idRed);
+		return $q->result()[0]->valor_punto;
+	}
+	
 	function traer_nombre_red($idRed)
 	{
 		$q=$this->db->query('select nombre from tipo_red where id = '.$idRed);
