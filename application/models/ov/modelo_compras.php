@@ -119,7 +119,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 	}
 	function get_productos_red($idCategoriaRed, $pais)
 	{
-		$q=$this->db->query('Select a.nombre, a.descripcion, b.id , b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red 
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id , b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red, b.puntos_comisionables 
 from producto a, mercancia b, cat_grupo_producto d
 where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.estatus like "ACT" and (b.pais = "'.$pais.'" or b.pais = "AAA") and a.id_grupo='.$idCategoriaRed.' order by d.descripcion');
 		$produc =  $q->result();
@@ -177,7 +177,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	
 	function get_servicios_red($idCategoriaRed,$pais)
 	{
-		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red 
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red, b.puntos_comisionables 
 		from servicio a, mercancia b
 		where a.id=b.sku and b.id_tipo_mercancia= 2 and b.estatus like "ACT" and a.id_red= '.$idCategoriaRed.' and (b.pais = "'.$pais.'" or b.pais = "AAA")');
 		$servicios_bd =  $q->result();
@@ -200,7 +200,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	}
 	function get_combinados_red($idCategoriaRed,$pais)
 	{
-		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
+		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.costo_publico,d.fecha_alta,d.puntos_comisionables, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idCategoriaRed.' and (d.pais = "'.$pais.'" or d.pais = "AAA") group by (d.id)');
 		$combinados_bd =  $q->result();
 
@@ -209,7 +209,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	
 	function get_paquetes_inscripcion_red($idCategoriaRed,$pais)
 	{
-		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red 
+		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.id_paquete, d.costo, d.costo_publico,d.fecha_alta,d.puntos_comisionables, a.nombre img, a.id_red 
 								from paquete_inscripcion a, mercancia d, cross_paquete
 								e where a.id_paquete=e.id_paquete 
 								and d.sku=a.id_paquete 
@@ -223,7 +223,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	
 	function get_membresias_red($idCategoriaRed,$pais)
 	{
-		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red,b.puntos_comisionables
 		from membresia a, mercancia b
 		where a.id=b.sku and b.id_tipo_mercancia= 5 and b.estatus like "ACT" and a.id_red= '.$idCategoriaRed.' and (b.pais = "'.$pais.'" or b.pais = "AAA")');
 		$membresia_bd =  $q->result();
