@@ -14,7 +14,7 @@
 							<a href="/bo/configuracion/empresa">Empresa</a>
 							</span>
 							<span>
-							>Configurar Entorno
+							>Actividad Usuario
 							</span>
 							</h1>
 		</div>
@@ -45,7 +45,7 @@
 					<header>
 						<span class="widget-icon"> <i class="fa fa-wrench "></i> 						
 						</span>
-						<h2>Configurar Entorno</h2>
+						<h2>Configurar Actividad Usuario</h2>
 					</header>
 
 					<!-- widget div-->
@@ -55,20 +55,47 @@
 						 <legend>Compras obligatorias</legend>
 						 <input type="hidden" value="<?=$empresa[0]->id_tributaria;?>" name="id" >
 						 <section id="usuario" class="col col-3">
-							 <label class="input">Membresia
-								 <input type="checkbox" name="membresia" <?=$empresa[0]->membresia == 'ACT' ? "checked" : "";?> > 
+							 <label><h4>Membresia</h4>
+								 <input style="margin-left: 4rem;" type="checkbox" name="membresia" <?=$empresa[0]->membresia == 'ACT' ? "checked" : "";?> > 
 							 </label>
 						 </section>
 						 <section id="usuario" class="col col-3">
-							 <label class="input">Paquete
-								 <input type="checkbox" name="paquete" <?=$empresa[0]->paquete == 'ACT' ? "checked" : "";?>>
+							 <label ><h4>Paquete</h4>
+								 <input style="margin-left: 4rem;" type="checkbox" name="paquete" <?=$empresa[0]->paquete == 'ACT' ? "checked" : "";?>>
 							 </label> 
 						 </section>
 						 <section id="usuario" class="col col-3">
-							 <label class="input">Producto / Servicio / Combinado
-								 <input type="checkbox" name="item" <?=$empresa[0]->item == 'ACT' ? "checked" : "";?> >
+							 <label><h4>Producto / Servicio / Combinado</h4>
+								 <input style="margin-left: 4rem;" type="checkbox" name="item" <?=$empresa[0]->item == 'ACT' ? "checked" : "";?> >
 							 </label>
 						 </section>
+					 </fieldset>
+					 
+					 <fieldset>
+						 <legend>Afiliaciones Directas</legend>
+						 <label style="margin: 1rem;width: 50rem;" class="select">
+							<select id="afiliados_directos" name="afiliados_directos" style="margin: 1rem;width: 10rem;">
+								<option value="0">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+							</select>
+						</label>
+					 </fieldset>
+					 
+					 <fieldset>
+						 <legend>Puntos Comisionables personales en el MES</legend>
+						 <label style="margin: 1rem;width: 10rem;" for="" class="input">
+							<i class="icon-prepend fa fa-sort-numeric-asc"></i>
+							<input id="puntos_personales" class="form-control" name="puntos_personales" placeholder="" required="" type="number" value="<?=$empresa[0]->puntos_personales;?>">
+						</label>
 					 </fieldset>
 					 
 						<footer>
@@ -132,5 +159,6 @@ function enviar()
 					});//Fin callback bootbox
 }
 
+$("#afiliados_directos").val("<?=$empresa[0]->afiliados_directos;?>");
 
 </script>

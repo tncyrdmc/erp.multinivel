@@ -28,6 +28,8 @@
 										<option value="1000" selected> </option>
 										<option value="7" >Afiliados</option>
 										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
+										<option value="15" onclick="tipo_reporte()" >Afiliados Activos</option>
+										<option value="16" onclick="tipo_reporte()" >Afiliados InActivos</option>
 										<option value="1" >Ventas por Oficinas Virtuales</option>
 										<option value="9" onclick="tipo_reporte()">Ventas Por Cobrar Bancos</option>
 										<option value="12">Ventas Pagadas Bancos</option>
@@ -423,6 +425,7 @@
 							
 						});
 					}
+
 					break;
 					case '17':
 						$("#nuevos-afiliados").show();
@@ -843,6 +846,42 @@
 				});
 			}
 			break;
+
+			case "15" :{
+				iniciarSpinner();
+			// Afiliados Activos
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/afiliados_activos",
+					data: {startdate:inicio,finishdate:fin}
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+					
+				});
+			}
+			break;
+
+			case "16" :{
+				iniciarSpinner();
+			// Afiliados Activos
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/afiliados_inactivos",
+					data: {startdate:inicio,finishdate:fin}
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+					
+				});
+			}
+			break;
 		}
 
 		}
@@ -915,6 +954,22 @@
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				window.location="/bo/reportes/reporte_ventas_pagadas_online_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+			
+			case "15" :{
+				// Comisiones por pagar y pagadas
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/afiliados_activos_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+
+			case "16" :{
+				// Comisiones por pagar y pagadas
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/afiliados_inactivos_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 		}

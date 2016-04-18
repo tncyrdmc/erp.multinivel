@@ -595,7 +595,9 @@ where(a.id_pais=b.Code)");
 		$dato=array(
 				"membresia"     => isset($_POST['membresia']) ? "ACT" : "DES",
 				"paquete"   	=> isset($_POST['paquete']) ? "ACT" : "DES",
-				"item"     		=> isset($_POST['item']) ? "ACT" : "DES"
+				"item"     		=> isset($_POST['item']) ? "ACT" : "DES",
+				"afiliados_directos"     		=> $_POST['afiliados_directos'] ,
+				"puntos_personales"     		=> $_POST['puntos_personales']
 		);
 	
 		$this->db->where('id_tributaria', $_POST['id']);

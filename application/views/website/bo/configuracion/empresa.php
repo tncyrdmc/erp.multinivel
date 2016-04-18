@@ -68,9 +68,9 @@
 												<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 link">
 													<a href="/bo/configuracion/entorno">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-wrench fa-3x"></i><i class="fa fa-cogs fa-2x"></i>
-															<p>Configurar</p>
-															<h1>Entorno</h1> 
+															<i class="fa fa-group fa-3x"></i><i class="fa fa-sitemap fa-2x"></i><i class="fa fa-shopping-cart fa-2x"></i>
+															<h1>Actividad</h1>
+															<p>Usuario</p> 
 															<br>
 														</div>
 													</a>
