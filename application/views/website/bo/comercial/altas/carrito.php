@@ -104,6 +104,7 @@
 													<th data-hide="phone,tablet">CATEGORÍA</th>
 													<th data-hide="phone">PAIS</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
+													<th data-hide="phone,tablet"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> PUNTOS COMISIONABLES</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> IMPUESTOS</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO REAL</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO COSTO</th>
@@ -131,6 +132,7 @@
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td><?
 													foreach ($imp_merc as $key_1) {
 														if($key->id==$key_1->id_mercancia){
@@ -175,6 +177,7 @@
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -221,6 +224,7 @@
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -267,6 +271,7 @@
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -311,6 +316,7 @@
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {

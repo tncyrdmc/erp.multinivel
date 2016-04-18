@@ -71,7 +71,7 @@
 														
 														$totales = (intval($comision_todo["ganancias"][$i][0]->valor)<>0||sizeof($comision_todo["bonos"][$i])<>0) ? 0 : 'FAIL';													
 														
-														//echo $totales."|";
+														//echo count($comision_todo["bonos"][$i]);
 														
 														if($totales!=='FAIL'){
 															echo '<tr class="success" >
@@ -147,7 +147,12 @@
 													
 													<?php if ($transaction) { ?>	
 														<tr class="warning">
-															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+															<td ><b>TRANSACCIONES EMPRESA</b></td>
+															<td >
+																<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ver(<?=$id?>);'>
+																				<i class='fa fa-eye fa-3x'></i>
+																</a>
+															</td>
 														</tr>
 													<?php if ($transaction['add']) {
 															$total_transact+=$transaction['add'];
@@ -261,7 +266,7 @@
 		<!-- Morris Chart Dependencies -->
 		<script type="text/javascript">
 
-			function ver(id){
+			function ver(id,fecha){
 				$.ajax({
 					type: "POST",
 					url: "/ov/billetera2/historial_transaccion",

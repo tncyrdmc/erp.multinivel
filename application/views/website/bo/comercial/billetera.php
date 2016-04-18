@@ -33,7 +33,7 @@
 											-->
 																							<!-- widget content -->
 												
-												<div class=""><!-- widget-body --> 
+												<div style='overflow-y: scroll; height: 280px;'><!-- widget-body --> 
 													<div id="" class=""> <!-- myTabContent1 ; tab-content padding-50 -->
 													<h1 class="text-center"></h1>
 													
@@ -49,52 +49,105 @@
 												<?php 
 													$total = 0; 
 													$i = 0;
-													
 													$total_transact = 0;
-																										
-													foreach ($ganancias as $gred){
-														if($gred[0]->valor!=0){
-														echo '<tr class="success" >
-																<td colspan="2">'.$gred[0]->nombre.'</td>
-															</tr>'; 
-
-														echo '<tr class="success">
-															<td>Comisiones Directas</td>
-																<td>$ '.number_format($comisiones_directos[$i][0]->valor,2).'</td>
-															</tr>'; 
+													
+													
+													//var_dump($comision_todo);
+													
+													for ($i = 0 ; $i<sizeof($comision_todo["redes"]);$i++){
 														
-														echo '<tr class="success">
-															<td>Comisiones Indirectas</td>
-																<td>$ '.number_format($gred[0]->valor - $comisiones_directos[$i][0]->valor,2).'</td>
-															</tr>'; 
-
-														if($gred[0]->valor){
-														echo '<tr class="warning">
-																<td>Total</td>
-																<td>$ '.number_format($gred[0]->valor,2).'</td>
-															</tr>';
-														$total += $gred[0]->valor;
-														}else {
-															echo '<tr class="warning">
-																<td> Total </td>
-																<td>$ 0</td>
+														$totales = (intval($comision_todo["ganancias"][$i][0]->valor)<>0||sizeof($comision_todo["bonos"][$i])<>0) ? 0 : 'FAIL';													
+														
+														//echo $totales."|";
+														
+														if($totales!=='FAIL'){
+															echo '<tr class="success" >
+																<td colspan="2"><b>'.$comision_todo["redes"][$i]->nombre.'</b></td>
 															</tr>';
 														}
-														$i++;
-													}
+														
+														
+														if($comision_todo["ganancias"][$i][0]->valor<>0){
+															echo '<tr class="success" >
+																<td colspan="2"><i class="fa fa-money"></i>Comisiones</td>
+															</tr>';
+														
+															echo '<tr class="success">
+															<td>&nbsp;&nbsp;Comisiones Directas</td>
+																<td>$ '.number_format($comision_todo["directos"][$i][0]->valor,2).'</td>
+															</tr>';
+														
+															echo '<tr class="success">
+															<td>&nbsp;&nbsp;Comisiones Indirectas</td>
+																<td>$ '.number_format($comision_todo["ganancias"][$i][0]->valor - $comision_todo["directos"][$i][0]->valor,2).'</td>
+															</tr>';
+														
+															if($comision_todo["ganancias"][$i][0]->valor){
+															/*	echo '<tr class="warning">
+																<td>&nbsp;Total</td>
+																<td>$ '.number_format(($comision_todo["ganancias"][$i][0]->valor),2).'</td>
+															</tr>';*/
+																$totales += ($comision_todo["ganancias"][$i][0]->valor);
+															}else {
+																/*echo '<tr class="warning">
+																<td> Total </td>
+																<td>$ 0</td>
+															</tr>';*/
+															}
+														
+															
+														}
+														
+														if($comision_todo["bonos"][$i]){
+															echo '<tr class="success" >
+																<td colspan="2"><i class="fa fa-gift"></i>Bonos</td>
+															</tr>';
+															for ($k=0;$k<sizeof($comision_todo["bonos"][$i]);$k++){
+																if($comision_todo["bonos"][$i][$k]->valor<>0){
+																	$totales += ($comision_todo["bonos"][$i][$k]->valor);
+																	echo '<tr class="success">
+																<td>&nbsp;&nbsp;'.$comision_todo["bonos"][$i][$k]->nombre.'</td>
+																	<td>$ '.number_format($comision_todo["bonos"][$i][$k]->valor,2).'</td>
+																</tr>';
+																}
+															}
+														}
+														
+														if($totales<>0){
+															echo '<tr class="warning">
+																<td>&nbsp; Total </td>
+																<td>$ '.number_format($totales,2).'</td>
+															</tr>';
+															$total += ($totales);
+														}
+														
 													}
 
 													?>  
-													
-													
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
-														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
+														<td>
+														<div class="col-md-6">
+															<h4><b>$ <?php echo number_format($total,2);?></b></h4>
+														</div>
+														<?php if($total !== 0){?>
+														<div class="col-md-1">
+															<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ventas(<?=$id?>);'>
+																<i class='fa fa-eye fa-3x'></i>
+															</a>
+														</div>		
+														<?php }?>																										
+														</td>
 													</tr>
 													
 													<?php if ($transaction) { ?>	
 														<tr class="warning">
-															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+															<td ><b>TRANSACCIONES EMPRESA</b></td>
+															<td >
+																<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ver(<?=$id?>);'>
+																				<i class='fa fa-eye fa-3x'></i>
+																</a>
+															</td>
 														</tr>
 													<?php if ($transaction['add']) {
 															$total_transact+=$transaction['add'];
@@ -315,7 +368,28 @@ function enviar(){
 	});	
 }
 
+function ventas(id){
+	$.ajax({
+		type: "POST",
+		url: "/ov/billetera2/ventas_comision",
+		data: {id: id}
+	})
+	.done(function( msg )
+	{					
+		bootbox.dialog({
+			message: msg,
+			title: 'Detalles de la Comisiones',
+			buttons: {
+				danger: {
+					label: "Cerrar",
+					className: "btn-danger",
+					callback: function() {
 
+						}
+			}
+		}})//fin done ajax
+	});//Fin callback bootbox
+}
 
 </script>
 <!-- 

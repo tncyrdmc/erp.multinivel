@@ -690,23 +690,34 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function ComprasUsuario($id){
-		$q = $this->db->query("SELECT sum(cvm.costo_unidad*cvm.cantidad) as compras 
+		$q = $this->db->query("SELECT
+									sum(cvm.costo_unidad*cvm.cantidad) as compras,
+									sum(cvm.costo_total-(cvm.impuesto_unidad*cvm.cantidad)) as comprast 
 								FROM cross_venta_mercancia cvm , venta v
 								where v.id_user=".$id."
 								and cvm.id_venta=v.id_venta
 								and v.id_estatus='ACT'");
 		$costos = $q->result();
-		return $costos[0]->compras;
+		return $costos;
 	}
 	
 	function PuntosUsuario($id){
-		$q = $this->db->query("SELECT sum(c.puntos) as puntos FROM comision c, venta v where c.id_venta = v.id_venta and v.id_user = ".$id.";");
+		$q = $this->db->query("select distinct  
+					sum(m.puntos_comisionables*c.cantidad) puntos, sum(m.puntos_comisionables) as puntosu 
+				FROM mercancia m, cross_venta_mercancia c , venta v
+				WHERE m.sku = c.id_mercancia and c.id_venta = v.id_venta and v.id_user = ".$id."");
 		$puntos = $q->result();
-		return $puntos[0]->puntos;
+		return $puntos;
 	}
 	
 	function ComisionUsuario($id){
 		$q = $this->db->query("SELECT sum(valor) as comision FROM comision where id_afiliado = ".$id.";");
+		$comision = $q->result();
+		return $comision[0]->comision;
+	}
+	
+	function BonosUsuario($id){
+		$q = $this->db->query("SELECT sum(valor) as comision FROM comision_bono where id_usuario = ".$id.";");
 		$comision = $q->result();
 		return $comision[0]->comision;
 	}

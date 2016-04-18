@@ -222,6 +222,7 @@ class billetera2 extends CI_Controller
 		$this->template->set("transaction",$transaction);
 		$this->template->set("redes",$redesUsuario);
 		$this->template->set("bonos",$bonos);
+		$this->template->set("id",$id);
 		$this->template->set("total_bonos",$total_bonos);
 		$this->template->set("comision_todo",$comision_todo);
 		$this->template->set("comisiones_directos",$comision_directos);
@@ -385,7 +386,7 @@ class billetera2 extends CI_Controller
 		$comision_directos = array();
 		$bonos = array();		
 		
-		foreach ($redes as $red){
+		foreach ($redesUsuario as $red){
 			array_push($bonos,$this->model_bonos->ver_total_bonos_id_red_fecha($id,$red->id,$_GET['fecha']));
 			array_push($ganancias,$this->modelo_billetera->get_comisiones_mes($id,$red->id,$_GET['fecha']));
 			array_push($comision_directos, $this->modelo_billetera->getComisionDirectosMes($id, $red->id, $_GET['fecha']));
@@ -475,20 +476,38 @@ class billetera2 extends CI_Controller
 	
 	function ventas_comision(){
 	
+		$ventas = $this->ventas_comisiones();
+		$bonos = $this->bonos_comisiones();
+		
+		echo "<legend><b>Ventas</b></legend></br>";
+		echo $ventas;
+		
+		echo "<hr/>";
+		
+		echo "<legend><b>Bonos</b></legend></br>";
+		echo $bonos;
+	
+	}
+	
+	function ventas_comisiones(){
+	
 	
 		$id=$_POST['id'];
 		$fecha =isset($_POST['fecha']) ? $_POST['fecha'] : null;
 	
 		//echo "dentro de historial : ".$id;
 	
-		$ventas = ($fecha) 
-		 	? $this->modelo_billetera->get_ventas_comision_fecha($id,$fecha) 
-		 	: $this->modelo_billetera->get_ventas_comision_id($id);
-		
-		$total = 0 ;
+		$ventas = ($fecha)
+		? $this->modelo_billetera->get_ventas_comision_fecha($id,$fecha)
+		: $this->modelo_billetera->get_ventas_comision_id($id);
 	
-		echo
-		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+		$total = 0 ;
+		$ventas_table = "";
+	
+		if(!$ventas){return "<div class=''>No existen ventas registradas</div>";}
+	
+		$ventas_table .=
+		"<div style='overflow-y: scroll; height: 100px;'><table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
 				<thead id='tablacabeza'>
 					<th data-class='expand'>ID Venta</th>
 					<th data-hide='phone,tablet'>Afiliado</th>
@@ -502,8 +521,8 @@ class billetera2 extends CI_Controller
 	
 		foreach($ventas as $venta)
 		{
-			
-			echo "<tr>
+				
+			$ventas_table .= "<tr>
 			<td class='sorting_1'>".$venta->id_venta."</td>
 			<td>".$venta->nombres."</td>
 			<td>".$venta->red."</td>
@@ -511,22 +530,22 @@ class billetera2 extends CI_Controller
 			<td>".number_format($venta->total, 2)."</td>
 			<td> $	".number_format($venta->comision, 2)."</td>
 			</tr>";
-				
+	
 			$total += ($venta->comision);
 	
 		}
 			
-		echo "<tr>
-			<td class='sorting_1'></td>			
+		$ventas_table .= "<tr>
+			<td class='sorting_1'></td>
 			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
 			</tr>";
-		
-		echo "<tr>			
-			<td></td>			
+	
+		$ventas_table .= "<tr>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -534,8 +553,91 @@ class billetera2 extends CI_Controller
 			<td><b> $	".number_format($total, 2)."</b></td>
 			</tr>";
 	
-		echo "</tbody>
-		</table><tr class='odd' role='row'>";
+		$ventas_table .= "</tbody>
+		</table><tr class='odd' role='row'></div>";
+	
+		return $ventas_table;
+	
+	}
+	
+	function bonos_comisiones(){
+	
+	
+		$id=$_POST['id'];
+		$fecha =isset($_POST['fecha']) ? $_POST['fecha'] : null;
+	
+		//echo "dentro de historial : ".$id;
+	
+		$bonos = ($fecha) 
+		 	? $this->model_bonos->detalle_bono_fecha($id,$fecha) 
+		 	: $this->model_bonos->detalle_bono_id($id);
+		 
+		##return var_dump($bonos); 	
+		 	
+		$total = 0 ;
+		$bonos_table = "";
+		
+		if(!$bonos||$bonos[0]->valor==0){return "<div class=''>No hay Bonos registrados o no ha aplicado ninguno</div>";}
+	
+		$bonos_table .=
+		"<div style='overflow-y: scroll; height: 100px;'><table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Historial</th>
+					<th data-hide='phone,tablet'>Bono</th>
+					<th data-hide='phone,tablet'>Descripcion</th>
+					<th data-hide='phone,tablet'>Dia</th>
+					<th data-hide='phone,tablet'>Mes</th>
+					<th data-hide='phone,tablet'>Año</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Valor</th>
+				</thead>
+				<tbody>";
+	
+	
+		foreach($bonos as $bono)
+		{
+			
+			$bonos_table .= "<tr>
+			<td class='sorting_1'>".$bono->id."</td>
+			<td>".$bono->bono."</td>
+			<td>".$bono->descripcion."</td>
+			<td>".$bono->dia."</td>
+			<td>".$bono->mes."</td>
+			<td>".$bono->ano."</td>
+			<td>".$bono->fecha."</td>
+			<td> $	".number_format($bono->valor, 2)."</td>
+			</tr>";
+	
+			$total += ($bono->valor);
+	
+		}
+			
+		$bonos_table .= "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+	
+		$bonos_table .= "<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class='sorting_1'><b>TOTAL:</b></td>
+			<td><b> $	".number_format($total, 2)."</b></td>
+			</tr>";
+	
+		$bonos_table .= "</tbody>
+		</table><tr class='odd' role='row'></div>";
+		
+		return $bonos_table;
 	
 	}
 	
