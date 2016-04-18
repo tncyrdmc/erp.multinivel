@@ -3748,18 +3748,19 @@ function index()
 	public function pagarComisionVenta($id_venta,$id_afiliado_comprador){
 		$MATRICIAL='MAT';
 		$UNILEVEL='UNI';	
-		
+		 
 		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
 	
 		foreach ($mercancias as $mercancia){
 				
 			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
+			$valor_punto_comisionable=$this->model_tipo_red->traerValorPuntoComisionableRed($id_red_mercancia);
 			$tipo_plan_compensacion=$this->modelo_compras->obtenerPlanDeCompensacion($id_red_mercancia);
 			
 			if($tipo_plan_compensacion[0]->plan==$MATRICIAL||$tipo_plan_compensacion[0]->plan==$UNILEVEL){
 
-				$costoVenta=$mercancia->costo_unidad_total;
-				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
+				$valorAComisionar=$valor_punto_comisionable*$mercancia->puntos_comisionables;
+				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$valorAComisionar,$id_afiliado_comprador);
 				
 			}
 

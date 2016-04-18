@@ -5,6 +5,7 @@ class calculador_bono extends CI_Model
 	private $usuariosRed=array();
 	private $valorCondicion;
 	private $id_bono_historial=0;
+	private $isSetBonoRepartir=false;
 
 	private $fechaCalculoBono; 
 	/*
@@ -23,6 +24,7 @@ class calculador_bono extends CI_Model
 		$this->load->model('/bo/bonos/activacion_bono');
 		$this->load->model('/bo/bonos/repartidor_comision_bono');
 		$this->load->model('/bo/bonos/afiliado');
+		$this->load->model('/bo/bonos/clientes/mobileMoney/bono_mobile_money');
 		
 		$this->setFechaCalculoBono(date('Y-m-d'));
 	}
@@ -231,7 +233,8 @@ class calculador_bono extends CI_Model
 		
 		/* (Bono a la medida) Repartir valor total de igualaciones dividido numero de compras por puntos (Money Mobile) */
 		else if($verticalidad=="RDESC"){
-			$this->repartirComisionesBonoPorIgualacionesPorCompras ( $id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicion_red,$verticalidad,$fecha);
+			$bonoMoneyMobile=$this->bono_mobile_money;
+			$this->repartirComisionesBonoPorIgualacionesPorCompras ($bonoMoneyMobile, $id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicion_red,$verticalidad,$fecha);
 		}
 	}
 	
@@ -294,25 +297,27 @@ class calculador_bono extends CI_Model
 		}
 	}
 	
-	private function repartirComisionesBonoPorIgualacionesPorCompras($id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicionRed,$verticalidad,$fecha) {
+	private function repartirComisionesBonoPorIgualacionesPorCompras($bonoMoneyMobile,$id_bono,$id_bono_historial,$id_usuario,$red,$nivel,$valor,$condicionRed,$verticalidad,$fecha) {
+		
+		if(!$this->getIsSetBonoRepartir()){
+						
+			$bono=$this->bono;
+			$bono->setUpBono($id_bono);
+			$this->setEstado("REC");
+	
+			$frecuencia=$bono->getActivacionBono()->getFrecuencia();
+			
+			$fecha_inicio=$this->getFechaInicioPagoDeBono($frecuencia,$fecha);
+			$fecha_fin=$this->getFechaFinPagoDeBono($frecuencia,$fecha);
+	
+			$bonoMoneyMobile->setUpBono($red, $fecha_inicio, $fecha_fin);
+			$this->setIsSetBonoRepartir(true);
+		}
+		
+		$valor=0;
+		$valor=$bonoMoneyMobile->getTotalARecibirAfiliado($red,$id_usuario);
 		$repartidorComisionBono=new $this->repartidor_comision_bono();
 		
-		$bono=$this->bono;
-		$bono->setUpBono($id_bono);
-		$this->setEstado("REC");
-
-		$frecuencia=$bono->getActivacionBono()->getFrecuencia();
-		
-		$fecha_inicio=$this->getFechaInicioPagoDeBono($frecuencia,$fecha);
-		$fecha_fin=$this->getFechaFinPagoDeBono($frecuencia,$fecha);
-
-		$bonoMoneyMobile=$this->bono_mobile_money;
-		
-			
-			$bonoMoneyMobile->setUpBono($red, $fecha_inicio, $fecha_fin);
-			$valor=0;
-			$valor=$bonoMoneyMobile->getTotalARecibirAfiliado($red,$id_usuario);
-
 			if($valor!=0)
 				$repartidorComisionBono->repartirComisionBono($repartidorComisionBono->getIdTransaccionPagoBono(),$id_usuario,$id_bono,$id_bono_historial,$valor);
 
@@ -615,6 +620,14 @@ class calculador_bono extends CI_Model
 		$this->estado = $estado;
 		return $this;
 	}
+	public function getIsSetBonoRepartir() {
+		return $this->isSetBonoRepartir;
+	}
+	public function setIsSetBonoRepartir($isSetBonoRepartir) {
+		$this->isSetBonoRepartir = $isSetBonoRepartir;
+		return $this;
+	}
+	
 
 	
 }
