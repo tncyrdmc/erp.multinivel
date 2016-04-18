@@ -354,6 +354,169 @@ class reportes extends CI_Controller
 		$objWriter->save('php://output');
 	}
 	
+	function afiliados_activos(){
+		$id=$this->tank_auth->get_user_id();
+		
+		if (!$this->tank_auth->is_logged_in())
+		{												
+		redirect('/auth');
+		}
+
+		$afiliados=$this->modelo_reportes->reporte_afiliados_activos(date('Y-m-d'));
+		echo 
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Actividad</th>
+				</thead>
+				<tbody>";
+			for($i=0;$i<sizeof($afiliados);$i++)
+			{
+					echo "<tr>
+					<td class='sorting_1'>".$afiliados[$i]->id."</td>
+					<td>".$afiliados[$i]->usuario."</td>
+					<td>".$afiliados[$i]->nombre."</td>
+					<td>".$afiliados[$i]->apellido."</td>
+					<td>".$afiliados[$i]->email."</td>
+					<td><div class='widget-body'>
+						<h2 class='alert alert-success'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i></h2>
+						</div></td>
+				</tr>";
+			}
+				
+			
+			echo "</tbody>
+			</table><tr class='odd' role='row'>";
+		
+		
+		
+	}
+	
+	function afiliados_activos_excel(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{
+			redirect('/auth');
+		}
+	
+		$afiliados=$this->modelo_reportes->reporte_afiliados_activos(date('Y-m-d'));
+
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+		
+		for($i = 0;$i < count($afiliados);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $afiliados[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+			$contador_filas++;
+		}
+		
+		$subtitulos	=array("ID","Usuario","Nombre","Apellido","Email");
+		$this->model_excel->setTemplateExcelReport ("Afiliados",$subtitulos,$contador_filas,$this->excel);
+		
+		$filename='AfiliadosActivos.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	
+	}
+	
+	function afiliados_inactivos(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{
+			redirect('/auth');
+		}
+	
+		$afiliados=$this->modelo_reportes->reporte_afiliados_inactivos(date('Y-m-d'));
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Actividad</th>
+				</thead>
+				<tbody>";
+		for($i=0;$i<sizeof($afiliados);$i++)
+		{
+			echo "<tr>
+					<td class='sorting_1'>".$afiliados[$i]->id."</td>
+					<td>".$afiliados[$i]->usuario."</td>
+					<td>".$afiliados[$i]->nombre."</td>
+					<td>".$afiliados[$i]->apellido."</td>
+					<td>".$afiliados[$i]->email."</td>
+					<td><div class='widget-body'>
+						<h2 class='alert alert-danger'><i class='fa fa-star-o '></i></h2>
+						</div></td>
+				</tr>";
+		}
+	
+			
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	
+	
+	
+	}
+	
+	function afiliados_inactivos_excel(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{
+			redirect('/auth');
+		}
+	
+		$afiliados=$this->modelo_reportes->reporte_afiliados_inactivos(date('Y-m-d'));
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_generico.xls");
+		$contador_filas=0;
+	
+		for($i = 0;$i < count($afiliados);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $afiliados[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+			$contador_filas++;
+		}
+	
+		$subtitulos	=array("ID","Usuario","Nombre","Apellido","Email");
+		$this->model_excel->setTemplateExcelReport ("Afiliados",$subtitulos,$contador_filas,$this->excel);
+	
+		$filename='AfiliadosInActivos.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	
+	}
+	
 	function reporte_ventas_oficinas_virtuales()
 	{
 		if (!$this->tank_auth->is_logged_in())

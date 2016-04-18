@@ -2,6 +2,15 @@
 
 class general extends CI_Model
 {
+	
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('/bo/bonos/calculador_bono');
+		$this->load->model('/bo/bonos/afiliado');
+	
+	}
+	
 	function IsActivedPago($id){
 		$q = $this->db->query('select estatus from user_profiles where user_id = '.$id);
 		$estado = $q->result();
@@ -80,6 +89,68 @@ class general extends CI_Model
 		
 		return $this->validarMembresias($id);
 
+	}
+	
+	function isActivedAfiliacionesPuntosPersonales($id_afiliado,$fecha){
+	$cualquiera="0";
+		
+	$numeroAfiliadosDirectos=$this->getAfiliadosDirectos($id_afiliado);
+	$afiliadosParaEstarActivo=$this->getAfiliadosParaEstarActivo();
+	
+	if($afiliadosParaEstarActivo>$numeroAfiliadosDirectos)
+		return false;
+	
+	$fechaInicio=$this->calculador_bono->getInicioMes($fecha);
+	$fechaFin=$this->calculador_bono->getFinMes($fecha);
+	
+	$puntosParaEstarActivo=$this->getPuntosParaEstarActivo();
+	$puntosComisionablesMes=0;
+	
+	$q=$this->db->query('select id from tipo_red');
+	$redes= $q->result();
+	
+	foreach ($redes as $red){
+		$puntos=$this->afiliado->getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+		$puntosComisionablesMes=$puntosComisionablesMes+$puntos;
+		
+	}
+	
+	if($puntosParaEstarActivo>$puntosComisionablesMes)
+		return false;
+
+	return true;
+	}
+	
+	private function getAfiliadosDirectos($id_afiliado){
+		$q=$this->db->query('SELECT count(*) as directos FROM users u,afiliar a
+		where u.id=a.id_afiliado and a.directo = '.$id_afiliado); 
+		$numeroAfiliados=$q->result();
+		
+		if($numeroAfiliados[0]->directos==null)
+			return 0;
+		
+		return $numeroAfiliados[0]->directos;
+		
+	}
+	
+	private function getAfiliadosParaEstarActivo(){
+		$q=$this->db->query('SELECT afiliados_directos as directos FROM empresa_multinivel');
+		$afiliadosDirectos=$q->result();
+		
+		if($afiliadosDirectos[0]->directos==null)
+			return 0;
+		
+		return $afiliadosDirectos[0]->directos;
+	}
+	
+	private function getPuntosParaEstarActivo(){
+		$q=$this->db->query('SELECT puntos_personales as puntos FROM empresa_multinivel');
+		$afiliadosDirectos=$q->result();
+	
+		if($afiliadosDirectos[0]->puntos==null)
+			return 0;
+	
+		return $afiliadosDirectos[0]->puntos;
 	}
 	
 	private function validarMembresias($id){

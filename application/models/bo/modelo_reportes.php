@@ -2,6 +2,13 @@
 
 class modelo_reportes extends CI_Model
 {
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('/ov/general');
+	
+	}
+	
 	function reporte_afiliados($inicio,$fin)
 	{
 		$q=$this->db->query('SELECT a.id as id,af.debajo_de as id_sponsor,a.username as usuario,b.nombre as nombre,a.email as email,b.apellido as apellido,
@@ -18,6 +25,52 @@ class modelo_reportes extends CI_Model
 							 	and DATE(a.created) BETWEEN "'.$inicio.'" AND "'.$fin.'" group by a.id order by a.id');
 		return $q->result();
 	}
+	
+	function reporte_afiliados_activos($fecha)
+	{
+		$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email 
+FROM users a, user_profiles b WHERE a.id=b.user_id and b.id_tipo_usuario=2 and a.id>2');
+		
+		$afiliados=$q->result();
+		$afiliadosActivos=array();
+		
+		foreach ($afiliados as $afiliado){
+
+			if(($this->general->isActived($afiliado->id)==0)&& 
+					(($this->general->isActivedAfiliacionesPuntosPersonales($afiliado->id,$fecha))==true)){
+
+				array_push($afiliadosActivos,$afiliado);
+			}
+			
+		}
+
+		return $afiliadosActivos;
+	}
+	
+	function reporte_afiliados_inactivos($fecha)
+	{
+		$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email
+FROM users a, user_profiles b WHERE a.id=b.user_id and b.id_tipo_usuario=2 and a.id>2');
+	
+		$afiliados=$q->result();
+		$afiliadosActivos=array();
+	
+		foreach ($afiliados as $afiliado){
+	
+			if(($this->general->isActived($afiliado->id)==0)&& 
+					(($this->general->isActivedAfiliacionesPuntosPersonales($afiliado->id,$fecha))==true)){
+
+				
+			}else {
+				array_push($afiliadosActivos,$afiliado);
+			}
+				
+		}
+	
+		return $afiliadosActivos;
+	}
+	
+	
 	function reporte_afiliados_mes()
 	{
 		$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email 
