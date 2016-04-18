@@ -157,25 +157,25 @@ var j=0;
 												if($nivel->verticalidad=="ASC"){
 													echo "<option value='ASC' selected>$ Hacia Arriba</option>
 														  <option value='DESC'>$ Hacia Abajo</option>
-														  <option value='PASC'>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Arriba</option>
 														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
 														  ";
 												}else if($nivel->verticalidad=="DESC"){
 													echo "<option value='ASC'>$ Hacia Arriba</option>
 														  <option value='DESC' selected>$ Hacia Abajo</option>
-														  <option value='PASC'>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Arriba</option>
 														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
 														  ";
 												}else if($nivel->verticalidad=="PASC"){
 													echo "<option value='ASC'>$ Hacia Arriba</option>
 														  <option value='DESC'>$ Hacia Abajo</option>
-														  <option value='PASC' selected>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC' selected>%(Puntos) Hacia Arriba</option>
 														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
 														  ";
 												}else if($nivel->verticalidad=="RDESC"){
 													echo "<option value='ASC'>$ Hacia Arriba</option>
 														  <option value='DESC'>$ Hacia Abajo</option>
-														  <option value='PASC'>%(Puntos) Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Arriba</option>
 														  <option value='RDESC' selected>%(Puntos)Residual Abajo</option>
 														  ";
 												}
@@ -358,7 +358,7 @@ function add_nivel()
 			+'<option value="ASC">$ Hacia Arriba</option>'
 			+'<option value="DESC">$ Hacia Abajo</option>'
 			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
-			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'
@@ -416,7 +416,7 @@ var code='<div class="row">'
 			+'<option value="ASC">$ Hacia Arriba</option>'
 			+'<option value="DESC">$ Hacia Abajo</option>'
 			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
-			+'<option value="RDASC">%(Puntos)Residual Abajo</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
 		+'</select>'
 	+'</label>'
 	+'</div>'

@@ -50,32 +50,27 @@ class testBonosMoneyMobile extends CI_Controller {
 	public function index(){
 		
 	//	$this->pruebaProduccion();
-	/*	$this->before();
+		$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
-	*/
+
 		$this->before();
-	//	$this->testCalcularComisionesAfiliadosBonoBinario();
+		$this->testCalcularComisionesAfiliadosBonoBinario();
 		$this->testGetTotalDeDineroARepartir();
 		$this->testARecibir();
 		$this->testRepartirComisiones();
-	/*	
+		$this->testValidarSiElBonoYaCobroVerdadero($this->idBonoDeBinario);
+		
 		$this->before();
 		$this->testCalcularComisionesAfiliadosBonoDeInicioRapido();
-		$this->testValidarSiElBonoYaCobroVerdadero();
-		$this->testGetAfiliadoActivosRed();
-		$this->after();*/
+		$this->testValidarSiElBonoYaCobroVerdadero($this->idBonoDeInicioRapido);
+		$this->after();
 
 	}
 	
 	public function pruebaProduccion(){
-		$this->before();
-		
-		$fecha=date('Y-m-d');
-		$effectiveDate = strtotime("+1 weeks", strtotime($fecha));
-		$fecha = strftime ( '%Y-%m-%d' , $effectiveDate );
-		
-		$this->ingresarVentasFecha($fecha);
+		$this->ingresarBonos();
+
 	}
 
 	public function testValidarSiElBonoYaCobroFalso(){
@@ -89,6 +84,10 @@ class testBonosMoneyMobile extends CI_Controller {
 		$resultado=$calculadorBono->isPagado($bono,$fechaActual);
 		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
 
+		$id_bono=$this->idBonoDeBinario;$bono=new $this->bono();$bono->setUpBono($id_bono);
+		$resultado=$calculadorBono->isPagado($bono,$fechaActual);
+		echo $this->unit->run(false,$resultado, 'Test validar si el bono no sea pagado','Resultado es :'.$resultado);
+		
 	}
 
 	public function testCalcularComisionesAfiliadosBonoDeInicioRapido(){
@@ -265,11 +264,11 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 		$id_usuario=10000;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
-		echo $this->unit->run(2155,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		echo $this->unit->run("2,162.5",number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.number_format($resultado,1));
 		
 		$id_usuario=10001;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
-		echo $this->unit->run(92,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		echo $this->unit->run(92.4,number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
 		
 		$id_usuario=10002;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
@@ -289,7 +288,7 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 		$id_usuario=10006;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
-		echo $this->unit->run(431,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		echo $this->unit->run(432.5,number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
 		
 		$id_usuario=10007;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
@@ -297,7 +296,7 @@ class testBonosMoneyMobile extends CI_Controller {
 
 		$id_usuario=10008;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
-		echo $this->unit->run(431,$resultado, 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
+		echo $this->unit->run(432.5,number_format($resultado,1), 'Test validar si entrega comisiones bono en red al afiliado '.$id_usuario,'Resultado es :'.$resultado);
 		
 		$id_usuario=10009;
 		$resultado=$repartidorComisionBono->getTotalValoresTransaccionPorBonoYUsuario($id_bono,$id_usuario)[0]->total;
@@ -521,11 +520,11 @@ class testBonosMoneyMobile extends CI_Controller {
 		
 	}
 	
-	public function testValidarSiElBonoYaCobroVerdadero(){
+	public function testValidarSiElBonoYaCobroVerdadero($id_bono){
 		
 		$calculadorBono=new $this->calculador_bono();
 		$fecha=date('Y-m-d');
-		$id_bono=$this->idBonoDeInicioRapido;$bono=new $this->bono();$bono->setUpBono($id_bono);
+		$bono=new $this->bono();$bono->setUpBono($id_bono);
 		$resultado=$calculadorBono->isPagado($bono,$fecha);
 		echo $this->unit->run(true,$resultado, 'Test validar si el bono ya se pago','Resultado es :'.$resultado);
 
@@ -576,7 +575,7 @@ class testBonosMoneyMobile extends CI_Controller {
 				'condicion_red_afilacion'    => "DEB",
 				'condicion1'    => $cualquiera,
 				'condicion2'	=> $cualquiera,
-				'calificado'    => "DAR",
+				'calificado'    => "DOS",
 				'estatus_rango'	=> 'ACT'
 		);
 		
