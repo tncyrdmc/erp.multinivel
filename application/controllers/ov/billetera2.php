@@ -222,6 +222,7 @@ class billetera2 extends CI_Controller
 		$this->template->set("transaction",$transaction);
 		$this->template->set("redes",$redesUsuario);
 		$this->template->set("bonos",$bonos);
+		$this->template->set("id",$id);
 		$this->template->set("total_bonos",$total_bonos);
 		$this->template->set("comision_todo",$comision_todo);
 		$this->template->set("comisiones_directos",$comision_directos);

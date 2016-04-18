@@ -2,6 +2,8 @@
 
 class Auth extends CI_Controller
 {
+	private $web;
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -13,6 +15,12 @@ class Auth extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
 		$this->load->model('cemail');
+		$this->load->model('bo/model_admin');
+		
+		$q=$this->model_admin->get_empresa_multinivel();
+		error_reporting(0);
+		$this->web = (file_get_contents($q[0]->web)) ? $q[0]->web : 'auth/login/';
+		#echo $this->web;
 	}
 
 	function index()
@@ -168,14 +176,15 @@ class Auth extends CI_Controller
 		
 		$id   = $this->tank_auth->get_user_id();
 		if($id==null){
-			redirect('/auth/login');
+			redirect($this->web);
 		}
 		$this->general->update_login($id);
 
 		$this->tank_auth->logout(); // Destroys session
 	    $this->session->sess_create();
 	    //$this->_show_message($this->lang->line('auth_message_logged_out'));
-		$this->load->view('auth/login');
+		//$this->load->view('auth/login');
+		redirect($this->web);
 	}
 
 	function logout2()
