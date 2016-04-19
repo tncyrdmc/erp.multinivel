@@ -188,19 +188,19 @@
 										<section class="col col-3">
 											<label class="input">
 												Nombre de titular
-												<input required type="text" name="calle" value="<?//=$dir[0]->calle?>">
+												<input required type="text" name="" value="<?//=$dir[0]->calle?>">
 											</label>
 										</section>	
-										<section id="municipio" class="col col-3">
+										<section id="" class="col col-3">
 											<label class="input">
 												Nombre de Banco
-												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
 											</label>
 										</section>
 										<section class="col col-3">
 											País de la Cuenta
 											<label class="select">
-												<select id="tipo_fiscal" required name="tipo_fiscal">
+												<select id="" required name="">
 												<?php foreach ($pais as $key){
 													
 													//if($usuario[0]->id_fiscal==$key->id){?>
@@ -219,7 +219,7 @@
 										<section id="municipio" class="col col-3">
 											<label class="input">
 												Numero de la Cuenta
-												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
 											</label>
 										</section>
 									</div>
@@ -227,25 +227,25 @@
 										<section id="colonia" class="col col-3">
 											<label class="input">
 												Código SWIFT
-												<input type="text" name="colonia" value="<?//=$dir[0]->colonia?>">
+												<input type="text" name="" value="<?//=$dir[0]->colonia?>">
 											</label>
 										</section>	
 										<section id="municipio" class="col col-3">
 											<label class="input">
 												ABA/IBAN/OTRO
-												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
 											</label>
 										</section>
 										<section id="municipio" class="col col-3">
 											<label class="input">
 												CLABE
-												<input type="text" name="municipio" value="<?//=$dir[0]->municipio?>">
+												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
 											</label>
 										</section>
 										<section class="col col-3">
 											<label class="input">
 												Dirección postal
-												<input required type="text" name="calle" value="<?//=$dir[0]->calle?>">
+												<input required type="text" name="" value="<?//=$dir[0]->calle?>">
 											</label>
 										</section>										
 									</div>

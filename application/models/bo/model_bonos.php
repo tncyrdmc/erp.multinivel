@@ -448,10 +448,8 @@ function get__condicioneses_bonos_id_bono($id_bono){
 	
 	function ver_total_bonos_id_red_fecha($id,$red,$fecha){
 		$query = $this->db->query('select 
-										h.id, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,  
-										(select sum(valor) 
-											from comision_bono 
-											where id_bono = b.id_bono and id_usuario = b.id_usuario) valor
+										h.id, h.dia, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,  
+										sum(b.valor) valor
 									from 
 										comision_bono b, cat_bono_condicion c , tipo_red t, bono o, comision_bono_historial h
 									where 
@@ -462,7 +460,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 									    and date_format(h.fecha,"%Y-%m") = "'.date("Y-m", strtotime($fecha)).'"
 										and t.id = c.id_red and o.id = b.id_bono
 										and c.id_red = '.$red.'	
-									group by b.id_bono');	
+									group by  b.id_bono');	
 		return $query->result();
 	}
 	function ver_total_bonos_id($id){
@@ -553,7 +551,7 @@ function get__condicioneses_bonos_id_bono($id_bono){
 								and b.id = c.id_bono
 								and c.valor > 0
 								and c.id_usuario = ".$id."
-								and h.id = id_bono_historial group by c.id_usuario");
+								and c.id_bono_historial = h.id group by h.id order by h.fecha desc");
 		$q2=$q->result();
 	
 		return $q2;
@@ -577,9 +575,10 @@ function get__condicioneses_bonos_id_bono($id_bono){
 								and b.id = c.id_bono
 								and c.valor > 0
 								and c.id_usuario = ".$id."
-								and h.id = id_bono_historial
+								and c.id_bono_historial = h.id 
 								and date_format(h.fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."'
-							ORDER BY c.id ");
+							group by h.id
+							ORDER BY h.id ");
 		$q2=$q->result();
 	
 		return $q2;
