@@ -6,6 +6,8 @@ class modelo_compras extends CI_Model
 	{
 		parent::__construct();
 		$this->load->model('ov/model_perfil_red');
+		$this->load->model('/ov/general');
+		$this->load->model('/bo/bonos/afiliado');
 	}
 	
 	function get_red($id)
@@ -19,6 +21,72 @@ class modelo_compras extends CI_Model
 		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e, tipo_red tr WHERE a.created>=NOW() - INTERVAL 1 MONTH 
 		and a.id=b.user_id and b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and tr.id=e.id_red and e.debajo_de='.$id_usuario.'');
 		return $q->result();
+	}
+	
+	function reporte_afiliados_activos($id_afiliado,$fecha)
+	{
+		$usuario=new $this->afiliado;
+		$q=$this->db->query('select id,profundidad from tipo_red');
+		$redes= $q->result();
+		
+		$afiliadosEnLaRed=array();
+		
+		foreach ($redes as $red){
+			$usuario->getAfiliadosDebajoDe($id_afiliado,$red->id,"RED",0,$red->profundidad);
+			array_push($afiliadosEnLaRed, $usuario->getIdAfiliadosRed());
+		}
+
+		
+		$afiliadosActivos=array();
+
+		foreach ($afiliadosEnLaRed[0] as $afiliados){
+			
+			if(($this->general->isActived($afiliados)==0)&& 
+					(($this->general->isActivedAfiliacionesPuntosPersonales($afiliados,$fecha))==true)){
+				$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email
+									FROM users a, user_profiles b WHERE a.id=b.user_id and b.id_tipo_usuario=2 and a.id='.$afiliados.'');
+				
+				$afiliado=$q->result();
+				array_push($afiliadosActivos,$afiliado);
+			}
+			
+		}
+
+		return $afiliadosActivos;
+	}
+	
+	function reporte_afiliados_inactivos($id_afiliado,$fecha)
+	{
+		$usuario=new $this->afiliado;
+		$q=$this->db->query('select id,profundidad from tipo_red');
+		$redes= $q->result();
+		 
+		$afiliadosEnLaRed=array();
+		
+		foreach ($redes as $red){
+			$usuario->getAfiliadosDebajoDe($id_afiliado,$red->id,"RED",0,$red->profundidad);
+			array_push($afiliadosEnLaRed, $usuario->getIdAfiliadosRed());
+		}
+
+		
+		$afiliadosActivos=array();
+
+		foreach ($afiliadosEnLaRed[0] as $afiliados){
+			
+			if(($this->general->isActived($afiliados)==0)&& 
+					(($this->general->isActivedAfiliacionesPuntosPersonales($afiliados,$fecha))==true)){
+
+			}else {
+				$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email
+									FROM users a, user_profiles b WHERE a.id=b.user_id and b.id_tipo_usuario=2 and a.id='.$afiliados.'');
+				
+				$afiliado=$q->result();
+				array_push($afiliadosActivos,$afiliado);
+			}
+			
+		}
+
+		return $afiliadosActivos;
 	}
 	
 	function traer_afiliados($id)

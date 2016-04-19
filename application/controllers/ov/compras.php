@@ -1182,7 +1182,7 @@ function index()
 		
 		switch ($_POST['tipo']){
 			case 1 	: $this->reporte_afiliados(); break;
-			case 2 	: $this->reporte_compras_usr(); 
+			case 2 	: $this->reporte_compras_usr();  
 						$this->reporte_compras_usr_well(); break;
 			case 3 	: $this->reporte_compras(); 
 						$this->reporte_compras_red_well();break;
@@ -1192,6 +1192,8 @@ function index()
 			case 7 	: $this->reporte_compras_afiliados_todos(); break;
 			case 8 	: $this->reporte_compras_personales(); break;
 			case 9 	: $this->reporte_directos(); break;
+			case 10 	: $this->reporte_afiliados_activos(); break;
+			case 11 	: $this->reporte_afiliados_inactivos(); break;
 		}
 		
 	}
@@ -1735,6 +1737,96 @@ function index()
 	
 	
 	}
+	
+	function reporte_afiliados_activos()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+		if (!$this->tank_auth->is_logged_in())
+		{												
+		redirect('/auth');
+		}
+
+		$afiliados=$this->modelo_compras->reporte_afiliados_activos($id,date('Y-m-d'));
+		
+		echo 
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Actividad</th>
+				</thead>
+				<tbody>";
+			foreach($afiliados as $afiliado)
+			{
+					echo "<tr>
+					<td class='sorting_1'>".$afiliado[0]->id."</td>
+					<td>".$afiliado[0]->usuario."</td>
+					<td>".$afiliado[0]->nombre."</td>
+					<td>".$afiliado[0]->apellido."</td>
+					<td>".$afiliado[0]->email."</td>
+					<td><div class='widget-body'>
+						<h2 class='alert alert-success'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i></h2>
+						</div></td>
+				</tr>";
+			}
+				
+			
+			echo "</tbody>
+			</table><tr class='odd' role='row'>";
+		
+		
+		
+	}
+	
+	function reporte_afiliados_inactivos()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+		if (!$this->tank_auth->is_logged_in())
+		{												
+		redirect('/auth');
+		}
+
+		$afiliados=$this->modelo_compras->reporte_afiliados_inactivos($id,date('Y-m-d'));
+		
+		echo 
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Actividad</th>
+				</thead>
+				<tbody>";
+			foreach($afiliados as $afiliado)
+			{
+					echo "<tr>
+					<td class='sorting_1'>".$afiliado[0]->id."</td>
+					<td>".$afiliado[0]->usuario."</td>
+					<td>".$afiliado[0]->nombre."</td>
+					<td>".$afiliado[0]->apellido."</td>
+					<td>".$afiliado[0]->email."</td>
+					<td><div class='widget-body'>
+						<h2 class='alert alert-danger'><i class='fa fa-star-o '></i></h2>
+						</div></td>
+				</tr>";
+			}
+				
+			
+			echo "</tbody>
+			</table><tr class='odd' role='row'>";
+		
+		
+		
+		
+	}
+	
 	function reporte_afiliados_excel()
 	{
 		//load our new PHPExcel library
