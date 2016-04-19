@@ -39,7 +39,23 @@ class modelo_billetera extends CI_Model
 	
 	function get_historial_cuenta($id)
 	{
-		$q=$this->db->query('SELECT  DATE_FORMAT(fecha,"%Y-%m-01") as fecha,sum(puntos) as puntos,sum(valor) as valor FROM comision where id_afiliado="'.$id.'" group by MONTH(fecha)');
+		$q=$this->db->query('SELECT
+								date_format(h.fecha,"%Y-%m-01") as fecha,		
+								-- b.nombre bono,
+								(select sum(valor)
+									from comision 
+									where id_afiliado='.$id.' 
+										and date_format(fecha,"%Y-%m-01") = date_format(h.fecha,"%Y-%m-01")) comision , 
+								sum(c.valor) bono
+							FROM comision_bono_historial h , comision_bono c, bono b
+							WHERE 
+								c.id_usuario='.$id.'
+								and b.id = c.id_bono 
+								and c.id_bono_historial = h.id
+								-- and o.fecha = h.fecha
+							GROUP BY 
+								month(h.fecha)
+							ORDER BY h.fecha desc');
 		return $q->result();
 	}
 	
