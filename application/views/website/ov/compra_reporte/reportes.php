@@ -34,7 +34,9 @@
 										<select id="tipo-reporte">
 											<option value="0" selected="" disabled="">Tipo de reporte</option>
 											<option value="9">Ver mis Directos</option>
-											<option value="6">Ver consecutivo de mi red</option>
+											<option value="6">Ver consecutivo de Mi red</option>
+											<option value="10">Ver Afiliados Activos de Mi red</option>
+											<option value="11">Ver Afiliados InActivos de Mi red</option>
 											<!--<option value="1">Afiados nuevos</option>-->
 											<!--<option value="7">Ver compras de mi red</option>-->
 											<!--  <option value="4">Ventas web personal</option>-->
