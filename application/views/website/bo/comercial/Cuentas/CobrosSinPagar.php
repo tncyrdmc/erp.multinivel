@@ -8,6 +8,10 @@
 										<th data-hide="phone">Cuenta</th>
 										<th data-hide="phone">Titular</th>
 										<th data-hide="phone">Clabe</th>
+										<th data-hide="phone">Pais</th>
+										<th data-hide="phone">Swift</th>
+										<th data-hide="phone">ABA/IBAN/OTRO</th>
+										<th data-hide="phone">dirección postal</th>
 										<th data-hide="phone,tablet">Metodo</th>
 										<th data-hide="phone,tablet">Valor</th>
 										<th data-hide="phone,tablet">Estado</th>
@@ -23,6 +27,10 @@
 											<td><?php echo $cobro->cuenta; ?></td>
 											<td><?php echo $cobro->titular; ?></td>
 											<td><?php echo $cobro->clabe; ?></td>
+											<td><?php echo $cobro->pais; ?></td>
+											<td><?php echo $cobro->swift; ?></td>
+											<td><?php echo $cobro->otro; ?></td>
+											<td><?php echo $cobro->postal; ?></td>
 											<td><?php echo $cobro->metodo_pago; ?></td>
 											<td>$ <?php echo number_format($cobro->monto,2); ?></td>
 											<td><?php echo $cobro->estado; ?></td>

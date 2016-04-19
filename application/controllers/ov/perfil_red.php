@@ -68,7 +68,7 @@ class perfil_red extends CI_Controller
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
 		$coaplicante	 = $this->model_perfil_red->get_coaplicante($id);
-		
+		$cuenta			 = $this->model_perfil_red->val_cuenta_banco($id);
 		
 		$this->template->set("dir",$dir);
 		$this->template->set("style",$style);
@@ -80,6 +80,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("tipo_fiscal",$tipo_fiscal);
 		$this->template->set("civil",$civil);
 		$this->template->set("estudios",$estudios);
+		$this->template->set("cuenta",$cuenta);
 		$this->template->set("ocupacion",$ocupacion);
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("name_c",$coaplicante[0]->nombre);
@@ -1163,6 +1164,7 @@ class perfil_red extends CI_Controller
 			echo "El Email ya existe , ingrese otro no existente";
 			exit();
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$this->model_perfil_red->actualizar($id,$pais[0]->codigoPais);
 		echo "Felicitaciones <br> Se han actualizado los datos";

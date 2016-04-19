@@ -48,12 +48,10 @@
 							
 											-->
 																							<!-- widget content -->
-												<div class="widget-body">
-													<div id="myTabContent1" class="tab-content padding-10">
-													<h1 class="text-center"></h1>
+												<div class="widget-body" style="padding : 0;">
+													<div id="myTabContent1" class="col-md-6 tab-content ">
 													
 													<div class="table-responsive">
-													<table class="table">
 													<table class="table">
 													<thead>
 														<tr>
@@ -132,7 +130,7 @@
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
 														<td>
-														<div class="col-md-3">
+														<div class="col-md-4">
 															<h4><b>$ <?php echo number_format($total,2);?></b></h4>
 														</div>
 														<?php if($total !== 0){?>
@@ -240,9 +238,9 @@
 													</div>
 													
 													
-														<form action="send_mail" method="post" id="contact-form1"  class="smart-form col-xs-12 col-sm-8 col-md-6 col-lg-4">
+														<form action="send_mail" method="post" id="contact-form1"  class="smart-form col-xs-12 col-sm-8 col-md-6 col-lg-6">
 																<fieldset>
-																	<section class="col col-10">
+																	<section class="col col-4">
 																		<label class="label "><b>Saldo Disponible</b></label>
 																		<label class="input input state-success">
 																			<input type="text" name="saldo"  class="from-control" id="saldo" 
@@ -254,14 +252,14 @@
 																			echo $saldo_neto ?>" readonly />
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-4">
 																		<label class="label"><b>Pedir Dinero</b></label>
 																		<label class="input">
 																			<i class="icon-prepend fa fa-money"></i>
 																			<input name="cobro" type="number" min="1" class="from-control" id="cobro"/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-4">
 																		<label class="label"><b>Saldo Final</b></label>
 																		<label class="input state-disabled state-error">
 																			<input value="" type="number" disabled="disabled" name="neto" id="neto" class="from-control" readonly />
@@ -269,32 +267,77 @@
 																	</section>
 																</fieldset>	
 																<fieldset>
-																	<section class="col col-10">
+																<header >
+																	<h2><span class="widget-icon"> <i class="fa fa-bank"></i> </span>
+																	Datos Bancarios</h2>
+											
+																</header>
+																<br>
+																	<section class="col col-6">
 																		<label class="label"><b>Titular Cuenta</b></label>
 																		<label class="input">
 																		<i class="icon-prepend fa fa-user"></i>
-																			<input name="ctitular" type="text" class="from-control" id="ctitular"/>
+																			<input required name="ctitular" type="text" value="<?=$cuenta[0]->titular?>" class="from-control" id="ctitular"/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-6">
+																		<label class="label"><b>País</b></label>
+																		<label class="select">
+																			<select id="cpais" required name="cpais">
+																			<?php foreach ($pais as $key){																				
+																				if($cuenta[0]->pais==$key->Code){?>
+							
+																				  <option selected value="<?=$key->Code?>">
+																					<?=$key->Name?>
+																				</option>
+																				<?php }else{?>
+																				<option value="<?=$key->Code?>">
+																					<?=$key->Name?>
+																				</option>
+																			<?php }}?>
+																			</select>
+																		</label>
+																	</section>	
+																	<section class="col col-6">
 																		<label class="label "><b>Numero de la cuenta</b></label>
 																		<label class="input input">
 																		<i class="icon-prepend fa fa-credit-card"></i>
-																			<input type="number" name="ncuenta" class="from-control" id="ncuenta" value="" required/>
+																			<input type="number" name="ncuenta" value="<?=$cuenta[0]->cuenta?>" class="from-control" id="ncuenta" value="" required/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-6">
 																		<label class="label"><b>Banco</b></label>
 																		<label class="input">
 																			<i class="icon-prepend fa fa-bank"></i>
-																			<input name="cbanco" type="text" class="from-control" id="cbanco"/>
+																			<input name="cbanco" type="text" value="<?=$cuenta[0]->banco?>" class="from-control" id="cbanco" required/>
+																		</label>
+																	</section>	
+																	<section class="col col-6">
+																		<label class="label"><b>Codigo Swift</b></label>
+																		<label class="input">
+																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
+																			<input name="cswift" type="text" class="from-control" value="<?=$cuenta[0]->swift?>" id="cswift"/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
-																		<label class="label"><b>CLABE (Solo en Mexico)</b></label>
+																	<section class="col col-6">
+																		<label class="label "><b>Otro</b></label>
 																		<label class="input input">
 																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
-																			<input value="" type="number" name="cclabe" id="cclabe" class="from-control" />
+																			<input type="number" name="cotro" class="from-control" id="cotro" value="<?=$cuenta[0]->otro?>" />
+																		</label>
+																	</section>
+																	<section class="col col-6">
+																		<label class="label"><b>CLABE (Solo en Mexico)</b></label>
+																		<label class="input">
+																			<i class="icon-prepend fa fa-sort-numeric-desc"></i>
+																			<input name="cclabe" type="text" class="from-control" value="<?=$cuenta[0]->clabe?>" id="cclabe"/>
+																		</label>
+																	</section>
+																	<section class="col col-6">
+																		<label class="label"><b>Dirección Postal</b></label>
+																		<label class="input input">
+																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
+																			<input value="" type="number" name="cpostal" value="<?=$cuenta[0]->dir_postal?>" id="cpostal" class="from-control" />
 																		</label>
 																	</section>
 																</fieldset>	

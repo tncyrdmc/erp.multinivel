@@ -156,21 +156,25 @@ class CuentasPagar extends CI_Controller
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->cuenta);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->titular);
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->clabe);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->metodo_pago);
-			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->monto);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->pais);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->swift);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), $cobros[$i]->otro);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($i+8), $cobros[$i]->postal);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(11, ($i+8), $cobros[$i]->metodo_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(12, ($i+8), $cobros[$i]->monto);
 			$total = $total + $cobros[$i]->monto;
 			$ultima_fila = $i+8;
 			$usuario = $this->modelo_cobros->CambiarEstadoCobro($cobros[$i]->id_cobro);
 			$this->enviar_email($usuario[0]->email, $usuario);
 		}
 		
-		$subtitulos	=array("ID Solicitud","Fecha","Usuario","Banco","Cuenta","Titular","CLABE","Metodo","Valor","Estado");
+		$subtitulos	=array("ID Solicitud","Fecha","Usuario","Banco","Cuenta","Titular","CLABE","Pais","Swift","ABA_IBAN_OTRO","Direccion_Postal","Metodo","Valor","Estado");
 		
 		$this->model_excel->setTemplateExcelReport ("Cuentas Por Pagar",$subtitulos,$contador_filas,$this->excel);
 		
 		
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($ultima_fila+1), "Total");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+1), $total);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(11, ($ultima_fila+1), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(12, ($ultima_fila+1), $total);
 		
 		$date = new \Datetime('now');
 

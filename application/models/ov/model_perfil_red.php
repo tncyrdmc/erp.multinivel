@@ -12,23 +12,38 @@ class model_perfil_red extends CI_Model
 	
 	function datos_perfil($id)
 	{
-		$q=$this->db->query('
-			SELECT profile.keyword keyword, (select email from users where id=profile.user_id) email, profile.id_edo_civil, profile.user_id, profile.nombre nombre, profile.apellido apellido,
-			profile.fecha_nacimiento nacimiento, profile.id_estudio id_estudio,
-			profile.id_ocupacion id_ocupacion,
-			profile.id_tiempo_dedicado id_tiempo_dedicado,
-			profile.id_fiscal id_fiscal,
-			sexo.descripcion sexo,
-			edo_civil.descripcion edo_civil,
-			estilos.bg_color, estilos.btn_1_color, estilos.btn_2_color
-			from user_profiles profile
-			left join cat_sexo sexo
-			on profile.id_sexo=sexo.id_sexo
-			left join estilo_usuario estilos on
-			profile.user_id=estilos.id_usuario
-			left join cat_edo_civil edo_civil on
-			profile.id_edo_civil=edo_civil.id_edo_civil
-			where profile.user_id='.$id);
+		$q=$this->db->query('SELECT 
+							    `profile`.keyword keyword,
+							    (select 
+							            email
+							        from
+							            users
+							        where
+							            id = `profile`.user_id) email,
+							    `profile`.id_edo_civil,
+							    `profile`.user_id,
+							    `profile`.nombre nombre,
+							    `profile`.apellido apellido,
+							    `profile`.fecha_nacimiento nacimiento,
+							    `profile`.id_estudio id_estudio,
+							    `profile`.id_ocupacion id_ocupacion,
+							    `profile`.id_tiempo_dedicado id_tiempo_dedicado,
+							    `profile`.id_fiscal id_fiscal,
+							    sexo.descripcion sexo,
+							    edo_civil.descripcion edo_civil,
+							    estilos.bg_color,
+							    estilos.btn_1_color,
+							    estilos.btn_2_color
+							from
+							    user_profiles `profile`
+							        left join
+							    cat_sexo sexo ON `profile`.id_sexo = sexo.id_sexo
+							        left join
+							    estilo_usuario estilos ON `profile`.user_id = estilos.id_usuario
+							        left join
+							    cat_edo_civil edo_civil ON `profile`.id_edo_civil = edo_civil.id_edo_civil
+							where
+							    `profile`.user_id = '.$id);
 		return $q->result();
 	}
 	function tipo_fiscal()
@@ -632,9 +647,25 @@ order by (U.id);");
             );
             $this->db->insert("cross_dir_user",$dato_dir);
 
-        $this->db->query('update users set email="'.$_POST['email'].'" where id='.$id);
-		$this->db->query("update user_profiles set id_sexo=".$_POST['sexo'].", id_fiscal='".$_POST['tipo_fiscal']."', keyword='".$_POST['rfc']."' ,id_edo_civil='".$_POST['civil']."', id_estudio=".$_POST['estudios'].", id_ocupacion=".$_POST['ocupacion']." , id_tiempo_dedicado=".$_POST['tiempo_dedicado']." ,nombre='".$_POST['nombre']."',apellido='".$_POST['apellido']."',fecha_nacimiento='".$_POST['nacimiento']."' where user_id=".$id);
-		$this->db->query("update estilo_usuario set bg_color='".$_POST['bg_color']."', btn_1_color='".$_POST['color_1']."', btn_2_color='".$_POST['color_2']."' where id_usuario=".$id);
+        $this->db->query ( 'update users set email="' . $_POST ['email'] . '" where id=' . $id );
+		$this->db->query ( "update user_profiles 
+										set id_sexo=" . $_POST ['sexo'] 
+										. ", id_fiscal='" . $_POST ['tipo_fiscal'] 
+										. "', keyword='" . $_POST ['rfc'] 
+										. "' ,id_edo_civil='" . $_POST ['civil'] 
+										. "', id_estudio=" . $_POST ['estudios'] 
+										. ", id_ocupacion=" . $_POST ['ocupacion'] 
+										. " , id_tiempo_dedicado=" . $_POST ['tiempo_dedicado'] 
+										. " ,nombre='" . $_POST ['nombre'] 
+										. "',apellido='" . $_POST ['apellido'] 
+										. "',fecha_nacimiento='" . $_POST ['nacimiento']. "' 
+										where user_id=" . $id );
+		$this->db->query ( "update estilo_usuario 
+								set bg_color='" . $_POST ['bg_color'] 
+								. "', btn_1_color='" . $_POST ['color_1'] 
+								. "', btn_2_color='" . $_POST ['color_2'] . "' 
+								where id_usuario=" . $id );
+		$this->actualizar_cuenta_banco($id);
 	}
 	function cp()
 	{
@@ -710,6 +741,44 @@ order by (U.id);");
 	{
 		$q=$this->db->query("select * from coaplicante where id_user=".$id);
 		return $q->result();
+	}
+	
+	function val_cuenta_banco($id)
+	{
+		$val=$this->get_cuenta_banco($id);
+		if(!$val){
+			$dato=array(
+					"id_user" =>	$id
+			);
+			$this->db->insert("cross_user_banco",$dato);
+			$val=$this->get_cuenta_banco($id);
+		}
+		return $val;
+	}
+	
+	function get_cuenta_banco($id)
+	{
+		$q=$this->db->query("select * from cross_user_banco where id_user=".$id." and estatus ='ACT'");
+		return $q->result();
+	}
+	
+	function actualizar_cuenta_banco($id)
+	{
+		$dato=array(
+				"cuenta"     => $_POST['c_cuenta'] ? $_POST['c_cuenta'] : "Your account",
+				"titular"     		=> $_POST['c_titular'] ? $_POST['c_titular'] : "You",
+				"banco"       		=> $_POST['c_banco'] ? $_POST['c_banco'] : "Your bank",
+				"pais"         		=> $_POST['c_pais'] ? $_POST['c_pais'] : "COL",
+				"swift"      		=> $_POST['c_swift'],
+				"otro"         		=> $_POST['c_otro'] ,
+				"clabe"       		=> $_POST['c_clabe'] ,
+				"dir_postal"        => $_POST['c_postal']
+		);
+	
+		$this->db->where('id_user', $id);
+		$this->db->update('cross_user_banco', $dato);
+	
+		return true;
 	}
 	
 	function ConsultarIdPadre($id , $id_red_padre){

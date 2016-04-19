@@ -185,67 +185,60 @@
 								<fieldset>
 								<legend>Datos Bancarios</legend>
 									<div class="row">
-										<section class="col col-3">
-											<label class="input">
-												Nombre de titular
-												<input required type="text" name="" value="<?//=$dir[0]->calle?>">
+										<section class="col col-3">Nombre de titular
+											<label class="input"><i class="icon-prepend fa fa-user"></i>												
+												<input required type="text" name="c_titular" value="<?=$cuenta[0]->titular?>">
 											</label>
-										</section>	
-										<section id="" class="col col-3">
-											<label class="input">
-												Nombre de Banco
-												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
-											</label>
-										</section>
+										</section>											
 										<section class="col col-3">
 											País de la Cuenta
 											<label class="select">
-												<select id="" required name="">
-												<?php foreach ($pais as $key){
-													
-													//if($usuario[0]->id_fiscal==$key->id){?>
+												<select id="" required name="c_pais">
+												<?php foreach ($pais as $key){													
+													if($cuenta[0]->pais==$key->Code){?>
 
-													<!--  <option selected value="<?=$key->id?>">
-														<?=$key->descripcion?>
-													</option>-->
-													<?php //}else{?>
+													  <option selected value="<?=$key->Code?>">
+														<?=$key->Name?>
+													</option>
+													<?php }else{?>
 													<option value="<?=$key->Code?>">
 														<?=$key->Name?>
 													</option>
-												<?php }//}?>
+												<?php }}?>
 												</select>
 											</label>
+										</section>										
+										<section id="" class="col col-3">Número de la Cuenta
+											<label class="input"><i class="icon-prepend fa fa-credit-card"></i>													
+												<input type="text" name="c_cuenta" value="<?=$cuenta[0]->cuenta?>">
+											</label>
 										</section>
-										<section id="municipio" class="col col-3">
-											<label class="input">
-												Numero de la Cuenta
-												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
+										<section id="" class="col col-3">Nombre de Banco
+											<label class="input"><i class="icon-prepend fa fa-bank"></i>												
+												<input type="text" name="c_banco" value="<?=$cuenta[0]->banco?>">
 											</label>
 										</section>
 									</div>
 									<div class="row">
-										<section id="colonia" class="col col-3">
-											<label class="input">
-												Código SWIFT
-												<input type="text" name="" value="<?//=$dir[0]->colonia?>">
+										<section id="colonia" class="col col-3">Código SWIFT
+											<label class="input"><i class="icon-prepend fa fa-sort-numeric-desc"></i>												
+												<input type="text" name="c_swift" value="<?=$cuenta[0]->swift?>">
 											</label>
 										</section>	
-										<section id="municipio" class="col col-3">
-											<label class="input">
-												ABA/IBAN/OTRO
-												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
+										<section id="municipio" class="col col-3">ABA/IBAN/OTRO
+											<label class="input"><i class="icon-prepend fa fa-sort-numeric-desc"></i>												
+												<input type="text" name="c_otro" value="<?=$cuenta[0]->otro?>">
 											</label>
 										</section>
-										<section id="municipio" class="col col-3">
-											<label class="input">
-												CLABE
-												<input type="text" name="" value="<?//=$dir[0]->municipio?>">
+										<section id="municipio" class="col col-3">CLABE
+											<label class="input"><i class="icon-prepend fa fa-sort-numeric-desc"></i>												
+												<input type="text" name="c_clabe" value="<?=$cuenta[0]->clabe?>">
 											</label>
 										</section>
 										<section class="col col-3">
 											<label class="input">
 												Dirección postal
-												<input required type="text" name="" value="<?//=$dir[0]->calle?>">
+												<input required type="number" name="c_postal" value="<?=$cuenta[0]->dir_postal?>">
 											</label>
 										</section>										
 									</div>
@@ -421,6 +414,7 @@ $(document).ready(function() {
 });
 function actualizar()
 {
+	$
 	var ids = new Array(
 		"#nombre",
 	 	"#apellido",

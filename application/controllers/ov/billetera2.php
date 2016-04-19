@@ -17,6 +17,7 @@ class billetera2 extends CI_Controller
 		$this->load->model('ov/modelo_dashboard');
 		$this->load->model('bo/model_bonos');
 		$this->load->model('model_tipo_red');
+		$this->load->model('ov/model_perfil_red');
 		
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -212,10 +213,14 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
+		$pais            = $this->model_perfil_red->get_pais();
+		$cuenta			 = $this->model_perfil_red->val_cuenta_banco($id);
 		
 		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);
 		
 		$this->template->set("style",$style);
+		$this->template->set("pais",$pais);
+		$this->template->set("cuenta",$cuenta);
 		$this->template->set("comisiones",$comisiones);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
@@ -277,15 +282,17 @@ class billetera2 extends CI_Controller
 		$cobrosPagos=$this->modelo_billetera->get_cobros_total_afiliado($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$total_transact = $this->modelo_billetera->get_total_transact_id($id);
+		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
 		
 	/*	echo $comisiones."<br>";
+	 * 	echo $total_bonos."<br>";
 		echo $retenciones."<br>";
 		echo $cobrosPagos."<br>";
 		echo $cobroPendientes."<br>";
 */
 		
  
-		if((($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))+($total_transact))>0){
+		if((($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))+($total_transact)+$total_bonos)>0){
 			$this->modelo_billetera->cobrar($id,$_POST['ncuenta'],$_POST['ctitular'],$_POST['cbanco'],$_POST['cclabe']);
 			echo "Felicitaciones<br> Tu cobro se esta procesando.";
 		}else {

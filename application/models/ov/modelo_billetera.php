@@ -158,6 +158,10 @@ class modelo_billetera extends CI_Model
 					"titular"=> $titular,
 					"banco"=> $banco,
 					"clabe"=> $clabe,
+					"pais"=> $_POST['cpais'],
+					"swift"=> $_POST['cswift'],
+					"otro"=> $_POST['cotro'],
+					"postal"=> $_POST['cpostal'],
 			);
 			
 			$this->db->insert("cobro",$dato_cobro);
