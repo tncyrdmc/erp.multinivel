@@ -410,7 +410,7 @@ class afiliado extends CI_Model
 		return $datos[0]->total;
 	}
 	
-	 function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
+	function getPuntosTotalesPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
 
 		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
 		$id_tipo_mercancia=$id_tipo_mercancia;
@@ -452,7 +452,7 @@ class afiliado extends CI_Model
 		}
 	}
 
-	private function getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
+	function getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_afiliado,$id_red,$id_tipo_mercancia,$id_mercancia,$fechaInicio,$fechaFin) {
 
 		$id_mercancia=$this->separarMercanciasConsulta($id_mercancia);
 		$id_tipo_mercancia=$id_tipo_mercancia;
@@ -640,7 +640,7 @@ class afiliado extends CI_Model
 		return $patas;
 	}
 
-	private function getVentasTodaLaRedEquilibrada($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_tipo_mercancia,$id_mercancia,$datosVenta) {
+	function getVentasTodaLaRedEquilibrada($id_afiliado, $red,$tipo,$nivel,$fechaInicio,$fechaFin,$limite,$id_tipo_mercancia,$id_mercancia,$datosVenta) {
 		$total=0;
 		
 		$this->getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite);

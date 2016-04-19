@@ -26,7 +26,8 @@ class compras extends CI_Controller
 		$this->load->model('model_carrito_temporal');
 		$this->load->model('model_servicio');
 		$this->load->model('bo/modelo_pagosonline');
-			
+		$this->load->model('bo/bonos/afiliado');
+		$this->load->model('bo/bonos/calculador_bono');
 		$this->load->model('ov/model_web_personal_reporte');
 	}
 	
@@ -1043,12 +1044,112 @@ function index()
 		$this->template->set("porcentaje_tiempo_completo",$porcentaje_tiempo_completo);
 		$this->template->set("porcentaje_medio_tiempo",$porcentaje_medio_tiempo);
 		
+		
+		$q=$this->db->query("SELECT id, frontal ,profundidad ,nombre FROM tipo_red");
+		$redes=$q->result();
+		
+		$patas=array();
+		
+		foreach ($redes as $red){
+
+			$patas=$this->getCantidadDeAfiliadosPorPatas($patas,$id, $red);
+		}
+
+		$this->template->set("patas",$patas);
+		
+		$total_puntos_red=0;$total_puntos_red_mes=0;$total_ventas_red=0;$total_ventas_red_mes=0;
+		foreach ($patas as $pata){
+			$total_puntos_red=$total_puntos_red+$pata["total_puntos"];
+			$total_puntos_red_mes=$total_puntos_red_mes+$pata["total_puntos_mes"];
+			
+			$total_ventas_red=$total_ventas_red+$pata["total_ventas_red"];
+			$total_ventas_red_mes=$total_ventas_red_mes+$pata["total_ventas_mes"];
+		}
+		
+		$this->template->set("total_puntos_red",$total_puntos_red);
+		$this->template->set("total_puntos_red_mes",$total_puntos_red_mes);
+		$this->template->set("total_ventas_red",$total_ventas_red);
+		$this->template->set("total_ventas_red_mes",$total_ventas_red_mes);
+
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/compra_reporte/estadisticas');	}
+		$this->template->build('website/ov/compra_reporte/estadisticas');	
+	}
 	
+	
+	private function getCantidadDeAfiliadosPorPatas($patas,$id_afiliado,$red){
+
+		
+		$frontalidad=$red->frontal;
+		$profundidad=$red->profundidad;
+		
+		
+		for ($i=1;$i<=$frontalidad;$i++){
+
+			// Afiliados Totales
+			$posicionEnRed=$i-1;
+			$usuario=new $this->afiliado;
+			$usuario->setIdAfiliadosRed(array());
+			$id_hijo=$usuario->getAfiliadoDirectoPorPosicion($id_afiliado,$red->id,$posicionEnRed);
+			$usuario->getAfiliadosDebajoDe($id_hijo,$red->id,"RED",0,$profundidad);
+			$total_afiliados=count($usuario->getIdAfiliadosRed());
+			
+			
+			//Puntos Totales
+			$usuario=new $this->afiliado;
+			$puntosHijo=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
+			$puntosRedHijo=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,0,"2016-01-01","2026-01-01",$profundidad,"0","0","PUNTOS");
+			$puntosTotales=$puntosHijo[0]->total+$puntosRedHijo;
+			
+			$calculador=new $this->calculador_bono;
+
+			
+			$inicioMes=$calculador->getInicioMes(date('Y-m-d'));
+			$finMes=$calculador->getFinMes(date('Y-m-d'));
+			//Puntos Mes
+			$usuario=new $this->afiliado;
+			$puntosHijoMes=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0",$inicioMes,$finMes);
+			$puntosRedHijoMes=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,0,$inicioMes,$finMes,$profundidad,"0","0","PUNTOS");
+			$puntosTotalesMes=$puntosHijoMes[0]->total+$puntosRedHijoMes;
+
+			//ventas Totales
+			$usuario=new $this->afiliado;
+			$ventasHijo=$usuario->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
+			$ventasRedHijo=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,0,"2016-01-01","2026-01-01",$profundidad,"0","0","COSTO");
+			$ventasTotales=$ventasHijo[0]->total+$ventasRedHijo;
+			
+			$calculador=new $this->calculador_bono;
+				
+			
+			$inicioMes=$calculador->getInicioMes(date('Y-m-d'));
+			$finMes=$calculador->getFinMes(date('Y-m-d'));
+			//ventas Mes
+			$usuario=new $this->afiliado;
+			$ventasHijoMes=$usuario->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0",$inicioMes,$finMes);
+			
+			$ventasRedHijoMes=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,0,$inicioMes,$finMes,$profundidad,"0","0","COSTO");
+			$ventasTotalesMes=$ventasHijoMes[0]->total+$ventasRedHijoMes;
+				
+			$pata = array(
+					'id_red' => $red->id,
+					'nombre_red' => $red->nombre,
+					'id_pata' => $i,
+					'total_afiliados'   => $total_afiliados+1,
+					'total_puntos'   => $puntosTotales ,
+					'total_puntos_mes'   => $puntosTotalesMes,
+					'total_ventas_red'   => $ventasTotales ,
+					'total_ventas_mes'   => $ventasTotalesMes
+					
+			);
+		
+			array_push($patas, $pata);
+		}
+
+		return $patas;
+	}
+		
 	function reportes()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
