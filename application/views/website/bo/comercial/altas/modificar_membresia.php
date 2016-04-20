@@ -77,7 +77,7 @@ $porcentajeContador=0;
 											<section class="col col-2" style="width: 50%;">
 											<label class="input"><span id="labelextra">Descuento de la
 													membresía</span> 
-													<input required id="precio_promo" type="number" name="descuento" value='<? echo $mercancia[0]->descuento;?>' required/> 
+													<input required id="precio_promo"  type="number" name="descuento" value='<? echo $mercancia[0]->descuento;?>' required/> 
 											</label>
 											</section>													
 														
@@ -131,7 +131,7 @@ $porcentajeContador=0;
 													<section class="col col-3" style="width: 50%;">
 														<label class="input">
 														Puntos comisionables
-															<input type="number" min="1" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
+															<input type="number" min="0" max="" value='<?=$mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
 													</fieldset>
