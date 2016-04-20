@@ -610,7 +610,7 @@ order by (U.id);");
 		$this->db->query("delete from cross_tel_user where id_user=".$id);
 		$this->db->query("delete from cross_dir_user where id_user=".$id);
 
-		if($_POST["fijo"])
+		if(isset($_POST["fijo"]))
 		{
 			foreach ($_POST["fijo"] as $fijo)
 			{
@@ -623,7 +623,7 @@ order by (U.id);");
 	            $this->db->insert("cross_tel_user",$dato_tel);
 			}
 		}
-		if($_POST["movil"])
+		if(isset($_POST["movil"]))
 		{
 			foreach ($_POST["movil"] as $movil)
 			{
