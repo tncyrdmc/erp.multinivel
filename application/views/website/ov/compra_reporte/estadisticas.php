@@ -15,7 +15,7 @@
 					<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id1" data-widget-editbutton="false" data-widget-custombutton="false">
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Afiliados en Toda Mi Organizacion</h2>				
@@ -45,20 +45,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id3" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Afiliados en Tus Brazos</h2>				
@@ -88,7 +75,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id2" data-widget-editbutton="false" data-widget-custombutton="false">
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Puntos Totales en Mi Organizacion En el Mes</h2>				
@@ -118,20 +105,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id3" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Puntos en Tus Brazos En el Mes</h2>				
@@ -161,7 +135,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id2" data-widget-editbutton="false" data-widget-custombutton="false">
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Puntos Totales en Mi Organizacion</h2>				
@@ -191,20 +165,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id3" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Puntos en Tus Brazos</h2>				
@@ -234,7 +195,7 @@
 			</article>
 						<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id2" data-widget-editbutton="false" data-widget-custombutton="false">
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Ventas Totales en Mi Organizacion En el Mes</h2>				
@@ -264,20 +225,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id3" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Ventas en Tus Brazos En el Mes</h2>				
@@ -307,7 +255,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id2" data-widget-editbutton="false" data-widget-custombutton="false">
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Ventas Totales en Mi Organizacion</h2>				
@@ -337,20 +285,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id3" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Ventas en Tus Brazos</h2>				
@@ -380,20 +315,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-10" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Sexo</h2>				
@@ -423,20 +345,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-11" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Edad</h2>				
@@ -466,20 +375,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-12" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Estado civil</h2>				
@@ -508,20 +404,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-13" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Ocupación</h2>				
@@ -551,20 +434,7 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-14" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Tiempo dedicado</h2>				
