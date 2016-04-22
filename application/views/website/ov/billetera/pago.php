@@ -226,11 +226,11 @@
 																		<td><h4><b>
 																		$ 
 																		<?php 
-																		$saldo_neto=number_format(($total-($cobro+$retenciones_total+$cobroPendientes)+($total_transact)),2);
+																		$saldo_neto=($total-($cobro+$retenciones_total+$cobroPendientes)+($total_transact));
 																		if($saldo_neto<0)
 																			echo 0;
 																		else
-																			echo $saldo_neto
+																			echo number_format($saldo_neto,2)
 																		?></b></h4></td>
 																	</tr>
 																</table>
@@ -249,7 +249,7 @@
 																		if($saldo_neto<0)
 																			echo 0;
 																		else
-																			echo $saldo_neto ?>" readonly />
+																			echo number_format($saldo_neto,2) ?>" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-4">
@@ -407,8 +407,8 @@
 			
 function CalcularSaldo(evt){
 				
-				var saldo = $("#saldo").val();
-				var pago = $("#cobro").val() /*+ (String.fromCharCode(evt.charCode)*/;
+				var saldo = <?=$saldo_neto?> /*$("#saldo").val()+ (String.fromCharCode(evt.charCode)*/;
+				var pago = $("#cobro").val() ;
 				var neto = saldo-pago;
 				$("#neto").val(neto);
 				if(neto > 0){

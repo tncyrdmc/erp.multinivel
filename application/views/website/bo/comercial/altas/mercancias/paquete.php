@@ -221,7 +221,7 @@
 
 															<section class="col col-xs-12 col-md-6 col-lg-3">
 																<label class="input">Puntos comisionables <input
-																	type="number" min="1" max="" name="puntos_com"
+																	type="number" min="0" max="" name="puntos_com"
 																	id="puntos_com" required>
 																</label>
 															</section>
