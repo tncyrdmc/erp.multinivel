@@ -59,6 +59,14 @@
 													</div>
 												</a>
 												</div>
+												<div class="col-sm-2 link">
+												<a href="/bo/configuracion/Tucompra"><!-- /bo/payulatam -->
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-globe fa-3x"></i>
+														<h1>Tu Compra</h1>
+													</div>
+												</a>
+												</div>
 											</div>
 										 </div>
 									</div>

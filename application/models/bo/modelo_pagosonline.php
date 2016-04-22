@@ -2,6 +2,19 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 class modelo_pagosonline extends CI_Model
 {
+	function val_tucompra()
+	{
+		$tucompra=$this->get_datos_tucompra();
+		if(!$tucompra){
+			$dato=array(
+					"apykey" =>	"6u39nqhq8ftd0hlvnjfs66eh8c"
+			);
+			$this->db->insert("tucompra",$dato);
+			$tucompra=$this->get_datos_tucompra();
+		}
+		return $tucompra;
+	}
+	
 	function val_payulatam()
 	{
 		$payulatam=$this->get_datos_payulatam();
@@ -28,6 +41,13 @@ class modelo_pagosonline extends CI_Model
 		return $payulatam;
 	}
 	
+	function get_datos_tucompra()
+	{
+		$q=$this->db->query("select * from tucompra");
+		$payulatam = $q->result();
+		return $payulatam;
+	}
+	
 	function get_datos_payulatam()
 	{
 		$q=$this->db->query("select * from payulatam");
@@ -42,7 +62,7 @@ class modelo_pagosonline extends CI_Model
 		return $paypal;
 	}
 	
-	function actualizar_payulatam()
+	function actualizar_tucompra()
 	{
 		
 		$test=0;
@@ -64,9 +84,36 @@ class modelo_pagosonline extends CI_Model
 		);
 	
 		$this->db->where('apykey', $_POST['id']);
-		$this->db->update('payulatam', $dato);
+		$this->db->update('tucompra', $dato);
 	
 		return true;
+	}
+	
+	function actualizar_payulatam()
+	{
+	
+		$test=0;
+		$estado='DES';
+	
+		if(isset($_POST['test']))
+			$test=1;
+	
+			if(isset($_POST['estatus']))
+				$estado='ACT';
+	
+				$dato=array(
+						"apykey"     => $_POST['apykey'],
+						"id_comercio"   		=> $_POST['id_comercio'],
+						"id_cuenta"     		=> $_POST['id_cuenta'],
+						"moneda"       			=> $_POST['moneda'],
+						"test"       			=> $test,
+						"estatus"       		=> $estado
+				);
+	
+				$this->db->where('apykey', $_POST['id']);
+				$this->db->update('payulatam', $dato);
+	
+				return true;
 	}
 	
 	function actualizar_paypal()
