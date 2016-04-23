@@ -580,7 +580,7 @@ function codpos_red()
 																</section>
 																<section class="col col-3" id="key">
 																	<label id="key_" class="input"> <i class="icon-prepend fa fa-barcode"></i>
-																		<input id="keyword" onkeyup="check_keyword()" placeholder="DNI" type="text" name="keyword">
+																		<input id="keyword" onkeyup="check_keyword()" placeholder="Número de identificación" type="text" name="keyword">
 																	</label>
 																</section>
 																<section class="col col-2">

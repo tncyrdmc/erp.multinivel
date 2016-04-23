@@ -449,7 +449,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6" id="key_red">'
 									+'<label id="key_2" class="input"> <i class="icon-prepend fa fa-barcode"></i>'
-										+'<input id="keyword_red" onkeyup="check_keyword_red()" placeholder="DNI" type="text" name="keyword">'
+										+'<input id="keyword_red" onkeyup="check_keyword_red()" placeholder="Número de identificación" type="text" name="keyword">'
 									+'</label>'
 								+'</section>'
 							+'</div>'
