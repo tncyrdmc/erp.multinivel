@@ -1204,6 +1204,33 @@ function index()
 			$total_ventas_red_mes=$total_ventas_red_mes+$pata["total_ventas_mes"];
 		}
 		
+		$remanentes=array();
+		
+		foreach ($redes as $red){
+			
+			for($i=1; $i<=$red->frontal ;$i++){
+				$q=$this->db->query("SELECT total FROM comisionPuntosRemanentes where id_usuario=".$id." and id_pata=".$i." order by id desc limit 0,1");
+				$totalPata=$q->result();
+				$totalRemanente=0;
+
+				if($totalPata!=NULL)
+					$totalRemanente=$totalPata[0]->total;
+				 
+				$remanente = array(
+						'id_red' => $red->id,
+						'nombre_red' => $red->nombre,
+						'id_pata' => $i,
+						'total'   => $totalRemanente
+				
+				);
+				
+				array_push($remanentes, $remanente);
+
+			}
+		}
+
+		$this->template->set("remanentes",$remanentes);
+		
 		$this->template->set("total_puntos_red",$total_puntos_red);
 		$this->template->set("total_puntos_red_mes",$total_puntos_red_mes);
 		$this->template->set("total_ventas_red",$total_ventas_red);
