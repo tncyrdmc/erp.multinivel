@@ -440,6 +440,22 @@ class model_perfil_red extends CI_Model
 		return  $q->result();
 	}
 	
+	function get_directos_by_id_ultimos_cinco($id)
+	{
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , AF.directo ,
+	
+			(select distinct tr.nombre from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_red=  AF.id_red)) as redes
+	
+				from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA ,afiliar AF
+	
+				where U.id = UP.user_id and UP.user_id = AF.id_afiliado and AF.directo = ".$id."
+	
+				and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2
+	
+				order by   U.id , AF.lado asc,(U.id) limit 5");
+		return  $q->result();
+	}
+	
 	function get_tabla()
 	{
 		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 

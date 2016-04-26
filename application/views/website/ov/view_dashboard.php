@@ -124,16 +124,11 @@
 															</ul>
 														<h1><small>Últimos Auspiciados</small></h1>
 															<ul class="list-inline friends-list">
-																<li><img src="/template/img/empresario.jpg" alt="friend-1">
-																</li>
-																<li><img src="/template/img/empresario.jpg" alt="friend-2">
-																</li>
-																<li><img src="/template/img/empresario.jpg" alt="friend-3">
-																</li>
-																<li><img src="/template/img/empresario.jpg" alt="friend-4">
-																</li>
-																<li><img src="/template/img/empresario.jpg" alt="friend-5">
-																</li>
+																<?php 
+																foreach ($ultimos_auspiciados as $afiliado) {
+																	echo '<li><a onclick="detalles('.$afiliado["id"].')"><img src="'.$afiliado["foto"].'"></a>
+																		  </li>';
+																}?>
 															</ul>
 														</div>
 													</div>
@@ -815,3 +810,29 @@
         </div>
 			</div>
 			<!-- END MAIN CONTENT -->
+<script>
+function detalles(id)
+{
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/detalle_usuario",
+		data: {id: id},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+			message: msg,
+			title: "Información Personal",
+			buttons: {
+				success: {
+					label: "Cerrar!",
+					className: "btn-success",
+					callback: function() {
+					//location.href="";
+				}
+			}
+		}
+	});
+	});
+}
+</script>

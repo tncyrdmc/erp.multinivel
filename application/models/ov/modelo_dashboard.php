@@ -7,6 +7,7 @@ class modelo_dashboard extends CI_Model
 		parent::__construct();
 		$this->load->model('/bo/bonos/afiliado');
 		$this->load->model('/bo/bonos/calculador_bono');
+		$this->load->model('/ov/model_perfil_red');
 	
 	}
 	function get_style($id)
@@ -210,5 +211,32 @@ class modelo_dashboard extends CI_Model
   	 
   	 
   	return $puntos;
+  }
+  
+  function get_ultimos_auspiciados($id){
+
+  	$afiliados = $this->model_perfil_red->get_directos_by_id_ultimos_cinco($id);
+  	$image=$this->model_perfil_red->get_images_users();
+  	$ultimos_auspiciados=array();
+  	foreach ($afiliados as $afiliado)
+  	{
+  		$afiliados_imagen="/template/img/empresario.jpg";
+  		foreach ($image as $img) {
+  			if($img->id_user==$afiliado->id){
+  				$cadena=explode(".", $img->img);
+  				if($cadena[0]=="user")
+  				{
+  					$afiliados_imagen=$img->url;
+  				}
+  			}
+  		}
+  		$afiliado_datos = array(
+				'id' =>$afiliado->id,
+				'foto'   => $afiliados_imagen
+		);
+  		array_push($ultimos_auspiciados, $afiliado_datos);
+  	}
+  	
+  	return $ultimos_auspiciados;
   }
 }
