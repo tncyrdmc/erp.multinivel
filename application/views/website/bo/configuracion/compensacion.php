@@ -52,7 +52,7 @@
 											<div class="col-sm-1 link">
 											</div>
 											<div class="col-sm-10 link">
-												<div class="col-sm-3 link">
+												<div class="col-sm-2 link">
 												<a href="/bo/configuracion/comisiones">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-money fa-3x"></i>
@@ -60,7 +60,15 @@
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-3 link">
+												<div class="col-sm-2 link">
+												<a href="/bo/titulos">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-trophy fa-3x"></i>
+														<h1>Títulos<br/><br/></h1>
+													</div>
+												</a>
+												</div>
+												<div class="col-sm-2 link">
 												<a href="/bo/rangos">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-road fa-3x"></i>
@@ -68,7 +76,7 @@
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-3 link">
+												<div class="col-sm-2 link">
 												<a href="/bo/bonos">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-gift fa-3x"></i>

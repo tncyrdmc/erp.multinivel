@@ -1006,8 +1006,12 @@ function index()
 			else $cantidad_mujeres = $cantidad_mujeres + 1;
 		}
 		$cantidad_total_sexo = $cantidad_hombres+$cantidad_mujeres;
+
+		if($cantidad_total_sexo==0)
+			$porcentaje_total=0;
+		else
+			$porcentaje_total = 100/$cantidad_total_sexo;
 		
-		$porcentaje_total = 100/$cantidad_total_sexo;
 		$porcentaje_de_hombres = round($porcentaje_total*$cantidad_hombres,1, PHP_ROUND_HALF_UP);
 		$porcentaje_de_mujeres = round($porcentaje_total*$cantidad_mujeres,1, PHP_ROUND_HALF_UP);
 		
@@ -1120,7 +1124,11 @@ function index()
 		}
 		$cantidad_total_estado_civil = $cantidad_solteros +	$cantidad_casados + $cantidad_union_libre + $cantidad_divorciados + $cantidad_viudos;
 		
-		$porcentaje_total_estado_civil = 100/$cantidad_total_estado_civil;
+		if($cantidad_total_estado_civil==0)
+			$porcentaje_total=0;
+		else
+			$porcentaje_total_estado_civil = 100/$cantidad_total_estado_civil;
+		
 		$porcentaje_solteros = round($porcentaje_total_estado_civil*$cantidad_solteros,1, PHP_ROUND_HALF_UP);
 		$porcentaje_casados = round($porcentaje_total_estado_civil*$cantidad_casados,1, PHP_ROUND_HALF_UP);
 		$porcentaje_union_libre = round($porcentaje_total_estado_civil*$cantidad_union_libre,1, PHP_ROUND_HALF_UP);
@@ -1174,8 +1182,13 @@ function index()
 			}
 		}
 		$cantidad_total_tiempo_dedicado = $cantidad_tiempo_completo + $cantidad_medio_tiempo;
+
+		if($porcentaje_total_tiempo_dedicado==0)
+			$porcentaje_total_tiempo_dedicado=0;
+		else
+			$porcentaje_total_tiempo_dedicado = 100/$cantidad_total_sexo;
+
 		
-		$porcentaje_total_tiempo_dedicado = 100/$cantidad_total_sexo;
 		$porcentaje_tiempo_completo = round($porcentaje_total_tiempo_dedicado*$cantidad_tiempo_completo,1, PHP_ROUND_HALF_UP);
 		$porcentaje_medio_tiempo = round($porcentaje_total_tiempo_dedicado*$cantidad_medio_tiempo,1, PHP_ROUND_HALF_UP);
 		
@@ -1246,7 +1259,10 @@ function index()
 	
 	private function getCantidadDeAfiliadosPorPatas($patas,$id_afiliado,$red){
 		$frontalidad=$red->frontal;
-		$profundidad=($red->profundidad-1);
+		if($red->profundidad==0)
+			$profundidad=0;
+		else
+			$profundidad=($red->profundidad-1);
 		
 		for ($i=1;$i<=$frontalidad;$i++){
 		
@@ -1255,9 +1271,10 @@ function index()
 			$usuario=new $this->afiliado;
 			$usuario->setIdAfiliadosRed(array());
 			$id_hijo=$usuario->getAfiliadoDirectoPorPosicion($id_afiliado,$red->id,$posicionEnRed);
+			
 			$usuario->getAfiliadosDebajoDe($id_hijo,$red->id,"RED",$profundidad,$profundidad);
 			$total_afiliados=count($usuario->getIdAfiliadosRed());
-				
+			
 			//Puntos Totales
 			$usuario=new $this->afiliado;
 			$puntosHijo=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
@@ -1297,7 +1314,7 @@ function index()
 					'id_red' => $red->id,
 					'nombre_red' => $red->nombre,
 					'id_pata' => $i,
-					'total_afiliados'   => $total_afiliados+1,
+					'total_afiliados'   => $total_afiliados,
 					'total_puntos'   => $puntosTotales ,
 					'total_puntos_mes'   => $puntosTotalesMes,
 					'total_ventas_red'   => $ventasTotales ,
@@ -1307,7 +1324,7 @@ function index()
 		
 			array_push($patas, $pata);
 		}
-		
+
 		return $patas;
 	}
 		
