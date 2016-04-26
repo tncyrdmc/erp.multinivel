@@ -43,7 +43,7 @@
 																<small>ID</small></h4>
 															</div>
 														</div>
-														<div class="col-sm-6">
+														<div class="col-sm-4">
 															<h1><?=$usuario[0]->nombre?> <span class="semi-bold"><?=$usuario[0]->apellido?></span>
 															<br>
 															<small> <?php //echo $nivel_actual_red?></small></h1>
@@ -86,12 +86,9 @@
 									                              <?php }}?>
 									                                </li>
                                 									<div class="row">
-				
+																	<br>
 																	<div class="col-xs-2 col-sm-1">
-																		<time datetime="2016-04-10" class="icon" style="width: 6rem;">
-																			<strong> <?php if($actividad) echo "Activo";else echo "Inactivo";?></strong>
-																			<span><?php if($actividad) echo "<i class='fa fa-thumbs-o-up'></i>";else echo "<i class='fa fa-thumbs-o-down'></i>";?></span>
-																		</time>
+																			<strong class="<?php if($actividad) echo "label label-success";else echo "label label-default";?>" style="font-size: 2rem;"> <?php if($actividad) echo "<i class='fa fa-smile-o'></i> Activo";else echo "<i class='fa fa-frown-o'></i> Inactivo";?></strong>
 																	</div>
 																	<div class="col-sm-12">
 																		<hr>
@@ -106,7 +103,38 @@
 															</ul>
 															<br>
 														</div>
-														<div class="col-sm-3">
+														<div class="col-sm-4">
+														<h1><small>Puntos Comisionables Personales</small>  <i class='fa fa-user'></i></h1>
+															<ul class="list-inline friends-list">
+																<li><span class="font-md"><i>Semana :</i></span> <?=intval($puntos_semana)?>
+																</li>
+																<li><span class="font-md"><i>Mes :</i></span> <?=intval($puntos_semana)?>
+																</li>
+																<li><span class="font-md"><i>Total :</i></span> <?=intval($puntos_total)?>
+																</li>
+															</ul>
+														<h1><small>Puntos Comisionables Red </small>  <i class='fa fa-sitemap'></i></h1>
+															<ul class="list-inline friends-list">
+																<li><span class="font-md"><i>Semana :</i></span> <?=$puntos_red_semana?>
+																</li>
+																<li><span class="font-md"><i>Mes :</i></span> <?=$puntos_red_mes?>
+																</li>
+																<li><span class="font-md"><i>Total :</i></span> <?=$puntos_red_total?>
+																</li>
+															</ul>
+														<h1><small>Últimos Auspiciados</small></h1>
+															<ul class="list-inline friends-list">
+																<li><img src="/template/img/empresario.jpg" alt="friend-1">
+																</li>
+																<li><img src="/template/img/empresario.jpg" alt="friend-2">
+																</li>
+																<li><img src="/template/img/empresario.jpg" alt="friend-3">
+																</li>
+																<li><img src="/template/img/empresario.jpg" alt="friend-4">
+																</li>
+																<li><img src="/template/img/empresario.jpg" alt="friend-5">
+																</li>
+															</ul>
 														</div>
 													</div>
 												</div>
