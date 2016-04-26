@@ -157,6 +157,14 @@ class dashboard extends CI_Controller
 		
 		$actividad=$this->modelo_compras->is_afiliado_activo($id,date('Y-m-d'));
 
+		$puntos_semana=$this->modelo_dashboard->get_puntos_personales_semana($id);
+		$puntos_mes=$this->modelo_dashboard->get_puntos_personales_mes($id);
+		$puntos_total=$this->modelo_dashboard->get_puntos_personales_total($id);
+		
+		$puntos_red_semana=$this->modelo_dashboard->get_puntos_red_semana($id);
+		$puntos_red_mes=$this->modelo_dashboard->get_puntos_red_mes($id);
+		$puntos_red_total=$this->modelo_dashboard->get_puntos_red_total($id);
+		
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
 	    $this->template->set("telefono",$telefono);
@@ -172,6 +180,13 @@ class dashboard extends CI_Controller
 		$this->template->set("cuentasPorPagar",$cuentasPorPagar);
 		$this->template->set("notifies",$notifies);
 		$this->template->set("actividad",$actividad);
+		
+		$this->template->set("puntos_semana",$puntos_semana);
+		$this->template->set("puntos_mes",$puntos_mes);
+		$this->template->set("puntos_total",$puntos_total);
+		$this->template->set("puntos_red_semana",$puntos_red_semana);
+		$this->template->set("puntos_red_mes",$puntos_red_mes);
+		$this->template->set("puntos_red_total",$puntos_red_total);
 		
 		$this->template->set("numeroAfiliadosRed",$numeroAfiliadosRed);
 		

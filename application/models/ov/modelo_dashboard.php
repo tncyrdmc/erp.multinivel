@@ -2,6 +2,13 @@
 
 class modelo_dashboard extends CI_Model
 {
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('/bo/bonos/afiliado');
+		$this->load->model('/bo/bonos/calculador_bono');
+	
+	}
 	function get_style($id)
 	{
 		$q=$this->db->query('select * from estilo_usuario where id_usuario = '.$id);
@@ -67,4 +74,141 @@ class modelo_dashboard extends CI_Model
 	return $q->result();
   }
 
+  function get_puntos_personales_semana($id){
+  	$usuario=new $this->afiliado;
+  	$calculador=new $this->calculador_bono;
+  	
+  	$cualquiera="0";
+  	$fechaActual=date('Y-m-d');
+  	$fechaInicio=$calculador->getInicioSemana($fechaActual);
+  	$fechaFin=$calculador->getFinSemana($fechaActual);
+
+  	$q=$this->db->query("select id from tipo_red where estatus = 'ACT' group by id");
+  	$redes= $q->result();
+  	
+  	$puntos=0;
+  	
+  	foreach ($redes as $red){
+  		$puntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+  		if($puntos==null)
+  			$puntos=0;
+  	}
+  	
+  	
+	return $puntos;
+  }
+  function get_puntos_personales_mes($id){
+	$usuario=new $this->afiliado;
+  	$calculador=new $this->calculador_bono;
+  	
+  	$cualquiera="0";
+  	$fechaActual=date('Y-m-d');
+  	$fechaInicio=$calculador->getInicioMes($fechaActual);
+  	$fechaFin=$calculador->getFinMes($fechaActual);
+
+  	$q=$this->db->query("select id from tipo_red where estatus = 'ACT' group by id");
+  	$redes= $q->result();
+  	
+  	$puntos=0;
+  	
+  	foreach ($redes as $red){
+  		$puntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+  		if($puntos==null)
+  			$puntos=0;
+  	}
+  	
+  	
+	return $puntos;
+  }
+  function get_puntos_personales_total($id){
+	$usuario=new $this->afiliado;
+  	
+  	$cualquiera="0";
+  	$fechaInicio="2016-01-01";
+  	$fechaFin="2026-01-01";
+
+  	$q=$this->db->query("select id from tipo_red where estatus = 'ACT' group by id");
+  	$redes= $q->result();
+  	
+  	$puntos=0;
+  	
+  	foreach ($redes as $red){
+  		$puntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+  		if($puntos==null)
+  			$puntos=0;
+  	}
+  	
+  	
+	return $puntos;
+  }
+
+  function get_puntos_red_semana($id){
+  	$usuario=new $this->afiliado;
+  	$calculador=new $this->calculador_bono;
+  	 
+  	$cualquiera="0";
+  	$fechaActual=date('Y-m-d');
+  	$fechaInicio=$calculador->getInicioSemana($fechaActual);
+  	$fechaFin=$calculador->getFinSemana($fechaActual);
+  
+  	$q=$this->db->query("select id , profundidad from tipo_red where estatus = 'ACT' group by id");
+  	$redes= $q->result();
+  	 
+  	$puntos=0;
+  	 
+  	foreach ($redes as $red){
+  		$puntos=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
+  		if($puntos==null)
+  			$puntos=0;
+  	}
+  	 
+  	 
+  	return $puntos;
+  }
+
+  function get_puntos_red_mes($id){
+  	$usuario=new $this->afiliado;
+  	$calculador=new $this->calculador_bono;
+  	 
+  	$cualquiera="0";
+  	$fechaActual=date('Y-m-d');
+  	$fechaInicio=$calculador->getInicioMes($fechaActual);
+  	$fechaFin=$calculador->getFinMes($fechaActual);
+  
+  	$q=$this->db->query("select id , profundidad from tipo_red where estatus = 'ACT' group by id");
+  	$redes= $q->result();
+  	 
+  	$puntos=0;
+  	 
+  	foreach ($redes as $red){
+  		$puntos=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
+  		if($puntos==null)
+  			$puntos=0;
+  	}
+  	 
+  	 
+  	return $puntos;
+  }
+
+  function get_puntos_red_total($id){
+  	$usuario=new $this->afiliado;
+  	 
+  	$cualquiera="0";
+  	$fechaInicio="2016-01-01";
+  	$fechaFin="2026-01-01";
+  
+  	$q=$this->db->query("select id , profundidad from tipo_red where estatus = 'ACT' group by id");
+  	$redes= $q->result();
+  	 
+  	$puntos=0;
+  	 
+  	foreach ($redes as $red){
+  		$puntos=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
+  		if($puntos==null)
+  			$puntos=0;
+  	}
+  	 
+  	 
+  	return $puntos;
+  }
 }
