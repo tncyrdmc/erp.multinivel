@@ -383,7 +383,7 @@ class reportes extends CI_Controller
 					<td>".$afiliados[$i]->apellido."</td>
 					<td>".$afiliados[$i]->email."</td>
 					<td><div class='widget-body'>
-						<h2 class='alert alert-success'><i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i></h2>
+						<h2 class='alert alert-success'><i class='fa fa-thumbs-o-up'></i></h2>
 						</div></td>
 				</tr>";
 			}
@@ -464,7 +464,7 @@ class reportes extends CI_Controller
 					<td>".$afiliados[$i]->apellido."</td>
 					<td>".$afiliados[$i]->email."</td>
 					<td><div class='widget-body'>
-						<h2 class='alert alert-danger'><i class='fa fa-star-o '></i></h2>
+						<h2 class='alert alert-danger'><i class='fa fa-thumbs-o-down '></i></h2>
 						</div></td>
 				</tr>";
 		}

@@ -23,6 +23,17 @@ class modelo_compras extends CI_Model
 		return $q->result();
 	}
 	
+	function is_afiliado_activo($id_afiliado,$fecha)
+	{
+				
+			if(($this->general->isActived($id_afiliado)==0)&&
+					(($this->general->isActivedAfiliacionesPuntosPersonales($id_afiliado,$fecha))==true)){
+				return true;
+			}
+	
+		return false;
+	}
+	
 	function reporte_afiliados_activos($id_afiliado,$fecha)
 	{
 		$usuario=new $this->afiliado;
