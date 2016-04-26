@@ -422,7 +422,7 @@ class afiliado extends CI_Model
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
@@ -430,7 +430,7 @@ class afiliado extends CI_Model
 							 and  (i.id=cvm.id_mercancia)
 							 and (".$id_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}else if($id_mercancia===$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
@@ -438,7 +438,7 @@ class afiliado extends CI_Model
 							 and  (i.id=cvm.id_mercancia)
 							 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 			$q=$this->db->query("SELECT sum(puntos_comisionables) as total FROM venta v,cross_venta_mercancia cvm,items i
@@ -447,7 +447,7 @@ class afiliado extends CI_Model
 							 and (".$id_mercancia.")
 							 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}
 	}
@@ -464,7 +464,7 @@ class afiliado extends CI_Model
 							 where (v.id_venta=cvm.id_venta)
 							 and  (i.id=cvm.id_mercancia)
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){
 
@@ -473,7 +473,7 @@ class afiliado extends CI_Model
 							 and  (i.id=cvm.id_mercancia)
 							 and (".$id_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}else if($id_mercancia===$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 
@@ -482,7 +482,7 @@ class afiliado extends CI_Model
 							 and  (i.id=cvm.id_mercancia)
 						 	 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia!==$cualquiera){
 
@@ -492,7 +492,7 @@ class afiliado extends CI_Model
 							 and (".$id_mercancia.")
 						 	 and (i.id_tipo_mercancia=".$id_tipo_mercancia.")
 							 and(v.id_user=".$id_afiliado.")
-							 and (i.red=".$id_red.") and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
+							 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')");
 			return $q->result();
 		}
 
