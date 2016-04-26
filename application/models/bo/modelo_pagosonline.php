@@ -7,7 +7,7 @@ class modelo_pagosonline extends CI_Model
 		$tucompra=$this->get_datos_tucompra();
 		if(!$tucompra){
 			$dato=array(
-					"apykey" =>	"6u39nqhq8ftd0hlvnjfs66eh8c"
+					"email" =>	"you@domain.com"
 			);
 			$this->db->insert("tucompra",$dato);
 			$tucompra=$this->get_datos_tucompra();
@@ -75,15 +75,15 @@ class modelo_pagosonline extends CI_Model
 			$estado='ACT';
 		
 		$dato=array(
-				"apykey"     => $_POST['apykey'],
-				"id_comercio"   		=> $_POST['id_comercio'],
-				"id_cuenta"     		=> $_POST['id_cuenta'],
-				"moneda"       			=> $_POST['moneda'],
+				"cuenta"     => $_POST['cuenta'],
+				"email"     => $_POST['email'],
+				"llave"   		=> $_POST['llave'],
+				"moneda"   		=> $_POST['moneda'],
 				"test"       			=> $test,
 				"estatus"       		=> $estado
 		);
 	
-		$this->db->where('apykey', $_POST['id']);
+		$this->db->where('email', $_POST['id']);
 		$this->db->update('tucompra', $dato);
 	
 		return true;

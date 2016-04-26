@@ -312,8 +312,8 @@
 	}
 
 	function tucompra(){
-		alert('Medio de Pago en Desarrollo');
-		/*iniciarSpinner();
+		//alert('Medio de Pago en Desarrollo');
+		iniciarSpinner();
 		$.ajax({
 			type:"post",
 			url:"pagarVentaTucompra",
@@ -333,7 +333,7 @@
 					}
 				})
 			}
-		});	*/
+		});	
 	}
 
 	function payuLatam(){

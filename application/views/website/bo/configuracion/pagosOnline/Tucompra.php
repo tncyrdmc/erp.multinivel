@@ -49,59 +49,33 @@
 							class="smart-form">
 							<fieldset>
 								<legend>Configuracion tucompra</legend>
-								<input type="hidden" value="<?=$tucompra[0]->apykey;?>"
-									name="id">
-								<section id="usuario" class="col col-6">
-									<label class="input">Apy key <input required type="text"
-										name="apykey" placeholder="Apy key"
-										value="<?=$tucompra[0]->apykey;?>">
-									</label>
-									<div class="note">
-										<strong>Nota:</strong> En estado test
-										:6u39nqhq8ftd0hlvnjfs66eh8c.
-									</div>
-								</section>
-								<section id="usuario" class="col col-6">
-									<label class="input">Merchant Id <input required type="text"
-										name="id_comercio" value="<?=$tucompra[0]->id_comercio;?>">
-									</label>
-									<div class="note">
-										<strong>Nota:</strong> En estado test : 500238.
-									</div>
-								</section>
-								<section id="usuario" class="col col-6">
-									<label class="input">Account Id <input required type="text"
-										name="id_cuenta" value="<?=$tucompra[0]->id_cuenta;?>">
-									</label>
-									<div class="note">
-										<strong>Nota:</strong> En estado test : 509171.
-									</div>
-								</section>
-								<section class="col col-6">
-									<label class="select">Moneda <select id="moneda" name="moneda">
-											<option value="ANG">ANG</option>
-											<option value="EUR">EUR</option>
-											<option value="GBP">GBP</option>
-											<option value="CAD">CAD</option>
-											<option value="INR">INR</option>
-											<option value="ARS">ARS</option>
-											<option value="USD">USD</option>
-											<option value="MXN">MXN</option>
-											<option value="DOP">DOP</option>
-											<option value="CLP">CLP</option>
-											<option value="BRL">BRL</option>
-											<option value="CRC">CRC</option>
-											<option value="PAB">PAB</option>
-											<option value="VEF">VEF</option>
-											<option value="AWG">AWG</option>
-											<option value="PEN">PEN</option>
-											<option value="COP">COP</option>
-									</select>
-									</label>
-									<div class="note">
-										<strong> </strong>
-									</div>
-								</section>
+								<input type="hidden" value="<?=$tucompra[0]->email;?>" name="id" >
+						 <section id="usuario" class="col col-6">
+							 <label class="input">Id Sistema Tu Compra
+								 <input required type="cuenta" name="cuenta" placeholder="cuenta" value="<?=$tucompra[0]->cuenta;?>" > 
+							 </label>
+						 </section> 
+						 <section id="usuario" class="col col-6">
+							 <label class="input">Email Cuenta Tu Compra
+								 <input required type="email" name="email" placeholder="Email" value="<?=$tucompra[0]->email;?>" > 
+							 </label>
+						 </section> 
+						 <section id="usuario" class="col col-6">
+							 <label class="input">Llave Encripción
+								 <input required type="llave" name="llave" placeholder="Key" value="<?=$tucompra[0]->llave;?>" > 
+							 </label>
+						 </section>
+						 <section  class="col col-3">
+							 <label class="select">Moneda
+							 	<select id="moneda" name="moneda">
+									<option value="COP">COP</option>
+									<option value="USD">USD</option>
+								</select>
+							 </label>
+							 <div class="note">
+								<strong> </strong>
+							</div>
+						 </section>
 								<section id="usuario" class="col col-6">
 									<label class="checkbox"> <input name="test"
 										<?php if($tucompra[0]->test == '1') echo "checked='checked'";?>
@@ -148,7 +122,7 @@ $( "#form_tucompra" ).submit(function( event ) {
 	enviar();
 });
 
-$("#moneda").val("<?=$tucompra[0]->moneda;?>");
+
 
 function enviar()
 {
