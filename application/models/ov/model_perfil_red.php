@@ -877,7 +877,7 @@ order by (U.id);");
 		$this->db->query("delete from billetera where id_user not in (select id from users)");
 		$this->db->query("delete from cross_rango_user where id_user not in (select id from users)");
 		$this->db->query("delete from cross_img_user where id_user not in (select id from users)");
-		$this->db->query("delete from cat_img where id_img not in (select id_img from cross_img_user)");
+		$this->db->query("delete from cat_img where id_img not in (select id_img from cross_img_user union select id_cat_imagen from cross_merc_img)");
 		//$this->db->query("delete from red where id_usuario = ".$id);
 		return true;
 	}
