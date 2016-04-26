@@ -154,6 +154,8 @@ class dashboard extends CI_Controller
 		}
 		
 		$style=$this->modelo_dashboard->get_style($id);
+		
+		$actividad=$this->modelo_compras->is_afiliado_activo($id,date('Y-m-d'));
 
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
@@ -169,6 +171,7 @@ class dashboard extends CI_Controller
 		$this->template->set("ultima",$ultima);
 		$this->template->set("cuentasPorPagar",$cuentasPorPagar);
 		$this->template->set("notifies",$notifies);
+		$this->template->set("actividad",$actividad);
 		
 		$this->template->set("numeroAfiliadosRed",$numeroAfiliadosRed);
 		

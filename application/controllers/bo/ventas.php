@@ -247,55 +247,12 @@ public function createFolder()
 
 
     // Creacion del PDF
- 
-    /*
-     * Se crea un objeto de la clase Pdf, recuerda que la clase Pdf
-     * heredó todos las variables y métodos de fpdf
-     */
-    $this->load->library('Pdf');
-    $this->pdf = new Pdf();
-    // Agregamos una página
+     $this->load->library('pdf'); // Load library
     $this->pdf->AddPage();
-    // Define el alias para el número de página que se imprimirá en el pie
-    $this->pdf->AliasNbPages();
- 
-    /* Se define el titulo, márgenes izquierdo, derecho y
-     * el color de relleno predeterminado
-     */
-    $this->pdf->SetTitle("Lista de alumnos");
-    $this->pdf->SetLeftMargin(15);
-    $this->pdf->SetRightMargin(15);
-    $this->pdf->SetFillColor(200,200,200);
- 
-    // Se define el formato de fuente: Arial, negritas, tamaño 9
-    $this->pdf->SetFont('Arial', 'B', 9);
-    /*
-     * TITULOS DE COLUMNAS
-     *
-     * $this->pdf->Cell(Ancho, Alto,texto,borde,posición,alineación,relleno);
-     */
- 
-    $this->pdf->Cell(15,7,'NUM','TBL',0,'C','1');
-    $this->pdf->Cell(25,7,'PATERNO','TB',0,'L','1');
-    $this->pdf->Cell(25,7,'MATERNO','TB',0,'L','1');
-    $this->pdf->Cell(25,7,'NOMBRE','TB',0,'L','1');
-    $this->pdf->Cell(40,7,'FECHA DE NACIMIENTO','TB',0,'C','1');
-    $this->pdf->Cell(25,7,'GRADO','TB',0,'L','1');
-    $this->pdf->Cell(25,7,'GRUPO','TBR',0,'C','1');
-    $this->pdf->Ln(7);
-    // La variable $x se utiliza para mostrar un número consecutivo
-    $x = 1;
-
-    /*
-     * Se manda el pdf al navegador
-     *
-     * $this->pdf->Output(nombredelarchivo, destino);
-     *
-     * I = Muestra el pdf en el navegador
-     * D = Envia el pdf para descarga
-     *
-     */
-    $this->pdf->Output("alumnos.pdf", 'I');
+    $this->pdf->SetFont('Arial','B',16);
+    $this->pdf->Cell(40,10,'Hello World!');
+    $this->pdf->Output('imprimir.pdf','D');
+    echo "hola mundo";
     
 
     }    

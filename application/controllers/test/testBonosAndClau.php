@@ -49,18 +49,18 @@ class testBonosAndClau extends CI_Controller {
 	
 	public function index(){
 		
-		$this->pruebaProduccion();
-	/*	$this->before();
+	//	$this->pruebaProduccion();
+		$this->before();
 		$this->testValidarSiElBonoYaCobroFalso();
 		$this->after();
 	
 		$this->before();
 		$this->testCalcularComisionesAfiliadosBonoDeEquipo();
-		$this->testCalcularComisionesAfiliadosBonoDeEquipoRemanente();
+	/*	$this->testCalcularComisionesAfiliadosBonoDeEquipoRemanente();
 		$this->testValidarSiElBonoYaCobroVerdadero();
 		$this->testCalcularComisionesAfiliadosBonoDeActividad();
-		$this->testCalcularComisionesAfiliadosBonoDeIgualacion();
-		$this->after();*/
+		$this->testCalcularComisionesAfiliadosBonoDeIgualacion();*/
+	//	$this->after();
 
 	}
 	

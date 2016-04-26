@@ -315,6 +315,36 @@
 			</article>
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Remanente de La Red</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Red Hay</h5><hr>
+							<div id="bar-graph-10" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
 				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
@@ -730,6 +760,42 @@
 			xkey : 'x',
 			ykeys : ['y'],
 			labels : ['Ventas'],
+		});
+	}
+
+	// Remanente		
+	<?php 
+
+	$i=0;
+	$text="";
+	foreach ($remanentes as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total"]."'
+               }";
+		}
+			
+		$i++;
+	}
+	
+	?>
+
+	if ($('#bar-graph-10').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-10',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Puntos Remanentes'],
 		});
 	}
 //sexo

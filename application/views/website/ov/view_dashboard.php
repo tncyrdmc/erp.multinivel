@@ -34,15 +34,13 @@
 													<div class="row">
 
 														<div class="col-sm-3 profile-pic">
-															<img src="<?=$user?>" alt="demo user">
+															<img class="<?php if($actividad) echo "online";?>" src="<?=$user?>" alt="demo user">
 															<div class="padding-10">
-															<!--	<h4 class="font-md"><strong>1,543</strong>
+															<a style="padding: 6px 2rem 6px 6px;" href="/ov/perfil_red/foto"><i class="fa fa-camera fa-2x fa-fw fa-lg"></i></a>
+																<br><br>
+																<h4 class="font-md"><strong><?=$id?></strong>
 																<br>
-																<small>Followers</small></h4>
-																<br>
-																<h4 class="font-md"><strong>419</strong>
-																<br>
-																<small>Connections</small></h4> -->
+																<small>ID</small></h4>
 															</div>
 														</div>
 														<div class="col-sm-6">
@@ -76,17 +74,35 @@
 																		<i class="fa fa-calendar"></i>&nbsp;&nbsp;<span class="txt-color-darken">Ultima sesión: <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment"><?=$ultima?></a></span>
 																	</p>
 																</li>
-                                <li>
-                                <?php if($id_sponsor&&$name_sponsor){
-                                if(($id_sponsor[0]->id_usuario!=1)){
-                                ?>
-                               <b>Patrocinador:</b>
-                              <?=$name_sponsor[0]->nombre?> <?=$name_sponsor[0]->apellido?> con id <?=$id_sponsor[0]->id_usuario?><br/>
-
-                              <?php }else{?>
-                              Eres un nodo raíz, fuiste patrocinado por la empresa<br />
-                              <?php }}?>
-                                </li>
+									                                <li>
+									                                <?php if($id_sponsor&&$name_sponsor){
+									                                if(($id_sponsor[0]->id_usuario!=1)){
+									                                ?>
+									                               <b>Patrocinador:</b>
+									                              <?=$name_sponsor[0]->nombre?> <?=$name_sponsor[0]->apellido?> con id <?=$id_sponsor[0]->id_usuario?><br/>
+									
+									                              <?php }else{?>
+									                              Eres un nodo raíz, fuiste patrocinado por la empresa<br />
+									                              <?php }}?>
+									                                </li>
+                                									<div class="row">
+				
+																	<div class="col-xs-2 col-sm-1">
+																		<time datetime="2016-04-10" class="icon" style="width: 6rem;">
+																			<strong> <?php if($actividad) echo "Activo";else echo "Inactivo";?></strong>
+																			<span><?php if($actividad) echo "<i class='fa fa-thumbs-o-up'></i>";else echo "<i class='fa fa-thumbs-o-down'></i>";?></span>
+																		</time>
+																	</div>
+																	<div class="col-sm-12">
+																		<hr>
+																	</div>
+																	<div class="col-sm-12">
+				
+																		<br>
+				
+																	</div>
+				
+																</div>
 															</ul>
 															<br>
 														</div>

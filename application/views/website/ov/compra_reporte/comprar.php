@@ -91,7 +91,7 @@
 													<div class="well well-sm  bg-color-darken txt-color-white no-border">
 														<div class="fa-lg">
 															Total :
-															<span class="pull-right">$ <?php echo $this->cart->total(); ?> USD** </span>
+															<span class="pull-right">$ <?php echo $this->cart->total(); ?> ** </span>
 														</div>
 				
 													</div>
