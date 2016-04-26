@@ -649,7 +649,7 @@ function index()
 		
 		//$firma = md5($tucompra[0]->apykey."~".$tucompra[0]->id_comercio."~NetSoft".$time."~".$totalCarrito."~".$tucompra[0]->moneda);
 		
-		$firma = md5($tucompra[0]->apykey.";".$codigoFactura.";".$totalCarrito."".$tucompra[0]->moneda.";".$codigoAutorizacion);
+		$firma = md5($tucompra[0]->llave.";".$codigoFactura.";".$totalCarrito."".$tucompra[0]->moneda.";".$codigoAutorizacion);
 		$id_transacion = $firma;
 	
 		$link="https://demo2.tucompra.net/tc/app/inputs/compra.jsp";
@@ -661,14 +661,14 @@ function index()
 			<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
 			<form method="post" action="'.$link.'">'
 	//		  .'<input name="merchantId"    type="hidden"  value="'.$tucompra[0]->id_comercio.'">'
-			  .'<input name="usuario"     type="hidden"  value="'.$tucompra[0]->id_cuenta.'" >'
+			  .'<input name="usuario"     type="hidden"  value="'.$tucompra[0]->cuenta.'" >'
 			  .'<input name="descripcionFactura"   type="hidden"  value="'.$descripcion.'"  >'
 			  .'<input name="factura" type="hidden"  value="NetSoft'.$time.$id_pago_proceso.'" >'
 			  .'<input name="valor"         type="hidden"  value="'.$totalCarrito.'"   >'
-			  .'<input name="nombreComprador"  type="hidden"  value="'.$usuario.'"  >'
+			  .'<input name="nombreComprador"  type="hidden"  value="'.$usuario[0]->nombre." ".$usuario[0]->apellido.'"  >'
 			  .'<input name="documentoComprador" type="hidden"  value="'.$id.'" >'
 			  .'<input name="tipoMoneda"      type="hidden"  value="'.$tucompra[0]->moneda.'" >'
-	//		  .'<input name="signature"     type="hidden"  value="'.$id_transacion.'"  >'
+			  .'<input name="signature"     type="hidden"  value="'.$id_transacion.'"  >'
 	//		  .'<input name="test"          type="hidden"  value="'.$tucompra[0]->test.'" >'
 	//		  .'<input name="extra1" type="hidden" value="'.$id.'" >'
 	//		  .'<input name="extra2" type="hidden" value="'.$id_pago_proceso.'" >'
