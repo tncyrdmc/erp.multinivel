@@ -428,7 +428,8 @@ function index()
 		$respuesta = $_POST['numeroTransaccion'];
 		$moneda = $_POST['valorFactura'];
 		$medio_pago = $_POST['payment_method_name'];
-	
+
+		var_dump($estado);
 	
 		if($estado==1){
 				
@@ -530,8 +531,10 @@ function index()
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		var_dump($_GET['transaccionAprobada']);
 	
-		if($_GET['transactionState']==4){
+		if($_GET['transaccionAprobada']==1){
 				
 			$this->cart->destroy();
 			$id=$this->tank_auth->get_user_id();
