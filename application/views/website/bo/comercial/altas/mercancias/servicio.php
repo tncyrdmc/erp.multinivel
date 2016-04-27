@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-			
+
 				<!--<?php  //if($type=='5'){?>
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>&gt;
@@ -19,22 +19,24 @@
 				</span>
 				
 				<?php //}?>-->
-												<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>&gt;
-								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras?co=c"> Carrito de Compras </a>
-								> <a href="/bo/mercancia/index?co=c" >Alta</a> > Servicio
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>&gt;
+					<a href="/bo/comercial">Comercial</a> > <a
+					href="/bo/comercial/carrito_de_compras?co=c"> Carrito de Compras </a>
+					> <a href="/bo/mercancia/index?co=c">Alta</a> > Servicio
 				</span>
 			</h1>
 		</div>
 	</div>
-	<?php if($this->session->flashdata('error')) {
+	<?php
+	
+if ($this->session->flashdata ( 'error' )) {
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
 									×
 								</button>
 								<i class="fa-fw fa fa-check"></i>
-								<strong>Error </strong> '.$this->session->flashdata('error').'
-			</div>'; 
+								<strong>Error </strong> ' . $this->session->flashdata ( 'error' ) . '
+			</div>';
 	}
 	?>	 
 	<section id="widget-grid" class="">
@@ -43,210 +45,237 @@
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
-					
+				<div class="jarviswidget" id="wid-id-1"
+					data-widget-editbutton="false" data-widget-custombutton="false"
+					data-widget-colorbutton="false">
+
 					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Mercancia</h2>				
-						
+						<span class="widget-icon"> <i class="fa fa-edit"></i>
+						</span>
+						<h2>Mercancia</h2>
+
 					</header>
 
 					<!-- widget div-->
-					
-						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"  action="/bo/mercancia/CrearServicio" class="smart-form" name="form_service">
-								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
-									
-								<fieldset>
-									<legend>Datos del Servicio</legend>
-									<div id="form_mercancia">
-										<div class="row">
-												<fieldset>
-													<section class="col col-2">
-														<label class="input">Nombre
-															<input required type="text" id="nombre_s" name="nombre">
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Concepto
-															<input required type="text" id="concepto" name="concepto">
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Fecha de inicio
-														<input required type="text" name="fecha_inicio" id="startdate" readonly="readonly" /> </label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Fecha de termino
-														<input type="text" name="fecha_fin" id="finishdate" readonly="readonly"/> </label>
-													</section>
-													<section class="col col-3">Categoria
-															<label class="select">
-																<select name="red">
+
+					<div class="widget-body">
+						<form method="POST" enctype="multipart/form-data"
+							action="/bo/mercancia/CrearServicio" class="smart-form"
+							name="form_service">
+							<input type="text" class="hide"
+								value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
+
+							<fieldset>
+								<legend>Datos del Servicio</legend>
+								<div id="form_mercancia">
+									<div class="row">
+										<fieldset>
+											<section class="col col-2">
+												<label class="input">Nombre <input required type="text"
+													id="nombre_s" name="nombre">
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="input">Concepto <input required type="text"
+													id="concepto" name="concepto">
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="input">Fecha de inicio <input required
+													type="text" name="fecha_inicio" id="startdate"
+													readonly="readonly" />
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="input">Fecha de termino <input type="text"
+													name="fecha_fin" id="finishdate" readonly="readonly" />
+												</label>
+											</section>
+											<section class="col col-3">
+												Categoria <label class="select"> <select name="red">
 																<?foreach ($grupos as $grupo){?>
 																	<option value="<?=$grupo->id_grupo?>">
-																	<?= $grupo->descripcion." (".$grupo->red.")" ?>
+																	<?= $grupo->descripcion." (".$grupo->red.")"?>
 																	</option>
 																<?}?>
 																</select>
-															</label>
-														</section>
-											<div class="row">
-											<fieldset>
-											<section class="col col-2">
-											<label class="input"><span id="labelextra">Descuento del servicio</span>
-												<input required id="precio_promo" type="number" min="0" name="descuento">
-											</label>
+												</label>
 											</section>
-											</fieldset>
-											</div>
-													<div>
-														<section style="padding-left: 0px;" class="col col-6">Descripcion
-															<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
-														</section>
-														
-														<section id="imagenes" class="col col-6">
-														<label class="label">Imágen</label>
-														<div class="input input-file">
-															<span class="button">
-																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple required>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen"  type="text" required>
-															</div>
-															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
-														</section>
-													</div>
-														
-												</fieldset>
-												<fieldset id="moneda_field">
-													<legend>Moneda y país</legend>
-													<section class="col col-2">
-														<label class="input">
-														Costo real
-														<input type="number" min="1" name="real" id="real" onchange="calcular_precio_total()" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Costo distribuidores
-														<input type="number" min="1" name="costo" id="costo" onchange="calcular_precio_total()" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">Costo publico
-														<input type="number" min="1" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-														Tiempo mínimo de entrega
-														<input placeholder="En días" type="number" min="1" name="entrega" id="entrega">
-														</label>
-													</section>
+										</fieldset>
+									</div>
+									<div class="row">
+										<fieldset>
+											<section class="col col-2">
+												<label class="input"><span id="labelextra">Descuento del
+														servicio</span> <input required id="precio_promo"
+													type="number" min="0" name="descuento"> </label>
+											</section>
+										</fieldset>
+									</div>
+									<div class="row">
+										<section style="padding-left: 0px;" class="col col-6">
+											Descripcion
+											<textarea name="descripcion" style="max-width: 96%"
+												id="mymarkdown"></textarea>
+										</section>
 
-									
-													<section class="col col-3">Proveedor
-														<label class="select">
-															<select name="proveedor" id="proveedor_select" required>
+										<section id="imagenes" class="col col-6">
+											<label class="label">Imágen</label>
+											<div class="input input-file">
+												<span class="button"> <input id="img" name="img"
+													onchange="this.parentNode.nextSibling.value = this.value"
+													type="file" multiple required>Buscar
+												</span><input id="imagen_mr"
+													placeholder="Agregar alguna imágen" type="text" required>
+											</div>
+											<small>Para cargar múltiples archivos, presione la tecla ctrl
+												y sin soltar selecione sus archivos.<br />
+											<cite title="Source Title">Para ver los archivos que va a
+													cargar, deje el puntero sobre el boton de "Buscar"</cite>
+											</small>
+										</section>
+									</div>
+							
+							<div class="row">
+							<fieldset id="moneda_field">
+								<legend>Moneda y país</legend>
+								<section class="col col-2">
+									<label class="input"> Costo real <input type="number" min="1"
+										name="real" id="real" onchange="calcular_precio_total()"
+										required>
+									</label>
+								</section>
+								<section class="col col-2">
+									<label class="input">Costo distribuidores <input type="number"
+										min="1" name="costo" id="costo"
+										onchange="calcular_precio_total()" required>
+									</label>
+								</section>
+								<section class="col col-2">
+									<label class="input">Costo publico <input type="number" min="1"
+										name="costo_publico" id="costo_publico"
+										onchange="calcular_precio_total()" required>
+									</label>
+								</section>
+								<section class="col col-2">
+									<label class="input"> Tiempo mínimo de entrega <input
+										placeholder="En días" type="number" min="1" name="entrega"
+										id="entrega">
+									</label>
+								</section>
+
+
+								<section class="col col-3">
+									Proveedor <label class="select"> <select name="proveedor"
+										id="proveedor_select" required>
 															<?foreach ($proveedores as $key){?>
 																<option value="<?=$key->user_id?>">
 																	<?=$key->nombre." ".$key->apellido?>
 																</option>
 															<?}?>
 															</select>
-														</label>
-														<a style="cursor: pointer;" onclick="add_proveedor()">Agregar Proveedor<i class="fa fa-plus"></i></a>
-											
-													</section>
-													
-													<section class="col col-3">
-														<label class="input">
-														Puntos comisionables
-															<input type="number" min="0" max="" name="puntos_com" id="puntos_com" required>
-														</label>
-													</section>
-													<legend>Impuestos</legend>
+									</label> <a style="cursor: pointer;" onclick="add_proveedor()">Agregar
+										Proveedor<i class="fa fa-plus"></i>
+									</a>
 
-													<fieldset>
-													<div class="row" id="impuesto_agregar">
-														<section class="col col-2">País del servicio
-														<label class="select">
-															<select id="pais"  name="pais" onChange="select_pais()" required="required">
-															<option value="-" selected>-- Seleciona un pais --</option>
+								</section>
+
+								<section class="col col-3">
+									<label class="input"> Puntos comisionables <input type="number"
+										min="0" max="" name="puntos_com" id="puntos_com" required>
+									</label>
+								</section>
+								<legend>Impuestos</legend>
+
+								<fieldset>
+									<div class="row" id="impuesto_agregar">
+										<section class="col col-2">
+											País del servicio <label class="select"> <select id="pais"
+												name="pais" onChange="select_pais()" required="required">
+													<option value="-" selected>-- Seleciona un pais --</option>
 															<?foreach ($pais as $key){?>
 																<option value="<?=$key->Code?>">
 																<?=$key->Name?></option>
 															<?}?>
 															</select>
-														</label>
-													</section>
-																	<!--<section class="col col-2" id="impuesto">Impuesto
+											</label>
+										</section>
+										<!--<section class="col col-2" id="impuesto">Impuesto
 														<label class="select">
 															<select name="id_impuesto[]" onclick="calcular_precio_total()">
 															
 															</select>
 															
 														</label>-->
-														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													<!--</section>-->
-															<section class="col col-2">Requiere especificación
-																<div class="inline-group">
-																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" >
-																		<i></i>con IVA</label>
-																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva" checked="">
-																			<i></i>más IVA</label>
-																		</div>
-																	</section>
-																	</div>
-																	<div class="row">
-																		<section class="col col-2">
-														<label class="input">
-															Costo real con IVA
-															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo público con IVA
-															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
-														</label>
-													</section>
-													</div>
-													</fieldset>
-												</fieldset>
+										<a style="cursor: pointer;" onclick="add_impuesto()">Agregar
+											impuesto<i class="fa fa-plus"></i>
+										</a>
+										<!--</section>-->
+										<section class="col col-2">
+											Requiere especificación
+											<div class="inline-group">
+												<label class="radio"> <input type="radio" value="1"
+													name="iva" onchange="calcular_precio_total()"> <i></i>con
+													IVA
+												</label> <label class="radio"> <input type="radio" value="0"
+													onchange="calcular_precio_total()" name="iva" checked=""> <i></i>más
+													IVA
+												</label>
 											</div>
-										</div>
-									</fieldset>
-									<footer>
-										<button type="submit" class="btn btn-primary">
-											Agregar
-										</button>
-									</footer>
-								</form>
-							</div>
-						</div>
-					</article>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-2">
+											<label class="input"> Costo real con IVA <input type="text"
+												min="1" max="" name="real_iva" id="real_iva" disabled>
+											</label>
+										</section>
+										<section class="col col-2">
+											<label class="input"> Costo distribuidores con IVA <input
+												type="text" min="1" max="" name="distribuidores_iva"
+												id="distribuidores_iva" disabled>
+											</label>
+										</section>
+										<section class="col col-2">
+											<label class="input"> Costo público con IVA <input
+												type="text" min="1" max="" name="publico_iva"
+												id="publico_iva" disabled>
+											</label>
+										</section>
+									</div>
+								</fieldset>
+							</fieldset>
+					
+					</div>
 				</div>
-			
-		</section>
-	</div>
-											<!-- END MAIN CONTENT -->
-											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-											<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-											<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
-											<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-											<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-											<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-											<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-											<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-											<script src="/template/js/validacion.js"></script>
-											<script type="text/javascript">
+				</fieldset>
+				<footer>
+					<button type="submit" class="btn btn-primary">Agregar</button>
+				</footer>
+				</form>
+		
+		</div>
+
+</div>
+</article>
+</div>
+
+</section>
+</div>
+<!-- END MAIN CONTENT -->
+<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+<script
+	src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script
+	src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script type="text/javascript">
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 var i = 0;

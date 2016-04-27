@@ -2451,7 +2451,7 @@ class comercial extends CI_Controller
 		
 		
 		$productos       = $this->model_admin->get_productos();
-		$servicios		 = $this->model_admin->get_servicios();
+		$servicios		 = $this->model_admin->get_servicios();//var_dump($servicios);exit();
 		//$promo			 = $this->model_admin->get_promo();
 		$combinados		 = $this->model_admin->get_combinados();
 		$paquete		 = $this->model_admin->get_paquetes();

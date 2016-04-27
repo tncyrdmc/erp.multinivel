@@ -452,6 +452,8 @@ function index()
 			$this->registrarFacturaDatosDefaultAfiliado($id,$id_venta);
 			$this->registrarFacturaMercanciaPagoOnline ( $contenidoCarrito,$carrito ,$id_venta);
 			$this->pagarComisionVenta($id_venta,$id);
+			
+			return "OK";
 		}
 	
 	}
@@ -569,6 +571,9 @@ function index()
 			$this->template->set_partial('header', 'website/ov/header');
 			$this->template->set_partial('footer', 'website/ov/footer');
 			$this->template->build('website/ov/compra_reporte/transaccionExitosa');
+			
+			//return "OK";
+			
 			return true;
 		}
 	

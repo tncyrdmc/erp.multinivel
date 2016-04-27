@@ -4,26 +4,28 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-				
 
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>&gt;
-								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras?co=c"> Carrito de Compras </a>
-								> <a href="/bo/mercancia/index?co=c" >Alta</a> > Producto
+
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>&gt;
+					<a href="/bo/comercial">Comercial</a> > <a
+					href="/bo/comercial/carrito_de_compras?co=c"> Carrito de Compras </a>
+					> <a href="/bo/mercancia/index?co=c">Alta</a> > Producto
 				</span>
-					
-					
+
+
 			</h1>
 		</div>
 	</div>
-	<?php if($this->session->flashdata('error')) {
+	<?php
+	
+if ($this->session->flashdata ( 'error' )) {
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
 									×
 								</button>
 								<i class="fa-fw fa fa-check"></i>
-								<strong>Error </strong> '.$this->session->flashdata('error').'
-			</div>'; 
+								<strong>Error </strong> ' . $this->session->flashdata ( 'error' ) . '
+			</div>';
 	}
 	?>	 
 	<section id="widget-grid" class="">
@@ -32,320 +34,337 @@
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
-					
+				<div class="jarviswidget" id="wid-id-1"
+					data-widget-editbutton="false" data-widget-custombutton="false"
+					data-widget-colorbutton="false">
+
 					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Mercancia</h2>				
-						
+						<span class="widget-icon"> <i class="fa fa-edit"></i>
+						</span>
+						<h2>Mercancia</h2>
+
 					</header>
 
 					<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"   action="/bo/mercancia/CrearProducto" class="smart-form" name="form_product">
-								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
-								
+							<form method="POST" enctype="multipart/form-data"
+								action="/bo/mercancia/CrearProducto" class="smart-form"
+								name="form_product">
+								<input type="text" class="hide"
+									value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
+
 								<fieldset>
-									<legend>Datos del producto</span></legend>
+									<legend>
+										Datos del producto</span>
+									</legend>
 									<div id="form_mercancia">
 										<div class="row">
 											<fieldset>
 												<section class="col col-2">
-													<label class="input">
-														Nombre
-														<input  type="text" id="nombre_p" name="nombre" required>
+													<label class="input"> Nombre <input type="text"
+														id="nombre_p" name="nombre" required>
 													</label>
 												</section>
 
 												<section class="col col-2">
-													<label class="input">
-														Concepto
-														<input required type="text" id="concepto" name="concepto">
+													<label class="input"> Concepto <input required type="text"
+														id="concepto" name="concepto">
 													</label>
 												</section>
 												<section class="col col-2">
-													<label class="input">
-														Marca
-														<input type="text" name="marca" id="marca">
+													<label class="input"> Marca <input type="text" name="marca"
+														id="marca">
 													</label>
 												</section>
 												<section class="col col-2">
-													<label class="input">
-														Código de barras
-														<input type="number" min="1" name="codigo_barras" id="codigo_barras">
+													<label class="input"> Código de barras <input type="number"
+														min="1" name="codigo_barras" id="codigo_barras">
 													</label>
 												</section>
-												<section class="col col-3">Categoria
-															<label class="select">
-																<select name="red">
+												<section class="col col-3">
+													Categoria <label class="select"> <select name="red">
 																<?foreach ($grupos as $grupo){?>
 																	<option value="<?=$grupo->id_grupo?>">
-																	<?= $grupo->descripcion." (".$grupo->red.")" ?>
+																	<?= $grupo->descripcion." (".$grupo->red.")"?>
 																	</option>
 																<?}?>
 																</select>
-															</label>
-														</section>
-											<div class="row">
-											<fieldset>
-											<section class="col col-2">
-											<label class="input"><span id="labelextra">Descuento del producto</span>
-												<input required id="precio_promo" type="number" min="0" name="descuento">
-											</label>
-											</section>
+													</label>
+												</section>
 											</fieldset>
-											</div>
-												<div>
-													<section style="padding-left: 0px;" class="col col-6">Descripcion
-														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
-													</section>
-													
-													<section id="imagenes" class="col col-6">
-														<label class="label">Imágen</label>
-														<div class="input input-file">
-															<span class="button">
-																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen"  type="text" required>
-															</div>
-															<small><cite title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite></small>
-														</section>
+										</div>
+										<div class="row">
+											<fieldset>
+												<section class="col col-2">
+													<label class="input"><span id="labelextra">Descuento del
+															producto</span> <input required id="precio_promo"
+														type="number" min="0" name="descuento"> </label>
+												</section>
+											</fieldset>
+										</div>
+										<div class="row">
+											<section style="padding-left: 0px;" class="col col-6">
+												Descripcion
+												<textarea name="descripcion" style="max-width: 96%"
+													id="mymarkdown"></textarea>
+											</section>
+
+											<section id="imagenes" class="col col-6">
+												<label class="label">Imágen</label>
+												<div class="input input-file">
+													<span class="button"> <input id="img" name="img"
+														onchange="this.parentNode.nextSibling.value = this.value"
+														type="file" multiple>Buscar
+													</span><input id="imagen_mr"
+														placeholder="Agregar alguna imágen" type="text" required>
 												</div>
-												</fieldset>
-												<fieldset>
-													<legend>Fisicos</legend>
-													<section class="col col-2">
-														<label class="input">
-															Peso
-															<input required type="number" min="0" name="peso" id="peso">
-														</label>
-													</section>
-													<section id="colonia" class="col col-2">
-														<label class="input">
-															Alto
-															<input type="number" min="0" name="alto" id="alto">
-														</label>
-													</section>
-													<section id="municipio" class="col col-2">
-														<label class="input">
-															Ancho
-															<input type="number" min="0" name="ancho" id="ancho">
-														</label>
-													</section>
-													<section id="municipio" class="col col-2">
-														<label class="input">
-															Profundidad
-															<input type="number" min="0" name="profundidad" id="profundidad">
-														</label>
-													</section>
-													<section id="municipio" class="col col-2">
-														<label class="input">
-															Diametro
-															<input type="number" min="0" name="diametro" id="diametro">
-														</label>
-													</section>
-												</fieldset>
-												<fieldset id="moneda_field">
-													<legend>Moneda y país</legend>
-													<section class="col col-2">
-														<label class="input">
-															Cantidad mínima de venta
-															<input type="number" name="min_venta" min="1" id="min_venta" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Cantidad máxima de venta
-															<input type="number" name="max_venta" min="1" id="max_venta" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input" >
-															Costo real
-															<input type="number" name="real" id="real" onchange="calcular_precio_total()" min="1" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo distribuidores
-															<input type="number" name="costo" id="costo" onchange="calcular_precio_total()" min="1"required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo publico
-															<input type="number" name="costo_publico" id="costo_publico" onchange="calcular_precio_total()" min="1" required>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Tiempo mínimo de entrega
-															<input placeholder="En días" type="number" name="entrega" min="1" id="entrega" >
-														</label>
-													</section>
-													
-													<section class="col col-3">Proveedor
-														<label class="select">
-															<select name="proveedor" required>
-																<?foreach ($proveedores as $key)
-																{?>
+												<small><cite title="Source Title">Para ver el archivo que va
+														a cargar, pulse con el puntero en el boton de "Buscar"</cite></small>
+											</section>
+										</div>
+								
+								<div class="row">
+								<fieldset>
+									<legend>Fisicos</legend>
+									<section class="col col-2">
+										<label class="input"> Peso <input required type="number"
+											min="0" name="peso" id="peso">
+										</label>
+									</section>
+									<section id="colonia" class="col col-2">
+										<label class="input"> Alto <input type="number" min="0"
+											name="alto" id="alto">
+										</label>
+									</section>
+									<section id="municipio" class="col col-2">
+										<label class="input"> Ancho <input type="number" min="0"
+											name="ancho" id="ancho">
+										</label>
+									</section>
+									<section id="municipio" class="col col-2">
+										<label class="input"> Profundidad <input type="number" min="0"
+											name="profundidad" id="profundidad">
+										</label>
+									</section>
+									<section id="municipio" class="col col-2">
+										<label class="input"> Diametro <input type="number" min="0"
+											name="diametro" id="diametro">
+										</label>
+									</section>
+								</fieldset>
+								<fieldset id="moneda_field">
+									<legend>Moneda y país</legend>
+									<section class="col col-2">
+										<label class="input"> Cantidad mínima de venta <input
+											type="number" name="min_venta" min="1" id="min_venta"
+											required>
+										</label>
+									</section>
+									<section class="col col-2">
+										<label class="input"> Cantidad máxima de venta <input
+											type="number" name="max_venta" min="1" id="max_venta"
+											required>
+										</label>
+									</section>
+									<section class="col col-2">
+										<label class="input"> Costo real <input type="number"
+											name="real" id="real" onchange="calcular_precio_total()"
+											min="1" required>
+										</label>
+									</section>
+									<section class="col col-2">
+										<label class="input"> Costo distribuidores <input
+											type="number" name="costo" id="costo"
+											onchange="calcular_precio_total()" min="1" required>
+										</label>
+									</section>
+									<section class="col col-2">
+										<label class="input"> Costo publico <input type="number"
+											name="costo_publico" id="costo_publico"
+											onchange="calcular_precio_total()" min="1" required>
+										</label>
+									</section>
+									<section class="col col-2">
+										<label class="input"> Tiempo mínimo de entrega <input
+											placeholder="En días" type="number" name="entrega" min="1"
+											id="entrega">
+										</label>
+									</section>
+
+									<section class="col col-3">
+										Proveedor <label class="select"> <select name="proveedor"
+											required>
+																<?
+																
+foreach ( $proveedores as $key ) {
+																	?>
 																<option value="<?=$key->user_id?>"><?=$key->nombre." ".$key->apellido?></option>	
 																<?}?>
 															</select>
-														</label>
-													</section>
-													
-													<section class="col col-3">
-														<label class="input">
-															Puntos comisionables
-															<input type="number" min="0" max="" name="puntos_com" id="puntos_com" required>
-														</label>
-													</section>
-													
-													<legend>Impuestos</legend>
-													<fieldset>
-													<div class="row" id="impuesto_agregar">
-														
+										</label>
+									</section>
 
-														<section class="col col-2">País de la mercancía
-														<label class="select">
-															<select id="pais"  name="pais" onChange="select_pais()" required >
-																<option value="-" selected>-- Seleciona un pais --</option>
-																<?foreach ($pais as $key)
-																{?>
+									<section class="col col-3">
+										<label class="input"> Puntos comisionables <input
+											type="number" min="0" max="" name="puntos_com"
+											id="puntos_com" required>
+										</label>
+									</section>
+
+									<legend>Impuestos</legend>
+									<fieldset>
+										<div class="row" id="impuesto_agregar">
+
+
+											<section class="col col-2">
+												País de la mercancía <label class="select"> <select
+													id="pais" name="pais" onChange="select_pais()" required>
+														<option value="-" selected>-- Seleciona un pais --</option>
+																<?
+																
+foreach ( $pais as $key ) {
+																	?>
 																<option value="<?=$key->Code?>">
 																	<?=$key->Name?>
 																</option>
 																<?}?>
 															</select>
-														</label>
-													</section>
-													<!--<section class="col col-2" id="impuesto">Impuesto
+												</label>
+											</section>
+											<!--<section class="col col-2" id="impuesto">Impuesto
 														<label class="select">
 															<select id="id_impuesto[]" name="id_impuesto[]" onclick="calcular_precio_total()">
 																
 															</select>
 														</label>-->
-														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													<!--</section>-->
-															<section class="col col-2">Requiere especificación
-																<div class="inline-group">
-																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" >
-																		<i></i>con IVA</label>
-																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva" checked="">
-																			<i></i>más IVA</label>
-																		</div>
-																	</section>
-																</div>
-																														<div class="row">
-													<section class="col col-2">
-														<label class="input">
-															Costo real con IVA
-															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo público con IVA
-															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
-														</label>
-													</section>
-																										</div>
-																										</fieldset>
-												</fieldset>
-												<fieldset>
-													<legend>Extra</legend>
-													<section class="col col-2">Requiere instalación
-														<div class="inline-group">
-															<label class="radio">
-																<input type="radio" value="1" name="instalacion" checked="">
-																<i></i>Si</label>
-																<label class="radio">
-																	<input type="radio" value="0" name="instalacion">
-																	<i></i>No</label>
-																</div>
-															</section>
-															<section class="col col-2">Requiere especificación
-																<div class="inline-group">
-																	<label class="radio">
-																		<input type="radio" value="1" name="especificacion" checked="">
-																		<i></i>Si</label>
-																		<label class="radio">
-																			<input type="radio" value="0" name="especificacion">
-																			<i></i>No</label>
-																		</div>
-																	</section>
-																	<section class="col col-2">Requiere producción
-																		<div class="inline-group">
-																			<label class="radio">
-																				<input type="radio" value="1" name="produccion" checked="">
-																				<i></i>Si</label>
-																				<label class="radio">
-																					<input type="radio" value="0" name="produccion">
-																					<i></i>No</label>
-																				</div>
-																			</section>
-																			<section class="col col-2">Producto de importación
-																				<div class="inline-group">
-																					<label class="radio">
-																						<input type="radio" value="1" name="importacion" checked="">
-																						<i></i>Si</label>
-																						<label class="radio">
-																							<input type="radio" value="0" name="importacion">
-																							<i></i>No</label>
-																						</div>
-																					</section>
-																					<section class="col col-2">Producto de sobrepedido
-																						<div class="inline-group">
-																							<label class="radio">
-																								<input type="radio" value="1" name="sobrepedido" checked="">
-																								<i></i>Si</label>
-																								<label class="radio">
-																									<input type="radio" value="0" name="sobrepedido">
-																									<i></i>No</label>
-																								</div>
-																							</section>
-																						</fieldset>
-																					</div>
-																				</div>
-																			</fieldset>
-																			<footer>
-																				<button type="submit" class="btn btn-primary">
-																					Agregar
-																				</button>
-																			</footer>
-																		</form>
-																	</div>
+											<a style="cursor: pointer;" onclick="add_impuesto()">Agregar
+												impuesto<i class="fa fa-plus"></i>
+											</a>
+											<!--</section>-->
+											<section class="col col-2">
+												Requiere especificación
+												<div class="inline-group">
+													<label class="radio"> <input type="radio" value="1"
+														name="iva" onchange="calcular_precio_total()"> <i></i>con
+														IVA
+													</label> <label class="radio"> <input type="radio"
+														value="0" onchange="calcular_precio_total()" name="iva"
+														checked=""> <i></i>más IVA
+													</label>
+												</div>
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-2">
+												<label class="input"> Costo real con IVA <input type="text"
+													min="1" max="" name="real_iva" id="real_iva" disabled
+													value="">
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="input"> Costo distribuidores con IVA <input
+													type="text" min="1" max="" name="distribuidores_iva"
+													id="distribuidores_iva" disabled>
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="input"> Costo público con IVA <input
+													type="text" min="1" max="" name="publico_iva"
+													id="publico_iva" disabled>
+												</label>
+											</section>
+										</div>
+									</fieldset>
+								</fieldset>
+								<fieldset>
+									<legend>Extra</legend>
+									<section class="col col-2">
+										Requiere instalación
+										<div class="inline-group">
+											<label class="radio"> <input type="radio" value="1"
+												name="instalacion" checked=""> <i></i>Si
+											</label> <label class="radio"> <input type="radio" value="0"
+												name="instalacion"> <i></i>No
+											</label>
+										</div>
+									</section>
+									<section class="col col-2">
+										Requiere especificación
+										<div class="inline-group">
+											<label class="radio"> <input type="radio" value="1"
+												name="especificacion" checked=""> <i></i>Si
+											</label> <label class="radio"> <input type="radio" value="0"
+												name="especificacion"> <i></i>No
+											</label>
+										</div>
+									</section>
+									<section class="col col-2">
+										Requiere producción
+										<div class="inline-group">
+											<label class="radio"> <input type="radio" value="1"
+												name="produccion" checked=""> <i></i>Si
+											</label> <label class="radio"> <input type="radio" value="0"
+												name="produccion"> <i></i>No
+											</label>
+										</div>
+									</section>
+									<section class="col col-2">
+										Producto de importación
+										<div class="inline-group">
+											<label class="radio"> <input type="radio" value="1"
+												name="importacion" checked=""> <i></i>Si
+											</label> <label class="radio"> <input type="radio" value="0"
+												name="importacion"> <i></i>No
+											</label>
+										</div>
+									</section>
+									<section class="col col-2">
+										Producto de sobrepedido
+										<div class="inline-group">
+											<label class="radio"> <input type="radio" value="1"
+												name="sobrepedido" checked=""> <i></i>Si
+											</label> <label class="radio"> <input type="radio" value="0"
+												name="sobrepedido"> <i></i>No
+											</label>
+										</div>
+									</section>
+								</fieldset>
+						
+						</div>
+					</div>
+					</fieldset>
+					<footer>
+						<button type="submit" class="btn btn-primary">Agregar</button>
+					</footer>
+					</form>
+				</div>
+		
+		</div>
+		<!-- end widget div -->
 
-																</div>
-																<!-- end widget div -->
-															
-														</article>
-														<!-- END COL -->
-													</div>
+		</article>
+		<!-- END COL -->
 
-												</section>
-												<!-- end widget grid -->
-											</div>
-											<!-- END MAIN CONTENT -->
-											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-											<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-											<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
-											<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-											<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-											<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-											<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-											<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-											<script src="/template/js/validacion.js"></script>
-											<script type="text/javascript">
+</div>
+
+</section>
+<!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+<script
+	src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script
+	src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script type="text/javascript">
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 var i = 0;
@@ -1329,10 +1348,12 @@ function add_impuesto_boot()
 	var code=	'<section class="col col-6">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
-	<?foreach ($impuesto as $key)
-	{
-		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
-	}?>
+	<?
+	
+foreach ( $impuesto as $key ) {
+		echo "+'<option value=" . $key->id_impuesto . ">" . $key->descripcion . " " . $key->porcentaje . "%" . "</option>'";
+	}
+	?>
 	+'</select>'
 	+'</label>'
 	+'<a class="btn btn-danger">Eliminar</a>'
