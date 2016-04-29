@@ -1272,8 +1272,12 @@ function index()
 			$usuario->setIdAfiliadosRed(array());
 			$id_hijo=$usuario->getAfiliadoDirectoPorPosicion($id_afiliado,$red->id,$posicionEnRed);
 			
-			$usuario->getAfiliadosDebajoDe($id_hijo,$red->id,"RED",$profundidad,$profundidad);
-			$total_afiliados=count($usuario->getIdAfiliadosRed());
+			if($id_hijo==null)
+				$total_afiliados=0;
+			else{
+				$usuario->getAfiliadosDebajoDe($id_hijo,$red->id,"RED",$profundidad,$profundidad);
+				$total_afiliados=(count($usuario->getIdAfiliadosRed())+1);
+			}
 			
 			//Puntos Totales
 			$usuario=new $this->afiliado;

@@ -91,7 +91,15 @@
 																			<strong class="<?php if($actividad) echo "label label-success";else echo "label label-default";?>" style="font-size: 2rem;"> <?php if($actividad) echo "<i class='fa fa-smile-o'></i> Activo";else echo "<i class='fa fa-frown-o'></i> Inactivo";?></strong>
 																	</div>
 																	<div class="col-sm-12">
-																		<hr>
+																		<br>
+																		<?php if($titulo!=NULL) 
+																			echo '<ul id="sparks" class="">
+																				<li class="sparks-info">
+																				<h5>RANGO<span class="txt-color-yellow"><i class="fa fa-trophy fa-2x"></i>'.$titulo.'</span></h5>
+																				<div class="sparkline txt-color-yellow hidden-mobile hidden-md hidden-sm"></div>
+																				</li>
+																			</ul>'
+																			 ?>
 																	</div>
 																	<div class="col-sm-12">
 				

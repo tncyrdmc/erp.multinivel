@@ -24,8 +24,8 @@ class afiliado extends CI_Model
 	private $totalPuntosComisionables=0;
 	
 	//BONO BINARIOS 
-	private $id_bono;
-	private $tipoDeBono;
+	private $id_bono=0;
+	private $tipoDeBono="NO";
 	private $id_bono_historial=0;
 	/*
 	 * Estado

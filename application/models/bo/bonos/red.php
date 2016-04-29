@@ -70,7 +70,7 @@ class red extends CI_Model
 	}
 
 	function eliminarRed(){
-		$this->db->query('delete from tipo_red where id >= 300');
+		$this->db->query('delete from tipo_red where id >= 1');
 	}
 	public function getIdRed() {
 		return $this->id_red;

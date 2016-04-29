@@ -138,16 +138,16 @@ class mercancia extends CI_Model
 
 
 	function eliminarMercancias(){
-		$this->db->query('delete from mercancia where id >= 500');
-		$this->db->query('delete from producto where id >= 500');
-		$this->db->query('delete from servicio where id >= 500');
-		$this->db->query('delete from combinado where id >= 500');
-		$this->db->query('delete from paquete_inscripcion where id_paquete >= 500');
-		$this->db->query('delete from membresia where id >= 500'); 
-		$this->db->query('delete from cross_merc_img where id_mercancia >= 500');
+		$this->db->query('delete from mercancia where id >= 1');
+		$this->db->query('delete from producto where id >= 1');
+		$this->db->query('delete from servicio where id >= 1');
+		$this->db->query('delete from combinado where id >= 1');
+		$this->db->query('delete from paquete_inscripcion where id_paquete >= 1');
+		$this->db->query('delete from membresia where id >= 1'); 
+		$this->db->query('delete from cross_merc_img where id_mercancia >= 1');
 	}
 	function eliminarCategorias(){
-		$this->db->query('delete from cat_grupo_producto where id_grupo >= 250');
+		$this->db->query('delete from cat_grupo_producto where id_grupo >= 1');
 	}
 	
 	public function getIdMercancia() {

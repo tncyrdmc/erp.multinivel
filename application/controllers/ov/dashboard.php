@@ -17,6 +17,7 @@ class dashboard extends CI_Controller
 		$this->load->model('modelo_premios');
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/bonos/titulo');
 	}
 
 	private $afiliados = array();
@@ -167,6 +168,8 @@ class dashboard extends CI_Controller
 		
 		$ultimos_auspiciados=$this->modelo_dashboard->get_ultimos_auspiciados($id);
 		
+		$titulo=$this->titulo->getNombreTituloAlcanzadoAfiliado($id,date('Y-m-d'));
+		
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
 	    $this->template->set("telefono",$telefono);
@@ -189,6 +192,8 @@ class dashboard extends CI_Controller
 		$this->template->set("puntos_red_semana",$puntos_red_semana);
 		$this->template->set("puntos_red_mes",$puntos_red_mes);
 		$this->template->set("puntos_red_total",$puntos_red_total);
+		
+		$this->template->set("titulo",$titulo);
 		
 		$this->template->set("ultimos_auspiciados",$ultimos_auspiciados);
 		

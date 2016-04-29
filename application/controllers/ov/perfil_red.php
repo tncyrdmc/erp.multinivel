@@ -20,6 +20,7 @@ class perfil_red extends CI_Controller
 		$this->load->model('model_planes');
 		$this->load->model('ov/modelo_dashboard');
 		$this->load->model('bo/model_tipo_usuario');		
+		$this->load->model('bo/bonos/titulo');
 		if (!$this->tank_auth->is_logged_in()&&!$_POST['token'])
 		{																		// logged in
 		redirect('/auth');
@@ -449,6 +450,16 @@ class perfil_red extends CI_Controller
 		echo '<div class="row">Compras: $ <b>'.number_format($compras[0]->comprast==0 ? $compras[0]->compras : $compras[0]->comprast,2).'</b></div>';
 		echo '<div class="row">Comisiones: $ <b>'.number_format($comision+$bonos,2).'</b></div>';
 		echo '<div class="row">Puntos comisionables:  <b>'.number_format($puntos[0]->puntos==0 ? $puntos[0]->puntosu : $puntos[0]->puntos,2).'</b></div>';
+		
+		$titulo=$this->titulo->getNombreTituloAlcanzadoAfiliado($_POST['id'],date('Y-m-d'));
+		
+		if($titulo!=NULL)
+			echo '<ul id="sparks" class="">
+					<li class="sparks-info">
+					 <h5>RANGO<span class="txt-color-yellow"><i class="fa fa-trophy fa-2x"></i>'.$titulo.'</span></h5>
+					 <div class="sparkline txt-color-yellow hidden-mobile hidden-md hidden-sm"></div>
+					</li>
+				</ul>';
 		echo '</div></div></div>';
 	}
 	
