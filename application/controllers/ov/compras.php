@@ -416,21 +416,25 @@ function index()
 		}	
 	}
 	
-	function RegistrarVentaTucompra(){
+	function RegistrarVentaTucompra(){ //WOWCONEXION
 	
-		$id = $_POST['extra1'];
-		$id_pago = $_POST['extra2'];
+		$id = $_POST['campoExtra1'];
+		$id_pago = $_POST['campoExtra2'];
 		$identificado_transacion = $_POST['firmaTuCompra'];
-		$fecha=$_POST['transaction_date'];
+		$fecha=date("Y-m-d");
 		$referencia = $_POST['codigoFactura'];
 		$metodo_pago = $_POST['metodoPago'];
 		$estado = $_POST['transaccionAprobada'];
 		$respuesta = $_POST['numeroTransaccion'];
-		$moneda = $_POST['valorFactura'];
-		$medio_pago = $_POST['payment_method_name'];
+		$moneda = "COP";
+		$medio_pago = $_POST['metodoPago'];
 	
+		if(!$id){
+			return false;
+			exit();
+		}
 	
-		if($estado==1){
+		if($estado=="1"){
 				
 	
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'TUCOMPRA',$fecha);
@@ -448,6 +452,8 @@ function index()
 			$this->registrarFacturaDatosDefaultAfiliado($id,$id_venta);
 			$this->registrarFacturaMercanciaPagoOnline ( $contenidoCarrito,$carrito ,$id_venta);
 			$this->pagarComisionVenta($id_venta,$id);
+			
+			return "OK";
 		}
 	
 	}
@@ -524,15 +530,34 @@ function index()
 	
 	}
 	
-	function RespuestaTucompra(){
+	function RespuestaTucompra(){ //WOWCONEXION
 	
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
-	
-		if($_GET['transactionState']==4){
-				
+		
+		$a = array(
+			$_POST['campoExtra1'],
+			$_POST['campoExtra2'],
+			$_POST['firmaTuCompra'],
+			date("Y-m-d"),
+			$_POST['codigoFactura'],
+			$_POST['metodoPago'],
+			$_POST['transaccionAprobada'],
+			$_POST['numeroTransaccion'], 
+			"COP",
+			$_POST['metodoPago']				
+		);		
+		
+		if(!$a){
+			return false;
+			exit();
+		}
+		
+		if($a[6]=="1"){
+			
+			//var_dump($a);exit();	
 			$this->cart->destroy();
 			$id=$this->tank_auth->get_user_id();
 			$usuario=$this->general->get_username($id);
@@ -546,6 +571,9 @@ function index()
 			$this->template->set_partial('header', 'website/ov/header');
 			$this->template->set_partial('footer', 'website/ov/footer');
 			$this->template->build('website/ov/compra_reporte/transaccionExitosa');
+			
+			//return "OK";
+			
 			return true;
 		}
 	
@@ -608,7 +636,7 @@ function index()
 			redirect('/');
 	}
 	
-	function pagarVentaTucompra(){
+	function pagarVentaTucompra(){ //WOWCONEXION
 	
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -670,8 +698,8 @@ function index()
 			  .'<input name="tipoMoneda"      type="hidden"  value="'.$tucompra[0]->moneda.'" >'
 			  .'<input name="signature"     type="hidden"  value="'.$id_transacion.'"  >'
 	//		  .'<input name="test"          type="hidden"  value="'.$tucompra[0]->test.'" >'
-	//		  .'<input name="extra1" type="hidden" value="'.$id.'" >'
-	//		  .'<input name="extra2" type="hidden" value="'.$id_pago_proceso.'" >'
+			  .'<input name="campoExtra1" type="hidden" value="'.$id.'" >'
+			  .'<input name="campoExtra2" type="hidden" value="'.$id_pago_proceso.'" >'
 			  .'<input name="correoComprador" type="hidden"  value="'.$email[0]->email.'" >'
 			  .'<input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RespuestaTucompra" >'
 			  .'<input name="confirmationUrl"  type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaTucompra" >'

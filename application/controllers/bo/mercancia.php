@@ -99,14 +99,14 @@ class mercancia extends CI_Controller
 		$zona	         = $this->model_admin->get_zona();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
 		$pais            = $this->model_admin->get_pais_activo();
-		$paquetes_actuales= $this->model_admin->get_paquetes_actuales();
+		//$paquetes_actuales= $this->model_admin->get_paquetes_actuales();
 		$redes           = $this->model_tipo_red->listarTodos();
 		
 		
 		$this->template->set("pais",$pais);
 		$this->template->set("redes",$redes);
 		$this->template->set("productos",$productos);
-		$this->template->set("paquetes_actuales",$paquetes_actuales);
+		//$this->template->set("paquetes_actuales",$paquetes_actuales);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("proveedores",$proveedores);
