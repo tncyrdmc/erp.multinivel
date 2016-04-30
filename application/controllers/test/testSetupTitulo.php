@@ -48,17 +48,17 @@ class testSetupTitulo extends CI_Controller {
 	
 	public function index(){
 
-		$this->before();
-	/*	$this->testSetTitulo();
+		$this->after();
+		$this->testSetTitulo();
 		$this->testIngresarTitulo();
-		
+		$this->before();
 		$this->testGetValoresAfiliadoTieneParaTitulo();
 		$this->testGetBuscarTituloAlcanzadoPorElAfiliadoPuntosRed();
 		$this->testGetBuscarTituloAlcanzadoPorElAfiliadoPuntosPersonales();
 		$this->testGetBuscarTituloAlcanzadoPorElAfiliadoComprasRed();
 		$this->testGetBuscarTituloAlcanzadoPorElAfiliadoComprasPersonales();
 		$this->testGetNombreTituloAlcanzadoAfiliado();
-		$this->after();*/
+		$this->after();
 
 
 	}
