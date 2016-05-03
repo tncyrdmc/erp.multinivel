@@ -584,6 +584,35 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		return $q2;
 	}
 	
+	function getBonosPagadosRed($id,$inicio,$fin){
+		$q=$this->db->query("SELECT -- c.id, 
+									h.id, -- c.id_usuario,
+									concat(p.nombre,' ',p.apellido) as afiliado,
+									u.username as usuario,
+									c.id_bono,
+									b.nombre bono, 
+									b.descripcion, 
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									sum(c.valor) as valor
+									FROM 
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h 
+									WHERE p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and c.valor > 0
+								and c.id_usuario  = ".$id."
+								and c.id_bono_historial = h.id 
+								and h.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' 
+							group by h.id
+							ORDER BY h.id ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
 	function kill_historial($id){
 		$this->db->query("delete from comision_bono_historial where id = ".$id);
 		$this->db->query("delete from comision_bono where id_bono_historial = ".$id);

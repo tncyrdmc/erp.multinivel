@@ -21,13 +21,13 @@ class compras extends CI_Controller
 		$this->load->model('bo/modelo_historial_consignacion');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('model_user_webs_personales');
 		$this->load->model('model_comprador');
 		$this->load->model('model_carrito_temporal');
 		$this->load->model('model_servicio');
 		$this->load->model('bo/modelo_pagosonline');
-		$this->load->model('bo/bonos/afiliado');
-		$this->load->model('bo/bonos/calculador_bono');
+			
 		$this->load->model('ov/model_web_personal_reporte');
 	}
 	
@@ -1505,6 +1505,7 @@ function index()
 			case 9 	: $this->reporte_directos(); break;
 			case 10 	: $this->reporte_afiliados_activos(); break;
 			case 11 	: $this->reporte_afiliados_inactivos(); break;
+			case 12 	: $this->reporte_bonos_afiliados_todos(); break;
 		}
 		
 	}
@@ -2475,6 +2476,84 @@ function index()
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 				//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');
+	}
+	
+	function reporte_bonos_afiliados_todos()
+	{
+		$id=$this->tank_auth->get_user_id();
+	
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
+	
+		$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
+			
+		foreach ($redesUsuario as $redUsuario){
+			$red = $this->model_tipo_red->ObtenerFrontalesRed($redUsuario->id );
+		
+			if($red){
+					
+				if($red[0]->profundidad==0)
+					$this->preOrdenRedProfundidadInfinita($id,$redUsuario->id,$red[0]->frontal);
+					else
+						$this->preOrdenRed($id,$redUsuario->id,$red[0]->frontal,$red[0]->profundidad);
+			}
+		}
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>"
+					."<th>ID historial</th>"
+					."<th>Usuario</th>"
+					."<th data-hide='phone'>Nombre Completo</th>"
+					."<th data-hide='phone,tablet'>Fecha</th>"
+					."<th data-hide='phone,tablet'>Bono</th>"
+					."<th data-hide='phone,tablet'>Valor</th>"
+				."</thead>
+				<tbody>";
+		
+		$total = 0;				
+		
+		foreach ($this->afiliados as $afiliado){
+		
+			$bonos = $this->model_bonos->getBonosPagadosRed($afiliado->id_afiliado,$inicio,$fin);
+						
+			foreach ($bonos as $bono)
+			{					
+					$total += $bono->valor;	
+					
+				echo "<tr>"
+						."<td class='sorting_1'>".$bono->id."</td>"
+						."<td>".$bono->usuario."</td>"
+						."<td>".$bono->afiliado."</td>"
+						."<td> ".$bono->fecha."</td>"
+						."<td> ".$bono->bono."</td>"
+						."<td>$ ".$bono->valor
+						//."|".$total
+						."</td>"
+					."</tr>";
+			}
+		}
+	
+		/*	<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";*/
+		
+		echo "<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class='sorting_1'><b>TOTAL:</b></td>
+			<td><b> $	".number_format($total, 2)."</b></td>
+			</tr>";
+		
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	
 	}
 	
 	function muestra_mercancia()
@@ -4151,24 +4230,27 @@ function index()
 	public function pagarComisionVenta($id_venta,$id_afiliado_comprador){
 		$MATRICIAL='MAT';
 		$UNILEVEL='UNI';	
-		 
+		
 		$mercancias = $this->modelo_compras->consultarMercanciaTotalVenta($id_venta);
 	
 		foreach ($mercancias as $mercancia){
 				
 			$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia->id);
-			$valor_punto_comisionable=$this->model_tipo_red->traerValorPuntoComisionableRed($id_red_mercancia);
 			$tipo_plan_compensacion=$this->modelo_compras->obtenerPlanDeCompensacion($id_red_mercancia);
 			
 			if($tipo_plan_compensacion[0]->plan==$MATRICIAL||$tipo_plan_compensacion[0]->plan==$UNILEVEL){
 
-				$valorAComisionar=$valor_punto_comisionable*$mercancia->puntos_comisionables;
-				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$valorAComisionar,$id_afiliado_comprador);
+				$costoVenta=$mercancia->costo_unidad_total;
+				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
 				
 			}
-
+			
+			
 		}
 	}
+	
+	
+	
 	
 	public function calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado){
 	

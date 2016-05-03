@@ -37,6 +37,7 @@
 											<option value="6">Ver consecutivo de Mi red</option>
 											<option onclick="tipo_reporte()" value="10">Ver Afiliados Activos de Mi red</option>
 											<option onclick="tipo_reporte()" value="11">Ver Afiliados InActivos de Mi red</option>
+											<option value="12">Ver Bonos pagados de Mi red</option>
 											<!--<option value="1">Afiados nuevos</option>-->
 											<!--<option value="7">Ver compras de mi red</option>-->
 											<!--  <option value="4">Ventas web personal</option>-->
@@ -386,7 +387,7 @@
 			}
 		
 			function validarsifecha(tipo,inicio,fin){
-				var tiposfecha = [2,3,4,5,7,8];
+				var tiposfecha = [2,3,4,5,7,8,12];
 				for (i = 0; i < tiposfecha.length; i++)  {
 					if(tipo == tiposfecha[i]){
 						return (inicio == '' || fin == '') ? true : false;						
@@ -414,6 +415,7 @@
 						success: function( msg )
 						{
 						$("#reporte_div").html(msg);
+						setTableConfig();
 						FinalizarSpinner();
 						}
 					});
@@ -705,11 +707,12 @@
 				phone : 480
 			};
 			var otable = $('#datatable_fixed_column1').DataTable({
-	    	//"bFilter": false,
+	    	"bFilter": true,
+	    	"bFilter": true,
 	    	//"bInfo": false,
 	    	//"bLengthChange": false
 	    	//"bAutoWidth": false,
-	    	//"bPaginate": false,
+	    	"bPaginate": true,
 	    	//"bStateSave": true // saves sort state using localStorage
 			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
 					"t"+
