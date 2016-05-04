@@ -83,9 +83,22 @@ class modelo_billetera extends CI_Model
 		return $comisiones[0]->valor;
 	}
 	
+	function get_total_comisiones_afiliado_Range($id,$inicio,$fin){
+	
+		$q=$this->db->query('SELECT sum(valor)as valor FROM comision where id_afiliado='.$id.' and fecha between "'.$inicio.' 00:00:00" and "'.$fin.' 23:59:59"');
+		$comisiones=$q->result();
+		return $comisiones[0]->valor;
+	}
+	
 	function get_comisiones_mes($id,$id_red,$fecha){
 		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t 
 		where (c.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.' and MONTH("'.$fecha.'")=MONTH(fecha)');
+		return $q->result();
+	}
+	
+	function get_comisiones_Range($id,$id_red,$inicio, $fin){
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t 
+		where (c.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.' and c.fecha between "'.$inicio.' 00:00:00" and "'.$fin.' 23:59:59"');
 		return $q->result();
 	}
 	
@@ -121,9 +134,22 @@ class modelo_billetera extends CI_Model
 		return $q->result();
 	}
 	
+	function get_cobros_total_Range($id,$inicio,$fin)
+	{
+		$q=$this->db->query('SELECT round(sum(monto),2) as monto FROM cobro where  id_estatus=2 and fecha_pago between "'.$inicio.' 00:00:00" and "'.$fin.' 23:59:59" and id_user='.$id);
+		return $q->result();
+	}
+	
 	function get_cobros_afiliado_mes_pendientes($id,$fecha)
 	{
 		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus!=2 and month("'.$fecha.'")=month(fecha_pago) and id_user='.$id);
+		$cobros=$q->result();
+		return $cobros[0]->monto;
+	}
+	
+	function get_cobros_pendientes_total_afiliado_Range($id,$inicio,$fin)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus!=2 and fecha_pago between "'.$inicio.' 00:00:00" and "'.$fin.' 23:59:59" and id_user='.$id);
 		$cobros=$q->result();
 		return $cobros[0]->monto;
 	}
@@ -259,6 +285,29 @@ class modelo_billetera extends CI_Model
 		return $retenciones;
 	}
 	
+	function ValorRetencionesTotales_Range($id, $inicio,$fin){
+		
+		$q = $this->db->query("SELECT created FROM users where id=".$id);
+		$fecha_creacion = $q->result();
+		
+		$q = $this->db->query("SELECT * FROM cat_retenciones_historial 
+				where concat(ano,'-',mes) > '".date("Y-m", strtotime($inicio))."' 
+				and concat(ano,'-',mes) <= '".date("Y-m", strtotime($fin))."' 
+				and month('".$fecha_creacion[0]->created."')<=mes 
+				and year('".$fecha_creacion[0]->created."')<=ano");
+		
+		$retenciones_regis = $q->result();
+		$retenciones = array();
+		foreach ($retenciones_regis as $retencion){
+
+			$retencion_cobrar = array('id' => $retencion->id,
+					'descripcion' => $retencion->descripcion,
+					'valor'   => $retencion->valor);
+			$retenciones[] = $retencion_cobrar;
+		}
+		return $retenciones;
+	}
+	
 	function PagosClientes()
 	{
 		$q=$this->db->query('select * ,
@@ -303,6 +352,14 @@ class modelo_billetera extends CI_Model
 		$q = $this->db->query("select sum(c.puntos) as puntos, sum(c.valor) as valor
 		from afiliar a, comision c, venta v
 		where v.id_user = a.id_afiliado and v.id_venta = c.id_venta  and a.id_red = ".$id_red." and c.id_red = ".$id_red." and  c.id_afiliado = ".$id_afiliado." and  a.debajo_de = ".$id_afiliado." and (MONTH('".$fecha."') = MONTH(c.fecha))");
+		return $q->result();
+	}
+	
+	function getComisionDirectos_Range($id_afiliado, $id_red, $inicio, $fin)
+	{
+		$q = $this->db->query("select sum(c.puntos) as puntos, sum(c.valor) as valor
+		from afiliar a, comision c, venta v
+		where v.id_user = a.id_afiliado and v.id_venta = c.id_venta  and a.id_red = ".$id_red." and c.id_red = ".$id_red." and  c.id_afiliado = ".$id_afiliado." and  a.debajo_de = ".$id_afiliado." and c.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59'");
 		return $q->result();
 	}
 	
@@ -399,6 +456,13 @@ from transaccion_billetera where id_user = ".$id." order by fecha desc ");
 	
 	function get_total_transacciones_id_fecha($id,$fecha){
 		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." and date_format(fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."' group by tipo ");
+		$q2=$q->result();
+		
+		return $this->set_transacciones_format($q2);
+	}
+	
+	function get_total_transacciones_id_Range($id,$inicio,$fin){
+		$q=$this->db->query("select tipo,sum(monto) as valor from transaccion_billetera where id_user = ".$id." and fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' group by tipo ");
 		$q2=$q->result();
 		
 		return $this->set_transacciones_format($q2);

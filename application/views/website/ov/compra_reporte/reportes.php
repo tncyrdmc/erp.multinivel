@@ -420,6 +420,7 @@
 						}
 					});
 				}else{
+					FinalizarSpinner();
 					alert('Introduzca las fechas para buscar');
 				}
 			

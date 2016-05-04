@@ -705,7 +705,7 @@ class model_afiliado extends CI_Model{
 		$q = $this->db->query("select distinct  
 					sum(m.puntos_comisionables*c.cantidad) puntos, sum(m.puntos_comisionables) as puntosu 
 				FROM mercancia m, cross_venta_mercancia c , venta v
-				WHERE m.sku = c.id_mercancia and c.id_venta = v.id_venta and v.id_user = ".$id."");
+				WHERE m.id = c.id_mercancia and c.id_venta = v.id_venta and v.id_user = ".$id."");
 		$puntos = $q->result();
 		return $puntos;
 	}

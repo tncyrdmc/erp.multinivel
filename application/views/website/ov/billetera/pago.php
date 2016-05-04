@@ -256,7 +256,7 @@
 																		<label class="label"><b>Pedir Dinero</b></label>
 																		<label class="input">
 																			<i class="icon-prepend fa fa-money"></i>
-																			<input name="cobro" type="number" min="1" class="from-control" id="cobro"/>
+																			<input name="cobro" type="number" min="0.01" step="0.01" class="from-control" id="cobro"/>
 																		</label>
 																	</section>
 																	<section class="col col-4">
@@ -502,7 +502,7 @@ function cobrar() {
 }
 function validarCampos(){
 
-	if(parseInt($('#cobro').val())<=0)
+	if($('#cobro').val()<=0)
 		return false;
 	
 	if($('#ctitular').val()=="")

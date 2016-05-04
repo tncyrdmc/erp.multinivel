@@ -249,7 +249,7 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 		
-		if(intval($_POST['cobro'])<=0){
+		if($_POST['cobro']<=0){
 			echo "ERROR <br>Valor del cobro invalido.";
 			exit();
 		}
@@ -410,7 +410,7 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
 
-		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
+		$total_bonos = $this->model_bonos->ver_total_bonos_id_fecha($id,$_GET['fecha']);
 		
 		/*echo date("Y-m", strtotime($_GET['fecha'])) ;
 		exit();*/

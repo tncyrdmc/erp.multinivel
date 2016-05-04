@@ -1,6 +1,5 @@
 
 <!-- MAIN CONTENT -->
-<div id="spinner2"></div>
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
@@ -25,7 +24,7 @@
 									
 								<label class="select">
 									<select id="tipo-reporte" >
-										<option value="1000" selected> </option>
+										<option value="" selected="" disabled="">Selecciona Reporte </option>
 										<option value="7" >Afiliados</option>
 										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
 										<option value="15" onclick="tipo_reporte()" >Afiliados Activos</option>
@@ -36,6 +35,8 @@
 										<option value="14">Ventas Pagos Enlinea</option>
 										<option value="13" >Comisiones Por Pagar</option>
 										<option value="10" >Comisiones Pagadas</option>
+										<option value="17" >Bonos Pagados</option>
+										<option value="18" >Total Comisiones y Bonos</option>
 										<option value="11" >Comisiones Pagadas y Por Pagar</option>
 										<!--  	
 											<option value="6" >Facturacion / Pedidos cobrados</option>
@@ -89,7 +90,7 @@
 								
 							<section class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
 								<label class="input">
-									<a id="genera-reporte" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12" onClick = "tipo_reporte()">Generar Reporte</a>
+									<a id="genera-reporte" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12" >Generar Reporte</a>
 								</label>
 							</section>
 							<section class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -289,188 +290,74 @@
 		</script>
 		
 		<script type="text/javascript">
-			$("#genera-reporte").click(function()
-			{
-				tipo=$("#tipo-reporte").val();
-				switch(tipo)
-				{
-					case '1':
-						
-						
-						break;
-					case '2':
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
-						{
-							alert('Introduzca fecha de inicio');
-						}
-						else
-						{
-							if(fin=='')
-							{
-								alert('Introduzca fecha de fin');
-							}
-							else
-							{
-								$("#nuevos_afiliados").show();
-								var datos={'inicio':inicio,'fin':fin};
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras_usr",
-									success: function( msg )
-									{
-										$("#reporte_div").html(msg);
-			    
-									}
-								});
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras_usr_well",
-									success: function( msg )
-									{
-										$("#well-print-usr").html(msg);
-									}
-								});
-							}
-						}	
-						
-						
-						break;
-					case '3':
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
-						{
-							alert('Introduzca fecha de inicio');
-						}
-						else
-						{
-							if(fin=='')
-							{
-								alert('Introduzca fecha de fin');
-							}
-							else
-							{
-								$("#nuevos_afiliados").show();
-								var datos={'inicio':inicio,'fin':fin};
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras",
-									success: function( msg )
-									{
-										$("#reporte_div").html(msg);
-								    
-									}
-								});
-								$.ajax({
-									 data: {info:JSON.stringify(datos)},
-							         type: "get",
-							         url: "reporte_compras_red_well",
-									success: function( msg )
-									{
-										$("#well-print-red").html(msg);
-									}
-								});
-							}
-						}	
-						
-						
-						break;
-					case '4':
-						$("#nuevos-afiliados").show();
-						$.ajax({
-					         type: "post",
-					         url: "reportes/reporte_proveedores",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-					    
-							}
-						});
-						break;
-					case "12" :{
-							iniciarSpinner();
-						// Ventas Pagadas Bancos
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-							$.ajax({
-								type: "POST",
-								url: "/bo/reportes/reporte_cobros_pagados",
-								data: {startdate:inicio,finishdate:fin}
-							})
-							.done(function( msg ) {
-								FinalizarSpinner();
-								$("#reporte_div").html(msg);
-								
-							});
-						}
-						break;
-					case "14" :{
-						iniciarSpinner();
-					// Ventas Pagadas Online
-					var inicio=$("#startdate").val();
-					var fin=$("#finishdate").val();
-						$.ajax({
-							type: "POST",
-							url: "/bo/reportes/reporte_ventas_pagadas_online",
-							data: {startdate:inicio,finishdate:fin}
-						})
-						.done(function( msg ) {
-							FinalizarSpinner();
-							$("#reporte_div").html(msg);
-							
-						});
-					}
-
-					break;
-					case '17':
-						$("#nuevos-afiliados").show();
-						$.ajax({
-					         type: "post",
-					         url: "reportes/reporte_usuarios",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-						    
-							}
-						});
-						break;
-					case '25':
-						$("#nuevos-afiliados").show();
-						$.ajax({
-					         type: "post",
-					         url: "reportes/reporte_afiliados",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-						    
-							}
-						});
-						break;
-					case '26':
-						$("#nuevos-afiliados").show();
-						$.ajax({
-					         type: "post",
-					         url: "reportes/reporte_afiliados_mes",
-							success: function( msg )
-							{
-								$("#reporte_div").html(msg);
-						    
-							}
-						});
-						break;
-					default:
-						break;
-				}
 
 			
+			
+			function tipo_reporte(){
+			
+				var tipo=$("#tipo-reporte").val();
+				
+				$("#nuevos-afiliados").show();
+				iniciarSpinner();
+				$.ajax({
+			         type: "post",
+			         url: "/bo/reportes/reportes_tipo",
+			         data: {
+				         	tipo : tipo,
+				         	startdate :'2016-01-01',
+				         	finishdate :'2026-01-01'
+				         }
+				}).done(function( msg )
+					{
+					
+					$("#reporte_div").html(msg);
+					setTableConfig();
+					FinalizarSpinner();
+					
+					});
+			}
+		
+			function validarsifecha(tipo,inicio,fin){
+				var tiposfecha = [1,7,10,11,12,13,14,17,18];
+				for (i = 0; i < tiposfecha.length; i++)  {
+					if(tipo == tiposfecha[i]){
+						return (inicio == '' || fin == '') ? true : false;						
+					}			
+				}					
+			}
+		
+			$("#genera-reporte").click(function()
+			{
+				
+				var tipo=$("#tipo-reporte").val();
+				var inicio=$("#startdate").val();
+				var fin=$("#finishdate").val();
+				if (!validarsifecha(tipo,inicio,fin)){
+					$("#nuevos-afiliados").show();
+					iniciarSpinner();
+					$.ajax({
+				         type: "post",
+				         url: "/bo/reportes/reportes_tipo",
+				         data: {
+					         	tipo : tipo,
+					         	startdate :inicio,
+					         	finishdate :fin
+					         }
+			         }).done(function (msg){
+							$("#reporte_div").html(msg);
+							setTableConfig();
+							FinalizarSpinner();
+							});
+				}else{
+					FinalizarSpinner();
+					alert('Introduzca las fechas para buscar');
+				}
+			
 			});
-		</script>
-		<script>
+						
+			
+		
+			
 			function reporte_excel_comprar_usr()
 			{
 				var inicio=$("#startdate").val();
@@ -554,7 +441,7 @@
 			/* END BASIC */
 			
 			/* COLUMN FILTER  */
-		    var otable = $('#datatable_fixed_column').DataTable({
+		    var otable = $('#datatable_fixed_column1').DataTable({
 		    	//"bFilter": false,
 		    	//"bInfo": false,
 		    	//"bLengthChange": false
@@ -568,7 +455,7 @@
 				"preDrawCallback" : function() {
 					// Initialize the responsive datatables helper once.
 					if (!responsiveHelper_datatable_fixed_column) {
-						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+						responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
 					}
 				},
 				"rowCallback" : function(nRow) {
@@ -678,213 +565,6 @@
 		
 		})
 		
-		function iniciarSpinner(){
-			
-			var opts = {
-					  lines: 12 // The number of lines to draw
-					, length: 28 // The length of each line
-					, width: 14 // The line thickness
-					, radius: 42 // The radius of the inner circle
-					, scale: 1 // Scales overall size of the spinner
-					, corners: 1 // Corner roundness (0..1)
-					, color: '#3276B1' // #rgb or #rrggbb or array of colors
-					, opacity: 0.25 // Opacity of the lines
-					, rotate: 0 // The rotation offset
-					, direction: 1 // 1: clockwise, -1: counterclockwise
-					, speed: 1 // Rounds per second
-					, trail: 60 // Afterglow percentage
-					, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-					, zIndex: 2e9 // The z-index (defaults to 2000000000)
-					, className: 'spinner' // The CSS class to assign to the spinner
-					, top: '50%' // Top position relative to parent
-					, left: '50%' // Left position relative to parent
-					, shadow: false // Whether to render a shadow
-					, hwaccel: true // Whether to use hardware acceleration
-					, position: 'absolute' // Element positioning
-					}
-					
-					var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
-			}
-
-		function FinalizarSpinner(){
-			
-			$("#spinner2").html('');
-		}
-		
-		function tipo_reporte(){
-			
-			switch($("#tipo-reporte").val()){
-			case "0" : location.href="/bo/comercial/red_tabla";
-			break;
-			case "1" : 
-
-				/*var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/index_actualizado_ventas_ov",
-					data: {startdate:startdate,finishdate:finishdate}
-				});
-				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();*/
-				iniciarSpinner();
-				var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_ventas_oficinas_virtuales",
-					data: {startdate:startdate,finishdate:finishdate}
-					
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			break;
-			case "7" :{
-				//AFILIADOS
-				iniciarSpinner();
-				var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_afiliados",
-					data: {startdate:startdate,finishdate:finishdate}
-					
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			}
-			break;
-			case "8" :{
-				iniciarSpinner();
-				// Afiliados en el mes
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_afiliados_mes"
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-				});
-			}
-			break;
-			case "9" :{
-				iniciarSpinner();
-			//Ventas por combrar Bancos
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_cobros_pendientes"
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-				});
-			}
-			break;
-			case "10" :{
-				iniciarSpinner();
-				// Comisiones pagadas
-				var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_comisiones_pagadas",
-					data: {inicio:startdate,fin:finishdate}
-					
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			}
-			break;
-			case "13" :{
-				// Comisiones por pagar
-				iniciarSpinner();
-				var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_comisiones_por_pagar",
-					data: {inicio:startdate,fin:finishdate}
-					
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			}
-			break;
-
-			case "11" :{
-				// Comisiones por pagar y pagadas
-				iniciarSpinner();
-				var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_cobros_todos",
-					data: {inicio:startdate,fin:finishdate}
-					
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			}
-			break;
-
-			case "15" :{
-				iniciarSpinner();
-			// Afiliados Activos
-			var inicio=$("#startdate").val();
-			var fin=$("#finishdate").val();
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/afiliados_activos",
-					data: {startdate:inicio,finishdate:fin}
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			}
-			break;
-
-			case "16" :{
-				iniciarSpinner();
-			// Afiliados Activos
-			var inicio=$("#startdate").val();
-			var fin=$("#finishdate").val();
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/afiliados_inactivos",
-					data: {startdate:inicio,finishdate:fin}
-				})
-				.done(function( msg ) {
-					FinalizarSpinner();
-					$("#reporte_div").html(msg);
-					
-				});
-			}
-			break;
-		}
-
-		}
 
 		function reporte_excel(){
 			
@@ -974,6 +654,59 @@
 			break;
 		}
 
+		}
+
+		function setTableConfig(){
+			var responsiveHelper_dt_basic = undefined;
+			var responsiveHelper_datatable_fixed_column = undefined;
+			var responsiveHelper_datatable_col_reorder = undefined;
+			var responsiveHelper_datatable_tabletools = undefined;
+			
+			var breakpointDefinition = {
+				tablet : 1024,
+				phone : 480
+			};
+			var otable = $('#datatable_fixed_column1').DataTable({
+	    	"bFilter": true,
+	    	"bFilter": true,
+	    	//"bInfo": false,
+	    	//"bLengthChange": false
+	    	//"bAutoWidth": false,
+	    	"bPaginate": true,
+	    	//"bStateSave": true // saves sort state using localStorage
+			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+					"t"+
+					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"autoWidth" : true,
+			"preDrawCallback" : function() {
+				// Initialize the responsive datatables helper once.
+				if (!responsiveHelper_datatable_fixed_column) {
+					responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+				}
+			},
+			"rowCallback" : function(nRow) {
+				responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+			},
+			"drawCallback" : function(oSettings) {
+				responsiveHelper_datatable_fixed_column.respond();
+			}		
+			
+		    });
+	    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+	    	   
+		    // Apply the filter
+		    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+		    	
+		        otable
+		            .column( $(this).parent().index()+':visible' )
+		            .search( this.value )
+		            .draw();
+		            
+		    } );
+		   
+	    // custom toolbar
+		/*	 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+					$("#remplazar").html(obj);*/
 		}
 			
 		</script>
