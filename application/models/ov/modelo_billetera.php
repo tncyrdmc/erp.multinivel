@@ -402,7 +402,7 @@ from transaccion_billetera t, users u, user_profiles p
 								(select sum(costo_total) 
 									from cross_venta_mercancia 
 									where id_venta = c.id_venta) as total,
-								c.valor as comision
+								(select sum(valor) from comision where id_venta = c.id_venta and id_afiliado =  c.id_afiliado) comision
 							FROM comision c , user_profiles p , venta v, tipo_red t
 							WHERE 	
 								p.user_id = v.id_user
@@ -410,6 +410,7 @@ from transaccion_billetera t, users u, user_profiles p
 								and	t.id = c.id_red
 								and c.id_afiliado = ".$id."
 								-- and date_format(v.fecha,'%Y-%m') = ''
+							GROUP BY c.id_venta
 							ORDER BY c.id ;");
 		$q2=$q->result();
 	
@@ -440,6 +441,7 @@ from transaccion_billetera t, users u, user_profiles p
 								and	t.id = c.id_red
 								and c.id_afiliado = ".$id."
 								and date_format(v.fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."'
+							GROUP BY c.id_venta
 							ORDER BY c.id ;");
 		$q2=$q->result();
 	
