@@ -6,7 +6,7 @@ class titulo extends CI_Model
 		parent::__construct();
 		$this->load->model('/bo/bonos/afiliado');
 		$this->load->model('/bo/bonos/calculador_bono');
-
+		$this->load->model('/ov/model_titulos');
 	
 	}
 
@@ -217,6 +217,7 @@ class titulo extends CI_Model
 	
 	function getNombreTituloAlcanzadoAfiliado($id_usuario,$fechaActual){
 		$id_titulo=$this->getTituloAlcanzadoAfiliado($id_usuario,1,$fechaActual);
+		$this->model_titulos->actualizar($id_usuario,$id_titulo);
 		return $this->getNombreTitulo($id_titulo);
 	}
 	function getNombreTitulo($id){
