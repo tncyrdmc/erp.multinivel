@@ -165,8 +165,8 @@
 						<th>ID</th>
 		                <th data-class="expand">Imagen</th>
 		                <th data-hide="phone">Usuario</th>
-			            <th data-hide="phone,tablet">Nombre</th>
-			            <th data-hide="phone,tablet">Apellido</th>
+			            <th data-hide="phone,tablet">Sponsor</th>
+			            <th data-hide="phone,tablet">Contraseña</th>
 				        <th data-hide="phone,tablet">e-mail</th>
 				        <th data-hide="phone">Redes</th>
 				        <th>Accion</th>
@@ -191,9 +191,9 @@
 						}?>
 				        
 		                <td><img style="width: 10rem; height: 10rem;" src="<?php echo $afiliados_imagen?>"></img></td>
-		                <td><?php echo $afiliado->username?></td>
-			            <td><?php echo $afiliado->nombre?></td>
-			            <td><?php echo $afiliado->apellido?></td>
+		                <td><?php echo $afiliado->nombre." ".$afiliado->apellido." (".$afiliado->username.")"?></td>
+			            <td><?php echo $afiliado->id==2 ? "Eres la Empresa" : $afiliado->sponsor ?></td>
+			            <td><?php echo $afiliado->recovery ? $afiliado->recovery : "<em class='txt-color-red'>Debe Cambiarse</em>" ?></td>
 				        <td><?php echo $afiliado->email?></td>
 				        <td><?php echo $afiliado->redes?></td>
 				        <td>

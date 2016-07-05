@@ -248,9 +248,10 @@ class Users extends CI_Model
 	 * @param	int
 	 * @return	bool
 	 */
-	function reset_password($user_id, $new_pass, $new_pass_key, $expire_period = 900)
+	function reset_password($user_id,$recovery, $new_pass, $new_pass_key, $expire_period = 900)
 	{
 		$this->db->set('password', $new_pass);
+		$this->db->set('recovery', $recovery);
 		$this->db->set('new_password_key', NULL);
 		$this->db->set('new_password_requested', NULL);
 		$this->db->where('id', $user_id);
@@ -268,9 +269,10 @@ class Users extends CI_Model
 	 * @param	string
 	 * @return	bool
 	 */
-	function change_password($user_id, $new_pass)
+	function change_password($user_id, $new_pass,$recovery)
 	{
 		$this->db->set('password', $new_pass);
+		$this->db->set('recovery', $recovery);
 		$this->db->where('id', $user_id);
 
 		$this->db->update($this->table_name);

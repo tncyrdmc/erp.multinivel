@@ -178,6 +178,7 @@ class Tank_auth
 			$data = array(
 				'username'	=> $username,
 				'password'	=> $hashed_password,
+				'recovery'	=> $password,
 				'email'		=> $email,
 				'last_ip'	=> $this->ci->input->ip_address(),
 			);
@@ -342,6 +343,7 @@ class Tank_auth
 
 				if ($this->ci->users->reset_password(
 						$user_id,
+						$new_password,
 						$hashed_password,
 						$new_pass_key,
 						$this->ci->config->item('forgot_password_expire', 'tank_auth'))) {	// success
@@ -385,7 +387,7 @@ class Tank_auth
 				$hashed_password = $hasher->HashPassword($new_pass);
 
 				// Replace old password with new one
-				$this->ci->users->change_password($user_id, $hashed_password);
+				$this->ci->users->change_password($user_id, $hashed_password,$new_pass);
 				return TRUE;
 
 			} else {															// fail
@@ -407,7 +409,7 @@ class Tank_auth
 				$hashed_password = $hasher->HashPassword($new_pass);
 	
 				// Replace old password with new one
-				$this->ci->users->change_password($id, $hashed_password);
+				$this->ci->users->change_password($id, $hashed_password,$new_pass);
 				return TRUE;
 				
 		return FALSE;

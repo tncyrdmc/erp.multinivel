@@ -458,7 +458,7 @@ class model_perfil_red extends CI_Model
 	
 	function get_tabla()
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+		$q=$this->db->query("select U.id, U.username, U.email,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
@@ -470,7 +470,7 @@ where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id
 		
 	function get_tabla_por_id_buscado($id_buscado, $id_red)
 	{
-			$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+			$q=$this->db->query("select U.id, U.username,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
@@ -485,7 +485,7 @@ order by (U.id);");
 	
 	function get_tabla_por_nombre_buscado($nombre_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+		$q=$this->db->query("select U.id, U.username,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
@@ -500,7 +500,7 @@ order by (U.id);");
 	
 	function get_tabla_por_apellido_buscado($apellido_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+		$q=$this->db->query("select U.id, U.username,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
@@ -515,7 +515,7 @@ order by (U.id);");
 	
 	function get_tabla_por_username_buscado($username_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+		$q=$this->db->query("select U.id, U.username,U.recovery, (select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
@@ -529,7 +529,7 @@ order by (U.id);");
 	
 	function get_tabla_por_email_buscado($email_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+		$q=$this->db->query("select U.id, U.username, U.email,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 

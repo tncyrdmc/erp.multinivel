@@ -106,6 +106,8 @@ class Auth extends CI_Controller
 					$this->template->set('data',$data);
 					$this->template->build('auth/login');
 				}else {
+					$recovery = $this->getRecovery ($login);
+					
 					if ($this->tank_auth->login(
 							$this->form_validation->set_value('login'),
 							$this->form_validation->set_value('password'),
@@ -143,7 +145,11 @@ class Auth extends CI_Controller
 					
 						}
 					
-					} else {
+					} else if(!$recovery){
+						//echo $recovery;exit();
+						redirect('/auth/forgot_password');
+						
+					}else{
 						
 						$data['errors']['attempts']= $this->general->addAttempts();
 						
@@ -158,6 +164,7 @@ class Auth extends CI_Controller
 							foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 						}
 					}
+
 				}
 
 			}
@@ -165,6 +172,15 @@ class Auth extends CI_Controller
 			$this->template->build('auth/login');
 		}
 	}
+	
+	private function getRecovery($login) {
+		$query = "select recovery from users where id = ".$login." or username = '".$login."' or email = '".$login."'";
+		$q = $this->db->query($query);
+		$q=$q->result();
+		$recovery = $q ? $q[0]->recovery : false;
+		return $recovery ;
+	}
+
 
 	/**
 	 * Logout user
