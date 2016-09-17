@@ -116,7 +116,7 @@
 															<ul class="list-inline friends-list">
 																<li><span class="font-md"><i>Semana :</i></span> <?=intval($puntos_semana)?>
 																</li>
-																<li><span class="font-md"><i>Mes :</i></span> <?=intval($puntos_semana)?>
+																<li><span class="font-md"><i>Mes :</i></span> <?=intval($puntos_mes)?>
 																</li>
 																<li><span class="font-md"><i>Total :</i></span> <?=intval($puntos_total)?>
 																</li>
@@ -247,7 +247,7 @@
 																		if($cuenta->swift)
 																			echo'<span>SWIFT  :<b>'.$cuenta->swift.'</b>,</span><br>';
 																		if($cuenta->otro)
-																			echo'<span>ABA/IBAN/OTRO  :<b>'.$cuenta->otro.'</b>,</span><br>';
+																			echo'<span>Titular  :<b>'.$cuenta->otro.'</b>,</span><br>';
 																		if($cuenta->dir_postal)
 																			echo'<span>Dirección postal  :<b>'.$cuenta->dir_postal.'</b>,</span><br>';
 																		   echo'<span>Valor  :<b> $ '.$cuenta->valor.'</b>,</span>

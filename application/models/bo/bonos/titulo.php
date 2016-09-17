@@ -179,15 +179,15 @@ class titulo extends CI_Model
 		$idValorTitulo=$titulo[0]->id;
 		
 		$titulo_siguiente=$this->getTituloPorOrden($orden+1);
-
+		$valorTituloAfiliado=$this->getTipoDeValorTitulo($id_afiliado,$titulo[0]->frecuencia,$titulo[0]->condicion_red_afilacion, $fechaActual, $titulo[0]->tipo);
+		
+		$valorTituloAfiliado=(($valorTituloAfiliado*$titulo[0]->porcentaje)/100);
+		
 		if(!isset($titulo_siguiente[0])){
-			return $titulo[0]->id;
+			return ($valorTitulo>$valorTituloAfiliado) ? 0 : $titulo[0]->id;
 		}
 		
-		$valorTituloSiguiente=$titulo_siguiente[0]->valor;
-		$valorTituloAfiliado=$this->getTipoDeValorTitulo($id_afiliado,$titulo[0]->frecuencia,$titulo[0]->condicion_red_afilacion, $fechaActual, $titulo[0]->tipo);
-
-		$valorTituloAfiliado=(($valorTituloAfiliado*$titulo[0]->porcentaje)/100);
+		$valorTituloSiguiente=$titulo_siguiente[0]->valor;		
 		
 		if($valorTitulo>$valorTituloAfiliado)
 			return 0;

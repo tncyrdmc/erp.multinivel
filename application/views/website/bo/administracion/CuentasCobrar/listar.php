@@ -63,9 +63,9 @@
 										<th data-hide="phone">Email</th>	
 										<th data-hide="phone">Banco</th>
 										<th data-hide="phone,tablet">N° Cuenta</th>
+										<th data-hide="phone,tablet">Titular</th>
 										<th data-hide="phone,tablet">CLABE</th>
-										<th data-hide="phone,tablet">SWIFT</th>
-										<th data-hide="phone,tablet">ABA/IBAN/OTRO</th>
+										<th data-hide="phone,tablet">SWIFT</th>										
 										<th data-hide="phone,tablet">Dirección postal</th>
 										<th data-hide="phone,tablet">Valor</th>
 										<th data-hide="phone,tablet">Fecha</th>
@@ -82,9 +82,9 @@
 										<td><?php echo $cobro->email; ?></td>
 										<td><?php echo $cobro->banco; ?></td>
 										<td><?php echo $cobro->cuenta; ?></td>
-										<td><?php echo $cobro->clave; ?></td>
-										<td><?php echo $cobro->swift; ?></td>
 										<td><?php echo $cobro->otro; ?></td>
+										<td><?php echo $cobro->clave; ?></td>
+										<td><?php echo $cobro->swift; ?></td>										
 										<td><?php echo $cobro->dir_postal; ?></td>
 										<td>$ <?php echo number_format($cobro->valor,2); ?></td>
 										<td><?php echo $cobro->fecha; ?></td>

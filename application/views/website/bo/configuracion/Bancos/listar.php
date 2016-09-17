@@ -90,9 +90,9 @@
 										<th data-class="expand">Pais</th>
 										<th data-hide="phone">Nombre</th>
 										<th data-hide="phone">Cuenta</th>
+										<th data-hide="phone, tablet">Titular</th>
 										<th data-hide="phone, tablet">CLABE</th>
-										<th data-hide="phone, tablet">SWIFT</th>
-										<th data-hide="phone, tablet">ABA/IBAN/OTRO</th>
+										<th data-hide="phone, tablet">SWIFT</th>										
 										<th data-hide="phone, tablet">Dirección postal </th>
 										<th>Acciones</th>
 
@@ -105,9 +105,9 @@
 										<td><?php echo $banco->pais; ?></td>
 										<td><?php echo $banco->nombre; ?></td>
 										<td><?php echo $banco->cuenta; ?></td>
-										<td><?php echo $banco->clave; ?></td>
-										<td><?php echo $banco->swift; ?></td>
 										<td><?php echo $banco->otro; ?></td>
+										<td><?php echo $banco->clave; ?></td>
+										<td><?php echo $banco->swift; ?></td>										
 										<td><?php echo $banco->dir_postal; ?></td>
 										<td class='text-center'>
 											

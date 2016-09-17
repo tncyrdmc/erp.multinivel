@@ -35,6 +35,12 @@
 				</div>
 				<br>
 				<div class="form-group">
+					<b>Titular</b> <input class="form-control" id="otro" name="otro"
+						type="text"
+						value="<?php echo $banco[0]->otro?>">
+				</div>
+				<br>
+				<div class="form-group">
 					<b>CLABE</b> <input class="form-control" id="clabe" name="clabe"
 						type="number" onChange="validarSiNumero(this.value);"
 						value="<?php echo $banco[0]->clave?>">
@@ -45,13 +51,7 @@
 						type="number"
 						value="<?php echo $banco[0]->swift?>">
 				</div>
-				<br>
-				<div class="form-group">
-					<b>ABA/IBAN/OTRO</b> <input class="form-control" id="otro" name="otro"
-						type="number"
-						value="<?php echo $banco[0]->otro?>">
-				</div>
-				<br>
+				<br>				
 				<div class="form-group">
 					<b>Dirección postal</b> <input class="form-control" id="dir_postal" name="dir_postal"
 						type="number"

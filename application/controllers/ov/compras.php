@@ -397,7 +397,7 @@ function index()
 			}
 			if($banco[0]->otro){
 				echo '
-				<p><b>ABA/IBAN/OTRO</b> :'.$banco[0]->otro.'</p>
+				<p><b>Titular</b> :'.$banco[0]->otro.'</p>
 				';
 			}
 			if($banco[0]->dir_postal){

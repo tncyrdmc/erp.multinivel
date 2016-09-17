@@ -61,13 +61,13 @@
 															<input class="form-control"  id="cuenta" name="cuenta"  type="number" placeholder="Numero de cuenta" onChange="validarSiNumero(this.value);">
 														</div><br>
 														<div class="form-group">
-															Código SWIFT
-															<input class="form-control"  id="swift" name="swift" type="text">
-														</div><br>
-														<div class="form-group">
-															ABA/IBAN/OTRO
+															<b>Titular:</b>
 															<input class="form-control"  id="otro" name="otro" type="text">
 														</div><br>
+														<div class="form-group">
+															Código SWIFT
+															<input class="form-control"  id="swift" name="swift" type="text">
+														</div><br>														
 														<div class="form-group">
 															CLABE
 															<input class="form-control"  id="clabe" name="clabe" type="number" onChange="validarSiNumero(this.value);">
