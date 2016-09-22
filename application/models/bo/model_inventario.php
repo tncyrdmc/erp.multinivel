@@ -11,8 +11,20 @@ class model_inventario extends CI_Model
             );
              $this->db->insert("documento_inventario",$dato_documento);
 	}
+	function setMovimiento()
+	{
+		$dato_documento=array(
+				"nombre"     => $_POST['nombre'],
+				"estatus"     => 'ACT',
+		);
+		$this->db->insert("movimiento_inventario",$dato_documento);
+	}
 	function Obtener_Almacen($almacen){
-		$q=$this->db->query('select * from cedi where tipo  ="'.$almacen.'"');
+		$q=$this->db->query('select * from cedi where tipo  = "'.$almacen.'"');
+		return $q->result();
+	}
+	function Obtener_Proveedor($almacen){
+		$q=$this->db->query('select p.id_proveedor id_cedi,concat(p.nombre," ",p.apellido) nombre from proveedor_datos p group by p.id_proveedor');
 		return $q->result();
 	}
 	function Obtener_Productos_Almacen($almacen){
@@ -23,8 +35,37 @@ class model_inventario extends CI_Model
 		$q=$this->db->query('select * from documento_inventario ');
 		return $q->result();
 	}
+	function getMovimientos(){
+		$q=$this->db->query('select * from movimiento_inventario');
+		return $q->result();
+	}
 	function getAlmacenesCedi(){
-		$q=$this->db->query('select * from cedi ');
+		$q=$this->db->query("select
+								    id_cedi,
+								    nombre,
+								    (case
+								        when (tipo = 'C') then 'CEDI'
+								        else 'Almacén'
+								    end) tipo
+								from
+								    cedi");
+		return $q->result();
+	}
+	function getAlmacenesCediProveedores(){
+		$q=$this->db->query("select
+								    id_cedi,
+								    nombre,
+								    (case
+								        when (tipo = 'C') then 'CEDI'
+								        else 'Almacén'
+								    end) tipo
+								from
+								    cedi
+								union select
+								    id_proveedor, concat(nombre, ' ', apellido), 'Proveedor'
+								from
+								    proveedor_datos
+								group by id_proveedor");
 		return $q->result();
 	}
 	function updateEstatusdocumento(){
@@ -35,15 +76,28 @@ class model_inventario extends CI_Model
 		$this->db->where('id_doc', $_POST['id']);
 		$this->db->update('documento_inventario', $datos);
 	}
+	function statusMovimiento(){
+		$datos = array(
+				'estatus' => $_POST['estado'],
+	
+		);
+		$this->db->where('id_doc', $_POST['id']);
+		$this->db->update('movimiento_inventario', $datos);
+	}
    function kill_Documento(){
       	$q=$this->db->query('delete from documento_inventario where id_doc ='.$_POST['id']);
    }
-   
+   function killMovimiento(){
+      	$q=$this->db->query('delete from movimiento_inventario where id_doc ='.$_POST['id']);
+   }
    function getDocumento($id){
        	$q=$this->db->query('select * from documento_inventario where id_doc ='.$_POST['id']);
      	return $q->result();
    }
-   
+   function getMovimiento($id){
+   	$q=$this->db->query('select * from movimiento_inventario where id_doc ='.$_POST['id']);
+   	return $q->result();
+   }
    function getProductos(){
    	$q=$this->db->query('select * from producto  ');
    	return $q->result();
@@ -57,6 +111,14 @@ class model_inventario extends CI_Model
    	$this->db->where('id_doc', $_POST['id']);
    	$this->db->update('documento_inventario', $datos);
    }
+   function updateMovimiento(){
+   	$datos = array(
+   			'nombre' => $_POST['nombre'],
+   
+   	);
+   	$this->db->where('id_doc', $_POST['id']);
+   	$this->db->update('movimiento_inventario', $datos);
+   }
    function ingresar_inventario($datos){
    	$this->db->insert("inventario",$datos);
    	return $this->db->insert_id();
@@ -66,7 +128,8 @@ class model_inventario extends CI_Model
   }
   
   function consultar_en_inventario($mercancia,$destino){
-  	$q=$this->db->query('select * from inventario where  id_almacen ="'.$destino.'" and id_mercancia ='.$mercancia);
+  	$query = 'select * from inventario where id_almacen = '.$destino.' and id_mercancia = '.$mercancia;
+	$q=$this->db->query($query);
   	return $q->result();
   }
 

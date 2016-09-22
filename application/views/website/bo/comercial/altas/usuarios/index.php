@@ -32,10 +32,10 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-3 link">
+											<div class="col-sm-2 link">
 											</div>
-											<div class="col-sm-6 link">
-												<div class="col-sm-4 link">
+											<div class="col-sm-8 link">
+												<div class="col-sm-3 link">
 												<a href="/bo/usuarios/altaUsuarioAcceso">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-user fa-3x"></i>
@@ -43,10 +43,18 @@
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/menuAltaUsuarioCedi">
+												<div class="col-sm-3 link">
+												<a href="/bo/usuarios/almacen">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-home fa-3x"></i>
+														<i class="fa fa-user fa-3x"></i><i class="fa fa-building fa-3x"></i>
+														<h1>Usuarios Almacén</h1>
+													</div>
+												</a>
+												</div>
+												<div class="col-sm-3 link">
+												<a href="/bo/usuarios/CEDI">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-user fa-3x"></i><i class="fa fa-home fa-3x"></i>
 														<h1>Usuarios CEDI</h1>
 													</div>
 												</a>

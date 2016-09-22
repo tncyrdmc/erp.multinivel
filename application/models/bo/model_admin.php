@@ -2161,4 +2161,104 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 	
 	}
 	
+	function getDistribucion(){
+	
+		$q=$this->db->query("select 
+									d.canal,
+								    c.alias,
+									group_concat(d.tipo_mercancia) mercancia,
+									group_concat(t.descripcion) tipo
+								from
+								    canal c,
+								    cat_tipo_mercancia t,
+								    distribucion d
+								where 
+									c.id = d.canal
+									and t.id = d.tipo_mercancia 
+									and c.estatus = 'ACT'
+									and t.estatus = 'ACT'
+								group by
+									c.id");
+		return $q->result();
+	}
+	
+	function limpiarDistribucion($id){
+		$this->db->query("DELETE FROM distribucion WHERE canal=".$id);
+		return true;
+	}
+	
+	function setDistribucion($id,$mercancias){
+		
+		$dato = array(
+			'canal' => $id,
+			'tipo_mercancia' => 0
+		);
+
+		foreach ($mercancias as $item){
+			if(intval($item)>0){
+				$dato['tipo_mercancia']=$item;
+				$this->db->insert("distribucion",$dato);
+			}									
+		}
+		
+	}
+	
+	function getCanales(){
+	
+		$q=$this->db->query("SELECT *  FROM canal");
+		return $q->result();
+	}
+	
+	function getCanalesDefault($id){
+	
+		$q=$this->db->query("select 
+									d.canal,
+								    c.alias,
+									c.nombre,
+									group_concat(d.tipo_mercancia) mercancia,
+									group_concat(t.descripcion) tipo
+								from
+								    canal c,
+								    cat_tipo_mercancia t,
+								    distribucion d
+								where 
+									c.id = d.canal
+									and t.id = d.tipo_mercancia 
+									and c.estatus = 'ACT'
+									and t.estatus = 'ACT'
+									and d.tipo_mercancia = ".$id."
+								group by
+									c.id");
+		return $q->result();
+	}
+	
+	function getCanalesWHERE($where){
+		
+		$where = ($where) ? 'where '.$where : '';
+	
+		$q=$this->db->query("SELECT *  FROM canal ".$where);
+		return $q->result();
+	}
+	
+	function limpiarComercializacion($id){
+		$this->db->query("DELETE FROM comercializacion WHERE mercancia=".$id);
+		return true;
+	}
+	
+	function setComercializacion($id,$canales){
+		
+		$dato = array(
+			'mercancia' => $id,
+			'canal' => 0
+		);
+
+		foreach ($canales as $item){
+			if(intval($item)>0){
+				$dato['canal']=$item;
+				$this->db->insert("comercializacion",$dato);
+			}									
+		}
+		
+	}
+	
 }

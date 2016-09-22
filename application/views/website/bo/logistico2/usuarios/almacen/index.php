@@ -4,20 +4,24 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						
-							<?php  if($type=='5'){?>
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>							
-								> Pedidos / Embarques
-							</span>
-						<?php }else{?>
+						<?php  if($type=='5'){?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
 							<span>
-								> <a href="/bol/dashboard/"> Logistico</a>
-								> Pedidos / Embarques
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/logistico2/usuarios"> Usuarios Logístico</a>
+								> Almacén
 							</span>
-						
-							<?php }?>	
-						
+							<?php }else{?>	
+									<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+								> <a href="/bo/administracion">Administración </a>
+								> <a href="/bo/usuarios">Usuarios </a> 
+								> Almacén
+							</span>
+							
+								
+						<?php }?>	
 						</h1>
 					</div>
 				</div>
@@ -43,31 +47,22 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											
-											<div class="col-sm-2 link">
+											<div class="col-sm-3 link">
 											</div>
-											<div class="col-sm-8 link">
-												<div class="col-sm-3 link">
-												<a href="/bo/logistico2/pedidos_pendientes">
+											<div class="col-sm-6 link">
+												<div class="col-sm-4 link">
+												<a href="/bo/usuarios/altaAlmacen">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-clipboard fa-3x"></i>
-														<h1>Pedidos a Embarcar</h1>
+														<i class="fa fa-edit fa-3x"></i>
+														<h1>Alta</h1>
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-3 link">
-												<a href="/bo/logistico2/pedidos_transito">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-truck fa-3x"></i>
-														<h1>Pedidos en Transito</h1>
-													</div>
-												</a>
-												</div>
-												<div class="col-sm-3 link">
-												<a href="/bo/logistico2/pedidos_embarcados">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-check fa-3x"></i>
-														<h1>Pedidos Embarcados </h1>
+												<div class="col-sm-4 link">
+												<a href="/bo/usuarios/listarAlmacen">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-list-alt fa-3x"></i>
+														<h1>Listar</h1>
 													</div>
 												</a>
 												</div>

@@ -19,6 +19,7 @@ class usuarios extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('model_cedi');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/modelo_almacen');
 	}
 	
 	function index(){
@@ -472,7 +473,7 @@ class usuarios extends CI_Controller
 			$this->template->build('website/bo/comercial/altas/usuarios/altaUsuarioAcceso');
 	}
 
-	function menuAltaUsuarioCedi(){
+	function CEDI(){
 		
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -480,11 +481,13 @@ class usuarios extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if($this->general->isAValidUser($id,"administracion")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Administracion = $this->general->isAValidUser($id,"administracion");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$Administracion&&!$Logistico){
 			redirect('/auth/logout');
 		}
+		
 		$usuario=$this->general->get_username($id);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$style=$this->modelo_dashboard->get_style(1);
@@ -499,24 +502,26 @@ class usuarios extends CI_Controller
 			$this->template->build('website/bo/comercial/altas/usuarios/menuAltaUsuarioCedi');
 	}
 	
-	function altaCedi(){
+	function altaCEDI(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"administracion"))
-		{
+		$Administracion = $this->general->isAValidUser($id,"administracion");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$Administracion&&!$Logistico){
 			redirect('/auth/logout');
 		}
-
+		
 		$usuario=$this->general->get_username($id);
 		
 		$style=$this->modelo_dashboard->get_style(1);
 		
 		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$cedis = $this->model_cedi->listarTodos();
 		
 		$this->template->set("cedis",$cedis);
@@ -689,15 +694,17 @@ class usuarios extends CI_Controller
 		$this->template->build('website/bo/comercial/altas/usuarios/listar');
 	}
 	
-	function listarCedi(){
+	function listarCEDI(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"administracion"))
-		{
+		$Administracion = $this->general->isAValidUser($id,"administracion");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$Administracion&&!$Logistico){
 			redirect('/auth/logout');
 		}
 
@@ -705,7 +712,7 @@ class usuarios extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style(1);
 		$users=$this->model_tipo_usuario->get_all_users_cedi();
-
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("users",$users);
@@ -728,7 +735,7 @@ class usuarios extends CI_Controller
 		$this->template->build('website/bo/comercial/altas/usuarios/editar');
 	}
 	
-	function editarUsuarioCedi(){
+	function editarCEDI(){
 		$id             = 	$this->tank_auth->get_user_id();
 		$style          = 	$this->general->get_style(1);
 		
@@ -750,7 +757,7 @@ class usuarios extends CI_Controller
 		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($_POST['id']);
 		
 		if($_POST['email']==""||$_POST['username']==""||$_POST['nombre']==""||$_POST['apellido']==""){
-			echo "Faltaron datos por ingrensar";
+			echo "Faltaron datos por ingresar";
 			exit();
 		}
 		
@@ -774,13 +781,13 @@ class usuarios extends CI_Controller
 		}
 	}
 	
-	function actualizar_users_cedi(){
+	function actualizarCEDI(){
 		
 		$_POST['mail']=$_POST['email'];
 		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($_POST['id']);
 		
 		if($_POST['email']==""||$_POST['nombre']==""||$_POST['apellido']==""){
-			echo "Faltaron datos por ingrensar";
+			echo "Faltaron datos por ingresar";
 			exit();
 		}
 		
@@ -805,7 +812,7 @@ class usuarios extends CI_Controller
 		$this->db->query("delete from user_profiles where user_id=".$_POST["id"]);
 	}
 	
-	function kill_user_cedi()
+	function killCEDI()
 	{
 		$username = $this->db->query("select username from users where id=".$_POST["id"]);
 		$username = $username->result();
@@ -1174,4 +1181,195 @@ function subtree()
 		}
 		
 	}
+	
+	function almacen(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+	
+		$Administracion = $this->general->isAValidUser($id,"administracion");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Administracion&&!$Logistico){
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/logistico2/usuarios/almacen/index');
+	}
+	
+	function altaAlmacen(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+	
+		$Administracion = $this->general->isAValidUser($id,"administracion");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Administracion&&!$Logistico){
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$almacenes = $this->modelo_almacen->obtenerAlmacenes();
+	
+		$this->template->set("almacenes",$almacenes);
+	
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
+	
+		$this->template->set("tiposUsuario",$tiposUsuario);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		if ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+			redirect('/auth/send_again/');
+	
+		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
+			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
+	
+		} else {
+			$use_username = $this->config->item('use_username', 'tank_auth');
+			if ($use_username) {
+				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+			}
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+			$email_activation = $this->config->item('email_activation', 'tank_auth');
+	
+			if ($this->form_validation->run()) {								// validation ok
+				if (!is_null($data = $this->tank_auth->create_user(
+						$use_username ? $this->form_validation->set_value('username') : '',
+						$this->form_validation->set_value('email'),
+						$this->form_validation->set_value('password'),
+						$email_activation))) {
+								
+							$this->model_tipo_usuario->newUser($_POST['nombre'],$_POST['apellido'],9);
+	
+							$this->modelo_almacen->insertarUsuario();
+	
+							redirect('/bo/usuarios/listarAlmacen');
+	
+							//redirect('/bo/usuarios/listarTipoDeUsuarioAcceso');
+	
+						} else {
+							$errors = $this->tank_auth->get_error_message();
+							foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+						}
+			}
+			$data['use_username'] = $use_username;
+			$this->template->set("data",$data);
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			$this->template->build('website/bo/logistico2/usuarios/almacen/alta',$data);
+	
+		}
+	}
+	
+	function listarAlmacen(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+	
+		$Administracion = $this->general->isAValidUser($id,"administracion");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Administracion&&!$Logistico){
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+		$users=$this->modelo_almacen->getUsuarios();
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("users",$users);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/logistico2/usuarios/almacen/listar');
+	}
+	
+	function editarAlmacen(){
+		$id             = 	$this->tank_auth->get_user_id();
+		$style          = 	$this->general->get_style(1);
+	
+		$user	 	 	=	$this->modelo_almacen->getUsuarioId($_POST['id']);
+	
+		$almacenes = $this->modelo_almacen->obtenerAlmacenes();
+	
+		$this->template->set("almacenes",$almacenes);
+	
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
+	
+		$this->template->set("user",$user);
+		$this->template->build('website/bo/logistico2/usuarios/almacen/editar');
+	}
+	
+	function actualizarAlmacen(){
+	
+		$_POST['mail']=$_POST['email'];
+		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($_POST['id']);
+	
+		if($_POST['email']==""||$_POST['nombre']==""||$_POST['apellido']==""){
+			echo "Faltaron datos por ingresar";
+			exit();
+		}
+	
+		if($use_mail){
+			echo "El Email ya existe , ingrese otro no existente";
+			exit();
+		}
+	
+		$correcto = $this->modelo_almacen->actualizarUsuario();
+	
+		if($correcto){
+			echo "Usuario Actualizado";
+		}
+		else{
+			echo "No se puede actualizar el usuario";
+		}
+	}
+	
+	function killAlmacen()
+	{
+		$username = $this->model_perfil_red->get_username($_POST["id"]);
+		//echo $username[0]->username;
+		//var_dump($this->db->query("delete from users_cedi where username='".$username[0]->username."'"));exit();
+		$this->db->query("delete from users_almacen where username='".$username."'");
+		$this->db->query("delete from users where id=".$_POST["id"]);
+		$this->db->query("delete from user_profiles where user_id=".$_POST["id"]);
+		//redirect('/bo/usuarios/listarCedi');
+	}
+	
 }

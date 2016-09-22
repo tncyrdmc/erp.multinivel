@@ -13,10 +13,10 @@
 															</label>
 															<label class="txt-color-red"></label>
 															<br>
-															<label class="label">Seleccione el CEDI al que pertenece</label>
+															<label class="label">Seleccione el Almacén al que pertenece</label>
 															<label class="select">
 																<select name="id_cedi" id="id_cedi" required>
-																<?foreach ($cedis as $cedi) {
+																<?foreach ($almacenes as $cedi) {
 																	if ($cedi->id_cedi==$user[0]->cedi){?>
 																	<option selected value="<?php echo $cedi->id_cedi; ?>">
 																		<?php echo $cedi->nombre; ?>
@@ -70,7 +70,7 @@
 														<br>
 														<label class="label">Teléfono (fijo o Movil)</label>
 														<label class="input">
-															<input name="telefono" value="<?php echo $user[0]->telefono_fijo?>" id="telefono" maxlength="60" size="30" type="tel" pattern="[0-9-(-)---+]+" required>
+															<input name="telefono" value="<?php echo $user[0]->telefono?>" id="telefono" maxlength="60" size="30" type="tel" pattern="[0-9-(-)---+]+" required>
 														</label>
 														<label class="txt-color-red"></label>
 														</fieldset>
@@ -100,7 +100,7 @@ function enviar() {
 	setiniciarSpinner();
 	 $.ajax({
 							type: "POST",
-							url: "/bo/usuarios/actualizarCEDI",
+							url: "/bo/usuarios/actualizarAlmacen",
 							data: $('#edit').serialize()
 						})
 						.done(function( msg ) {
@@ -115,7 +115,7 @@ function enviar() {
 											className: "btn-success",
 											callback: function() {
 												FinalizarSpinner();
-												location.href="/bo/usuarios/listarCEDI";
+												location.href="/bo/usuarios/listarAlmacen";
 												}
 											}
 										}

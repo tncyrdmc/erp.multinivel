@@ -94,7 +94,8 @@ class model_mercancia extends CI_Model {
 				"especificacion" => $_POST ['especificacion'],
 				"produccion" => $_POST ['produccion'],
 				"importacion" => $_POST ['importacion'],
-				"sobrepedido" => $_POST ['sobrepedido'] 
+				"sobrepedido" => $_POST ['sobrepedido'],
+				"inventario" => $_POST ['inventario'] 
 		);
 		$this->db->insert ( "producto", $dato_producto );
 		

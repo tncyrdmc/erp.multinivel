@@ -7,17 +7,17 @@
 						<?php  if($type=='5'){?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							
-							<span>>
-								<a href="/bo/usuarios">Usuarios </a> > CEDI
+							<span>
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/logistico2/usuarios"> Usuarios Logístico</a>
+								> CEDI
 							</span>
 							<?php }else{?>	
 									<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								<a href="/bo/administracion">Administración </a>
-							</span>
-							
-							<span>>
-								<a href="/bo/usuarios">Usuarios </a> > CEDI
+							<span>
+								> <a href="/bo/administracion">Administración </a>
+								> <a href="/bo/usuarios">Usuarios </a> 
+								> CEDI
 							</span>
 							
 								
@@ -51,7 +51,7 @@
 											</div>
 											<div class="col-sm-6 link">
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/altaCedi">
+												<a href="/bo/usuarios/altaCEDI">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-edit fa-3x"></i>
 														<h1>Alta</h1>
@@ -59,7 +59,7 @@
 												</a>
 												</div>
 												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/listarCedi">
+												<a href="/bo/usuarios/listarCEDI">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 														<i class="fa fa-list-alt fa-3x"></i>
 														<h1>Listar</h1>

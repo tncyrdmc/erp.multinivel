@@ -8,7 +8,7 @@
 							
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/comercial"> Comercial</a> > Carrito de Compras
+								<a href="/bo/comercial"> Comercial</a> > Mercancias
 							</span>
 			
 						</h1>
@@ -36,32 +36,20 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-3 link">
+											<div class="col-sm-2 link">
 											</div>
 											
-							 <?php if(isset($_GET['co'])){?>
-											<div class="col-sm-6 link">
-												<div class="col-sm-4 link">
-												<a href="/bo/mercancia/index?co=c">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-edit fa-3x"></i>
-														<h1>Alta</h1>
+							
+											<div class="col-sm-8 link">
+												<div class="col-sm-3 link">
+												<a href="/bo/mercancia/configurar">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<i class="fa fa-cogs fa-3x"></i>
+														<h1>Configurar</h1>
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-4 link">
-												<a href="/bo/comercial/carrito?co=c">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-list-alt fa-3x"></i>
-														<h1>Listar</h1>
-													</div>
-												</a>
-												</div>
-											</div>
-											
-											 <?php } else{?>
-											<div class="col-sm-6 link">
-												<div class="col-sm-4 link">
+												<div class="col-sm-3 link">
 												<a href="/bo/mercancia/index">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-edit fa-3x"></i>
@@ -69,9 +57,9 @@
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-4 link">
-												<a href="/bo/comercial/carrito">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+												<div class="col-sm-3 link">
+												<a href="/bo/comercial/listarMercancia">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-list-alt fa-3x"></i>
 														<h1>Listar</h1>
 													</div>
@@ -79,7 +67,6 @@
 												</div>
 											</div>
 											
-											 <?php }?>
 										 </div>
 									</div>
 								</fieldset>

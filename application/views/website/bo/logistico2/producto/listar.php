@@ -5,14 +5,25 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 			
-
-							
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> <a href="/bo/comercial"> Comercial</a> 
-								> <a href="/bo/comercial/mercancia">Mercancias</a>
+						<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						<span>
+								
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/logistico2/producto"> Producto Inventario</a>
 								> Listar
-							</span>		
+						</span>
+							 <?php }else{?>
+						
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+								> <a href="/bol/dashboard/"> Logístico</a> 
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/logistico2/producto"> Producto Inventario</a>
+								> Listar
+							</span>
+							
+							<?php }?>	
 							
 			</h1>
 		</div>
@@ -26,7 +37,7 @@
 				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Mercancias</h2>				
+						<h2>Carrito de Compras</h2>				
 						
 					</header>
 
@@ -160,190 +171,7 @@
 												</tr>
 												<?}?>
 												
-												<?foreach ($servicios as $key) {?>
-												<tr>
-													<td><?=$key->id?></td>
-													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
-													<td><?=$key->red?></td>
-													<td><?php
-													foreach ($grupos1 as $categorias) {
-														if($categorias->id_grupo==$key->id_red){
-															echo $categorias->descripcion;
-														}
-													}
-													 ?></td>
-													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
-															<?php echo $key->Name; ?>
-													</td>													<td><?=$key->descripcion?></td>
-													<td><?=$key->puntos_comisionables?></td>
-													<td>
-														<?
-													foreach ($imp_merc as $key_1) {
-														if($key->id==$key_1->id_mercancia){
-																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
-																$contadorImpuestos++;		
-														}
-													}
-														if($contadorImpuestos==0){
-															echo "No hay ningun impuesto en esta mercancia";
-														}
-														$contadorImpuestos=0;
-													?>
-													</td>
-													<td><?=$key->real?></td>
-													<td><?=$key->costo?></td>
-													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
-														<?if($key->estatus=='DES'){?>
-															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
-														<?}else{?>
-															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
-														<?}?>
-													</td>
-												</tr>
-												<?}?>
 												
-												<?foreach ($combinados as $key) {?>
-												<tr>
-													<td><?=$key->id?></td>
-													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
-													<td><?=$key->red?></td>
-													<td><?php
-													foreach ($grupos1 as $categorias) {
-														if($categorias->id_grupo==$key->id_red){
-															echo $categorias->descripcion;
-														}
-													}
-													 ?></td>
-													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
-															<?php echo $key->Name; ?>
-													</td>
-													<td><?=$key->descripcion?></td>
-													<td><?=$key->puntos_comisionables?></td>
-													<td>
-														<?
-													foreach ($imp_merc as $key_1) {
-														if($key->id==$key_1->id_mercancia){
-																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
-																$contadorImpuestos++;		
-														}
-													}
-														if($contadorImpuestos==0){
-															echo "No hay ningun impuesto en esta mercancia";
-														}
-														$contadorImpuestos=0;
-													?>
-													</td>
-													<td><?=$key->real?></td>
-													<td><?=$key->costo?></td>
-													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
-														<?if($key->estatus=='DES'){?>
-															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
-														<?}else{?>
-															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
-														<?}?>
-													</td>
-												</tr>
-												<?}?>
-												
-												<?foreach ($paquetes as $key) {?>
-												<tr>
-													<td><?=$key->id ?></td>
-													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
-													<td><?=$key->red?></td>
-													<td><?php
-													foreach ($grupos1 as $categorias) {
-														if($categorias->id_grupo==$key->id_red){
-															echo $categorias->descripcion;
-														}
-													}
-													 ?></td>
-													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
-															<?php echo $key->Name; ?>
-													</td>
-													<td><?=$key->descripcion?></td>
-													<td><?=$key->puntos_comisionables?></td>
-													<td>
-														<?
-													foreach ($imp_merc as $key_1) {
-														if($key->id==$key_1->id_mercancia){
-																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
-																$contadorImpuestos++;		
-														}
-													}
-														if($contadorImpuestos==0){
-															echo "No hay ningun impuesto en esta mercancia";
-														}
-														$contadorImpuestos=0;
-													?>
-													</td>
-													<td><?=$key->real?></td>
-													<td><?=$key->costo?></td>
-													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
-														<?if($key->estatus=='DES'){?>
-															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
-														<?}else{?>
-															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
-														<?}?>
-													</td>
-												</tr>
-												<?}?>
-												<?foreach ($membresias as $key) {?>
-												<tr>
-													<td><?=$key->id?></td>
-													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
-													<td><?=$key->red?></td>
-													<td><?php
-													foreach ($grupos1 as $categorias) {
-														if($categorias->id_grupo==$key->id_red){
-															echo $categorias->descripcion;
-														}
-													}
-													 ?></td>
-													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
-															<?php echo $key->Name; ?>
-													</td>													<td><?=$key->descripcion?></td>
-													<td><?=$key->puntos_comisionables?></td>
-													<td>
-														<?
-													foreach ($imp_merc as $key_1) {
-														if($key->id==$key_1->id_mercancia){
-																echo '-'.$key_1->descripcion.'&nbsp'.$key_1->porcentaje.'&#37</br>';
-																$contadorImpuestos++;		
-														}
-													}
-														if($contadorImpuestos==0){
-															echo "No hay ningun impuesto en esta mercancia";
-														}
-														$contadorImpuestos=0;
-													?>
-													</td>
-													<td><?=$key->real?></td>
-													<td><?=$key->costo?></td>
-													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>, '<?=$key->Code?>')" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
-														<?if($key->estatus=='DES'){?>
-															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
-														<?}else{?>
-															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
-														<?}?>
-													</td>
-												</tr>
-												<?}?>
 												
 											</tbody>
 										</table>
@@ -503,7 +331,7 @@ function eliminar(id)
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href = "/bo/comercial/listarMercancia";
+								location.href = "/bo/comercial/carrito";
 								}
 							}
 						}
@@ -541,7 +369,7 @@ function estatus(tipo,id)
 						data: {tipo: tipo, id: id},
 					})
 					.done(function( msg )
-					{	location.href = "/bo/comercial/listarMercancia";
+					{	location.href = "/bo/comercial/carrito";
 						
 					});//Fin callback bootbox
 
@@ -575,7 +403,7 @@ function estatus(tipo,id)
 					})
 					.done(function( msg )
 					{	
-						location.href = "/bo/comercial/listarMercancia";
+						location.href = "/bo/comercial/carrito";
 						
 					});//Fin callback bootbox
 

@@ -52,10 +52,11 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito_de_compras?co=c">
+													<a href="/bo/comercial/mercancia">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-shopping-cart fa-3x"></i>
-															<h1>Carrito de Compras</h1>
+															<i class="fa fa-cube fa-3x"></i>
+															<h1>Mercancias</h1>
+															<h1>.</h1>
 														</div>
 													</a>
 												</div>
@@ -80,6 +81,7 @@
 															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 																<i class="fa fa-archive fa-3x"></i>
 																<h1>Archivero</h1>
+																<h1>.</h1>
 															</div>
 														</a>
 												</div>											

@@ -18,6 +18,8 @@ class inventario extends CI_Controller {
 		$this->load->model ( 'bo/general' );
 		$this->load->model ( 'bo/modelo_cedi' );
 		$this->load->model ( 'bo/model_inventario' );
+		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_mercancia');
 	}
 	function index() {
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
@@ -170,6 +172,7 @@ class inventario extends CI_Controller {
 		$this->template->build ( 'website/bo/logistico2/inventario/indexentrada' );
 	}
 	function bloqueo() {
+		redirect('/bo/inventario');
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
 			redirect ( '/auth' );
 		}
@@ -215,17 +218,20 @@ class inventario extends CI_Controller {
 			redirect ( '/bo/inventario/bloqueo' );
 		}
 	}
-	function inventarioEntradaAlta() {
+	function entrada() {
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
 			redirect ( '/auth' );
 		}
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
 		
-		if ($this->general->isAValidUser ( $id, "comercial" ) || $this->general->isAValidUser ( $id, "logistica" )) {
-		} else {
-			redirect ( '/auth/logout' );
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistica){
+			redirect('/auth/logout');
 		}
+		
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
 		$this->template->set ( "usuario", $usuario );
@@ -245,7 +251,9 @@ class inventario extends CI_Controller {
 	}
 	
 	function tipoAlmacen() {
-		$almacen = $this->model_inventario->Obtener_Almacen ( $_POST ['tipo'] );
+		$almacen = ($_POST ['tipo']=='P') ? 
+		$this->model_inventario->Obtener_Proveedor ( $_POST ['tipo'] ) :
+		$this->model_inventario->Obtener_Almacen ( $_POST ['tipo'] );
 		echo json_encode ( $almacen );
 	}
 	
@@ -255,80 +263,118 @@ class inventario extends CI_Controller {
 	}
 	
 	function new_entrada() {
-		if (! ($_POST ['origen_in'] == null) || ! ($_POST ['origen'] == null)) {
+		
+		$origen_in = $_POST ['origen_in'];
+		$origen = $_POST ['origen'];		
+		
+		if (isset($origen_in) || isset($origen)) {
 			$id_inventario = 0;
 			
-			$existe_en_inventario = $this->model_inventario->consultar_en_inventario ( $_POST ['mercancia_in'], $_POST ['destino_in'] );
+			$mercancia_in = $_POST ['mercancia_in'];
+			$destino_in = $_POST ['destino_in'];
 			
-			if ($existe_en_inventario != null) {
-				$datos_inventario_update = array (
-						"cantidad" => $_POST ['cantidad_in'] + $existe_en_inventario [0]->cantidad 
-				)
-				;
-				$this->db->where ( 'id_inventario', $existe_en_inventario [0]->id_inventario );
-				$this->db->update ( 'inventario', $datos_inventario_update );
-				$id_inventario = $existe_en_inventario [0]->id_inventario;
-			} else {
+			$existe_en_inventario = $this->model_inventario->consultar_en_inventario ( $mercancia_in, $destino_in );
+			$existe_traspaso = $this->model_inventario->consultar_en_inventario ( $mercancia_in, $origen );
+			
+			$cantidad_in = $_POST ['cantidad_in'];			
+			
+			if (count($existe_traspaso)>0) {
+				$this->inventarioExistente ( $existe_traspaso , -$cantidad_in );					
+			}
+			
+			if (count($existe_en_inventario)>0) {
+				$existeID = $this->inventarioExistente ( $existe_en_inventario , $cantidad_in );
+				$id_inventario = $existeID;
 				
+			} else {				
 				$datos_inventario = array (
 						
-						"id_almacen" => $_POST ['destino_in'],
-						"id_mercancia" => $_POST ['mercancia_in'],
-						"cantidad" => $_POST ['cantidad_in'],
+						"id_almacen" => $destino_in,
+						"id_mercancia" => $mercancia_in,
+						"cantidad" => $cantidad_in,
 						"bloqueados" => "0",
 						"estatus" => 'ACT' 
 				);
+				
 				$id_inventario = $this->model_inventario->ingresar_inventario ( $datos_inventario );
-			}
+			}						
 			
-			if ($_POST ['origen_in'] != null) {
-				$datos = array (
-						
-						"id_origen" => '0',
-						"id_destino" => $_POST ['destino_in'],
-						"id_documento" => $_POST ['documento'],
-						"cantidad" => $_POST ['cantidad_in'],
-						"id_mercancia" => $_POST ['mercancia_in'],
-						"otro_origen" => $_POST ['origen_in'],
-						"n_documento" => $_POST ['n_documento'],
-						"id_inventario" => $id_inventario,
-						"tipo" => 'E' 
-				);
-			} else {
-				$datos = array (
-						
-						"id_origen" => $_POST ['origen'],
-						"id_destino" => $_POST ['destino_in'],
-						"id_documento" => $_POST ['documento'],
-						"cantidad" => $_POST ['cantidad_in'],
-						"id_mercancia" => $_POST ['mercancia_in'],
-						"otro_origen" => '0',
-						"n_documento" => $_POST ['n_documento'],
-						"id_inventario" => $id_inventario,
-						"tipo" => 'E' 
-				);
-			}
+			$documento = $_POST ['documento'];
+			$n_documento = $_POST ['n_documento'];
+			
+			$datos = $this->setDatosHistorial ( $origen_in, $origen, $id_inventario, $mercancia_in, $destino_in, $cantidad_in, $documento, $n_documento );
 			
 			$this->model_inventario->ingresar_inventario_historial ( $datos );
+			
+			echo "la entrada a sido registrada";
+			
 		} else {
 			
-			$error = "Complete los datos del formulario";
-			$this->session->set_flashdata ( 'error', $error );
+			echo "Complete los datos del formulario";
+			//$error = "Complete los datos del formulario";
+			//$this->session->set_flashdata ( 'error', $error );
 			//redirect ( '/bo/inventario/inventarioEntradaAlta' );
 		}
 		//redirect ( '/bo/inventario/index' );
 	}
-	function inventarioSalidaAlta() {
+	
+	private function inventarioExistente($existente,$cantidad) {
+		$existeCantidad = $existente[0]->cantidad;
+		$datos = array (
+				"cantidad" => $cantidad + $existeCantidad 
+		);
+		$existeID = $existente[0]->id_inventario;
+		$this->db->where ( 'id_inventario', $existeID );
+		$this->db->update ( 'inventario', $datos );
+		return $existeID;
+	}
+
+	 
+	private function setDatosHistorial($origen_in, $origen, $id_inventario, $mercancia_in, $destino_in, $cantidad_in, $documento, $n_documento) {
+		if ($origen_in != null) {
+			$datos = array (
+					
+					"id_origen" => '0',
+					"id_destino" => $destino_in,
+					"id_documento" => $documento,
+					"cantidad" => $cantidad_in,
+					"id_mercancia" => $mercancia_in,
+					"otro_origen" => $origen_in,
+					"n_documento" => $n_documento,
+					"id_inventario" => $id_inventario,
+					"tipo" => 'E' 
+			);
+		} else {
+			$datos = array (
+					
+					"id_origen" => $origen,
+					"id_destino" => $destino_in,
+					"id_documento" => $documento,
+					"cantidad" => $cantidad_in,
+					"id_mercancia" => $mercancia_in,
+					"otro_origen" => '0',
+					"n_documento" => $n_documento,
+					"id_inventario" => $id_inventario,
+					"tipo" => 'E' 
+			);
+		}
+		return $datos;
+	}
+
+	function salida() {
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
 			redirect ( '/auth' );
 		}
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
 		
-		if ($this->general->isAValidUser ( $id, "comercial" ) || $this->general->isAValidUser ( $id, "logistica" )) {
-		} else {
-			redirect ( '/auth/logout' );
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistica){
+			redirect('/auth/logout');
 		}
+		
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
 		$this->template->set ( "usuario", $usuario );
@@ -403,7 +449,7 @@ class inventario extends CI_Controller {
 		
 		redirect ( '/bo/inventario/index' );
 	}
-	function historial_Inventario() {
+	function historial() {
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
 			redirect ( '/auth' );
 		}
@@ -413,11 +459,11 @@ class inventario extends CI_Controller {
 		$style = $this->general->get_style ( $id );
 		$this->template->set ( "style", $style );
 		$this->template->set ( "usuario", $usuario );
-		
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/ov/header' );
-		$this->template->set_partial ( 'footer', 'website/ov/footer' );
+		$this->template->set_partial ( 'header', 'website/bo/header' );
+		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/inventario/historial_inventario' );
 	}
 	function historial_entrada() {
@@ -425,7 +471,7 @@ class inventario extends CI_Controller {
 		$data = $_GET ["info"];
 		$data = json_decode ( $data, true );
 		$Entradas = $this->model_inventario->historial_entradas ( $data ['inicio'], $data ['fin'], 'E' );
-		$Cedis = $this->model_inventario->getAlmacenesCedi ();
+		$Cedis = $this->model_inventario->getAlmacenesCediProveedores ();
 		$Documento = $this->model_inventario->getAlldocumento ();
 		$Producto = $this->model_inventario->getProductos ();
 		
@@ -457,7 +503,7 @@ class inventario extends CI_Controller {
 		$data = $_GET ["info"];
 		$data = json_decode ( $data, true );
 		$Entradas = $this->model_inventario->historial_entradas_salida ( $data ['inicio'], $data ['fin'] );
-		$Cedis = $this->model_inventario->getAlmacenesCedi ();
+		$Cedis = $this->model_inventario->getAlmacenesCediProveedores ();
 		$Documento = $this->model_inventario->getAlldocumento ();
 		$Producto = $this->model_inventario->getProductos ();
 		
@@ -468,4 +514,171 @@ class inventario extends CI_Controller {
 		$this->template->set_theme ( 'desktop' );
 		$this->template->build ( 'website/bo/logistico2/inventario/historial_entrada_salida' );
 	}
+	function altaMovimiento() {
+		if (! $this->tank_auth->is_logged_in ()) { // logged in
+			redirect ( '/auth' );
+		}
+		$id = $this->tank_auth->get_user_id ();
+		$usuario = $this->general->get_username ( $id );
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistico){
+			redirect('/auth/logout');
+		}
+		
+		$style = $this->modelo_dashboard->get_style ( 1 );
+		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
+		$this->template->set ( "usuario", $usuario );
+		$this->template->set ( "style", $style );
+	
+		$this->template->set_theme ( 'desktop' );
+		$this->template->set_layout ( 'website/main' );
+		$this->template->set_partial ( 'header', 'website/bo/header' );
+		$this->template->set_partial ( 'footer', 'website/bo/footer' );
+		$this->template->build ( 'website/bo/logistico2/movimiento/alta' );
+	}
+	function nuevoMovimiento() {
+		if ($_POST ['nombre'] != null) {
+			$this->model_inventario->setMovimiento ();
+			redirect ( '/bo/inventario/listarMovimiento' );
+		} else {
+			$error = "Digite el nombre de documento";
+			$this->session->set_flashdata ( 'error', $error );
+			redirect ( '/bo/inventario/altaMovimiento' );
+		}
+	}
+	function listarMovimiento() {
+		if (! $this->tank_auth->is_logged_in ()) { // logged in
+			redirect ( '/auth' );
+		}
+		$id = $this->tank_auth->get_user_id ();
+		$usuario = $this->general->get_username ( $id );
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistico){
+			redirect('/auth/logout');
+		}
+		
+		$documento = $this->model_inventario->getMovimientos();
+		$style = $this->modelo_dashboard->get_style ( 1 );
+		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
+		$this->template->set ( "usuario", $usuario );
+		$this->template->set ( "style", $style );
+	
+		$this->template->set ( "documento", $documento );
+		$this->template->set_theme ( 'desktop' );
+		$this->template->set_layout ( 'website/main' );
+		$this->template->set_partial ( 'header', 'website/bo/header' );
+		$this->template->set_partial ( 'footer', 'website/bo/footer' );
+		$this->template->build ( 'website/bo/logistico2/movimiento/listar' );
+	}
+	
+	function estadoMovimiento() {
+		$this->model_inventario->statusMovimiento ();
+	}
+	
+	function killMovimiento() {
+		$this->model_inventario->killMovimiento ();
+		echo "Documento eliminado con Exito";
+	}
+	
+	function editarMovimiento() {
+		$datosDocumento = $this->model_inventario->getMovimiento ( $_POST ['id'] );
+		$id = $this->tank_auth->get_user_id ();
+		$style = $this->general->get_style ( 1 );
+	
+		$this->template->set ( "datosDocumento", $datosDocumento );
+		$this->template->build ( 'website/bo/logistico2/movimiento/editar' );
+	}
+	
+	function updateMovimiento() {
+		if ($_POST ['nombre'] != null) {
+			$this->model_inventario->updateMovimiento ();
+			redirect ( '/bo/inventario/listarMovimiento' );
+		} else {
+			$error = "Digite el nombre de documento";
+			$this->session->set_flashdata ( 'error', $error );
+			redirect ( '/bo/inventario/listarMovimiento' );
+		}
+	}
+	
+	function productos(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistica){
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$grupos1         = $this->model_mercancia->todogrupos();
+		$proveedores	 = $this->model_admin->get_proveedor();
+		$grupo			 = $this->model_admin->get_grupo();
+		$impuesto		 = $this->model_admin->get_impuesto();
+		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
+		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
+		$empresa	     = $this->model_admin->get_empresa();
+		$regimen	     = $this->model_admin->get_regimen();
+		$zona	         = $this->model_admin->get_zona();
+		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
+		$pais            = $this->model_admin->get_pais();
+	
+	
+		$productos       = $this->model_admin->get_productos();
+		//$servicios		 = $this->model_admin->get_servicios();
+		//var_dump($servicios);exit();
+		//$promo			 = $this->model_admin->get_promo();
+		//$combinados		 = $this->model_admin->get_combinados();
+		//$paquete		 = $this->model_admin->get_paquetes();
+		//$membresias      = $this->model_admin->get_membresias();
+		$imp_merc=$this->model_admin->impuestos_por_mercancia();
+	
+		$this->template->set("imp_merc",$imp_merc);
+		$this->template->set("pais",$pais);
+		$this->template->set("productos",$productos);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("proveedores",$proveedores);
+		//$this->template->set("promo",$promo);
+		$this->template->set("grupo",$grupo);
+		//$this->template->set("servicios",$servicios);
+		//		$this->template->set("producto",$producto);
+		//$this->template->set("combinados",$combinados);
+		$this->template->set("impuesto",$impuesto);
+		$this->template->set("tipo_mercancia",$tipo_mercancia);
+		$this->template->set("tipo_proveedor",$tipo_proveedor);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("regimen",$regimen);
+		$this->template->set("zona",$zona);
+		$this->template->set("tipo_paquete",$tipo_paquete);
+		//$this->template->set("paquetes",$paquete);
+		//$this->template->set("membresias",$membresias );
+		$this->template->set("grupos1",$grupos1 );
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/logistico2/producto/listar');
+	}
+	
 }

@@ -30,7 +30,7 @@
 										        "<td>".$entrada->fecha."</td>";
 									     foreach ($Cedis as $Cedi){
 									    	if($Cedi->id_cedi==$entrada->id_origen){
-									    	echo	"<td>".$Cedi->nombre."</td>";
+									    	echo	"<td>".$Cedi->nombre." (".$Cedi->tipo.")</td>";
 									    	}
 									    
 									      }
@@ -40,7 +40,7 @@
 									
 										 foreach ($Cedis as $Cedi){
 												    	if($Cedi->id_cedi==$entrada->id_destino){
-												    		echo	"<td>".$Cedi->nombre."</td>";
+												    		echo	"<td>".$Cedi->nombre." (".$Cedi->tipo.")</td>";
 												        }
 									      }		
 							            if($entrada->id_destino=='0'){

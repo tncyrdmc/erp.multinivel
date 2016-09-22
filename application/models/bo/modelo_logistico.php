@@ -2,6 +2,65 @@
 
 class modelo_logistico extends CI_Model
 {
+	function __construct() {
+		parent::__construct();	
+		$this->load->model('ov/modelo_compras');
+	}	
+	
+	
+	function setPedido($venta){
+		
+		$mercancia = $this->modelo_compras->get_mercancia_venta($venta);
+		$inventario = $this->calcularInventario ( $mercancia );
+		$totalPedido = count($mercancia);
+		$numeroInventario = count($inventario);
+		
+		if($numeroInventario<$totalPedido){
+			return false;
+		}
+		
+		foreach ($inventario as $almacenes){
+			var_dump($almacenes);echo "<br/>";
+		}
+		
+		return true;
+	}
+	
+	private function calcularInventario($mercancia) {
+		$ordenar = array();
+		for ($i=0;$i<sizeof($mercancia);$i++){
+			array_push($ordenar, 0);
+		}
+		$ordenar = $this->setExistencias ( $mercancia, $ordenar );
+		$items=array();
+		foreach ($ordenar as $orden){
+			if($orden){
+				array_push($items, $orden);
+			}
+		}
+		return $items;
+	}
+	  
+	private function setExistencias($mercancia, $ordenar) {
+		$f=0;
+		foreach ($mercancia as $item){
+			$ordenar[$f]=array();
+			$cantidad = $item->cantidad;
+			$inventario = $this->get_existencias($item->id_mercancia);			
+			$minimo = $this->modelo_compras->getMinimoInventario($item->id_mercancia);
+			foreach ($inventario as $almacen){
+				$valor = $almacen[1];
+				$valor -= $cantidad;
+				if($valor>=$minimo){
+					array_push($ordenar[$f], $almacen[0]);
+				}
+			}	
+			$f++;
+		}
+		return $ordenar;
+	}
+
+
 	function get_impuestos()
 	{
 		$q=$this->db->query("select * from cat_impuesto where estatus like 'ACT'");
@@ -477,6 +536,20 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 		$res=$q->result();
 		$existencia=$res[0]->cantidad;
 		return $existencia;
+	}
+	function get_existencias($id)
+	{	
+		$q=$this->db->query('SELECT * from inventario where id_mercancia = '.$id.' and estatus = "ACT"');
+		$res=$q->result();
+		$existencias = array();
+		foreach ($res as $inventario){
+			$almacen = array(
+					$inventario->id_almacen,
+					$inventario->cantidad
+			); 
+			array_push($existencias, $almacen);
+		}
+		return $existencias;
 	}
 	function bloquear_mercancia($id,$cantidad)
 	{

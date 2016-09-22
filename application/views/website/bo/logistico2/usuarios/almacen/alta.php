@@ -8,7 +8,7 @@
 						<span>
 								> <a href="/bo/logistico2/alta"> Alta</a>
 								> <a href="/bo/logistico2/usuarios">  Usuarios Logístico</a>
-								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> <a href="/bo/usuarios/almacen"> Almacén </a>
 								> Alta
 							</span>
 							 <?php }else{?>
@@ -17,7 +17,7 @@
 							<span>
 								> <a href="/bo/administracion">Administración </a>
 								> <a href="/bo/usuarios">Usuarios </a>
-								> <a href="/bo/usuarios/CEDI">CEDI </a>
+								> <a href="/bo/usuarios/almacen">Almacén </a>
 								> Alta
 							</span>
 							
@@ -52,7 +52,7 @@
 									<section>
 										<div>
 											<?php
-											if(count($cedis)>0){
+											if(count($almacenes)>0){
 												if ($use_username) {
 													$username = array(
 														'name'	=> 'username',
@@ -96,14 +96,14 @@
 												);
 											
 											echo form_open($this->uri->uri_string()); ?>
-											<legend>Nuevo Agente CEDI</legend>
+											<legend>Nuevo Agente Almacén</legend>
 											<fieldset>
-												<label class="label">Seleccione el CEDI al que pertenecerá</label>
+												<label class="label">Seleccione el Almacén al que pertenecerá</label>
 												<label class="select">
 													<select name="id_cedi" id="id_cedi" required>
-														<?foreach ($cedis as $cedi) {?>
-															<option value="<?php echo $cedi->id_cedi; ?>">
-																<?php echo $cedi->nombre; ?>
+														<?foreach ($almacenes as $almacen) {?>
+															<option value="<?php echo $almacen->id_cedi; ?>">
+																<?php echo $almacen->nombre; ?>
 															</option>
 														<?}?>
 													</select>
@@ -191,12 +191,12 @@
 												echo 
 												"
 													<div class='callout'>
-														Atención, No se ha hallado ningún CEDI disponible. 
+														Atención, No se ha hallado ningún Almacén disponible. 
 														<br/>
 														<hr/>
 														<br/>
-														<a class='btn btn-primary pull-right' href='/bo/cedis/altaCedis'>
-															<span><i class='fa fa-home'></i></span> Alta CEDI
+														<a class='btn btn-primary pull-right' href='/bo/almacen/alta'>
+															<span><i class='fa fa-building'></i></span> Alta Almacén
 														</a>
 													</div>
 												";

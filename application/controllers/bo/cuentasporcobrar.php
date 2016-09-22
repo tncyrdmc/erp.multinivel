@@ -8,6 +8,7 @@ class cuentasporcobrar extends compras{
 		
 		$this->load->model ( 'bo/modelo_dashboard' );
 		$this->load->model ( 'ov/model_perfil_red' );
+		$this->load->model ( 'bo/modelo_logistico' );
 		$this->load->model ( 'cemail' );
 	}
 	
@@ -65,8 +66,15 @@ class cuentasporcobrar extends compras{
 				echo  "No se ha podido realizar el cambio de estado de la peticion.";
 			
 			$id_afiliado_comprador=$datosCuentaPagar[0]->id_usuario;
-			$id_historial=$datosCuentaPagar[0]->id;
+			$id_historial=$datosCuentaPagar[0]->id;			
 			
+			$embarque = $this->modelo_logistico->setPedido($id_venta);
+			
+			if(!$embarque){
+				echo "No se puede cambiar el estado del pedido, No hay suficiente mercancia en el Inventario.";
+				exit();
+			}			
+			echo '/bo/cuentasporcobrar | 77';exit();
 			$this->pagarComisionVenta($id_venta,$id_afiliado_comprador);
 			
 			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $datosCuentaPagar[0]->id);

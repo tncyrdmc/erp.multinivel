@@ -4,8 +4,10 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						<?php  if($type=='5'){?>
+							<span>
 							<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
 							> Inventario
+							</span>
 						 <?php }else{?>
 						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
 							<span>
@@ -15,6 +17,7 @@
 						<?php }?>
 						</h1>
 					</div>
+					
 				</div>
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
@@ -39,41 +42,35 @@
                   <div class="contenidoBotones">
 						<div class="row">
 							<div class="col-sm-2"></div>						
-							<div class="col-sm-8">
-												<div class="col-sm-2 link">
-																		
-												</div>
+							<div class="col-sm-10">
 											
-												<div class="col-sm-4 link">
-													<a href="/bo/inventario/inventarioEntradaAlta">
+												<div class="col-sm-2 link">
+													<a href="/bo/inventario/entrada">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-plus-square  fa-3x"></i>
+															<i class="fa fa-cubes fa-3x"></i><i class="fa fa-plus fa-2x"></i>
 															<h1>Entrada</h1>
 														</div>
 													</a>
 												</div>												
-												<div class="col-sm-4 link">
-													<a href="/bo/inventario/inventarioSalidaAlta">
+												<div class="col-sm-2 link">
+													<a href="/bo/inventario/salida">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-minus-square  fa-3x"></i>
+															<i class="fa fa-cubes fa-3x"></i><i class="fa fa-minus fa-2x"></i>
 															<h1>Salida</h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-2 link">
-																		
-												</div>
 												
-												<div class="col-sm-4 link">
-													<a href="/bo/inventario/bloqueo">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-lock fa-3x"></i>
+												<div class="col-sm-2 link" >
+													<a href="/bo/inventario/bloqueo" id="bloqueo">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#c1c1c1; color:#999 !important;">
+															<i class="fa fa-cubes fa-3x"></i><i class="fa fa-lock fa-2x"></i>
 															<h1>Bloqueo</h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-4 link">
-													<a href="/bo/inventario/historial_Inventario">
+												<div class="col-sm-2 link">
+													<a href="/bo/inventario/historial">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-list-alt  fa-3x"></i>
 															<h1>Historial</h1>
@@ -120,3 +117,8 @@
 }
 </style>
 			
+<script>
+
+;
+
+</script>

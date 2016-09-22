@@ -335,9 +335,23 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		return $q->result();
 	}
 	
+	function getMinimoInventario($id){
+		$posicion = $this->get_tipo_mercancia_atual($id);
+		$tipo = array(
+			1 => 'productos',	
+			2 => 'servicios',
+			3 => 'combinados',
+			4 => 'paquete',
+			5 => 'membresia',
+		);
+		$function = 'detalles_'.$tipo[$posicion[0]->id_tipo_mercancia];
+		$detalles = $this->$function($id);
+		return $detalles[0]->inventario;
+	}
+	
 	function detalles_productos($i)
 	{
-		$q=$this->db->query('SELECT b.id,a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables
+		$q=$this->db->query('SELECT *
 		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}

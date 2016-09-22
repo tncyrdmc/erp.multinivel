@@ -2361,6 +2361,36 @@ class comercial extends CI_Controller
 		
 		
 	}
+	
+	function mercancia()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = '';//$this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistica){
+			redirect('/auth/logout');
+		}
+	
+		$style = $this->general->get_style(1);
+	
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/carrito/index');
+	}
+	
 	function carrito_de_compras()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -2414,7 +2444,7 @@ class comercial extends CI_Controller
 		$this->template->build('website/bo/comercial/categorias');
 	}
 	
-	function carrito(){
+	function listarMercancia(){
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
 			redirect('/auth');
@@ -2422,9 +2452,10 @@ class comercial extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		
-	    if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = '';//$this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistica){
 			redirect('/auth/logout');
 		}
 

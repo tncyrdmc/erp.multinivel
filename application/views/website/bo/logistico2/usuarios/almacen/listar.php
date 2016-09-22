@@ -8,7 +8,7 @@
 						<span>
 								> <a href="/bo/logistico2/alta"> Alta</a>
 								> <a href="/bo/logistico2/usuarios">  Usuarios Logístico</a>
-								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> <a href="/bo/usuarios/almacen"> Almacén </a>
 								> Listar
 							</span>
 							 <?php }else{?>
@@ -17,7 +17,7 @@
 							<span>
 								> <a href="/bo/administracion">Administración </a>
 								> <a href="/bo/usuarios">Usuarios </a>
-								> <a href="/bo/usuarios/CEDI">CEDI </a>
+								> <a href="/bo/usuarios/almacen"> Almacén </a>
 								> Listar
 							</span>
 							
@@ -71,7 +71,7 @@
 													<th data-hide="phone">Nombre(s)</th>
 													<th data-hide="phone">Apellido(s)</th>
 													<th data-hide="phone">Email</th>
-													<th>CEDI</th>
+													<th>Almacén</th>
 													<th>Acciones</th>
 												</tr>
 											</thead>
@@ -210,7 +210,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/usuarios/editarCEDI",
+		url: "/bo/usuarios/editarAlmacen",
 		data: {
 			id: id
 			}
@@ -245,13 +245,13 @@ function eliminar(id) {
 				iniciarSpinner();
 				$.ajax({
 					type: "POST",
-					url: "/bo/usuarios/killCEDI",
+					url: "/bo/usuarios/killAlmacen",
 					data: {id: id}
 				})
 				.done(function( msg )
 					{
 					FinalizarSpinner();
-					location.href="/bo/usuarios/listarCEDI";
+					location.href="/bo/usuarios/listarAlmacen";
 						
 					});//Fin callback bootbox
 

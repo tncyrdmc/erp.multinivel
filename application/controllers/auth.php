@@ -174,7 +174,7 @@ class Auth extends CI_Controller
 	}
 	
 	private function getRecovery($login) {
-		$query = "select recovery from users where id = ".$login." or username = '".$login."' or email = '".$login."'";
+		$query = "select recovery from users where id = '".$login."' or username = '".$login."' or email = '".$login."'";
 		$q = $this->db->query($query);
 		$q=$q->result();
 		$recovery = $q ? $q[0]->recovery : false;

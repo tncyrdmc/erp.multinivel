@@ -5,11 +5,22 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 				
-				<!-- PAGE HEADER -->
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> 
-					Historial
-				</span>
+				<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						<span>								
+								> <a href="/bo/inventario"> Inventario</a>
+								> Historial 
+						</span>
+							 <?php }else{?>
+						
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+								> <a href="/bol/dashboard/"> Logístico</a> 
+								> <a href="/bo/inventario"> Inventario</a>
+								> Historial 
+							</span>
+							
+							<?php }?>
 			</h1>
 		</div>
 	</div>
@@ -32,7 +43,7 @@
 									
 									<label class="select">
 										<select id="tipo-reporte">
-											<option value="0" selected="" disabled="">Tipo de Historial</option>
+											<option value="0" selected disabled>Tipo de Historial</option>
 											<option value="2">Entradas</option>
 											<option value="3">Salidas</option>
 											<option value="4">Entradas/Salidas</option>

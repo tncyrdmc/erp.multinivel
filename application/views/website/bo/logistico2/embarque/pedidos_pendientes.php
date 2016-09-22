@@ -6,16 +6,15 @@
 						
 						<?php  if($type=='5'){?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-						
-								> <a href="/bo/logistico2/pedidos">Surtidos / Embarques</a>
+							<span>						
+								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
 								> Pedidos Pendientes
 							</span>
 							<?php }else{?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
-								> <a href="/bol/dashboard/">Log&iacute;stico</a> 
-								> <a href="/bo/logistico2/pedidos">Surtidos / Embarques</a>
+								> <a href="/bol/dashboard/">Logístico</a> 
+								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
 								> Pedidos Pendientes
 							</span>
 							

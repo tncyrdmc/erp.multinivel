@@ -5,13 +5,22 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 
-
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>&gt;
-					<a href="/bo/comercial">Comercial</a> > <a
-					href="/bo/comercial/carrito_de_compras?co=c"> Carrito de Compras </a>
-					> <a href="/bo/mercancia/index?co=c">Alta</a> > Producto
-				</span>
-
+				<?php  if($type=='5'){?>
+					<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+					<span>
+					> <a href="/bo/logistico2/alta">Alta </a>
+					> <a href="/bo/logistico2/producto">Producto Inventario</a>
+					> Alta
+					</span>
+				 <?php }else{?>
+				 	<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
+				 	<span>
+				 	> <a href="/bo/comercial">Comercial</a> 
+					> <a href="/bo/comercial/mercancia"> Mercancias</a>
+					> <a href="/bo/mercancia">Alta</a> 
+					> Producto
+					</span>
+				<?php }?>
 
 			</h1>
 		</div>
@@ -96,21 +105,7 @@ if ($this->session->flashdata ( 'error' )) {
 										</div>
 										<div class="row">
 											<fieldset>
-												<section class="col col-2">
-													<label class="input"><span id="labelextra">Descuento del
-															producto</span> <input required id="precio_promo"
-														type="number" min="0" name="descuento"> </label>
-												</section>
-											</fieldset>
-										</div>
-										<div class="row">
-											<section style="padding-left: 0px;" class="col col-6">
-												Descripcion
-												<textarea name="descripcion" style="max-width: 96%"
-													id="mymarkdown"></textarea>
-											</section>
-
-											<section id="imagenes" class="col col-6">
+												<section id="imagenes" class="col col-6">
 												<label class="label">Imágen</label>
 												<div class="input input-file">
 													<span class="button"> <input id="img" name="img"
@@ -121,6 +116,42 @@ if ($this->session->flashdata ( 'error' )) {
 												</div>
 												<small><cite title="Source Title">Para ver el archivo que va
 														a cargar, pulse con el puntero en el boton de "Buscar"</cite></small>
+												</section>
+												<section class="col col-2">
+													<label class="input"><span id="labelextra">Descuento del
+															producto</span> <input required id="precio_promo"
+														type="number" min="0" name="descuento"> </label>
+												</section>
+												<section class="col col-2">
+													<label class="input"><span id="labelextra"><b>Mínimo de Inventario</b></span> <input required id="inventario"
+														type="number" min="1" name="inventario"> </label>
+												</section>
+											</fieldset>
+										</div>
+										<div class="row">
+											<section style="padding-left: 3em;" class="col col-6">
+												Descripcion
+												<textarea name="descripcion" style="max-width: 96%"
+													id="mymarkdown"></textarea>
+											</section>
+
+											<section id="canal" class="col col-6">
+												<label for=""><b>Comercialización</b></label>
+												<hr /><br />
+												<ul style="list-style:none">
+												<?php 
+												foreach ($canales as $canal){
+													$readonly = '';//($canal->canal==1) ? '<h1><b>x</b><h1>' : '';
+													echo '<li class="well col-md-4 text-center" style="height: 8em">
+																<h4>'.$canal->nombre.'</h4>
+																<h1>____</h1>'.$readonly.'
+																<input type="checkbox" class="canal" name="canal[]" value="'.$canal->canal.'" checked="" />
+															</li>';
+												}
+												?>
+													
+												</ul>
+												
 											</section>
 										</div>
 								
@@ -368,6 +399,16 @@ foreach ( $pais as $key ) {
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 var i = 0;
+
+/*$('.canal').each(function() {
+		// es el valor del checkbox correspondiente
+		if($(this).val()==1){
+			$(this).hide();
+		}
+});*/
+
+
+
 $(document).ready(function() {
 	
 	$("#mymarkdown").markdown({
