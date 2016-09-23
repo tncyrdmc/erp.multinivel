@@ -186,135 +186,33 @@
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 <script>
+
+
+				
 	function surtir(id_surtido,id_venta)
 	{
-		var darfecha='<div class="row">'
-			+'<form class="smart-form" novalidate="novalidate">'
-				+'<section class="col col-12">'
-					+'<label class="input"> <i class="icon-append fa fa-calendar"></i>'
-						+'<input required class ="col col-12" id="datepicker" type="text" name="nacimiento" placeholder="Fecha de entrega">'
-					+'</label> '
-				+'</section>'
-				+'<section class="col col-12">'
-				+'<label class="input"> '
-					+'<input required class ="col col-12" id="n_guia" type="text" name="n_guia" placeholder="número de guia">'
-				+'</label> '
-			+'</section>'
-			+'</form>'
-		+'</div>';
-		bootbox.dialog({
-			message: darfecha,
-			title: "Embarcar",
-			className: "",
-			buttons: {
-				success: {
-					label: "Aceptar",
-					className: "btn-success",
-					callback: function(){
-						var fecha=$("#datepicker").val();
-						var n_guia=$("#n_guia").val();
-						
-						if(fecha=="")
-						{
-							alert("Especifique una fecha de entrega");
-						}
-						else if(n_guia=="")
-						{
-							alert("Especifique un número de guia");
-						}
-						else
-						{
-							if(id_venta==0)
-							{
-								$.ajax({
-									type: "post",
-									data: {surtido:id_surtido, venta:id_venta, fecha:fecha, n_guia:n_guia,unico:1},
-									url: "surtir"
-								})
-								.done(function(msg){
-									bootbox.dialog({
-										message: "Se ha enviado este producto a embarques exitosamente.",
-										title: "Exito",
-										className: "",
-										buttons: {
-											success: {
-												label: "Aceptar",
-												className: "btn-success",
-												callback: function(){
-													window.location.href="pedidos_pendientes";
-												}
-											}
-										}
-									})
-								});
-							}
-							else
-							{
-								bootbox.dialog({
-									message: "¿Desea surtir toda la venta ahora?",
-									title: "Surtir",
-									className: "",
-									buttons: {
-										success: {
-										label: "Aceptar",
-										className: "btn-success",
-										callback: function() {
-											$.ajax({
-												type: "post",
-												data: {surtido:id_surtido, venta:id_venta, fecha:fecha, n_guia:n_guia,unico:0},
-												url: "surtir"
-											})
-											.done(function(msg){
-												bootbox.dialog({
-													message: "Se ha enviado este producto a embarques exitosamente.",
-													title: "Exito",
-													className: "",
-													buttons: {
-														success: {
-															label: "Aceptar",
-															className: "btn-success",
-															callback: function(){
-																window.location.href="pedidos_pendientes";
-															}
-														}
-													}
-												})
-											});
-											}
-										},
-										danger:{
-											label: "Cancelar",
-											className: "btn-danger",
-											callback: function(){
-												
-											}
-										}
-									}
-								});
-							}
+
+		$.ajax({
+			type: "post",
+			data: {surtido:id_surtido, venta:id_venta},
+			url: "nuevo_surtido"
+		}).done(function(msg){
+			bootbox.dialog({
+				message: msg,
+				title: "Embarcar",
+				className: "",
+				buttons: {
+					danger: {
+						label: "Cancelar",
+						className : "btn-danger",
+						callback: function(){
+							
 						}
 					}
-				},
-				danger: {
-					label: "Cancelar",
-					className : "btn-danger",
-					callback: function(){
-						
-					}
-				}
-			}
+				}				
+			})
 			
-		});
-				var fecha = new Date();
-				
-				$( "#datepicker" ).datepicker({
-				changeMonth: true,
-				numberOfMonths: 2,
-				dateFormat:"yy-mm-dd",
-				//defaultDate: "1970-01-01",
-				minDate: fecha.getFullYear() + "-" + (fecha.getMonth() +1) + "-" + fecha.getDate() ,
-				changeYear: true
-				});
+		});	
 		
 	}
 	function embarcar(id)

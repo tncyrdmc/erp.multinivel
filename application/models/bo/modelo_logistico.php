@@ -5,12 +5,14 @@ class modelo_logistico extends CI_Model
 	function __construct() {
 		parent::__construct();	
 		$this->load->model('ov/modelo_compras');
+		$this->load->model('ov/model_perfil_red');
+		$this->load->model('bo/model_inventario');
 	}	
 	
 	
 	function setPedido($venta){
 		
-		$mercancia = $this->modelo_compras->get_mercancia_venta($venta);
+		$mercancia = $this->modelo_compras->get_mercancia_venta_inventario($venta);
 		$inventario = $this->calcularInventario ( $mercancia );
 		$totalPedido = count($mercancia);
 		$numeroInventario = count($inventario);
@@ -19,11 +21,171 @@ class modelo_logistico extends CI_Model
 			return false;
 		}
 		
-		foreach ($inventario as $almacenes){
-			var_dump($almacenes);echo "<br/>";
+		$Count = $this->soloUnAlmacen ( $inventario );		
+		
+		if ($Count[0]<$totalPedido){
+			return false;
+		}
+		
+		$this->cargarPedido($Count[1],$venta,$mercancia);
+		
+		return true;
+	}
+	
+	function setPedidoOnline($venta){
+	
+		$mercancia = $this->modelo_compras->get_mercancia_venta_inventario($venta);
+		
+		$items = array();
+		
+		foreach ($mercancia as $item){
+			array_push($items, $item->id_mercancia);
+		}
+		
+		$grupos = implode(',', $items); 
+		
+		$query = "SELECT 
+										    id_almacen,sum(cantidad) c
+										from
+										    inventario
+										where
+										    id_mercancia in (".$grupos.")
+										        and estatus = 'ACT'
+										group by
+											id_almacen
+										order by 
+											c desc";
+		$q = $this->db->query($query);
+		$q=$q->result();
+		
+		
+		//$inventario = $this->calcularInventario ( $mercancia );
+		//$totalPedido = count($mercancia);
+		//$numeroInventario = count($inventario);
+	
+		//if($numeroInventario<$totalPedido){
+		//	return false;
+		//}
+	
+		$Count = $q ? array($q[0]->id_almacen) : array(1);//$this->soloUnAlmacen ( $inventario );
+		
+		//if ($Count[0]<$totalPedido){
+		//	return false;
+		//}
+	
+		$this->cargarPedido($Count,$venta,$mercancia);
+	
+		return true;
+	}
+	  
+	function cargarPedido($almacenes,$pedido,$mercancia){	
+		
+		$almacen = $this->elegirAlmacen ($almacenes, $mercancia);
+		$venta =  $this->modelo_compras->get_venta($pedido);
+		$id = $venta[0]->id_user;
+		$user = $this->model_perfil_red->get_username($id);			
+		$keyword=$this->setKeyword ( $pedido, $user );
+		
+		$valor = 0;
+		
+		
+		foreach ($mercancia as $item){
+			
+			$id_mercancia = $item->id_mercancia;
+			$cantidad = $item->cantidad;
+			$estado = $this->crearEmbalaje($almacen,$pedido, $keyword, $user, $id_mercancia, $cantidad, $valor);
+			if (!$estado){
+				echo "FALLO: ".$id_mercancia."<br/>";exit();
+			}
+		}
+		
+	}
+	
+	private function setKeyword($pedido, $user) {
+		
+		//$fecha =  substr($venta[0]->fecha, 2,2);
+		//$fecha.=  substr($venta[0]->fecha, 5,2);
+		//$fecha.=  substr($venta[0]->fecha, 8,2);		
+		
+		$abbr = substr($user, 0,3);
+		
+		return $pedido."V".$abbr;
+	}
+
+	
+	private function crearEmbalaje($id,$venta,$clave,$destino,$mercancia,$cant,$valor)
+	{
+		
+		$origen = $this->getNombreAlmacen ($id);
+		
+		$tipo = 2;
+		$isEntrada = 0;
+		$impuesto = 1;
+		$subtotal = $valor;
+		$importe = 0;
+		$total = 0;
+		$estatus = 1;
+	
+		$mov = $this->insertMovimiento ( $origen, $tipo, $isEntrada, $clave, $destino, $mercancia, $cant, $impuesto, $subtotal, $importe, $total, $estatus );
+		
+		$dato_surtido=array(
+				"id_almacen_origen"	=> $id,
+				"id_movimiento"		=> $mov,
+				"estatus"			=> 1,
+				"id_venta"			=> $venta
+		);
+	
+		$this->db->insert("surtido",$dato_surtido);
+		
+		$inventario = $this->getTodoInventariobyMercancia ($mercancia,$id);
+	
+		$id_inventario = $inventario[0]->id_inventario;
+		
+		if(isset($id_inventario))
+		{
+			$cantidadIn = $inventario[0]->cantidad;
+			$actual=$cantidadIn*1;
+			$mas=$cant*1;
+			$cantidad=$actual-$mas;
+			$this->db->query("update inventario
+									set cantidad=".$cantidad."
+									where id_inventario=".$id_inventario);
 		}
 		
 		return true;
+	}
+
+	private function elegirAlmacen($almacenes, $mercancia) {
+		$elegido = 0;
+		$primero = 0;
+		foreach ($almacenes as $almacen){
+			$suma = 0;
+			foreach ($mercancia as $item){
+				$id_mercancia = $item->id_mercancia;
+				$q = $this->model_inventario->consultar_en_inventario($id_mercancia,$almacen);
+				$cantidad = $q ? $q[0]->cantidad : 0;
+				$suma += $cantidad;
+			}	
+			if ($suma>$primero){
+				$elegido = $almacen;
+				$primero = $suma;
+			}
+		}
+		return $elegido;
+	}
+
+	
+	private function soloUnAlmacen($inventario) {
+		$A = array();
+		$Count = 1;
+		$C = array();
+		foreach ($inventario as $almacenes){
+			$B = $A;			
+			$A = $almacenes;
+			$C = array_intersect($B, $A);
+			(count($C)>0) ? $Count++ : '';			
+		}
+		return array($Count,$C);
 	}
 	
 	private function calcularInventario($mercancia) {
@@ -83,84 +245,126 @@ class modelo_logistico extends CI_Model
 	}
 	function insert_movimiento_in()
 	{
-		$destino_q=$this->db->query("select nombre from almacen where id_almacen=".$_POST["destino_in"]);
-		$destino_res=$destino_q->result();
-		$destino=$destino_res[0]->nombre;
-		$dato_mov=array(
-			"id_tipo"		=> $_POST["tipo_movimiento_in"],
-			"entrada"		=> 1,
-			"keyword"		=> $_POST["clave_in"],
-			"origen"		=> $_POST["origen_in"],
-			"destino"		=> $destino,
-			"id_mercancia"	=> $_POST["mercancia_in"],
-			"cantidad"		=> $_POST["cantidad_in"],
-			"id_impuesto"	=> $_POST["impuesto_in"],
-			"subtotal"		=> $_POST["subtotal_in"],
-			"importe"		=> $_POST["importe_in"],
-			"total"			=> $_POST["total_in"],
-			"id_estatus"	=> 1
-		);
-		$this->db->insert("movimiento",$dato_mov);
+		$id = $_POST["destino_in"];
+		$destino=$this->getNombreAlmacen($id);
 		
-		$inventario_q=$this->db->query("Select * from inventario where id_mercancia=".$_POST['mercancia_in']." and id_almacen=".$_POST['destino_in']);
-		$inventario_res=$inventario_q->result();
-		if(isset($inventario_res[0]->id_inventario))
+		$tipo = $_POST["tipo_movimiento_in"];
+		$isEntrada = 1;		
+		$clave = $_POST["clave_in"];
+		
+		$origen = $_POST["origen_in"];
+		$mercancia = $_POST["mercancia_in"];
+		$cant = $_POST["cantidad_in"];
+		$impuesto = $_POST["impuesto_in"];
+		$subtotal = $_POST["subtotal_in"];
+		$importe = $_POST["importe_in"];
+		$total = $_POST["total_in"];
+		$estatus = 1;
+		
+		$mov = $this->insertMovimiento ( $origen, $tipo, $isEntrada, $clave, $destino, $mercancia, $cant, $impuesto, $subtotal, $importe, $total, $estatus );		
+		
+		$id_inventario = $this->getInventariobyMercancia ($mercancia,$id);
+		
+		if(isset($id_inventario))
 		{
 			$actual=$inventario_res[0]->cantidad*1;
-			$mas=$_POST["cantidad_in"]*1;
+			$mas=$cant*1;
 			$cantidad=$actual+$mas;
-			$this->db->query("update inventario set cantidad=".$cantidad." where id_inventario=".$inventario_res[0]->id_inventario);
+			$this->db->query("update inventario set cantidad=".$cantidad." where id_inventario=".$id_inventario);
 		}
 		else
 		{
 			$dato_inventario=array(
-				"id_mercancia"	=> $_POST["mercancia_in"],
-				"id_almacen"	=> $_POST["destino_in"],
-				"cantidad"		=> $_POST["cantidad_in"],
+				"id_mercancia"	=> $mercancia,
+				"id_almacen"	=> $id,
+				"cantidad"		=> $cant,
 				"bloqueados"	=> 0,
 				"estatus"		=> "ACT"
 			);
 			$this->db->insert("inventario",$dato_inventario);
 		}
 	}
+	
+	private function getInventariobyMercancia($mercancia,$id) {
+		$inventario_q=$this->db->query("Select * from inventario where id_mercancia=".$mercancia." and id_almacen=".$id);
+		$inventario_res=$inventario_q->result();
+		return $inventario_res[0]->id_inventario;
+	}
+
+	private function getTodoInventariobyMercancia($mercancia,$id) {
+		$inventario_q=$this->db->query("Select * from inventario where id_mercancia=".$mercancia." and id_almacen=".$id);
+		$inventario_res=$inventario_q->result();
+		return $inventario_res;
+	}
+	
+	
 	function insert_movimiento_out()
 	{
-		$origen_q=$this->db->query("select nombre from almacen where id_almacen=".$_POST["origen_out"]);
-		$origen_res=$origen_q->result();
-		$origen=$origen_res[0]->nombre;
-		$dato_mov=array(
-			"id_tipo"		=> $_POST["tipo_movimiento_out"],
-			"entrada"		=> 0,
-			"keyword"		=> $_POST["clave_out"],
-			"origen"		=> $origen,
-			"destino"		=> $_POST["destino_out"],
-			"id_mercancia"	=> $_POST["mercancia_out"],
-			"cantidad"		=> $_POST["cantidad_out"],
-			"id_impuesto"	=> $_POST["impuesto_out"],
-			"subtotal"		=> $_POST["subtotal_out"],
-			"importe"		=> $_POST["importe_out"],
-			"total"			=> $_POST["total_out"],
-			"id_estatus"	=> 2
-		);
-		$this->db->insert("movimiento",$dato_mov);
-		$mov=$this->db->insert_id();
+		$id = $_POST["origen_out"];		
+		$origen = $this->getNombreAlmacen ($id);
+		
+		$tipo = $_POST["tipo_movimiento_out"];
+		$isEntrada = 0;
+		$clave = $_POST["clave_out"];
+		$destino = $_POST["destino_out"];
+		$mercancia = $_POST["mercancia_out"];
+		$cant = $_POST["cantidad_out"];
+		$impuesto = $_POST["impuesto_out"];
+		$subtotal = $_POST["subtotal_out"];
+		$importe = $_POST["importe_out"];
+		$total = $_POST["total_out"];		
+		$estatus = 2;
+		
+		$mov = $this->insertMovimiento ( $origen, $tipo, $isEntrada, $clave, $destino, $mercancia, $cant, $impuesto, $subtotal, $importe, $total, $estatus );
+		
 		$dato_surtido=array(
-			"id_almacen_origen"	=> $_POST["origen_out"],
+			"id_almacen_origen"	=> $id,
 			"id_movimiento"		=> $mov,
 			"estatus"			=> 1,
 			"id_venta"			=> 0
 		);
+		
 		$this->db->insert("surtido",$dato_surtido);
-		$inventario_q=$this->db->query("Select * from inventario where id_mercancia=".$_POST['mercancia_out']." and id_almacen=".$_POST['origen_out']);
-		$inventario_res=$inventario_q->result();
-		if(isset($inventario_res[0]->id_inventario))
+		
+		$id_inventario = $this->getInventariobyMercancia ($mercancia,$id);
+		
+		if(isset($id_inventario))
 		{
 			$actual=$inventario_res[0]->cantidad*1;
-			$mas=$_POST["cantidad_out"]*1;
+			$mas=$cant*1;
 			$cantidad=$actual-$mas;
 			$this->db->query("update inventario set cantidad=".$cantidad." where id_inventario=".$inventario_res[0]->id_inventario);
 		}
 	}
+	
+	private function insertMovimiento($origen, $tipo, $isEntrada, $clave, $destino, $mercancia, $cant, $impuesto, $subtotal, $importe, $total, $estatus) {
+		
+		$dato_mov=array(
+			"id_tipo"		=> $tipo,
+			"entrada"		=> $isEntrada,
+			"keyword"		=> $clave,
+			"origen"		=> $origen,
+			"destino"		=> $destino,
+			"id_mercancia"	=> $mercancia,
+			"cantidad"		=> $cant,
+			"id_impuesto"	=> $impuesto,
+			"subtotal"		=> $subtotal,
+			"importe"		=> $importe,
+			"total"			=> $total,
+			"id_estatus"	=> $estatus
+		);
+		
+		$this->db->insert("movimiento",$dato_mov);
+		return $this->db->insert_id();
+	}
+
+	  
+	private function getNombreAlmacen($id) {
+		$q=$this->db->query("select nombre from cedi where id_cedi=".$id);
+		$res=$q->result();
+		return $res[0]->nombre;
+	}
+
 	function get_costo_real($id)
 	{
 		$q=$this->db->query("SELECT a.real FROM mercancia a WHERE id=".$id);
@@ -216,20 +420,194 @@ WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_ve
 	}
 	*/
 	
+	function getSurtidos()
+	{
+		$q=$this->db->query("SELECT 
+							    s.id_surtido as id,
+							    v.id_venta,
+							    m.keyword as id_transaccion,
+							    c.nombre as origen,
+							    concat(co.Name,
+							            ' ',
+							            es.Nombre,
+							            ' ',
+							            ci.Name,
+							            ' ',
+							            cve.colonia,
+							            ' ',
+							            cve.calle) as direccion,
+							    concat(cve.nombre, ' ', cve.apellido) as usuario,
+							    cve.celular,
+							    cve.correo,
+							    s.fecha
+							FROM
+							    surtido s,
+							    movimiento m,
+							    cedi c,
+							    cross_venta_envio cve,
+							    venta v,
+							    Country co,
+							    estate es,
+							    City ci
+							WHERE
+							    s.id_almacen_origen = c.id_cedi
+							        and s.id_movimiento = m.id_movimiento
+							        and s.id_venta = v.id_venta
+							        and s.estatus = 1
+							        and c.id_cedi = m.origen
+							        and cve.id_venta = s.id_venta
+							        and co.Code = cve.id_pais
+							        and es.id = cve.estado
+							        and ci.ID = cve.municipio
+							        and v.id_venta = cve.id_venta
+							        and v.id_estatus = 2
+							group by (s.id_surtido)");
+		
+		return $q->result();
+	}
+	
 	function get_surtidos()
 	{
-		$q=$this->db->query("SELECT s.id_surtido as id, v.id_venta, m.keyword as id_transaccion, c.nombre as origen, concat(co.Name,' ',es.Nombre,' ',
-							ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, concat(cve.nombre,' ', cve.apellido) as usuario,
-							cve.celular, cve.correo, s.fecha
-							
-							FROM surtido s, movimiento m, cedi c, cross_venta_envio cve, 
-							venta v, Country co, estate es, City ci
-							
-							WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and s.id_venta = v.id_venta and
-							s.estatus = 1 and c.id_cedi = m.origen and cve.id_venta = s.id_venta and 
-							co.Code = cve.id_pais and es.id = cve.estado and ci.ID = cve.municipio 
-							and v.id_venta = cve.id_venta and v.id_estatus = 2 group by (s.id_surtido)");
+		$q=$this->db->query("SELECT 
+							    s.id_surtido as id,
+							    v.id_venta,
+							    m.keyword as id_transaccion,
+							    c.nombre as origen,
+								concat(p.nombre, ' ', p.apellido) as usuario,
+							    concat(co.Name,
+							            ' ',
+							            d.estado,
+							            ' ',
+							            d.municipio,
+							            ' ',
+							            d.colonia,
+							            ' ',
+							            d.calle) as direccion,
+							    group_concat(t.numero) celular,
+							    u.email correo,
+							    s.fecha
+							FROM
+								users u,
+								user_profiles p,
+							    surtido s,
+							    movimiento m,
+							    cedi c,
+								cross_dir_user d,
+								cross_tel_user t,
+							    venta v,
+							    Country co
+							WHERE
+									s.id_almacen_origen = c.id_cedi
+							        and s.id_movimiento = m.id_movimiento
+							        and s.id_venta = v.id_venta
+							        and s.estatus = 1
+							        and p.user_id = v.id_user
+									and u.id = v.id_user
+									and d.id_user =  v.id_user
+									and t.id_user =  v.id_user
+									and co.Code = d.pais
+							        and v.id_estatus = 'ACT'
+							group by (s.id_surtido)");
 		
+		return $q->result();
+	}
+	function getDetalleProductoPendiente($id){
+		$q=$this->db->query("SELECT 
+									s.id_surtido,
+								    p.nombre as producto,
+								    cvm.cantidad,
+								    g.descripcion as red,
+									'Sin Asignar' nombre_empresa,
+									ch.gastos tarifa,
+								    concat(co.Name,
+								            ' ',
+								            d.estado,
+								            ' ',
+								            d.municipio,
+								            ' ',
+								            d.colonia,
+								            ' ',
+								            d.calle) as ciudad
+								FROM
+								    surtido s,
+									movimiento o,
+								    cross_venta_mercancia cvm,
+								    mercancia m,
+								    producto p,
+									cat_grupo_producto g,
+								    tipo_red tr,
+									users u,
+									cross_dir_user d,
+								    Country co,
+									canal ch
+								WHERE
+										p.id = m.sku         
+								        and m.id = o.id_mercancia
+										and cvm.id_mercancia = o.id_mercancia
+										and cvm.id_venta = s.id_venta
+										and o.id_movimiento = s.id_movimiento
+								        and m.id_tipo_mercancia = 1
+								        and tr.id = g.id_red
+										and g.id_grupo = p.id_grupo
+										and ch.id = 1
+								        and co.`Code` = d.pais
+										and d.id_user = u.id
+										and u.username = o.destino
+										and s.id_surtido = ".$id);
+		
+		return $q->result();
+	}
+	
+	function getDetalleProductoTransito($id){
+		$q=$this->db->query("SELECT
+									s.id_surtido,
+								    p.nombre as producto,
+								    cvm.cantidad,
+								    g.descripcion as red,
+									pm.nombre_empresa,
+									ch.gastos tarifa,
+								    concat(co.Name,
+								            ' ',
+								            d.estado,
+								            ' ',
+								            d.municipio,
+								            ' ',
+								            d.colonia,
+								            ' ',
+								            d.calle) as ciudad
+								FROM
+								    surtido s,
+									movimiento o,
+								    cross_venta_mercancia cvm,
+								    mercancia m,
+								    producto p,
+									cat_grupo_producto g,
+								    tipo_red tr,
+									users u,
+									cross_dir_user d,
+								    Country co,
+									proveedor_mensajeria pm,
+									cross_surtido_embarque se,
+									embarque e,
+									canal ch
+								WHERE
+										p.id = m.sku
+								        and m.id = o.id_mercancia
+										and cvm.id_mercancia = o.id_mercancia
+										and cvm.id_venta = s.id_venta
+										and o.id_movimiento = s.id_movimiento
+								        and m.id_tipo_mercancia = 1
+								        and tr.id = g.id_red
+										and g.id_grupo = p.id_grupo
+										and ch.id = 1
+								        and co.`Code` = d.pais
+										and d.id_user = u.id
+										and u.username = o.destino
+										and s.id_surtido = se.id_surtido
+										and e.id_embarque = se.id_embarque
+										and pm.id = e.id_mensajeria
+										and se.id_surtido = ".$id);
+	
 		return $q->result();
 	}
 	
@@ -309,139 +687,325 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 	
 	function surtir()
 	{
-		if($_POST["venta"]==0 || $_POST["unico"]==1)
-		{
-			$dato_embarque=array(
-				"fecha_entrega"	=> $_POST["fecha"],
-				"id_estatus"	=> 1,
-				"n_guia"		=> $_POST["n_guia"]
-			);
-			$this->db->insert("embarque",$dato_embarque);
-			$embarque=$this->db->insert_id();
-			$dato_cross=array(
-				"id_surtido"	=> $_POST["surtido"],
-				"id_embarque"	=> $embarque
-			);
-			$this->db->insert("cross_surtido_embarque",$dato_cross);
-			$this->db->query("update surtido set estatus=2 where id_surtido=".$_POST["surtido"]);
+		$venta = $_POST["venta"];
+		$unico = $_POST["unico"];
+		$fecha = $_POST["fecha"];
+		$n_guia = $_POST["n_guia"];
+		$id_surtido = $_POST["surtido"];
+		$proveedor = $_POST["proveedor"];
+		
+		$embarque = $this->insertEmbarque ( $fecha, $n_guia,$proveedor );		
+		
+		if($venta==0 || $unico==1)
+		{	
+			$this->surtidoEmbarque ( $id_surtido, $embarque );		
+			$this->estatusSurtido (2,$id_surtido);
 		}
 		else
 		{
-			$dato_embarque=array(
-				"fecha_entrega"	=> $_POST["fecha"],
-				"id_estatus"	=> 1,
-				"n_guia"		=> $_POST["n_guia"]
-			);
-			$this->db->insert("embarque",$dato_embarque);
-			$embarque=$this->db->insert_id();
-			$surtidos_q=$this->db->query("SELECT * from surtido where id_venta=".$_POST["venta"]." and estatus<>2");
-			$surtidos=$surtidos_q->result();
+			$surtidos = $this->getSurtidoNoEmbarcado ($venta);
+			
 			foreach($surtidos as $surtido)
 			{
-				$dato_cross=array(
-					"id_surtido"	=> $surtido->id_surtido,
-					"id_embarque"	=> $embarque
-				);
-				$this->db->insert("cross_surtido_embarque",$dato_cross);
+				$this->surtidoEmbarque ( $surtido->id_surtido, $embarque );
 			}
-			$this->db->query("update surtido set estatus=2 where id_venta=".$_POST["venta"]);
+			
+			$this->estatusSurtidobyVenta (2,$venta);
 		}
 		
-		$q = $this->db->query("SELECT p.id , s.id_almacen_origen , cvm.cantidad, concat(cve.nombre,' ',cve.apellido) as otro_destino
-
-							   FROM surtido s, cross_venta_mercancia cvm, mercancia m, producto p, cross_venta_envio cve
-			
-							   WHERE s.id_surtido = ".$_POST["surtido"]." and s.id_venta = cvm.id_venta and s.id_venta = cve.id_venta and cvm.id_mercancia = m.id
-							   and m.sku = p.id and m.id_tipo_mercancia = 1");  
-		$productos = $q->result();
+		$productos = $this->productoSurtido ($embarque);
+		
 		foreach($productos as $producto)
 		{
-			$q2 = $this->db->query("select id_inventario, cantidad from inventario where id_almacen = ".$producto->id_almacen_origen." and id_mercancia = ".$producto->id);
-			$inventario = $q2->result();
-			$cantidad_total = $inventario[0]->cantidad - $producto->cantidad;
-			$this->db->query("update inventario set cantidad=".$cantidad_total." where id_almacen = ".$producto->id_almacen_origen." and id_mercancia = ".$producto->id);
+			$almacen = $producto->id_almacen_origen;
+			$mercancia = $producto->id;
 			
-			$dato_mov=array(
-			"id_origen"		=> $producto->id_almacen_origen,
-			"otro_origen"	=> $producto->otro_destino,
-			"id_destino"	=> 0,
-			"id_documento"	=> 9,
-			"cantidad"		=> $producto->cantidad,
-			"id_inventario"	=> $inventario[0]->id_inventario,
-			"id_mercancia"	=> $producto->id,
-			"tipo"			=> 'S',
-			"n_documento"	=> '',
-		);
-		$this->db->insert("inventario_historial",$dato_mov);
+			$inventario = $this->getTodoInventariobyMercancia($mercancia,$almacen);
+			
+			$cantidad = $producto->cantidad;
+			$cantidad_total = $inventario[0]->cantidad - $cantidad;
+			$this->updateInventario ($cantidad_total,$almacen,$mercancia);
+			
+			$otro = $producto->otro_destino;			
+			$id_inventario = $inventario[0]->id_inventario;
+			$destino = 0;			
+			$documento = 9;			
+			$n_documento = $venta.'V'.date('Ymd');
+			
+			$this->historialInventario ( $almacen, $mercancia, $cantidad, $otro, $id_inventario, $destino, $documento, $n_documento );
+			
 		}
-		$this->db->query("delete from carrito_temporal where id_venta = ".$_POST["venta"]);
+		
+		$this->db->query("delete from carrito_temporal where id_venta = ".$venta);
+		
+		echo "FINE!";
 	}
+	
+	private function historialInventario($almacen, $mercancia, $cantidad, $otro, $id_inventario, $destino, $documento, $n_documento) {
+		$dato_mov=array(
+			"id_origen"		=> $almacen,
+			"otro_origen"	=> $otro,
+			"id_destino"	=> $destino,
+			"id_documento"	=> $documento,
+			"cantidad"		=> $cantidad,
+			"id_inventario"	=> $id_inventario,
+			"id_mercancia"	=> $mercancia,
+			"tipo"			=> 'S',
+			"n_documento"	=> $n_documento
+		);
+		
+		$this->db->insert("inventario_historial",$dato_mov);
+	}
+
+	
+	private function updateInventario($cantidad,$almacen,$mercancia) {
+		$this->db->query("update inventario set cantidad=".$cantidad." where id_almacen = ".$almacen." and id_mercancia = ".$mercancia);
+	}
+
+	
+	private function productoSurtido($id) {
+		$q = $this->db->query("SELECT 
+									    p.id,
+									    s.id_almacen_origen,
+									    cvm.cantidad,
+									    concat(f.nombre,
+									            ' ',
+												f.apellido,
+									            '\n',
+												co.`Name`,
+									            ' ',
+									            d.estado,
+									            ' ',
+									            d.municipio,
+									            ' ',
+									            d.colonia,
+									            ' ',
+									            d.calle) as otro_destino
+									FROM
+									    surtido s,
+										movimiento o,
+									    cross_venta_mercancia cvm,
+									    mercancia m,
+									    producto p,
+										users u,
+										user_profiles f,
+										cross_dir_user d,
+									    Country co,
+										cross_surtido_embarque e
+									WHERE
+											p.id = m.sku         
+									        and m.id = o.id_mercancia
+									        and cvm.id_mercancia = o.id_mercancia
+											and cvm.id_venta = s.id_venta
+											and o.id_movimiento = s.id_movimiento
+											and m.id_tipo_mercancia = 1
+									        and co.`Code` = d.pais
+											and d.id_user = u.id
+											and f.user_id = u.id
+											and u.username = o.destino
+									        and s.id_surtido = e.id_surtido
+											and e.id_embarque = ".$id);  
+		$productos = $q->result();
+		return $productos;
+	}
+
+	
+	private function estatusSurtidobyVenta($estatus,$venta) {
+		$this->db->query("update surtido set estatus=".$estatus." where id_venta=".$venta);
+	}
+
+	
+	private function getSurtidoNoEmbarcado($venta) {
+		$surtidos_q=$this->db->query("SELECT * from surtido where id_venta=".$venta." and estatus <> 2");
+		return $surtidos_q->result();
+	}
+
+	
+	private function estatusSurtido($estatus,$id) {
+		$this->db->query("update surtido set estatus = ".$estatus." where id_surtido=".$id);
+	}
+
+	
+	private function surtidoEmbarque($id_surtido, $embarque) {
+		$dato_cross=array(
+			"id_surtido"	=> $id_surtido,
+			"id_embarque"	=> $embarque
+		);
+		$this->db->insert("cross_surtido_embarque",$dato_cross);
+	}
+
+	
+	private function insertEmbarque($fecha, $n_guia, $proveedor) {
+		$dato_embarque=array(
+			"fecha_entrega"	=> $fecha,
+			"id_estatus"	=> 1,			
+			"n_guia"		=> $n_guia,
+			"id_mensajeria"	=> $proveedor
+		);
+		$this->db->insert("embarque",$dato_embarque);
+		return $this->db->insert_id();
+	}
+
 
 	function get_embarque()
 	{
-		$q=$this->db->query("SELECT * from embarque where id_estatus=1");
-		$embarques=$q->result();
+		$embarques = $this->getEmbarquesEstatus(1);
 		$embarques_array=array();
 		$dato=0;
 		foreach($embarques as $embarque)
 		{
-			/*$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
-			h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
-			FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
-			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
-			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
-			*/
-			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.n_guia, e.id_embarque, c.nombre as origen, 
-									e.fecha_entrega, concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, 
-									concat(cve.nombre,' ', cve.apellido) as usuario, cve.celular, cve.correo
-									
-									FROM surtido s, movimiento m, cedi c, embarque e, cross_surtido_embarque g, cross_venta_envio cve,
-									Country co, estate es, City ci
-									
-									WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and c.id_cedi = m.origen and
-									e.id_embarque = g.id_embarque and s.id_surtido = g.id_surtido and co.Code = cve.id_pais and 
-									es.id = cve.estado and ci.ID = cve.municipio  and c.id_cedi = m.origen and e.id_estatus = 1 and 
-									cve.id_venta = s.id_venta and e.id_embarque = ".$embarque->id_embarque." limit 1");
-			$dato_embarque=$q2->result();
-			$embarques_array[$dato]=$dato_embarque[0];
+			$dato_embarque = $this->getEmbarquesTransito ($embarque->id_embarque);
+			
+			array_push($embarques_array, $dato_embarque);
 			$dato++;
 		} 
 		return $embarques_array;
-	} 
+	}
+	
+
+	private function getEmbarquesTransito($id) {
+		/*$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
+		h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
+		FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
+		cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
+		and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
+		*/
+		$query = "SELECT 
+					    s.id_surtido as id,
+					    m.keyword as id_transaccion,
+					    e.n_guia,
+					    e.id_embarque,
+					    c.nombre as origen,
+					    e.fecha_entrega,
+					    concat(co.Name,
+					            ' ',
+					            d.estado,
+					            ' ',
+					            d.municipio,
+					            ' ',
+					            d.colonia,
+					            ' ',
+					            d.calle) as direccion,
+					    concat(p.nombre, ' ', p.apellido) as usuario,
+					    group_concat(t.numero) celular,
+					    u.email correo
+					FROM
+					    surtido s,
+					    movimiento m,
+					    cedi c,
+					    embarque e,
+					    cross_surtido_embarque g,
+					    cross_dir_user d,
+						cross_tel_user t,
+					    Country co,
+					    users u,
+						user_profiles p
+					WHERE
+							c.id_cedi = s.id_almacen_origen 
+							and m.id_movimiento = s.id_movimiento
+					        and s.id_surtido = g.id_surtido
+							and e.id_embarque = g.id_embarque
+					        and co.`Code` = d.pais
+							and d.id_user = u.id
+							and t.id_user = u.id
+							and p.user_id = u.id
+							and u.username = m.destino
+					        and e.id_estatus = 1
+					        and g.id_embarque = ".$id."
+					group by s.id_surtido
+					limit 10";
+		
+		$q2=$this->db->query($query);
+		$dato_embarque=$q2->result();
+		return $dato_embarque;
+	}
+
+	private function getEmbarquesEstatus($estatus) {
+		$q=$this->db->query("SELECT * from embarque where id_estatus=".$estatus);
+		$embarques=$q->result();
+		return $embarques;
+	}
+ 
 	function get_embarcados($inicio, $fin)
 	{
-		$q=$this->db->query("SELECT * from embarque where id_estatus=2");
-		$embarques=$q->result();
+		$embarques = $this->getEmbarquesEstatus(2);
 		$embarques_array=array();
 		$dato=0;
 		foreach($embarques as $embarque)
 		{
-			/*$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
-			h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
-			FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
-			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
-			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
-			*/
-			$q2=$this->db->query("SELECT s.id_surtido as id, m.keyword as id_transaccion, e.n_guia, e.id_embarque, c.nombre as origen, 
-									e.fecha_entrega, concat(co.Name,' ',es.Nombre,' ',ci.Name,' ',cve.colonia,' ',cve.calle) as direccion, 
-									concat(cve.nombre,' ', cve.apellido) as usuario, cve.celular, cve.correo
-									
-									FROM surtido s, movimiento m, cedi c, embarque e, cross_surtido_embarque g, cross_venta_envio cve,
-									Country co, estate es, City ci
-									
-									WHERE s.id_almacen_origen = c.id_cedi and s.id_movimiento = m.id_movimiento and c.id_cedi = m.origen and
-									e.id_embarque = g.id_embarque and s.id_surtido = g.id_surtido and co.Code = cve.id_pais and 
-									es.id = cve.estado and ci.ID = cve.municipio  and c.id_cedi = m.origen and e.id_estatus = 2 and 
-									cve.id_venta = s.id_venta and e.id_embarque = ".$embarque->id_embarque." and e.fecha_entrega>'".$inicio."' and e.fecha_entrega<'".$fin."' limit 1");
+			$id = $embarque->id_embarque;		
 			
-			$dato_embarque=$q2->result();
+			$dato_embarque = $this->getEmbarquesHechos ( $inicio, $fin, $id );
+			
 			if(isset($dato_embarque[0]->id_embarque)){
-				$embarques_array[$dato]=$dato_embarque[0];
+				array_push($embarques_array, $dato_embarque);
 			}
 			$dato++;
 		}
 		return $embarques_array;
-	} 
+	}
+	
+	private function getEmbarquesHechos($inicio, $fin, $id) {
+		
+		/*$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega,
+		 h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
+		 FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
+		 cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido
+		 and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
+		*/				
+		
+		$query = "SELECT 
+					    s.id_surtido as id,
+					    m.keyword as id_transaccion,
+					    e.n_guia,
+					    e.id_embarque,
+					    c.nombre as origen,
+					    e.fecha_entrega,
+					    concat(co.`Name`,
+					            ' ',
+					            d.estado,
+					            ' ',
+					            d.municipio,
+					            ' ',
+					            d.colonia,
+					            ' ',
+					            d.calle) as direccion,
+					    concat(p.nombre, ' ', p.apellido) as usuario,
+					    group_concat(t.numero) celular,
+					    u.email correo
+					FROM
+					    surtido s,
+					    movimiento m,
+					    cedi c,
+					    embarque e,
+					    cross_surtido_embarque g,
+					    cross_dir_user d,
+						cross_tel_user t,
+						users u,
+						user_profiles p,
+					    Country co
+					WHERE
+							c.id_cedi = s.id_almacen_origen 
+					        and m.id_movimiento = s.id_movimiento       
+					        and s.id_surtido = g.id_surtido
+							and e.id_embarque = g.id_embarque
+					        and co.`Code` = d.pais
+							and d.id_user = u.id
+							and t.id_user = u.id
+							and p.user_id = u.id
+							and u.username = m.destino
+					        and e.id_estatus = 2
+					        and g.id_embarque = ".$id."
+					        and e.fecha_entrega > '".$inicio."'
+					        and e.fecha_entrega <= '".$fin."'
+					group by s.id_surtido
+					limit 10";
+		$q2=$this->db->query($query);
+		
+		$dato_embarque=$q2->result();
+		return $dato_embarque;
+	}
+ 
 	function embarcar()
 	{
 		$this->db->query("UPDATE embarque set id_estatus=2 where id_embarque=".$_POST["id"]);
@@ -485,14 +1049,8 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 	}
 	function estatus_almacen()
 	{
-		if($_POST["estatus"]==1)
-		{
-			$estatus="DES";
-		}
-		else 
-		{
-			$estatus="ACT";
-		}
+		$estatus = ($_POST["estatus"]==1) ? "DES" : "ACT";
+		
 		$this->db->query("UPDATE almacen set estatus='".$estatus."' where id_almacen=".$_POST["id"]);
 	}
 	function eliminar_almacen()

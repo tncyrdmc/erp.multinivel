@@ -14,7 +14,7 @@
 							<?php }else{?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
-								> <a href="/bol/dashboard/">Log&iacute;stico</a> 
+								> <a href="/bol/dashboard/">Logístico</a> 
 								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
 								> Pedidos Embarcados
 							</span>
@@ -130,6 +130,9 @@
 					</header>
 					
 					<div class="row" id="reporte_div" style="width: 100%;">
+					
+					
+					
 					</div>	
 							
 				</div>
@@ -340,18 +343,13 @@
 				var inicio=$("#startdate").val();
 				var fin=$("#finishdate").val();
 
-				if(inicio=='')
+				if(inicio==''||fin=='')
 				{
-					alert('Introduzca fecha de inicio');
+					alert('Introduzca las fechas');
 				}
 				else
 				{
-					if(fin=='')
-					{
-						alert('Introduzca fecha de fin');
-					}
-					else
-					{
+					
 						$("#nuevos_afiliados").show();
 						var datos={'inicio':inicio,'fin':fin};
 						$.ajax({
@@ -419,7 +417,7 @@
 								    
 							}
 						});
-					}
+					
 				}	
 			});
 
@@ -429,7 +427,7 @@
 						id : id,
 						},
 					type:"post",
-					url:"detalles",
+					url:"detalles2",
 					success: function(msg){
 						bootbox.dialog({
 							message: msg,
@@ -491,66 +489,7 @@
 			}
 		}
 		</script>
-		<script>
-			function reporte_excel_comprar_usr()
-			{
-				var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
-						{
-							alert('Introduzca fecha de inicio');
-						}
-						else
-						{
-							if(fin=='')
-							{
-								alert('Introduzca fecha de fin');
-							}
-							else
-							{
-								$("#nuevos_afiliados").show();
-								var datos={'inicio':inicio,'fin':fin};
-								$.ajax({
-							         type: "get",
-							         url: "reporte_compras_excel/"+inicio+fin,
-								});
-							}
-						}	
-			}
-
-			function iniciarSpinner(){
-				
-				var opts = {
-						  lines: 12 // The number of lines to draw
-						, length: 28 // The length of each line
-						, width: 14 // The line thickness
-						, radius: 42 // The radius of the inner circle
-						, scale: 1 // Scales overall size of the spinner
-						, corners: 1 // Corner roundness (0..1)
-						, color: '#3276B1' // #rgb or #rrggbb or array of colors
-						, opacity: 0.25 // Opacity of the lines
-						, rotate: 0 // The rotation offset
-						, direction: 1 // 1: clockwise, -1: counterclockwise
-						, speed: 1 // Rounds per second
-						, trail: 60 // Afterglow percentage
-						, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-						, zIndex: 2e9 // The z-index (defaults to 2000000000)
-						, className: 'spinner' // The CSS class to assign to the spinner
-						, top: '50%' // Top position relative to parent
-						, left: '50%' // Left position relative to parent
-						, shadow: false // Whether to render a shadow
-						, hwaccel: true // Whether to use hardware acceleration
-						, position: 'absolute' // Element positioning
-						}
-						
-						var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
-				}
-
-			function FinalizarSpinner(){
-				
-				$("#spinner2").html('');
-			}
-		</script>
+		
 		<script type="text/javascript">
 		
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!

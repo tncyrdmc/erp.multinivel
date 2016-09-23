@@ -198,9 +198,43 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 	}
 	function get_productos_red($idCategoriaRed, $pais)
 	{
-		$q=$this->db->query('Select a.nombre, a.descripcion, b.id , b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red, b.puntos_comisionables 
-from producto a, mercancia b, cat_grupo_producto d
-where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.estatus like "ACT" and (b.pais = "'.$pais.'" or b.pais = "AAA") and a.id_grupo='.$idCategoriaRed.' order by d.descripcion');
+		$query = 'SELECT 
+					    a.nombre,
+					    a.descripcion,
+					    a.inventario,
+					    (select 
+								(case when (max(i.cantidad)-a.inventario > 0)&&(i.cantidad) then max(i.cantidad)-a.inventario else 0 end) c 
+					        from
+					            inventario i,
+								cedi c
+					        where 
+									i.id_mercancia = b.id
+									and c.id_cedi = i.id_almacen
+									and c.tipo = "A"
+									order by i.cantidad desc) existencia,
+					    b.id,
+					    b.costo,
+					    b.costo_publico,
+					    b.fecha_alta,
+					    d.descripcion grupo,
+					    d.id_grupo,
+					    a.nombre img,
+					    d.id_red,
+					    b.puntos_comisionables,
+						a.max_venta,
+						b.id_tipo_mercancia
+					FROM
+					    producto a,
+					    mercancia b,
+					    cat_grupo_producto d
+					WHERE
+					    a.id = b.sku and d.id_grupo = a.id_grupo
+					        and b.id_tipo_mercancia = 1
+					        and b.estatus like "ACT"
+					        and (b.pais = "'.$pais.'" or b.pais = "AAA")
+					        and a.id_grupo = '.$idCategoriaRed.'
+					order by d.descripcion';
+		$q=$this->db->query($query);
 		$produc =  $q->result();
 
 		return $produc;
@@ -518,7 +552,32 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	function get_limite_compras($tipoMercancia,$i)
 	{
-			$q=$this->db->query("select a.min_venta, a.max_venta from producto a, mercancia b where a.id=b.sku and b.id=".$i);
+			$q=$this->db->query("select 
+								    a.min_venta,
+								    a.max_venta,
+								    a.inventario,
+								    (select 
+								            (case
+								                    when
+								                        (max(i.cantidad) - a.inventario > 0)
+								                            && (i.cantidad)
+								                    then
+								                        max(i.cantidad) - a.inventario
+								                    else 0
+								                end) c
+								        from
+								            inventario i,
+								            cedi c
+								        where
+								            i.id_mercancia = b.id
+								                and c.id_cedi = i.id_almacen
+								                and c.tipo = 'A'
+								        order by i.cantidad desc) existencia
+								from
+								    producto a,
+								    mercancia b
+								where
+								    a.id = b.sku and b.id =".$i);
 			return $q->result();
 	}
 	function get_costo($i)
@@ -1652,12 +1711,30 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	
 	function get_mercancia_venta($id_venta){
 		$q = $this->db->query("SELECT * FROM cross_venta_mercancia where id_venta=".$id_venta);
+		return $q->result();	
+	}
+	function get_mercancia_venta_inventario($id_venta){
+		$q = $this->db->query("SELECT 
+								    c.*
+								FROM
+								    cross_venta_mercancia c,
+									mercancia m
+								where
+									m.id = c.id_mercancia and
+									m.id_tipo_mercancia = 1 and
+								    c.id_venta = ".$id_venta);
 		return $q->result();
-	
 	}
 	function get_tipo_mercancia($id_mercancia){
 		$q = $this->db->query("SELECT id_tipo_mercancia FROM mercancia where id=".$id_mercancia);
 		return $q->result();
 	
 	}
+	
+	function get_venta($id){
+		$q = $this->db->query("select * from venta where id_venta = ".$id);
+		return $q->result();
+	
+	}
+	
 }

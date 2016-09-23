@@ -71,10 +71,10 @@ class cuentasporcobrar extends compras{
 			$embarque = $this->modelo_logistico->setPedido($id_venta);
 			
 			if(!$embarque){
-				echo "No se puede cambiar el estado del pedido, No hay suficiente mercancia en el Inventario.";
+				echo "No se puede cambiar el estado del pedido, Una de las Mercancias esta Agotada.";
 				exit();
 			}			
-			echo '/bo/cuentasporcobrar | 77';exit();
+			
 			$this->pagarComisionVenta($id_venta,$id_afiliado_comprador);
 			
 			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $datosCuentaPagar[0]->id);

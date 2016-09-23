@@ -15,6 +15,7 @@ class logistico2 extends CI_Controller
 		$this->load->model('bo/general');
 		$this->load->model('general');
 		$this->load->model('bo/modelo_logistico');
+		$this->load->model('bo/modelo_proveedor_mensajeria');
 	}
 
 	function index()
@@ -80,11 +81,14 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
-		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistico){
 			redirect('/auth/logout');
 		}
+	
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -160,8 +164,8 @@ class logistico2 extends CI_Controller
 								</tr>
 							</thead>
 							<tbody style='width: 100%;'>";
-								
-							foreach ($surtidos as $surtido){
+							if($surtidos){	
+							foreach ($surtidos[0] as $surtido){
 								echo "<tr style='width: 100%;'>
 									<td class='sorting_1'>". $surtido->id."</td>
 									<td>". $surtido->n_guia."</td>
@@ -175,7 +179,7 @@ class logistico2 extends CI_Controller
 										<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(".$surtido->id.")' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
 									</td>
 								</tr>";
-						} 
+						}} 
 						echo "	
 						</tbody>
 					</table> <tr class='odd' role='row'>
@@ -186,11 +190,13 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistico){
 			redirect('/auth/logout');
 		}
+		
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		
@@ -220,7 +226,7 @@ class logistico2 extends CI_Controller
 		}
 	*/
 		$surtidos = $this->modelo_logistico->get_embarque();
-		
+		//var_dump($surtidos);exit();
 		$this->template->set("style",$style);
 		$this->template->set("surtidos",$surtidos);
 		
@@ -237,13 +243,14 @@ class logistico2 extends CI_Controller
 	}
 	
 	function detalles()
-	{
+	{ 
 		$id = $this->tank_auth->get_user_id();
 		$usuario = $this->general->get_username($id);
 		
-		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistico){
 			redirect('/auth/logout');
 		}
 		
@@ -253,20 +260,57 @@ class logistico2 extends CI_Controller
 		$this->template->set("style",$style);
 		
 		$productos = "";
-		$servicios = "";
-		$combinados = "";
-		$paquetes = "";
+		$servicios = array();
+		$combinados = array();
+		$paquetes = array();
 		
-		$productos = $this->modelo_logistico->getDetalleVentaProducto($id_surtido);
-		$servicios = $this->modelo_logistico->getDetalleVentaServicio($id_surtido);
-		$combinados = $this->modelo_logistico->getDetalleVentaCombinado($id_surtido);
-		$paquetes = $this->modelo_logistico->getDetalleVentaPaquete($id_surtido);
+		$productos = $this->modelo_logistico->getDetalleProductoPendiente($id_surtido);
+		#$servicios = $this->modelo_logistico->getDetalleVentaServicio($id_surtido);
+		#$combinados = $this->modelo_logistico->getDetalleVentaCombinado($id_surtido);
+		#$paquetes = $this->modelo_logistico->getDetalleVentaPaquete($id_surtido);
 		
 		$this->template->set("productos",$productos);
 		$this->template->set("servicios",$servicios);
 		$this->template->set("combinados",$combinados);
 		$this->template->set("paquetes",$paquetes);
 		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->build('website/bo/logistico2/embarque/detalles');
+	}
+	
+	function detalles2()
+	{
+		$id = $this->tank_auth->get_user_id();
+		$usuario = $this->general->get_username($id);
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistico){
+			redirect('/auth/logout');
+		}
+	
+		$id_surtido = $_POST['id'];
+	
+		$style=$this->modelo_dashboard->get_style(1);
+		$this->template->set("style",$style);
+	
+		$productos = "";
+		$servicios = array();
+		$combinados = array();
+		$paquetes = array();
+	
+		$productos = $this->modelo_logistico->getDetalleProductoTransito($id_surtido);
+		#$servicios = $this->modelo_logistico->getDetalleVentaServicio($id_surtido);
+		#$combinados = $this->modelo_logistico->getDetalleVentaCombinado($id_surtido);
+		#$paquetes = $this->modelo_logistico->getDetalleVentaPaquete($id_surtido);
+	
+		$this->template->set("productos",$productos);
+		$this->template->set("servicios",$servicios);
+		$this->template->set("combinados",$combinados);
+		$this->template->set("paquetes",$paquetes);
+	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/logistico2/embarque/detalles');
@@ -281,15 +325,19 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistico){
 			redirect('/auth/logout');
 		}
+		
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set("usuario",$usuario);
+		
+		
 		/*
 		
 		$embarcados=$this->modelo_logistico->get_embarcados();
@@ -315,10 +363,15 @@ class logistico2 extends CI_Controller
 			}
 		}*/
 		
-		//$surtidos = $this->modelo_logistico->get_embarcados();
+		$inicio = date('Y-m').'-01';
+		$fin = date('Y-m-d');
+		
+		if($inicio&&$fin){
+			$surtidos = $this->modelo_logistico->get_embarcados($inicio,$fin);
+		}
 		
 		$this->template->set("style",$style);
-		//$this->template->set("surtidos",$surtidos);
+		$this->template->set("surtidos",$surtidos);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -355,7 +408,7 @@ class logistico2 extends CI_Controller
 		$this->template->build('website/bo/logistico2/alta');
 	}
 	
-	function movimiento(){
+	function nuevo_surtido(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -367,6 +420,39 @@ class logistico2 extends CI_Controller
 		$Comercial = $this->general->isAValidUser($id,"comercial");
 		$Logistico = $this->general->isAValidUser($id,"logistica");
 		
+		if(!$Comercial&&!$Logistico){
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$surtido = $_POST['surtido'];
+		$venta = $_POST['venta'];
+		
+		$proveedores = $this->modelo_proveedor_mensajeria->obtenerProveedores();
+		
+		$this->template->set("proveedores",$proveedores);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("surtido",$surtido);
+		$this->template->set("venta",$venta);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		
+		$this->template->build('website/bo/logistico2/embarque/surtir');
+	}
+	
+	function movimiento(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
 		if(!$Comercial&&!$Logistico){
 			redirect('/auth/logout');
 		}

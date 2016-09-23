@@ -125,7 +125,8 @@
 																				</thead>
 																				<tbody>
 																					
-																					<?php foreach ($surtidos as $surtido){ ?>
+																					<?php if($surtidos) {
+																						foreach ($surtidos[0] as $surtido){ ?>
 																						<tr>
 																							<td><?php echo $surtido->id; ?></td>
 																							<td><?php echo $surtido->n_guia; ?></td>
@@ -137,10 +138,10 @@
 																							<td><?php echo $surtido->fecha_entrega; ?></td>
 																							<td class='text-center'>
 																								<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
-																								<a class='txt-color-blue' style='cursor: pointer;' onclick='embarcar(<?php echo $surtido->id_embarque; ?>)' title='Embarcar'><i class='fa fa-truck fa-3x'></i></a>
+																								<a class='txt-color-blue' style='cursor: pointer;' onclick='embarcar(<?php echo $surtido->id_embarque; ?>)' title='Embarcar'><i class='fa fa-home fa-3x'></i></a>
 																							</td>
 																						</tr>
-																				<?php } ?>
+																				<?php } }?>
 																					
 																				</tbody>
 																			</table>
@@ -454,7 +455,7 @@
 				id : id,
 				},
 			type:"post",
-			url:"detalles",
+			url:"detalles2",
 			success: function(msg){
 				bootbox.dialog({
 					message: msg,

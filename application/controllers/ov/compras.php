@@ -323,6 +323,9 @@ function index()
 		$empresa  = $this->model_admin->val_empresa_multinivel();
 		$this->template->set("empresa",$empresa);
 		
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		$this->template->set("envio",$canal[0]->gastos);
+		
 		$contenidoCarrito=$this->get_content_carrito ();
 
 		if(!$contenidoCarrito['compras'])
@@ -434,11 +437,12 @@ function index()
 			exit();
 		}
 	
-		if($estado=="1"){
-				
+		if($estado=="1"){				
 	
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'TUCOMPRA',$fecha);
 				
+			$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+			
 			$this->modelo_compras->registrar_pago_online
 			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
@@ -477,6 +481,8 @@ function index()
 
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYULATAM',$fecha);
 			
+			$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+			
 			$this->modelo_compras->registrar_pago_online
 			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
@@ -512,7 +518,9 @@ function index()
 				
 			$fecha = date("Y-m-d");
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYPAL',$fecha);
-				
+			
+			$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+			
 			$this->modelo_compras->registrar_pago_online
 			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
@@ -2733,8 +2741,8 @@ function index()
 		echo "<form id='comprar'  method='post' action=''>";
 		if($id_tipo_mercancia==1){
 			$limites=$this->modelo_compras->get_limite_compras($id_tipo_mercancia,$id_mercancia);
-			$min=$limites[0]->min_venta;
-			$max=$limites[0]->max_venta;
+			$min=($limites[0]->min_venta>$limites[0]->existencia) ? $limites[0]->existencia :$limites[0]->min_venta;
+			$max=($limites[0]->max_venta>$limites[0]->existencia) ? $limites[0]->existencia :$limites[0]->max_venta;
 			echo "	<div class='row'>
 						<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
 							<p class='font-md'><strong>Cantidad</strong></p><br>
@@ -3310,12 +3318,15 @@ function index()
 		$productos=1;
 		$servicios=2;
 		$combinados=3;
+		$paquete=4;
+		$membresia=5;
 
-		$this->showMercanciaPorCategoria($productos, $idCategoriaRed, $paisUsuario);
+		$tipoItems = array($productos,$servicios,$combinados,$paquete,$membresia);
+			
+		for($i=0;$i<sizeof($tipoItems);$i++){
+			$this->showMercanciaPorCategoria($tipoItems[$i], $idCategoriaRed, $paisUsuario);
+		}
 		
-		$this->showMercanciaPorCategoria($servicios, $idCategoriaRed, $paisUsuario);
-		
-		$this->showMercanciaPorCategoria($combinados, $idCategoriaRed, $paisUsuario);
 	}
 	
 	function getMercanciaPorTipoDeRed($id_tipo_mercancia,$id_tipo_red,$paisUsuario){
@@ -3349,9 +3360,26 @@ function index()
 	}
 	
 	function printMercanciaPorTipoDeRed($mercancia,$tipoMercancia){
-		$imprimir='';
+		
 		for($i=0;$i<sizeof($mercancia);$i++)
 		{
+			$id_tipo_mercancia = isset($mercancia[$i]->id_tipo_mercancia) ? $mercancia[$i]->id_tipo_mercancia : 0;
+			$inventario = '';
+			$boton = 'compra_prev('.$mercancia[$i]->id.','.$tipoMercancia.',0)' ;
+			$btn = 'success';
+			$rows = ($mercancia[$i]->descripcion!='') ? 9.8 : 1;
+			
+			if($id_tipo_mercancia == 1){
+				$existencia = intval($mercancia[$i]->existencia);				
+				$color = ($existencia < $mercancia[$i]->max_venta) ? 'orange' : 'green';
+				$inventario = ($existencia>0)  ? 'Existencias: <b style="color: '.$color.'">'.$existencia.'</b>' : '<b style="color: red">Producto Agotado</b>';
+				($existencia>0) ? '' : $boton = 'javascript:void(0)' ;
+				($existencia>0) ? '' : $btn = 'default' ;	
+			}					
+			
+			$puntos_comisionables = ($mercancia[$i]->puntos_comisionables!='0') 
+				? '<span style="font-size: 1.5rem;">(Puntos  '.$mercancia[$i]->puntos_comisionables.')</span>' : '';
+				
 		$imprimir ='	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 					<div class="producto">
 					<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
@@ -3365,22 +3393,21 @@ function index()
 					<h4><a  onclick="detalles('.$mercancia[$i]->id.','.$tipoMercancia.')">'.$mercancia[$i]->nombre.'</a></h4>
      				<section style="margin-bottom: 1rem;" class="smart-form">
 					<label class="textarea textarea state-disabled"> 										
-						<textarea rows="4" class="custom-scroll" disabled="disabled" style="color: rgb(0, 0, 0); border: medium none; overflow: hidden; height: 9.8rem;">'.$mercancia[$i]->descripcion.'
+						<textarea rows="4" class="custom-scroll" disabled="disabled" style="color: rgb(0, 0, 0); border: medium none; overflow: hidden; height: '.$rows.'rem;">'.$mercancia[$i]->descripcion.'
 						</textarea> 
 					</label>
 					</section>
 					</div>
-					<div class="price">';
-					if($mercancia[$i]->puntos_comisionables!='0'){
-						$imprimir.='<span style="font-size: 1.5rem;">(Puntos  '.$mercancia[$i]->puntos_comisionables.')</span>';
-					}
-					 
-					$imprimir.='<br>
+					<div class="price">
+					<span>'.$inventario.'</span>
+					</div>
+					<hr/>
+					<div class="price">'.$puntos_comisionables.'<br>
 					<span>$ '.$mercancia[$i]->costo.'</span>
 					</div>
 					<br>
 					<div class=""> 
-						<a style="font-size: 1.7rem;" class="btn btn-success" onclick="compra_prev('.$mercancia[$i]->id.','.$tipoMercancia.',0)"> 
+						<a style="font-size: 1.7rem;" class="btn btn-'.$btn.'" onclick="'.$boton.'"> 
 						<span class="add2cart">
 						<i class="glyphicon glyphicon-shopping-cart"> 
 						</i> Agregar al carrito </span> </a> </div>

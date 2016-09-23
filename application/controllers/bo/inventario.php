@@ -279,13 +279,18 @@ class inventario extends CI_Controller {
 			$cantidad_in = $_POST ['cantidad_in'];			
 			
 			if (count($existe_traspaso)>0) {
-				$this->inventarioExistente ( $existe_traspaso , -$cantidad_in );					
+				$existeCantidad = $existe_traspaso [0]->cantidad;
+				if ($cantidad_in <= $existeCantidad) {
+					$this->inventarioExistente ( $existe_traspaso , -$cantidad_in );
+				}else{
+					echo "Digite una cantidad Menor a : ".$existeCantidad;
+					exit();
+				}					
 			}
 			
 			if (count($existe_en_inventario)>0) {
 				$existeID = $this->inventarioExistente ( $existe_en_inventario , $cantidad_in );
-				$id_inventario = $existeID;
-				
+				$id_inventario = $existeID;				
 			} else {				
 				$datos_inventario = array (
 						
@@ -302,7 +307,7 @@ class inventario extends CI_Controller {
 			$documento = $_POST ['documento'];
 			$n_documento = $_POST ['n_documento'];
 			
-			$datos = $this->setDatosHistorial ( $origen_in, $origen, $id_inventario, $mercancia_in, $destino_in, $cantidad_in, $documento, $n_documento );
+			$datos = $this->setDatosHistorialEntrada ( $origen_in, $origen, $id_inventario, $mercancia_in, $destino_in, $cantidad_in, $documento, $n_documento );
 			
 			$this->model_inventario->ingresar_inventario_historial ( $datos );
 			
@@ -330,7 +335,7 @@ class inventario extends CI_Controller {
 	}
 
 	 
-	private function setDatosHistorial($origen_in, $origen, $id_inventario, $mercancia_in, $destino_in, $cantidad_in, $documento, $n_documento) {
+	private function setDatosHistorialEntrada($origen_in, $origen, $id_inventario, $mercancia_in, $destino_in, $cantidad_in, $documento, $n_documento) {
 		if ($origen_in != null) {
 			$datos = array (
 					
@@ -393,62 +398,95 @@ class inventario extends CI_Controller {
 		$this->template->build ( 'website/bo/logistico2/inventario/salida_alta' );
 	}
 	function new_salida() {
-		if (! ($_POST ['destino_in'] == null) || ! ($_POST ['destino'] == null) && (! ($_POST ['documento'] == null) && ! ($_POST ['mercancia_in'] == null) && ! ($_POST ['cantidad_in'] == null) && ! ($_POST ['n_documento'] == null))) {
+		
+		$destino_in = $_POST ['destino_in'];
+		$destino = $_POST ['destino'];
+		$documento = $_POST ['documento'];
+		$mercancia_in = $_POST ['mercancia_in'];
+		$n_documento = $_POST ['n_documento'];
+		
+		$cantidad_in = $_POST ['cantidad_in'];
+		if (! ($destino_in == null) || 
+				! ($destino == null) &&
+				(! ($documento == null) &&
+						! ($mercancia_in == null) &&
+						! ($cantidad_in == null) &&
+						! ($n_documento == null)
+				)
+			) {
+					
 			$id_inventario = 0;
 			
-			$existe_en_inventario = $this->model_inventario->consultar_en_inventario ( $_POST ['mercancia_in'], $_POST ['origen_in'] );
+			$origen = $_POST ['origen_in'];
 			
-			if ($existe_en_inventario != null) {
-				if ($_POST ['cantidad_in'] <= $existe_en_inventario [0]->cantidad) {
-					$datos_inventario_update = array (
-							"cantidad" => $existe_en_inventario [0]->cantidad - $_POST ['cantidad_in'] 
-					)
-					;
-					$this->db->where ( 'id_inventario', $existe_en_inventario [0]->id_inventario );
-					$this->db->update ( 'inventario', $datos_inventario_update );
-					$id_inventario = $existe_en_inventario [0]->id_inventario;
+			$existe_en_inventario = $this->model_inventario->consultar_en_inventario ( $mercancia_in, $origen );
+			$existe_traspaso = $this->model_inventario->consultar_en_inventario ( $mercancia_in, $destino );
+			
+			if (count($existe_en_inventario)>0) {
+				$existeCantidad = $existe_en_inventario [0]->cantidad;
+				if ($cantidad_in <= $existeCantidad) {
+					$existeID = $this->inventarioExistente ( $existe_en_inventario , -$cantidad_in );
+					$id_inventario = $existeID;
+				}else{
+					echo "Digite una cantidad Menor a : ".$existeCantidad;
+					exit();
 				}
-			} else {
+			} 
+			
+			if (count($existe_traspaso)>0) {
+				$this->inventarioExistente ( $existe_traspaso , $cantidad_in );
 			}
 			
-			if ($_POST ['destino_in'] != null) {
-				$datos = array (
-						
-						"id_origen" => $_POST ['origen_in'],
-						"id_destino" => '0',
-						"id_documento" => $_POST ['documento'],
-						"cantidad" => $_POST ['cantidad_in'],
-						"id_mercancia" => $_POST ['mercancia_in'],
-						"otro_origen" => $_POST ['destino_in'],
-						"n_documento" => $_POST ['n_documento'],
-						"id_inventario" => $id_inventario,
-						"tipo" => 'S' 
-				);
-			} else {
-				$datos = array (
-						
-						"id_origen" => $_POST ['origen_in'],
-						"id_destino" => $_POST ['destino'],
-						"id_documento" => $_POST ['documento'],
-						"cantidad" => $_POST ['cantidad_in'],
-						"id_mercancia" => $_POST ['mercancia_in'],
-						"otro_origen" => '0',
-						"n_documento" => $_POST ['n_documento'],
-						"id_inventario" => $id_inventario,
-						"tipo" => 'S' 
-				);
-			}
+			$datos = $this->setDatosHistorialSalida ( $destino_in, $destino, $documento, $mercancia_in, $n_documento, $cantidad_in, $id_inventario, $origen );
 			
 			$this->model_inventario->ingresar_inventario_historial ( $datos );
+			
+			echo ($id_inventario>0) ? "la salida a sido registrada" : "El Origen no posee inventario de esta mercancia.";
+			
 		} else {
 			
-			$error = "Complete los datos de formualrio";
-			$this->session->set_flashdata ( 'error', $error );
-			redirect ( '/bo/inventario/inventarioEntradaAlta' );
+			echo "Complete los datos del formulario";
+			//$error = "Complete los datos de formulario";
+			//$this->session->set_flashdata ( 'error', $error );
+			//redirect ( '/bo/inventario/inventarioEntradaAlta' );
 		}
 		
-		redirect ( '/bo/inventario/index' );
+		//redirect ( '/bo/inventario/index' );
 	}
+	
+
+	private function setDatosHistorialSalida($destino_in, $destino, $documento, $mercancia_in, $n_documento, $cantidad_in, $id_inventario, $origen) {
+		if ($destino_in != null) {
+			$datos = array (
+					
+					"id_origen" => $origen,
+					"id_destino" => '0',
+					"id_documento" => $documento,
+					"cantidad" => $cantidad_in,
+					"id_mercancia" => $mercancia_in,
+					"otro_origen" => $destino_in,
+					"n_documento" => $n_documento,
+					"id_inventario" => $id_inventario,
+					"tipo" => 'S' 
+			);
+		} else {
+			$datos = array (
+					
+					"id_origen" => $origen,
+					"id_destino" => $destino,
+					"id_documento" => $documento,
+					"cantidad" => $cantidad_in,
+					"id_mercancia" => $mercancia_in,
+					"otro_origen" => '0',
+					"n_documento" => $n_documento,
+					"id_inventario" => $id_inventario,
+					"tipo" => 'S' 
+			);
+		}
+		
+		return $datos;
+	}
+
 	function historial() {
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
 			redirect ( '/auth' );

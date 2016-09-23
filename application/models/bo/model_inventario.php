@@ -138,7 +138,14 @@ class model_inventario extends CI_Model
   	return $q->result();
   }
   function getAlmacen_en_inventario(){
-  	$q=$this->db->query('SELECT c.id_cedi,c.nombre,c.descripcion,c.estatus,c.tipo FROM inventario n,cedi c where c.id_cedi=n.id_almacen group by c.id_cedi,c.nombre');
+  	$q=$this->db->query("SELECT 
+  								c.id_cedi,c.nombre,c.descripcion,c.estatus,c.tipo,
+  									(case
+								        when (tipo = 'C') then 'CEDI'
+								        else 'Almacén'
+								    end) tipo_nombre 
+  							FROM inventario n,cedi c 
+  							where c.id_cedi=n.id_almacen group by c.id_cedi,c.nombre");
   	return $q->result();
   }
 

@@ -83,14 +83,14 @@
 					
 						
 							
-							<form id="entradas" class="smart-form" method="post" action="new_salida">
+							<form id="entradas" class="smart-form" method="post" action="new_salida" role="form">
                               
                               <fieldset>
                                 <legend>Datos de Salida</legend>
                                 <section  class="col col-3">
                                   <label class="select">Tipo de Entrada
-                                    <select id="documento" required type="text" name="documento">
-                                      <option >--------Escoja un tipo--------------</option>
+                                    <select id="documento" required  name="documento">
+                                      <option value="" >--------Escoja un tipo--------------</option>
                                                            <?foreach ($documento as $key){?>
 													<option value="<?=$key->id_doc?>"><?=$key->nombre?></option>
 												<?}?>
@@ -107,11 +107,11 @@
                               <fieldset>
                                 <section  class="col col-3">
                                   <label class="select">Almacen/Cedi    <strong>Origen</strong>
-                                    <select id="origen_in" required type="text" name="origen_in" onChange="ProductoAlmacen()">
-                                      <option >--------------Escoja un almacen-----------------</option>
+                                    <select id="origen_in" required  name="origen_in" onChange="ProductoAlmacen()">
+                                      <option value="" >--------------Elije Almacen/CEDI-----------------</option>
                                                                                
                                                  <?foreach (	$almacenesCedi as $key){?>
-													<option value="<?=$key->id_cedi?>"><?=$key->nombre?></option>
+													<option value="<?=$key->id_cedi?>"><?=$key->nombre." (".$key->tipo_nombre.")";?></option>
 												<?}?>    </select>
                                   </label>
                                 </section>
@@ -119,16 +119,16 @@
                                 <legend>Almacen</legend>
                                 <section  class="col col-3">
                                   <label class="select"> <strong>Destino</strong>
-                                    <select id="tipo"  type="text" name="tipo" onChange="OrigenAlmacen()">
+                                    <select id="tipo" required name="tipo" onChange="OrigenAlmacen()">
                                       <option value="">--------------Escoja un tipo-----------------</option>
                                          <option value="A">Almacen</option>
                                           <option value="C">Cedi</option>
-                                                                                      
+                                          <option value="O">Otro</option>                                            
                                    </select>
                                   </label>
                                   <br>
-                                  <label for="" class="select"> <select
-						              id="destino" name="destino" >
+                                  <label for="" class="select"> 
+                                  <select id="destino" name="destino" >
 								      </select>
 								 </label>
 								 
@@ -151,7 +151,7 @@
                                 <legend>General</legend>
                                 <section class="col col-3">
                                   <label class="select">Producto
-                                    <select id="mercancia_in" required type="text" name="mercancia_in">
+                                    <select id="mercancia_in" required  name="mercancia_in">
                                     
 											 </select>
                                   </label>
@@ -164,9 +164,7 @@
                               
                               </fieldset>
                               <footer>
-                                <button type="submit" class="btn btn-success">
-                                  Guardar Salida
-                                </button>
+                              	<input type="submit" value="Crear salida" class="btn btn-success" />                               
                               </footer>
                            
 							  
@@ -209,7 +207,42 @@
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script src="/template/js/validacion.js"></script>
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-<<script type="text/javascript">
+<script type="text/javascript">
+
+$( "#entradas" ).submit(function( event ) {
+	event.preventDefault();	
+	GuardarSalida();
+});
+
+function GuardarSalida(){
+	$.ajax({
+		type: "POST",
+		url: "/bo/inventario/new_salida",
+		data: $("#entradas").serialize()
+	})
+	.done(function( msg )
+	{
+		if(msg != ''){
+			bootbox.dialog({
+				message: msg,//"la entrada a sido registrada",
+				title: 'Entrada',
+				buttons: {
+					success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							location.href="/bo/inventario/historial";
+						}
+					}
+				}
+		
+			})//fin done ajax
+		}else{
+			location.href="/bo/inventario/historial";
+		}
+	});
+}
+
 function OrigenAlmacen(){
 	var tipo = $("#tipo").val();
 	$.ajax({
@@ -250,6 +283,8 @@ function ProductoAlmacen(){
 	});
 	
 }
+
+
 </script>
 
 

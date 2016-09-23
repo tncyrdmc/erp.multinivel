@@ -87,13 +87,22 @@
 														</div>
 				
 													</div>
-													<br>
+													<hr/>
 													<div class="well well-sm  bg-color-darken txt-color-white no-border">
 														<div class="fa-lg">
-															Total :
+															Subtotal :
 															<span class="pull-right">$ <?php echo $this->cart->total(); ?> ** </span>
 														</div>
-				
+														<br/>
+														<div class="fa-lg">
+															Gastos Envío :
+															<span class="pull-right">$ <?php echo $envio; ?> ** </span>
+														</div>
+														<hr/>
+														<div class="fa-lg">
+															Total :
+															<span class="pull-right">$ <?php echo $this->cart->total()+$envio; ?> ** </span>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -215,7 +224,9 @@
 													
 													<div class="col-sm-4">
 														<div class="invoice-sum-total pull-right">
-															<h3><strong>Total a Pagar: <span class="text-success">$ <?php echo $total;?> </span></strong></h3>
+															<h4><strong>Subtotal: <span class="text-default pull-right">$ <?php echo $total;?> </span></strong></h4>
+															<h4><strong>Gastos Envio: <span class="text-danger pull-right">$ <?php echo $envio;?> </span></strong></h4>															
+															<h3><strong>Total a Pagar: <span class="text-success pull-right">&nbsp;&nbsp;$ <?php echo $total+$envio;?> </span></strong></h3>
 														</div>
 													</div>
 				

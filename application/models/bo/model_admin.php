@@ -2261,4 +2261,9 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		
 	}
 	
+	function setGastosCanal($canal,$valor){
+		$this->db->query("update canal set gastos = ".$valor." where id=".$canal);
+		return true;
+	}
+	
 }

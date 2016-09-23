@@ -660,10 +660,15 @@ if($datos['pais'] == "-"){
 		
 		foreach ($canales as $canal){
 			$setCanal = isset($_POST[$canal->alias]) ? $_POST[$canal->alias] : false;
+			
 			if($setCanal){
 				$this->model_admin->limpiarDistribucion($canal->id);
 				$this->model_admin->setDistribucion($canal->id,$setCanal);
 			}			
+		}
+		$gastos = $_POST['gastos'];
+		for ($i=0;$i<sizeof($gastos);$i++){
+			$this->model_admin->setGastosCanal($i+1,$gastos[$i]);
 		}
 		
 		echo "Actualizado";
