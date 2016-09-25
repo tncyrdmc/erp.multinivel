@@ -165,9 +165,12 @@ class logistico2 extends CI_Controller
 							</thead>
 							<tbody style='width: 100%;'>";
 							if($surtidos){	
-							foreach ($surtidos[0] as $surtido){
+							foreach ($surtidos as $surtido){
+								
+								$factura = ($surtido->id_venta > 0) ? "<a class='txt-color-green' style='cursor: pointer;' onclick='factura(".$surtido->id_venta.")' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>" : "" ;
+								
 								echo "<tr style='width: 100%;'>
-									<td class='sorting_1'>". $surtido->id."</td>
+									<td class='sorting_1'>". $surtido->id_embarque."</td>
 									<td>". $surtido->n_guia."</td>
 									<td>". $surtido->origen."</td>
 									<td>". $surtido->usuario."</td>
@@ -176,7 +179,8 @@ class logistico2 extends CI_Controller
 									<td>". $surtido->correo."</td>
 									<td>". $surtido->fecha_entrega."</td>
 									<td class='text-center'>
-										<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(".$surtido->id.")' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
+										<a class='txt-color-orange' style='cursor: pointer;' onclick='detalles(".$surtido->id.")' title='Detalles'><i class='fa fa-cube fa-3x'></i></a>
+										".$factura."
 									</td>
 								</tr>";
 						}} 

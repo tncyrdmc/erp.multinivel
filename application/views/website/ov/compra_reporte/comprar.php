@@ -90,18 +90,8 @@
 													<hr/>
 													<div class="well well-sm  bg-color-darken txt-color-white no-border">
 														<div class="fa-lg">
-															Subtotal :
+															Precio :
 															<span class="pull-right">$ <?php echo $this->cart->total(); ?> ** </span>
-														</div>
-														<br/>
-														<div class="fa-lg">
-															Gastos Envío :
-															<span class="pull-right">$ <?php echo $envio; ?> ** </span>
-														</div>
-														<hr/>
-														<div class="fa-lg">
-															Total :
-															<span class="pull-right">$ <?php echo $this->cart->total()+$envio; ?> ** </span>
 														</div>
 													</div>
 												</div>

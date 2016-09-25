@@ -421,6 +421,35 @@
 				}	
 			});
 
+
+			function factura(id) {
+				iniciarSpinner();
+				$.ajax({
+					data:{
+						id : id
+					},
+						type:"post",
+						url:"/bo/ventas/factura",
+						success: function(msg){
+								FinalizarSpinner();
+								bootbox.dialog({
+									message: msg,
+									title: "Factura",
+									className: "",
+									buttons: {
+										success: {
+										label: "Aceptar",
+										className: "hide",
+										callback: function() {
+											}
+										}
+									}
+								})
+							}
+						});
+
+		}
+			
 			function detalles(id){
 				$.ajax({
 					data:{

@@ -7,6 +7,7 @@ class modelo_logistico extends CI_Model
 		$this->load->model('ov/modelo_compras');
 		$this->load->model('ov/model_perfil_red');
 		$this->load->model('bo/model_inventario');
+		
 	}	
 	
 	
@@ -16,14 +17,20 @@ class modelo_logistico extends CI_Model
 		$inventario = $this->calcularInventario ( $mercancia );
 		$totalPedido = count($mercancia);
 		$numeroInventario = count($inventario);
-		
+		var_dump($mercancia);
+		echo "<hr/>";
+		var_dump($inventario);
+		echo "<hr/>";
+		echo $totalPedido."|".$numeroInventario;
+		echo "<hr/>";
 		if($numeroInventario<$totalPedido){
 			return false;
 		}
 		
 		$Count = $this->soloUnAlmacen ( $inventario );		
-		
-		if ($Count[0]<$totalPedido){
+		var_dump($Count);
+		echo "<hr/>";
+		if ($Count[0]<$totalPedido||!$Count[1]){
 			return false;
 		}
 		
@@ -42,6 +49,18 @@ class modelo_logistico extends CI_Model
 			array_push($items, $item->id_mercancia);
 		}
 		
+		$Count = $this->groupAlmacenes ( $items );		
+		//if ($Count[0]<$totalPedido){
+		//	return false;
+		//}
+	
+		$this->cargarPedido($Count,$venta,$mercancia);
+	
+		return true;
+	}
+	
+	private function groupAlmacenes($items) {
+	 
 		$grupos = implode(',', $items); 
 		
 		$query = "SELECT 
@@ -67,20 +86,15 @@ class modelo_logistico extends CI_Model
 		//	return false;
 		//}
 	
-		$Count = $q ? array($q[0]->id_almacen) : array(1);//$this->soloUnAlmacen ( $inventario );
-		
-		//if ($Count[0]<$totalPedido){
-		//	return false;
-		//}
-	
-		$this->cargarPedido($Count,$venta,$mercancia);
-	
-		return true;
+		return $q ? array($q[0]->id_almacen) : array(1);//$this->soloUnAlmacen ( $inventario );
+
 	}
+
 	  
 	function cargarPedido($almacenes,$pedido,$mercancia){	
 		
 		$almacen = $this->elegirAlmacen ($almacenes, $mercancia);
+		echo $almacen;
 		$venta =  $this->modelo_compras->get_venta($pedido);
 		$id = $venta[0]->id_user;
 		$user = $this->model_perfil_red->get_username($id);			
@@ -141,7 +155,7 @@ class modelo_logistico extends CI_Model
 	
 		$id_inventario = $inventario[0]->id_inventario;
 		
-		if(isset($id_inventario))
+		/*if(isset($id_inventario))
 		{
 			$cantidadIn = $inventario[0]->cantidad;
 			$actual=$cantidadIn*1;
@@ -150,7 +164,7 @@ class modelo_logistico extends CI_Model
 			$this->db->query("update inventario
 									set cantidad=".$cantidad."
 									where id_inventario=".$id_inventario);
-		}
+		}*/
 		
 		return true;
 	}
@@ -182,8 +196,9 @@ class modelo_logistico extends CI_Model
 		foreach ($inventario as $almacenes){
 			$B = $A;			
 			$A = $almacenes;
-			$C = array_intersect($B, $A);
-			(count($C)>0) ? $Count++ : '';			
+			$C = (count($C)==0) ? $A : array_intersect($B, $A);
+			(count($C)>0) ? $Count++ : '';	
+			var_dump($almacenes);echo "<hr/>";
 		}
 		return array($Count,$C);
 	}
@@ -710,6 +725,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 				$this->surtidoEmbarque ( $surtido->id_surtido, $embarque );
 			}
 			
+			$this->embarcarbyid($embarque);
 			$this->estatusSurtidobyVenta (2,$venta);
 		}
 		
@@ -738,7 +754,7 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 		
 		$this->db->query("delete from carrito_temporal where id_venta = ".$venta);
 		
-		echo "FINE!";
+		echo ($venta==0 || $unico==1) ? "El Pedido ha sido enviado a transito!" : "El Pedido ha sido Embarcado!";
 	}
 	
 	private function historialInventario($almacen, $mercancia, $cantidad, $otro, $id_inventario, $destino, $documento, $n_documento) {
@@ -929,20 +945,23 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 	function get_embarcados($inicio, $fin)
 	{
 		$embarques = $this->getEmbarquesEstatus(2);
-		$embarques_array=array();
-		$dato=0;
+		//$embarques_array=array();
+		$dato=array();
 		foreach($embarques as $embarque)
 		{
 			$id = $embarque->id_embarque;		
 			
-			$dato_embarque = $this->getEmbarquesHechos ( $inicio, $fin, $id );
+			//$dato_embarque = $this->getEmbarquesHechos ( $inicio, $fin, $id );
 			
-			if(isset($dato_embarque[0]->id_embarque)){
-				array_push($embarques_array, $dato_embarque);
-			}
-			$dato++;
+			//if(isset($dato_embarque[0]->id_embarque)){
+				array_push($dato, $id);
+			//}
+			//$dato++;
 		}
-		return $embarques_array;
+		
+		$embarques_array = implode(',', $dato);
+		
+		return $this->getEmbarquesHechos ( $inicio, $fin, $embarques_array);
 	}
 	
 	private function getEmbarquesHechos($inicio, $fin, $id) {
@@ -972,7 +991,8 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 					            d.calle) as direccion,
 					    concat(p.nombre, ' ', p.apellido) as usuario,
 					    group_concat(t.numero) celular,
-					    u.email correo
+					    u.email correo,
+						s.id_venta
 					FROM
 					    surtido s,
 					    movimiento m,
@@ -995,10 +1015,10 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 							and p.user_id = u.id
 							and u.username = m.destino
 					        and e.id_estatus = 2
-					        and g.id_embarque = ".$id."
+					        and g.id_embarque in (".$id.")
 					        and e.fecha_entrega > '".$inicio."'
 					        and e.fecha_entrega <= '".$fin."'
-					group by s.id_surtido
+					group by e.id_embarque
 					limit 10";
 		$q2=$this->db->query($query);
 		
@@ -1010,6 +1030,12 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 	{
 		$this->db->query("UPDATE embarque set id_estatus=2 where id_embarque=".$_POST["id"]);
 	}
+	
+	function embarcarbyid($id)
+	{
+		$this->db->query("UPDATE embarque set id_estatus=2 where id_embarque=".$id);
+	}
+	
 	function existe_almacen_web()
 	{
 		$q=$this->db->query("SELECT * from almacen where web=1");

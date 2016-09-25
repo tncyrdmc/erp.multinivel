@@ -132,7 +132,8 @@
 																							<td><?php echo $surtido->correo; ?></td>
 																							<td><?php echo $surtido->fecha; ?></td>
 																							<td class='text-center'>
-																								<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
+																								<a class='txt-color-green' style='cursor: pointer;' onclick='factura(<?php echo $surtido->id_venta; ?>)' title='Factura'><i class='fa fa-eye fa-3x'></i></a>
+																								<a class='txt-color-orange' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-cube fa-3x'></i></a>
 																								<a class='txt-color-blue' style='cursor: pointer;' onclick='surtir(<?php echo $surtido->id; ?>,<?php echo $surtido->id_venta; ?>)' title='Surtir'><i class='fa fa-truck fa-3x'></i></a>
 																							</td>
 																						</tr>
@@ -261,6 +262,36 @@
 				
 	}
 
+
+	function factura(id) {
+		iniciarSpinner();
+		$.ajax({
+			data:{
+				id : id
+			},
+				type:"post",
+				url:"/bo/ventas/factura",
+				success: function(msg){
+						FinalizarSpinner();
+						bootbox.dialog({
+							message: msg,
+							title: "Factura",
+							className: "",
+							buttons: {
+								success: {
+								label: "Aceptar",
+								className: "hide",
+								callback: function() {
+									}
+								}
+							}
+						})
+					}
+				});
+
+}
+
+	
 	function detalles(id){
 		$.ajax({
 			data:{
@@ -271,7 +302,7 @@
 			success: function(msg){
 				bootbox.dialog({
 					message: msg,
-					title: "Detalles de la venta",
+					title: "Detalles del Pedido",
 					className: "",
 					buttons: {
 						success: {
