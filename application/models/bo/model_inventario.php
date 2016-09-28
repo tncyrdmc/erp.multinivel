@@ -28,7 +28,17 @@ class model_inventario extends CI_Model
 		return $q->result();
 	}
 	function Obtener_Productos_Almacen($almacen){
-		$q=$this->db->query('SELECT * FROM producto p,inventario i where p.id = i.id_mercancia and i.id_almacen="'.$almacen.'" group by p.id,p.nombre ');
+		$q=$this->db->query('SELECT 
+								    p . *, i . *, m.`real`, m.costo, m.costo_publico
+								FROM
+								    mercancia m,
+								    producto p,
+								    inventario i
+								where
+								    p.id = m.sku 
+									and m.id = i.id_mercancia
+								    and i.id_almacen ="'.$almacen.'" 
+								group by p.id,p.nombre ');
 		return $q->result();
 	}
 	function getAlldocumento(){

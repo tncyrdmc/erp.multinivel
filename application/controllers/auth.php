@@ -49,22 +49,7 @@ class Auth extends CI_Controller
 			$tipo = $this->general->get_tipo($id);
 			$tipo = (int)$tipo[0]->id_tipo_usuario;
 			
-			if($tipo==2){
-				$this->cobrarRetenciones();
-				redirect('/ov/dashboard');
-			}
-			elseif ($tipo==1)
-				redirect('/bo/dashboard');
-			elseif ($tipo==3)
-				redirect('/bos/dashboard');
-			elseif ($tipo==4)
-				redirect('/boc/dashboard');
-			elseif ($tipo==5)
-				redirect('/bol/dashboard');
-			elseif ($tipo==6)
-				redirect('/boo/dashboard');
-			elseif ($tipo==7)
-				redirect('/boa/dashboard');
+			$this->accesos ( $tipo );	
 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
 			redirect('/auth/send_again/');
@@ -124,22 +109,9 @@ class Auth extends CI_Controller
 							
 						if($estatus == '1'){
 							$this->general->unlocked();
-							if($tipo==2){
-								$this->cobrarRetenciones();
-								redirect('/ov/dashboard');
-							}
-							elseif ($tipo==1){
-								redirect('/bo/dashboard');
-							}elseif ($tipo==3)
-								redirect('/bos/dashboard');
-							elseif ($tipo==4)
-								redirect('/boc/dashboard');
-							elseif ($tipo==5)
-								redirect('/bol/dashboard');
-							elseif ($tipo==6)
-								redirect('/boo/dashboard');
-							elseif ($tipo==7)
-								redirect('/boa/dashboard');
+							
+							$this->accesos ( $tipo );		
+							
 						}else{
 							$this->logout2();
 					
@@ -172,6 +144,30 @@ class Auth extends CI_Controller
 			$this->template->build('auth/login');
 		}
 	}
+	
+	
+	private function accesos($tipo) {
+		if($tipo==2){
+			$this->cobrarRetenciones();
+		}
+		
+		$accesos = array(
+				1 => '/bo/dashboard',
+				2 => '/bo/dashboard',
+				3 => '/bos/dashboard',
+				4 => '/boc/dashboard',
+				5 => '/bol/dashboard',
+				6 => '/boo/dashboard',
+				7 => '/boa/dashboard',
+				8 => '/CEDI/home',
+				9 => '/Almacen/home',
+		);
+		
+		if($accesos[$tipo]){
+			redirect($accesos[$tipo]);
+		}
+	}
+
 	
 	private function getRecovery($login) {
 		$query = "select recovery from users where id = '".$login."' or username = '".$login."' or email = '".$login."'";

@@ -81,6 +81,35 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 	function actualizar_cedi($cedi, $id){
 		$this->db->update('cedi', $cedi, array('id_cedi' => $id));
 	}
+	function getUsuarioId($id)
+	{
+		$q=$this->db->query('SELECT
+								    u.id as id,
+								    u.username as username,
+								    u.email as email,
+								    up.nombre,
+								    up.apellido,
+								    C.id_cedi as cedi,
+								    UC.dni,
+								    UC.telefono_fijo,
+								    UC.id_pais
+								FROM
+								    users u,
+								    user_profiles up,
+								    cat_tipo_usuario cu,
+								    users_cedi UC,
+								    cedi C
+								WHERE
+								    (u.id = up.user_id)
+								        and (up.id_tipo_usuario = cu.id_tipo_usuario)
+								        and (cu.id_tipo_usuario = 8)
+								        and (u.id = '.$id.')
+								        and UC.username = u.username
+								        and UC.id_cedi = C.id_cedi
+								group by u.id');
+		return $q->result();
+	}
+	
 }
 
 ?>
