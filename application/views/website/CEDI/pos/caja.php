@@ -31,17 +31,15 @@
 										
 										<section class="col-md-3" style="padding-left: 2em">
 											<div class="control-group info">
-															<form name="form1" method="post" action="">
 																<label> <input type="text" autofocus
 																	class="input-xlarge" id="codigo" name="codigo"
 																	list="characters"
 																	placeholder="Codigo de barra o Nombre del producto"
-																	autocomplete="off"> <datalist id="characters">
-																		<option value="item 1">
-																	
+																	autocomplete="off"> 
+																	<datalist id="characters">
+															
 																	</datalist>
 																</label>
-															</form>
 											</div>
 											
 											
@@ -53,15 +51,15 @@
 											</a>
 										</section>										
 										<section class="col-md-5" style="padding-left: 2em">
-										<pre style="padding: 2em" class="pull-right">Nombre del Cajero/a : caja 1</pre>
+										<pre style="padding: 2em" class="pull-right">Nombre del Cajero/a : <?=$cajero?></pre>
 										</section>
 										<section class="col-md-12" style="padding-left: 2em"></section>
-										<section class="col-md-3" style="padding-left: 2em">
-											<div class="alert alert-error" align="center">
-												<button type="button" class="close" data-dismiss="alert">×</button>
+										<section id="existeProducto" class="col-md-3" style="padding-left: 2em">
+											<!--  <div id="noRegistrado" class="alert alert-error" align="center">
+												<button type="button" class="close" data-dismiss="alert">x</button>
 												<strong>Producto no Registrado<br>
-												<a href="#" class="btn btn-success"	onclick="crear_item($('#codigo').val())">Crear Este Producto </a></strong>
-											</div>
+												<a href="#" class="btn btn-success"	onclick="crear_item($(`#codigo).val())">Crear Este Producto </a></strong>
+											</div> -->
 										</section>
 										<section class="col-md-8" style="padding-left: 2em">
 											<div class="pull-right">
@@ -81,7 +79,7 @@
 
 											<div
 												style="OVERFLOW: auto; WIDTH: 100%; TOP: 48px; HEIGHT: 150px">
-												<table style='width: 98%' class="table table-hover">
+												<table id="pedidos" style='width: 98%' class="table table-hover">
 													<tr class="info">
 														<td width="13%"><strong>Codigo</strong></td>
 														<td width="27%"><strong>Descripcion del Producto</strong></td>
@@ -91,23 +89,7 @@
 														<td width="9%"><strong>Existencia</strong></td>
 														<td width="11%">&nbsp;</td>
 													</tr>
-													<tr>
-														<td>68463</td>
-														<td>celular</td>
-														<td><div align="right">
-																<a
-																	href="caja.php?id=4645435'&ddes='.$_SESSION['ddes']; ?>">co395749</a>
-															</div></td>
-														<td><a href="caja.php?idd=5647654">3</a></td>
-														<td bgcolor="#D9EDF7"><div align="right">$ 357645</div></td>
-														<td>23</td>
-														<td>
-															<button type="button" class="btn btn-danger"
-																onClick="window.location='php_eliminar_caja.php?id=5645'">
-																<i class="fa fa-minus"></i> Remover
-															</button>
-														</td>
-												
+													
 												</table>
 
 											</div>
@@ -254,6 +236,70 @@
 }
 </style>
 <script>
+
+$(document).ready(function(){
+	
+})
+
+$('#codigo').keyup(function(){	
+	existeProducto();
+})
+
+$('#codigo').focus(function(){	
+	existeProducto();
+})
+
+$('#codigo').change(function(){	
+	addProducto();
+})
+
+function addProducto(){
+	 var item = $("#codigo").val(); 
+	 if(item!=''){
+		 
+		 $.ajax({
+				type: "POST",
+				url: "POS/cargarProducto",
+				data: {
+					item : item
+				},
+			})
+			.done(function( msg )
+			{
+				if(msg){
+					$('#pedidos').append(msg);
+					$("#codigo").val('');
+				}
+			});//Fin callback bootbox*/
+
+	}
+}
+
+function eliminar(i){
+	$('#item'+i).remove();
+}
+
+function existeProducto(){
+	 var item = $("#codigo").val(); 
+	 if(item!=''){
+		 
+		 $.ajax({
+				type: "POST",
+				url: "POS/existeProducto",
+				data: {
+					item : item
+				},
+			})
+			.done(function( msg )
+			{
+				if(msg){
+					$('#characters').html(msg);
+				}
+			});//Fin callback bootbox*/
+
+	}
+}
+
 
 function crear_item(code)
 {
