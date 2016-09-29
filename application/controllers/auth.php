@@ -153,7 +153,7 @@ class Auth extends CI_Controller
 		
 		$accesos = array(
 				1 => '/bo/dashboard',
-				2 => '/bo/dashboard',
+				2 => '/ov/dashboard',
 				3 => '/bos/dashboard',
 				4 => '/boc/dashboard',
 				5 => '/bol/dashboard',

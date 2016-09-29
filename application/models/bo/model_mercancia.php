@@ -716,4 +716,17 @@ class model_mercancia extends CI_Model {
 			return false;
 		}
 	}
+	
+	function getProductoBy($id) {
+		$query = "SELECT * 
+											FROM mercancia m , producto p 
+											WHERE p.id = m.sku 
+												and (m.id = '".$id."' 
+												or p.codigo_barras like '".$id."%'  
+												or p.nombre like '".$id."%' 
+												or m.sku_2 like '".$id."%')";
+		$q = $this->db->query ($query);
+		return $q->result ();
+	}
+	
 }

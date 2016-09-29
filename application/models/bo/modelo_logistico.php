@@ -17,19 +17,19 @@ class modelo_logistico extends CI_Model
 		$inventario = $this->calcularInventario ( $mercancia );
 		$totalPedido = count($mercancia);
 		$numeroInventario = count($inventario);
-		var_dump($mercancia);
+		/*var_dump($mercancia);
 		echo "<hr/>";
 		var_dump($inventario);
 		echo "<hr/>";
 		echo $totalPedido."|".$numeroInventario;
-		echo "<hr/>";
+		echo "<hr/>";*/
 		if($numeroInventario<$totalPedido){
 			return false;
 		}
 		
 		$Count = $this->soloUnAlmacen ( $inventario );		
-		var_dump($Count);
-		echo "<hr/>";
+		//var_dump($Count);
+		//echo "<hr/>";
 		if ($Count[0]<$totalPedido||!$Count[1]){
 			return false;
 		}
@@ -94,7 +94,7 @@ class modelo_logistico extends CI_Model
 	function cargarPedido($almacenes,$pedido,$mercancia){	
 		
 		$almacen = $this->elegirAlmacen ($almacenes, $mercancia);
-		echo $almacen;
+		//echo $almacen;
 		$venta =  $this->modelo_compras->get_venta($pedido);
 		$id = $venta[0]->id_user;
 		$user = $this->model_perfil_red->get_username($id);			

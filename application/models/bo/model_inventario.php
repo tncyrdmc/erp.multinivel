@@ -27,6 +27,23 @@ class model_inventario extends CI_Model
 		$q=$this->db->query('select p.id_proveedor id_cedi,concat(p.nombre," ",p.apellido) nombre from proveedor_datos p group by p.id_proveedor');
 		return $q->result();
 	}
+	
+	function Obtener_Producto_Almacen($almacen,$item){
+		$q=$this->db->query('SELECT 
+								    p . *, i . *, m.`real`, m.costo, m.costo_publico
+								FROM
+								    mercancia m,
+								    producto p,
+								    inventario i
+								where
+								    p.id = m.sku 
+									and m.id = i.id_mercancia
+									and i.id_mercancia = "'.$item.'" 
+								    and i.id_almacen = "'.$almacen.'" 
+								group by p.id,p.nombre ');
+		return $q->result();
+	}
+	
 	function Obtener_Productos_Almacen($almacen){
 		$q=$this->db->query('SELECT 
 								    p . *, i . *, m.`real`, m.costo, m.costo_publico
@@ -176,10 +193,11 @@ class model_inventario extends CI_Model
   	}
   	
   	function historial_entradas_salida($inicio,$fin){
-  		$q=$this->db->query("select i.id_inventario_historial,i.fecha,i.otro_origen,
+  		$query = "select i.id_inventario_historial,i.fecha,i.otro_origen,
  			i.id_destino,i.id_origen,i.cantidad,i.id_documento,i.id_mercancia,i.tipo
  			from inventario_historial i
-             where i.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' ");
+             where i.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' ";
+  		$q=$this->db->query($query);
   		return $q->result();
   	}
 
