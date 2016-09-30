@@ -43,6 +43,18 @@ class modelo_cedi extends CI_Model
 	    return  $q->result();
 	}
 	
+	function get_mercancia_id($id){
+		$q = $this->db->query("SELECT 
+								    p.id, p.nombre, p.min_venta, m.costo, m.costo_publico
+								FROM
+								    producto p,
+								    mercancia m
+								where
+								    p.id = m.sku
+										and m.id = '".$id."'");
+		return  $q->result();
+	}
+	
 	function get_cant_disp_y_bloq_cedi($id_prod, $id_cedi){
 		$q = $this->db->query("SELECT i.cantidad, i.bloqueados FROM inventario i, producto p where i.id_mercancia = '".$id_prod."' and i.id_mercancia = p.id and i.id_almacen = '".$id_cedi."'");
 	    return  $q->result();
@@ -110,7 +122,339 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 		return $q->result();
 	}
 	
+	/**
+	 * Point of Sale (POS)	 
+	 */
+	
+	function setItemPOS ($mercancia,$id,$cedi){
+		
+		$items = $this->getTemporalID ($id);
+		$id_temporal = $this->setIdTemporal ( $id, $cedi );		
+		$temporal =  $items ? $items[0]->id_temporal : 0;				
+		
+		if ($temporal==$id_temporal){	
+			
+			$cantidad = 0;
+			foreach ($items as $item){
+				if($item->item == $mercancia){					
+					$cantidad += $item->cantidad;
+				}
+			}
+			echo $cantidad;
+			($cantidad>0) 
+			? $this->updateTemporalItem ( $mercancia, $id_temporal, 'cantidad' ,$cantidad+1 )
+			: $this->insertTemporal ( $id, $id_temporal ,$mercancia);
+			
+		}else{
+			$this->insertTemporal ( $id, $id_temporal ,$mercancia);		
+		}	
+		
+		return $this->getTemporal ($id_temporal);
+
+		
+	}
+	
+	function setIdTemporal($id, $cedi) {
+		
+		$venta = $this->getUltimaVenta ();
+		$id_temporal = $venta."_".$cedi."_".$id;
+		
+		return $id_temporal;
+	}
+
+	
+	function updateTemporalItem($mercancia, $id_temporal, $campo, $valor) {
+		
+		$query = 'update pos_venta_temporal 
+					set '.$campo.'  = "'.$valor.'" 
+					where id_temporal = "'.$id_temporal.'" 
+						and item = '.$mercancia;
+		
+		$this->db->query($query);
+	}
+
+	function updateTemporal($id_temporal, $campo, $valor) {
+	
+		$query = 'update pos_venta_temporal
+					set '.$campo.'  = "'.$valor.'"
+					where id_temporal = "'.$id_temporal.'"';
+	
+		$this->db->query($query);
+	}
+	
+	function deleteTemporal( $id_temporal) {
+	
+		$query = 'delete from pos_venta_temporal
+					where id_temporal = "'.$id_temporal.'"';
+	
+		$this->db->query($query);
+	}
+	
+	function deleteTemporalItem($mercancia, $id_temporal) {
+	
+		$query = 'delete from pos_venta_temporal
+					where id_temporal = "'.$id_temporal.'"
+						and item = '.$mercancia;
+	
+		$this->db->query($query);
+	}	
+	
+	function getTotalNeto($temporal){
+		
+		$temporal = $this->getTemporal($temporal);
+		
+		$valor = 0;
+		foreach ($temporal as $items){
+			
+			$precio = $this->calcularPrecio($items);
+			
+			$valor+= $precio * $items->cantidad;
+		}
+		
+		return $valor;
+		
+	}
+	
+	function setDescuento($temporal,$item,$descuento,$tipo){
+		if($tipo == '%' && $descuento>99){
+			$descuento = 99;
+		}
+		$this->updateTemporalItem($item, $temporal, 'descuento', $descuento);
+		$this->updateTemporalItem($item, $temporal, 'tipo_descuento', $tipo);
+		
+	}
+	
+	function getTotalArticulos($temporal){
+	
+		$temporal = $this->getTemporal($temporal);
+	
+		$valor = 0;
+		foreach ($temporal as $items){
+			$valor+= $items->cantidad;
+		}
+	
+		return $valor;
+	
+	}
+	
+	function getTemporal($id) {
+		$query = 'select 
+										    p.codigo_barras,
+										    p.nombre,
+										    (case
+										        when (v.costo = "DETAL") 
+												then m.costo_publico
+										        else m.costo
+										    end) unidad,
+										   	i.cantidad inventario,
+										   	p.inventario minimo, 
+										   	v . *
+										from
+										    pos_venta_temporal v,
+										    producto p,
+										    mercancia m,
+											users_cedi UC,
+											users u,
+											inventario i
+										where
+										    p.id = m.sku 
+												and m.id = i.id_mercancia 
+												and i.id_mercancia =  v.item
+												and i.id_almacen = UC.id_cedi
+												and UC.username = u.username	
+												and u.id = v.id_user
+										        and v.id_temporal = "'.$id.'" 
+										        and v.estatus = "ACT"';
+		
+		$q = $this->db->query($query);
+		return $q->result();
+	}
+
+	function getTemporalItem($id,$mercancia) {
+		$query = 'select
+										    p.codigo_barras,
+										    p.nombre,
+										    (case
+										        when (v.costo = "DETAL")
+												then m.costo_publico
+										        else m.costo
+										    end) unidad,
+										   	i.cantidad inventario,
+										   	p.inventario minimo,
+										   	v . *
+										from
+										    pos_venta_temporal v,
+										    producto p,
+										    mercancia m,
+											users_cedi UC,
+											users u,
+											inventario i
+										where
+										    p.id = m.sku
+												and m.id = i.id_mercancia
+												and i.id_mercancia =  v.item
+												and v.item = '.$mercancia.'
+												and i.id_almacen = UC.id_cedi
+												and UC.username = u.username
+												and u.id = v.id_user
+										        and v.id_temporal = "'.$id.'"
+										        and v.estatus = "ACT"';
+	
+		$q = $this->db->query($query);
+		return $q->result();
+	}
+	
+	private function insertTemporal($id, $id_temporal,$item) {
+		$mercancia = $this->get_mercancia_id($item);
+		$dato = array (
+				"id_temporal" => $id_temporal,
+				"id_user" => $id,
+				"item" => $item,
+				"fecha" => date('Y-m-d'),
+				"cantidad" => $mercancia[0]->min_venta,
+				"costo" => 'DETAL',
+				"descuento" => 0,
+				"tipo_descuento" => "$",
+				"estatus" => "ACT"
+		);
+		$this->db->insert ( "pos_venta_temporal", $dato );
+	}
+
+	
+	private function getTemporalID($id) {
+		$q = $this->db->query('select * 
+								from pos_venta_temporal 
+								where id_user = '.$id.' 
+									and estatus = "ACT"');
+		
+		return $q->result(); 
+	}
+
+	
+	function getUltimaVenta() {
+		$q = $this->db->query('select max(id_venta) id from venta where id_estatus = "ACT"');
+		$q = $q->result();
+		$q = $q ? $q[0]->id : 0;
+		$q+=1;
+		return $q;
+	}
+
+	function registrarVenta($temporal,$pago,$id){
+		
+		$temp = $this->getTemporal ($temporal);
+		
+		$venta = $this->insertVenta ( $id );
+		
+		$this->insertVentaPOS ( $pago, $venta , $temp[0]->id_user );
+		
+		$cedi = $this->getUsuarioId($temp[0]->id_user);
+
+		$id_cedi = $cedi[0]->cedi;
+		
+		foreach ($temp as $item){
+			
+			$this->insertVentaPOSItem ( $venta , $item);
+			$this->insertHistorial ( $id, $temp[0]->id_user, $venta ,$item);			
+			$this->updateInventarioPOS ( $id_cedi,$item );
+			
+		}			
+		
+		$id_temporal = $venta."_".$id_cedi."_".$temp[0]->id_user;
+		
+		$this->deleteTemporal($id_temporal);
+		
+	}
+	
+	private function updateInventarioPOS($id_cedi,$item) {
+		$cantidad = ($item->inventario - $item->cantidad);
+		
+		$query = "update inventario 
+					set cantidad = ".$cantidad." 
+					where id_almacen = ".$id_cedi." 
+						and id_mercancia = ".$item->item."";
+		$this->db->query($query);
+	}
+
+	
+	private function insertHistorial($id, $user, $venta, $item) {
+		$date = date('Y-m-d');
+		
+		$valor = $this->calcularPrecio ($item);
+		
+		$dato_venta=array(
+				"id_venta" 	=> $venta,
+				"id_user"	=> $user,
+				"cliente"	=> $id,
+				"fecha"	=> $date,
+				"item"	=> $item->item,
+				"cantidad" 	=> $item->cantidad,
+				"costo" 	=> $item->costo,
+				"descuento" 	=> $item->descuento,
+				"tipo_descuento" 	=> $item->tipo_descuento,
+				"total" => $valor*$item->cantidad
+		);
+		$this->db->insert("pos_venta_historial",$dato_venta);
+	}
+
+	
+	function calcularPrecio($item) {
+		$percent = ($item->unidad*$item->descuento)/100;
+		$percent = ($percent>$item->unidad) ? $item->unidad : $item->unidad-$percent;
+			
+		$cifra = ($item->descuento>0) ? $item->descuento : $item->unidad;
+			
+		$valor = ($item->tipo_descuento == '%') ? $percent : $cifra;
+		return $valor;
+	}
+
+	
+	private function insertVentaPOSItem($venta,$item) {
+		
+		$valor = $this->calcularPrecio($item);
+		
+		$dato_venta=array(
+				"id_venta" 	=> $venta,
+				"item"	=> $item->item,
+				"cantidad" 	=> $item->cantidad,
+				"valor" => $valor*$item->cantidad
+		);
+		$this->db->insert("pos_venta_item",$dato_venta);
+		return $this->db->insert_id();
+	}
+
+	
+	private function insertVentaPOS($pago, $venta, $id) {
+		$dato_venta=array(
+				"id_venta" 	=> $venta,
+				"id_user"	=> $id,
+				"costo" 	=> $pago
+		);
+		$this->db->insert("pos_venta",$dato_venta);
+		return $this->db->insert_id();
+	}
+
+	
+	private function insertVenta($id) {
+		$date = date('Y-m-d h:i:s');
+		
+		$dato_venta=array(
+				"id_user" 			=> $id,
+				"id_estatus"		=> 'ACT',
+				"id_metodo_pago" 	=> 'CEDI',
+				"fecha" 			=> $date
+		);
+		$this->db->insert("venta",$dato_venta);
+		return $this->db->insert_id();
+	}
+
+	function getClientes(){
+		
+		$query = "select * from user_profiles where id_tipo_usuario in (2,10)";
+		$q = $this->db->query($query);
+		return $q->result();
+	}
+	
 }
 
-?>
+
 

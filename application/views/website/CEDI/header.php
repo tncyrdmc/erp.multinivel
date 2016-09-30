@@ -45,7 +45,7 @@
 								<i style="font-size: 2rem;" class="fa fa-home"></i><br/>Inicio</a>
 							</li>
 							<li class="text-center">
-								<a href="POS">
+								<a href="/CEDI/POS">
 								<i style="font-size: 2rem;" class="fa fa-desktop"></i><br/>Punto de Venta </a>
 							</li>
 							<li class="text-center">
