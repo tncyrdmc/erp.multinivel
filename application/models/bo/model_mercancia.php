@@ -718,7 +718,7 @@ class model_mercancia extends CI_Model {
 	}
 	
 	function getProductoBy($id) {
-		$query = "SELECT m.id id_mercancia, p.* 
+		$query = "SELECT m.id id_mercancia, p.* , m.*
 											FROM mercancia m , producto p 
 											WHERE p.id = m.sku 
 												and (m.id = '".$id."' 
