@@ -18,6 +18,7 @@ class POS extends CI_Controller
 		$this->load->model('bo/modelo_logistico');
 		$this->load->model('bo/modelo_cedi');
 		$this->load->model('bo/general');
+		$this->load->model('cemail');
 	}
 
 	function index()
@@ -74,13 +75,188 @@ class POS extends CI_Controller
 		$id_temporal = $this->modelo_cedi->setIdTemporal ( $id, $almacen[0]->cedi );
 	
 		$total = $this->modelo_cedi->getTotalNeto($id_temporal);		
+		$iva = $this->modelo_cedi->setImpuesto($almacen[0]->id_pais,$total);
 		$total -= ($total * $descuento)/100;		
 		
 		$this->template->set("valor",$total);
+		$this->template->set("total",$total+$iva);
+		$this->template->set("iva",$iva);
+		$this->template->set("descuento",$descuento);
 		$this->template->set("users",$users);
 		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->build('website/CEDI/pos/verContado');
+	}
+	
+	function emailFactura(){
+		
+		$email = $_POST['email'];
+		$venta = $_POST['venta'];
+		
+		
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$empresa=$this->model_admin->get_empresa_multinivel();
+		$items = $this->modelo_cedi->getVenta($venta);
+		$cajero = $usuario[0]->nombre." ".$usuario[0]->apellido;
+		$user = $this->general->get_username($items[0]->cliente);
+		$cliente = $user[0]->nombre." ".$user[0]->apellido;
+		
+		
+		
+		$guion = (($empresa[0]->fijo)&&($empresa[0]->movil)) ? ' - ' : '';
+		$fecha = date('Y-m-d h:i:s');
+		
+		$neto = 0;
+		$item_html='';
+		
+		foreach ($items as $item){
+			$neto += $item->valor;
+			$descripcion = $item->nombre." ".$item->codigo_barras;
+			$item_html.='<tr>
+						<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+					</tr>
+					<tr>
+						<td style="text-align:left; min-width:100px">'.$descripcion.'</td>
+						<td style="text-align:right; min-width:100px">'.$item->cantidad.'</td>
+						<td style="text-align:right; min-width:100px">$ '.number_format($item->valor,2).'</td>
+					</tr>';
+			
+		}
+		
+		$articulos = 0;
+		foreach ($items as $item){
+			$articulos += $item->cantidad;
+		}
+		
+		$subtotal = $item->valor_total-$item->iva;
+		$direccion = $empresa[0]->provincia.", ".$empresa[0]->ciudad;		
+		
+		$dialogo = '';
+		
+		if($email&&$venta){
+		
+			$body = '<table width="310px" border="0" >
+					<tr>
+						<td colspan="3" >
+							<div align="center">
+								<img src="/logo.png" alt="" width="200px"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<br/><strong>'.$empresa[0]->nombre.'</strong>
+							<br/>Nit: '.$empresa[0]->id_tributaria.'
+							<br/>
+							<br/>Tel: '.$empresa[0]->fijo.$guion.$empresa[0]->movil.'
+							<br>'.$direccion.'
+						</td>
+					</tr>
+					<tr>
+						<td ></td>
+						<td colspan="2"><div align="right">'.$fecha.'</div></td>
+					</tr>
+					<tr>
+						<td colspan="3">CAJERO: '.$cajero.'</td>
+					</tr>
+					<tr>
+						<td colspan="3"><br/><br/></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<table width="100%">
+								<tr>
+									<td style="text-align:left; min-width:100px">DESCRIPCION</td>
+									<td style="text-align:right; min-width:100px">CANT</td>
+									<td style="text-align:right; min-width:100px">IMPORTE</td>
+								</tr>
+									'.$item_html.'
+								<tr>
+									<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+								</tr>
+								<tr>
+									<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align:right">TOTAL SUMA:</td>
+									<td style="text-align:right"><strong>$ '.number_format($neto,2).'</strong></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><br/></td>
+					</tr>
+					<tr >
+						<td colspan="3">
+							<table width="100%">
+								<td style="text-align:center">
+									NO. DE ARTICULOS: <strong>'.$articulos.'</strong><br/>
+									DESCUENTO: <strong>'.number_format($item->descuento_neto,1).'%</strong>
+								</td>
+								<td style="text-align:center">
+									SUBTOTAL: <strong>$ '.number_format($subtotal,2).'</strong><br/>
+									IVA: <strong>$ '.number_format($item->iva,2).'</strong><br/>
+									TOTAL: <strong>$ '.number_format($item->valor_total,2).'</strong>
+								</td>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div style="text-align:center">
+								<br/><br/>
+								<strong>* VENTA AL '.$items[0]->costo.' *</strong>
+								<br/><br/>
+								FIRMA DEL CLIENTE
+								<br/>'.$cliente.'<br/>
+								________________________________________
+								<br/><br/>
+								GRACIAS POR SU COMPRA
+								<br/>
+								'.$item->id_venta.'
+							</div>
+						</td>
+					</tr>
+					</table>';
+			
+			//echo $body;exit();
+			
+			$data = array(
+					'email' => $email,
+					'nombres' => $cliente,
+					'factura' => $body
+			);
+			
+			$mail = $this->cemail->send_email(11, $email, $data);
+			
+			$dialogo = $mail ? "Email Enviado" : "Falló envio de Email";
+		
+		}else{
+			$dialogo = "ERROR: No se ha axenado ninguna factura";
+		}
+		
+		$style=$this->modelo_dashboard->get_style($id);
+		$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+		
+		$this->template->set("style",$style);
+		$this->template->set("dialogo",$dialogo);
+		
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/CEDI/header',$data);
+        $this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/CEDI/pos/emailFactura');
+		
+		
 	}
 	
 	function facturar()
@@ -95,18 +271,32 @@ class POS extends CI_Controller
 	
 		$saldo =  $_POST['saldo'];
 		$pago = $_POST['pago'];
+		$iva = $_POST['iva'] ? $_POST['iva'] : 0;
 		$user = $_POST['user'];
+		$descuento = $_POST['desc'] ? $_POST['desc'] : 0;
+		
+		if(!$saldo||!$pago||!$user){
+			redirect('/CEDI/POS');
+		}
+		
+		
+		$email = $this->modelo_cedi->getCliente($user);
 		
 		$almacen  = $this->modelo_cedi->getUsuarioId($id);
 		
 		$id_temporal = $this->modelo_cedi->setIdTemporal ( $id, $almacen[0]->cedi );
 		
-		$datos = $this->modelo_cedi->registrarVenta($id_temporal,$pago,$user);
+		$datos = $this->modelo_cedi->registrarVenta($id_temporal,$pago,$user,$descuento,$iva);
 		
 		$style=$this->modelo_dashboard->get_style($id);
 		$this->template->set("cajero",$usuario[0]->nombre." ".$usuario[0]->apellido);
 		$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
 		
+		$empresa=$this->model_admin->get_empresa_multinivel();
+		
+		$this->template->set("email",$email[0]->email);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("items",$datos);
 		$this->template->set("style",$style);
 		$this->template->set("saldo",$saldo);
 		$this->template->set("pago",$pago);
@@ -255,10 +445,12 @@ class POS extends CI_Controller
 		
 		$limite =  $temporal[0]->inventario - $temporal[0]->minimo;
 		
-		$cantidad = $temporal[0]->cantidad;
+		$cantidad = $temporal[0]->cantidad;		
 		($factor == '+') ? $cantidad++ : $cantidad--;
+		$puntos = $temporal[0]->puntos_comisionables * $cantidad;
 		
 		($cantidad>$limite) ? '' : $this->modelo_cedi->updateTemporalItem($item, $id_temporal, 'cantidad', $cantidad);
+		($cantidad>$limite) ? '' : $this->modelo_cedi->updateTemporalItem($item, $id_temporal, 'puntos', $puntos);
 		($cantidad>0)  ? '' : $this->modelo_cedi->deleteTemporalItem($item, $id_temporal);		
 		
 		$pedidos = $this->modelo_cedi->getTemporal ($id_temporal);
@@ -320,6 +512,8 @@ class POS extends CI_Controller
 			
 			$precio = $this->modelo_cedi->calcularPrecio($producto);
 			
+			$puntos = ($producto->puntos_comisionables*$producto->cantidad);
+			
 			echo '<tr id="item'.$producto->item .'">
 					<td>'.$producto->codigo_barras .'</td>
 					<td>'.$producto->nombre .'</td>
@@ -328,6 +522,9 @@ class POS extends CI_Controller
 					</td>
 					<td>
 						'.$producto->cantidad.'
+					</td>
+					<td >
+						'.$puntos .'
 					</td>
 					<td >
 						$ '.number_format(($precio*$producto->cantidad),2) .'

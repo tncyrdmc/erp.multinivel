@@ -28,9 +28,9 @@
 
 										<div class="col-sm-11 link" style="padding-left: 2em">
 											<section class="col-md-3" style="padding-left: 2em">
-												<a href="#" class="btn" onclick="crear_item()"> <i
+												<!--<a href="#" class="btn" onclick="crear_item()"> <i
 													class="fa fa-tag"></i> Agregar Producto
-												</a>
+												</a>-->
 											</section>
 											<section class="col-md-5 col-xs-5" style="padding-left: 2em">
 												<pre style="padding: 2em" class="pull-right">Nombre del Cajero/a : <?=$cajero?></pre>
@@ -71,6 +71,7 @@
 															<th data-hide="phone,tablet"><strong>Producto</strong></th>
 															<th data-hide="phone,tablet"><strong>Valor Unitario</strong></th>
 															<th data-hide="phone,tablet"><strong>Cant.</strong></th>
+															<th data-hide="phone,tablet"><strong>Puntos</strong></th>
 															<th data-hide="phone,tablet"><strong>Importe</strong></th>
 															<th data-hide="phone,tablet"><strong>Existencia</strong></th>
 															<th data-hide="phone,tablet">Acciones</th>
@@ -167,7 +168,7 @@
 														<div class="padding-10">
 															<div class="col-md-2 "></div>
 															<label class="input-prepend input-append col-md-8 input">
-																<input type="number" class="span1" min="0" max="99"
+																<input type="number" class="span1" min="0" step="0.01" max="99"
 																name="cifra" id="cifra" value=""> <span
 																class="add-on">%</span>
 															</label>

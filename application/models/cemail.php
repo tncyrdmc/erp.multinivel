@@ -87,7 +87,8 @@ class Cemail extends CI_Model
 				"CONFIRMACIÓN DE NUEVA CONTRASEÑA", //reset-password
 				"INVITACION AL MULTINIVEL", //invitacion
 				"BANNER PROMOCIONAL", //autoresponder
-				"TRANSACCION DE BILLETERA" //transaccion-empresa
+				"TRANSACCION DE BILLETERA", //transaccion-empresa
+				"RECIBO DE COMPRA DESDE CEDI" //compra-cedi
 		);
 		
 		return $q[$type]; 		
@@ -104,7 +105,8 @@ class Cemail extends CI_Model
 				($type==6) ? "Tu nueva contraseña en ".$data['site_name']."." : "", //reset-password
 				($type==7) ? "Hola, ".$data['email'].", Te han invitado a afiliarte." : "", //invitacion
 				($type==8) ? "Gusto en Conocerte, ".$data['email']."." : "" , //autoresponder
-				($type==9) ? "Apreciado ".$data['username'].", Se ha realizado una transacción por parte de la Empresa." : "" //transaccion-empresa
+				($type==9) ? "Apreciado ".$data['username'].", Se ha realizado una transacción por parte de la Empresa." : "", //transaccion-empresa
+				($type==10) ? "Apreciado ".$data['nombres'].", Se ha realizado una Compra desde nuestros CEDI." : "" //compra-cedi
 		);
 	
 		return $q[$type];
@@ -139,7 +141,8 @@ class Cemail extends CI_Model
 				'descripcion_t'		=>isset($data['descripcion_t']) ? "Motivo la transacción: <br/><em class='callout'> ".$data['descripcion_t']."<em/>" : "",
 				'valor'		=>isset($data['valor']) ? "Valor de pago: $ ".$data['valor'] : "",
 				'sponsor_tel'	=>isset($data['sponsor_tel']) ? "Telefonos fijos y/o moviles: ".$data['sponsor_tel'] : "",
-				'tipo_t'	=>isset($data['tipo_t']) ? "Informamos que la empresa le ha <strong>".$data['tipo_t']." Dinero</strong> a su billetera," : ""
+				'tipo_t'	=>isset($data['tipo_t']) ? "Informamos que la empresa le ha <strong>".$data['tipo_t']." Dinero</strong> a su billetera," : "",
+				'factura'	=>isset($data['factura']) ? "Se anexa recibo de compra: <br/><br/>".$data['factura'] : ""
 		);
 		
 		$welcome = ($type==0) ? '<p class="callout">
@@ -254,6 +257,7 @@ class Cemail extends CI_Model
 						<p>'. $validar['descripcion_t'].'<br /></p>
 						<p>'. $validar['monto_t'].'<br /></p>' : '';
 		
+		$compra_cedi = ($type==10) ? $validar['factura'] : '';
 		
 		$q = array(			//welcome
 						$welcome, 
@@ -274,7 +278,9 @@ class Cemail extends CI_Model
 							//autoresponder
 						$autoresponder, 
 							//transaccion-empresa
-						$transaccion
+						$transaccion, 
+							//compra-cedi
+						$compra_cedi
 		);
 	
 		return $q[$type];

@@ -28,25 +28,36 @@
 
 										<div class="col-sm-11 link" style="padding-left: 2em">
 											
-											<section class="col-md-10 text-center" style="padding-top: 2em">
-												<a onclick="location.href='/CEDI/POS'" class="btn"><i
-													class="fa fa-backward"></i> Regresar a Ventas</a> <a
-													onclick="imprimir()" class="btn"><i
-													class="fa fa-print"></i> Imprimir Factura</a> <br>
-												</section> 
+											
 												
 												<section class="col-md-5">
+												
+												<section class="text-center" style="padding-top: 2em">
+												<a onclick="location.href='/CEDI/POS'" class="btn">
+													<i class="fa fa-backward"></i> Regresar </a> 
+												<a onclick="imprimir('<?="ficha".$items[0]->id_venta?>')" class="btn">
+													<i class="fa fa-print"></i> Imprimir Factura</a> 
+												</section> 												
+												<br>
 												<div class="text-center">
 													<h5>Total a Pagar</h5><h3>$ <?=number_format($pago,2)?></h3>
 													<br/><br/><h5 >Dinero Recibido</h5><h3>$ <?=number_format($saldo,2)?></h3>
 													<br/><br/><h5 >Cambio</h5><h3>$ <?=number_format(($saldo-$pago),2)?></h3>
 												</div>
 												
+												<br>
+												<section class="text-center" style="padding-top: 2em">
+												<form action="emailFactura" method="POST">
+													<input type="hidden" name="venta" id="venta" value="<?=$items[0]->id_venta;?>">
+													<input type="email" name="email" value="<?=$email;?>" id="email" required /> 
+													<input type="submit" value="Enviar E-Mail" class="btn fa fa-envelope">																									
+												</form>
 												
+												</section> 
 												<br/>
 												<div class="alert alert-success text-center">
 													<strong>Pago realizado con exito</strong><br>
-													<a href="caja.php?ddes=0">Regresar a la caja</a>
+													<a onclick="location.href='/CEDI/POS'">Regresar a la caja</a>
 												</div>
 														
 											</section>
@@ -60,77 +71,121 @@
 											<div id="Imprime" style="font-size: 12px">
 															<br />
 															<!-- <iframe frameborder="0" height="100" width="300" src="></iframe> -->
-															<table width="310px" border="0" >
+															<table id="<?="ficha".$items[0]->id_venta?>" width="310px" border="0" >
 																<tr>
-																	<td>
-																		<strong>empresa</strong>
-																		<br /> direccion
-																		<br />telefono
-																		<br /> nit
-																		<br />
+																	<td colspan="3" >
+																		<div align="center">
+																			<img src="/logo.png" alt="" width="200px"/>
+																		</div>
 																	</td>
 																</tr>
 																<tr>
-																	<td colspan="2"></td>
-																	<td>fecha</td>
+																	<td colspan="2">
+																		<br /><strong><?=$empresa[0]->nombre?></strong>
+																		<br />Nit: <?=$empresa[0]->id_tributaria?>																		
+																		<br/>
+																		<br /> <?php 
+																		$guion = (($empresa[0]->fijo)&&($empresa[0]->movil))
+																			? ' - ' : '';
+																		echo "Tel: ".$empresa[0]->fijo.$guion.$empresa[0]->movil
+																		?>
+																		<br><?=$empresa[0]->provincia.", ".$empresa[0]->ciudad?>
+																	</td>
 																</tr>
 																<tr>
-																	<td>CAJERO: cajera</td>
+																	<td ></td>
+																	<td colspan="2"><div align="right"><?=date('Y-m-d h:i:s')?></div></td>
 																</tr>
 																<tr>
-																	<td colspan="3">&nbsp;</td>
+																	<td colspan="3">CAJERO: <?=$cajero?></td>
 																</tr>
-																
-																
 																<tr>
-																	<td width="45">CANT</td>
-																	<td width="158">DESCRIPCION</td>
-																	<td width="93"><div align="right">IMPORTE</div></td>
-																</tr>
-																
+																	<td colspan="3"><br/><br/></td>
+																</tr>																														
 																<tr>
-																	<td colspan="3">=====================================</td>
+																	<td colspan="3">
+																		<table width="100%">
+																			<tr>
+																				<td style="text-align:left; min-width:100px">DESCRIPCION</td>																	
+																				<td style="text-align:right; min-width:100px">CANT</td>																	
+																				<td style="text-align:right; min-width:100px">IMPORTE</td>
+																			</tr>																																						
+																			<?php 
+																			$neto = 0;
+																			foreach ($items as $item){
+																			$neto += $item->valor;
+																			?>
+																			<tr>
+																				<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+																			</tr>
+																			<tr>
+																				<td style="text-align:left; min-width:100px"><?=$item->nombre." ".$item->codigo_barras?></td>
+																				<td style="text-align:right; min-width:100px"><?=$item->cantidad?></td>																	
+																				<td style="text-align:right; min-width:100px">$ <?=number_format($item->valor,2)?></td>
+																			</tr>
+																			<?php }?>
+																			<tr>
+																				<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+																			</tr>
+																			<tr>
+																				<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+																			</tr>
+																			<tr>
+																				<td colspan="2" style="text-align:right">TOTAL SUMA:</td>
+																				<td style="text-align:right"><strong>$ <?=number_format($neto,2)?></strong></td>
+																			</tr>
+																		</table>
+																	</td>
 																</tr>
-																<?php foreach (items as $item){?>
 																<tr>
-																	<td>2</td>
-																	<td>nombre 56464564</td>
-																	<td><div align="right">$ 5476474</div></td>
-																</tr>
-																<?php }?>
-																<tr>
-																	<td colspan="3">&nbsp;</td>
-																</tr>
+																	<td colspan="3"><br/></td>
+																</tr>	
+																<?php 
+																$articulos = 0;
+																foreach ($items as $item){
+																	$articulos += $item->cantidad;
+																}
+																?>
 																<tr >
-																	<td colspan="3" class="text-center">NO. DE ARTICULOS: 2</td>
+																	<td colspan="3">
+																		<table width="100%">
+																			<td style="text-align:center">
+																				NO. DE ARTICULOS: <strong><?=$articulos?></strong><br/>
+																				DESCUENTO: <strong><?=number_format($item->descuento_neto,1)?>%</strong>
+																			</td>
+																			<td style="text-align:center">
+																				SUBTOTAL: <strong>$ <?=number_format(($item->valor_total-$item->iva),2)?></strong><br/>
+																				IVA: <strong>$ <?=number_format($item->iva,2)?></strong><br/>
+																				TOTAL: <strong>$ <?=number_format($item->valor_total,2)?></strong>
+																			</td>
+																		</table>
+																	</td>
 																</tr>
 																<tr>
-																	<td colspan="3" class="text-center"><strong>TOTAL: $ 534756456</strong></td>
+																	<td colspan="3">
+																		<div style="text-align:center">
+																			<br/><br/>
+																			<strong>* VENTA AL <?=$items[0]->costo?> *</strong>
+																			<br/><br/>
+																			FIRMA DEL CLIENTE
+																			
+																			<br/><br/><br/>
+																			________________________________________
+																			<br/><br/>
+																			GRACIAS POR SU COMPRA
+																			<br/>
+																			<?=$item->id_venta?>
+																		</div>
+																	</td>
 																</tr>
 																<tr>
-																	<td colspan="3" class="text-center"><strong>* VENTA A MAYOR/DETAL *</strong></td>
-																</tr>
-																<tr>
-																	<td colspan="3" class="text-center">FIRMA DEL CLIENTE</td>
-																</tr>
-																<tr>
-																	<td colspan="3" class="text-center">__________________________</td>
-																</tr>
-																<tr>
-																	<td colspan="3">&nbsp;</td>
-																</tr>
-																<tr>
-																	<td colspan="3" class="text-center">GRACIAS POR SU COMPRA</td>
-																</tr>
-																<tr>
-																	<td colspan="3" class="text-center">No</td>
-																</tr>
-																<tr>
-																	<td colspan="3">&nbsp;</td>
-																</tr>
+																	<td colspan="3"><br/><br/></td>
+																</tr>	
+															</table>
+															<table width="310px" border="0" >
 																<tr>
 																	<td colspan="3" class="text-center">
-																		<a onclick="imprimir()" class="btn">
+																		<a onclick="imprimir('<?="ficha".$item->id_venta?>')" class="btn">
 																		<i class="fa fa-print"></i> Imprimir Factura</a>
 																	</td>
 																</tr>
@@ -204,28 +259,52 @@
 	text-decoration: none !important;
 }
 </style>
-<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
-<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-<script
-	src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-<script
-	src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-<script src="/template/js/validacion.js"></script>
+
 <script>
 
 
-function imprSelec(nombre) {
+function imprimir(nombre) {
 	
 	  var ficha = document.getElementById(nombre);
 	  var ventimp = window.open(' ', 'popimpr');
 	  ventimp.document.write( ficha.innerHTML );
 	  ventimp.document.close();
-	  ventimp.print( );
+	  ventimp.print();
 	  ventimp.close();
+} 
+
+function email(nombre,mail) {
+	
+	  //var ficha = document.getElementById(nombre);/*ficha.innerHTML*/
+	  
+	  var email = prompt("Proporciona Correo Eléctronico:", mail);
+	  
+	  	$.ajax({
+	  		type: "POST",
+	  		url: "POS/emailFactura",
+	  		data: {
+		  		ficha:nombre,
+		  		email:email
+		  		},
+	  	})
+	  	.done(function( msg )
+	  	{
+	  		bootbox.dialog({
+	  			message: msg,
+	  			title: 'Atención',
+	  			buttons: {
+	  				success: {
+	  					label: "Aceptar!",
+	  					className: "btn-success",
+	  					callback: function() {
+	  	
+	  					}
+	  				}
+	  			}
+	  		})
+	  		
+	  	});
+	  
+	  
 } 
 </script>

@@ -45,7 +45,7 @@ class modelo_cedi extends CI_Model
 	
 	function get_mercancia_id($id){
 		$q = $this->db->query("SELECT 
-								    p.id, p.nombre, p.min_venta, m.costo, m.costo_publico
+								    p.id, p.nombre, p.min_venta, m.costo, m.costo_publico,m.puntos_comisionables
 								FROM
 								    producto p,
 								    mercancia m
@@ -236,7 +236,32 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 		return $valor;
 	
 	}
-	
+	function getVenta($id) {
+		$query = "select 
+					    v.*,i.*,p.*,h.*,
+						c.costo valor_total, c.descuento descuento_neto , c.iva
+					from
+					    venta v,
+						pos_venta c,
+						pos_venta_item i,
+						pos_venta_historial h,
+						producto p,
+						mercancia m
+					where
+						p.id = m.sku
+						and m.id = i.item
+						and h.id_venta = v.id_venta
+						and h.item = i.item
+						and c.id_venta = v.id_venta
+						and i.id_venta = v.id_venta
+					    and v.id_venta = '".$id."'
+						and v.id_estatus = 'ACT'
+						and v.id_metodo_pago= 'CEDI' 
+					group by i.item";
+		
+		$q = $this->db->query($query);
+		return $q->result();
+	}
 	function getTemporal($id) {
 		$query = 'select 
 										    p.codigo_barras,
@@ -246,6 +271,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 												then m.costo_publico
 										        else m.costo
 										    end) unidad,
+											m.puntos_comisionables,
 										   	i.cantidad inventario,
 										   	p.inventario minimo, 
 										   	v . *
@@ -279,6 +305,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 												then m.costo_publico
 										        else m.costo
 										    end) unidad,
+											m.puntos_comisionables,
 										   	i.cantidad inventario,
 										   	p.inventario minimo,
 										   	v . *
@@ -306,12 +333,14 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 	
 	private function insertTemporal($id, $id_temporal,$item) {
 		$mercancia = $this->get_mercancia_id($item);
+		$puntos = $mercancia[0]->puntos_comisionables*$mercancia[0]->min_venta;
 		$dato = array (
 				"id_temporal" => $id_temporal,
 				"id_user" => $id,
 				"item" => $item,
 				"fecha" => date('Y-m-d'),
 				"cantidad" => $mercancia[0]->min_venta,
+				"puntos" => $puntos,
 				"costo" => 'DETAL',
 				"descuento" => 0,
 				"tipo_descuento" => "$",
@@ -339,13 +368,13 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 		return $q;
 	}
 
-	function registrarVenta($temporal,$pago,$id){
+	function registrarVenta($temporal,$pago,$id,$descuento,$iva){
 		
 		$temp = $this->getTemporal ($temporal);
 		
 		$venta = $this->insertVenta ( $id );
 		
-		$this->insertVentaPOS ( $pago, $venta , $temp[0]->id_user );
+		$this->insertVentaPOS ( $pago, $venta , $temp[0]->id_user ,$descuento,$iva,$temporal);
 		
 		$cedi = $this->getUsuarioId($temp[0]->id_user);
 
@@ -363,6 +392,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 		
 		$this->deleteTemporal($id_temporal);
 		
+		return $this->getVenta($venta);
 	}
 	
 	private function updateInventarioPOS($id_cedi,$item) {
@@ -388,6 +418,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 				"fecha"	=> $date,
 				"item"	=> $item->item,
 				"cantidad" 	=> $item->cantidad,
+				"puntos" 	=> $item->puntos,
 				"costo" 	=> $item->costo,
 				"descuento" 	=> $item->descuento,
 				"tipo_descuento" 	=> $item->tipo_descuento,
@@ -416,22 +447,40 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 				"id_venta" 	=> $venta,
 				"item"	=> $item->item,
 				"cantidad" 	=> $item->cantidad,
-				"valor" => $valor*$item->cantidad
+				"valor" => $valor*$item->cantidad,
+				"puntos" => $item->puntos
 		);
 		$this->db->insert("pos_venta_item",$dato_venta);
 		return $this->db->insert_id();
 	}
 
 	
-	private function insertVentaPOS($pago, $venta, $id) {
+	private function insertVentaPOS($pago, $venta, $id,$desc,$iva,$temp) {
+		
+		$puntos = $this->sumaPuntosTemporal ($temp);
+		
 		$dato_venta=array(
 				"id_venta" 	=> $venta,
 				"id_user"	=> $id,
-				"costo" 	=> $pago
+				"descuento" 	=> $desc,
+				"iva" 	=> $iva,
+				"costo" 	=> $pago,
+				"puntos" 	=> $puntos
 		);
 		$this->db->insert("pos_venta",$dato_venta);
 		return $this->db->insert_id();
 	}
+	
+	private function sumaPuntosTemporal($temp) {
+		$q = $this->db->query('select sum(puntos) puntos
+								from pos_venta_temporal 
+								where id_temporal = "'.$temp.'" 
+									and estatus = "ACT"');
+		$q = $q->result();
+		$puntos = $q ? $q[0]->puntos : 0;
+		return $puntos;
+	}
+
 
 	
 	private function insertVenta($id) {
@@ -449,9 +498,52 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 
 	function getClientes(){
 		
-		$query = "select * from user_profiles where id_tipo_usuario in (2,10)";
+		$query = "select 
+					    u.*,group_concat(t.nombre) red
+					from
+					    user_profiles u,
+						tipo_red t,
+						afiliar a
+					where
+						t.id = a.id_red	
+						and a.id_afiliado = u.user_id
+						and u.id_tipo_usuario in (2 , 10)";
 		$q = $this->db->query($query);
 		return $q->result();
+	}
+	
+	function getCliente($id){
+	
+		$query = "select
+					    p.*,group_concat(t.nombre) red,u.email
+					from
+					    user_profiles p,
+						users u,
+						tipo_red t,
+						afiliar a
+					where
+						t.id = a.id_red
+						and a.id_afiliado = p.user_id
+						and u.id = p.user_id
+						and p.id_tipo_usuario in (2 , 10)";
+		$q = $this->db->query($query);
+		return $q->result();
+	}
+	
+	function setImpuesto($id_pais,$neto){
+	
+		$impuestos = $this->getImpuestosPais($id_pais);
+		$impuesto = 0;
+		foreach ($impuestos as $valor){
+			$impuesto += $valor->porcentaje;
+		}
+		return ($neto*$impuesto)/100;
+	}
+	
+	private function getImpuestosPais($id_pais){
+		$query = "SELECT * FROM cat_impuesto where id_pais='".$id_pais."'";
+		$q = $this->db->query($query);
+		return  $q->result();
 	}
 	
 }
