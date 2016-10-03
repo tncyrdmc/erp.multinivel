@@ -384,7 +384,7 @@ class POS extends CI_Controller
 		$producto = $this->model_mercancia->getProductoBy($id);
 		if($producto){
 			foreach ($producto as $item){
-				echo "<option value='ID:".$item->id." [".$item->sku_2."] ".strtoupper($item->nombre)." # ".$item->codigo_barras."'>";
+				echo "<option value='ID:".$item->id_mercancia." [".$item->sku_2."] ".strtoupper($item->nombre)." # ".$item->codigo_barras."'>";
 			}
 		}else{
 			echo "";exit();
