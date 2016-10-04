@@ -1,34 +1,17 @@
 			<!-- MAIN CONTENT -->
 			<div id="content" >
 				<div class="row">
-					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+					<!--<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-							<?php  if($type=='5'){?>
-						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
-						<span>
-								
-								> <a href="/bo/logistico2/alta"> Alta</a>
-								> Usuarios Logístico
-						</span>
-						<?php }else if($type=='8'||$type=='9'){
-						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
-						 	?>
-							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
-							<span> 
-								> <a href="<?=$index?>/altas"> Altas</a>
-								> Usuarios Logístico
-						</span>
-							 <?php }else{?>
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> <a href="/bol/dashboard/"> Logístico</a> 
-								> <a href="/bo/logistico2/alta"> Alta</a>
-								> Usuarios Logístico
-							</span>
-							
-							<?php }?>
+						 <?php  if($type=='8'){?>
+							<a class="backHome" href="/CEDI"><i class="fa fa-home"></i> Menu</a>
+							<span> >  Alta </span>
+						 <?php }else{?>
+							<a class="backHome" href="/almacen"><i class="fa fa-home"></i> Menu</a>
+							<span> >  Alta </span>
+						<?php }?> 
 						</h1>
-					</div>
+					</div>-->
 				</div>
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
@@ -52,24 +35,35 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-3 link">
+											
+											<div class="col-sm-2">
+										
+												<a class="backHome" href="<?= ($type=='8')? '/CEDI' : '/Almacen' ?>">
+												<i class="fa fa-backward"></i> Atras</a>
+														
 											</div>
-											<div class="col-sm-6 link">
-												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/almacen">
+											<div class="col-sm-9 link">
+												<div class="col-sm-3 link">
+												<a href="/bo/logistico2/pedidos_pendientes">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-user fa-3x"></i><i class="fa fa-building fa-3x"></i>
-														<h1>Usuarios</h1>
-														<h1>Almacén</h1>
+														<i class="fa fa-clipboard fa-3x"></i>
+														<h1>A Embarcar</h1>
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-4 link">
-												<a href="/bo/usuarios/CEDI">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-user fa-3x"></i><i class="fa fa-home fa-3x"></i>
-														<h1>Usuarios</h1>
-														<h1>CEDI</h1>
+												<div class="col-sm-3 link">
+												<a href="/bo/logistico2/pedidos_transito">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-truck fa-3x"></i>
+														<h1>En Transito</h1>
+													</div>
+												</a>
+												</div>
+												<div class="col-sm-3 link">
+												<a href="/bo/logistico2/pedidos_embarcados">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-check fa-3x"></i>
+														<h1>Historial </h1>
 													</div>
 												</a>
 												</div>

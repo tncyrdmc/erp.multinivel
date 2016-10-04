@@ -182,7 +182,7 @@
 												</div>
 											</section>
 											<section class="col-md-4 col-xs-7">
-												<pre class="pull-right" id="neto"
+												<pre class="" id="neto"
 													style="padding: 1em; font-size: 24px">Neto: $ 0.00</pre>
 											</section>
 

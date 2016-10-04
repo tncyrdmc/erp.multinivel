@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-require_once BASEPATH."../template/cedi/dompdf/dompdf_config.inc.php";
-class home extends CI_Controller
+
+class perfil extends CI_Controller
 {
 	function __construct()
 	{
@@ -16,7 +16,9 @@ class home extends CI_Controller
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_inventario');
 		$this->load->model('bo/modelo_logistico');
-		$this->load->model('bo/modelo_almacen');
+		$this->load->model('bo/modelo_cedi');
+		$this->load->model('model_cedi');
+		$this->load->model('bo/model_tipo_usuario');
 		$this->load->model('bo/general');
 	}
 
@@ -30,20 +32,29 @@ class home extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
-		$almacen  = $this->modelo_almacen->getUsuarioId($id);
-		$productos = $this->model_inventario->Obtener_Productos_Almacen($almacen[0]->cedi);		
+		$almacen  = $this->modelo_cedi->getUsuarioId($id);
+		$style          = 	$this->general->get_style(1);
+		
+		$user	 	 	=	$this->model_tipo_usuario->getUsuarioCediId($id);
+		
+		$cedis = $this->model_cedi->listarTodos();
+		
+		$this->template->set("cedis",$cedis);
+		
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
+	
+		$this->template->set("user",$user);
 		
 		$this->template->set("style",$style);
 		$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-		$this->template->set("productos",$productos);
-		
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/Almacen/header',$data);
+        $this->template->set_partial('header', 'website/CEDI/header2',$data);
         $this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/Almacen/home/index');
+        $this->template->build('website/bo/comercial/altas/usuarios/editarC');
+		//$this->template->build('website/CEDI/home/index');
 	}
 	
 	function PDF()
@@ -57,9 +68,9 @@ class home extends CI_Controller
 		$usuario=$this->general->get_username($id);
 	
 		$style=$this->modelo_dashboard->get_style($id);
-		$almacen  = $this->modelo_almacen->getUsuarioId($id);
+		$almacen  = $this->modelo_cedi->getUsuarioId($id);
 		$empresa=$this->model_admin->get_empresa_multinivel();
-		
+	
 		$productos = $this->model_inventario->Obtener_Productos_Almacen($almacen[0]->cedi);
 	
 		$this->template->set("style",$style);
@@ -67,7 +78,6 @@ class home extends CI_Controller
 		$this->template->set("user",$usuario[0]->nombre." ".$usuario[0]->apellido);
 		$this->template->set("productos",$productos);
 	
-		$this->template->build('website/Almacen/home/PDFdashboard');
+		$this->template->build('website/CEDI/home/PDFdashboard');
 	}
-	
 }

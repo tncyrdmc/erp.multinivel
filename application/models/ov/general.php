@@ -55,31 +55,20 @@ class general extends CI_Model
 	
 		$idTipoUsuario=$tipo[0]->tipoId;
 		
-		if($modulo=="OV"){
-			return $this->IsActivedPago($id);
+		$perfiles = array(
 			
-		}else if($modulo=="comercial"){
-			if($idTipoUsuario==4||$idTipoUsuario==1)
-				return true;
-			return false;
-		}else if($modulo=="soporte"){
-			if($idTipoUsuario==3||$idTipoUsuario==1)
-				return true;
-			return false;
-		}else if($modulo=="logistica"){
-			if($idTipoUsuario==5||$idTipoUsuario==1)
-				return true;
-			return false;
-		}else if($modulo=="oficina"){
-			if($idTipoUsuario==6||$idTipoUsuario==1)
-				return true;
-			return false;
-		}else if($modulo=="administracion"){
-			if($idTipoUsuario==7||$idTipoUsuario==1)
-				return true;
-			return false;
-		}
-		return false;
+				"OV" => $this->IsActivedPago($id),
+				"comercial" => ($idTipoUsuario==4) ? true : false,
+				"soporte" => ($idTipoUsuario==3) ? true : false,
+				"logistica" => ($idTipoUsuario==5) ? true : false,
+				"oficina" => ($idTipoUsuario==6) ? true : false,
+				"administracion" => ($idTipoUsuario==7) ? true : false,
+				"cedi" => ($idTipoUsuario==8) ? true : false,
+				"almacen" => ($idTipoUsuario==9) ? true : false,
+				
+		);
+		
+		return ($idTipoUsuario==1) ? true :$perfiles[$modulo];
 	}
 	
 	function isActived($id){

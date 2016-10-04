@@ -28,10 +28,16 @@ class inventario extends CI_Controller {
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
 		
-		if ($this->general->isAValidUser ( $id, "comercial" ) || $this->general->isAValidUser ( $id, "logistica" )) {
-		} else {
-			redirect ( '/auth/logout' );
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
 		}
+		
+		
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
 		$this->template->set ( "usuario", $usuario );
@@ -51,10 +57,16 @@ class inventario extends CI_Controller {
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
 		
-		if ($this->general->isAValidUser ( $id, "comercial" ) || $this->general->isAValidUser ( $id, "logistica" )) {
-		} else {
-			redirect ( '/auth/logout' );
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
 		}
+		
+		
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
 		$this->template->set ( "usuario", $usuario );
@@ -62,7 +74,15 @@ class inventario extends CI_Controller {
 		
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/documento/index' );
 	}
@@ -73,10 +93,15 @@ class inventario extends CI_Controller {
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
 		
-		if ($this->general->isAValidUser ( $id, "comercial" ) || $this->general->isAValidUser ( $id, "logistica" )) {
-		} else {
-			redirect ( '/auth/logout' );
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
 		}
+		
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
 		$this->template->set ( "usuario", $usuario );
@@ -84,7 +109,14 @@ class inventario extends CI_Controller {
 		
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/documento/altadocumento' );
 	}
@@ -105,10 +137,16 @@ class inventario extends CI_Controller {
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
 		
-		if ($this->general->isAValidUser ( $id, "comercial" ) || $this->general->isAValidUser ( $id, "logistica" )) {
-		} else {
-			redirect ( '/auth/logout' );
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
 		}
+		
+		
 		$documento = $this->model_inventario->getAlldocumento ();
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
@@ -118,7 +156,14 @@ class inventario extends CI_Controller {
 		$this->template->set ( "documento", $documento );
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/documento/listardocumento' );
 	}
@@ -226,9 +271,11 @@ class inventario extends CI_Controller {
 		$usuario = $this->general->get_username ( $id );
 		
 		$Comercial = $this->general->isAValidUser($id,"comercial");
-		$Logistica = $this->general->isAValidUser($id,"logistica");
-	
-		if(!$Comercial&&!$Logistica){
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 		
@@ -245,7 +292,15 @@ class inventario extends CI_Controller {
 		$this->template->set ( "almacenesCedi", $almacenesCedi );
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/inventario/entrada_alta' );
 	}
@@ -374,11 +429,14 @@ class inventario extends CI_Controller {
 		$usuario = $this->general->get_username ( $id );
 		
 		$Comercial = $this->general->isAValidUser($id,"comercial");
-		$Logistica = $this->general->isAValidUser($id,"logistica");
-	
-		if(!$Comercial&&!$Logistica){
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 		
 		$style = $this->modelo_dashboard->get_style ( 1 );
 		$this->template->set ( "type", $usuario [0]->id_tipo_usuario );
@@ -393,7 +451,15 @@ class inventario extends CI_Controller {
 		$this->template->set ( "almacenesCedi", $almacenesCedi );
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/inventario/salida_alta' );
 	}
@@ -494,13 +560,31 @@ class inventario extends CI_Controller {
 		
 		$id = $this->tank_auth->get_user_id ();
 		$usuario = $this->general->get_username ( $id );
+		
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
 		$style = $this->general->get_style ( $id );
 		$this->template->set ( "style", $style );
 		$this->template->set ( "usuario", $usuario );
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/inventario/historial_inventario' );
 	}
@@ -560,9 +644,11 @@ class inventario extends CI_Controller {
 		$usuario = $this->general->get_username ( $id );
 	
 		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
 		$Logistico = $this->general->isAValidUser($id,"logistica");
 		
-		if(!$Comercial&&!$Logistico){
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 		
@@ -573,7 +659,13 @@ class inventario extends CI_Controller {
 	
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/movimiento/alta' );
 	}
@@ -595,9 +687,11 @@ class inventario extends CI_Controller {
 		$usuario = $this->general->get_username ( $id );
 	
 		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
 		$Logistico = $this->general->isAValidUser($id,"logistica");
 		
-		if(!$Comercial&&!$Logistico){
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 		
@@ -610,7 +704,13 @@ class inventario extends CI_Controller {
 		$this->template->set ( "documento", $documento );
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
-		$this->template->set_partial ( 'header', 'website/bo/header' );
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial ( 'footer', 'website/bo/footer' );
 		$this->template->build ( 'website/bo/logistico2/movimiento/listar' );
 	}
@@ -653,11 +753,14 @@ class inventario extends CI_Controller {
 		$id=$this->tank_auth->get_user_id();
 	
 		$Comercial = $this->general->isAValidUser($id,"comercial");
-		$Logistica = $this->general->isAValidUser($id,"logistica");
-	
-		if(!$Comercial&&!$Logistica){
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 	
 		$usuario=$this->general->get_username($id);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
@@ -714,7 +817,14 @@ class inventario extends CI_Controller {
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
+		
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/producto/listar');
 	}

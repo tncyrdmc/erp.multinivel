@@ -216,8 +216,12 @@ class logistico extends CI_Controller
 				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-	   if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 

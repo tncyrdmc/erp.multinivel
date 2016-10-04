@@ -5,32 +5,40 @@
 						<h1 class="page-title txt-color-blueDark">
 						
 						<?php  if($type=='5'){?>
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-							<a href="/bo/logistico2/alta">Alta</a>>
-							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
-								Listar
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+							> <a href="/bo/logistico2/alta">Alta</a>
+							> <a href="/bo/comercial/actionProveedor">Proveedor </a>
+							> Listar
 							</span>
-								<?php } elseif($type=='4'){?>		
+		   <?php } else if($type=='4'){?>		
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							
-							<span>>
-							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
-							    <a class="" href="/bo/comercial/actionProveedor/"><i class=""></i> Alta</a>>
-								Listar
+							<span>
+							> <a class="" href="/bo/comercial/altas/"><i class=""></i> Comercial</a>
+							> <a class="" href="/bo/comercial/actionProveedor/"><i class=""></i> Proveedor</a>
+							> Listar
 							</span>
 					
-							
-			
-						<?php }else{?>	
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-							<a href="/bo/comercial/actionProveedor">Proveedor </a>>
-								Listar
+			<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> <a href="/bo/comercial/actionProveedor">Proveedor </a>
+								> Listar
+							</span>						
+			<?php }else{?>
+				      <a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+							 	 > <a href="/bol/"> Logistico </a>
+								 > <a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
+								 > <a href="/bo/comercial/actionProveedor">Proveedor </a>
+								 > Listar
 							</span>
-					
-							
-						<?php }?>		
+			<?php }?>	
+								
 						</h1>
 					</div>
 				</div>

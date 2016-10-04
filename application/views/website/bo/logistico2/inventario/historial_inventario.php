@@ -11,6 +11,13 @@
 								> <a href="/bo/inventario"> Inventario</a>
 								> Historial 
 						</span>
+						<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';?>
+						<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+						<span>
+							> <a href="<?=$index?>/inventario"> Inventario </a> 
+							> historial				
+						</span>
 							 <?php }else{?>
 						
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>

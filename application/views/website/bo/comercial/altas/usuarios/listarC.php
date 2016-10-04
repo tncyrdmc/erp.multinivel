@@ -11,6 +11,16 @@
 								> <a href="/bo/usuarios/CEDI"> CEDI </a>
 								> Listar
 							</span>
+							<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> <a href="/bo/logistico2/usuarios"> Usuarios Logístico</a>
+								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> Listar
+							</span>
 							 <?php }else{?>
 						
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>

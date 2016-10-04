@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require_once BASEPATH."../template/cedi/dompdf/dompdf_config.inc.php";
-class home extends CI_Controller
+class perfil extends CI_Controller
 {
 	function __construct()
 	{
@@ -30,20 +30,31 @@ class home extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
 		$almacen  = $this->modelo_almacen->getUsuarioId($id);
-		$productos = $this->model_inventario->Obtener_Productos_Almacen($almacen[0]->cedi);		
+		$style          = 	$this->general->get_style(1);
+	
+		$user	 	 	=	$this->modelo_almacen->getUsuarioId($id);
+	
+		$almacenes = $this->modelo_almacen->obtenerAlmacenes();
+	
+		$this->template->set("almacenes",$almacenes);
+	
+		$paises = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
+	
+		$this->template->set("user",$user);
+		
 		
 		$this->template->set("style",$style);
 		$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-		$this->template->set("productos",$productos);
 		
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/Almacen/header',$data);
+        $this->template->set_partial('header', 'website/Almacen/header2',$data);
         $this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/Almacen/home/index');
+        $this->template->build('website/bo/logistico2/usuarios/almacen/editar');
+		//$this->template->build('website/Almacen/perfil/index');
 	}
 	
 	function PDF()

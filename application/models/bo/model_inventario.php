@@ -126,7 +126,7 @@ class model_inventario extends CI_Model
    	return $q->result();
    }
    function getProductos(){
-   	$q=$this->db->query('select m.id, p.* from producto p, mercancia m, where p.id = m.sku ');
+   	$q=$this->db->query('select m.id, p.* from producto p, mercancia m where p.id = m.sku ');
    	return $q->result();
    }
    
@@ -161,7 +161,11 @@ class model_inventario extends CI_Model
   }
 
   function getProductos_en_inventario(){
-  	$q=$this->db->query('select m.id,p.nombre from producto p ,inventario n,mercancia m, where p.id=m.sku and m.id = n.id_mercancia group by p.id,p.nombre ');
+  	$q=$this->db->query('select m.id,p.nombre 
+  								from producto p ,inventario n,mercancia m
+  								where p.id=m.sku 
+  									and m.id = n.id_mercancia 
+  								group by p.id,p.nombre ');
   	return $q->result();
   }
   function getAlmacen_en_inventario(){

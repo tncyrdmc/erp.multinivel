@@ -30,7 +30,7 @@
 											
 											
 												
-												<section class="col-md-5">
+												<section class="col-md-5 col-xs-2">
 												
 												<section class="text-center" style="padding-top: 2em">
 												<a onclick="location.href='/CEDI/POS'" class="btn">
@@ -63,10 +63,10 @@
 											</section>
 														
 														
-											<section class="col-md-1"></section>
+											<section class="col-md-1 col-xs-12"></section>
 														
 														
-											<section class="col-md-5">
+											<section class="col-md-5 col-xs-12">
 											
 											<div id="Imprime" style="font-size: 12px">
 															<br />
@@ -199,30 +199,7 @@
 											
 											</section>
 												
-											<table width="100%" border="0">
-												<tr>
-													<td width="50%"><pre style="font-size: 24px">
-															</td>
-													<td width="50%" rowspan="3">
-														<!-- codigo imprimir -->
-
-														
-														
-													</td>
-												</tr>
-												<tr>
-													<td>
-														
-
-
-
-													</td>
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-											</table>
-
+											
 										</div>
 									</div>
 								</div>

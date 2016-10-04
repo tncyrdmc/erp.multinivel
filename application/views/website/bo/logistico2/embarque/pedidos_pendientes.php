@@ -8,14 +8,21 @@
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>						
 								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
-								> Pedidos Pendientes
+								> Pedidos a Embarcar
+							</span>
+							<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';?>
+								<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span>							
+								> <a href="<?=$index?>/embarques">Pedidos / Embarques</a>
+								> Pedidos a Embarcar
 							</span>
 							<?php }else{?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 								> <a href="/bol/dashboard/">Logístico</a> 
 								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
-								> Pedidos Pendientes
+								> Pedidos a Embarcar
 							</span>
 							
 							

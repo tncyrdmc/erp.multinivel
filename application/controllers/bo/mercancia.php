@@ -65,10 +65,13 @@ class mercancia extends CI_Controller
 		
 		$Comercial = $this->general->isAValidUser($id,"comercial");
 		$Logistica = ($tipoID==1) ? $this->general->isAValidUser($id,"logistica") : '';
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
 		
-		if(!$Comercial&&!$Logistica){
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 
 		$usuario=$this->general->get_username($id);
 		

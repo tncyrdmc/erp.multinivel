@@ -4,13 +4,31 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
-					<span>
-						> <a href="/bol/"> Logistico</a>
-						> <a href="/bo/logistico2/alta"> Alta </a>
-						> <a href="/bo/proveedor_mensajeria/index"> Proveedor Mensajeria </a>
-						> listar
-					</span>
+					<?php  if($type=='5'){?>
+							<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/proveedor_mensajeria/"> Proveedor de Mensajeria </a>
+								> Listar
+							</span>
+						 <?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> <a href="/bo/proveedor_mensajeria/"> Proveedor de Mensajeria </a>
+								> Listar
+							</span>
+						 <?php }else{?>
+								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+								<span>
+								> <a href="/bol/"> Logistico </a>
+								> <a href="/bo/logistico2/alta"> Alta </a>
+								> <a href="/bo/proveedor_mensajeria/"> Proveedor de Mensajeria </a>
+								> Listar
+								</span>
+						 <?php }?>	
 			</h1>
 		</div>
 	</div>

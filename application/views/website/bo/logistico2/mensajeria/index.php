@@ -3,12 +3,30 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-								> <a href="/bo/logistico2/"> Logistico</a> 
+						<?php  if($type=='5'){?>
+							<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+							<span> 
 								> <a href="/bo/logistico2/alta"> Alta</a>
 								> Proveedor Mensajeria
 							</span>
+						 <?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> Proveedor Mensajeria
+							</span>
+						 <?php }else{?>
+								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+								<span>
+								> <a href="/bo/logistico2/"> Logistico</a> 
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> Proveedor Mensajeria
+								</span>
+							<?php }?>
+							
+							
 						</h1>
 					</div>
 				</div>

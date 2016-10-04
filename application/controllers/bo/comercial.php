@@ -2080,11 +2080,15 @@ class comercial extends CI_Controller
    	
    	$id=$this->tank_auth->get_user_id();
    	
-   	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-   	{
-   	}else{
-   		redirect('/auth/logout');
-   	}
+   		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
 
    	$usuario=$this->general->get_username($id);
    	$this->template->set("type",$usuario[0]->id_tipo_usuario);
@@ -2094,7 +2098,13 @@ class comercial extends CI_Controller
    	$this->template->set("style",$style);
    	$this->template->set_theme('desktop');
    	$this->template->set_layout('website/main');
-   	$this->template->set_partial('header', 'website/bo/header');
+   		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
    	$this->template->set_partial('footer', 'website/bo/footer');
    	$this->template->build('website/bo/comercial/altas/proveedor');
    }
@@ -2108,11 +2118,15 @@ class comercial extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 
 		$usuario=$this->general->get_username($id);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
@@ -2166,7 +2180,13 @@ class comercial extends CI_Controller
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/bo/header');
+		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/altas/newproveedor');		
 	}
@@ -2178,11 +2198,15 @@ class comercial extends CI_Controller
   	
   	$id=$this->tank_auth->get_user_id();
   	
-  	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-  	{
-  	}else{
-  		redirect('/auth/logout');
-  	}
+  		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
   	
   	$usuario=$this->general->get_username($id);
   	$this->template->set("type",$usuario[0]->id_tipo_usuario);
@@ -2195,7 +2219,13 @@ class comercial extends CI_Controller
   	$this->template->set("style",$style);
   	$this->template->set_theme('desktop');
   	$this->template->set_layout('website/main');
-  	$this->template->set_partial('header', 'website/bo/header');
+  		if($CEDI||$almacen){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
   	$this->template->set_partial('footer', 'website/bo/footer');
   	$this->template->build('website/bo/comercial/altas/listarProveedor');
   }
