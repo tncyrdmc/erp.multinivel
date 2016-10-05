@@ -28,8 +28,8 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="/template/css/demo.min.css">
 
 		<!-- #FAVICONS -->
-		<link rel="shortcut icon" href="/template/img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/template/img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/template/img/favicon/favicon.png" type="image/x-icon">
+		<link rel="icon" href="/template/img/favicon/favicon.png" type="image/x-icon">
 
 		<!-- #GOOGLE FONT -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
@@ -61,7 +61,7 @@
 				<img id="compania" src="/logo.png" alt="">
 			</div>
 			<div class="hidden-xs col-sm-6 col-md-6 col-lg-6">
-				<h1>Sistema Integral de Operaciones NetworkSoft &reg;</h1>
+				<h1>Sistema Integral de Operaciones RoshLife &reg;</h1>
 			</div>
 		</header>
 
@@ -162,7 +162,7 @@
 				background: #fff !important;
 
 			}
-			#compania{width: 70%; margin: 0 auto;}
+			#compania{width: 20%; margin: -10px auto;}
 			#header h1{margin-top: -5px;font-weight: bold !important;}
 			header h2{text-align: center; color: rgb(41, 124, 255) ;font-weight: bold !important;font-size: 2em;}
 			#login-form{

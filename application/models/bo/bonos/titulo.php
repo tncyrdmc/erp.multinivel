@@ -169,7 +169,7 @@ class titulo extends CI_Model
 			$totalPuntosPersonales=$totalPuntosPersonales+$afiliado->getVentasTodaLaRed($id_afiliado,$red->id,"RED",$condicion_red,$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"COSTO");
 		}
 	
-		return $totalPuntosPersonales ;
+		return $totalPuntosPersonales;
 	}
 	
 	function getTituloAlcanzadoAfiliado($id_afiliado,$orden,$fechaActual){
@@ -180,11 +180,10 @@ class titulo extends CI_Model
 		
 		$titulo_siguiente=$this->getTituloPorOrden($orden+1);
 		$valorTituloAfiliado=$this->getTipoDeValorTitulo($id_afiliado,$titulo[0]->frecuencia,$titulo[0]->condicion_red_afilacion, $fechaActual, $titulo[0]->tipo);
-		
 		$valorTituloAfiliado=(($valorTituloAfiliado*$titulo[0]->porcentaje)/100);
 		
 		if(!isset($titulo_siguiente[0])){
-			return ($valorTitulo>$valorTituloAfiliado) ? 0 : $titulo[0]->id;
+			return $valorTitulo>$valorTituloAfiliado ? 0 : $titulo[0]->id;
 		}
 		
 		$valorTituloSiguiente=$titulo_siguiente[0]->valor;		
@@ -216,7 +215,7 @@ class titulo extends CI_Model
 	}
 	
 	function getNombreTituloAlcanzadoAfiliado($id_usuario,$fechaActual){
-		$id_titulo=$this->getTituloAlcanzadoAfiliado($id_usuario,1,$fechaActual);
+		$id_titulo=$this->getTituloAlcanzadoAfiliado($id_usuario,1,$fechaActual);		
 		$this->model_titulos->actualizar($id_usuario,$id_titulo);
 		return $this->getNombreTitulo($id_titulo);
 	}

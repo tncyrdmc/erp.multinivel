@@ -27,10 +27,23 @@
 									<div class="row">
 
 										<div class="col-sm-11 link" style="padding-left: 2em">
-											<section class="col-md-3" style="padding-left: 2em">
-												<!--<a href="#" class="btn" onclick="crear_item()"> <i
+											<!--<section class="col-md-3" style="padding-left: 2em">
+												<a href="#" class="btn" onclick="crear_item()"> <i
 													class="fa fa-tag"></i> Agregar Producto
-												</a>-->
+												</a>
+											</section>-->
+											<section class="col-md-3 col-xs-6" style="padding-left: 2em">
+												<div class="control-group info">
+													<label> 
+														<input type="text" autofocus class="input-xlarge"
+														id="usuario" name="usuario" list="customers"
+														placeholder="ID o Nombre del Afiliado"
+														autocomplete="off"> 
+														<datalist id="customers">
+
+														</datalist>
+													</label>
+												</div>
 											</section>
 											<section class="col-md-5 col-xs-5" style="padding-left: 2em">
 												<pre style="padding: 2em" class="pull-right">Nombre del Cajero/a : <?=$cajero?></pre>
@@ -115,7 +128,7 @@
 											</section>
 											
 											<section class="col-md-5 col-xs-5" style="padding-left: 2em">
-												<div class="pull-right">
+												<!--<div class="pull-right">
 													<h5>Tipo de Compra:</h5>
 													<br />
 													<button type="button" class="btn btn-primary"
@@ -125,7 +138,7 @@
 														onclick="tipo_venta('MAYOR')">P.
 														Mayoreo</button>
 
-												</div>
+												</div>-->
 											</section>
 
 											<!--  <hr class="col-md-12 col-xs-12" />
@@ -160,7 +173,7 @@
 											<section class="col-md-4 col-xs-6 text-center">
 												<div style="padding: 0.5em;">
 
-													<!--  <form name="form3" method="get" action="caja.php">-->
+													<!--  <form name="form3" method="get" action="caja.php">>
 
 														<div class="padding-10">
 															<h4>Descuento al Neto:</h4>
@@ -177,7 +190,7 @@
 															<button onclick="descuento_neto()" class="btn btn-mini">Aplicar
 																Descuento</button>
 														</div>
-													<!--  </form> -->
+													<! </form> -->
 
 												</div>
 											</section>
@@ -303,7 +316,28 @@ function setTabla(){
 }
 
 $(document).ready(function(){
-	existeProducto();
+	existeUser();
+	existeProducto();	
+})
+
+$('#usuario').keyup(function(){	
+	existeUser();
+})
+
+$('#usuario').mouseenter(function(){	
+	existeUser();
+})
+
+$('#usuario').mouseover(function(){	
+	existeUser();
+})
+
+$('#usuario').focus(function(){	
+	existeUser();
+})
+
+$('#usuario').change(function(){	
+	addUser();
 })
 
 $('#codigo').keyup(function(){	
@@ -322,13 +356,17 @@ $('#codigo').focus(function(){
 	existeProducto();
 })
 
-$('#codigo').change(function(){	
+$('#codigo').change(function(){		
 	addProducto();
+	addUser();
+	
 })
 
 function addProducto(){
 	 var item = $("#codigo").val(); 
-	 if(item!=''){
+	 var user = $("#usuario").val(); 
+	 
+	 if(item!=''&&user!=''){
 		 
 		 $.ajax({
 				type: "POST",
@@ -345,6 +383,32 @@ function addProducto(){
 				if(msg){
 					$('#pedidos').html(msg);
 					neto(total);art();
+					$("#codigo").val('');
+				}
+			});//Fin callback bootbox*/
+
+	}
+}
+
+function addUser(){
+	 var item = $("#usuario").val(); 
+	 if(item!=''){
+		 
+		 $.ajax({
+				type: "POST",
+				url: "POS/cargarUser",
+				data: {
+					item : item
+				},
+			})
+			.done(function( msg )
+			{
+				/*bootbox.dialog({
+					message: msg,
+				})*/
+				if(msg){
+					//$('#pedidos').html(msg);
+					//neto(total);art();
 					$("#codigo").val('');
 				}
 			});//Fin callback bootbox*/
@@ -429,21 +493,58 @@ function cantidad(i,f){
 
 function existeProducto(){
 	 var item = $("#codigo").val(); 
-	 if(item!=''){
+	 var user = $("#usuario").val(); 
+	 
+	 if(item!=''&&user!=''){
 		 
 		 $.ajax({
 				type: "POST",
 				url: "POS/existeProducto",
+				data: {
+					item : item,
+					user : user
+				},
+			})
+			.done(function( msg )
+			{
+				/*
+				bootbox.dialog({
+					message: msg,
+				})
+				*/
+				if(msg){
+					$('#characters').html(msg);
+					$('#characters').show();
+				}
+				//
+			});//Fin callback bootbox*/
+
+	}
+}
+
+function existeUser(){
+	 var item = $("#usuario").val(); 
+	 if(item!=''){
+		 
+		 $.ajax({
+				type: "POST",
+				url: "POS/existeUser",
 				data: {
 					item : item
 				},
 			})
 			.done(function( msg )
 			{
+				/*
+				bootbox.dialog({
+					message: msg,
+				})
+				*/
 				if(msg){
-					$('#characters').html(msg);
-					$('#characters').show();
+					$('#customers').html(msg);
+					$('#customers').show();
 				}
+				//
 			});//Fin callback bootbox*/
 
 	}

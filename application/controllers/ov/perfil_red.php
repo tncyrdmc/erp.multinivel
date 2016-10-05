@@ -84,7 +84,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("cuenta",$cuenta);
 		$this->template->set("ocupacion",$ocupacion);
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
-		$this->template->set("name_c",$coaplicante[0]->nombre);
+		//$this->template->set("name_c",$coaplicante[0]->nombre);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

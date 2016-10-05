@@ -35,7 +35,7 @@
 				</div>
 				<br>
 				<div class="form-group">
-					<b>Titular</b> <input class="form-control" id="otro" name="otro"
+				<!-- ABA/IBAN/OTRO -->	<b>Titular</b> <input class="form-control" id="otro" name="otro"
 						type="text"
 						value="<?php echo $banco[0]->otro?>">
 				</div>
@@ -50,8 +50,8 @@
 					<b>SWIFT</b> <input class="form-control" id="swift" name="swift"
 						type="number"
 						value="<?php echo $banco[0]->swift?>">
-				</div>
-				<br>				
+				</div>				
+				<br>
 				<div class="form-group">
 					<b>Dirección postal</b> <input class="form-control" id="dir_postal" name="dir_postal"
 						type="number"

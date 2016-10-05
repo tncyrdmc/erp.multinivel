@@ -30,7 +30,7 @@ $(document).ready(function() {
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa el DNI",
+					 	"Por favor ingresa tu Identificación",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",
@@ -278,7 +278,7 @@ function botbox(nombre, id, lado)
 							+'</section>'
 							+'<section id="correo" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-envelope-o"></i>'
-								+'<input id="email" onkeyup="use_mail()" required="" name="email" placeholder="Email" type="email">'
+								+'<input id="email" onkeyup="use_mail()" required="" name="email" placeholder="Dirección de Correo Electrónico" type="email">'
 							+'</label></section>'
 								+'<section class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-lock"></i>'
@@ -287,7 +287,7 @@ function botbox(nombre, id, lado)
 							+'</section>'
 							+'<section id="confirmar_password" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-lock"></i>'
-									+'<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Repite contraseña">'
+									+'<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Confirme contraseña">'
 								+'</label>'
 							+'</section>'
 						+'</fieldset>'
@@ -300,7 +300,7 @@ function botbox(nombre, id, lado)
 							+'<div class="row">'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-									+'<input id="nombre" required type="text" name="nombre" placeholder="Nombre">'
+									+'<input id="nombre" required type="text" name="nombre" placeholder="Nombre(s)">'
 									+'<input required type="hidden" id="id" name="afiliados" value="'+id+'">'
 									//+'<input id="mail_important" required type="hidden" name="mail_important" value="">'
 									+'<input id="lado" required type="hidden" name="lado" value="'+lado+'">'
@@ -309,7 +309,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-									+'<input id="apellido" required type="text" name="apellido" placeholder="Apellido">'
+									+'<input id="apellido" required type="text" name="apellido" placeholder="Apellidos (paterno y/o materno)">'
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6">'
@@ -319,7 +319,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6" id="key_red">'
 									+'<label id="key_2" class="input"> <i class="icon-prepend fa fa-barcode"></i>'
-										+'<input id="keyword_red" onkeyup="check_keyword_red()" placeholder="Número de identificación" type="text" name="keyword">'
+										+'<input id="keyword_red" onkeyup="check_keyword_red()" placeholder="Identificación (IFE,CURP,RFC)" type="text" name="keyword">'
 									+'</label>'
 								+'</section>'
 							+'</div>'
@@ -344,7 +344,7 @@ function botbox(nombre, id, lado)
 							+'</div>'
 						+'</fieldset>'
 						+'<fieldset>'
-							+'<legend>Datos co-aplicante</legend>'
+							+'<legend>Datos del Beneficiario</legend>'
 							+'<div class="row">'
 								+'<section class="col col-4">'
 									+'<label class="input">'
@@ -357,8 +357,8 @@ function botbox(nombre, id, lado)
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-4" id="key_red_co">'
-									+'<label id="key_3" class="input"> <i class=" icon-prepend fa fa-barcode"></i>'
-										+'<input onkeyup="check_keyword_red_co()" placeholder="DNI" type="text" name="keyword_co" id="keyword_red_co">'
+									+'<label id="key_3" class="input"> <i class=" icon-prepend fa fa-users"></i>'
+										+'<!-- check_keyword_red_co() --><input onkeyup="" placeholder="Parentesco" type="text" name="keyword_co" id="keyword_red_co">'
 									+'</label>'
 								+'</section>'
 							+'</div>'
@@ -384,12 +384,12 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section id="municipio" class="col col-6">'
 									+'<label class="input">'
-									+'Estado'
+									+'Ciudad - Estado'
 										+'<input type="text" name="estado" >'
 									+'</label>'
 								+'</section>'
 								+'<section id="municipio_red" class="col col-6">'
-									+'<label class="input">Municipio'
+									+'<label class="input">Delegación o Municipio'
 									+'<input type="text" name="municipio" >'
 									+'</label>'
 								+'</section>'
@@ -403,6 +403,7 @@ function botbox(nombre, id, lado)
 								+'<section class="col col-6">'
 									+'<label class="input">Dirección de domicilio'
 									+'<input required type="text" name="calle">'
+									+'(Calle,No. Exterior,No. Interior)'
 									+'</label>'
 								+'</section>'
 								
@@ -424,7 +425,7 @@ function botbox(nombre, id, lado)
 									+'</select>'
 									+'</label>'
 								+'</section>'
-								+'<section class="col col-6">Sexo&nbsp;'
+								+'<section class="col col-6">Género&nbsp;'
 									+'<div class="inline-group"><?foreach ($sexo as $value){?>'
 									+'<label class="radio">'
 									+'<input <?=($value->id_sexo==1) ? "checked" : " " ?> type="radio" value="<?=$value->id_sexo?>" name="sexo" placeholder="sexo"><i></i><?=$value->descripcion?>'
@@ -621,7 +622,7 @@ function botbox(nombre, id, lado)
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa el DNI",
+					 	"Por favor ingresa tu Identificación",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",

@@ -73,12 +73,13 @@ class POS extends CI_Controller
 		$almacen  = $this->modelo_cedi->getUsuarioId($id);
 		$users = $this->modelo_cedi->getClientes();
 		$id_temporal = $this->modelo_cedi->setIdTemporal ( $id, $almacen[0]->cedi );
-	
+		$puntos = $this->modelo_cedi->sumaPuntosTemporal($id_temporal);
 		$total = $this->modelo_cedi->getTotalNeto($id_temporal);		
 		$iva = $this->modelo_cedi->setImpuesto($almacen[0]->id_pais,$total);
 		$total -= ($total * $descuento)/100;		
 		
 		$this->template->set("valor",$total);
+		$this->template->set("puntos",$puntos);
 		$this->template->set("total",$total+$iva);
 		$this->template->set("iva",$iva);
 		$this->template->set("descuento",$descuento);
@@ -272,19 +273,22 @@ class POS extends CI_Controller
 		$saldo =  $_POST['saldo'];
 		$pago = $_POST['pago'];
 		$iva = $_POST['iva'] ? $_POST['iva'] : 0;
-		$user = $_POST['user'];
 		$descuento = $_POST['desc'] ? $_POST['desc'] : 0;
 		
-		if(!$saldo||!$pago||!$user){
+		if(!$saldo||!$pago){
 			redirect('/CEDI/POS');
 		}
 		
 		
-		$email = $this->modelo_cedi->getCliente($user);
-		
 		$almacen  = $this->modelo_cedi->getUsuarioId($id);
 		
 		$id_temporal = $this->modelo_cedi->setIdTemporal ( $id, $almacen[0]->cedi );
+		
+		$pedidos = $this->modelo_cedi->getTemporal ($id_temporal);
+		
+		$user = $pedidos[0]->cliente;
+		
+		$email = $this->modelo_cedi->getCliente($user);
 		
 		$datos = $this->modelo_cedi->registrarVenta($id_temporal,$pago,$user,$descuento,$iva);
 		
@@ -381,7 +385,21 @@ class POS extends CI_Controller
 	function existeProducto(){
 		
 		$id = $_POST['item'];
-		$producto = $this->model_mercancia->getProductoBy($id);
+		$user = $_POST['user'];
+		$user = substr($user, 3);
+		$user = explode(" ", $user);
+		$user = $user[0];
+		
+		$cliente = $this->modelo_cedi->getCliente($user);
+		
+		if(!$cliente){
+			echo "";exit();
+		}
+		
+		$red= $cliente[0]->id_red;
+		//echo $red;exit();
+		$producto = $this->model_mercancia->getProductoBy($id,$red);
+		
 		if($producto){
 			foreach ($producto as $item){
 				echo "<option value='ID:".$item->id_mercancia." [".$item->sku_2."] ".strtoupper($item->nombre)." # ".$item->codigo_barras."'>";
@@ -393,7 +411,51 @@ class POS extends CI_Controller
 		
 	}
 	
+	function existeUser(){
+	
+		$id = $_POST['item'];
+		$user = $this->modelo_cedi->getClienteBy($id);
+		if($user){
+			foreach ($user as $item){
+				echo "<option value='ID:".$item->user_id." ".strtoupper($item->nombre." ".$item->apellido)." [".$item->red."]'>";
+			}
+		}else{
+			echo "";exit();
+		}
+	
+	
+	}
+	
 	function cargarProducto(){
+	
+		$item = $_POST['item'];
+		$item = substr($item, 3);
+		$item = explode(" ", $item);
+		$item = $item[0];
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$almacen  = $this->modelo_cedi->getUsuarioId($id);
+	
+		$productos = $this->model_inventario->Obtener_Producto_Almacen($almacen[0]->cedi,$item);
+	
+		if(($productos) && ($productos[0]->cantidad > $productos[0]->inventario)){
+				
+			$pedidos = $this->modelo_cedi->setItemPOS($productos[0]->id_mercancia,$id,$almacen[0]->cedi);
+				
+			$this->printItems($pedidos);
+	
+		}
+	
+	}
+	
+	function cargarUser(){
 		
 		$item = $_POST['item'];
 		$item = substr($item, 3);
@@ -410,16 +472,11 @@ class POS extends CI_Controller
 		
 		$almacen  = $this->modelo_cedi->getUsuarioId($id);		
 		
-		$productos = $this->model_inventario->Obtener_Producto_Almacen($almacen[0]->cedi,$item);		
+		$id_temporal = $this->modelo_cedi->setIdTemporal ( $id, $almacen[0]->cedi );
 		
-		if(($productos) && ($productos[0]->cantidad > $productos[0]->inventario)){
-					
-					$pedidos = $this->modelo_cedi->setItemPOS($productos[0]->id_mercancia,$id,$almacen[0]->cedi);
-					
-					$this->printItems($pedidos);
+		$this->modelo_cedi->updateTemporal( $id_temporal, 'cliente', $item);				
 		
-		}
-		
+		echo "OK";
 	}
 	
 	function setCantidad(){

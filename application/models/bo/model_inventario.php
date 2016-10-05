@@ -46,13 +46,18 @@ class model_inventario extends CI_Model
 	
 	function Obtener_Productos_Almacen($almacen){
 		$q=$this->db->query('SELECT 
-								    p . *, i . *, m.`real`, m.costo, m.costo_publico
+								    p . *, i . *, m.`real`,
+									m.costo, m.costo_publico,t.id id_red,t.nombre red
 								FROM
 								    mercancia m,
 								    producto p,
-								    inventario i
+								    inventario i,
+									items v,
+									tipo_red t
 								where
 								    p.id = m.sku 
+									and v.id = m.id
+									and t.id = v.red
 									and m.id = i.id_mercancia
 								    and i.id_almacen ="'.$almacen.'" 
 								group by p.id,p.nombre ');
@@ -126,7 +131,11 @@ class model_inventario extends CI_Model
    	return $q->result();
    }
    function getProductos(){
-   	$q=$this->db->query('select m.id, p.* from producto p, mercancia m where p.id = m.sku ');
+   	$q=$this->db->query('select m.id, p.*,t.nombre red 
+   							from producto p, mercancia m ,tipo_red t,items i 
+   							where p.id = m.sku 
+   								and m.id = i.id 
+   								and t.id = i.red');
    	return $q->result();
    }
    
@@ -161,10 +170,12 @@ class model_inventario extends CI_Model
   }
 
   function getProductos_en_inventario(){
-  	$q=$this->db->query('select m.id,p.nombre 
-  								from producto p ,inventario n,mercancia m
+  	$q=$this->db->query('select m.id,p.nombre ,t.nombre red 
+  								from producto p ,inventario n,mercancia m, tipo_red t,items i 
   								where p.id=m.sku 
   									and m.id = n.id_mercancia 
+  									and m.id = i.id 
+   									and t.id = i.red
   								group by p.id,p.nombre ');
   	return $q->result();
   }

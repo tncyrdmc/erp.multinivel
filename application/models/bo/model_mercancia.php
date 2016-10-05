@@ -717,11 +717,13 @@ class model_mercancia extends CI_Model {
 		}
 	}
 	
-	function getProductoBy($id) {
+	function getProductoBy($id,$red) {
 		$query = "SELECT m.id id_mercancia, p.* , m.*
-											FROM mercancia m , producto p 
+											FROM mercancia m , producto p ,items i
 											WHERE p.id = m.sku 
-												and (m.id = '".$id."' 
+												and m.id = i.id
+												and i.red = '".$red."'
+												and (i.id = '".$id."' 
 												or p.codigo_barras like '".$id."%'  
 												or p.nombre like '".$id."%' 
 												or m.sku_2 like '".$id."%')";

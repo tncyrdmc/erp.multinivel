@@ -281,7 +281,7 @@ function ProductoAlmacen(){
 		datos=$.parseJSON(msg);
 		$('#mercancia_in').append('<option value="">-- Seleccine Producto--</option>');
 	      for(var i in datos){
-		      $('#mercancia_in').append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+'</option>'); 		        
+		      $('#mercancia_in').append('<option value="'+datos[i]['id']+'">'+datos[i]['nombre']+' ('+datos[i]['red']+')</option>'); 		        
 	      }
 	});
 	

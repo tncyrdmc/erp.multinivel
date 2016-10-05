@@ -1,6 +1,5 @@
-
 <!-- MAIN CONTENT -->
-<div id="content">
+			<div id="content" >
 
 	<section id="widget-grid">
 		<!-- START ROW -->
@@ -81,7 +80,7 @@
 																	
 																	echo '<tr>
 																			<td>'.$code.'</td>
-																			<td><a href="producto/verProducto?id='.$producto->id_mercancia.'">'.$producto->nombre.'</a></td>
+																			<td><a href="#">'.$producto->nombre.' ('.$producto->red.')</a></td>
 																			<td><div >$ '.$producto->real.'</div></td>
 																			<td><div >$ '.$producto->costo.'</div></td>
 																			<td><div >$ '.$producto->costo_publico.'</div></td>
@@ -180,7 +179,7 @@
 															
 															echo '<tr>
 																	<td>'.$code.'</td>
-																	<td><a href="producto/verProducto?id='.$producto->id_mercancia.'">'.$producto->nombre.'</a></td>
+																	<td><a href="#">'.$producto->nombre.' ('.$producto->red.')</a></td>
 																	<td><div >$ '.$producto->real.'</div></td>
 																	<td><div >$ '.$producto->costo.'</div></td>
 																	<td><div >$ '.$producto->costo_publico.'</div></td>

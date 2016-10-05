@@ -61,7 +61,7 @@
 															<input class="form-control"  id="cuenta" name="cuenta"  type="number" placeholder="Numero de cuenta" onChange="validarSiNumero(this.value);">
 														</div><br>
 														<div class="form-group">
-															<b>Titular:</b>
+															Titular
 															<input class="form-control"  id="otro" name="otro" type="text">
 														</div><br>
 														<div class="form-group">

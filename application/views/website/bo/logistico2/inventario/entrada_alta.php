@@ -160,7 +160,7 @@ if ($this->session->flashdata ( 'error' )) {
 											required  name="mercancia_in">
 												<option value="">----------- Escoja una mercancia ----------</option>
                                                 <?foreach ($productos as $key){?>
-													<option value="<?=$key->id?>"><?=$key->nombre?></option>
+													<option value="<?=$key->id?>"><?=$key->nombre." (".$key->red.")"?></option>
 												<?}?>
 												
 											 </select>

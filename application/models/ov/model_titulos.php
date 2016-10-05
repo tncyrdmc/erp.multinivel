@@ -18,9 +18,9 @@ class model_titulos extends CI_Model {
     }
 
     function getTitulo($id) {
-        $titulos = $this->db->query('select id_rango from cross_rango_user where id_user=' . $id . '');
+        $titulos = $this->db->query('select * from cross_rango_user where id_user=' . $id . '');
         $titulo = $titulos->result();
-        return $titulo[0]->id_rango;
+        return isset($titulo[0]->id_rango) ? 0 : $titulo[0]->id_rango;
     }
 
     function actualizar($id, $id_titulo) {

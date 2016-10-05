@@ -517,14 +517,17 @@ function delete_telefono(id){
 	$("#tel_"+id+"").remove();	
 }
 
- $(function()
+$(function()
  {
+ 	a = new Date();
+	año = a.getFullYear()-18;
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
 	numberOfMonths: 2,
+	maxDate: año+"-12-31",
 	dateFormat:"yy-mm-dd",
-	defaultDate: "1970-01-01",
-	changeYear: true
+	changeYear: true,
+	yearRange: "-99:+0",
 	});
 });
  

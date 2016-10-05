@@ -95,7 +95,7 @@ $codigoHTML='
 																	
 																	$codigoHTML.= '<tr>
 																			<td>'.$code.'</td>
-																			<td>'.$producto->nombre.'</td>
+																			<td>'.$producto->nombre.' ('.$producto->red.')</td>
 																			<td><div >$ '.$producto->real.'</div></td>
 																			<td><div >$ '.$producto->costo.'</div></td>
 																			<td><div >$ '.$producto->costo_publico.'</div></td>
@@ -165,7 +165,7 @@ if ($productos){
 															
 															$codigoHTML.='<tr>
 																	<td>'.$code.'</td>
-																	<td>'.$producto->nombre.'</td>
+																	<td>'.$producto->nombre.' ('.$producto->red.')</td>
 																	<td><div >$ '.$producto->real.'</div></td>
 																	<td><div >$ '.$producto->costo.'</div></td>
 																	<td><div >$ '.$producto->costo_publico.'</div></td>

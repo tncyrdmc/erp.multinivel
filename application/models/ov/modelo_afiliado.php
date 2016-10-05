@@ -190,6 +190,7 @@ class modelo_afiliado extends CI_Model{
 			$dato_img
 		);	
 		
+		
 		# TELEFONOS $dato_tels dato_tels($id)
 		
 		return $afiliar ? $id /*var_dump()."|".var_dump($_POST["movil"])*/ : null;#; #;
@@ -313,6 +314,20 @@ class modelo_afiliado extends CI_Model{
  		#echo "afiliar si|";
 	}
 
+	private function insert_dato_afiliar($id, $mi_red, $id_debajo, $lado, $directo) { #insert_dato_afiliar
+		$dato_afiliar =array(
+			"id_red"      => $mi_red,
+			"id_afiliado" => $id,
+			"debajo_de"   => $id_debajo,
+			"directo"     => $directo,
+			"lado"        => $lado
+			);
+		
+		//var_dump($dato_afiliar); exit;
+ 		$this->db->insert("afiliar",$dato_afiliar); 		
+ 		return true;
+ 		#echo "afiliar si|";
+	}
 	
 	private function definir_sponsor($id_debajo) {
 		if(isset($_POST['sponsor']))

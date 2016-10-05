@@ -239,7 +239,10 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 	function getVenta($id) {
 		$query = "select 
 					    v.*,i.*,p.*,h.*,
-						c.costo valor_total, c.descuento descuento_neto , c.iva
+						c.costo valor_total, 
+						c.descuento descuento_neto ,
+						c.iva,
+						c.puntos total_puntos
 					from
 					    venta v,
 						pos_venta c,
@@ -341,7 +344,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 				"fecha" => date('Y-m-d'),
 				"cantidad" => $mercancia[0]->min_venta,
 				"puntos" => $puntos,
-				"costo" => 'DETAL',
+				"costo" => 'MAYOR',
 				"descuento" => 0,
 				"tipo_descuento" => "$",
 				"estatus" => "ACT"
@@ -471,7 +474,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 		return $this->db->insert_id();
 	}
 	
-	private function sumaPuntosTemporal($temp) {
+	function sumaPuntosTemporal($temp) {
 		$q = $this->db->query('select sum(puntos) puntos
 								from pos_venta_temporal 
 								where id_temporal = "'.$temp.'" 
@@ -507,7 +510,9 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 					where
 						t.id = a.id_red	
 						and a.id_afiliado = u.user_id
-						and u.id_tipo_usuario in (2 , 10)";
+						and u.user_id != 2
+						and u.id_tipo_usuario in (2 , 10)
+					group by u.user_id";
 		$q = $this->db->query($query);
 		return $q->result();
 	}
@@ -515,7 +520,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 	function getCliente($id){
 	
 		$query = "select
-					    p.*,group_concat(t.nombre) red,u.email
+					    p.*,t.id id_red,t.nombre red,u.email
 					from
 					    user_profiles p,
 						users u,
@@ -525,7 +530,34 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 						t.id = a.id_red
 						and a.id_afiliado = p.user_id
 						and u.id = p.user_id
-						and p.id_tipo_usuario in (2 , 10)";
+						and p.user_id != 2
+						and p.user_id = ".$id."
+						and p.id_tipo_usuario in (2 , 10) 
+					group by p.user_id";
+		$q = $this->db->query($query);
+		return $q->result();
+	}
+	
+	function getClienteBy($id){
+	
+		$query = "select
+					    p.*,/*group_concat(*/t.nombre/*)*/ red,u.email
+					from
+					    user_profiles p,
+						users u,
+						tipo_red t,
+						afiliar a
+					where
+						t.id = a.id_red
+						and a.id_afiliado = p.user_id
+						and u.id = p.user_id
+						and p.user_id != 2
+						and p.id_tipo_usuario in (2 , 10) 
+						and (u.id = '".$id."' ". 
+						//"or p.user_id like '".$id."%' ". 
+						"or p.nombre like '".$id."%' 
+						or p.apellido like '".$id."%')
+					group by p.user_id";
 		$q = $this->db->query($query);
 		return $q->result();
 	}

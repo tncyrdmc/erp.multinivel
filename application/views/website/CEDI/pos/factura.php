@@ -151,7 +151,7 @@
 																		<table width="100%">
 																			<td style="text-align:center">
 																				NO. DE ARTICULOS: <strong><?=$articulos?></strong><br/>
-																				DESCUENTO: <strong><?=number_format($item->descuento_neto,1)?>%</strong>
+																				PUNTOS: <strong><?=$item->total_puntos?></strong>
 																			</td>
 																			<td style="text-align:center">
 																				SUBTOTAL: <strong>$ <?=number_format(($item->valor_total-$item->iva),2)?></strong><br/>

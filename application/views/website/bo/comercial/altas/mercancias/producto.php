@@ -208,20 +208,20 @@ if ($this->session->flashdata ( 'error' )) {
 									</section>
 									<section class="col col-2">
 										<label class="input"> Costo real <input type="number"
-											name="real" id="real" onchange="calcular_precio_total()"
+											name="real" id="real" onchange="calcular_precio_total()" step="0.0001"
 											min="1" required>
 										</label>
 									</section>
 									<section class="col col-2">
 										<label class="input"> Costo distribuidores <input
 											type="number" name="costo" id="costo"
-											onchange="calcular_precio_total()" min="1" required>
+											onchange="calcular_precio_total()" min="1" step="0.0001" required>
 										</label>
 									</section>
 									<section class="col col-2">
 										<label class="input"> Costo publico <input type="number"
 											name="costo_publico" id="costo_publico"
-											onchange="calcular_precio_total()" min="1" required>
+											onchange="calcular_precio_total()" min="1" step="0.0001" required>
 										</label>
 									</section>
 									<section class="col col-2">

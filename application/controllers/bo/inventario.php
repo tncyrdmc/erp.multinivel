@@ -65,7 +65,8 @@ class inventario extends CI_Controller {
 		
 		
 		$style = $this->modelo_dashboard->get_style ( 1 );
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set ( "usuario", $usuario );
 		$this->template->set ( "style", $style );
 		
@@ -74,7 +75,7 @@ class inventario extends CI_Controller {
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -100,7 +101,8 @@ class inventario extends CI_Controller {
 		}
 		
 		$style = $this->modelo_dashboard->get_style ( 1 );
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set ( "usuario", $usuario );
 		$this->template->set ( "style", $style );
 		
@@ -109,7 +111,7 @@ class inventario extends CI_Controller {
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -146,7 +148,8 @@ class inventario extends CI_Controller {
 		
 		$documento = $this->model_inventario->getAlldocumento ();
 		$style = $this->modelo_dashboard->get_style ( 1 );
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set ( "usuario", $usuario );
 		$this->template->set ( "style", $style );
 		
@@ -156,7 +159,7 @@ class inventario extends CI_Controller {
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -293,7 +296,7 @@ class inventario extends CI_Controller {
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -453,7 +456,7 @@ class inventario extends CI_Controller {
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -573,13 +576,13 @@ class inventario extends CI_Controller {
 		$this->template->set ( "style", $style );
 		$this->template->set ( "usuario", $usuario );
 		$type = $usuario[0]->id_tipo_usuario;
-		$this->template->set("type",$type);
+	$this->template->set("type",$type);
 		$this->template->set_theme ( 'desktop' );
 		$this->template->set_layout ( 'website/main' );
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -653,7 +656,8 @@ class inventario extends CI_Controller {
 		}
 		
 		$style = $this->modelo_dashboard->get_style ( 1 );
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set ( "usuario", $usuario );
 		$this->template->set ( "style", $style );
 	
@@ -661,7 +665,7 @@ class inventario extends CI_Controller {
 		$this->template->set_layout ( 'website/main' );
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -697,7 +701,8 @@ class inventario extends CI_Controller {
 		
 		$documento = $this->model_inventario->getMovimientos();
 		$style = $this->modelo_dashboard->get_style ( 1 );
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set ( "usuario", $usuario );
 		$this->template->set ( "style", $style );
 	
@@ -706,7 +711,7 @@ class inventario extends CI_Controller {
 		$this->template->set_layout ( 'website/main' );
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -821,7 +826,7 @@ class inventario extends CI_Controller {
 		
 		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');

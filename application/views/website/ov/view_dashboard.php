@@ -242,15 +242,15 @@
 																				<span>Banco  : <b>'.$cuenta->nombreBanco.'</b>,</span><br> 
 																				<span>Cuenta : <b>'.$cuenta->cuenta.'</b>,</span><br>
 																		';
-																		if($cuenta->clabe)
-																		   echo'<span>Clabe  :<b>'.$cuenta->clabe.'</b>,</span><br>';
-																		if($cuenta->swift)
-																			echo'<span>SWIFT  :<b>'.$cuenta->swift.'</b>,</span><br>';
 																		if($cuenta->otro)
-																			echo'<span>Titular  :<b>'.$cuenta->otro.'</b>,</span><br>';
+																			echo'<span>Titular:	<b>'.$cuenta->otro.'</b>,</span><br>';
+																		if($cuenta->clabe)
+																		   echo'<span>Clabe:	<b>'.$cuenta->clabe.'</b>,</span><br>';
+																		if($cuenta->swift)
+																			echo'<span>SWIFT:	<b>'.$cuenta->swift.'</b>,</span><br>';																		
 																		if($cuenta->dir_postal)
 																			echo'<span>Dirección postal  :<b>'.$cuenta->dir_postal.'</b>,</span><br>';
-																		   echo'<span>Valor  :<b> $ '.$cuenta->valor.'</b>,</span>
+																		   echo'<span>Valor:	<b> $ '.$cuenta->valor.'</b>,</span>
 																		</div>
 																	</li>';
 																		}

@@ -56,7 +56,7 @@ table.social div[class="column"]{width:auto !important}}
 				<div class="content">
 					<table>
 						<tr>
-							<td><img src="<?=site_url('')?>/logo.png" height="30" width="142" /></td>
+							<td><img src="<?=site_url('')?>/template/img/favicon/favicon.png" height="30" /></td>
 							<td align="right"><h6 class="collapse"><?=$tema ? $tema : "TEMA"?></h6></td>
 						</tr>
 					</table>
@@ -93,7 +93,7 @@ table.social div[class="column"]{width:auto !important}}
 										<tr>
 											<td>				
 												
-												<img src="<?=site_url('')?>/logo.png"  width="100%" />
+												<img src="<?=site_url('')?>/template/img/favicon/favicon.png"  width="200em" />
 													
 												
 											</td>

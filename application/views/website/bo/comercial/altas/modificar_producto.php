@@ -202,21 +202,21 @@ $porcentajeContador=0;
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo real
-															<input required type="number" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
+															<input required type="number" step="0.0001" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo distribuidores
-															<input required type="number" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
+															<input required type="number" step="0.0001" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo publico
-															<input required type="number" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
+															<input required type="number" step="0.0001" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
