@@ -80,7 +80,8 @@ class mercancia extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$proveedores = array();
@@ -133,7 +134,13 @@ class mercancia extends CI_Controller
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
+		if($type==8||$type==9){
+			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial('footer', 'website/bo/footer');
 		if($tipoID == 1){
 			$this->template->build('website/bo/comercial/altas/mercancias/producto');

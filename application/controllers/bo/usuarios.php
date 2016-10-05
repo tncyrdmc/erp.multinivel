@@ -491,7 +491,8 @@ class usuarios extends CI_Controller
 		}
 				
 		$usuario=$this->general->get_username($id);
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("usuario",$usuario);
@@ -499,9 +500,9 @@ class usuarios extends CI_Controller
 		
 			$this->template->set_theme('desktop');
 			$this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -531,7 +532,8 @@ class usuarios extends CI_Controller
 		$style=$this->modelo_dashboard->get_style(1);
 		
 		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$cedis = $this->model_cedi->listarTodos();
 		
 		$this->template->set("cedis",$cedis);
@@ -585,9 +587,9 @@ class usuarios extends CI_Controller
 			$this->template->set("data",$data);
 			$this->template->set_theme('desktop');
 			$this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -730,16 +732,17 @@ class usuarios extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style(1);
 		$users=$this->model_tipo_usuario->get_all_users_cedi();
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("users",$users);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -1224,7 +1227,8 @@ function subtree()
 		}
 	
 		$usuario=$this->general->get_username($id);
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("usuario",$usuario);
@@ -1232,9 +1236,9 @@ function subtree()
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -1264,7 +1268,8 @@ function subtree()
 		$style=$this->modelo_dashboard->get_style(1);
 	
 		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$almacenes = $this->modelo_almacen->obtenerAlmacenes();
 	
 		$this->template->set("almacenes",$almacenes);
@@ -1316,9 +1321,9 @@ function subtree()
 			$this->template->set("data",$data);
 			$this->template->set_theme('desktop');
 			$this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');
@@ -1349,16 +1354,17 @@ function subtree()
 	
 		$style=$this->modelo_dashboard->get_style(1);
 		$users=$this->modelo_almacen->getUsuarios();
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("users",$users);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
-			$header = $CEDI ? 'CEDI' : 'Almacen';
+			$header = $type==8 ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
 		}else{
 			$this->template->set_partial('header', 'website/bo/header');

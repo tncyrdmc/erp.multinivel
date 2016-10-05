@@ -2091,14 +2091,15 @@ class comercial extends CI_Controller
 		
 
    	$usuario=$this->general->get_username($id);
-   	$this->template->set("type",$usuario[0]->id_tipo_usuario);
+   	$type = $usuario[0]->id_tipo_usuario;
+	$this->template->set("type",$type);
    	$style=$this->modelo_dashboard->get_style(1);
    	
    	$this->template->set("usuario",$usuario);
    	$this->template->set("style",$style);
    	$this->template->set_theme('desktop');
    	$this->template->set_layout('website/main');
-   		if($CEDI||$almacen){
+   		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
 			$header = $CEDI ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
@@ -2129,7 +2130,8 @@ class comercial extends CI_Controller
 		
 
 		$usuario=$this->general->get_username($id);
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
@@ -2180,7 +2182,7 @@ class comercial extends CI_Controller
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-		if($CEDI||$almacen){
+        if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
 			$header = $CEDI ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
@@ -2209,7 +2211,8 @@ class comercial extends CI_Controller
 		
   	
   	$usuario=$this->general->get_username($id);
-  	$this->template->set("type",$usuario[0]->id_tipo_usuario);
+  	$type = $usuario[0]->id_tipo_usuario;
+	$this->template->set("type",$type);
   	$style=$this->modelo_dashboard->get_style(1);
   	
   	$proveedor=$this->model_admin->get_all_proveedor();
@@ -2219,7 +2222,7 @@ class comercial extends CI_Controller
   	$this->template->set("style",$style);
   	$this->template->set_theme('desktop');
   	$this->template->set_layout('website/main');
-  		if($CEDI||$almacen){
+  		if($type==8||$type==9){
 			$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
 			$header = $CEDI ? 'CEDI' : 'Almacen';
 			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
