@@ -87,11 +87,17 @@
 														</div>
 				
 													</div>
-													<hr/>
-													<div class="well well-sm  bg-color-darken txt-color-white no-border">
+													<hr class="col-md-12" />
+													<div class="col-md-12 well well-sm  bg-color-darken txt-color-white no-border">
 														<div class="fa-lg">
 															Precio :
 															<span class="pull-right">$ <?php echo $this->cart->total(); ?> ** </span>
+														</div>
+													</div>
+													<div class="col-md-12 well well-sm  bg-color-green txt-color-white no-border">
+														<div class="fa-lg">
+															Puntos :
+															<span class="pull-right">** <?php echo $puntos; ?> ** </span>
 														</div>
 													</div>
 												</div>
@@ -107,6 +113,7 @@
 														<th class="text-center">Cantidad</th>
 														<th>ITEM</th>
 														<th>DESCRIPCION</th>
+														<th>PUNTOS</th>
 														<th>PRECIO</th>
 														<th>IMPUESTO</th>
 														<th>SUBTOTAL</th>
@@ -146,6 +153,9 @@
 																	<td class="miniCartProductThumb"><img style="width: 8rem;" src="'.$compras[$contador]['imagen'].'" alt="img">'.$compras[$contador]['nombre'].'</td>
 																	<td style="max-width: 25rem;"><a href="javascript:void(0);">'.$compras[$contador]['descripcion'].'</a></td>
 																	<td>
+												                        <span> '.($compras[$contador]['puntos']*$cantidad).' </span>
+																	</td>
+      																<td>
 												                        <span>$ '.($precioUnidad*$cantidad).' </span>
 																	</td>
 																	<td>
@@ -153,10 +163,10 @@
         															<br>'.$nombreImpuestos.'
       																<br>
 																	</td>
-																	<td><strong>$ '.(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad)).'</strong></td>
+																	<td><strong>$ '.number_format(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad),2).'</strong></td>
 												                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="txt-color-red fa fa-trash-o fa-3x "></i> </a></td>
 																</tr>'; 
-														$total+=(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad));
+														$total+=round(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad),2);
 														$contador++;
 														} 
 														

@@ -128,7 +128,7 @@
 											</section>
 											
 											<section class="col-md-5 col-xs-5" style="padding-left: 2em">
-												<!--<div class="pull-right">
+												<div class="pull-right">
 													<h5>Tipo de Compra:</h5>
 													<br />
 													<button type="button" class="btn btn-primary"
@@ -138,7 +138,7 @@
 														onclick="tipo_venta('MAYOR')">P.
 														Mayoreo</button>
 
-												</div>-->
+												</div>
 											</section>
 
 											<!--  <hr class="col-md-12 col-xs-12" />
@@ -173,7 +173,7 @@
 											<section class="col-md-4 col-xs-6 text-center">
 												<div style="padding: 0.5em;">
 
-													<!--  <form name="form3" method="get" action="caja.php">>
+													  <!--  <form name="form3" method="get" action="caja.php">-->
 
 														<div class="padding-10">
 															<h4>Descuento al Neto:</h4>
@@ -190,7 +190,7 @@
 															<button onclick="descuento_neto()" class="btn btn-mini">Aplicar
 																Descuento</button>
 														</div>
-													<! </form> -->
+													<!--  </form> --> 
 
 												</div>
 											</section>

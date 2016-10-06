@@ -90,9 +90,9 @@ class modelo_dashboard extends CI_Model
   	$puntos=0;
   	
   	foreach ($redes as $red){
-  		$puntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+  		$puntos+=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
   		if($puntos==null)
-  			$puntos=0;
+  			$puntos+=0;
   	}
   	
   	
@@ -113,9 +113,9 @@ class modelo_dashboard extends CI_Model
   	$puntos=0;
   	
   	foreach ($redes as $red){
-  		$puntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+  		$puntos+=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
   		if($puntos==null)
-  			$puntos=0;
+  			$puntos+=0;
   	}
   	
   	
@@ -134,9 +134,9 @@ class modelo_dashboard extends CI_Model
   	$puntos=0;
   	
   	foreach ($redes as $red){
-  		$puntos=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
+  		$puntos+=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id,$red->id,$cualquiera,$cualquiera,$fechaInicio,$fechaFin)[0]->total;
   		if($puntos==null)
-  			$puntos=0;
+  			$puntos+=0;
   	}
   	
   	
@@ -158,9 +158,9 @@ class modelo_dashboard extends CI_Model
   	$puntos=0;
   	 
   	foreach ($redes as $red){
-  		$puntos=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
+  		$puntos+=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
   		if($puntos==null)
-  			$puntos=0;
+  			$puntos+=0;
   	}
   	 
   	 
@@ -182,9 +182,9 @@ class modelo_dashboard extends CI_Model
   	$puntos=0;
   	 
   	foreach ($redes as $red){
-  		$puntos=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
+  		$puntos+=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
   		if($puntos==null)
-  			$puntos=0;
+  			$puntos+=0;
   	}
   	 
   	 
@@ -204,9 +204,9 @@ class modelo_dashboard extends CI_Model
   	$puntos=0;
   	 
   	foreach ($redes as $red){
-  		$puntos=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
+  		$puntos+=$usuario->getVentasTodaLaRed($id,$red->id,"RED","EQU",$red->profundidad,$fechaInicio,$fechaFin,$cualquiera,$cualquiera,"PUNTOS");
   		if($puntos==null)
-  			$puntos=0;
+  			$puntos+=0;
   	}
   	 
   	 

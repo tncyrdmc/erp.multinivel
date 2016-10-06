@@ -217,6 +217,7 @@ function index()
 		$info_compras[$contador]=Array(
 				"imagen" => $imagenes[0]->url,
 				"nombre" => $detalles[0]->nombre,
+				"puntos" => $detalles[0]->puntos_comisionables,
 				"descripcion" => $detalles[0]->descripcion,
 				"costos" => $costosImpuestos
 		);
@@ -331,10 +332,16 @@ function index()
 		if(!$contenidoCarrito['compras'])
 			redirect('/ov/compras/carrito');
 		
+		$puntos = 0;
+		foreach ($contenidoCarrito['compras'] as $item){
+			$puntos += $item['puntos'];
+		}
+		
 		$paypal  = $this->modelo_pagosonline->val_paypal();
 		$payulatam  = $this->modelo_pagosonline->val_payulatam();
 		$tucompra  = $this->modelo_pagosonline->val_tucompra();
 		
+		$this->template->set('puntos',$puntos);
 		$this->template->set('paypal',$paypal);
 		$this->template->set('payulatam',$payulatam);
 		$this->template->set('tucompra',$tucompra);

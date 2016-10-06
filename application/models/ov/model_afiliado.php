@@ -702,11 +702,23 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function PuntosUsuario($id){
-		$q = $this->db->query("select distinct  
-					sum(m.puntos_comisionables*c.cantidad) puntos, sum(m.puntos_comisionables) as puntosu 
-				FROM mercancia m, cross_venta_mercancia c , venta v
-				WHERE m.id = c.id_mercancia and c.id_venta = v.id_venta and v.id_user = ".$id."");
-		$puntos = $q->result();
+		$cedi = "+ (select sum(p.puntos) 
+						from pos_venta_item p, venta v 
+						where p.id_venta = v.id_venta	
+							and v.id_user = ".$id."
+							and date_format(v.fecha ,'%Y-%m') = date_format(now(),'%Y-%m'))";
+		
+		$query = "SELECT distinct  
+							sum(m.puntos_comisionables*c.cantidad) ".$cedi." puntos,
+							sum(m.puntos_comisionables) ".$cedi." as puntosu 
+						FROM mercancia m, cross_venta_mercancia c , venta v
+						WHERE m.id = c.id_mercancia 
+							and c.id_venta = v.id_venta 
+							and v.id_user = ".$id." 
+							and v.id_estatus = 'ACT'
+							and date_format(v.fecha ,'%Y-%m') = date_format(now(),'%Y-%m')";
+		
+		$q = $this->db->query($query);
 		return $puntos;
 	}
 	
