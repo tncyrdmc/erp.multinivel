@@ -49,7 +49,7 @@
 												<section class="text-center" style="padding-top: 2em">
 												<form action="emailFactura" method="POST">
 													<input type="hidden" name="venta" id="venta" value="<?=$items[0]->id_venta;?>">
-													<input type="email" name="email" value="<?=$email;?>" id="email" required /> 
+													<input type="email" name="email" value="<?=$cliente[0]->email;?>" id="email" required /> 
 													<input type="submit" value="Enviar E-Mail" class="btn fa fa-envelope">																									
 												</form>
 												
@@ -91,6 +91,11 @@
 																		?>
 																		<br><?=$empresa[0]->provincia.", ".$empresa[0]->ciudad?>
 																	</td>
+																	<td ><div align="right">
+																		ID Cliente: <?=$cliente[0]->user_id?>
+																		<br/>
+																		<?=$cliente[0]->nombre?><br/><?=$cliente[0]->apellido?>					
+																	</div></td>
 																</tr>
 																<tr>
 																	<td ></td>

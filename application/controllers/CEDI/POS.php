@@ -298,7 +298,7 @@ class POS extends CI_Controller
 		
 		$empresa=$this->model_admin->get_empresa_multinivel();
 		
-		$this->template->set("email",$email[0]->email);
+		$this->template->set("cliente",$email);
 		$this->template->set("empresa",$empresa);
 		$this->template->set("items",$datos);
 		$this->template->set("style",$style);
