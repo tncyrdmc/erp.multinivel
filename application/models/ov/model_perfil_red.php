@@ -544,32 +544,32 @@ order by (U.id);");
 	
 	function use_mail()
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."'");
 		return $q->result();
 	}
 	
 	function exist_mail($mail)
 	{
-		$q=$this->db->query("select * from users where email like '".$mail."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."'");
 		return $q->result();
 	}
 	
 	function use_mail_modificar_perfil($id)
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id!= '".$id."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."' and id!= '".$id."'");
 		return $q->result();
 	}
 	
 	function use_mail_modificar()
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id != '".$_POST['id']."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."' and id != '".$_POST['id']."'");
 		
 		return $q->result();
 	}
 	
 	function use_username()
 	{
-		$q=$this->db->query("select * from users where username = '".$_POST['username']."'");
+		$q=$this->db->query("select * from users where lower(username) = '".strtolower($_POST['username'])."'");
 		return $q->result();
 	}
 	
@@ -581,7 +581,7 @@ order by (U.id);");
 	
 	function use_username_modificar()
 	{
-		$q=$this->db->query("select * from users where username like '".$_POST['username']."' and id!= '".$_POST['id']."'");
+		$q=$this->db->query("select * from users where lower(username) like '".strtolower($_POST['username'])."' and id!= '".$_POST['id']."'");
 		return $q->result();
 	}
 	

@@ -67,7 +67,7 @@
 										<th data-hide="phone,tablet">CLABE</th>
 										<th data-hide="phone,tablet">SWIFT</th>										
 										<th data-hide="phone,tablet">Dirección postal</th>
-										<th data-hide="phone,tablet">Valor</th>
+										<th data-hide="phone,tablet" style="width: 70px !important">Valor</th>
 										<th data-hide="phone,tablet">Fecha</th>
 										<th data-hide="phone,tablet">Estado</th>
 										<th>Acciones</th>

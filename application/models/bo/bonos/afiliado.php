@@ -418,7 +418,8 @@ class afiliado extends CI_Model
 		$cualquiera="0"; 
 		 
 		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
-			$cedi = "+ (select sum(p.puntos)
+			$cedi = "+ (select 
+						 (case when sum(p.puntos) then sum(p.puntos) else 0 end)
 						from pos_venta o,venta v,pos_venta_item p,items i
 						where 
 							i.id = p.item	

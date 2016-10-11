@@ -702,7 +702,8 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function PuntosUsuario($id){
-		$cedi = "+ (select sum(p.puntos) 
+		$cedi = "+ (select  
+						(case when sum(p.puntos) then sum(p.puntos) else 0 end)
 						from pos_venta_item p, venta v 
 						where p.id_venta = v.id_venta	
 							and v.id_user = ".$id."

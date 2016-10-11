@@ -111,6 +111,8 @@ class ventas extends CI_Controller
 	
 		$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha($_POST['startdate'],$_POST['finishdate']);
 	
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		
 		$id=$this->tank_auth->get_user_id();
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
@@ -121,6 +123,7 @@ class ventas extends CI_Controller
 					<th data-hide='phone,tablet'>Apellido</th>
 					<th data-hide='phone,tablet'>Subtotal</th>
 					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Gastos Envio</th>
 					<th data-hide='phone,tablet'>Total Venta</th>
 					<th data-hide='phone,tablet'>Total Comisiones</th>
 					<th data-hide='phone,tablet'>Total Neto</th>
@@ -138,7 +141,8 @@ class ventas extends CI_Controller
 			<td>".$venta->lastname."</td>
 			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>
 			<td> $	".number_format($venta->impuestos, 2, '.', '')."</td>
-			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
+			<td> $	".number_format($canal[0]->gastos, 2, '.', '')."</td>
+			<td> $	".number_format($venta->costo+$canal[0]->gastos, 2, '.', '')."</td>
 			<td> $	".number_format($venta->comision, 2, '.', '')."</td>
 			<td> $	".number_format((($venta->costo)-($venta->impuestos+$venta->comision)), 2, '.', '')."</td>
 			<td>
@@ -173,10 +177,12 @@ class ventas extends CI_Controller
 			<td></td>
 			<td></td>
 			<td></td>
+			<td></td>
 			</tr>";
 				
 			echo "<tr>
 			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -325,6 +331,9 @@ public function createFolder()
 		$this->template->set("mercanciaFactura",$mercanciaFactura);
 		$this->template->set("info_mercancia",$info_mercancia);
 		
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		$this->template->set("envio",$canal[0]->gastos);
+		
 		$pais = $this->general->get_pais($id);
 		$this->template->set("pais_afiliado",$pais);
 		
@@ -337,8 +346,11 @@ public function createFolder()
 		$this->template->build('website/bo/administracion/ventas/factura');
 	}
 
-	function facturaImprimir($id_venta){
+	function facturaImprimir(){
 
+		$id_venta = $_POST['id'];
+		$retorno = $_POST['link'];
+		
 		$id = $this->modelo_compras->get_datos_venta($id_venta);
 		$fecha_1=date_create($id[0]->fecha);
 		$fecha=date_format($fecha_1,'Y-m-d');
@@ -380,9 +392,13 @@ public function createFolder()
 		}
 /////////////////////////////////////////////////////////////////////////////////
 
-		$this->template->set("id_venta",$id_venta);
+		$this->template->set("id",$id_venta);
+		$this->template->set("link",$retorno);
 		$this->template->set("mercanciaFactura",$mercanciaFactura);
 		$this->template->set("info_mercancia",$info_mercancia);
+		
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		$this->template->set("envio",$canal[0]->gastos);
 		
 		$pais = $this->general->get_pais($id);
 		$this->template->set("pais_afiliado",$pais);
@@ -393,134 +409,7 @@ public function createFolder()
 		$this->template->set("fecha",$fecha);
 		
 		$this->template->set_theme('desktop');
-
-$html='';
-$html.='<div class="padding-10">
-											<div class="pull-left">
-												<img style="width: 18rem; height: auto; padding: 1rem;" src="" alt="">
-				
-												<address>
-													<h4 class="semi-bold">'.$empresa[0]->nombre.'</h4>
-													<abbr title="Phone">Identificador tributario:</abbr>'."\t".$empresa[0]->id_tributaria.'
-													<br>
-													<abbr title="Phone">Dirección:</abbr>'.$empresa[0]->direccion.'
-													<br>
-													<abbr title="Phone">Ciudad:</abbr>'.$empresa[0]->ciudad.'
-													<br>
-													<abbr title="Phone">Tel:</abbr>&nbsp;'.$empresa[0]->fijo.'
-												</address>
-											</div>
-											</br>
-											<div class="pull-right">
-												<h1 class="font-300">Factura de venta</h1>
-											</div>
-											<div class="clearfix"></div>
-											<br>
-											<div class="row">
-												<div class="col-sm-9">
-													<address>
-														<strong>Facturar a:</strong>
-														<br>
-														<strong>Señor (a). '.$datos_afiliado[0]->nombre." ".$datos_afiliado[0]->apellido.'</strong>
-														<br>
-														<abbr title="Phone">DNI:</abbr>'.$datos_afiliado[0]->keyword.'
-														<br>
-														<abbr title="Phone">Dirección:</abbr>'.$pais_afiliado[0]->direccion.'
-														<br>
-														<abbr title="Phone">País:</abbr>'.$pais_afiliado[0]->nombrePais.' <img class="flag flag-<?=strtolower($pais_afiliado[0]->codigo)?>">
-														<br>
-														<abbr title="Phone">Email:</abbr>'.$datos_afiliado[0]->email.'
-													</address>
-												</div>
-												<div class="col-sm-3">
-													<div>
-														<div>
-															<strong>FACTURA NO :</strong>
-															<span class="pull-right">'.$_POST["id"].'</span>
-														</div>
-				
-													</div>
-													<div>
-														<div class="">
-															<abbr title="Phone"><strong>Fecha de expedición:</strong></abbr><span class="pull-right"> <i ></i> <?php echo $fecha;?> </span>
-															<br>
-															<br>
-															<abbr title="Phone"><strong>Fecha de vencimiento:</strong></abbr><span class="pull-right"> <i ></i> <?php echo $fecha;?> </span>
-														</div>
-				
-													</div>
-													<br>
-
-												</div>
-
-											</div>
-
-												<div class="panel panel-default">
-  													<div class="panel-body">
-														<span class="center"> <?php echo $empresa[0]->resolucion;?> </span>
-  													</div>
-												</div>
-											<table class="table table-hover">
-												<thead>
-													<tr>
-														<th class="text-center">Cantidad</th>
-														<th>ITEM</th>
-														<th>DESCRIPCION</th>
-														<th>PRECIO</th>
-														<th>IMPUESTO</th>
-														<th>SUBTOTAL</th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>';
-												$contador=0;
-												$total=0;
-												foreach ($mercanciaFactura as $mercancia){										
-															$html .= '<tr> 
-																	<td class="text-center"><strong>'.$mercancia->cantidad.'</strong></td>
-																	<td class="miniCartProductThumb"><img style="width: 8rem;" src="'.$info_mercancia[$contador]['imagen'].'" alt="img">'.$info_mercancia[$contador]['nombre'].'</td>
-																	<td style="max-width: 25rem;"><a href="javascript:void(0);">'.$info_mercancia[$contador]['descripcion'].'</a></td>
-																	<td>
-												                        <span>$ '.($mercancia->costo_unidad*$mercancia->cantidad).' </span>
-																	</td>
-																	<td>
-																	$ '.$mercancia->impuesto_unidad*$mercancia->cantidad.'
-        															<br>'.$mercancia->nombreImpuesto.'
-      																<br>
-																	</td>
-																	<td><strong>$ '.(($mercancia->costo_unidad*$mercancia->cantidad)+($mercancia->impuesto_unidad*$mercancia->cantidad)).'</strong></td>
-																</tr>'; 
-														$total+=(($mercancia->costo_unidad*$mercancia->cantidad)+($mercancia->impuesto_unidad*$mercancia->cantidad));
-														$contador++;
-												}
-								                  
-												$html .= '</tbody>
-											</table>
-				
-											<div class="invoice-footer">
-				
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="invoice-sum-total pull-right">
-															<h3><strong>Total a Pagar: <span class="text-success">$ <?php echo $total;?></span></strong></h3>
-														</div>
-													</div>
-				
-												</div>
-			
-											</div>
-											<div class="panel panel-default">
-  												<div class="panel-body">
-													<abbr title="Phone">Observaciones:</abbr><span class="center"> <?php echo $empresa[0]->comentarios;?> </span>
-  												</div>
-											</div>
-										</div>
-</div>';
-/////////////////////////////////////////////////////////////////////////////////
-
-
-
-		return $html;
-		//return $this->template->build('website/bo/administracion/ventas/factura_2');
+		
+		return $this->template->build('website/bo/administracion/ventas/factura_2');
 	}
 }

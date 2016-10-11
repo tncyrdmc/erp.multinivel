@@ -514,7 +514,22 @@
 						});
 
 		}
-			
+
+			function imprimir(id){
+				$.ajax({
+					type: "POST",
+					url: "/bo/ventas/facturaImprimir",//imprimirfactura
+					data: {id: id, link : '/ov/compras/reportes'},
+					success: function( msg ){
+						bootbox.dialog({
+							message: msg,
+							title: "Factura",
+							className: "",					
+						})
+					}
+				});
+			}
+				
 		</script>
 		<script type="text/javascript">
 		

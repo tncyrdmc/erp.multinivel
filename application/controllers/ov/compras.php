@@ -332,9 +332,17 @@ function index()
 		if(!$contenidoCarrito['compras'])
 			redirect('/ov/compras/carrito');
 		
-		$puntos = 0;
+		$cartItem = array(); 
+		
+		foreach ($this->cart->contents() as $item){
+			array_push($cartItem, $item);
+		}
+		
+		$puntos = 0;	
+		$i=0;
 		foreach ($contenidoCarrito['compras'] as $item){
-			$puntos += $item['puntos'];
+			$puntos += $item['puntos']*$cartItem[$i]['qty'] ;
+			$i++;
 		}
 		
 		$paypal  = $this->modelo_pagosonline->val_paypal();
@@ -1850,7 +1858,7 @@ function index()
 			<td>				<a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura(".$venta->id_venta.");'>
 				<i class='fa fa-eye fa-3x'></i>
 				</a>
-					<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='factura(".$venta->id_venta.");'>
+					<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir(".$venta->id_venta.");'>
 				<i class='fa fa-file-pdf-o fa-3x'></i>
 				</a>
 				</td>

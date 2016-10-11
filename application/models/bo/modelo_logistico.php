@@ -198,7 +198,7 @@ class modelo_logistico extends CI_Model
 			$A = $almacenes;
 			$C = (count($C)==0) ? $A : array_intersect($B, $A);
 			(count($C)>0) ? $Count++ : '';	
-			var_dump($almacenes);echo "<hr/>";
+			//var_dump($almacenes);echo "<hr/>";
 		}
 		return array($Count,$C);
 	}

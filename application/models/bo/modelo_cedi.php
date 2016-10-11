@@ -555,8 +555,8 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 						and p.id_tipo_usuario in (2 , 10) 
 						and (u.id = '".$id."' ". 
 						//"or p.user_id like '".$id."%' ". 
-						"or p.nombre like '".$id."%' 
-						or p.apellido like '".$id."%')
+						"or lower(p.nombre) like '".strtolower($id)."%' 
+						or lower(p.apellido) like '".strtolower($id)."%')
 					group by p.user_id";
 		$q = $this->db->query($query);
 		return $q->result();

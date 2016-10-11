@@ -268,17 +268,17 @@
 		function imprimir(id){
 								$.ajax({
 									type: "POST",
-									url: "imprimirfactura",
-									data: {id: id},
+									url: "facturaImprimir",//imprimirfactura
+									data: {id: id, link : '/bo/ventas/'},
 									success: function( msg )
 									{
-									bootbox.dialog({
-									message: msg,
-									title: "Factura",
-									className: "",
-
-									
-								})
+										bootbox.dialog({
+											message: msg,
+											title: "Factura",
+											className: "",
+		
+											
+										})
 							    
 									}
 								});

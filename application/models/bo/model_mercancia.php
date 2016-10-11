@@ -724,9 +724,9 @@ class model_mercancia extends CI_Model {
 												and m.id = i.id
 												and i.red = '".$red."'
 												and (i.id = '".$id."' 
-												or p.codigo_barras like '".$id."%'  
-												or p.nombre like '".$id."%' 
-												or m.sku_2 like '".$id."%')";
+												or lower(p.codigo_barras) like '".strtolower($id)."%'  
+												or lower(p.nombre) like '".strtolower($id)."%' 
+												or lower(m.sku_2) like '".strtolower($id)."%')";
 		$q = $this->db->query ($query);
 		return $q->result ();
 	}
