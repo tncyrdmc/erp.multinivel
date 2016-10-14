@@ -418,24 +418,31 @@ class afiliado extends CI_Model
 		$cualquiera="0"; 
 		 
 		if($id_mercancia===$cualquiera&&$id_tipo_mercancia===$cualquiera){
-			$cedi = "+ (select 
+			$cedi = "+ (select
 						 (case when sum(p.puntos) then sum(p.puntos) else 0 end)
 						from pos_venta o,venta v,pos_venta_item p,items i
-						where 
-							i.id = p.item	
+						where
+							i.id = p.item
 							and i.red = ".$id_red."
-							and p.id_venta = o.id_venta 
-							and o.id_venta = v.id_venta 
+							and p.id_venta = o.id_venta
+							and o.id_venta = v.id_venta
 							and v.id_user = ".$id_afiliado."
 							and v.id_estatus = 'ACT'
 							and v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."'
 						)";
 			
-			$query = "SELECT sum(i.puntos_comisionables*cvm.cantidad) ".$cedi." as total FROM venta v,cross_venta_mercancia cvm,items i
+			$cart = "(SELECT
+							(case when i.puntos_comisionables
+								then sum(i.puntos_comisionables*cvm.cantidad)
+								else 0 end)
+						FROM venta v,cross_venta_mercancia cvm,items i
 									 where (v.id_venta=cvm.id_venta)
 									 and  (i.id=cvm.id_mercancia)
 									 and(v.id_user=".$id_afiliado.")
-									 and (i.red=".$id_red.") and v.id_estatus = 'ACT' and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')";
+									 and (i.red=".$id_red.") and v.id_estatus = 'ACT'
+									 and (v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin."')) ";
+				
+			$query = "SELECT ".$cart.$cedi." total";
 			$q=$this->db->query($query);
 			return $q->result();
 		}else if($id_mercancia!==$cualquiera&&$id_tipo_mercancia===$cualquiera){

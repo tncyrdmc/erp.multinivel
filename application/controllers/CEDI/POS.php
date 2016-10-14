@@ -108,7 +108,7 @@ class POS extends CI_Controller
 		$items = $this->modelo_cedi->getVenta($venta);
 		$cajero = $usuario[0]->nombre." ".$usuario[0]->apellido;
 		$user = $this->general->get_username($items[0]->cliente);
-		$cliente = $user[0]->nombre." ".$user[0]->apellido;
+		$cliente = $user[0]->user_id."<br/>".$user[0]->nombre." ".$user[0]->apellido;
 		
 		
 		
@@ -160,6 +160,7 @@ class POS extends CI_Controller
 							<br/>Tel: '.$empresa[0]->fijo.$guion.$empresa[0]->movil.'
 							<br>'.$direccion.'
 						</td>
+                                                <td><div align="right">ID CLIENTE: '.$cliente.'</div></td>
 					</tr>
 					<tr>
 						<td ></td>
@@ -218,7 +219,7 @@ class POS extends CI_Controller
 								<strong>* VENTA AL '.$items[0]->costo.' *</strong>
 								<br/><br/>
 								FIRMA DEL CLIENTE
-								<br/>'.$cliente.'<br/>
+								<br/><br/>
 								________________________________________
 								<br/><br/>
 								GRACIAS POR SU COMPRA

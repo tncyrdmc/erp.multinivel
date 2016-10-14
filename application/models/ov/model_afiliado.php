@@ -702,22 +702,34 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function PuntosUsuario($id){
-		$cedi = "+ (select  
+		$cedi = "+ (select
 						(case when sum(p.puntos) then sum(p.puntos) else 0 end)
-						from pos_venta_item p, venta v 
-						where p.id_venta = v.id_venta	
+						from pos_venta_item p, venta v
+						where p.id_venta = v.id_venta
 							and v.id_user = ".$id."
 							and date_format(v.fecha ,'%Y-%m') = date_format(now(),'%Y-%m'))";
 		
-		$query = "SELECT distinct  
-							sum(m.puntos_comisionables*c.cantidad) ".$cedi." puntos,
-							sum(m.puntos_comisionables) ".$cedi." as puntosu 
+		$cart = "(SELECT distinct
+							 (case when m.puntos_comisionables then SUM(m.puntos_comisionables * c.cantidad) else 0 end)
 						FROM mercancia m, cross_venta_mercancia c , venta v
-						WHERE m.id = c.id_mercancia 
-							and c.id_venta = v.id_venta 
-							and v.id_user = ".$id." 
+						WHERE m.id = c.id_mercancia
+							and c.id_venta = v.id_venta
+							and v.id_user = ".$id."
 							and v.id_estatus = 'ACT'
-							and date_format(v.fecha ,'%Y-%m') = date_format(now(),'%Y-%m')";
+							and date_format(v.fecha ,'%Y-%m') = date_format(now(),'%Y-%m')) ";
+		
+		$cart2 = "(SELECT distinct
+							 (case when m.puntos_comisionables then SUM(m.puntos_comisionables) else 0 end)
+						FROM mercancia m, cross_venta_mercancia c , venta v
+						WHERE m.id = c.id_mercancia
+							and c.id_venta = v.id_venta
+							and v.id_user = ".$id."
+							and v.id_estatus = 'ACT'
+							and date_format(v.fecha ,'%Y-%m') = date_format(now(),'%Y-%m')) ";
+		
+		$puntos = $cart.$cedi;
+		$puntosu = $cart2.$cedi;
+		$query ="SELECT ".$puntos." puntos , ".$puntosu." puntosu";
 		
 		$q = $this->db->query($query);
 		return $puntos;

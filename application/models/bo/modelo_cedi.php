@@ -265,6 +265,63 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 		$q = $this->db->query($query);
 		return $q->result();
 	}
+        	
+	function getVentasRealizadas($inicio,$fin) {
+		$query = "SELECT 
+					    v.id_venta id,
+					    v.fecha,
+					    w.nombre cedi,
+					    CONCAT(p.nombre, ' ', p.apellido) usuario,
+					    CONCAT(p2.nombre, ' ', p2.apellido) cliente,
+					    (CASE
+					        WHEN
+					            ((SELECT 
+					                    t.id
+					                FROM
+					                    afiliar a,
+					                    tipo_red t
+					                WHERE
+					                    t.id = a.id_red
+					                        AND a.id_afiliado = v.id_user
+					                        AND a.id_red = 1))
+					        THEN
+					            'Emprendedor'
+					        ELSE 'Cliente Distinguido'
+					    END) red,
+					    c.costo valor,
+					    c.iva,
+					    c.puntos
+					FROM
+					    venta v,
+					    pos_venta c,
+					    pos_venta_item i,
+					    pos_venta_historial h,
+					    user_profiles p,
+					    user_profiles p2,
+					    users_cedi x,
+					    cedi w,
+					    users u,
+					    mercancia m
+					WHERE
+							p.user_id = c.id_user 
+							AND p2.user_id = v.id_user 
+							AND x.id_cedi = x.id_cedi
+							AND x.username = u.username
+							AND u.id = c.id_user
+							AND m.id = i.item
+					        AND h.id_venta = v.id_venta
+					        AND h.item = i.item
+					        AND c.id_venta = v.id_venta
+					        AND i.id_venta = v.id_venta
+					        AND v.id_estatus = 'ACT'
+					        AND v.id_metodo_pago = 'CEDI'
+							AND v.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59'
+					GROUP BY v.id_venta";
+	
+		$q = $this->db->query($query);
+		return $q->result();
+	}
+	
 	function getTemporal($id) {
 		$query = 'select 
 										    p.codigo_barras,

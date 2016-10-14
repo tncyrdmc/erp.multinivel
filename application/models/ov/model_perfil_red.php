@@ -444,7 +444,7 @@ class model_perfil_red extends CI_Model
 	{
 		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , AF.directo ,
 	
-			(select distinct tr.nombre from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_red=  AF.id_red)) as redes
+			(select distinct  group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_red=  AF.id_red)) as redes
 	
 				from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA ,afiliar AF
 	

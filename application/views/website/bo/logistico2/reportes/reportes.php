@@ -1,6 +1,5 @@
 
 <!-- MAIN CONTENT -->
-<div id="spinner2"></div>
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
@@ -44,6 +43,7 @@
 									
 								<label class="select">
 									<select id="tipo-reporte" >
+                                                                                <option value="8" >Ventas CEDIS</option>
 										<option value="1" >Inventario</option>
 										<option value="2" >Entradas</option>
 										<option value="3" >Salidas</option>
@@ -445,40 +445,26 @@
 		
 		})
 		
-		function iniciarSpinner(){
-			
-			var opts = {
-					  lines: 12 // The number of lines to draw
-					, length: 28 // The length of each line
-					, width: 14 // The line thickness
-					, radius: 42 // The radius of the inner circle
-					, scale: 1 // Scales overall size of the spinner
-					, corners: 1 // Corner roundness (0..1)
-					, color: '#3276B1' // #rgb or #rrggbb or array of colors
-					, opacity: 0.25 // Opacity of the lines
-					, rotate: 0 // The rotation offset
-					, direction: 1 // 1: clockwise, -1: counterclockwise
-					, speed: 1 // Rounds per second
-					, trail: 60 // Afterglow percentage
-					, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-					, zIndex: 2e9 // The z-index (defaults to 2000000000)
-					, className: 'spinner' // The CSS class to assign to the spinner
-					, top: '50%' // Top position relative to parent
-					, left: '50%' // Left position relative to parent
-					, shadow: false // Whether to render a shadow
-					, hwaccel: true // Whether to use hardware acceleration
-					, position: 'absolute' // Element positioning
-					}
-					
-					var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
-			}
-
-		function FinalizarSpinner(){
-			$("#spinner2").html('');
-		}
-		
+				
 		function tipo_reporte(){
 			switch($("#tipo-reporte").val()){
+                                case "8" : 
+					iniciarSpinner();
+					var startdate = $('#startdate').val();
+					var finishdate = $('#finishdate').val();
+					
+					$.ajax({
+						type: "POST",
+						url: "reporte_cedi",
+						data: {inicio:startdate,fin:finishdate}
+						
+					})
+					.done(function( msg ) {
+						FinalizarSpinner();
+						$("#reporte_div").html(msg);
+						
+					});
+				break;
 				case "1" : 
 					iniciarSpinner();
 					var startdate = $('#startdate').val();
@@ -676,6 +662,11 @@
 			switch($("#tipo-reporte").val()){
 			case "1" :
 				window.location="reporte_inventario_excel";
+				break;
+                        case "8" :
+				var inicio=$("#startdate").val();
+				var fin=$("#finishdate").val();
+				window.location="reporte_cedi_excel?inicio="+inicio+"&&fin="+fin;
 				break;
 			case "2" :
 				var inicio=$("#startdate").val();

@@ -18,6 +18,8 @@ class dashboard extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/bonos/titulo');
+		
+		
 	}
 
 	private $afiliados = array();
@@ -110,7 +112,7 @@ class dashboard extends CI_Controller
 	}
 	
 	function index()
-	{
+	{	
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -119,7 +121,7 @@ class dashboard extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-	
+		
 		$this->getAfiliadosRed($id);
 		$numeroAfiliadosRed=count($this->afiliados);
 		
