@@ -108,7 +108,7 @@ class POS extends CI_Controller
 		$items = $this->modelo_cedi->getVenta($venta);
 		$cajero = $usuario[0]->nombre." ".$usuario[0]->apellido;
 		$user = $this->general->get_username($items[0]->cliente);
-		$cliente = $user[0]->user_id."<br/>".$user[0]->nombre." ".$user[0]->apellido;
+		$cliente = $user[0]->user_id."<br/>".$user[0]->nombre."<br/>".$user[0]->apellido;
 		
 		
 		
@@ -202,7 +202,7 @@ class POS extends CI_Controller
 							<table width="100%">
 								<td style="text-align:center">
 									NO. DE ARTICULOS: <strong>'.$articulos.'</strong><br/>
-									DESCUENTO: <strong>'.number_format($item->descuento_neto,1).'%</strong>
+									PUNTOS: <strong>'.$item->total_puntos.'</strong>
 								</td>
 								<td style="text-align:center">
 									SUBTOTAL: <strong>$ '.number_format($subtotal,2).'</strong><br/>

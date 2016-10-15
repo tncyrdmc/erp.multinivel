@@ -1,5 +1,5 @@
-<?php
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 class modelo_cedi extends CI_Model
 {
 	function crear_cedi($cedi){
@@ -238,7 +238,7 @@ FROM cedi p , City c, Country co where p.ciudad = c.ID and c.CountryCode = co.Co
 	}
 	function getVenta($id) {
 		$query = "select 
-					    v.*,i.*,p.*,h.*,
+					    v.fecha fecha_venta,v.*,i.*,p.*,h.*,
 						c.costo valor_total, 
 						c.descuento descuento_neto ,
 						c.iva,

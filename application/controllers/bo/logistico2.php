@@ -15,6 +15,8 @@ class logistico2 extends CI_Controller
 		$this->load->model('bo/general');
 		$this->load->model('general');
 		$this->load->model('bo/modelo_logistico');
+                $this->load->model('bo/model_admin');
+                $this->load->model('bo/modelo_cedi');
 		$this->load->model('bo/modelo_proveedor_mensajeria');
 	}
 
@@ -598,5 +600,207 @@ class logistico2 extends CI_Controller
 		}
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/usuarios/index');
+	}
+        
+             
+        function kill_venta()
+	{
+		$this->model_admin->kill_venta_cedi($_POST['id']);
+		echo "Se ha eliminado la Venta.";
+	}
+        
+        function factura(){
+		
+            
+		$venta = $_POST['id'];				
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+                $Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+                
+		$empresa=$this->model_admin->get_empresa_multinivel();
+		$items = $this->modelo_cedi->getVenta($venta);
+		$cajero = $usuario[0]->nombre." ".$usuario[0]->apellido;
+		$user = $this->general->get_username($items[0]->cliente);
+		$cliente = $user[0]->user_id."<br/>".$user[0]->nombre."<br/>".$user[0]->apellido;				
+		
+		$guion = (($empresa[0]->fijo)&&($empresa[0]->movil)) ? ' - ' : '';
+		$fecha = $items[0]->fecha_venta;
+		
+		$neto = 0;
+		$item_html='';
+		
+		foreach ($items as $item){
+			$neto += $item->valor;
+			$descripcion = $item->nombre." ".$item->codigo_barras;
+			$item_html.='<tr>
+						<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+					</tr>
+					<tr>
+						<td style="text-align:left; min-width:100px">'.$descripcion.'</td>
+						<td style="text-align:right; min-width:100px">'.$item->cantidad.'</td>
+						<td style="text-align:right; min-width:100px">$ '.number_format($item->valor,2).'</td>
+					</tr>';
+			
+		}
+		
+		$articulos = 0;
+		foreach ($items as $item){
+			$articulos += $item->cantidad;
+		}
+		
+		$subtotal = $item->valor_total-$item->iva;
+		$direccion = $empresa[0]->provincia.", ".$empresa[0]->ciudad;		
+		
+		$dialogo = '';
+		
+		if($venta){
+		
+			$body = '<table width="100%" border="0" >
+					<tr>
+						<td colspan="3" >
+							<div align="center">
+								<img src="/logo.png" alt="" width="200px"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<br/><strong>'.$empresa[0]->nombre.'</strong>
+							<br/>Nit: '.$empresa[0]->id_tributaria.'
+							<br/>
+							<br/>Tel: '.$empresa[0]->fijo.$guion.$empresa[0]->movil.'
+							<br>'.$direccion.'
+						</td>
+						<td><div align="right">ID CLIENTE: '.$cliente.'</div></td>
+					</tr>
+					<tr>
+						<td ></td>
+						<td colspan="2"><div align="right">'.$fecha.'</div></td>
+					</tr>
+					<tr>
+						<td colspan="3">CAJERO: '.$cajero.'</td>
+					</tr>
+					<tr>
+						<td colspan="3"><br/><br/></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<table width="100%">
+								<tr>
+									<td style="text-align:left; min-width:100px">DESCRIPCION</td>
+									<td style="text-align:right; min-width:100px">CANT</td>
+									<td style="text-align:right; min-width:100px">IMPORTE</td>
+								</tr>
+									'.$item_html.'
+								<tr>
+									<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+								</tr>
+								<tr>
+									<td colspan="3"><hr style="padding: 0 !important;margin: 0 !important;" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align:right">TOTAL SUMA:</td>
+									<td style="text-align:right"><strong>$ '.number_format($neto,2).'</strong></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><br/></td>
+					</tr>
+					<tr >
+						<td colspan="3">
+							<table width="100%">
+								<td style="text-align:center">
+									NO. DE ARTICULOS: <strong>'.$articulos.'</strong><br/>
+									PUNTOS: <strong>'.$item->total_puntos.'</strong>
+								</td>
+								<td style="text-align:center">
+									SUBTOTAL: <strong>$ '.number_format($subtotal,2).'</strong><br/>
+									IVA: <strong>$ '.number_format($item->iva,2).'</strong><br/>
+									TOTAL: <strong>$ '.number_format($item->valor_total,2).'</strong>
+								</td>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div style="text-align:center">
+								<br/><br/>
+								<strong>* VENTA AL '.$items[0]->costo.' *</strong>
+								<br/><br/>
+								FIRMA DEL CLIENTE
+								<br/><br/>
+								________________________________________
+								<br/><br/>
+								GRACIAS POR SU COMPRA
+								<br/>
+								'.$item->id_venta.'
+							</div>
+						</td>
+					</tr>
+					</table>';
+			
+			echo $body;
+		
+		}else{
+			echo "ERROR: No se ha podido cargar ninguna factura con este ID";
+		}
+				
+	}
+        
+        function facturaImprimir()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
+                $venta = $_POST['id'];	
+                $link = $_POST['link'];	
+                
+		$empresa=$this->model_admin->get_empresa_multinivel();
+		$items = $this->modelo_cedi->getVenta($venta);
+		$cajero = $usuario[0]->nombre." ".$usuario[0]->apellido;
+		$user = $this->general->get_username($items[0]->cliente);
+		//$cliente = $user[0]->user_id."<br/>".$user[0]->nombre."<br/>".$user[0]->apellido;				
+		
+		//$guion = (($empresa[0]->fijo)&&($empresa[0]->movil)) ? ' - ' : '';
+		//$fecha = $items[0]->fecha_venta;
+		
+                $this->template->set("id",$venta);
+                $this->template->set("link",$link);
+		$this->template->set("cliente",$user);
+                $this->template->set("cajero",$cajero);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("items",$items);
+	
+		$this->template->build('website/bo/logistico2/reportes/factura');
 	}
 }

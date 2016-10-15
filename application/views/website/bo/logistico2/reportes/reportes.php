@@ -261,7 +261,119 @@
 					$("#finishdate").prop( "disabled", false );
 				}
 			});
+			                    
+                        function imprimir(id){
+				$.ajax({
+                                    type: "POST",
+                                    url: "/bo/logistico2/facturaImprimir",//imprimirfactura
+                                    data: {id: id,link: '/bo/reportes_logistico/'},
+                                })
+				.done(function( msg )
+				{
+                                    bootbox.dialog({
+					message: msg,
+					title: "Factura",
+					className: "",
+                                        buttons: {
+                                            success: {
+                                                label: "Aceptar",
+                                                className: "hide",
+                                                callback: function() {
+
+                                                }
+                                            }
+                                        }									
+                                    })
+				});
+
+                        }
+                        
+                        function factura(id) {
+				iniciarSpinner();
+				$.ajax({
+					data:{
+						id : id
+					},
+					type:"post",
+					url:"/bo/logistico2/factura",
+				})
+				.done(function( msg )
+				{
+						FinalizarSpinner();
+						bootbox.dialog({
+                                                    message: msg,
+                                                    title: "Factura",
+                                                    className: "",
+                                                    buttons: {
+							success: {
+                                                            label: "Aceptar",
+                                                            className: "hide",
+                                                            callback: function() {
+                                                            
+                                                            }
+                                                        }
+                                                    }
+						})
+					
+				});
+
+                        }
 			
+                        function eliminar(id) {
+
+				$.ajax({
+					type: "POST",
+					url: "/auth/show_dialog",
+					data: {message: '¿ Esta seguro que desea Eliminar la Venta?'},
+				})
+				.done(function( msg )
+				{
+                                    bootbox.dialog({
+					message: msg,
+					title: 'Eliminar Ventas',
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							iniciarSpinner();
+								$.ajax({
+									type: "POST",
+									url: "/bo/logistico2/kill_venta",
+									data: {id: id}
+								})
+								.done(function( msg )
+								{
+									FinalizarSpinner();
+									bootbox.dialog({
+                                                                            message: msg,
+                                                                            title: 'Atención',
+                                                                            buttons: {
+                                                                                    success: {
+                                                                                        label: "Aceptar",
+                                                                                        className: "btn-success",
+                                                                                        callback: function() {
+                                                                                            tipo_reporte();
+                                                                                        }
+                                                                                    }
+                                                                            }
+                                                                        })//fin done ajax
+								});//Fin callback bootbox
+
+							}
+						},
+						danger: {
+							label: "Cancelar!",
+							className: "btn-danger",
+							callback: function() {
+
+							}
+						}
+                                        }
+                                    })
+                                });
+                        }
+                        
 		</script>
 		
 		<script type="text/javascript">
