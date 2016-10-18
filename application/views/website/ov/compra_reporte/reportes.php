@@ -43,6 +43,7 @@
 											<!--  <option value="4">Ventas web personal</option>-->
 											<option value="5">Compras por Banco</option>
 											<option value="8">Ver mis compras</option>
+                                                                                        <option value="4">Ver mis compras CEDI</option>
 											<option value="7">Ver compras de mi red</option>
 										</select> <i></i> </label>
 								</section>
@@ -298,52 +299,63 @@
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 		<script src="/template/js/spin.js"></script>
 		<script type="text/javascript">
-/*		function Enviar(id)
-		{
-			bootbox.dialog({
-				message: "¿Desea enviar este registro ahora?",
-				title: "Enviar Venta ".concat(id),
-				className: "",
-				buttons: {
-					success: {
-					label: "Si",
-					className: "btn-success",
-					callback: function() {
-						$.ajax({
-							type: "post",
-							data: {id:id},
-							url: "Cambiar_estado_enviar"
+                    
+                         function imprimir_cedi(id){
+				$.ajax({
+                                    type: "POST",
+                                    url: "/bo/logistico2/facturaImprimir",//imprimirfactura
+                                    data: {id: id,link: '/ov/compras/reportes'},
+                                })
+				.done(function( msg )
+				{
+                                    bootbox.dialog({
+					message: msg,
+					title: "Factura",
+					className: "",
+                                        buttons: {
+                                            success: {
+                                                label: "Aceptar",
+                                                className: "hide",
+                                                callback: function() {
+
+                                                }
+                                            }
+                                        }									
+                                    })
+				});
+
+                        }
+                    
+                        function factura_cedi(id) {
+				iniciarSpinner();
+				$.ajax({
+					data:{
+						id : id
+					},
+					type:"post",
+					url:"/bo/logistico2/factura",
+				})
+				.done(function( msg )
+				{
+						FinalizarSpinner();
+						bootbox.dialog({
+                                                    message: msg,
+                                                    title: "Factura",
+                                                    className: "",
+                                                    buttons: {
+							success: {
+                                                            label: "Aceptar",
+                                                            className: "hide",
+                                                            callback: function() {
+                                                            
+                                                            }
+                                                        }
+                                                    }
 						})
-						.done(function(msg){
-							bootbox.dialog({
-								message: "Se han enviado estos producto exitosamente.",
-								title: "Exito",
-								className: "",
-								buttons: {
-									success: {
-										label: "Aceptar",
-										className: "btn-success",
-										callback: function(){
-											window.location.href="reportes";
-										}
-									}
-								}
-							})
-						});
-					}
-				},
-				danger: {
-					label: "No",
-					className: "btn-danger",
-					callback: function(){
 					
-					}
-				}
-			}
-		});
-					
-		}
-*/
+				});
+
+                        }
 		</script>
 		
 		<script type="text/javascript">

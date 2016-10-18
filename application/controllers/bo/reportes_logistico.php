@@ -398,7 +398,7 @@ class reportes_logistico extends CI_Controller
 	
 	
 	}
-	
+               
 	function reporte_cedi_excel() {
 		if (! $this->tank_auth->is_logged_in ()) { // logged in
 			redirect ( '/auth' );

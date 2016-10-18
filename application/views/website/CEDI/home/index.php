@@ -39,6 +39,100 @@
 													onClick="window.location='caja.php?ddes=0'">Ventas</button>
 											</div>
 											<hr /> --><!-- Button to trigger modal -->
+                                                                                        <div class="col-md-12">
+												<h4>Últimas Ventas realizadas</h4>
+												<br/>	
+												<section class="row well">																						
+												<table style="width: 100%" id="dt_basic" class="table table-striped table-bordered table-hover">
+													<thead>
+														<tr>
+															<th data-class="expand"><strong>Código</strong></th>
+																<th data-hide="phone,tablet"><strong>Cliente</strong></th>
+																<th data-hide="phone,tablet"><div >
+																		<strong>Costo</strong>
+																	</div></th>
+																<th data-hide="phone,tablet"><div >
+																		<strong>IVA</strong>
+																	</div></th>
+																<th data-hide="phone,tablet"><div >
+																		<strong>Total</strong>
+																	</div></th>
+																<th data-hide="phone,tablet"><strong>Puntos</strong></th>
+														</tr>
+													</thead>
+													<tbody>																										
+														<?php 
+														if ($ventas){
+													
+															$costo = 0;
+															$puntos= 0;
+															$iva = 0;
+															$total = 0;
+															
+														foreach ($ventas as $producto){
+																	$costo += floatval($producto->valor-$producto->iva);
+																	$iva += floatval($producto->iva );
+																	$total += floatval($producto->valor);
+																	$puntos += intval($producto->puntos);
+																	
+																	echo '<tr>
+																			<td>'.$producto->id.'</td>
+																			<td><a href="#">'.$producto->cliente.' ('.$producto->red.')</a></td>
+																			<td><div >$ '.number_format(($producto->valor-$producto->iva ),2).'</div></td>
+																			<td><div >$ '.number_format($producto->iva,2).'</div></td>
+																			<td><div >$ '.number_format($producto->valor,2).'</div></td>
+																			<td><span class="badge badge-success">'.$producto->puntos.'</span></td>
+																		</tr>';
+															}
+															
+															echo '<tr>
+																<td>&nbsp;</td>
+																<td>
+																	<div >
+																		<strong>Totales:</strong>
+																	</div>
+																</td>
+																<td>
+																	<div >
+																		<strong>$ '.number_format($costo,2).'</strong>
+																	</div>
+																</td>
+																<td>
+																	<div >
+																		<strong>$ '.number_format($iva,2).'</strong>
+																	</div>
+																</td>
+																<td>
+																	<div >
+																		<strong>$ '.number_format($total,2).'</strong>
+																	</div>
+																</td>
+																<td><span class="badge badge-success">'.$puntos.'</span></td>
+															</tr>';
+															
+														}/*else{
+															echo '<tr>
+																		<td colspan="6">
+																			<div class="alert alert-error">
+																				<strong>No hay Articulos actualmente</strong>
+																			</div>
+																		</td>
+																	</tr>';
+														}*/
+														?>
+
+													</tbody>
+												</table>
+												</section>
+												<br />
+												<!-- <section class="row pull-right">
+													<div class="col-md-12 ">
+														<span class="badge badge-important">100</span> <span
+															class="badge badge-success">20</span>
+													</div>
+												</section> -->
+											</div>
+											<div class="col-md-12"></div>
 											<div class="col-md-12">
 												<h4>Productos de Baja Existencia</h4>
 												<br/>	

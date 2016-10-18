@@ -51,6 +51,37 @@ class Model_servicio extends CI_Model{
 	
 	}
 	
+        function listar_cedi_personales($inicio,$fin,$id){
+            
+            $query = "SELECT 
+                            V.id_venta,
+                            V.fecha AS fecha,
+                            U.username,
+                            UP.nombre AS name,
+                            UP.apellido AS lastname,
+                            (C.costo - C.iva)  AS costo,
+                            C.iva AS impuestos,
+                            C.puntos
+                        FROM
+                            venta V,
+                            pos_venta C,
+                            mercancia M,
+                            users U,
+                            user_profiles UP
+                        WHERE
+                                C.id_venta = V.id_venta
+                                AND UP.user_id = U.id
+                                AND V.id_user = U.id
+                                AND V.id_metodo_pago = 'CEDI'
+                                AND (V.id_estatus = 'ACT')
+                                AND (U.id = ".$id.")
+                                AND DATE(V.fecha) BETWEEN '".$inicio." 00:00:00' AND '".$fin." 23:59:59'
+                        GROUP BY (V.id_venta)
+                        ORDER BY (V.id_venta)";
+            $q=$this->db->query($query);
+            return $q->result();
+        }
+        
 	function listar_todos_por_venta_y_fecha_usuario($inicio, $fin,$id_usuario)
 	{
 	

@@ -1520,7 +1520,7 @@ function index()
 						$this->reporte_compras_usr_well(); break;
 			case 3 	: $this->reporte_compras(); 
 						$this->reporte_compras_red_well();break;
-			case 4	: ''; break;
+			case 4	: $this->reporte_compras_personales_cedi(); break;
 			case 5	: $this->ReportePagosBanco(); break;
 			case 6	: $this->reporte_afiliados_todos(); break;
 			case 7 	: $this->reporte_compras_afiliados_todos(); break;
@@ -1713,17 +1713,24 @@ function index()
 			$total_impuesto = 0;
 			
 			$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha_usuario($inicio,$fin,$afiliado->id_afiliado);
-		
+                        $cedi = $this->model_servicio->listar_cedi_personales($inicio,$fin,$afiliado->id_afiliado);
+                        
 			foreach($ventas as $venta)
 			{
 					
 				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
 				$total_impuesto = $total_impuesto + $venta->impuestos;
-				$total_venta = $total_venta  + $venta->costo;
-			
-
+				$total_venta = $total_venta  + $venta->costo;	
 			}
 			
+                         foreach ($cedi as $venta ){
+                
+                                $total_costo +=$venta->costo ;
+                                $total_impuesto += $venta->impuestos;
+                                $total_venta += ($venta->costo + $venta->impuestos);               
+
+                            }
+                        
 			echo "<tr>
 					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
 					<td>".$afiliado->nombre."</td>
@@ -1963,6 +1970,93 @@ function index()
 			</table><tr class='odd' role='row'>";
 	
 	*/
+	}
+        
+        function reporte_compras_personales_cedi()
+	{
+		$total_venta = 0;
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		$inicio = $_POST['inicio'] ? $_POST['inicio'] : date('Y-m').'-01';
+		$fin = $_POST['fin'] ? $_POST['fin'] : date('Y-m-d');
+		
+		$ventas = $this->model_servicio->listar_cedi_personales($inicio,$fin,$id);
+		
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Venta</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Usuario</th>
+					<th data-hide='phone,tablet'>Nombre Completo</th>
+					<th data-hide='phone,tablet'>Subtotal</th>
+					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Total Venta</th>
+					<th data-hide='phone,tablet'>Puntos</th>
+                                        <th >Acciones</th>
+				</thead>
+				<tbody>";
+		
+			foreach($ventas as $venta)
+			{
+			echo "<tr>
+                                    <td class='sorting_1'>".$venta->id_venta."</td>
+                                    <td>".$venta->fecha."</td>
+                                    <td>".$venta->username."</td>
+                                    <td>".$venta->name." ".$venta->lastname."</td>
+                                    <td> $ ".number_format(($venta->costo), 2)."</td>
+                                    <td> $ ".number_format($venta->impuestos, 2)."</td>
+                                    <td> $ ".number_format($venta->costo+$venta->impuestos, 2)."</td>
+                                    <td>".$venta->puntos."</td>
+                                    <td>	
+                                        <a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura_cedi(".$venta->id_venta.");'>
+                                            <i class='fa fa-eye fa-3x'></i>
+                                        </a>
+                                        <a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir_cedi(".$venta->id_venta.");'>
+                                            <i class='fa fa-file-pdf-o fa-3x'></i>
+                                        </a>
+                                    </td>
+                                </tr>";
+					
+				$total_costo += $venta->costo;
+				$total_impuesto += $venta->impuestos;
+				$total_venta += ($venta->costo+$venta->impuestos);
+				$total_comision += $venta->puntos;
+					
+			}
+		
+			echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+                        </tr>";
+				
+			echo "<tr>
+			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b> $ ".number_format($total_costo, 2)."</b></td>
+			<td><b> $ ".number_format($total_impuesto, 2)."</b></td>
+			<td><b> $ ".number_format($total_venta, 2)."</b></td>
+                        <td><b> ".$total_comision."</b></td>
+			<td></td>
+			</tr>";
+		
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+                
 	}
 	
 	function reporte_compras_personales_excel()

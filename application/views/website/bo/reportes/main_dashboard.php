@@ -30,6 +30,7 @@
 										<option value="15" onclick="tipo_reporte()" >Afiliados Activos</option>
 										<option value="16" onclick="tipo_reporte()" >Afiliados InActivos</option>
 										<option value="1" >Ventas por Oficinas Virtuales</option>
+                                                                                <option value="19" >Ventas por CEDIS</option>
 										<option value="9" onclick="tipo_reporte()">Ventas Por Cobrar Bancos</option>
 										<option value="12">Ventas Pagadas Bancos</option>
 										<option value="14">Ventas Pagos Enlinea</option>
@@ -575,6 +576,12 @@
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				window.location="/bo/reportes/reporte_ventas_oficinas_virtuales_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+                        break;
+                        case "19" : {
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes_logistico/reporte_cedi_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 			case "7" :{

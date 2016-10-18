@@ -385,6 +385,7 @@ function addProducto(){
 					neto(total);art();
 					$("#codigo").val('');
 				}
+                                //
 			});//Fin callback bootbox*/
 
 	}

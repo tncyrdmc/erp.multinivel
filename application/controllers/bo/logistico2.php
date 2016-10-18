@@ -622,14 +622,14 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-                $Comercial = $this->general->isAValidUser($id,"comercial");
+                /*$Comercial = $this->general->isAValidUser($id,"comercial");
 		$CEDI = $this->general->isAValidUser($id,"cedi");
 		$almacen = $this->general->isAValidUser($id,"almacen");
 		$Logistico = $this->general->isAValidUser($id,"logistica");
 		
 		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
-		}
+		}*/
                 
 		$empresa=$this->model_admin->get_empresa_multinivel();
 		$items = $this->modelo_cedi->getVenta($venta);
@@ -773,14 +773,14 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 	
-		$Comercial = $this->general->isAValidUser($id,"comercial");
+		/*$Comercial = $this->general->isAValidUser($id,"comercial");
 		$CEDI = $this->general->isAValidUser($id,"cedi");
 		$almacen = $this->general->isAValidUser($id,"almacen");
 		$Logistico = $this->general->isAValidUser($id,"logistica");
 		
 		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
-		}
+		}*/
 		
                 $venta = $_POST['id'];	
                 $link = $_POST['link'];	

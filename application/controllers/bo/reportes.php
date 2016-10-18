@@ -1,7 +1,5 @@
-<?php
+<?php if (! defined ( 'BASEPATH' )) exit ( 'No direct script access allowed' );
 
-if (! defined ( 'BASEPATH' ))
-	exit ( 'No direct script access allowed' );
 class reportes extends CI_Controller {
 	function __construct() {
 		parent::__construct ();
@@ -19,6 +17,7 @@ class reportes extends CI_Controller {
 		$this->load->model ( 'model_servicio' );
 		$this->load->model ( 'bo/modelo_reportes' );
 		$this->load->model ( 'bo/model_bonos' );
+                $this->load->model ( 'bo/modelo_cedi' );
 		$this->load->model ( 'general' );
 		$this->load->model ( 'modelo_cobros' );
 		$this->load->model ( 'bo/modelo_historial_consignacion' );
@@ -174,14 +173,100 @@ class reportes extends CI_Controller {
 				$this->afiliados_inactivos ();
 				break;
 			case 17 :
-					$this->reporte_bonos_afiliados_todos ();
-					break;
+				$this->reporte_bonos_afiliados_todos ();
+				break;
 			case 18 :
-					$this->reporte_todo_comisiones ();
-					break;
+				$this->reporte_todo_comisiones ();
+				break;
+                        case 19 :
+				$this->reporte_cedi_lite ();
+				break;
 		}
 	}
 	
+        function reporte_cedi_lite()
+	{
+		$id=$this->tank_auth->get_user_id();
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+		
+		$inicio = $_POST['inicio'] ? $_POST['inicio'] : date('Y-m').'-01';
+		$fin = $_POST['fin'] ? $_POST['fin'] : date('Y-m-d');
+	
+		$inventario = $this->modelo_cedi->getVentasRealizadas($inicio,$fin);
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Fecha</th>
+					<th>CEDI</th>
+					<th>Usuario</th>
+					<th>Cliente</th>
+					<th>Puntos</th>
+					<th>Valor Venta</th>
+					<th>IVA</th>
+					<th>Total Venta</th>
+				</thead>
+				<tbody>";
+		
+		$total = 0;
+		$iva = 0;
+		$venta = 0;
+		$puntos = 0;
+		
+		foreach ($inventario as $producto){
+			echo "<tr>
+					<td class='sorting_1'>".$producto->id."</td>
+					<td>".$producto->fecha."</td>
+					<td>".$producto->cedi."</td>
+					<td>".$producto->usuario."</td>
+					<td>".$producto->cliente." [".$producto->red."]</td>
+					<td>".$producto->puntos."</td>
+					<td>$ ".number_format(($producto->valor-$producto->iva),2)."</td>
+					<td>$ ".number_format($producto->iva,2)."</td>
+					<td>$ ".number_format($producto->valor,2)."</td>
+				</tr>";
+			$total += $producto->valor;
+			$iva += $producto->iva;
+			$venta += ($producto->valor-$producto->iva);
+			$puntos += $producto->puntos;
+		}
+		
+		echo "<tr>
+					<td class='sorting_1'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>TOTALES</b></td>
+					<td><b>".$puntos."</b></td>
+					<td><b>$ ".number_format($venta,2)."</b></td>
+					<td><b>$ ".number_format($iva,2)."</b></td>
+					<td><b>$ ".number_format($total,2)."</b></td>
+				</tr>";
+			
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	
+	
+	}
+        
 	function reporte_bonos_afiliados_todos() {
 		
 		$inicio = $_POST ['startdate'];
