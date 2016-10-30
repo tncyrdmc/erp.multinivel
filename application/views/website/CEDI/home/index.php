@@ -47,6 +47,7 @@
 													<thead>
 														<tr>
 															<th data-class="expand"><strong>Código</strong></th>
+                                                                                                                                <th data-hide="phone,tablet"><strong>Fecha</strong></th>
 																<th data-hide="phone,tablet"><strong>Cliente</strong></th>
 																<th data-hide="phone,tablet"><div >
 																		<strong>Costo</strong>
@@ -77,6 +78,7 @@
 																	
 																	echo '<tr>
 																			<td>'.$producto->id.'</td>
+                                                                                                                                                        <td>'.$producto->fecha.'</td>
 																			<td><a href="#">'.$producto->cliente.' ('.$producto->red.')</a></td>
 																			<td><div >$ '.number_format(($producto->valor-$producto->iva ),2).'</div></td>
 																			<td><div >$ '.number_format($producto->iva,2).'</div></td>
@@ -87,6 +89,7 @@
 															
 															echo '<tr>
 																<td>&nbsp;</td>
+                                                                                                                                <td>&nbsp;</td>
 																<td>
 																	<div >
 																		<strong>Totales:</strong>
@@ -175,9 +178,9 @@
 																	echo '<tr>
 																			<td>'.$code.'</td>
 																			<td><a href="#">'.$producto->nombre.' ('.$producto->red.')</a></td>
-																			<td><div >$ '.$producto->real.'</div></td>
-																			<td><div >$ '.$producto->costo.'</div></td>
-																			<td><div >$ '.$producto->costo_publico.'</div></td>
+																			<td><div >$ '.number_format($producto->real,2).'</div></td>
+																			<td><div >$ '.number_format($producto->costo,2).'</div></td>
+																			<td><div >$ '.number_format($producto->costo_publico,2).'</div></td>
 																			<td><span class="badge badge-'.$span.'">'.$producto->cantidad.'</span></td>
 																		</tr>';
 																}
@@ -274,9 +277,9 @@
 															echo '<tr>
 																	<td>'.$code.'</td>
 																	<td><a href="#">'.$producto->nombre.' ('.$producto->red.')</a></td>
-																	<td><div >$ '.$producto->real.'</div></td>
-																	<td><div >$ '.$producto->costo.'</div></td>
-																	<td><div >$ '.$producto->costo_publico.'</div></td>
+																	<td><div >$ '.number_format($producto->real,2).'</div></td>
+																	<td><div >$ '.number_format($producto->costo,2).'</div></td>
+																	<td><div >$ '.number_format($producto->costo_publico,2).'</div></td>
 																	<td><span class="badge badge-'.$span.'">'.$producto->cantidad.'</span></td>
 																</tr>';
 																

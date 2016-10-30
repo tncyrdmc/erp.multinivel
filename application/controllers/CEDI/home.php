@@ -60,16 +60,20 @@ class home extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 	
+                $inicio = $_POST['inicio'] ? $_POST['inicio'] : date('Y-m').'-01';
+		$fin = $_POST['fin'] ? $_POST['fin'] : date('Y-m-d');
+                
 		$style=$this->modelo_dashboard->get_style($id);
 		$almacen  = $this->modelo_cedi->getUsuarioId($id);
 		$empresa=$this->model_admin->get_empresa_multinivel();
-	
+                $ventas  = $this->modelo_cedi->getVentasRealizadasID($inicio,$fin,$id);
 		$productos = $this->model_inventario->Obtener_Productos_Almacen($almacen[0]->cedi);
 	
 		$this->template->set("style",$style);
 		$this->template->set("empresa",$empresa);
 		$this->template->set("user",$usuario[0]->nombre." ".$usuario[0]->apellido);
 		$this->template->set("productos",$productos);
+                $this->template->set("ventas",$ventas);
 	
 		$this->template->build('website/CEDI/home/PDFdashboard');
 	}
