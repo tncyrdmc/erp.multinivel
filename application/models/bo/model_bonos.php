@@ -529,7 +529,12 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		$q=$this->db->query("SELECT 
 									h.id ,  h.fecha, h.id_bono,
 									b.nombre bono ,
-									(select count(distinct id_usuario) from comision_bono where id_bono_historial = h.id) afiliados,
+									(select 
+            count(distinct id_usuario)
+        from
+            comision_bono
+        where
+            id_bono_historial = h.id and valor > 0) afiliados,
 									(select sum(valor) from comision_bono where id_bono_historial = h.id) total
 								FROM comision_bono_historial h , bono b 
 								WHERE 
