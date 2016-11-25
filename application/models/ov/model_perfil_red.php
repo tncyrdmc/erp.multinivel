@@ -550,7 +550,7 @@ order by (U.id);");
 	
 	function exist_mail($mail)
 	{
-		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($mail)."'");
 		return $q->result();
 	}
 	
