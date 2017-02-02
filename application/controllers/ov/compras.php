@@ -3498,7 +3498,7 @@ function index()
 							<img src="'.$mercancia[$i]->img.'" alt="img" class="img-responsive"></a>
 					<div class="promotion">   </div>
 					</div>
-					<div class="description">
+					<div class="description" style="overflow-y: scroll;height: 10em">
 					<h4><a  onclick="detalles('.$mercancia[$i]->id.','.$tipoMercancia.')">'.$mercancia[$i]->nombre.'</a></h4>
      				<section style="margin-bottom: 1rem;" class="smart-form">
 					<label class="textarea textarea state-disabled"> 										

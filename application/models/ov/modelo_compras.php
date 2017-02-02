@@ -208,7 +208,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 					            inventario i,
 								cedi c
 					        where 
-									i.id_mercancia = b.id
+									i.id_mercancia = a.id
 									and c.id_cedi = i.id_almacen
 									and c.tipo = "A"
 									order by i.cantidad desc) existencia,

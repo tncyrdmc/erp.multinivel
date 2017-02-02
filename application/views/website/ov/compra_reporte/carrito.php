@@ -35,7 +35,7 @@
         <div class="input-group">
           <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
         </div>
-        <!-- /input-group --
+        <! /input-group >
         
       </div> -->
     </div>

@@ -1024,6 +1024,7 @@ legend {
 	max-height: 300px;
 	width: 100%;
 	display: block;
+	overflow-y: scroll;
 }
 .miniCartProductThumb {
 	text-align: center;
