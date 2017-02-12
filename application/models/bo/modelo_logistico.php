@@ -23,6 +23,11 @@ class modelo_logistico extends CI_Model
 		echo "<hr/>";
 		echo $totalPedido."|".$numeroInventario;
 		echo "<hr/>";*/
+
+		if(!$mercancia){
+			return true;
+		}
+		
 		if($numeroInventario<$totalPedido){
 			return false;
 		}
