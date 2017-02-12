@@ -442,9 +442,43 @@ class model_admin extends CI_Model
 		return $q->result();
 	}
 	function get_membresias(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , M.puntos_comisionables, MEM.nombre,MEM.id_red, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2, C.Code
-							from mercancia M, membresia MEM, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
-							where M.sku = MEM.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=5 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = MEM.id_red and CGP.id_red = TR.id and C.Code = M.pais");
+		$q=$this->db->query("SELECT 
+								    M.id,
+								    M.sku,
+								    M.fecha_alta,
+								    M.real,
+								    M.costo,
+								    M.costo_publico,
+								    M.estatus,
+								    M.puntos_comisionables,
+								    MEM.nombre,
+								    MEM.id_red,
+								    CI.url,
+								    CTM.descripcion,
+								    TR.nombre red,
+								    M.pais,
+								    C.Name,
+								    C.Code2,
+								    C.Code
+								FROM
+								    mercancia M,
+								    membresia MEM,
+								    cat_tipo_mercancia CTM,
+								    cat_img CI,
+								    cross_merc_img CMI,
+								    tipo_red TR,
+								    cat_grupo_producto CGP,
+								    Country C
+								WHERE
+								    M.sku = MEM.id
+								        AND CTM.id = M.id_tipo_mercancia
+								        AND M.id_tipo_mercancia = 5
+								        AND CI.id_img = CMI.id_cat_imagen
+								        AND M.id = CMI.id_mercancia
+								        AND CGP.id_grupo = MEM.id_red
+								        AND CGP.id_red = TR.id
+								        AND C.Code = M.pais
+								GROUP BY M.id");
 		return $q->result();
 	}
 	

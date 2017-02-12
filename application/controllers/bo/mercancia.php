@@ -258,7 +258,7 @@ if($datos['pais'] == "-"){
 			$sku = $this->model_mercancia->nuevo_servicio();
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
-			redirect('/bo/comercial/carrito');
+			redirect('/bo/comercial/listarMercancia');
 			
 		}
 		
@@ -302,7 +302,7 @@ if($datos['pais'] == "-"){
 		
 		if (!$this->upload->do_upload('img'))
 		{
-			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para la membresia.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/mercancia/nueva_mercancia?id=5');
 		}
@@ -311,7 +311,7 @@ if($datos['pais'] == "-"){
 			$sku = $this->model_mercancia->nueva_membresia();
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
-			redirect('/bo/comercial/carrito');
+			redirect('/bo/comercial/listarMercancia');
 			
 		}
 	}
@@ -432,7 +432,7 @@ if($datos['pais'] == "-"){
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 		}
-		redirect('/bo/comercial/carrito');
+		redirect('/bo/comercial/listarMercancia');
 	}
 
 	
@@ -491,7 +491,7 @@ if($datos['pais'] == "-"){
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 		}
-		redirect('/bo/comercial/carrito');
+		redirect('/bo/comercial/listarMercancia');
 	}
 	
 	function ImpuestaPais(){
