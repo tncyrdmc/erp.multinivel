@@ -95,133 +95,124 @@ class ebooks extends CI_Controller
 		$this->template->build('website/bo/oficinaVirtual/ebooks/listar');
 	}
 	
-	function CrearEbook(){
-		$grupo = $_POST['grupo'];
-		$nombre_ebook = $_POST['nombre'];
-		$descripcion = $_POST['descripcion'];
+	function CrearEbook() {
+		$grupo = $_POST ['grupo'];
+		$nombre_ebook = $_POST ['nombre'];
+		$descripcion = $_POST ['descripcion'];
 		
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
+		//echo $grupo."|".$nombre_ebook."|". $_FILES ['userfile1'] ['name'];exit();
+		
+		if (! $this->tank_auth->is_logged_in ()) { // logged in
+			redirect ( '/auth' );
 		}
 		
-	$id=$this->tank_auth->get_user_id();
+		$id = $this->tank_auth->get_user_id ();
 		
-		if(!$this->general->isAValidUser($id,"oficina"))
-		{
-			redirect('/auth/logout');
+		if (! $this->general->isAValidUser ( $id, "oficina" )) {
+			redirect ( '/auth/logout' );
 		}
 		
-		$this->ComprovarArchivos();
-		//Checamos si el directorio del usuario existe, si no, se crea
-		if(!is_dir(getcwd()."/media/ebooks/"))
-		{
-			mkdir(getcwd()."/media/ebooks/", 0777);
+		$this->ComprovarArchivos ();
+		// Checamos si el directorio del usuario existe, si no, se crea
+		if (! is_dir ( getcwd () . "/media/ebooks/" )) {
+			mkdir ( getcwd () . "/media/ebooks/", 0777 );
 		}
 		
-		$ruta="/media/ebooks/";
-		//definimos la ruta para subir el archivo
-		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'pdf|png|jpg|jpeg|PNG';
+		$ruta = "/media/ebooks/";
+		// definimos la ruta para subir el archivo
+		$config ['upload_path'] = getcwd () . $ruta;
+		$config ['allowed_types'] = 'pdf|png|jpg|jpeg|PNG';
 		
-		//Cargamos la libreria con las configuraciones de arriba
-		$this->load->library('upload', $config);
+		// Cargamos la libreria con las configuraciones de arriba
+		$this->load->library ( 'upload', $config );
 		
-		$this->upload->initialize($config);
+		$this->upload->initialize ( $config );
 		
-		if ($grupo == "0"){
+		if ($grupo == "0") {
 			$error = "Debe seleccionar un grupo para el ebook.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/ebooks/alta');
+			$this->session->set_flashdata ( 'error', $error );
+			redirect ( '/bo/ebooks/alta' );
 		}
 		
-		if(!isset($nombre) && !isset($descripcion)){
+		if (! isset ( $nombre ) && ! isset ( $descripcion )) {
 			$error = "Debe darle un nombre y descripcion al ebook.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/ebooks/alta');
+			$this->session->set_flashdata ( 'error', $error );
+			redirect ( '/bo/ebooks/alta' );
 		}
 		$ebook;
-		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
-		if (!$this->upload->do_upload('userfile1'))
-		{	
-			$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
+		// Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+		if (! $this->upload->do_upload ( 'userfile1' )) {
+			$error = "El tipo de archivo que esta cargando excede tamaño permitido.";
 			//$error = array('error' => $this->upload->display_errors());
 			//var_dump($error); exit;
-			$this->session->set_flashdata('error', $error);
+			$this->session->set_flashdata ( 'error', $error );
 			
-			redirect('/bo/ebooks/alta');
-		}
-		else
-		{
-			$data = array('upload_data' => $this->upload->data());
+			redirect ( '/bo/ebooks/alta' );
+		} else {
+			$data = array (
+					'upload_data' => $this->upload->data () 
+			);
 			
-			$nombre = $data['upload_data']['file_name'];
-			$filename = strrev($nombre);
-			$explode = explode(".",$filename);
-			$extencion = strrev($explode[0]);
-			$ext=strtolower($extencion);
-			if($ext=="pdf")
-				{
-					$ebook = $this->model_ebook->CrearEbook($id, $grupo, $nombre_ebook, $descripcion, $ruta.$nombre);
-				}else {
-					$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
-					$this->session->set_flashdata('error', $error);
-						
-					redirect('/bo/ebooks/alta');
-				}		
-		}
-		
-		if (!$this->upload->do_upload('userfile2'))
-		{
-			$this->model_ebook->eliminararchivo($ebook);
-			$error = "El tipo de archivo que esta cargando no esta permitido debe ser una imagen.";
-			$this->session->set_flashdata('error', $error);
+			$nombre = $data ['upload_data'] ['file_name'];
+			$filename = strrev ( $nombre );
+			$explode = explode ( ".", $filename );
+			$extencion = strrev ( $explode [0] );
+			$ext = strtolower ( $extencion );
+			if ($ext == "pdf") {
+				$ebook = $this->model_ebook->CrearEbook ( $id, $grupo, $nombre_ebook, $descripcion, $ruta . $nombre );
+			} else {
+				$error = "El tipo de archivo que esta cargando no esta en PDF.";
+				$this->session->set_flashdata ( 'error', $error );
 				
-			redirect('/bo/ebooks/alta');
-		}
-		else
-		{
-			$data = array('upload_data' => $this->upload->data());
-			$nombre = $data['upload_data']['file_name'];
-			$filename = strrev($nombre);
-			$explode = explode(".",$filename);
-			$extencion = strrev($explode[0]);
-			$ext=strtolower($extencion);
-			if($ext != 'pdf'){
-				$nombre_archivo = explode(".", $nombre);
-				$this->model_ebook->CargarImagenEbook($ebook, $ruta.$nombre, $nombre, $nombre_archivo[0], $extencion);
-				redirect("/bo/ebooks/listar");
-			}else{
-				$this->model_ebook->eliminararchivo($ebook);
-				$error = "El tipo de archivo que esta cargando no esta permitido debe ser una imagen.";
-				$this->session->set_flashdata('error', $error);
-				
-				redirect('/bo/ebooks/alta');
+				redirect ( '/bo/ebooks/alta' );
 			}
+		}
 		
+		if (! $this->upload->do_upload ( 'userfile2' )) {
+			$this->model_ebook->eliminararchivo ( $ebook );
+			$error = "El tipo de archivo que esta cargando no es imagen.";
+			$this->session->set_flashdata ( 'error', $error );
+			
+			redirect ( '/bo/ebooks/alta' );
+		} else {
+			$data = array (
+					'upload_data' => $this->upload->data () 
+			);
+			$nombre = $data ['upload_data'] ['file_name'];
+			$filename = strrev ( $nombre );
+			$explode = explode ( ".", $filename );
+			$extencion = strrev ( $explode [0] );
+			$ext = strtolower ( $extencion );
+			if ($ext != 'pdf') {
+				$nombre_archivo = explode ( ".", $nombre );
+				$this->model_ebook->CargarImagenEbook ( $ebook, $ruta . $nombre, $nombre, $nombre_archivo [0], $extencion );
+				redirect ( "/bo/ebooks/listar" );
+			} else {
+				$this->model_ebook->eliminararchivo ( $ebook );
+				$error = "El tipo de archivo que esta cargando no es imagen.";
+				$this->session->set_flashdata ( 'error', $error );
+				
+				redirect ( '/bo/ebooks/alta' );
+			}
 		}
 	}
-	
-	private function ComprovarArchivos(){
-		$pdf = explode(".", $_FILES['userfile1']['name']);
-		$imagen = explode(".", $_FILES['userfile2']['name']);
+	private function ComprovarArchivos() {
+		$pdf = explode ( ".", $_FILES ['userfile1'] ['name'] );
+		$imagen = explode ( ".", $_FILES ['userfile2'] ['name'] );
 		
-		if(end($pdf) != 'pdf'){
-			$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
-			$this->session->set_flashdata('error', $error);
-						
-			redirect('/bo/ebooks/alta');	
+		if (end ( $pdf ) != 'pdf') {
+			$error = "El tipo de archivo que esta cargando no esta en PDF";
+			$this->session->set_flashdata ( 'error', $error );
+			
+			redirect ( '/bo/ebooks/alta' );
 		}
 		
-		if(end($imagen) != 'png')
-			if(end($imagen) != 'jpg')
-				if( end($imagen) != 'jpeg')
-					if( end($imagen) != 'gif'){
-							
-							$error = "El tipo de archivo que esta cargando no esta permitido debe ser una imagen.";
-							$this->session->set_flashdata('error', $error);
-							
-							redirect('/bo/ebooks/alta');
+		if (end ( $imagen ) != 'png' && end ( $imagen ) != 'jpg' && end ( $imagen ) != 'jpeg' && end ( $imagen ) != 'gif') {
+						
+			$error = "El tipo de archivo que esta cargando no es imagen.";
+			$this->session->set_flashdata ( 'error', $error );
+						
+			redirect ( '/bo/ebooks/alta' );
 		}
 		return true;
 	}

@@ -244,36 +244,46 @@ class general extends CI_Model
 	
 	private function compraDeUsuarioEstaActiva($id_tipo_mercancia,$id) {
 	
-		if($id_tipo_mercancia == 1){
-			$q = $this->db->query("SELECT v.id_venta,v.fecha,me.caducidad,DATEDIFF(now(),v.fecha)as dias_activacion FROM venta v,cross_venta_mercancia cvm,mercancia m,membresia me
-									where v.id_estatus='ACT'
-									and v.id_venta=cvm.id_venta
-									and m.id=cvm.id_mercancia
-									and m.id_tipo_mercancia=5
-									and v.id_user='".$id."'
-									and m.sku=me.id
-									and (DATEDIFF(now(),v.fecha)<=me.caducidad or me.caducidad=0)");
-		}elseif ($id_tipo_mercancia == 2){
-			$q = $this->db->query("SELECT v.id_venta,v.fecha,pa.caducidad,DATEDIFF(now(),v.fecha)as dias_activacion FROM venta v,cross_venta_mercancia cvm,mercancia m,paquete_inscripcion pa
-									where v.id_estatus='ACT'
-									and v.id_venta=cvm.id_venta
-									and m.id=cvm.id_mercancia
-									and m.id_tipo_mercancia=4
-									and v.id_user='".$id."'
-									and m.sku=pa.id_paquete
-									and (DATEDIFF(now(),v.fecha)<=pa.caducidad or pa.caducidad=0)");
-		}elseif($id_tipo_mercancia == 3) {
-			$q = $this->db->query("SELECT v.id_venta,v.fecha FROM venta v,cross_venta_mercancia cvm,mercancia m
-									where v.id_estatus='ACT'
-									and v.id_venta=cvm.id_venta
-									and m.id=cvm.id_mercancia
-									and (m.id_tipo_mercancia!=4)
-									and (m.id_tipo_mercancia!=5)
-									and v.id_user='".$id."'");
-		}else{
+		$membresia = "SELECT v.id_venta,v.fecha,me.caducidad,DATEDIFF(now(),v.fecha) as dias_activacion
+													FROM venta v,cross_venta_mercancia cvm,mercancia m,membresia me
+													WHERE v.id_estatus='ACT'
+														and v.id_venta=cvm.id_venta
+														and m.id=cvm.id_mercancia
+														and m.id_tipo_mercancia=5
+														and v.id_user='".$id."'
+														and m.sku=me.id
+														and (DATEDIFF(now(),v.fecha)<=me.caducidad or me.caducidad=0)";
+		
+		$paquete = "SELECT v.id_venta,v.fecha,pa.caducidad,DATEDIFF(now(),v.fecha)as dias_activacion
+													FROM venta v,cross_venta_mercancia cvm,mercancia m,paquete_inscripcion pa
+													WHERE v.id_estatus='ACT'
+														and v.id_venta=cvm.id_venta
+														and m.id=cvm.id_mercancia
+														and m.id_tipo_mercancia=4
+														and v.id_user='".$id."'
+														and m.sku=pa.id_paquete
+														and (DATEDIFF(now(),v.fecha)<=pa.caducidad or pa.caducidad=0)";
+		
+		$item = "SELECT v.id_venta,v.fecha
+													FROM venta v,cross_venta_mercancia cvm,mercancia m
+													WHERE v.id_estatus='ACT'
+														and v.id_venta=cvm.id_venta
+														and m.id=cvm.id_mercancia
+														and m.id_tipo_mercancia not in (4,5)
+														and v.id_user='".$id."'";
+		
+		$query = array( 
+				1 => $membresia,
+				2 => $paquete,
+				3 => $item 				
+		);		
+		
+		if($id_tipo_mercancia > sizeof($query) || $id_tipo_mercancia <= 0){
 			return false;
 		}
-	
+		
+		$q = $this->db->query($query[$id_tipo_mercancia]);
+		
 		$activacion=$q->result();
 	
 		if($activacion)
