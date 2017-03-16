@@ -98,11 +98,11 @@
 													</a>
 												</div>
 											<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="/bo/configuracion/emails_departamentos">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-envelope fa-3x"></i>
-															<h1>E-mails</h1>
-															<h1>Departamentos</h1>
+													<a href="#">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#c0c0c0">
+															<i class="fa fa-question fa-3x"></i>
+															<h1>Gestión</h1>
+															<h1>KANBAN</h1>
 														</div>
 													</a>
 											</div>
