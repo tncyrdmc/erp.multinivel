@@ -2,6 +2,19 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 class modelo_pagosonline extends CI_Model
 {
+	function val_compropago()
+	{
+		$compropago=$this->get_datos_compropago();
+		if(!$compropago){
+			$dato=array(
+					"email" =>	"you@domain.com"
+			);
+			$this->db->insert("compropago",$dato);
+			$compropago=$this->get_datos_compropago();
+		}
+		return $compropago;
+	}
+
 	function val_tucompra()
 	{
 		$tucompra=$this->get_datos_tucompra();
@@ -14,6 +27,7 @@ class modelo_pagosonline extends CI_Model
 		}
 		return $tucompra;
 	}
+	
 	
 	function val_payulatam()
 	{
@@ -40,6 +54,13 @@ class modelo_pagosonline extends CI_Model
 		}
 		return $payulatam;
 	}
+
+	function get_datos_compropago()
+	{
+		$q=$this->db->query("select * from compropago");
+		$payulatam = $q->result();
+		return $payulatam;
+	}
 	
 	function get_datos_tucompra()
 	{
@@ -61,6 +82,35 @@ class modelo_pagosonline extends CI_Model
 		$paypal = $q->result();
 		return $paypal;
 	}
+
+	function actualizar_compropago()
+	{
+		
+		$test=0;
+		$estado='DES';
+
+		if(isset($_POST['test']))
+			$test=1;
+		
+		if(isset($_POST['estatus']))
+			$estado='ACT';
+		
+		$dato=array(
+			
+				"email"     => $_POST['email'],
+				"actkey"   		=> $_POST['actkey'],
+				"testkey"   		=> $_POST['testkey'],
+				"moneda"   		=> $_POST['moneda'],
+				"test"       			=> $test,
+				"estatus"       		=> $estado
+		);
+	
+		$this->db->where('email', $_POST['id']);
+		$this->db->update('compropago', $dato);
+	
+		return true;
+	}
+	
 	
 	function actualizar_tucompra()
 	{

@@ -348,11 +348,13 @@ function index()
 		$paypal  = $this->modelo_pagosonline->val_paypal();
 		$payulatam  = $this->modelo_pagosonline->val_payulatam();
 		$tucompra  = $this->modelo_pagosonline->val_tucompra();
-		
+		$compropago  = $this->modelo_pagosonline->val_compropago();
+
 		$this->template->set('puntos',$puntos);
 		$this->template->set('paypal',$paypal);
 		$this->template->set('payulatam',$payulatam);
 		$this->template->set('tucompra',$tucompra);
+		$this->template->set('compropago',$compropago);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -659,6 +661,67 @@ function index()
 			redirect('/');
 	}
 	
+
+	function pagarVentaCompropago(){ //EVOLUCIONINTELIGENTE
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$actual_link = "http://$_SERVER[HTTP_HOST]";
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$email = $this->general->get_email($id);
+	
+	
+		$contenidoCarrito=$this->get_content_carrito ();
+		$carritoCompras=$this->cart->contents();
+	
+		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
+	
+		$descripcion="";
+		foreach ($contenidoCarrito["compras"] as $mercancia){
+			$descripcion.=" ".$mercancia["nombre"];
+		}
+	
+		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
+	
+	
+		$compropago  = $this->modelo_pagosonline->val_compropago();
+	
+		$key=$compropago[0]->testkey;
+	
+		if($compropago[0]->test!=1)
+			$key=$compropago[0]->actkey;
+
+		$load_SDK = '/CompropagoSdk/UnitTest/autoload.php';	
+
+		$library_SDK = getcwd().$load_SDK;
+
+		require_once 'CompropagoSdk/UnitTest/autoload.php';		
+
+		//use CompropagoSdk\Client;
+		//use CompropagoSdk\Factory\Factory;	
+
+		/*
+		$client = new Client(
+		    $compropago[0]->testkey,  # publickey
+		    $compropago[0]->actkey,  # privatekey
+		    false                         # live
+		);*/
+
+		echo $library_SDK;exit();
+	
+	}
+
 	function pagarVentaTucompra(){ //WOWCONEXION
 	
 		if (!$this->tank_auth->is_logged_in())

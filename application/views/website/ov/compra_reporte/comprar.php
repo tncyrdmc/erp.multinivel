@@ -24,7 +24,7 @@
         <div class="input-group">
           <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
         </div>
-        <!-- /input-group --
+        <! /input-group >
         
       </div> -->
     </div>
@@ -208,15 +208,17 @@
 															<a onclick="payuLatam()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/payu.jpg" alt="american express" height="60" width="100">
 															</a>
-															<?php }?>
-															<?php if($paypal[0]->estatus=='ACT') {?>
+															<?php } if($paypal[0]->estatus=='ACT') {?>
 															<a onclick="payPal()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
 															</a>
-															<?php }?>
-															<?php if($tucompra[0]->estatus=='ACT') {?>
+															<?php } if($tucompra[0]->estatus=='ACT') {?>
 															<a onclick="tucompra()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/tucompra.png" alt="tucompra" style="background: #fff" height="60" width="160">
+															</a>
+															<?php } if($compropago[0]->estatus=='ACT') {?>
+															<a onclick="compropago()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
+																<img src="/template/img/payment/compropago.png" alt="compropago" style="background: #fff" height="60" width="160">
 															</a>
 															<?php }?>
 														</div>
@@ -321,6 +323,32 @@
 					});
 					
 	}
+
+	function compropago(){
+		//alert('Medio de Pago en Desarrollo');
+		iniciarSpinner();
+		$.ajax({
+			type:"post",
+			url:"pagarVentaCompropago",
+			success: function(msg){
+				FinalizarSpinner();
+				bootbox.dialog({
+					message: msg,
+					title: "Pago Via Compropago",
+					className: "",
+					buttons: {
+						success: {
+						label: "Cancelar",
+						className: "btn-danger",
+						callback: function() {
+							}
+						}
+					}
+				})
+			}
+		});	
+	}
+
 
 	function tucompra(){
 		//alert('Medio de Pago en Desarrollo');
