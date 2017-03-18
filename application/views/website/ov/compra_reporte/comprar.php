@@ -329,7 +329,7 @@
 		iniciarSpinner();
 		$.ajax({
 			type:"post",
-			url:"pagarVentaCompropago",
+			url:"Compropago",
 			success: function(msg){
 				FinalizarSpinner();
 				bootbox.dialog({

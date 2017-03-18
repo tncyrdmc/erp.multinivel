@@ -214,12 +214,15 @@ function index()
 		
 		$costosImpuestos=$this->modelo_compras->getCostosImpuestos($pais[0]->pais,$items['id']);
 		
+		$cantidad=$items['qty'];
+
 		$info_compras[$contador]=Array(
 				"imagen" => $imagenes[0]->url,
 				"nombre" => $detalles[0]->nombre,
 				"puntos" => $detalles[0]->puntos_comisionables,
 				"descripcion" => $detalles[0]->descripcion,
-				"costos" => $costosImpuestos
+				"costos" => $costosImpuestos,
+				"cantidad" => $cantidad
 		);
 		$contador++;
 		
@@ -662,7 +665,7 @@ function index()
 	}
 	
 
-	function pagarVentaCompropago(){ //EVOLUCIONINTELIGENTE
+	function Compropago(){ //EVOLUCIONINTELIGENTE
 	
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -675,51 +678,146 @@ function index()
 			return 0;
 		}
 	
-		$actual_link = "http://$_SERVER[HTTP_HOST]";
+		$key = $this->modelo_pagosonline->cliente_compropago();
+		
+		$v1=$key[0];
+		$v2=$key[1];
+		$v3=$key[2];
+
+		$link = getcwd()."/CompropagoSdk/exec/listProviders.php";
+
+		require_once $link;
+
+		$passProviders = $providers;
+ 		
+ 		$this->template->set("providers",$passProviders);
+ 		$this->template->build('website/ov/compra_reporte/compropago/proveedores');
 	
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-		$email = $this->general->get_email($id);
+	}
+
+	function CompropagoRegistrar(){ //EVOLUCIONINTELIGENTE
 	
-	
-		$contenidoCarrito=$this->get_content_carrito ();
-		$carritoCompras=$this->cart->contents();
-	
-		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
-	
-		$descripcion="";
-		foreach ($contenidoCarrito["compras"] as $mercancia){
-			$descripcion.=" ".$mercancia["nombre"];
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
 		}
 	
+		$id = $this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$email = $this->general->get_email($id);
+
+		$contenidoCarrito=$this->get_content_carrito ();
+		
 		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
-	
-	
-		$compropago  = $this->modelo_pagosonline->val_compropago();
-	
-		$key=$compropago[0]->testkey;
-	
-		if($compropago[0]->test!=1)
-			$key=$compropago[0]->actkey;
 
-		$load_SDK = '/CompropagoSdk/UnitTest/autoload.php';	
+		$fecha = date("Y-m-d");
 
-		$library_SDK = getcwd().$load_SDK;
+		$customer = $usuario[0]->nombre." ".$usuario[0]->apellido;
 
-		require_once 'CompropagoSdk/UnitTest/autoload.php';		
+		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id,$fecha);		
+			
+		$orders = array();
 
-		//use CompropagoSdk\Client;
-		//use CompropagoSdk\Factory\Factory;	
+		foreach ($contenidoCarrito["compras"] as $value) {
+			$texto = "(".$value['cantidad'].") ".$value['nombre'];			
 
-		/*
-		$client = new Client(
-		    $compropago[0]->testkey,  # publickey
-		    $compropago[0]->actkey,  # privatekey
-		    false                         # live
-		);*/
+			$costo = " = $ ".$value['costos'][0]->costo;
+			$impuesto = intval($value['costos'][0]->costoImpuesto > 0) ? 
+							" ".$value['costos'][0]->iva." ".$value['costos'][0]->tipoImpuesto : "";
 
-		echo $library_SDK;exit();
-	
+			$valor = intval($costo>=0) ? $costo.$impuesto : "";
+
+			$texto.=$valor;
+
+			array_push($orders, $texto);
+		} 
+
+		$orders = implode(" + ", $orders); 
+			
+		$key = $this->modelo_pagosonline->cliente_compropago();
+		$compropago = $this->modelo_pagosonline->val_compropago();		
+
+		$payment_type = $_POST["prov"];
+
+		$v1=$key[0];
+		$v2=$key[1];
+		$v3=$key[2]; 		
+
+		$order_info = [
+		    'order_id' => $id_venta,
+		    'order_name' => $orders,
+		    'order_price' => $totalCarrito,
+		    'customer_name' => $customer,
+		    'customer_email' => $email[0]->email,
+		    'payment_type' => $payment_type,
+		    'currency' => $compropago[0]->moneda,
+		    'expiration_time' => null
+		];
+ 
+
+		$link = getcwd()."/CompropagoSdk/exec/newCharge.php";
+
+		require_once $link;
+
+		$Registro = $neworder;
+		
+		if(!$Registro||$Registro->status != "pending"){
+			echo "FAIL";
+			$this->db->query("delete from venta where id_venta = ".$id_venta);
+			exit();
+		}
+		//else{ 
+			$id_registro = $Registro->id;
+			$url_recibo = "https://www.compropago.com/comprobante/?confirmation_id=".$id_registro;
+		//	$this->template->set("url_recibo",$url_recibo);
+ 		//	$this->template->build('website/ov/compra_reporte/compropago/Recibo');
+		//}
+			
+
+		
+		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
+		
+		$this->registrarFacturaMercancia ( $contenidoCarrito ,$id_venta);
+		
+		$this->cart->destroy();
+		
+		echo "<div class='compropagoDivFrame' id='compropagodContainer' style='width: 100%;'>
+				    <iframe style='width: 100%;'
+				        id='compropagodFrame'
+				        src='".$url_recibo."'
+				        frameborder='0'
+				        scrolling='yes'> </iframe>
+				</div>
+				<script type='text/javascript'>
+				    function resizeIframe() {
+				        var container=document.getElementById('compropagodContainer');
+				        var iframe=document.getElementById('compropagodFrame');
+				        if(iframe && container){
+				            var ratio=585/811;
+				            var width=container.offsetWidth;
+				            var height=(width/ratio);
+				            if(height>937){ height=937;}
+				            iframe.style.width=width + 'px';
+				            iframe.style.height=height + 'px';
+				        }
+				    }
+				    window.onload = function(event) {
+				        resizeIframe();
+				    };
+				    window.onresize = function(event) {
+				        resizeIframe();
+				    };
+				</script>";
+
+		exit();
+
+		//} ESTE ES EL IF (ELSE)
 	}
 
 	function pagarVentaTucompra(){ //WOWCONEXION

@@ -83,6 +83,24 @@ class modelo_pagosonline extends CI_Model
 		return $paypal;
 	}
 
+	function cliente_compropago(){
+
+		$compropago  = $this->val_compropago(); 
+		
+		$test = ($compropago[0]->test!=1) ? true : false;
+
+		$k_test = array($compropago[0]->pk_test,$compropago[0]->sk_test,$test);
+		$k_live = array($compropago[0]->pk_live,$compropago[0]->sk_live,$test);
+
+		$key = $k_test;
+
+		if($compropago[0]->test!=1)
+			$key=$k_live;
+
+		return $key;
+
+	}
+
 	function actualizar_compropago()
 	{
 		
@@ -98,8 +116,10 @@ class modelo_pagosonline extends CI_Model
 		$dato=array(
 			
 				"email"     => $_POST['email'],
-				"actkey"   		=> $_POST['actkey'],
-				"testkey"   		=> $_POST['testkey'],
+				"pk_test"   		=> $_POST['pk_test'],
+				"sk_test"   		=> $_POST['sk_test'],
+				"pk_live"   		=> $_POST['pk_live'],
+				"sk_live"   		=> $_POST['sk_live'],
 				"moneda"   		=> $_POST['moneda'],
 				"test"       			=> $test,
 				"estatus"       		=> $estado

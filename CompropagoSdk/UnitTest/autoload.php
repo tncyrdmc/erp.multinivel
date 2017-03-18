@@ -1,6 +1,6 @@
 <?php
 
-echo "Cargando...";
+//echo "Cargando...";
 
 require_once __DIR__ .'/../Client.php';
 require_once __DIR__ .'/../Service.php';

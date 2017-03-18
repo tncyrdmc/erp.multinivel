@@ -50,22 +50,49 @@
 							<fieldset>
 								<legend>Configuracion Compropago</legend>
 								<input type="hidden" value="<?=$compropago[0]->email;?>" name="id" >
-						<section id="usuario" class="col col-6">
+						
+						<fieldset>
+
+									<section id="usuario" class="col col-3">
 							 <label class="input">Email Cuenta
 								 <input required type="email" name="email" placeholder="Email" value="<?=$compropago[0]->email;?>" > 
 							 </label>
 						 </section> 
-						 <section id="usuario" class="col col-6">
-							 <label class="input">Llave de Producción
-								 <input required type="actkey" name="actkey" placeholder="Active Key" value="<?=$compropago[0]->actkey;?>" > 
+
+						</fieldset>
+
+
+						  <fieldset id="test" class="col-md-6">
+						  	<legend>Modo Activo</legend>
+						 <section  class="col col-6">
+							 <label class="input">Llave Pública
+								 <input required type="text" name="pk_live" placeholder="Public Key" value="<?=$compropago[0]->pk_live;?>" > 
 							 </label>
 						 </section> 
 						 
-						 <section id="usuario" class="col col-6">
-							 <label class="input">Llave de Pruebas
-								 <input required type="testkey" name="testkey" placeholder="Test Key" value="<?=$compropago[0]->testkey;?>" > 
+						 <section  class="col col-6">
+							 <label class="input">Llave Privada
+								 <input required type="password" name="sk_live" placeholder="Secure Key" value="<?=$compropago[0]->sk_live;?>" > 
 							 </label>
 						 </section>
+						 </fieldset>
+						 <fieldset id="live" class="col-md-6">
+							<legend>Modo Pruebas</legend>						 	
+						 <section class="col col-6">
+							 <label class="input">Llave Pública
+								 <input required type="text" name="pk_test" placeholder="Public Key" value="<?=$compropago[0]->pk_test;?>" > 
+							 </label>
+						 </section> 
+						 
+						 <section  class="col col-6">
+							 <label class="input">Llave Privada
+								 <input required type="password" name="sk_test" placeholder="Secure Key" value="<?=$compropago[0]->sk_test;?>" > 
+							 </label>
+						 </section>
+						</fieldset>
+						
+					
+
 						 <section  class="col col-3">
 							 <label class="select">Moneda
 							 	<select id="moneda" name="moneda">
@@ -77,13 +104,13 @@
 								<strong> </strong>
 							</div>
 						 </section>
-								<section id="usuario" class="col col-6">
+								<section id="debug" class="col col-3">
 									<label class="checkbox"> <input name="test"
 										<?php if($compropago[0]->test == '1') echo "checked='checked'";?>
-										type="checkbox"> <i></i>Test
+										type="checkbox"> <i></i>Modo de Pruebas
 									</label>
 								</section>
-								<section id="usuario" class="col col-6">
+								<section id="show" class="col col-3">
 									<label class="checkbox"> <input name="estatus"
 										<?php if($compropago[0]->estatus == 'ACT') echo "checked='checked'";?>
 										type="checkbox"> <i></i>Mostrar en Carrito de Compras
