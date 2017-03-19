@@ -1,52 +1,83 @@
 <?php 
 
-require_once getcwd()."/../../CompropagoSdk/UnitTest/autoload.php";
+$link = getcwd()."/CompropagoSdk/UnitTest/autoload.php";
+
+require_once $link;
 
 use CompropagoSdk\Factory\Factory;
 use CompropagoSdk\Client;
 
 $request = @file_get_contents('php://input');
 
-var_dump($request);
-/*if(!$resp_webhook = Factory::getInstanceOf('CpOrderInfo', $request)){
-    die('Invalid Request');
+if(!$resp_webhook = Factory::getInstanceOf('CpOrderInfo', $request)){
+    $fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+    fputs($fp2, "Invalid Request.");
+    fclose($fp2);
+    die('');
 }
 
 $publickey     = $v1;
 $privatekey    = $v2;
 $live          = $v3; // si es modo pruebas cambiar por 'false'
 
+if(strlen($request)<=1){
+    $fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+    fputs($fp2, "No existe Request.");
+    fclose($fp2);
+    die('No existe Request.');
+}
+
 try{
     $client = new Client($publickey, $privatekey, $live );
 
-    if($resp_webhook->id == $id_Recibo){
-        die("Probando el WebHook?, Ruta correcta.");
+    $validar = false;
+    foreach ($preorders as $value) {
+        if($resp_webhook->id == $value[1]){
+            $validar = true;
+            $id_venta = $value[0];
+        }
     }
+
+    if(!$validar){
+        $fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+        fputs($fp2, "Probando el WebHook?, Recibo no existe.");
+        fclose($fp2);
+        die('Probando el WebHook?, Recibo no existe.');
+    } 
+
+    $fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+    fputs($fp2, "[".$id_venta);
+    fclose($fp2);
+
+    $estatus = "";
 
     $response = $client->api->verifyOrder($resp_webhook->id);
 
     switch ($response->type){
         case 'charge.success':
-            // TODO: Actions on success payment
+            $estatus =  "ACT";
             break;
         case 'charge.pending':
-            // TODO: Actions on pending payment
+            $estatus =  "DES";
             break;
         case 'charge.declined':
-            // TODO: Actions on declined payment
+            $estatus =  "DELETE";
             break;
         case 'charge.expired':
-            // TODO: Actions on expired payment
+            $estatus =  "DELETE";
             break;
         case 'charge.deleted':
-            // TODO: Actions on deleted payment
+            $estatus =  "DELETE";
             break;
         case 'charge.canceled':
-            // TODO: Actions on canceled payment
+            $estatus =  "DELETE";
             break;
         default:
+            $fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+            fputs($fp2, 'Invalid Response type.');
+            fclose($fp2);
             die('Invalid Response type');
     }
 }catch (Exception $e) {
     die($e->getMessage());
-}*/
+}

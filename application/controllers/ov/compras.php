@@ -713,6 +713,7 @@ function index()
 		$email = $this->general->get_email($id);
 
 		$contenidoCarrito=$this->get_content_carrito ();
+		$carritoCompras=$this->cart->contents();
 		
 		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
 
@@ -720,7 +721,7 @@ function index()
 
 		$customer = $usuario[0]->nombre." ".$usuario[0]->apellido;
 
-		$id_venta = $this->modelo_compras->registrar_ventaConsignacion($id,$fecha);		
+		$id_venta = $this->modelo_compras->registrar_venta_pago_online_des($id,'COMPROPAGO',$fecha);
 			
 		$orders = array();
 
@@ -778,20 +779,21 @@ function index()
 		//	$this->template->set("url_recibo",$url_recibo);
  		//	$this->template->build('website/ov/compra_reporte/compropago/Recibo');
 		//}
-			
 		
-		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
-		
-		$this->registrarFacturaMercancia ( $contenidoCarrito ,$id_venta);
+		$contenidoCarrito["id"] = $id_registro;
+
+		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
 		
 		$this->cart->destroy();
 		
-		echo "<div class='compropagoDivFrame' id='compropagodContainer' style='width: 100%;'>
+		echo "
+		<legend>Por Favor, Espere a que cargue el Recibo</legend>
+		<div class='compropagoDivFrame' id='compropagodContainer' style='width: 100%;'>
 				    <iframe style='width: 100%;'
 				        id='compropagodFrame'
 				        src='".$url_recibo."'
 				        frameborder='0'
-				        scrolling='yes'> </iframe>
+				        scrolling='yes'></iframe>
 				</div>
 				<script type='text/javascript'>
 				    function resizeIframe() {
@@ -817,6 +819,62 @@ function index()
 		//exit();
 
 		//} ESTE ES EL IF (ELSE)
+	}
+
+	function CompropagoRespuesta(){ //EVOLUCIONINTELIGENTE
+	
+		$in = "SELECT id_venta FROM venta WHERE id_metodo_pago = 'COMPROPAGO' and id_estatus = 'DES'";
+		$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProcesoIN($in);
+		$key = $this->modelo_pagosonline->cliente_compropago();	
+
+		$preorders = array();
+
+		foreach ($contenido_carrito_proceso as  $value) {
+			$contenidoCarrito=json_decode($value->contenido,true);
+			$datos = array($value->id,$contenidoCarrito['id']);
+			array_push($preorders, $datos);
+		} 
+
+		$id_venta= 0;
+
+		$v1=$key[0];
+		$v2=$key[1];
+		$v3=$key[2]; 
+
+		$link = getcwd()."/CompropagoSdk/exec/Response.php";
+
+		require_once $link;
+ 
+		$fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+		fputs($fp2, ":".$estatus."]");
+		fclose($fp2);
+
+ 		switch ($estatus) {
+ 			case 'ACT':
+ 				$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProceso($id_venta);
+ 				$contenidoCarrito=json_decode($contenido_carrito_proceso[0]->contenido,true);
+				$carrito=json_decode($contenido_carrito_proceso[0]->carrito,true);
+					
+				$this->registrarFacturaDatosDefaultAfiliado($contenido_carrito_proceso[0]->id_usuario,$id_venta);
+				$this->registrarFacturaMercanciaPagoOnline ($contenidoCarrito,$carrito ,$id_venta);
+				$this->db->query("UPDATE venta SET id_estatus = 'ACT' WHERE id_venta = ".$id_venta);
+				$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+				$this->pagarComisionVenta($id_venta,$contenido_carrito_proceso[0]->id_usuario);
+ 				break;
+
+ 			case 'DES':
+ 				$this->db->query("UPDATE venta SET id_estatus = 'DES' WHERE id_venta = ".$id_venta);
+ 				break;
+
+ 			case 'DELETE':
+ 				$this->db->query("delete from venta where id_venta = ".$id_venta);
+ 				break;
+ 			
+ 			default:
+ 				# code...
+ 				break;
+ 		}
+		//redirect('/');
 	}
 
 	function pagarVentaTucompra(){ //WOWCONEXION

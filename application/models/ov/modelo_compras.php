@@ -1244,6 +1244,18 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 		$venta = $this->db->insert_id();
 		return $venta;
 	}
+
+	function registrar_venta_pago_online_des($id_usuario, $tipo,$fecha){
+		$dato_venta=array(
+				"id_user" 			=> $id_usuario,
+				"id_estatus"		=> 'DES',
+				"id_metodo_pago" 	=> $tipo,
+				"fecha" 			=> $fecha
+		);
+		$this->db->insert("venta",$dato_venta);
+		$venta = $this->db->insert_id();
+		return $venta;
+	}
 	
 	function  registrar_pago_online ($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 									 	$metodo_pago,$estado,$respuesta,$moneda,$medio_pago){
@@ -1276,10 +1288,15 @@ where a.id_paquete = e.id_paquete and d.sku= a.id_paquete and d.estatus="ACT" an
 	}
 	
 	function getContenidoCarritoPagoOnlineProceso($id){
-		$q = $this->db->query("SELECT contenido_carrito as contenido,carrito as carrito FROM pago_online_proceso where id=".$id.";");
+		$q = $this->db->query("SELECT id_usuario,contenido_carrito as contenido,carrito as carrito FROM pago_online_proceso where id=".$id.";");
 		return $q->result();
 	}
 	
+	function getContenidoCarritoPagoOnlineProcesoIN($in){
+		$q = $this->db->query("SELECT id,contenido_carrito as contenido,carrito as carrito FROM pago_online_proceso where id in (".$in.");");
+		return $q->result();
+	}
+
 	function registrar_cross_comprador_ventaConsignacion($id_comprador, $id_venta , $id_afiliado){
 		$dato_venta=array(
 				"id_comprador" 			=> $id_comprador,
