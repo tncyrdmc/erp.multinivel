@@ -779,7 +779,6 @@ function index()
  		//	$this->template->build('website/ov/compra_reporte/compropago/Recibo');
 		//}
 			
-
 		
 		$this->registrarFacturaDatosDefaultAfiliado ($id,$id_venta);
 		
@@ -815,7 +814,7 @@ function index()
 				    };
 				</script>";
 
-		exit();
+		//exit();
 
 		//} ESTE ES EL IF (ELSE)
 	}
