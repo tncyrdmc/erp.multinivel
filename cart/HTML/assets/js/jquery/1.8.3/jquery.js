@@ -90,8 +90,8 @@ var
 	},
 
 	// [[Class]] -> type pairs
-	class2type = {};
-
+	class2type = {} 
+        
 jQuery.fn = jQuery.prototype = {
 	constructor: jQuery,
 	init: function( selector, context, rootjQuery ) {
@@ -5419,4 +5419,8 @@ jQuery.fn.extend({
 	},
 
 	filter: function( selector ) {
-		return this.pushStack( winnow(this, selector, true), "filter", selector
+		return this.pushStack( winnow(this, selector, true), "filter", selector); 
+            }
+})
+
+})

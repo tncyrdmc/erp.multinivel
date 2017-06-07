@@ -247,7 +247,7 @@ foreach ( $proveedores as $key ) {
 									<section class="col col-3">
 										<label class="input"> Puntos comisionables <input
 											type="number" min="0" max="" name="puntos_com"
-											id="puntos_com" required>
+											id="puntos_com" step="0.01" required>
 										</label>
 									</section>
 
