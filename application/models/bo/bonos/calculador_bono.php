@@ -47,6 +47,7 @@ class calculador_bono extends CI_Model
 		$bono->setUpBono($id_bono);
 			
 		if($this->isActivo($bono)&&$this->isVigentePorFecha($bono,$fechaCalculo)&&($this->isPagado($bono, $fechaCalculo)==false)){
+			log_message('DEV',"pagarComisionesBonoPorFecha : $id_bono");
 			$this->pagarComisionesBonoPorFecha($bono,$fechaCalculo);
 			return true;
 		}
@@ -221,7 +222,7 @@ class calculador_bono extends CI_Model
 		/* Repartir valor en $ hacia arriba o hacia abajo de la red */
 		
 		if(($verticalidad=="ASC")||($verticalidad=="DESC")){
-			$this->repertirAscendenteODesendente ($id_bono,$id_bono_historial,$red,$condicion_red,$verticalidad,$id_usuario,$fecha,$nivel,$valor);
+			$this->repartirAscendenteODesendente ($id_bono,$id_bono_historial,$red,$condicion_red,$verticalidad,$id_usuario,$fecha,$nivel,$valor);
 	
 		}
 		/* Repartir valor en % hacia arriba la red */
@@ -252,7 +253,7 @@ class calculador_bono extends CI_Model
 		}
 	}
 
-	private function repertirAscendenteODesendente($id_bono,$id_bono_historial,$red,$condicion_red,$verticalidad,$id_usuario,$fecha,$nivel,$valor) {
+	private function repartirAscendenteODesendente($id_bono,$id_bono_historial,$red,$condicion_red,$verticalidad,$id_usuario,$fecha,$nivel,$valor) {
 		if($nivel==0){
 			if($this->usuarioPuedeRecibirBono($id_bono, $id_usuario, $fecha)){
 				$repartidorComisionBono=new $this->repartidor_comision_bono();
