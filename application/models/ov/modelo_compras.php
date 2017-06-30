@@ -203,7 +203,7 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 					    a.descripcion,
 					    a.inventario,
 					    (select 
-								(case when (max(i.cantidad)-a.inventario > 0)&&(i.cantidad) then max(i.cantidad)-a.inventario else 0 end) c 
+								(case when (max(i.cantidad)-a.inventario > 0)&&(i.cantidad) then max(i.cantidad) else 0 end) c 
 					        from
 					            inventario i,
 								cedi c

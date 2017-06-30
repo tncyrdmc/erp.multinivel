@@ -124,6 +124,9 @@ function index()
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
+		$style=$this->general->get_style(1);
+		$this->template->set("style",$style);
+
 		$this->template->set("usuario",$usuario);
 		$this->template->set("grupos",$grupos);
 		
@@ -3691,18 +3694,23 @@ function index()
 		for($i=0;$i<sizeof($mercancia);$i++)
 		{
 			$id_tipo_mercancia = isset($mercancia[$i]->id_tipo_mercancia) ? $mercancia[$i]->id_tipo_mercancia : 0;
-			$inventario = '';
 			$boton = 'compra_prev('.$mercancia[$i]->id.','.$tipoMercancia.',0)' ;
 			$btn = 'success';
 			$rows = ($mercancia[$i]->descripcion!='') ? 9.8 : 1;
+			$inventario =  '';
 			
 			if($id_tipo_mercancia == 1){
-				$existencia = intval($mercancia[$i]->existencia);				
+				$existencia = intval($mercancia[$i]->existencia);			
+				$minimo = intval($mercancia[$i]->inventario);
+				$agotado = (($existencia-$minimo)>0) ? false : true;
 				$color = ($existencia < $mercancia[$i]->max_venta) ? 'orange' : 'green';
-				$inventario = ($existencia>0)  ? 'Existencias: <b style="color: '.$color.'">'.$existencia.'</b>' : '<b style="color: red">Producto Agotado</b>';
-				($existencia>0) ? '' : $boton = 'javascript:void(0)' ;
-				($existencia>0) ? '' : $btn = 'default' ;	
-			}					
+				$inventario = 'Existencias: <b style="color: '.$color.'">'.$existencia.'</b>' ;
+				if($agotado){ 
+						$inventario = '<b style="color: red">Producto Agotado</b>';
+						$boton = 'javascript:void(0)' ;
+						$btn = 'default' ;	
+				}
+			}				
 			
 			$puntos_comisionables = ($mercancia[$i]->puntos_comisionables!='0') 
 				? '<span style="font-size: 1.5rem;">(Puntos  '.$mercancia[$i]->puntos_comisionables.')</span>' : '';
