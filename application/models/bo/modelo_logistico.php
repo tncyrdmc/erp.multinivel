@@ -1128,7 +1128,18 @@ pt.id = cve.id_tarifa and co.Code = pm.id_pais and pm.estado = es.id and pm.muni
 	}
 	function get_existencias($id)
 	{	
-		$q=$this->db->query('SELECT * from inventario where id_mercancia = '.$id.' and estatus = "ACT"');
+		$query = "SELECT 
+					    i.*
+					FROM
+					    inventario i,
+					    mercancia m
+					WHERE
+					    i.id_mercancia = m.sku  
+					    AND m.id = ".$id."
+					    AND i.estatus = 'ACT'";
+
+		$q=$this->db->query($query);
+		
 		$res=$q->result();
 		$existencias = array();
 		foreach ($res as $inventario){

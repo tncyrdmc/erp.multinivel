@@ -3075,8 +3075,8 @@ function index()
 			$max=($limites[0]->max_venta>$limites[0]->existencia) ? $limites[0]->existencia :$limites[0]->max_venta;
 			echo "	<div class='row'>
 						<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-							<p class='font-md'><strong>Cantidad</strong></p><br>
-							<input type='number' id='cantidad' name='cantidad' min='".$min."' max='".$max."' value='".$min."' onkeydown='return false'><br><br>
+							<p class='font-md'><strong>Unidades</strong></p><br>
+							<input type='number' id='cantidad' name='cantidad' min='".$min."' max='".$max."' value='".$min."' ><br><br>
 						</div>
 					</div>";
 		}
