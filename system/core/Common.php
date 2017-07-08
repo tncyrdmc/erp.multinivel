@@ -253,8 +253,9 @@ if ( ! function_exists('get_config'))
 				}
 			}
 		}
-		error_reporting(0);
-		return $_config[0] =& $config ? $config : '';
+		
+		$_config[0] =& $config;
+		return  $_config[0];
 	}
 }
 

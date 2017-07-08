@@ -3035,14 +3035,17 @@ function index()
 		else if($id_tipo_mercancia==5)
 			$detalles=$this->modelo_compras->detalles_membresia($id_mercancia);
 		
-		
+		$img_item = $imagenes[0]->url;
+			
+			if(!file_exists(getcwd().$img_item))
+				$img_item = "/template/img/favicon/favicon.png";
 		
 		echo '<div class="product">
           <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
           <i class="glyphicon glyphicon-heart"></i>
           </a>
             <div class="image"> <a href="product-details.html">
-				<img class="img-responsive" alt="img" src="'.$imagenes[0]->url.'" style="width: 15rem ! important; height: 10rem ! important;">
+				<img class="img-responsive" alt="img" src="'.$img_item.'" style="width: 15rem ! important; height: 10rem ! important;">
 				</a>
             </div>
             <div class="description">
@@ -3715,13 +3718,18 @@ function index()
 			$puntos_comisionables = ($mercancia[$i]->puntos_comisionables!='0') 
 				? '<span style="font-size: 1.5rem;">(Puntos  '.$mercancia[$i]->puntos_comisionables.')</span>' : '';
 				
+			$img_item = $mercancia[$i]->img;
+			
+			if(!file_exists(getcwd().$img_item))
+				$img_item = "/template/img/favicon/favicon.png";
+
 		$imprimir ='	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 					<div class="producto">
 					<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
 						<i class=""></i>
 					</a>
 					<div class="image"> <a onclick="detalles('.$mercancia[$i]->id.','.$tipoMercancia.')">
-							<img src="'.$mercancia[$i]->img.'" alt="img" class="img-responsive"></a>
+							<img src="'.$img_item.'" alt="img" class="img-responsive"></a>
 					<div class="promotion">   </div>
 					</div>
 					<div class="description" style="overflow-y: scroll;height: 10em">
@@ -3765,8 +3773,14 @@ function index()
 			foreach ($this->cart->contents() as $items)
 			{
 				$total=$items['qty']*$items['price'];
+
+				$img_item = $compras['compras'][$cantidad]['imagen'];
+				
+				if(!file_exists(getcwd().$img_item))
+					$img_item = "/template/img/favicon/favicon.png";
+
 				echo '<tr class="miniCartProduct">
-									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$compras['compras'][$cantidad]['imagen'].'" alt="img"> </a> </div></td>
+									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$img_item.'" alt="img"> </a> </div></td>
 									<td style="width:40%"><div class="miniCartDescription">
 				                        <h4> <a href=""> '.$compras['compras'][$cantidad]['nombre'].'</a> </h4>
 				                        <span> '.$items['price'].' </span>

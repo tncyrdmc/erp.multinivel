@@ -327,6 +327,8 @@ class comercial extends CI_Controller
 		$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
 		
+		$afiliados = array();
+		
 		if(isset($_POST['nombre_buscado'])){
 			$longitud_nombre =	strlen($_POST['nombre_buscado']);
 			$id_red        = 0;
@@ -406,7 +408,7 @@ class comercial extends CI_Controller
 			}
 		}
 
-		if ( $afiliados[0]==NULL){
+		if (sizeof($afiliados)==0){
 			$error = "El afiliado que estas buscando no existe.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
