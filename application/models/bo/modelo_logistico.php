@@ -312,7 +312,15 @@ class modelo_logistico extends CI_Model
 	}
 
 	private function getTodoInventariobyMercancia($mercancia,$id) {
-		$inventario_q=$this->db->query("Select * from inventario where id_mercancia=".$mercancia." and id_almacen=".$id);
+	    $inventario_q=$this->db->query("SELECT
+                                                i.*
+                                            FROM
+                                                inventario i,
+                                                mercancia m
+                                            WHERE
+                                                i.id_mercancia = m.sku
+                                                AND m.id = $mercancia
+                                                AND id_almacen = ".$id);
 		$inventario_res=$inventario_q->result();
 		return $inventario_res;
 	}

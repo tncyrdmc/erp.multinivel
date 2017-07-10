@@ -4644,7 +4644,8 @@ function index()
 				
 			$id_afiliado_padre=$afiliado_padre[0]->debajo_de;
 				
-			$valor_comision=(($valor_comision_por_nivel[$i]->valor*$costoVenta)/100);
+			$valorComision = isset($valor_comision_por_nivel[$i]) ? $valor_comision_por_nivel[$i]->valor : 0;
+			$valor_comision=(($valorComision*$costoVenta)/100);
 				
 			$this->modelo_compras->set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado_padre,$valor_comision);
 				

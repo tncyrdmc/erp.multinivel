@@ -164,7 +164,15 @@ class model_inventario extends CI_Model
   }
   
   function consultar_en_inventario($mercancia,$destino){
-  	$query = 'select * from inventario where id_almacen = '.$destino.' and id_mercancia = '.$mercancia;
+  	$query = "SELECT 
+                        i.*
+                    FROM
+                        inventario i ,
+                    	mercancia m
+                    WHERE
+                        i.id_almacen = $destino 
+                        AND i.id_mercancia = m.sku  
+                    	AND m.id = ".$mercancia;
 	$q=$this->db->query($query);
   	return $q->result();
   }
