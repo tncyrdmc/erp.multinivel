@@ -3114,7 +3114,7 @@ function index()
 			$detalles=$this->modelo_compras->detalles_membresia($id_mercancia);
 	
 		
-		if(!$data['qty'])
+		if(!isset($data['qty']))
 			$cantidad=1;
 		else 
 			$cantidad=$data['qty'];
