@@ -448,7 +448,7 @@ class POS extends CI_Controller
 	
 		if(($productos) && ($productos[0]->cantidad > $productos[0]->inventario)){
 				
-			$pedidos = $this->modelo_cedi->setItemPOS($productos[0]->id_mercancia,$id,$almacen[0]->cedi);
+			$pedidos = $this->modelo_cedi->setItemPOS($productos[0]->item,$id,$almacen[0]->cedi);
 				
 			$this->printItems($pedidos);
 	
