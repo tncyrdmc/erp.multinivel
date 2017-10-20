@@ -465,7 +465,7 @@
 										<div class="row">
 											<fieldset>
 												<legend><b>Comunicación</b></legend>
-												<div class="col-sm-1">
+												<div class="col-sm-3">
 												</div>
 												
 												<div class="col-sm-2">
@@ -505,7 +505,7 @@
 									</div>
 									<!--Termina la seccion de comunicacion-->
 								</div>
-							</div>
+							
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
 									<!--Inicia la seccion de escuela y negocios-->

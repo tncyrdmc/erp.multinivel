@@ -7,11 +7,40 @@
 					<span class="pull-right txt-color-white">Hola: <?=$nombre?> tu última sesión fue: <?=$sesion?></span>
 					<?}?>
 					<span class="txt-color-white">
-			Copyright © 2016 Networksoft S.A.S Todos los derechos reservados.
+			Copyright © <?=date('Y');?> Networksoft S.A.S Todos los derechos reservados.
 		<a href="http://www.networksoft.com.co/" target="_BLANK">Networksoft S.A.S</a></span>
 				</div>
 			</div>
 		</div>
+
+		<script type="text/javascript">
+
+		$(document).ready(function(){
+			bache_ui();
+		});	
+
+		
+		function bache_ui(){
+			
+			var pathname = window.location.pathname;
+			var ruta = pathname.split("/");
+			
+			if(ruta[2]=="compras")
+				return false;	
+
+			var footer = $( "#page-footer" ).height();			
+			var header = $( "header" ).height();
+			
+			var htm = $( document ).height();
+			
+			var size = (htm-(header+footer))-footer;
+
+			$( "#content" ).height(size);
+			
+		}	
+
+		</script>
+		
 		<!-- END PAGE FOOTER -->
 
 		<!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
