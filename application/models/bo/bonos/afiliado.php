@@ -507,7 +507,7 @@ class afiliado extends CI_Model
         				WHERE
         				    v.id_venta = cvm.id_venta
         					AND i.id = cvm.id_mercancia
-        				    AND v.id_user = ".$id_afiliado."
+        				    AND v.id_user in (".$id_afiliado.")
         				    AND i.red = ".$id_red."
         				    AND v.id_estatus = 'ACT'
         				    AND v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin." 23:59:59' $where
@@ -542,7 +542,7 @@ class afiliado extends CI_Model
 								AND i.red = ".$id_red."
 								AND p.id_venta = o.id_venta
 								AND o.id_venta = v.id_venta
-								AND v.id_user = ".$id_afiliado."
+								AND v.id_user in (".$id_afiliado.")
 								AND v.id_estatus = 'ACT'
 								AND v.fecha BETWEEN '".$fechaInicio."' AND '".$fechaFin." 23:59:59' $where
 						)";
@@ -701,10 +701,10 @@ class afiliado extends CI_Model
 		$total=0;
 		
 		$this->getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite);
-	
-		foreach ($this->getIdAfiliadosRed() as $id_afiliado){
+		$id_afiliado = implode(",", $this->getIdAfiliadosRed());
+		#foreach ($this->getIdAfiliadosRed() as $id_afiliado){
 			$total+=$this->getComprasPersonalesIntervaloDeTiempo($id_afiliado, $red,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datosVenta);
-		}
+		#}
 		return $total;
 	}
 
