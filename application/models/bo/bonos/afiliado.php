@@ -701,6 +701,10 @@ class afiliado extends CI_Model
 		$total=0;
 		
 		$this->getAfiliadosDebajoDe($id_afiliado,$red,$tipo,$nivel,$limite);
+
+		if(!$this->getIdAfiliadosRed())
+			return $total;
+		
 		$id_afiliado = implode(",", $this->getIdAfiliadosRed());
 		#foreach ($this->getIdAfiliadosRed() as $id_afiliado){
 			$total+=$this->getComprasPersonalesIntervaloDeTiempo($id_afiliado, $red,$fechaInicio,$fechaFin,$id_tipo_mercancia,$id_mercancia,$datosVenta);
