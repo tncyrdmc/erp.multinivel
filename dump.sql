@@ -143,7 +143,7 @@ CREATE TABLE `archivo` (
   PRIMARY KEY (`id_archivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+ 
 --
 -- Dumping data for table `archivo`
 --
@@ -2911,11 +2911,7 @@ CREATE TABLE `cross_merc_img` (
 -- Dumping data for table `cross_merc_img`
 --
 
-LOCK TABLES `cross_merc_img` WRITE;
-/*!40000 ALTER TABLE `cross_merc_img` DISABLE KEYS */;
-INSERT INTO `cross_merc_img` VALUES (1,1,645),(2,2,646);
-/*!40000 ALTER TABLE `cross_merc_img` ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table `cross_merc_impuesto`
@@ -3824,11 +3820,7 @@ CREATE TABLE `factura` (
 -- Dumping data for table `factura`
 --
 
-LOCK TABLES `factura` WRITE;
-/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (1,'COL','sadas','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[]\n-Numero Móvil[]\n');
-/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table `informacion`
