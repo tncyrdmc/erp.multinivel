@@ -314,7 +314,7 @@ CREATE TABLE `canal` (
 
 LOCK TABLES `canal` WRITE;
 /*!40000 ALTER TABLE `canal` DISABLE KEYS */;
-INSERT INTO `canal` VALUES (1,'carrito','Carrito de Compras','ACT',30),(2,'cedi','CEDI','ACT',0),(3,'vip','Web Personal','DES',0);
+INSERT INTO `canal` VALUES (1,'carrito','Carrito de Compras','ACT',0),(2,'cedi','CEDI','ACT',0),(3,'vip','Web Personal','DES',0);
 /*!40000 ALTER TABLE `canal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1969,8 +1969,7 @@ CREATE TABLE `comercializacion` (
 --
 
 LOCK TABLES `comercializacion` WRITE;
-/*!40000 ALTER TABLE `comercializacion` DISABLE KEYS */;
-INSERT INTO `comercializacion` VALUES (1,1),(1,2),(2,1),(2,2);
+/*!40000 ALTER TABLE `comercializacion` DISABLE KEYS */; 
 /*!40000 ALTER TABLE `comercializacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2931,8 +2930,7 @@ CREATE TABLE `cross_merc_impuesto` (
 --
 
 LOCK TABLES `cross_merc_impuesto` WRITE;
-/*!40000 ALTER TABLE `cross_merc_impuesto` DISABLE KEYS */;
-INSERT INTO `cross_merc_impuesto` VALUES (1,2),(2,2);
+/*!40000 ALTER TABLE `cross_merc_impuesto` DISABLE KEYS */; 
 /*!40000 ALTER TABLE `cross_merc_impuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
