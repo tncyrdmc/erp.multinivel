@@ -8,9 +8,9 @@
 
 							
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								<a href="/bo/comercial"> Comercial</a> >
-								<a href="/bo/comercial/carrito_de_compras?co=c">Carrito de Compras</a>
+							<span>
+								> <a href="/bo/comercial"> Comercial</a> 
+								> <a href="/bo/comercial/mercancia">Mercancias</a>
 								> Listar
 							</span>		
 							
@@ -26,7 +26,7 @@
 				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Carrito de Compras</h2>				
+						<h2>Mercancias</h2>				
 						
 					</header>
 
@@ -101,8 +101,10 @@
 													<th data-class="expand">NOMBRE</th>
 													<th data-hide="phone">IMAGEN</th>
 													<th data-hide="phone,tablet">RED</th>
+													<th data-hide="phone,tablet">CATEGORÍA</th>
 													<th data-hide="phone">PAIS</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
+													<th data-hide="phone,tablet"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> PUNTOS COMISIONABLES</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> IMPUESTOS</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO REAL</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO COSTO</th>
@@ -118,11 +120,19 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_grupo){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td><?
 													foreach ($imp_merc as $key_1) {
 														if($key->id==$key_1->id_mercancia){
@@ -156,10 +166,18 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -194,11 +212,19 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -233,11 +259,19 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -271,10 +305,18 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td><?php
+													foreach ($grupos1 as $categorias) {
+														if($categorias->id_grupo==$key->id_red){
+															echo $categorias->descripcion;
+														}
+													}
+													 ?></td>
 													<td>
 															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
+													<td><?=$key->puntos_comisionables?></td>
 													<td>
 														<?
 													foreach ($imp_merc as $key_1) {
@@ -461,7 +503,7 @@ function eliminar(id)
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href = "/bo/comercial/carrito";
+								location.href = "/bo/comercial/listarMercancia";
 								}
 							}
 						}
@@ -499,7 +541,7 @@ function estatus(tipo,id)
 						data: {tipo: tipo, id: id},
 					})
 					.done(function( msg )
-					{	location.href = "/bo/comercial/carrito";
+					{	location.href = "/bo/comercial/listarMercancia";
 						
 					});//Fin callback bootbox
 
@@ -533,7 +575,7 @@ function estatus(tipo,id)
 					})
 					.done(function( msg )
 					{	
-						location.href = "/bo/comercial/carrito";
+						location.href = "/bo/comercial/listarMercancia";
 						
 					});//Fin callback bootbox
 

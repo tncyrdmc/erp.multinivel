@@ -265,6 +265,26 @@
 				});
 		}
 
+		function imprimir(id){
+								$.ajax({
+									type: "POST",
+									url: "facturaImprimir",//imprimirfactura
+									data: {id: id, link : '/bo/ventas/'},
+									success: function( msg )
+									{
+										bootbox.dialog({
+											message: msg,
+											title: "Factura",
+											className: "",
+		
+											
+										})
+							    
+									}
+								});
+
+		}
+
 			function factura(id) {
 				iniciarSpinner();
 				$.ajax({

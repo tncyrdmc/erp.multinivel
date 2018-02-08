@@ -542,7 +542,7 @@ function codpos_red()
 															</section>
 															<section id="correo" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-																	<input id="email" onkeyup="use_mail()" required type="email" name="email" placeholder="Email">
+																	<input id="email" onkeyup="use_mail()" required type="email" name="email" placeholder="Dirección de Correo Electrónico">
 																</label>
 															</section>
 															<section class="col col-6">
@@ -552,7 +552,7 @@ function codpos_red()
 															</section>
 															<section id="confirmar_password" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-																	<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Repite contraseña">
+																	<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Confirme contraseña">
 																</label>
 															</section>
 														</fieldset>
@@ -565,12 +565,12 @@ function codpos_red()
 															<div class="row">
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-user"></i>
-																		<input id="nombre" required type="text" name="nombre" placeholder="Nombre">
+																		<input id="nombre" required type="text" name="nombre" placeholder="Nombre(s)">
 																	</label>
 																</section>
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-user"></i>
-																		<input id="apellido" required type="text" name="apellido" placeholder="Apellido">
+																		<input id="apellido" required type="text" name="apellido" placeholder="Apellidos (paterno y/o materno)">
 																	</label>
 																</section>
 																<section class="col col-3">
@@ -580,7 +580,7 @@ function codpos_red()
 																</section>
 																<section class="col col-3" id="key">
 																	<label id="key_" class="input"> <i class="icon-prepend fa fa-barcode"></i>
-																		<input id="keyword" onkeyup="check_keyword()" placeholder="DNI" type="text" name="keyword">
+																		<input id="keyword" onkeyup="check_keyword()" placeholder="Número de identificación (IFE,CURP,RFC)" type="text" name="keyword">
 																	</label>
 																</section>
 																<section class="col col-2">
@@ -623,7 +623,7 @@ function codpos_red()
 														</fieldset>
 														
 														<fieldset>
-															<legend>Datos co-aplicante</legend>
+															<legend>Datos del Beneficiario</legend>
 															<div class="row">
 																<section class="col col-4">
 																	<label class="input">
@@ -636,8 +636,8 @@ function codpos_red()
 																	</label>
 																</section>
 																<section class="col col-4" id="key_co">
-																	<label id="key_1" class="input"> <i class=" icon-prepend fa fa-barcode"></i>
-																		<input onkeyup="check_keyword_co()" placeholder="CURP o RFC" type="text" name="keyword_co" id="keyword_co">
+																	<label id="key_1" class="input"> <i class=" icon-prepend fa fa-users"></i>
+																	<!-- check_keyword_co() -->	<input onkeyup="" placeholder="parentesco" type="text" name="keyword_co" id="keyword_co">
 																	</label>
 																</section>
 															</div>
@@ -660,14 +660,14 @@ function codpos_red()
 																</section>
 																<section id="municipio" class="col col-2">
 																	<label class="input">
-																		Estado
+																		Ciudad - Estado
 																		<input type="text" name="estado" >
 																	</label>
 																</section>
 
 																<section id="municipio" class="col col-2">
 																	<label class="input">
-																		Municipio
+																		Delegación o Municipio
 																		<input type="text" name="municipio" >
 																	</label>
 																</section>
@@ -683,6 +683,7 @@ function codpos_red()
 																	<label class="input">
 																		Dirección de domicilio
 																		<input required type="text" name="calle">
+																		(Calle,No. Exterior,No. Interior)
 																	</label>
 																</section>
 																
@@ -712,7 +713,7 @@ function codpos_red()
 																		</select>
 																	</label>
 																</section>
-																<section class="col col-2">Sexo&nbsp;
+																<section class="col col-2">Género&nbsp;
 																	<div class="inline-group">
 																		<?
 																		foreach ($sexo as $value)

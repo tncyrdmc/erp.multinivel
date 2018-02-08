@@ -3,13 +3,35 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								<a href="/bo/administracion">Administración </a>
-								<a href="/bo/usuarios"> > Usuarios </a>
-								<a href="/bo/usuarios/menuAltaUsuarioCedi"> > CEDI </a>
-								 > Listar
+						<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						<span>
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/logistico2/usuarios">  Usuarios Logístico</a>
+								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> Listar
 							</span>
+							<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> <a href="/bo/logistico2/usuarios"> Usuarios Logístico</a>
+								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> Listar
+							</span>
+							 <?php }else{?>
+						
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+								> <a href="/bo/administracion">Administración </a>
+								> <a href="/bo/usuarios">Usuarios </a>
+								> <a href="/bo/usuarios/CEDI">CEDI </a>
+								> Listar
+							</span>
+							
+							<?php }?>
 						</h1>
 					</div>
 				</div>
@@ -56,8 +78,8 @@
 												<tr>
 													<th>ID</th>
 													<th data-class="expand">Username</th>
-													<th data-hide="phone">Nombre</th>
-													<th data-hide="phone">Apellido</th>
+													<th data-hide="phone">Nombre(s)</th>
+													<th data-hide="phone">Apellido(s)</th>
 													<th data-hide="phone">Email</th>
 													<th>CEDI</th>
 													<th>Acciones</th>
@@ -74,8 +96,8 @@
 														<td><?php echo $user->email; ?></td>
 														<td><?php echo $user->cedi; ?></td>
 														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $user->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $user->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<a title="Editar" href="#" class="txt-color-blue" onclick="editar('<?php echo $user->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
+															<a title="Eliminar" href="#"  class="txt-color-red" onclick="eliminar('<?php echo $user->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>
@@ -198,7 +220,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/usuarios/editarUsuarioCedi",
+		url: "/bo/usuarios/editarCEDI",
 		data: {
 			id: id
 			}
@@ -221,6 +243,7 @@ function eliminar(id) {
 	})
 	.done(function( msg )
 	{
+		
 		bootbox.dialog({
 		message: msg,
 		title: 'Eliminar Usuario',
@@ -229,15 +252,16 @@ function eliminar(id) {
 				label: "Aceptar",
 				className: "btn-success",
 				callback: function() {
-
+				iniciarSpinner();
 				$.ajax({
 					type: "POST",
-					url: "/bo/usuarios/kill_user_cedi",
+					url: "/bo/usuarios/killCEDI",
 					data: {id: id}
 				})
 				.done(function( msg )
 					{
-					location.href="/bo/usuarios/listarCedi";
+					FinalizarSpinner();
+					location.href="/bo/usuarios/listarCEDI";
 						
 					});//Fin callback bootbox
 
@@ -247,30 +271,15 @@ function eliminar(id) {
 				label: "Cancelar!",
 				className: "btn-danger",
 				callback: function() {
-
-					}
+					FinalizarSpinner();
+				}
 			}
 		}
 	})
 	});
 }
 
-function estado(estatus, id)
-{
-		
-	$.ajax({
-		type: "POST",
-		url: "/bo/grupos/cambiar_estado_grupo",
-		data: {
-			id:id, 
-			estado: estatus
-		},
-		}).done(function( msg )
-				{
-					location.href = "/bo/grupos/listar";
-				
-			})
-	}
+
 </script>			
 <style>
 .link

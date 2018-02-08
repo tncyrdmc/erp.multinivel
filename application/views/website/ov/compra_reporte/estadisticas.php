@@ -15,23 +15,10 @@
 					<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Afiliados en Toda Mi Red</h2>				
+						<h2>Afiliados en Toda Mi Organizacion</h2>				
 						
 					</header>
 
@@ -46,7 +33,7 @@
 						<!-- end widget edit box -->
 						<!-- widget content -->
 						<div class="widget-body">
-							<h5>En tu red existen</h5><hr>
+							<h5>En tu Organizacion existen</h5><hr>
 							<div id="donut-graph-0" class="chart no-padding"></div>
 						</div>
 						<!-- end widget content -->
@@ -56,23 +43,309 @@
 				</div>
 				<!-- end widget -->
 			</article>
-			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Afiliados en Tus Brazos</h2>				
 						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
+					</header>
+
+					<!-- widget div-->
+					<div>
 						
-					-->
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Brazos Hay</h5><hr>
+							<div id="bar-graph-0" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Puntos Totales en Mi Organizacion En el Mes</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Organizacion existen</h5><hr>
+							<div id="donut-graph-1" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Puntos en Tus Brazos En el Mes</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Brazos Hay</h5><hr>
+							<div id="bar-graph-1" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Puntos Totales en Mi Organizacion</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Organizacion existen</h5><hr>
+							<div id="donut-graph-2" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Puntos en Tus Brazos</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Brazos Hay</h5><hr>
+							<div id="bar-graph-2" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+						<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Ventas Totales en Mi Organizacion En el Mes</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Organizacion existen</h5><hr>
+							<div id="donut-graph-3" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Ventas en Tus Brazos En el Mes</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Brazos Hay</h5><hr>
+							<div id="bar-graph-3" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Ventas Totales en Mi Organizacion</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Organizacion existen</h5><hr>
+							<div id="donut-graph-4" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Ventas en Tus Brazos</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Brazos Hay</h5><hr>
+							<div id="bar-graph-4" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Remanente de La Red</h2>				
+						
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+							
+						</div>
+						<!-- end widget edit box -->
+						<!-- widget content -->
+						<div class="widget-body">
+							<h5>En tu Red Hay</h5><hr>
+							<div id="bar-graph-10" class="chart no-padding"></div>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<article class="col-sm-12 col-md-6 col-lg-6">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget"  data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Sexo</h2>				
@@ -100,24 +373,9 @@
 				</div>
 				<!-- end widget -->
 			</article>
-			<!-- END COL -->
-			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Edad</h2>				
@@ -145,24 +403,9 @@
 				</div>
 				<!-- end widget -->
 			</article>
-			<!-- END COL -->
-			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-20" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Estado civil</h2>				
@@ -189,24 +432,9 @@
 				</div>
 				<!-- end widget -->
 			</article>
-			<!-- END COL -->
-			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-30" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Ocupación</h2>				
@@ -234,24 +462,9 @@
 				</div>
 				<!-- end widget -->
 			</article>
-			<!-- END COL -->
-			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-6 col-lg-6">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
+				<div class="jarviswidget" data-widget-editbutton="false" data-widget-custombutton="false">
 					<header>
 						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 						<h2>Tiempo dedicado</h2>				
@@ -279,6 +492,10 @@
 				</div>
 				<!-- end widget -->
 			</article>
+			<!-- END COL -->
+			<!-- NEW COL START -->
+			<!-- NEW COL START -->
+
 			<!-- END COL -->
 			
 				<div class="row">         
@@ -314,6 +531,273 @@
 				
 				pageSetUp();
 			})
+
+// AFILIADOS POR CADA BRAZO			
+	<?php 
+	$i=0;
+	$text="";
+	foreach ($patas as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_afiliados"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_afiliados"]."'
+               }";
+		}
+			
+		$i++;
+	}
+
+	?>
+
+	if ($('#bar-graph-0').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-0',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Personas afiliadas'],
+		});
+	}
+
+// PUNTOS EN EL MES
+	if ($('#donut-graph-1').length) {
+		Morris.Donut({
+				element : 'donut-graph-1',
+				data : [{
+					value : <?= $total_puntos_red_mes?>,
+					label : 'Puntos Red'
+				}],
+				formatter : function(x) {
+					return x + ""
+				}
+			});
+}
+
+	// Puntos mes cada brazo		
+	<?php 
+	$i=0;
+	$text="";
+	foreach ($patas as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_puntos_mes"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_puntos_mes"]."'
+               }";
+		}
+			
+		$i++;
+	}
+
+	?>
+
+	if ($('#bar-graph-1').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-1',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Puntos Comisionables'],
+		});
+	}
+
+// PUNTOS Totales
+	if ($('#donut-graph-2').length) {
+		Morris.Donut({
+				element : 'donut-graph-2',
+				data : [{
+					value : <?= $total_puntos_red?>,
+					label : 'Puntos Red'
+				}],
+				formatter : function(x) {
+					return x + ""
+				}
+			});
+}
+
+	// Puntos mes cada brazo		
+	<?php 
+	$i=0;
+	$text="";
+	foreach ($patas as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_puntos"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_puntos"]."'
+               }";
+		}
+			
+		$i++;
+	}
+
+	?>
+
+	if ($('#bar-graph-2').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-2',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Puntos Comisionables'],
+		});
+	}
+
+	// Ventas EN EL MES
+	if ($('#donut-graph-3').length) {
+		Morris.Donut({
+				element : 'donut-graph-3',
+				data : [{
+					value : <?= $total_ventas_red_mes?>,
+					label : 'Ventas Red'
+				}],
+				formatter : function(x) {
+					return x + ""
+				}
+			});
+}
+
+	// ventas mes cada brazo		
+	<?php 
+	$i=0;
+	$text="";
+	foreach ($patas as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_ventas_mes"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_ventas_mes"]."'
+               }";
+		}
+			
+		$i++;
+	}
+
+	?>
+
+	if ($('#bar-graph-3').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-3',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Ventas'],
+		});
+	}
+
+// Ventas Totales
+	if ($('#donut-graph-4').length) {
+		Morris.Donut({
+				element : 'donut-graph-4',
+				data : [{
+					value : <?= $total_ventas_red?>,
+					label : 'Ventas Red'
+				}],
+				formatter : function(x) {
+					return x + ""
+				}
+			});
+}
+
+	// Ventas totales cada brazo		
+	<?php 
+	$i=0;
+	$text="";
+	foreach ($patas as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_ventas_red"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total_ventas_red"]."'
+               }";
+		}
+			
+		$i++;
+	}
+
+	?>
+
+	if ($('#bar-graph-4').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-4',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Ventas'],
+		});
+	}
+
+	// Remanente		
+	<?php 
+
+	$i=0;
+	$text="";
+	foreach ($remanentes as $pata){
+		if($i==0){
+			$text.= "{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total"]."'
+               }";
+		
+		}else {
+			
+		$text.=  ",{	x : 'Brazo ".$pata["id_pata"]." ".$pata["nombre_red"]."',
+					    y : '".$pata["total"]."'
+               }";
+		}
+			
+		$i++;
+	}
+	
+	?>
+
+	if ($('#bar-graph-10').length) {
+
+		Morris.Bar({
+			element : 'bar-graph-10',
+			data : [
+			<?php echo $text;?>
+			],
+			xkey : 'x',
+			ykeys : ['y'],
+			labels : ['Puntos Remanentes'],
+		});
+	}
 //sexo
 if ($('#donut-graph').length) {
 	Morris.Donut({
@@ -331,18 +815,18 @@ if ($('#donut-graph').length) {
 	});
 }
 
-			if ($('#donut-graph-0').length) {
-				Morris.Donut({
-					element : 'donut-graph-0',
-					data : [{
-						value : <?= $afiliadosRed ?>,
-						label : 'Afiliados'
-					}],
-					formatter : function(x) {
-						return x + " Personas"
-					}
-				});
-			}
+if ($('#donut-graph-0').length) {
+		Morris.Donut({
+				element : 'donut-graph-0',
+				data : [{
+					value : <?= $afiliadosRed ?>,
+					label : 'Afiliados'
+				}],
+				formatter : function(x) {
+					return x + " Personas"
+				}
+			});
+}
 			
 //estado civil
 if ($('#donut-graph1').length) {

@@ -1,4 +1,4 @@
-
+	
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
@@ -6,7 +6,7 @@
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> 
 					<span>
-						> <a href="/bo/configuracion/"> Configuracion</a>
+						> <a href="/bo/configuracion/"> Configuración</a>
 						> <a href="/bo/configuracion/formaspago"> Formas de Pago</a> 
 						> <a href="/bo/bancos/index"> Bancos </a>
 						> listar
@@ -90,9 +90,9 @@
 										<th data-class="expand">Pais</th>
 										<th data-hide="phone">Nombre</th>
 										<th data-hide="phone">Cuenta</th>
+										<th data-hide="phone, tablet">Titular</th>
 										<th data-hide="phone, tablet">CLABE</th>
-										<th data-hide="phone, tablet">SWIFT</th>
-										<th data-hide="phone, tablet">ABA/IBAN/OTRO</th>
+										<th data-hide="phone, tablet">SWIFT</th>										
 										<th data-hide="phone, tablet">Dirección postal </th>
 										<th>Acciones</th>
 
@@ -105,18 +105,19 @@
 										<td><?php echo $banco->pais; ?></td>
 										<td><?php echo $banco->nombre; ?></td>
 										<td><?php echo $banco->cuenta; ?></td>
-										<td><?php echo $banco->clave; ?></td>
-										<td><?php echo $banco->swift; ?></td>
 										<td><?php echo $banco->otro; ?></td>
+										<td><?php echo $banco->clave; ?></td>
+										<td><?php echo $banco->swift; ?></td>										
 										<td><?php echo $banco->dir_postal; ?></td>
 										<td class='text-center'>
-											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_banco("<?php echo $banco->id_banco; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
+											
 											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_banco(<?php echo $banco->id_banco; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
 											<?php if ($banco->estatus == 'ACT') {?>
 												<a title="Desactivar" style='cursor: pointer;' onclick="estado_banco('DES','<?php echo $banco->id_banco; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>
 												<a title="Activar" style='cursor: pointer;' onclick="estado_banco('ACT','<?php echo $banco->id_banco; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<?php } ?>
+											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_banco("<?php echo $banco->id_banco; ?> ")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
 										</td>
 									</tr>
 									<?php } ?>

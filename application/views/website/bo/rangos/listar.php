@@ -5,7 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/compensacion">Plan de compensacion</a> >
 								<a href="/bo/rangos">Rangos</a>
 								> Listar Rangos
@@ -86,18 +86,20 @@
 																foreach ($cat_rango_tipo as $CatRangoTipo) {
 																	if($CatRangoTipo->id==$CrossRangoTipos->id_tipo_rango){
 																		echo $CatRangoTipo->nombre.'&nbsp&nbsp&nbspValor: '.$CrossRangoTipos->valor.'<br>';
+																		$condicion_Red=($CrossRangoTipos->condicion_red=='DIRECTOS') ? 'Directos de la red':'Toda la Red';
+																		echo $condicion_Red.'&nbsp&nbsp&nbspValor: '.$CrossRangoTipos->nivel_red.'<br>';
 																	}
 																}
 															}
 														}?></td>
 														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-pencil fa-3x"></i></a>															
 															<?php if($cat_rango->estatus == 'ACT'){ ?>
 																<a title="Desactivar" onclick="estado('DES','<?php echo $cat_rango->id_rango; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
 																<a title="Activar" onclick="estado('ACT','<?php echo $cat_rango->id_rango; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $cat_rango->id_rango; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>

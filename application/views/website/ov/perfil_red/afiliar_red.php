@@ -30,7 +30,7 @@ $(document).ready(function() {
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa el DNI",
+					 	"Por favor ingresa tu Identificación",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",
@@ -102,59 +102,6 @@ $(document).ready(function() {
 	pageSetUp(); 
 });
 
-/*
-$("#remove_step").click(function() {
-	$("#tipo_plan").attr("name","tipo_plan");
-	$('.wizard').wizard('selectedItem', {
-			step: 4
-		});
-	$( "#step4" ).slideUp();
-	$( "#step4" ).remove();
-	$( "#paso4" ).slideUp();
-	$( "#paso4" ).remove();
-	$( this ).slideUp();
-	$( this ).remove();
-});
-
-$("#plan1").click(function(event) {
-	$("#tipo_plan").attr("value","1");
-	$("#planuno").addClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-
-$("#plan2").click(function(event) {
-	$("#tipo_plan").attr("value","2");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").addClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan3").click(function(event) {
-	$("#tipo_plan").attr("value","3");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").addClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan4").click(function(event) {
-	$("#tipo_plan").attr("value","4");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").addClass('packselected');
-});
-
-*/
-
-/*
-CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
-$("input").click(function() {
-$( this ).slideUp();
-$( this ).remove();
-});
-*/
 function codpos()
 {
 	var pais = $("#pais").val();
@@ -175,71 +122,7 @@ function codpos()
 		})
 	}
 }
-/*
-function SelecionarFase()
-{
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/MensajeFase",
-		data: {	id: <?php echo $id ?>, red: <?php echo $_GET['id']; ?> }
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Información Personal",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "hide",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}
-*//*
-function faseCambio(fase){
-	
-	bootbox.dialog({
-		message: "¿Estas Seguro?",
-		title: "Atención",
-		buttons: {
-			success: {
-			label: "Si",
-			className: "btn-success",
-			callback: function() {
-				
-				$.ajax({
-					type: "POST",
-					url: "/ov/perfil_red/CambioFase",
-					data: {
-						id: <?php echo $id ?>,
-						red: <?php echo $_GET['id']; ?>,
-						fase: fase
-							},
-					})
-					.done(function(msg)
-					{
-						alert('Has Cambiado de fase'+msg);
-						location.reload();
-					})
-				}
-			},
-			close:{
-				label: "NO",
-				className: "btn-danger",
-				callback: function() {
-					
-					}
-				}
-		}
-	});
-	
-}
-*/
+
 function use_username()
 {
 	$('#username').val($('#username').val().replace(" ",""));
@@ -342,21 +225,8 @@ function agregar_red(tipo)
 }
 function delete_telefono(id){
 	$("#tel_red_"+id+"").remove();	
-}/*
- $(function()
- {
- 	a = new Date();
-	año = a.getFullYear()-19;
-	$( "#datepicker" ).datepicker({
-	changeMonth: true,
-	numberOfMonths: 2,
-	maxDate: año+"-12-31",
-	dateFormat:"yy-mm-dd",
-	changeYear: true
-	yearRange: "-99:+0",
-	});
-});
-*/
+}
+
 function subred(id,profundidad)
 {
 	$("#"+id).children(".quitar").attr('onclick','');
@@ -408,7 +278,7 @@ function botbox(nombre, id, lado)
 							+'</section>'
 							+'<section id="correo" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-envelope-o"></i>'
-								+'<input id="email" onkeyup="use_mail()" required="" name="email" placeholder="Email" type="email">'
+								+'<input id="email" onkeyup="use_mail()" required="" name="email" placeholder="Dirección de Correo Electrónico" type="email">'
 							+'</label></section>'
 								+'<section class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-lock"></i>'
@@ -417,7 +287,7 @@ function botbox(nombre, id, lado)
 							+'</section>'
 							+'<section id="confirmar_password" class="col col-6">'
 								+'<label class="input"><i class="icon-prepend fa fa-lock"></i>'
-									+'<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Repite contraseña">'
+									+'<input id="confirm_password" onkeyup="confirm_pass()" required type="password" name="confirm_password" placeholder="Confirme contraseña">'
 								+'</label>'
 							+'</section>'
 						+'</fieldset>'
@@ -430,7 +300,7 @@ function botbox(nombre, id, lado)
 							+'<div class="row">'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-									+'<input id="nombre" required type="text" name="nombre" placeholder="Nombre">'
+									+'<input id="nombre" required type="text" name="nombre" placeholder="Nombre(s)">'
 									+'<input required type="hidden" id="id" name="afiliados" value="'+id+'">'
 									//+'<input id="mail_important" required type="hidden" name="mail_important" value="">'
 									+'<input id="lado" required type="hidden" name="lado" value="'+lado+'">'
@@ -439,7 +309,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-prepend fa fa-user"></i>'
-									+'<input id="apellido" required type="text" name="apellido" placeholder="Apellido">'
+									+'<input id="apellido" required type="text" name="apellido" placeholder="Apellidos (paterno y/o materno)">'
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6">'
@@ -449,7 +319,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6" id="key_red">'
 									+'<label id="key_2" class="input"> <i class="icon-prepend fa fa-barcode"></i>'
-										+'<input id="keyword_red" onkeyup="check_keyword_red()" placeholder="DNI" type="text" name="keyword">'
+										+'<input id="keyword_red" onkeyup="check_keyword_red()" placeholder="Identificación (IFE,CURP,RFC)" type="text" name="keyword">'
 									+'</label>'
 								+'</section>'
 							+'</div>'
@@ -474,7 +344,7 @@ function botbox(nombre, id, lado)
 							+'</div>'
 						+'</fieldset>'
 						+'<fieldset>'
-							+'<legend>Datos co-aplicante</legend>'
+							+'<legend>Datos del Beneficiario</legend>'
 							+'<div class="row">'
 								+'<section class="col col-4">'
 									+'<label class="input">'
@@ -487,8 +357,8 @@ function botbox(nombre, id, lado)
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-4" id="key_red_co">'
-									+'<label id="key_3" class="input"> <i class=" icon-prepend fa fa-barcode"></i>'
-										+'<input onkeyup="check_keyword_red_co()" placeholder="DNI" type="text" name="keyword_co" id="keyword_red_co">'
+									+'<label id="key_3" class="input"> <i class=" icon-prepend fa fa-users"></i>'
+										+'<!-- check_keyword_red_co() --><input onkeyup="" placeholder="Parentesco" type="text" name="keyword_co" id="keyword_red_co">'
 									+'</label>'
 								+'</section>'
 							+'</div>'
@@ -514,12 +384,12 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section id="municipio" class="col col-6">'
 									+'<label class="input">'
-									+'Estado'
+									+'Ciudad - Estado'
 										+'<input type="text" name="estado" >'
 									+'</label>'
 								+'</section>'
 								+'<section id="municipio_red" class="col col-6">'
-									+'<label class="input">Municipio'
+									+'<label class="input">Delegación o Municipio'
 									+'<input type="text" name="municipio" >'
 									+'</label>'
 								+'</section>'
@@ -533,6 +403,7 @@ function botbox(nombre, id, lado)
 								+'<section class="col col-6">'
 									+'<label class="input">Dirección de domicilio'
 									+'<input required type="text" name="calle">'
+									+'(Calle,No. Exterior,No. Interior)'
 									+'</label>'
 								+'</section>'
 								
@@ -554,7 +425,7 @@ function botbox(nombre, id, lado)
 									+'</select>'
 									+'</label>'
 								+'</section>'
-								+'<section class="col col-6">Sexo&nbsp;'
+								+'<section class="col col-6">Género&nbsp;'
 									+'<div class="inline-group"><?foreach ($sexo as $value){?>'
 									+'<label class="radio">'
 									+'<input <?=($value->id_sexo==1) ? "checked" : " " ?> type="radio" value="<?=$value->id_sexo?>" name="sexo" placeholder="sexo"><i></i><?=$value->descripcion?>'
@@ -751,7 +622,7 @@ function botbox(nombre, id, lado)
 						"Por favor ingresa tu nombre",
 					 	"Por favor ingresa tu apellido",
 					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa el DNI",
+					 	"Por favor ingresa tu Identificación",
 					 	"Por favor ingresa un nombre de usuario",
 					 	"Por favor ingresa un correo",
 					 	"Por favor ingresa una contraseña",
@@ -815,47 +686,6 @@ function botbox(nombre, id, lado)
 			    
 			  });
 
-	/*	$("#remove_step_r").click(function(event) {
-
-			$("#tipo_plan_r").attr("name","tipo_plan");
-			$('.wizard_r').wizard('selectedItem', {
-					step: 4
-				});
-			$( "#step4_r" ).slideUp();
-			$( "#step4_r" ).remove();
-			$( "#paso4_r" ).slideUp();
-			$( "#paso4_r" ).remove();
-			$( this ).slideUp();
-			$( this ).remove();
-		});
-		$("#plan1_r").click(function(event) {
-		$("#tipo_plan_r").attr("value","1");
-		$("#planuno_r").addClass('packselected');
-		$("#plandos_r").removeClass('packselected');
-		$("#plantres_r").removeClass('packselected');
-		$("#plancuatro_r").removeClass('packselected');
-		});
-		$("#plan2_r").click(function(event) {
-			$("#tipo_plan_r").attr("value","2");
-			$("#planuno_r").removeClass('packselected');
-			$("#plandos_r").addClass('packselected');
-			$("#plantres_r").removeClass('packselected');
-			$("#plancuatro_r").removeClass('packselected');
-		});
-		$("#plan3_r").click(function(event) {
-			$("#tipo_plan_r").attr("value","3");
-			$("#planuno_r").removeClass('packselected');
-			$("#plandos_r").removeClass('packselected');
-			$("#plantres_r").addClass('packselected');
-			$("#plancuatro_r").removeClass('packselected');
-		});
-		$("#plan4_r").click(function(event) {
-			$("#tipo_plan_r").attr("value","4");
-			$("#planuno_r").removeClass('packselected');
-			$("#plandos_r").removeClass('packselected');
-			$("#plantres_r").removeClass('packselected');
-			$("#plancuatro_r").addClass('packselected');
-		});*/
 }
 function check_keyword()
 {
@@ -969,29 +799,7 @@ function detalles(id)
 		});
 	});
 }
-/*function InformarPremio(premio){
-	$.ajax({
-		type: "POST",
-		url: "ConsultarPremio",
-		data: {id: premio},
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Felicitaciones",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "btn btn-danger",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}*/
+
 </script>
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -1077,7 +885,7 @@ function detalles(id)
                                                         {?>
 														<li id="<?=$key->id_afiliado?>">
 															<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>, 1)" href="#"></a>
-															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
+															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==$id) ? 'todo1' : 'todo'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
 														</li>
 														<?}
 													}?>

@@ -85,7 +85,7 @@
 																	<? foreach ($historial as $key) {?>
 																	<tr>
 																		<td><?=$key->fecha?></td>
-																		<td>$ <?echo number_format($key->valor,2)?></td>
+																		<td>$ <?echo $key->comision ?  number_format($key->comision+$key->bono,2) : $key->bono?></td>
 																		<td>
 																			<a href="/ov/billetera2/estado_historial?fecha=<?php echo  date("Y-m", strtotime($key->fecha))."-01" ?>" title="Modificar">
 																				<i class="fa fa-eye  fa-3x "></i>

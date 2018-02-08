@@ -26,8 +26,11 @@ class proveedor_mensajeria extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico){
 			redirect('/auth/logout');
 		}
 		
@@ -35,10 +38,21 @@ class proveedor_mensajeria extends CI_Controller
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
+		
+		if($type==8||$type==9){
+			$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
+		
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/mensajeria/index');
 	}
@@ -52,8 +66,11 @@ class proveedor_mensajeria extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 	
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico){
 			redirect('/auth/logout');
 		}
 	
@@ -63,10 +80,20 @@ class proveedor_mensajeria extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("paises",$pais);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
+		
+		if($type==8||$type==9){
+			$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/mensajeria/alta');
 	}
@@ -264,8 +291,11 @@ class proveedor_mensajeria extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico){
 			redirect('/auth/logout');
 		}
 		
@@ -275,10 +305,20 @@ class proveedor_mensajeria extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("proveedores",$proveedores);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
+		
+		if($type==8||$type==9){
+			$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
+		
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/mensajeria/listar');
 	}

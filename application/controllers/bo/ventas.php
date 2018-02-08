@@ -34,6 +34,7 @@ class ventas extends CI_Controller
 		$this->load->model('model_excel');
 		$this->load->model('cemail');
 		$this->load->model('model_servicio');
+		$this->load->library('html2pdf');
 	}
 
 	function index(){
@@ -61,6 +62,31 @@ class ventas extends CI_Controller
 		$this->template->build('website/bo/administracion/ventas/listar');
 	}
 	
+	function ventasIndex(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/administracion/ventas/index');
+	}
+	
 	function reporte_ventas_oficinas_virtuales()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -85,6 +111,8 @@ class ventas extends CI_Controller
 	
 		$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha($_POST['startdate'],$_POST['finishdate']);
 	
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		
 		$id=$this->tank_auth->get_user_id();
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
@@ -95,6 +123,7 @@ class ventas extends CI_Controller
 					<th data-hide='phone,tablet'>Apellido</th>
 					<th data-hide='phone,tablet'>Subtotal</th>
 					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Gastos Envio</th>
 					<th data-hide='phone,tablet'>Total Venta</th>
 					<th data-hide='phone,tablet'>Total Comisiones</th>
 					<th data-hide='phone,tablet'>Total Neto</th>
@@ -107,12 +136,13 @@ class ventas extends CI_Controller
 			{
 				echo "<tr>
 			<td class='sorting_1'>".$venta->id_venta."</td>
-			<td>".$venta->username."</td>
+			<td>(".$venta->id_usuario.") ".$venta->username."</td>
 			<td>".$venta->name."</td>
 			<td>".$venta->lastname."</td>
 			<td> $	".number_format(($venta->costo-$venta->impuestos), 2, '.', '')."</td>
 			<td> $	".number_format($venta->impuestos, 2, '.', '')."</td>
-			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
+			<td> $	".number_format($canal[0]->gastos, 2, '.', '')."</td>
+			<td> $	".number_format($venta->costo+$canal[0]->gastos, 2, '.', '')."</td>
 			<td> $	".number_format($venta->comision, 2, '.', '')."</td>
 			<td> $	".number_format((($venta->costo)-($venta->impuestos+$venta->comision)), 2, '.', '')."</td>
 			<td>
@@ -121,6 +151,9 @@ class ventas extends CI_Controller
 				</a>
 				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$venta->id_venta.");'>
 				<i class='fa fa-trash-o fa-3x'></i>
+				</a>
+				<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir(".$venta->id_venta.");'>
+				<i class='fa fa-file-pdf-o fa-3x'></i>
 				</a>
 			</td>
 			</tr>";
@@ -144,10 +177,12 @@ class ventas extends CI_Controller
 			<td></td>
 			<td></td>
 			<td></td>
+			<td></td>
 			</tr>";
 				
 			echo "<tr>
 			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -162,6 +197,87 @@ class ventas extends CI_Controller
 		echo "</tbody>
 		</table><tr class='odd' role='row'>";
 	}
+
+
+	////////////////////////////////////Factura Ventas//////////////////////
+
+
+public function createFolder()
+    {
+        if(!is_dir("./files"))
+        {
+            mkdir("./files", 0777);
+            mkdir("./files/pdfs", 0777);
+        }
+    }
+
+  public function imprimirfactura()
+    {
+
+	    //Load the library
+	    /*$this->load->library('html2pdf');
+	    
+	    //Set folder to save PDF to
+	    $this->html2pdf->folder('./assets/pdfs/');
+	    
+	    //Set the filename to save/download as
+	    $this->html2pdf->filename('factura.pdf');
+	    
+	    //Set the paper defaults
+	    $this->html2pdf->paper('a4', 'portrait');
+	    
+	    //$data = array(
+	    //	'title' => 'PDF Created',
+	    //	'message' => 'Hello World!'
+    	    //);
+	    $data=$this->facturaImprimir($_POST['id']);
+	    //Load html view
+
+    	$this->html2pdf->html(utf8_decode("".(string)$data.""));
+ 	    
+	    if($this->html2pdf->create('save')) {
+	    	//PDF was successfully saved or downloaded
+	    	echo 'PDF saved';
+	    }
+
+	    var_dump("HOla mundo");
+	 $this->load->helper(array('dompdf', 'file'));
+	 $this->load->helper('file'); 
+     // page info here, db calls, etc.     
+     $html = $this->facturaImprimir($_POST['id']);
+     //pdf_create(utf8_decode("".(string)$html.""), 'filename');
+     //or
+     $data = pdf_create($html, '', false);
+     write_file('factura', $data);
+*/
+
+
+    // Creacion del PDF
+     $this->load->library('pdf'); // Load library
+    $this->pdf->AddPage();
+    $this->pdf->SetFont('Arial','B',16);
+    $this->pdf->Cell(40,10,'Hello World!');
+    $this->pdf->Output('imprimir.pdf','D');
+    echo "hola mundo";
+    
+
+    }    
+
+        public function show()
+    {
+        if(is_dir("./files/pdfs"))
+        {
+            $filename = "factura.pdf"; 
+            $route = base_url("files/pdfs/factura.pdf"); 
+            if(file_exists("./files/pdfs/".$filename))
+            {
+                header('Content-type: application/pdf'); 
+                readfile($route);
+            }
+        }
+    }
+
+    ///////////////////////////////////Finalizar Factura ventas////////////
 	
 	function kill_venta()
 	{
@@ -173,7 +289,8 @@ class ventas extends CI_Controller
 
 
 		$id = $this->modelo_compras->get_datos_venta($_POST['id']);
-		$fecha=$id[0]->fecha;
+		$fecha_1=date_create($id[0]->fecha);
+		$fecha=date_format($fecha_1,'Y-m-d');
 		$id=$id[0]->id_user;
 
 		$datos_afiliado = $this->model_perfil_red->datos_perfil($id);
@@ -214,6 +331,9 @@ class ventas extends CI_Controller
 		$this->template->set("mercanciaFactura",$mercanciaFactura);
 		$this->template->set("info_mercancia",$info_mercancia);
 		
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		$this->template->set("envio",$canal[0]->gastos);
+		
 		$pais = $this->general->get_pais($id);
 		$this->template->set("pais_afiliado",$pais);
 		
@@ -224,5 +344,72 @@ class ventas extends CI_Controller
 		
 		$this->template->set_theme('desktop');
 		$this->template->build('website/bo/administracion/ventas/factura');
+	}
+
+	function facturaImprimir(){
+
+		$id_venta = $_POST['id'];
+		$retorno = $_POST['link'];
+		
+		$id = $this->modelo_compras->get_datos_venta($id_venta);
+		$fecha_1=date_create($id[0]->fecha);
+		$fecha=date_format($fecha_1,'Y-m-d');
+		$id=$id[0]->id_user;
+
+		$datos_afiliado = $this->model_perfil_red->datos_perfil($id);
+		$this->template->set("datos_afiliado",$datos_afiliado);
+		
+		$mercanciaFactura = $this->modelo_compras->get_mercancia_venta($id_venta);
+		
+		$data=array();
+		$contador=0;
+		$info_compras=Array();
+		
+		foreach ($mercanciaFactura as $items)
+		{
+		
+			$imagenes=$this->modelo_compras->get_imagenes($items->id_mercancia);
+			$id_tipo_mercancia=$this->modelo_compras->get_tipo_mercancia($items->id_mercancia);
+			$id_tipo_mercancia=$id_tipo_mercancia[0]->id_tipo_mercancia;
+			if($id_tipo_mercancia==1)
+				$detalles=$this->modelo_compras->detalles_productos($items->id_mercancia);
+			else if($id_tipo_mercancia==2)
+				$detalles=$this->modelo_compras->detalles_servicios($items->id_mercancia);
+			else if($id_tipo_mercancia==3)
+				$detalles=$this->modelo_compras->detalles_combinados($items->id_mercancia);
+			else if($id_tipo_mercancia==4)
+				$detalles=$this->modelo_compras->detalles_paquete($items->id_mercancia);
+			else if($id_tipo_mercancia==5)
+				$detalles=$this->modelo_compras->detalles_membresia($items->id_mercancia);
+
+			$info_mercancia[$contador]=Array(
+					"imagen" => $imagenes[0]->url,
+					"nombre" => $detalles[0]->nombre,
+					"descripcion" => $detalles[0]->descripcion
+			);
+			$contador++;
+		
+		}
+/////////////////////////////////////////////////////////////////////////////////
+
+		$this->template->set("id",$id_venta);
+		$this->template->set("link",$retorno);
+		$this->template->set("mercanciaFactura",$mercanciaFactura);
+		$this->template->set("info_mercancia",$info_mercancia);
+		
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		$this->template->set("envio",$canal[0]->gastos);
+		
+		$pais = $this->general->get_pais($id);
+		$this->template->set("pais_afiliado",$pais);
+		
+		$empresa  = $this->model_admin->val_empresa_multinivel();
+		$this->template->set("empresa",$empresa);
+
+		$this->template->set("fecha",$fecha);
+		
+		$this->template->set_theme('desktop');
+		
+		return $this->template->build('website/bo/administracion/ventas/factura_2');
 	}
 }

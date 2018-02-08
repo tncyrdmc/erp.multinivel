@@ -12,16 +12,16 @@
 			<input type="text" class="form-control" required name="nombre" value = '<?= $datosDeRed[0]->nombre;?>'>
 
 			<label for="">Descripcion</label>
-			<textarea class="form-control" required name="descripcion" ><?= $datosDeRed[0]->descripcion;?></textarea>
+			<textarea class="form-control" rows="5" required name="descripcion" ><?= $datosDeRed[0]->descripcion;?></textarea>
 		</div>		
 		<div class="form-group">			
 			<div class="col-md-5"><br>
 			<p>Nota: Si tu red es de frontalidad o profundidad es infinita, en la configuracion ponle 0.</p><br>
 				<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
-					<input type="number" class="form-control" name="frontal" size="30" placeholder="frontalidad" value="<?= $datosDeRed[0]->frontal;?>" required>
+					<input type="number" class="form-control" name="frontal" size="30" min="0" placeholder="frontalidad" value="<?= $datosDeRed[0]->frontal;?>" required>
 		        </label>
 		        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
-					<input type="number" class="form-control" name="profundidad" size="30" placeholder="profundidad" value="<?= $datosDeRed[0]->profundidad;?>" required>
+					<input type="number" class="form-control" name="profundidad" size="30" min="0" placeholder="profundidad" value="<?= $datosDeRed[0]->profundidad;?>" required>
 		        </label>
 	        </div>
 			<div class="col-md-1"><br>
@@ -40,9 +40,20 @@
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="UNI" <?=($datosDeRed[0]->plan=="UNI") ? 'checked' : '' ?> placeholder="tipo de plan">
 	        <i></i>Unilevel</label></div>
+	       
 		</div>
+		</div>		
+			<div class="row">	
+		<div class="form-group">
+			<br><p>Valor del Punto Comisionable.</p><br>
+			<div class="col-md-5">
+				<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-dollar"></i>
+					<input type="number" min="1" class="form-control" name="valor_punto" size="10" placeholder="Valor del Punto" value="<?= $datosDeRed[0]->valor_punto;?>" required>
+		      </label></div>
+		</div>
+		</div>
+		 
 		
-		</div>	
 			
 			
 		<div class="row pull-right"><button type="submit" class="btn btn-success"  >Actualizar</button>	</div>

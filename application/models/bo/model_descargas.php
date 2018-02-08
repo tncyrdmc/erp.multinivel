@@ -7,7 +7,9 @@ class model_descargas extends CI_Model
 	}
 	
 	function BuscarTipo($tipo){
-		$q = $this->db->query("select * from cat_tipo_archivo where descripcion = '".$tipo."'");
+		$query = "select * from cat_tipo_archivo where descripcion = '".$tipo."'";
+		//echo $query;exit();
+		$q = $this->db->query($query);
 		$tipo = $q->result();
 		return $tipo[0]->id_tipo;
 	}
@@ -24,7 +26,7 @@ class model_descargas extends CI_Model
 			'nombre_publico' => $nombre
 		);
 		$this->db->insert('archivo',$datos);
-		return mysql_insert_id();
+		return $this->db->insert_id();
 	}
 	
 	function EliminarArchivo($id){
@@ -37,7 +39,7 @@ class model_descargas extends CI_Model
 	{
 		$q=$this->db->query('SELECT a.descripcion grupo, concat(b.nombre," ",b.apellido) usuario,c.fecha fecha,c.nombre_publico n_publico, cta.descripcion tipo, c.descripcion descripcion,c.ruta ruta, c.id_archivo id, c.status estado 
 							FROM cat_grupo a, user_profiles b, archivo c, cat_tipo_archivo cta
-							WHERE a.id = c.id_grupo and b.user_id= c.id_usuario and cta.id_tipo = c.id_tipo and a.tipo = "DES"');
+							WHERE a.id = c.id_grupo and b.user_id= c.id_usuario and cta.id_tipo = c.id_tipo and a.tipo = "DES" AND cta.id_tipo not in (21,22)');
 		return $q->result();
 	}
 	

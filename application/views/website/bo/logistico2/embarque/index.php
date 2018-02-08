@@ -6,15 +6,14 @@
 						
 							<?php  if($type=='5'){?>
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-							
-								> Surtidos / Embarque
+							<span>							
+								> Pedidos / Embarques
 							</span>
 						<?php }else{?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
 								> <a href="/bol/dashboard/"> Logistico</a>
-								> Surtidos / Embarque
+								> Pedidos / Embarques
 							</span>
 						
 							<?php }?>	
@@ -51,15 +50,15 @@
 												<div class="col-sm-3 link">
 												<a href="/bo/logistico2/pedidos_pendientes">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-list-alt fa-3x"></i>
-														<h1>Pedidos Pendientes</h1>
+														<i class="fa fa-clipboard fa-3x"></i>
+														<h1>Pedidos a Embarcar</h1>
 													</div>
 												</a>
 												</div>
 												<div class="col-sm-3 link">
 												<a href="/bo/logistico2/pedidos_transito">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-check fa-3x"></i>
+														<i class="fa fa-truck fa-3x"></i>
 														<h1>Pedidos en Transito</h1>
 													</div>
 												</a>
@@ -67,7 +66,7 @@
 												<div class="col-sm-3 link">
 												<a href="/bo/logistico2/pedidos_embarcados">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-car fa-3x"></i>
+														<i class="fa fa-check fa-3x"></i>
 														<h1>Pedidos Embarcados </h1>
 													</div>
 												</a>

@@ -52,10 +52,11 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito_de_compras?co=c">
+													<a href="/bo/comercial/mercancia">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-shopping-cart fa-3x"></i>
-															<h1>Carrito de Compras</h1>
+															<i class="fa fa-cube fa-3x"></i>
+															<h1>Mercancias</h1>
+															<h1>.</h1>
 														</div>
 													</a>
 												</div>
@@ -63,26 +64,27 @@
 													<a href="/bo/comercial/red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-sitemap fa-3x"></i>
-															<h1>Red de Afiliacion</h1>
+															<h1>Red de <br>Afiliacion</h1>
 														</div>
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/reportes">
+													<a href="/bo/comercial/transacciones_billetera"> <!-- /bo/reportes -->
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-book fa-3x"></i>
-															<h1>Reportes<br>&nbsp</h1>
+															<i class="fa fa-hand-o-right fa-3x"></i>&nbsp&nbsp&nbsp<i class="fa fa-money fa-3x"></i>
+															<h1>Transacciones <br> en Billetera</h1><!-- Reportes -->
 														</div>
 													</a>
-												</div>
+												</div>	
 												<div class="col-sm-3 link">	
-													<a href="/bo/CuentasPagar/Archivero">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-folder fa-3x"></i>
-															<h1>Archivero<br>&nbsp</h1>
-														</div>
-													</a>
-												</div>
+														<a href="#">
+															<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+																<i class="fa fa-archive fa-3x"></i>
+																<h1>Archivero</h1>
+																<h1>.</h1>
+															</div>
+														</a>
+												</div>											
 											</div>
 										 </div>
 									</div>

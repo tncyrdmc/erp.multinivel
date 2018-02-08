@@ -252,7 +252,7 @@ foreach ( $servicio as $key ) {
 
 										<section class="col col-2" style="width: 50%;">
 											<label class="input"> Tiempo mínimo de entrega <input
-												required placeholder="En días" type="number" name="entrega"
+												placeholder="En días" type="number" name="entrega"
 												id="entrega" value='<? echo $mercancia[0]->entrega?>'>
 											</label>
 										</section>
@@ -261,7 +261,7 @@ foreach ( $servicio as $key ) {
 
 										<section class="col col-3" style="width: 50%;">
 											<label class="input"> Puntos comisionables <input
-												required type="number" min="1" max="" name="puntos_com"
+												type="number" min="0" max="" name="puntos_com"
 												id="puntos_com"
 												value='<? echo $mercancia[0]->puntos_comisionables?>'>
 											</label>

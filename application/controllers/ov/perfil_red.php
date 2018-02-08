@@ -2,6 +2,8 @@
 
 class perfil_red extends CI_Controller
 {
+	
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -17,11 +19,12 @@ class perfil_red extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_planes');
 		$this->load->model('ov/modelo_dashboard');
-		$this->load->model('bo/model_tipo_usuario');
+		$this->load->model('bo/model_tipo_usuario');		
+		$this->load->model('bo/bonos/titulo');
 		if (!$this->tank_auth->is_logged_in()&&!$_POST['token'])
 		{																		// logged in
 		redirect('/auth');
-		}
+		}	
 		
 	}
 
@@ -57,6 +60,7 @@ class perfil_red extends CI_Controller
 		$edad            = $this->model_perfil_red->edad($id);
 		$sexo            = $this->model_perfil_red->sexo();
 		$style           = $this->general->get_style($id);
+		$pais            = $this->model_perfil_red->get_pais();
 		
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
 		$dir             = $this->model_perfil_red->dir($id);
@@ -65,7 +69,7 @@ class perfil_red extends CI_Controller
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
 		$coaplicante	 = $this->model_perfil_red->get_coaplicante($id);
-		
+		$cuenta			 = $this->model_perfil_red->val_cuenta_banco($id);
 		
 		$this->template->set("dir",$dir);
 		$this->template->set("style",$style);
@@ -73,13 +77,14 @@ class perfil_red extends CI_Controller
 		$this->template->set("telefonos",$telefonos);
 		$this->template->set("edad",$edad[0]->edad);
 		$this->template->set("sexo",$sexo);
-
+		$this->template->set("pais",$pais);
 		$this->template->set("tipo_fiscal",$tipo_fiscal);
 		$this->template->set("civil",$civil);
 		$this->template->set("estudios",$estudios);
+		$this->template->set("cuenta",$cuenta);
 		$this->template->set("ocupacion",$ocupacion);
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
-		$this->template->set("name_c",$coaplicante[0]->nombre);
+		//$this->template->set("name_c",$coaplicante[0]->nombre);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
@@ -150,12 +155,22 @@ class perfil_red extends CI_Controller
 	
 	private function printPosicionAfiliado($nivel, $afiliado) {
 		$img_perfil = $this->setImagenAfiliado ($afiliado[0]->id_afiliado);
-	
+		$colorDirecto=$this->getDirectoColor($afiliado[0]->directo);
+		
 		echo "  <li id='".$afiliado[0]->id_afiliado."'>
 		        	<a class='quitar' onclick='subred(".$afiliado[0]->id_afiliado.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
-		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='todo'>".$afiliado[0]->afiliado."<br />Detalles</div>
+		        	<div onclick='detalles(".$afiliado[0]->id_afiliado.")' class='".$colorDirecto."'>".$afiliado[0]->afiliado."<br />Detalles</div>
 		        </li>";
 	}
+	
+	private function getDirectoColor($directo){
+		$id_usuario=$this->tank_auth->get_user_id();
+		if($id_usuario==$directo)
+			return 'todo1';
+		return 'todo';
+	}
+	
+	
 	
 	private function printEspacioParaAfiliar($sponsor,$id_afiliado, $lado) {
 		echo "<li>
@@ -237,7 +252,11 @@ class perfil_red extends CI_Controller
 				else
 				{
 					$aux++;
-					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+					$id              = $this->tank_auth->get_user_id();
+					
+					$sponsor 			 = $this->model_perfil_red->get_sponsor_id($afiliado[0]->user_id,$id_red);
+
+					($sponsor[0]->directo==$id) ? $todo='todo1' : $todo='todo';
 					echo "
 					<li id='t".$afiliado[0]->user_id."'>
 		            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.",".($nivel+1).")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
@@ -382,6 +401,7 @@ class perfil_red extends CI_Controller
 
 		$pais=$this->modelo_dashboard->get_user_country_code($_POST['id']);
 		
+		
 		$usuario =$this->model_perfil_red->datos_perfil($_POST['id']);
 		$edad    =$this->model_perfil_red->edad($_POST['id']);
 		$telefonos    =$this->model_perfil_red->telefonos($_POST['id']);
@@ -389,46 +409,25 @@ class perfil_red extends CI_Controller
 		$username = $this->general->username($_POST['id']);
 		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
 		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
+		$bonos  = $this->model_afiliado->BonosUsuario($_POST['id']);
+		$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
+		$titulo=$this->titulo->getNombreTituloAlcanzadoAfiliado($_POST['id'],date('Y-m-d'));		
 		
-		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
-		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<img alt="'.$usuario[0]->nombre.'" src="'.$img_perfil.'" style="max-width: 100%; max-height: 100%">
-			</div>';
-		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<div class="demo-icon-font">Pais
-					<img class="flag flag-'.strtolower($pais).'" >
-               	</div>';
-		echo '
-				<div class="row">Id: <b>'.$_POST["id"].'</b></div>';
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("id",$_POST['id']);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("username",$username[0]->username);
+		$this->template->set("compras",$compras);
+		$this->template->set("puntos",$puntos);
+		$this->template->set("comision",$comision);
+		$this->template->set("bonos",$bonos);
+		$this->template->set("titulo",$titulo);
+		$this->template->set("edad",$edad);
+		$this->template->set("telefonos",$telefonos);
+		$this->template->set("dir",$dir);
+		$this->template->set("pais",$pais);
 		
-		echo '<div class="row">Username: <b>'.$username[0]->username.'</b></div>';
-		echo '<div class="row">Nombre: <b>'.$usuario[0]->nombre.'</b></div>';
-		echo '<div class="row">Apellido: <b>'.$usuario[0]->apellido.'</b></div>';
-		echo '<div class="row">Nacimiento: <b>'.$usuario[0]->nacimiento.'</b></div>';
-		echo '<div class="row">Edad: <b>'.$edad[0]->edad.'</b></div>';
-		echo '<div class="row">Email: <b>'.$usuario[0]->email.'</b></div>';
-		echo '<div class="row">Dirección: <b>'.$dir[0]->calle.' '.$dir[0]->colonia.' '.$dir[0]->municipio.' '.$dir[0]->estado.' '.$dir[0]->cp.'</b></div>';
-		echo '<div class="row">Teléfono(s) fijo(s): ';
-		foreach ($telefonos as $key)
-		{
-			if($key->tipo=='Fijo')
-			{
-				echo '<b>'.$key->numero."</b><br />";
-			}
-		}
-		echo '</div>';
-		echo '<div class="row">Teléfono(s) Movil: ';
-		foreach ($telefonos as $key)
-		{
-			if($key->tipo=='Móvil')
-			{
-				echo '<b>'.$key->numero."</b><br />";
-			}
-		}
-		echo '</div><br>';
-		echo '<div class="row">Compras: $ <b>'.number_format($compras,2).'</b></div>';
-		echo '<div class="row">Comisiones: $ <b>'.number_format($comision,2).'</b></div>';
-		echo '</div></div></div>';
+		$this->template->build('website/ov/perfil_red/detalle');
 	}
 	
 	function detalle_usuario2()
@@ -441,16 +440,20 @@ class perfil_red extends CI_Controller
 		
 		$usuario = $this->model_perfil_red->datos_perfil($_POST['id']);
 		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
-		//$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
+		$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
 		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
+		$bonos  = $this->model_afiliado->BonosUsuario($_POST['id']);
 		
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("id",$_POST['id']);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("username",$username[0]->username);
-		$this->template->set("compras",$compras);
-		//$this->template->set("puntos",$puntos);
+		$this->template->set("compras",$compras[0]->compras);
+		$this->template->set("compras2",$compras[0]->comprast);
+		$this->template->set("puntos",$puntos[0]->puntos);
+		$this->template->set("puntos2",$puntos[0]->puntosu);
 		$this->template->set("comision",$comision);
+		$this->template->set("bonos",$bonos);
 		$this->template->set("pais",$pais);
 		$this->template->build('website/ov/perfil_red/detallesAfiliado2');
 		
@@ -776,7 +779,7 @@ class perfil_red extends CI_Controller
 				
 		}
 		
-		$premium         = $red[0]->premium;
+		//$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		$planes 		 = $this->model_planes->Planes();
 	
@@ -804,7 +807,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		//$this->template->set("premium",$premium);
 		$this->template->set("planes",$planes);
 	
 		$this->template->set_theme('desktop');
@@ -882,7 +885,7 @@ class perfil_red extends CI_Controller
 		$use_username=$this->model_perfil_red->use_username();
 		
 		$email = preg_match(
-				'/^[A-z0-9_\-.]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				'/^[A-z0-9_\-.]+[A-z0-9]{1,}+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 		);
 		
 		if(!$_POST['username']||!$_POST['mail']||!$_POST['password']||!$_POST['confirm_password']){
@@ -928,30 +931,15 @@ class perfil_red extends CI_Controller
 		$use_username=$this->model_perfil_red->use_username_modificar();
 	
 		$email = preg_match(
-				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+				'/^[A-z0-9_\-.]+[A-z0-9]{1,}+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
 				);
 	
-		if(!$_POST['username']||!$_POST['mail']){
+		if(!$_POST['username']||!$_POST['mail']||!$email||$_POST['password']!=$_POST['confirm_password']||$use_mail||$use_username){
 			echo "<script>
 				  $('.btn-next').attr('disabled','disabled');
 				  </script>
 				";
-		}
-	
-		else if(!$email){
-			echo "<script>
-				  $('.btn-next').attr('disabled','disabled');
-				  </script>
-				";
-		}
-		else if($_POST['password']!=$_POST['confirm_password']){
-			echo "<script>
-				  $('.btn-next').attr('disabled','disabled');
-				  </script>
-				";
-		}
-	
-		else if(!$use_mail&&!$use_username){
+		}else {
 			echo "<script>
 				  $('.btn-next').removeAttr('disabled');
 				  </script>
@@ -962,8 +950,8 @@ class perfil_red extends CI_Controller
 	function use_mail()
 	{
 		$email = preg_match(
-				'/^[A-z.0-9_\-]+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
-		);
+				'/^[A-z0-9_\-.]+[A-z0-9]{1,}+[@][A-z0-9_\-]+([.][A-z0-9_\-]+)+[A-z.]{1,}$/', $_POST['mail']
+		); 
 		
 		$use_mail=$this->model_perfil_red->use_mail();
 		if($use_mail){
@@ -1053,14 +1041,16 @@ class perfil_red extends CI_Controller
 	
 	function afiliar_nuevo()
 	{
-		
-		$resultado = $this->model_afiliado->crearUsuario();
-		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
+		$this->load->model('ov/modelo_afiliado');	//pruebas
 		isset($_POST['token']) ? $this->model_perfil_red->trash_token($_POST['token']) : '';
-		if($resultado)
+		$resultado = $this->modelo_afiliado->crearUsuario();
+		#echo $resultado;
+		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
+		
+		if(intval($resultado))
 		{
-			$id_afiliado=$this->model_perfil_red->get_id();
-			echo "El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$id_afiliado[0]->id."</b>";
+			#$id_afiliado=$this->model_perfil_red->get_id(); //$id_afiliado[0]->id
+			echo "!FINE¡ El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$resultado."</b>";
 		}
 		else
 		{
@@ -1152,6 +1142,7 @@ class perfil_red extends CI_Controller
 			echo "El Email ya existe , ingrese otro no existente";
 			exit();
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$this->model_perfil_red->actualizar($id,$pais[0]->codigoPais);
 		echo "Felicitaciones <br> Se han actualizado los datos";
@@ -1666,5 +1657,6 @@ class perfil_red extends CI_Controller
 		$this->template->set("red",$red);
 		$this->template->set("valor_retencion",$valor_retencion);
 		$this->template->build('website/ov/perfil_red/fases');
-	}
+	}	
+	
 }

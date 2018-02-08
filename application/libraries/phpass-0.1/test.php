@@ -68,5 +68,5 @@ if ($ok == 6)
 	print "All tests have PASSED\n";
 else
 	print "Some tests have FAILED\n";
-
+	
 ?>

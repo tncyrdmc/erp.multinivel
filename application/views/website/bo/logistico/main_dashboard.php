@@ -65,11 +65,11 @@
 									</div>
 								<div>
 									<div class="col-sm-3 link">
-										<a href="/bo/premios/index">
-											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-												<i class="fa fa-trophy fa-3x"></i>
+										<a href="#">
+											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:#c0c0c0">
+												<i class="fa fa-shopping-cart fa-3x"></i>
 												<h1>
-													Premios
+													Ventas
 												</h1>
 											</div>
 										</a>

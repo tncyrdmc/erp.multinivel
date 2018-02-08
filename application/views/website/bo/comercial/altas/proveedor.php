@@ -7,25 +7,31 @@
 						<?php  if($type=='5'){?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							
-							<span>>
-								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>>
-								Proveedor 
+							<span>
+								> <a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
+								> Proveedor 
 							</span>
-							<?php } elseif($type='4'){?>
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							
-							<span>>
-							    <a class="" href="/bo/comercial/altas/"><i class=""></i> Altas</a>>
-								 Proveedor
-								
+							<?php } else if($type=='4'){?>
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>							
+							<span>
+								> <a class="" href="/bo/comercial/"><i class=""></i> Comercial</a>
+								> Proveedor								
 							</span>
 					
-						<?php }else{?>		
+						<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> Proveedor 
+							</span>		
+						<?php }else{?>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-						
-								<a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
-								 >Proveedor 
+							<span>
+								 > <a href="/bol/"> Logistico </a>
+								 > <a class="" href="/bo/logistico2/alta/"><i class=""></i> Alta</a>
+								 > Proveedor 
 							</span>
 						
 						<?php }?>		

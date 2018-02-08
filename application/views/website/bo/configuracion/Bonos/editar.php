@@ -38,9 +38,9 @@ var j=0;
 						<input value="DIA" name="frecuencia" placeholder="frecuencia" type="radio" <?php if($bono[0]->frecuencia == 'DIA') echo 'checked=""';?>>
 					<i></i>Diario</label>
 		<br><br>
-		<label class="toggle" style="width: 4rem;">
-			<input name="plan" type="checkbox">
-			<i data-swchoff-text="<?= $bono[0]->plan;?>" data-swchon-text="<?= ($bono[0]->plan == "SI") ? "NO" :"SI";?>"></i>Plan
+		<label class="checkbox">
+			<input name="plan" <?php if($bono[0]->plan == "SI") echo "checked='checked'";?> type="checkbox">
+			<i></i>Remanenete
 		</label>
 		</div>
 		<div class="form-group">
@@ -56,7 +56,7 @@ var j=0;
 										<div class="col col-lg-3 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Rango <i class="fa fa-plus"></i></a>
+											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condicion <i class="fa fa-plus"></i></a>
 										</div>
 										
 									</div>
@@ -64,9 +64,9 @@ var j=0;
 										<div class="col col-lg-2">
 										</div>
 										<div class="col col-xs-12 col-sm-12 col-lg-10">
-											<label class="select">Nombre Rango
+											<label class="select">Nombre Condicion
 											<select id="id_rango0" style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
-											<option value='0'>--- Seleccione Rango ---</option>
+											<option value='0'>--- Seleccione Condicion ---</option>
 													<?php	
 														foreach($rangosActivos as $categoria){
 															echo "<option value='".$categoria->id_rango."'>".$categoria->nombre_rango."</option>";
@@ -126,9 +126,9 @@ var j=0;
 
 									<div class="row" id="niveles">
 									<div class="row">
-										<div class="col col-lg-3 col-xs-2">
+										<div class="col col-lg-1 col-xs-2">
 										</div>
-										<div class="col col-lg-2 col-xs-2">
+										<div class="col col-lg-4 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_nivel()"> Agregar Nivel <i class="fa fa-plus"></i></a>
 											<a style="cursor: pointer;" onclick="reload_niveles()">&nbsp&nbsp&nbsp<i style="font-size: 2rem;color: #60A917 !important;" class="fa fa-refresh"></i></a>
 										</div>
@@ -139,19 +139,72 @@ var j=0;
 									foreach($valorNiveles as $nivel) {
 									?>
 									<div id="nivel<?php echo $contador;?>" class="row">
-										<div class="col col-lg-2">
-										</div>
-									<div class="col col-lg-2">
-										<span style="margin: 2rem;">Nivel</span>
+									<div class="col col-lg-1">
+									</div>
+									<div class="col col-lg-1">
+										<span style="margin: 5rem;">Nivel</span>
 		        							<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>
 												<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" required type="number" readonly value="<?php echo $nivel->nivel;?>">
 											</label>
 										</div>
-										<div class="col col-lg-1">
+									<div class="col col-lg-1">
+									</div>
+										<div class="col col-lg-2">
+										<label style="margin: 0.2rem;" class="select">Repartir
+											<select name="verticalidad_red[]" style="width: 10rem;">
+												 
+												<?php
+												if($nivel->verticalidad=="ASC"){
+													echo "<option value='ASC' selected>$ Hacia Arriba</option>
+														  <option value='DESC'>$ Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Arriba</option>
+														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
+														  ";
+												}else if($nivel->verticalidad=="DESC"){
+													echo "<option value='ASC'>$ Hacia Arriba</option>
+														  <option value='DESC' selected>$ Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Arriba</option>
+														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
+														  ";
+												}else if($nivel->verticalidad=="PASC"){
+													echo "<option value='ASC'>$ Hacia Arriba</option>
+														  <option value='DESC'>$ Hacia Abajo</option>
+														  <option value='PASC' selected>%(Puntos) Hacia Arriba</option>
+														  <option value='RDESC'>%(Puntos)Residual Abajo</option>
+														  ";
+												}else if($nivel->verticalidad=="RDESC"){
+													echo "<option value='ASC'>$ Hacia Arriba</option>
+														  <option value='DESC'>$ Hacia Abajo</option>
+														  <option value='PASC'>%(Puntos) Hacia Arriba</option>
+														  <option value='RDESC' selected>%(Puntos)Residual Abajo</option>
+														  ";
+												}
+												?>
+											</select>
+										</label>
 										</div>
 										<div class="col col-lg-2">
+										<label style="margin: 0.2rem;" class="select">Condicion
+											<select name="condicion_red[]" style="width: 10rem;">
+												
+												<?php
+												if($nivel->condicion_red=="RED")
+													echo "<option value='RED' selected>Toda La red</option>";
+												else 
+													echo "<option value='RED'>Toda La red</option>";
+												
+												if($nivel->condicion_red=="DIRECTOS")
+													echo "<option value='DIRECTOS' selected>Directos Afiliado</option>";
+												else
+													echo "<option value='DIRECTOS'>Directos Afiliado</option>";
+													
+												?>
+											</select>
+										</label>
+										</div>
+										<div class="col col-lg-4">
 		        							<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>
-												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number" value="<?php echo $nivel->valor;?>">
+												<input class="form-control" style="width:150px; height:30px;" name="valor[]" step="any" size="20" placeholder="Valor del Bono" required type="number" value="<?php echo $nivel->valor;?>">
 											</label>
 											<?php if($contador>0){?>
 											<a style="cursor: pointer;color: red;" onclick="delete_nivel(<?php echo $contador;?>)">Eliminar Nivel <i class="fa fa-minus"></i></a>
@@ -290,20 +343,36 @@ function add_rango()
 
 function add_nivel()
 {
-	var code=	'<div id="nivel'+j+'" class="row"><br>'
-	+'<div class="col col-lg-2">'
+	var code=	'<div id="nivel'+j+'" class="row">'
+	+'<div class="col col-lg-1">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<span >Nivel</span>'
 		+'<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>'
-		+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" readonly>'
+		+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" min="1">'
 		+'</label>'
 	+' </div>'
-	+'<div class="col col-lg-1">'
-	+' </div>'
-	+'<div class="col col-lg-2">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
+	+'<label class="select">Repartir'
+		+'<select name="verticalidad_red[]" style="width: 10rem;">'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición'
+		+'<select name="condicion_red[]" style="width: 10rem;">'
+			+'<option value="RED">Toda La red</option>'
+			+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-lg-4">'
 	+'	<label class="input" style="margin: 2rem;"><i class="icon-prepend fa fa-money"></i>'
-	+'		<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number">'
+	+'		<input class="form-control" style="width:150px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'	</label>'
 	+'<a style="cursor: pointer;color: red;" onclick="delete_nivel('+j+')">Eliminar Nivel <i class="fa fa-minus"></i></a>'
 	+'</div>'
@@ -325,15 +394,15 @@ function delete_nivel(id)
 
 function reload_niveles(){
 var code='<div class="row">'
-	+'<div class="col col-lg-3 col-xs-2">'
+	+'<div class="col col-lg-1 col-xs-1">'
 	+'</div>'
-	+'<div class="col col-lg-2 col-xs-2">'
+	+'<div class="col col-lg-4 col-xs-2">'
 	+'<a style="cursor: pointer;" onclick="add_nivel()"> Agregar Nivel <i class="fa fa-plus"></i></a>'
 	+'<a style="cursor: pointer;" onclick="reload_niveles()">&nbsp&nbsp&nbsp<i style="font-size: 2rem;color: #60A917 !important;" class="fa fa-refresh"></i></a>'
 	+'</div>'
 	+'</div>'
 	+'<div class="row">'
-	+'<div class="col col-lg-2">'
+	+'<div class="col col-lg-1">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<span style="margin: 2rem;">Nivel</span>'
@@ -341,11 +410,27 @@ var code='<div class="row">'
 	+'<input class="form-control" style="width:100px; height:30px;" name="id_niveles_bonos[]" size="20" value="0" required="" type="number" readonly>'
 	+'</label>'
 	+'</div>'
-	+'<div class="col col-lg-1">'
-	+' </div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
+	+'<label class="select">Repartir'
+		+'<select name="verticalidad_red[]" style="width: 10rem;">'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición'
+		+'<select name="condicion_red[]" style="width: 10rem;">'
+			+'<option value="RED">Toda La red</option>'
+			+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>'
-	+'<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number">'
+	+'<input class="form-control" style="width:150px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'</label>'
 	+'</div>'
 	+'</div>'

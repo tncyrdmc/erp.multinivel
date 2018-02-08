@@ -18,6 +18,7 @@ class bonos extends CI_Controller
 		$this->load->model('bo/model_bonos');
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/bonos/calculador_bono');
 	}
 	
 	function index()
@@ -39,6 +40,27 @@ class bonos extends CI_Controller
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/configuracion/Bonos/index');
+	}
+	
+	function index_calculo_bonos()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario = $this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/index_calculo_bonos');
 	}
 	
 	function alta()
@@ -130,9 +152,10 @@ class bonos extends CI_Controller
 
 		$id_niveles_bonos = $_POST['id_niveles_bonos'];
 		$valores = $_POST['valor'];
-			
+		$condicion_red = $_POST['condicion_red'];
+		$verticalidad_red = $_POST['verticalidad_red'];
 		for ($i=0;$i<sizeof($valores);$i++){
-			$valoresBono = $this->model_bonos->setUpValoresBones($idBono,$id_niveles_bonos[$i],$valores[$i]);
+			$valoresBono = $this->model_bonos->setUpValoresBones($idBono,$id_niveles_bonos[$i],$condicion_red[$i],$valores[$i],$verticalidad_red[$i]);
 			$this->model_bonos->insert_bono_valor_niveles($valoresBono);
 		}
 		
@@ -179,19 +202,21 @@ class bonos extends CI_Controller
 		$mes_desde_afiliacion=$_POST['mesDesdeAfiliacion'];
 		$mes_desde_activacion=$_POST['mesDesdeActivacion'];
 		$frecuencia=$_POST['frecuencia'];
-		$plan = isset($_POST['plan']) && $_POST['plan']  ? "SI" : "NO";
+
+		$plan = isset($_POST['plan']) && $_POST['plan']==="on"  ? "SI" : "NO";
 		$estatus="ACT";
-	
 
 		$bono = $this->model_bonos->setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desde_activacion,$frecuencia,$estatus,$plan);
 		$this->model_bonos->actualizar_bono($id_bono,$bono);
 	
 		$id_niveles_bonos = $_POST['id_niveles_bonos'];
 		$valores = $_POST['valor'];
+		$condicion_red = $_POST['condicion_red'];
+		$verticalidad_red = $_POST['verticalidad_red'];
 		$this->model_bonos->kill_bono_valor_nivel($id_bono);
 		
 		for ($i=0;$i<sizeof($valores);$i++){
-			$valoresBono = $this->model_bonos->setUpValoresBones($id_bono,$id_niveles_bonos[$i],$valores[$i]);
+			$valoresBono = $this->model_bonos->setUpValoresBones($id_bono,$id_niveles_bonos[$i],$condicion_red[$i],$valores[$i],$verticalidad_red[$i]);
 			$this->model_bonos->actualizar_bono_valor_niveles($id_bono,$valoresBono);
 		}
 
@@ -201,6 +226,55 @@ class bonos extends CI_Controller
 		foreach ($rangos as $rango){
 			$this->insertRangosRedesCondiciones($rango,$bono,$id_bono);
 		}
+	}
+	
+	function pago_bono(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$bonos=$this->model_bonos->get_bonos();
+		$this->template->set("bonos",$bonos);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/pagar');
+	}
+	
+	function pagar_bono_calculado(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"administracion"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$fecha=$_POST['fecha'];
+		$id_bono=$_POST['id_bono'];
+		
+		if($this->calculador_bono->calcularComisionesPorBono($id_bono,$fecha))
+			echo "Felicitaciones!<br>Se ha Calculado y Pagado el Bono.";
+		else 
+			echo "ERROR!<br>El bono ya estaba pagado en ese corte o no esta activo.";
 	}
 	
 	function set_Rango(){
@@ -214,7 +288,10 @@ class bonos extends CI_Controller
 				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
 			else if($tipoRango->tipo_rango==3)
 				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
-			
+			else if($tipoRango->tipo_rango==4)
+				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
+			else if($tipoRango->tipo_rango==5)
+				$this->set_Rango_Redes($_POST['idRango'],$tipoRango->tipo_rango,'cargar_mercancia_red');
 		}
 
 	}
@@ -232,7 +309,16 @@ class bonos extends CI_Controller
 		$idDiv=$idTipoRango;
 		foreach ($rango as $tipoRango){
 			echo '<div class="widget-body col col-12">
-					<div id="divRedes" class="widget-body col col-4">
+					<div id="divRedes" class="widget-body col col-2">
+					<label class="select"><b>Calificado<br>(Dar y/o Recibir)</b>
+						<select id="calificado'.$idRango.'" name="calificado'.$idRango.'">
+							<option value="DOS">Ambos</option>
+							<option value="DAR">Dar</option>
+							<option value="REC">Recibir</option>
+						</select>
+					</label>
+					</div>
+					<div id="divRedes" class="widget-body col col-3">
 					<h3 class="semi-bold">Rango <span>( '.$tipoRango->nombre_rango.' )</span></h3>
 					<hr class="simple">
 						<ul id="myTab'.$_POST['idRango'].$tipoRango->tipo_rango.'" class="nav nav-tabs bordered">
@@ -254,7 +340,7 @@ class bonos extends CI_Controller
 								</div>
 				</div>
 											
-				<div class="widget-body col col-4">
+				<div class="widget-body col col-3">
 					<h3 class="semi-bold">Redes</h3>
 					<label class="select select-multiple">Seleccione las Redes validas para generar el bono
 						<select id="id_red'.$idRango.$idTipoRango.'" multiple="" class="custom-scroll" style="max-width: 20rem;" name="id_red'.$idRango.$idTipoRango.'[]" onChange="'.$nombreMetodo.'($(this).val(),'.$tipoRango->id_rango.$idDiv.','.$idRango.$idTipoRango.');">
@@ -442,20 +528,185 @@ class bonos extends CI_Controller
 	}
 	
 	private function getCondiciones2InsertBonos($tipoCondicion,$condiciones1,$idRango,$idTipoRango,$red,$bono,$idBono){
-	
+		$calificado=$_POST['calificado'.$idRango];
+		
 		foreach ($condiciones1 as $condicion1){
 			if(isset($_POST[$tipoCondicion])){
 				foreach ($_POST[$tipoCondicion] as $condicion2){
-					$condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],$condicion2);
+					$condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],$condicion2,$calificado);
 					$this->model_bonos->insert_condicion_bono($condiciones);
 				}
 			}else {
-				    $condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],0);
+				    $condiciones=$this->model_bonos->setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1[0],0,$calificado);
 				    $this->model_bonos->insert_condicion_bono($condiciones);
 			}
 					
 		}
 
+	}
+	
+	function historial(){
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Bonos/ver_bonos');
+	
+	}
+	
+	function listar_historial(){
+	
+		$fecha_inicio = $_POST['startdate'];
+		$fecha_fin = $_POST['finishdate'];
+	
+		if($fecha_inicio&&$fecha_fin){
+			$historial = $this->model_bonos->get_historial_fecha($fecha_inicio,$fecha_fin);
+	
+			echo
+			"<table  id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Historial</th>
+					<th data-hide='phone,tablet'>Fecha Corte</th>
+					<th data-hide='phone,tablet'>Bono</th>					
+					<th data-hide='phone,tablet'># Pagados </th>
+					<th data-hide='phone,tablet'>Total Pagado</th>
+					<th data-hide='phone,tablet'>Accion</th>
+				</thead>
+				<tbody>";
+	
+	
+			foreach($historial as $hist)
+			{
+				if($hist->id){
+				echo "<tr>
+			<td class='sorting_1'>".$hist->id."</td>
+			<td>".$hist->fecha."</td>
+			<td>".$hist->bono."</td>
+			<td>".$hist->afiliados."</td>
+			<td> $	".number_format($hist->total, 2)."</td>
+			<td>
+				<a title='Ver Detalle' style='cursor: pointer;' class='txt-color-blue' onclick='ver(".$hist->id.");'>
+				<i class='fa fa-eye fa-3x'></i>
+				</a>
+				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$hist->id.");'>
+				<i class='fa fa-trash-o fa-3x'></i>
+				</a>
+			</td>
+			</tr>";
+				}else{
+					echo "<td colspan='6' style='text-align: center'> NO HAY HISTORIAL DISPONIBLE</td>";
+				}	
+	
+			}
+				
+		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function detalle_historial(){
+	
+	
+		$id=$_POST['id'];
+		$fecha =isset($_POST['fecha']) ? $_POST['fecha'] : null;
+	
+		//echo "dentro de historial : ".$id;
+	
+		$historial = ($fecha)
+		? $this->model_bonos->detalle_historial_fecha($id,$fecha)
+		: $this->model_bonos->detalle_historial_id($id);
+	
+		$total = 0 ;
+	
+		echo
+		"<div style='overflow-y: scroll; height: 300px;'><table  id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='80%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Afiliado</th>
+					<th data-hide='phone,tablet'>Afiliado</th>
+					<th data-hide='phone,tablet'>Bono</th>
+					<th data-hide='phone,tablet'>Dia</th>
+					<th data-hide='phone,tablet'>Mes</th>
+					<th data-hide='phone,tablet'>Año</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Valor</th>
+				</thead>
+				<tbody>";
+	
+	
+		foreach($historial as $hist)
+		{
+				
+			echo "<tr>
+			<td class='sorting_1'>".$hist->id_usuario."</td>
+			<td>".$hist->nombres."</td>
+			<td>".$hist->bono."</td>
+			<td>".$hist->dia."</td>
+			<td>".$hist->mes."</td>
+			<td>".$hist->ano."</td>
+			<td>".$hist->fecha."</td>
+			<td> $	".number_format($hist->valor, 2)."</td>
+			</tr>";
+	
+			$total += ($hist->valor);
+	
+		}
+			
+		echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+	
+		echo "<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class='sorting_1'><b>TOTAL:</b></td>
+			<td><b> $	".number_format($total, 2)."</b></td>
+			</tr>";
+	
+		echo "</tbody>
+		</table><tr class='odd' role='row'></div>";
+	
+	}
+	
+	function kill_historial()
+	{
+		//echo "dentro de kill controller ";
+		$q=$this->model_bonos->kill_historial($_POST['id']);
+		if($q){
+			echo "El Historial del Bono ha sido eliminado con exito";
+		}else{
+			echo " Historial del Bono no pudo ser eliminado";
+		}
+	
 	}
 
 }

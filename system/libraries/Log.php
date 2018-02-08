@@ -30,7 +30,7 @@ class CI_Log {
 	protected $_threshold	= 1;
 	protected $_date_fmt	= 'Y-m-d H:i:s';
 	protected $_enabled	= TRUE;
-	protected $_levels	= array('ERROR' => '1', 'DEBUG' => '2',  'INFO' => '3', 'ALL' => '4');
+	protected $_levels	= array('ERROR' => '1', 'DEBUG' => '2',  'INFO' => '3', 'ALL' => '4', 'DEV' => '1');
 
 	/**
 	 * Constructor
@@ -84,6 +84,9 @@ class CI_Log {
 		}
 
 		$filepath = $this->_log_path.'log-'.date('Y-m-d').'.php';
+		
+		$filepath = $this->_log_path.$level.'-'.date('Y-m-d').'.php';
+		
 		$message  = '';
 
 		if ( ! file_exists($filepath))
@@ -97,7 +100,7 @@ class CI_Log {
 		}
 
 		$message .= $level.' '.(($level == 'INFO') ? ' -' : '-').' '.date($this->_date_fmt). ' --> '.$msg."\n";
-
+				
 		flock($fp, LOCK_EX);
 		fwrite($fp, $message);
 		flock($fp, LOCK_UN);

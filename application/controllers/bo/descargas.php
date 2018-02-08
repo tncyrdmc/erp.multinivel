@@ -105,8 +105,16 @@ class descargas extends CI_Controller
 	
 	function CrearArchivo(){
 		$grupo = $_POST['grupo'];
-		$nombre_ebook = $_POST['nombre'];
+		$nombre = $_POST['nombre'];
 		$descripcion = $_POST['descripcion'];
+		
+		//echo $grupo."|".$nombre;var_dump($_FILES['userfile1']['name']);exit();
+		
+		if(!$_FILES['userfile1']['name']){
+			$error = "El archivo que esta cargando excede el tamaño permitido . ";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/descargas/alta');
+		}
 		
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -160,7 +168,7 @@ class descargas extends CI_Controller
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		if (!$this->upload->do_upload('userfile1'))
 		{	
-			$error = "El tipo de archivo que esta cargando no esta permitido.";
+			$error = "El archivo que esta cargando contiene errores . ";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/descargas/alta');
 		}
@@ -168,13 +176,13 @@ class descargas extends CI_Controller
 		{
 			$data = array('upload_data' => $this->upload->data());
 			
-			$nombre = $data['upload_data']['file_name'];
-			$filename = strrev($nombre);
+			$nombrefile = $data['upload_data']['file_name'];
+			$filename = strrev($nombrefile);
 			$explode = explode(".",$filename);
 			$extencion = strrev($explode[0]);
 			$ext=strtolower($extencion);
 
-			$this->model_descargas->CrearArchivo($id, $grupo, $ext,$nombre_ebook, $descripcion, $ruta.$nombre);
+			$this->model_descargas->CrearArchivo($id, $grupo, $ext,$nombre, $descripcion, $ruta.$nombrefile);
 			redirect('/bo/descargas/listar');
 		}
 		

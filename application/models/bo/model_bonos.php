@@ -19,17 +19,19 @@ function setUp($nombre,$descripcion,$inicio,$fin,$mes_desde_afiliacion,$mes_desd
 	return $bono;
 }
 
-function setUpValoresBones($idBono,$nivel,$valor){
+function setUpValoresBones($idBono,$nivel,$condicion_red,$valor,$verticalidad){
 
 	$bono_valores = array(
 			'id_bono' => $idBono,
 			'nivel' => $nivel,
 			'valor' => $valor,
+			'condicion_red'=>$condicion_red,
+			'verticalidad'=>$verticalidad
 	);
 	return $bono_valores;
 }
 
-function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicion2){
+function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicion2,$calificado){
 	$rango=$this->get_rangos_id_tipo($idRango, $idTipoRango);
 	$bonoCondiciones = array(
 			'id_bono' => $idBono,
@@ -39,6 +41,7 @@ function setUpCondicion($idBono,$idRango,$idTipoRango,$red,$condicion1,$condicio
 			'id_red' => $red,
 			'condicion1' => $condicion1,
 			'condicion2' => $condicion2,
+			'calificado' => $calificado,
 	);
 	return $bonoCondiciones;
 }
@@ -69,6 +72,7 @@ function cambiar_estado_bono($estado,$id_bono){
 }
 
 function insert_bono_valor_niveles($valoresBono){
+
 	$this->db->insert("cat_bono_valor_nivel",$valoresBono);
 
 }
@@ -424,4 +428,286 @@ function get__condicioneses_bonos_id_bono($id_bono){
 		$query = $this->db->query('select * from cat_bono_condicion where id_red='.$id_red.'');
 		return $query->result();
 	}
+	
+	function ver_total_bonos_id_red($id,$red){
+		$query = $this->db->query('select 
+										c.id_red, t.nombre red, b.id_bono, o.nombre,  
+										(select sum(valor) 
+											from comision_bono 
+											where id_bono = b.id_bono and id_usuario = b.id_usuario) valor
+									from 
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o
+									where 
+										b.id_usuario = '.$id.' 
+										and b.id_bono = c.id_bono
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red = '.$red.'				
+									group by b.id_bono');		#in (select id_red from afiliar where id_afiliado = $id)
+		return $query->result();
+	}
+	
+	function ver_total_bonos_id_red_fecha($id,$red,$fecha){
+		$query = $this->db->query('select 
+										h.id, h.dia, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,  
+										sum(b.valor) valor
+									from 
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o, comision_bono_historial h
+									where 
+										b.id_usuario = '.$id.' 
+										and b.id_bono = c.id_bono
+										and b.id_bono_historial = h.id
+										and b.id_bono = h.id_bono
+									    and date_format(h.fecha,"%Y-%m") = "'.date("Y-m", strtotime($fecha)).'"
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red = '.$red.'	
+									group by  b.id_bono');	
+		return $query->result();
+	}
+	
+	function ver_total_bonos_id_fecha($id,$fecha){
+		$query = $this->db->query('select
+										h.id, h.dia, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,
+										sum(b.valor) valor
+									from
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o, comision_bono_historial h
+									where
+										b.id_usuario = '.$id.'
+										and b.id_bono = c.id_bono
+										and b.id_bono_historial = h.id
+										and b.id_bono = h.id_bono
+									    and date_format(h.fecha,"%Y-%m") = "'.date("Y-m", strtotime($fecha)).'"
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red in (select id_red from afiliar where id_afiliado = '.$id.')
+									group by  b.id_bono');
+		return $query->result();
+	}
+	
+	function ver_total_bonos_id_red_Range($id,$red,$inicio,$fin){
+		$query = $this->db->query('select
+										h.id, h.dia, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,
+										sum(b.valor) valor
+									from
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o, comision_bono_historial h
+									where
+										b.id_usuario = '.$id.'
+										and b.id_bono = c.id_bono
+										and b.id_bono_historial = h.id
+										and b.id_bono = h.id_bono
+									    and h.fecha between "'.$inicio.' 00:00:00" and "'.$fin.' 23:59:59" 
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red = '.$red.'
+									group by  b.id_bono');
+		return $query->result();
+	}
+	
+	function ver_total_bonos_id_Range($id,$inicio,$fin){
+		$query = $this->db->query('select
+										h.id, h.dia, h.mes, h.ano, c.id_red, t.nombre red, b.id_bono, o.nombre,
+										sum(b.valor) valor
+									from
+										comision_bono b, cat_bono_condicion c , tipo_red t, bono o, comision_bono_historial h
+									where
+										b.id_usuario = '.$id.'
+										and b.id_bono = c.id_bono
+										and b.id_bono_historial = h.id
+										and b.id_bono = h.id_bono
+									    and h.fecha between "'.$inicio.' 00:00:00" and "'.$fin.' 23:59:59"
+										and t.id = c.id_red and o.id = b.id_bono
+										and c.id_red in (select id_red from afiliar where id_afiliado = '.$id.')
+									group by  b.id_bono');
+		$bono=$query->result();
+		return $bono ? $bono[0]->valor: 0 ;
+	}
+	
+	function ver_total_bonos_id($id){
+		$query = $this->db->query('select sum(valor) valor from comision_bono where id_usuario = '.$id);		
+		$q=$query->result();
+		return $q[0]->valor;
+	}
+	
+	function get_historial_fecha($inicio,$fin){
+		$q=$this->db->query("SELECT 
+									h.id ,  h.fecha, h.id_bono,
+									b.nombre bono ,
+									(select 
+            count(distinct id_usuario)
+        from
+            comision_bono
+        where
+            id_bono_historial = h.id and valor > 0) afiliados,
+									(select sum(valor) from comision_bono where id_bono_historial = h.id) total
+								FROM comision_bono_historial h , bono b 
+								WHERE 
+									fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' 
+									and b.id = h.id_bono
+								ORDER BY
+									h.id asc");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function detalle_historial_id($id){
+		$q=$this->db->query("SELECT c.id, h.id, c.id_usuario,
+									concat(p.nombre,' ',p.apellido) as nombres,
+									c.id_bono,
+									b.nombre bono, 
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									sum(c.valor) as valor
+									FROM 
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h 
+									WHERE c.id_bono_historial = ".$id."
+								and p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and c.valor > 0
+								and h.id = id_bono_historial group by c.id_usuario");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function detalle_historial_fecha($id,$fecha){
+		$q=$this->db->query("SELECT c.id, h.id, c.id_usuario,
+									#concat(p.nombre,' ',p.apellido) as nombres,
+									u.username nombres,
+									c.id_bono,
+									b.nombre bono, 
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									c.valor
+									FROM 
+				comision_bono c,users u,/*user_profiles p,*/bono b,comision_bono_historial h 
+									WHERE c.id_bono_historial = ".$id."
+								#and p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and h.id = id_bono_historial
+								and date_format(h.fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."'
+							ORDER BY c.id ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function detalle_bono_id($id){
+		$q=$this->db->query("SELECT c.id, h.id, 
+									c.id_bono,
+									b.nombre bono, 
+									b.descripcion, 
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									sum(c.valor) as valor
+									FROM 
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h 
+									WHERE p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and c.valor > 0
+								and c.id_usuario = ".$id."
+								and c.id_bono_historial = h.id group by h.id order by h.fecha desc");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function detalle_bono_fecha($id,$fecha){
+		$q=$this->db->query("SELECT c.id, h.id, -- c.id_usuario,
+									-- concat(p.nombre,' ',p.apellido) as nombres,
+									c.id_bono,
+									b.nombre bono, 
+									b.descripcion, 
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									sum(c.valor) as valor
+									FROM 
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h 
+									WHERE p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and c.valor > 0
+								and c.id_usuario = ".$id."
+								and c.id_bono_historial = h.id 
+								and date_format(h.fecha,'%Y-%m') = '".date("Y-m", strtotime($fecha))."'
+							group by h.id
+							ORDER BY h.id ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function getBonosPagadosRed($id,$inicio,$fin){
+		$q=$this->db->query("SELECT -- c.id, 
+									h.id, -- c.id_usuario,
+									concat(p.nombre,' ',p.apellido) as afiliado,
+									u.username as usuario,
+									c.id_bono,
+									b.nombre bono, 
+									b.descripcion, 
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									sum(c.valor) as valor
+									FROM 
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h 
+									WHERE p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and c.valor > 0
+								and c.id_usuario  = ".$id."
+								and c.id_bono_historial = h.id 
+								and h.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59' 
+							group by h.id
+							ORDER BY h.id ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function getBonosPagadosTodos($inicio,$fin){
+		$q=$this->db->query("SELECT -- c.id,
+									h.id, -- c.id_usuario,
+									concat(p.nombre,' ',p.apellido) as afiliado,
+									u.username as usuario,
+									c.id_bono,
+									b.nombre bono,
+									b.descripcion,
+									h.dia,
+									h.mes,
+									h.ano,
+									h.fecha,
+									sum(c.valor) as valor
+									FROM
+				comision_bono c,users u,user_profiles p,bono b,comision_bono_historial h
+									WHERE p.user_id = c.id_usuario
+								and u.id = c.id_usuario
+								and b.id = c.id_bono
+								and c.valor > 0
+								and c.id_usuario in (select id from users)
+								and c.id_bono_historial = h.id
+								and h.fecha between '".$inicio." 00:00:00' and '".$fin." 23:59:59'
+							group by c.id_usuario, h.id
+							ORDER BY h.id ");
+		$q2=$q->result();
+	
+		return $q2;
+	}
+	
+	function kill_historial($id){
+		$this->db->query("delete from comision_bono_historial where id = ".$id);
+		$this->db->query("delete from comision_bono where id_bono_historial = ".$id);
+		$this->db->query("delete from comisionPuntosRemanentes where id_bono_historial = ".$id);
+		return true ;
+	}
+	
 }

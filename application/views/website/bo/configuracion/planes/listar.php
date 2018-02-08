@@ -5,7 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/compensacion">Plan de compensacion</a> >
 								<a href="/bo/planes">Planes de Bonos</a>
 								> Listar Planes
@@ -69,7 +69,7 @@
 												<tr>
 													<th>ID</th>
 													<th data-class="expand">Nombre</th>
-													<th data-hide="phone,tablet">Descripcion</th>
+													<th data-hide="phone,tablet">Descripción</th>
 													<th data-hide="phone,tablet">Bonos</th>
 													<th data-class="expand">Acciones</th>
 												</tr>
@@ -92,12 +92,13 @@
 														}?></td>
 														<td>
 															<a style="cursor: pointer" title="Editar" class="txt-color-blue" onclick="editar('<?php echo $plan->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a style="cursor: pointer"title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $plan->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															
 															<?php if($plan->estatus == 'ACT'){ ?>
 																<a style="cursor: pointer" title="Desactivar" onclick="estado('DES','<?php echo $plan->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
 																<a style="cursor: pointer" title="Activar" onclick="estado('ACT','<?php echo $plan->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
+															<a style="cursor: pointer"title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $plan->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>

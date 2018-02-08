@@ -27,6 +27,12 @@ class model_mercancia extends CI_Model {
 		$categorias = $this->db->query ( "SELECT ctg.id_grupo, ctg.descripcion, tr.nombre as red  FROM cat_grupo_producto ctg, tipo_red tr where ctg.id_red = tr.id and ctg.estatus = 'ACT' and ctg.id_grupo =".$id);
 		return $categorias->result ();
 	}
+
+	function todogrupos(){
+		$categorias = $this->db->query ( "SELECT * FROM cat_grupo_producto WHERE estatus='ACT'");
+		return $categorias->result ();
+
+	}
 	
 	function nuevo_servicio() {
 		$dato_servicio = array (
@@ -39,14 +45,17 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "servicio", $dato_servicio );
 		
-		$sku = mysql_insert_id ();
+		$sku = $this->db->insert_id ();
 		
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		$iva=$this->validar_iva();
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		
 		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva, $_POST['descuento'] );
-		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		$id_impuesto = isset($_POST ['id_impuesto']) ? $_POST ['id_impuesto'] :false;
+		
+		if($id_impuesto)
+		    $this->ingresarimpuestos ( $id_impuesto, $mercancia );
 		return $mercancia;
 	}
 	function nueva_membresia(){
@@ -58,14 +67,17 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "membresia", $dato_membresia );
 		
-		$sku = mysql_insert_id ();
+		$sku = $this->db->insert_id ();
 		
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		$iva=$this->validar_iva();
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		
 		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, 0, $_POST ['costo'], '0', 0, $_POST ['puntos_com'], $iva, $_POST['descuento'] );
-		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		$id_impuesto = isset($_POST ['id_impuesto']) ? $_POST ['id_impuesto'] :false;
+		
+		if($id_impuesto)
+            $this->ingresarimpuestos ( $id_impuesto, $mercancia );
 		return $mercancia;	
 	}
 	function nuevo_producto() {
@@ -88,18 +100,22 @@ class model_mercancia extends CI_Model {
 				"especificacion" => $_POST ['especificacion'],
 				"produccion" => $_POST ['produccion'],
 				"importacion" => $_POST ['importacion'],
-				"sobrepedido" => $_POST ['sobrepedido'] 
+				"sobrepedido" => $_POST ['sobrepedido'],
+				"inventario" => $_POST ['inventario'] 
 		);
 		$this->db->insert ( "producto", $dato_producto );
 		
-		$sku = mysql_insert_id ();
+		$sku = $this->db->insert_id ();
 		
 		$nombre_ini = substr ( $_POST ['nombre'], 0, 3 );
 		
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		$iva=$this->validar_iva();
 		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], $_POST ['proveedor'], $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva, $_POST['descuento'] );
-		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		$id_impuesto = isset($_POST ['id_impuesto']) ? $_POST ['id_impuesto'] :false;
+		
+		if($id_impuesto)
+		    $this->ingresarimpuestos ( $id_impuesto, $mercancia );
 		return $mercancia;
 	}
 	function validar_iva(){
@@ -119,7 +135,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "combinado", $dato_combinado );
 		
-		$combinado = mysql_insert_id ();
+		$combinado = $this->db->insert_id ();
 		$n = 0;
 		
 		if (! isset ( $_POST ['n_productos'] ))
@@ -263,7 +279,10 @@ class model_mercancia extends CI_Model {
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		$iva=$this->validar_iva();
 		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'],$iva, $_POST['descuento'] );
-		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		$id_impuesto = isset($_POST ['id_impuesto']) ? $_POST ['id_impuesto'] :false;
+		
+		if($id_impuesto)
+		    $this->ingresarimpuestos ( $id_impuesto, $mercancia );
 		return $mercancia;
 	}
 	
@@ -280,7 +299,7 @@ class model_mercancia extends CI_Model {
 		);
 		$this->db->insert ( "paquete_inscripcion", $dato_paquete );
 	
-		$paquete = mysql_insert_id ();
+		$paquete = $this->db->insert_id ();
 		$n = 0;
 	
 		if (! isset ( $_POST ['n_productos'] ))
@@ -424,7 +443,10 @@ class model_mercancia extends CI_Model {
 		$sku_2 = $nombre_ini . $sku . $_POST ['tipo_mercancia'];
 		$iva=$this->validar_iva();
 		$mercancia = $this->CrearMercancia ( $sku, $sku_2, $_POST ['tipo_mercancia'], $_POST ['pais'], 0, $_POST ['real'], $_POST ['costo'], $_POST ['entrega'], $_POST ['costo_publico'], $_POST ['puntos_com'], $iva, $_POST['descuento'] );
-		$this->ingresarimpuestos ( $_POST ['id_impuesto'], $mercancia );
+		$id_impuesto = isset($_POST ['id_impuesto']) ? $_POST ['id_impuesto'] :false;
+		
+		if($id_impuesto)
+		    $this->ingresarimpuestos ( $id_impuesto, $mercancia );
 		return $mercancia;
 	}
 	
@@ -446,7 +468,7 @@ class model_mercancia extends CI_Model {
 				"descuento" => $descuento 
 		);
 		$this->db->insert ( "mercancia", $dato_mercancia );
-		return mysql_insert_id ();
+		return $this->db->insert_id ();
 	}
 	
 	function ingresarimpuestos($impuestos, $mercancia) {
@@ -485,7 +507,7 @@ class model_mercancia extends CI_Model {
 			);
 			$this->db->insert ( "cat_img", $dato_img );
 			
-			$id_foto = mysql_insert_id ();
+			$id_foto = $this->db->insert_id ();
 			
 			$dato_cross_img = array (
 					"id_mercancia" => $id,
@@ -509,7 +531,7 @@ class model_mercancia extends CI_Model {
 					"estatus" => "ACT" 
 			);
 			$this->db->insert ( "cat_img", $dato_img );
-			$id_foto = mysql_insert_id ();
+			$id_foto = $this->db->insert_id ();
 			
 			$dato_cross_img = array (
 					"id_promo" => $id,
@@ -581,7 +603,7 @@ class model_mercancia extends CI_Model {
 		
 		$this->db->insert("proveedor", $dato_proveedor );
 		
-		$id_nuevo = mysql_insert_id();
+		$id_nuevo = $this->db->insert_id();
 		
 		
 		$dato_proveedor = array (
@@ -709,4 +731,29 @@ class model_mercancia extends CI_Model {
 			return false;
 		}
 	}
+	
+	function getProductoBy($id,$red) {
+		$strID = strtolower($id);
+		
+		$query = "SELECT
+					    m.id id_mercancia, p.*, m.*
+					FROM
+					    mercancia m,
+					    producto p,
+					    items i
+					WHERE
+					    p.id = m.sku AND m.id = i.id
+					        AND i.red = '".$red."'
+					        AND i.id_tipo_mercancia = 1
+					        AND (i.id = '".$id."'
+					        OR p.id = '".$id."'
+					        OR LOWER(p.codigo_barras) LIKE '".$strID."%'
+							OR LOWER(p.concepto) LIKE '".$strID."%'
+					        OR LOWER(p.nombre) LIKE '".$strID."%'
+					        OR LOWER(m.sku_2) LIKE '".$strID."%')";
+		
+		$q = $this->db->query ($query);
+		return $q->result ();
+	}
+	
 }

@@ -55,7 +55,7 @@
 													</section>
 														<section class="col col-2">
 														<label class="input">Tiempo de caducidad
-															<input required placeholder="En días" type="text" id="caducidad" name="caducidad">
+															<input required placeholder="En días" type="number"  id="caducidad" name="caducidad">
 														</label>
 													</section>
 													<section class="col col-3">Categoria
@@ -71,7 +71,7 @@
 													</section>
 													<section class="col col-2">
 														<label class="input"><span id="labelextra">Descuento de la membresía</span>
-														<input required id="precio_promo" type="number" name="descuento">
+														<input required id="precio_promo" type="number" min="0" name="descuento">
 														</label>
 													</section>
 													<div>
@@ -83,7 +83,7 @@
 														<label class="label">Imágen</label>
 														<div class="input input-file">
 															<span class="button">
-																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="" type="text">
+																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" type="text" required>
 															</div>
 															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
 														</section>
@@ -95,20 +95,20 @@
 													<section class="col col-2">
 														<label class="input">
 														Costo distribuidores
-														<input required type="number" name="costo" id="costo" onchange="calcular_precio_total()" required >
+														<input required type="number" min="1" name="costo" id="costo" onchange="calcular_precio_total()" required >
 														</label>
 													</section>			
 													<section class="col col-3">
 														<label class="input">
 														Puntos comisionables
-															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+															<input type="number" min="0" max="" name="puntos_com" id="puntos_com" required>
 														</label>
 													</section>
 													<legend>Impuestos</legend>
 
 													<fieldset>
 													<div class="row" id="impuesto_agregar">
-														<section class="col col-2">País del servicio
+														<section class="col col-2">País de la membresía
 														<label class="select">
 															<select id="pais" required name="pais" onChange="select_pais()">
 															<option value="-" selected>-- Seleciona un pais --</option>

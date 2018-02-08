@@ -4,7 +4,7 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bo/configuracion/"> Configuracion </a>
+				<span>> <a href="/bo/configuracion/"> Configuración </a>
 				> <a href="/bo/configuracion/tipoRed"> Tipo De Red </a>
 				>	Alta
 				</span>
@@ -47,10 +47,10 @@
 			<br>
 			<p>Nota: Si la red es de frontalidad o profundidad infinita colocar 0.</p><br>
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-right"></i>
-				<input type="number" class="form-control" name="frontal" size="30" placeholder="frontalidad" required>
+				<input type="number" class="form-control" name="frontal" size="30" min="0" placeholder="frontalidad" required>
 	        </label>
 	        <label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-arrow-down"></i>
-				<input type="number" class="form-control" name="profundidad" size="30" placeholder="profundidad" required>
+				<input type="number" class="form-control" name="profundidad" size="30" min="0" placeholder="profundidad" required>
 	        </label><br>
 	        <p>Elije tipo de plan de compensación.</p><br>
 	        <label class="radio">
@@ -65,7 +65,11 @@
 	        <label class="radio">
 	        <input type="radio" name="tipo_plan" value="UNI" placeholder="tipo de plan">
 	        <i></i>Unilevel</label>
-																		
+			<br>
+			<p>Valor del Punto Comisionable.</p><br>
+			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-dollar"></i>
+				<input type="number" class="form-control" min="1" name="valor_punto" size="30" placeholder="Valor del Punto" required>
+	        </label>															
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Crear</button>
 			</div>
 		</form>

@@ -5,7 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/compensacion">Plan de compensacion</a> >
 								<a href="/bo/bonos">Bonos</a>
 								> Listar Bonos
@@ -69,11 +69,12 @@
 												<tr>
 													<th>ID</th>
 													<th data-class="expand">Nombre</th>
-													<th data-hide="phone,tablet">Descripcion</th>
+													<th data-hide="phone,tablet">Descripción</th>
 													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Fecuencia</th>
 													<th data-hide="phone,tablet">Condiciones</th>
 													<th data-hide="phone,tablet">Valor por Nivel</th>
+													<th data-hide="phone,tablet">Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -117,21 +118,23 @@
 														</td>
 														<td>
 														<?php foreach ($valorNiveles as $valorNivel){
+															$hacia = ($valorNivel->verticalidad == "ASC") ? "up" : "down";
 															if($valorNivel->id_bono==$bono->id){
-																
-																echo "Nivel ".$valorNivel->nivel." : <br> <b>$ ".$valorNivel->valor."</b><br>";
+																$hacia = ($valorNivel->nivel==0) ? "" : $hacia;
+																echo "Nivel ".$valorNivel->nivel." <i class='fa fa-long-arrow-".$hacia."'></i> : <br> <b>$ ".$valorNivel->valor."</b><br>";
 															}
 														}
 														?>
 														</td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $bono->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $bono->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															
 															<?php if($bono->estatus == 'ACT'){ ?>
 																<a title="Desactivar" onclick="estado('DES','<?php echo $bono->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
 																<a title="Activar" onclick="estado('ACT','<?php echo $bono->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $bono->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>

@@ -5,9 +5,9 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/retenciones">Retenciones</a>
-								> Nueva Retencion
+								> Nueva Retención
 							</span>
 						</h1>
 					</div>
@@ -34,7 +34,7 @@
 <div>
     <fieldset id="pswd">
 		<form class="smart-form" action="/bo/admin/new_retencion" method="POST" id="retencion" role="form">
-			<legend>Nueva Retencion </legend><br>
+			<legend>Nueva Retención </legend><br>
 			<div class="form-group" style="width: 20rem;">
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
 				<input id='desc' class="form-control" name="desc" size="20" placeholder="Nombre" type="text" required>
@@ -45,7 +45,7 @@
 	        <div class="">
 	        		<label class="radio">
 						<input value="UNI" name="duracion" placeholder="duracion" type="radio">
-					<i></i>Unica</label>
+					<i></i>Única</label>
 					<label class="radio">
 						<input value="ANO" name="duracion" placeholder="duracion" type="radio">
 					<i></i>Anual</label>

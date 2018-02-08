@@ -34,12 +34,16 @@
 										<select id="tipo-reporte">
 											<option value="0" selected="" disabled="">Tipo de reporte</option>
 											<option value="9">Ver mis Directos</option>
-											<option value="6">Ver consecutivo de mi red</option>
+											<option value="6">Ver consecutivo de Mi red</option>
+											<option onclick="tipo_reporte()" value="10">Ver Afiliados Activos de Mi red</option>
+											<option onclick="tipo_reporte()" value="11">Ver Afiliados InActivos de Mi red</option>
+											<option value="12">Ver Bonos pagados de Mi red</option>
 											<!--<option value="1">Afiados nuevos</option>-->
 											<!--<option value="7">Ver compras de mi red</option>-->
 											<!--  <option value="4">Ventas web personal</option>-->
 											<option value="5">Compras por Banco</option>
 											<option value="8">Ver mis compras</option>
+                                                                                        <option value="4">Ver mis compras CEDI</option>
 											<option value="7">Ver compras de mi red</option>
 										</select> <i></i> </label>
 								</section>
@@ -295,52 +299,63 @@
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 		<script src="/template/js/spin.js"></script>
 		<script type="text/javascript">
-/*		function Enviar(id)
-		{
-			bootbox.dialog({
-				message: "¿Desea enviar este registro ahora?",
-				title: "Enviar Venta ".concat(id),
-				className: "",
-				buttons: {
-					success: {
-					label: "Si",
-					className: "btn-success",
-					callback: function() {
-						$.ajax({
-							type: "post",
-							data: {id:id},
-							url: "Cambiar_estado_enviar"
+                    
+                         function imprimir_cedi(id){
+				$.ajax({
+                                    type: "POST",
+                                    url: "/bo/logistico2/facturaImprimir",//imprimirfactura
+                                    data: {id: id,link: '/ov/compras/reportes'},
+                                })
+				.done(function( msg )
+				{
+                                    bootbox.dialog({
+					message: msg,
+					title: "Factura",
+					className: "",
+                                        buttons: {
+                                            success: {
+                                                label: "Aceptar",
+                                                className: "hide",
+                                                callback: function() {
+
+                                                }
+                                            }
+                                        }									
+                                    })
+				});
+
+                        }
+                    
+                        function factura_cedi(id) {
+				iniciarSpinner();
+				$.ajax({
+					data:{
+						id : id
+					},
+					type:"post",
+					url:"/bo/logistico2/factura",
+				})
+				.done(function( msg )
+				{
+						FinalizarSpinner();
+						bootbox.dialog({
+                                                    message: msg,
+                                                    title: "Factura",
+                                                    className: "",
+                                                    buttons: {
+							success: {
+                                                            label: "Aceptar",
+                                                            className: "hide",
+                                                            callback: function() {
+                                                            
+                                                            }
+                                                        }
+                                                    }
 						})
-						.done(function(msg){
-							bootbox.dialog({
-								message: "Se han enviado estos producto exitosamente.",
-								title: "Exito",
-								className: "",
-								buttons: {
-									success: {
-										label: "Aceptar",
-										className: "btn-success",
-										callback: function(){
-											window.location.href="reportes";
-										}
-									}
-								}
-							})
-						});
-					}
-				},
-				danger: {
-					label: "No",
-					className: "btn-danger",
-					callback: function(){
 					
-					}
-				}
-			}
-		});
-					
-		}
-*/
+				});
+
+                        }
 		</script>
 		
 		<script type="text/javascript">
@@ -362,8 +377,29 @@
 		
 		<script type="text/javascript">
 
+			function tipo_reporte(){
+				var tipo=$("#tipo-reporte").val();
+				
+				$("#nuevos-afiliados").show();
+				iniciarSpinner();
+				$.ajax({
+			         type: "post",
+			         url: "reportes_tipo",
+			         data: {
+				         	tipo : tipo,
+				         	inicio :'2016-01-01',
+				         	fin :'2026-01-01'
+				         },
+					success: function( msg )
+					{
+					$("#reporte_div").html(msg);
+					FinalizarSpinner();
+					}
+				});
+			}
+		
 			function validarsifecha(tipo,inicio,fin){
-				var tiposfecha = [2,3,4,5,7,8];
+				var tiposfecha = [2,3,4,5,7,8,12];
 				for (i = 0; i < tiposfecha.length; i++)  {
 					if(tipo == tiposfecha[i]){
 						return (inicio == '' || fin == '') ? true : false;						
@@ -391,10 +427,12 @@
 						success: function( msg )
 						{
 						$("#reporte_div").html(msg);
+						setTableConfig();
 						FinalizarSpinner();
 						}
 					});
 				}else{
+					FinalizarSpinner();
 					alert('Introduzca las fechas para buscar');
 				}
 			
@@ -488,7 +526,22 @@
 						});
 
 		}
-			
+
+			function imprimir(id){
+				$.ajax({
+					type: "POST",
+					url: "/bo/ventas/facturaImprimir",//imprimirfactura
+					data: {id: id, link : '/ov/compras/reportes'},
+					success: function( msg ){
+						bootbox.dialog({
+							message: msg,
+							title: "Factura",
+							className: "",					
+						})
+					}
+				});
+			}
+				
 		</script>
 		<script type="text/javascript">
 		
@@ -682,11 +735,12 @@
 				phone : 480
 			};
 			var otable = $('#datatable_fixed_column1').DataTable({
-	    	//"bFilter": false,
+	    	"bFilter": true,
+	    	"bFilter": true,
 	    	//"bInfo": false,
 	    	//"bLengthChange": false
 	    	//"bAutoWidth": false,
-	    	//"bPaginate": false,
+	    	"bPaginate": true,
 	    	//"bStateSave": true // saves sort state using localStorage
 			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
 					"t"+

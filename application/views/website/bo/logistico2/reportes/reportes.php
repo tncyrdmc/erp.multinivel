@@ -1,15 +1,32 @@
 
 <!-- MAIN CONTENT -->
-<div id="spinner2"></div>
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>
-					> <a href="/bol/dashboard">Logistico</a>
-					> Reportes
-				</span>
+			
+			<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						<span>
+							> Reportes	
+						</span>
+							 <?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';?>
+						<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+						<span>
+							> Reportes		
+						</span>
+							 <?php }else{?>
+						
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+						<span>
+							> <a href="/bol/dashboard">Logistico</a>
+							> Reportes
+						</span>
+							
+							<?php }?>
+			
+					
 			</h1>
 		</div>
 	</div>
@@ -26,10 +43,11 @@
 									
 								<label class="select">
 									<select id="tipo-reporte" >
+                                                                                <option value="8" >Ventas CEDIS</option>
 										<option value="1" >Inventario</option>
 										<option value="2" >Entradas</option>
 										<option value="3" >Salidas</option>
-										<option value="4" >Entaradas/Salidas</option>
+										<option value="4" >Entradas/Salidas</option>
 										<option value="5" >Pedidos por entregar</option>
 										<option value="6" >Pedidos en transito</option>
 										<option value="7" >Pedidos embarcados</option>
@@ -243,7 +261,119 @@
 					$("#finishdate").prop( "disabled", false );
 				}
 			});
+			                    
+                        function imprimir(id){
+				$.ajax({
+                                    type: "POST",
+                                    url: "/bo/logistico2/facturaImprimir",//imprimirfactura
+                                    data: {id: id,link: '/bo/reportes_logistico/'},
+                                })
+				.done(function( msg )
+				{
+                                    bootbox.dialog({
+					message: msg,
+					title: "Factura",
+					className: "",
+                                        buttons: {
+                                            success: {
+                                                label: "Aceptar",
+                                                className: "hide",
+                                                callback: function() {
+
+                                                }
+                                            }
+                                        }									
+                                    })
+				});
+
+                        }
+                        
+                        function factura(id) {
+				iniciarSpinner();
+				$.ajax({
+					data:{
+						id : id
+					},
+					type:"post",
+					url:"/bo/logistico2/factura",
+				})
+				.done(function( msg )
+				{
+						FinalizarSpinner();
+						bootbox.dialog({
+                                                    message: msg,
+                                                    title: "Factura",
+                                                    className: "",
+                                                    buttons: {
+							success: {
+                                                            label: "Aceptar",
+                                                            className: "hide",
+                                                            callback: function() {
+                                                            
+                                                            }
+                                                        }
+                                                    }
+						})
+					
+				});
+
+                        }
 			
+                        function eliminar(id) {
+
+				$.ajax({
+					type: "POST",
+					url: "/auth/show_dialog",
+					data: {message: '¿ Esta seguro que desea Eliminar la Venta?'},
+				})
+				.done(function( msg )
+				{
+                                    bootbox.dialog({
+					message: msg,
+					title: 'Eliminar Ventas',
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							iniciarSpinner();
+								$.ajax({
+									type: "POST",
+									url: "/bo/logistico2/kill_venta",
+									data: {id: id}
+								})
+								.done(function( msg )
+								{
+									FinalizarSpinner();
+									bootbox.dialog({
+                                                                            message: msg,
+                                                                            title: 'Atención',
+                                                                            buttons: {
+                                                                                    success: {
+                                                                                        label: "Aceptar",
+                                                                                        className: "btn-success",
+                                                                                        callback: function() {
+                                                                                            tipo_reporte();
+                                                                                        }
+                                                                                    }
+                                                                            }
+                                                                        })//fin done ajax
+								});//Fin callback bootbox
+
+							}
+						},
+						danger: {
+							label: "Cancelar!",
+							className: "btn-danger",
+							callback: function() {
+
+							}
+						}
+                                        }
+                                    })
+                                });
+                        }
+                        
 		</script>
 		
 		<script type="text/javascript">
@@ -427,40 +557,26 @@
 		
 		})
 		
-		function iniciarSpinner(){
-			
-			var opts = {
-					  lines: 12 // The number of lines to draw
-					, length: 28 // The length of each line
-					, width: 14 // The line thickness
-					, radius: 42 // The radius of the inner circle
-					, scale: 1 // Scales overall size of the spinner
-					, corners: 1 // Corner roundness (0..1)
-					, color: '#3276B1' // #rgb or #rrggbb or array of colors
-					, opacity: 0.25 // Opacity of the lines
-					, rotate: 0 // The rotation offset
-					, direction: 1 // 1: clockwise, -1: counterclockwise
-					, speed: 1 // Rounds per second
-					, trail: 60 // Afterglow percentage
-					, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-					, zIndex: 2e9 // The z-index (defaults to 2000000000)
-					, className: 'spinner' // The CSS class to assign to the spinner
-					, top: '50%' // Top position relative to parent
-					, left: '50%' // Left position relative to parent
-					, shadow: false // Whether to render a shadow
-					, hwaccel: true // Whether to use hardware acceleration
-					, position: 'absolute' // Element positioning
-					}
-					
-					var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
-			}
-
-		function FinalizarSpinner(){
-			$("#spinner2").html('');
-		}
-		
+				
 		function tipo_reporte(){
 			switch($("#tipo-reporte").val()){
+                                case "8" : 
+					iniciarSpinner();
+					var startdate = $('#startdate').val();
+					var finishdate = $('#finishdate').val();
+					
+					$.ajax({
+						type: "POST",
+						url: "reporte_cedi",
+						data: {inicio:startdate,fin:finishdate}
+						
+					})
+					.done(function( msg ) {
+						FinalizarSpinner();
+						$("#reporte_div").html(msg);
+						
+					});
+				break;
 				case "1" : 
 					iniciarSpinner();
 					var startdate = $('#startdate').val();
@@ -658,6 +774,11 @@
 			switch($("#tipo-reporte").val()){
 			case "1" :
 				window.location="reporte_inventario_excel";
+				break;
+                        case "8" :
+				var inicio=$("#startdate").val();
+				var fin=$("#finishdate").val();
+				window.location="reporte_cedi_excel?inicio="+inicio+"&&fin="+fin;
 				break;
 			case "2" :
 				var inicio=$("#startdate").val();

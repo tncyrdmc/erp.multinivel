@@ -20,6 +20,7 @@ class reportes_logistico extends CI_Controller
 		$this->load->model('bo/modelo_cedi');
 		$this->load->model('bo/model_inventario');
 		$this->load->model('bo/modelo_logistico');
+                $this->load->model ( 'model_excel' );
 	}
 
 	function index()
@@ -31,8 +32,12 @@ class reportes_logistico extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 
@@ -42,10 +47,17 @@ class reportes_logistico extends CI_Controller
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
-		
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/bo/header');
+		if($type==8||$type==9){
+			$data2 = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data2);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/logistico2/reportes/reportes');
 	}
@@ -59,11 +71,16 @@ class reportes_logistico extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$this->template->set("type",$usuario[0]->id_tipo_usuario);
-		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -84,6 +101,15 @@ class reportes_logistico extends CI_Controller
 		redirect('/auth');
 		}
 		
+                $Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+                
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$surtidos =$this->modelo_logistico->get_surtidos();
@@ -121,11 +147,15 @@ class reportes_logistico extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		
@@ -148,6 +178,15 @@ class reportes_logistico extends CI_Controller
 		redirect('/auth');
 		}
 		
+                $Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+                
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$surtidos = $this->modelo_logistico->get_embarque();
@@ -214,6 +253,15 @@ class reportes_logistico extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
+                $Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+                
 		$inicio = '2000-01-01';
 		if($_GET['inicio'] != null){
 			$inicio = $_GET['inicio'];
@@ -254,6 +302,192 @@ class reportes_logistico extends CI_Controller
 		$objWriter->save('php://output');
 	}
 	
+        
+	function reporte_cedi()
+	{
+		$id=$this->tank_auth->get_user_id();
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+	
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+	
+		$usuario=$this->general->get_username($id);
+		
+		$inicio = $_POST['inicio'] ? $_POST['inicio'] : date('Y-m').'-01';
+		$fin = $_POST['fin'] ? $_POST['fin'] : date('Y-m-d');
+	
+		$inventario = $this->modelo_cedi->getVentasRealizadas($inicio,$fin);
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Fecha</th>
+					<th>CEDI</th>
+					<th>Usuario</th>
+					<th>Cliente</th>
+					<th>Puntos</th>
+					<th>Valor Venta</th>
+					<th>IVA</th>
+					<th>Total Venta</th>
+					<th>Acciones</th>
+				</thead>
+				<tbody>";
+		
+		$total = 0;
+		$iva = 0;
+		$venta = 0;
+		$puntos = 0;
+		
+		foreach ($inventario as $producto){
+			echo "<tr>
+					<td class='sorting_1'>".$producto->id."</td>
+					<td>".$producto->fecha."</td>
+					<td>".$producto->cedi."</td>
+					<td>".$producto->usuario."</td>
+					<td>".$producto->cliente." [".$producto->red."]</td>
+					<td>".$producto->puntos."</td>
+					<td>$ ".number_format(($producto->valor-$producto->iva),2)."</td>
+					<td>$ ".number_format($producto->iva,2)."</td>
+					<td>$ ".number_format($producto->valor,2)."</td>
+					<td style='width: 100px'>
+						<a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura(".$producto->id.");'>
+						<i class='fa fa-eye fa-2x'></i>
+						</a>
+						<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$producto->id.");'>
+						<i class='fa fa-trash-o fa-2x'></i>
+						</a>
+						<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir(".$producto->id.");'>
+						<i class='fa fa-file-pdf-o fa-2x'></i>
+						</a>
+					</td>
+				</tr>";
+			$total += $producto->valor;
+			$iva += $producto->iva;
+			$venta += ($producto->valor-$producto->iva);
+			$puntos += $producto->puntos;
+		}
+		
+		echo "<tr>
+					<td class='sorting_1'></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>TOTALES</b></td>
+					<td><b>".$puntos."</b></td>
+					<td><b>$ ".number_format($venta,2)."</b></td>
+					<td><b>$ ".number_format($iva,2)."</b></td>
+					<td><b>$ ".number_format($total,2)."</b></td>
+					<td></td>
+				</tr>";
+			
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	
+	
+	}
+               
+	function reporte_cedi_excel() {
+		if (! $this->tank_auth->is_logged_in ()) { // logged in
+			redirect ( '/auth' );
+		}
+	
+		$id = $this->tank_auth->get_user_id ();
+		$usuario = $this->general->get_username ( $id );
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
+		$total = 0;
+		$iva = 0;
+		$venta = 0;
+		$puntos = 0;
+			
+		$contador_filas = 0;
+		$inicio = $_GET['inicio'] ? $_GET['inicio'] : date('Y-m').'-01';
+		$fin = $_GET['fin'] ? $_GET['fin'] : date('Y-m-d');
+		
+		$ventas = $this->modelo_cedi->getVentasRealizadas($inicio,$fin);
+			
+		$this->load->library ( 'excel' );
+		$this->excel = PHPExcel_IOFactory::load ( FCPATH . "/application/third_party/templates/reporte_generico.xls" );
+				
+		for($i = 0; $i < count ( $ventas ); $i ++) {
+	
+				$contador_filas = $contador_filas + 1;
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 0, ($contador_filas + 7), $ventas [$i]->id );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 1, ($contador_filas + 7), $ventas [$i]->fecha );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 2, ($contador_filas + 7), $ventas [$i]->cedi );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 3, ($contador_filas + 7), $ventas [$i]->usuario );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 4, ($contador_filas + 7), $ventas	[$i]->cliente." [".$ventas[$i]->red."]");
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 5, ($contador_filas + 7), $ventas [$i]->puntos );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 6, ($contador_filas + 7), "$ ".number_format(($ventas[$i]->valor-$ventas[$i]->iva),2) );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 7, ($contador_filas + 7), "$ ".number_format($ventas[$i]->iva,2) );
+				$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 8, ($contador_filas + 7), "$ ".number_format($ventas[$i]->valor,2) );
+	
+				$total += $ventas[$i]->valor;
+				$iva += $ventas[$i]->iva;
+				$venta += ($ventas[$i]->valor-$ventas[$i]->iva);
+				$puntos += $ventas[$i]->puntos;
+		}
+				
+			$subtitulos = array (
+					"ID",
+					"Fecha",
+					"CEDI",
+					"Usuario",
+					"Cliente",
+					"Puntos",
+					"Valor Venta",
+					"IVA",
+					"Total Venta"
+			);
+				
+			$this->model_excel->setTemplateExcelReport ( "Ventas CEDI", $subtitulos, $contador_filas, $this->excel );
+				
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 0, ($contador_filas + 10), "" );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 1, ($contador_filas + 10), "" );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 2, ($contador_filas + 10), "" );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 3, ($contador_filas + 10), "" );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 4, ($contador_filas + 10), "TOTALES" );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 5, ($contador_filas + 10), $puntos );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 6, ($contador_filas + 10), "$ ".number_format($venta,2) );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 7, ($contador_filas + 10), "$ ".number_format($iva,2) );
+			$this->excel->getActiveSheet ()->setCellValueByColumnAndRow ( 8, ($contador_filas + 10), "$ ".number_format($total,2) );
+		
+	
+		$filename = 'Ventas_CEDIS_de ' . $inicio . ' al ' . $fin . '.xls'; // save our workbook as this file name
+		header ( 'Content-Type: application/vnd.ms-excel' ); // mime type
+		header ( 'Content-Disposition: attachment;filename="' . $filename . '"' ); // tell browser what's the file name
+		header ( 'Cache-Control: max-age=0' ); // no cache
+	
+		// save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		// if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter ( $this->excel, 'Excel5' );
+		// force user to download the Excel file without writing it to server's HD
+		// $objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save ( 'php://output' );
+		
+	}
+	
 	function reporte_inventario()
 	{
 		$id=$this->tank_auth->get_user_id();
@@ -265,8 +499,12 @@ class reportes_logistico extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 	
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 	
@@ -309,8 +547,12 @@ class reportes_logistico extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 	
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 	
@@ -350,8 +592,12 @@ class reportes_logistico extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 		
@@ -439,8 +685,12 @@ function reporte_salida_excel(){
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 		
@@ -528,8 +778,12 @@ foreach ($Entradas as $entrada)
 	
 		$id=$this->tank_auth->get_user_id();
 	
-		if(!$this->general->isAValidUser($id,"logistica"))
-		{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
 	

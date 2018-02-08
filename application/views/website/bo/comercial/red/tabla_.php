@@ -38,26 +38,33 @@
 					<div>
 			<div class="row col-xs-12 col-md-12 col-sm-12 col-lg-12 pull-right">
 				
-				<div class="col-xs-0 col-md-6 col-sm-0 col-lg-5">
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Recargar" style="cursor: pointer;" class="txt-color-gray" href="red_tabla"><i class="fa fa-spinner fa-3x"></i></a>
+						<br>Recargar
+					</center>
+				</div>
+				
+				<div class="col-xs-0 col-md-4 col-sm-0 col-lg-4">
 					
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 				<center>	
-					<a title="Bloquear" style="cursor: pointer;" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
+					<a title="Bloquear"  class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
 					<br>Bloquear
 					</center>
 				</div>
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Desbloquear" style="cursor: pointer;" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
+						<a title="Desbloquear"  class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
 						<br>Desbloquear
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-					<a title="Editar" style="cursor: pointer;" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					<a title="Editar"  class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 					<br>Editar
 					</center>
 				</div>
@@ -67,25 +74,25 @@
 					<a title="Sustituir" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
 					<br>Sustituir
 					</center>
+				</div> 
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Genealogico"  class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+						<br>Genealogico
+					</center>
 				</div> -->	
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Genealogico" style="cursor: pointer;" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
-						<br>Genealogico
-					</center>
-				</div>
-				
-				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
-					<center>
-						<a title="Arbol 1" style="cursor: pointer;" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a>
+						<a title="Arbol 1"  class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
 						<br>Arbol 1
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Arbol 2" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
+						<a title="Arbol 2" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
 						<br>Arbol 2
 					</center>
 				</div>
@@ -165,8 +172,8 @@
 						<th>ID</th>
 		                <th data-class="expand">Imagen</th>
 		                <th data-hide="phone">Usuario</th>
-			            <th data-hide="phone,tablet">Nombre</th>
-			            <th data-hide="phone,tablet">Apellido</th>
+			            <th data-hide="phone,tablet">Sponsor</th>
+			            <th data-hide="phone,tablet">Contraseña</th>
 				        <th data-hide="phone,tablet">e-mail</th>
 				        <th data-hide="phone">Redes</th>
 				        <th>Accion</th>
@@ -178,22 +185,22 @@
 				      <tr>
 				        <td><?php echo $afiliado->id;?></td>
 				        
-				       <? 
-				       $afiliados_imagen="/template/img/empresario.jpg";
+				       <?php
+				       $afiliados_imagen="/template/img/avatars/male.png";
 				       foreach ($image as $img) {
 				       	   if($img->id_user==$afiliado->id){
-								$cadena=explode(".", $img->img);
-								if($cadena[0]=="user")
-								{
-									$afiliados_imagen=$img->url;
-								}
+					       	   	$url=getcwd().$img->url;
+					       	   	if(file_exists($url)){
+					       	   		$afiliados_imagen=$img->url;
+					       	   	}
 				       	   }
-						}?>
+						}
+						?>
 				        
 		                <td><img style="width: 10rem; height: 10rem;" src="<?php echo $afiliados_imagen?>"></img></td>
-		                <td><?php echo $afiliado->username?></td>
-			            <td><?php echo $afiliado->nombre?></td>
-			            <td><?php echo $afiliado->apellido?></td>
+		                <td><?php echo $afiliado->nombre." ".$afiliado->apellido." (".$afiliado->username.")"?></td>
+			            <td><?php echo $afiliado->id==2 ? "Eres la Empresa" : $afiliado->sponsor ?></td>
+			            <td><?php echo $afiliado->recovery ? $afiliado->recovery : "<em class='txt-color-red'>Debe Cambiarse</em>" ?></td>
 				        <td><?php echo $afiliado->email?></td>
 				        <td><?php echo $afiliado->redes?></td>
 				        <td>
@@ -206,10 +213,12 @@
 							
 					        <a title="Editar" style='cursor: pointer;' onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 					        <!-- <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a> -->
-					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
-					        <a title="Arbol 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a>
-					        <a title="Arbol 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
+					         <a title="Billetera" style='cursor: pointer;' onclick="billetera_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-money fa-3x"></i></a>
 					        <a title="Eliminar" style='cursor: pointer;' onclick="eliminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					        </br>
+					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+					        <!-- <a title="Arbol 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a> -->
+					        <a title="Arbol 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
 						</td>
 				        
 				    </tr>
@@ -328,7 +337,21 @@ function eliminar_afiliado(id){
 	}
 	
 }
-
+function billetera_afiliado(id_afiliado){
+$.ajax({
+	type: "POST",
+	url: "/bo/comercial/billetera_afiliado",
+	data: {id:id_afiliado},
+})
+.done(function( msg )
+{
+	bootbox.dialog({
+	message: msg,
+	title: 'Billetera Afiliado',
+})//fin done ajax
+});
+	
+}
 $(document).ready(function() {
 	
 	pageSetUp();

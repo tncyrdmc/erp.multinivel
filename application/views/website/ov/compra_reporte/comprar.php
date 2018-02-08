@@ -24,7 +24,7 @@
         <div class="input-group">
           <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
         </div>
-        <!-- /input-group --
+        <! /input-group >
         
       </div> -->
     </div>
@@ -45,61 +45,75 @@
 				
 												<address>
 													<h4 class="semi-bold"><?=$empresa[0]->nombre?></h4>
-													<?=$empresa[0]->direccion?>
+													<abbr title="Phone">Identificador tributario:</abbr><?="\t".$empresa[0]->id_tributaria?>
 													<br>
-													<?=$empresa[0]->ciudad?>
+													<abbr title="Phone">Dirección:</abbr><?=$empresa[0]->direccion?>
+													<br>
+													<abbr title="Phone">Ciudad:</abbr><?=$empresa[0]->ciudad?>
 													<br>
 													<abbr title="Phone">Tel:</abbr>&nbsp;<?=$empresa[0]->fijo?>
 												</address>
 											</div>
 											<div class="pull-right">
-												<h1 class="font-400">Factura</h1>
+												<h1 class="font-400">Recibo de pago</h1>
 											</div>
 											<div class="clearfix"></div>
 											<br>
 											<div class="row">
 												<div class="col-sm-9">
 													<address>
+														<strong>Facturar a:</strong>
+														<br>
 														<strong>Señor (a). <?php echo $datos_afiliado[0]->nombre." ".$datos_afiliado[0]->apellido;?></strong>
 														<br>
-														<?php echo $pais_afiliado[0]->direccion;?>
+														<abbr title="Phone">Número de identificación:</abbr> <?php echo $datos_afiliado[0]->keyword;?>
 														<br>
-														<?php echo $pais_afiliado[0]->nombrePais;?> <img class="flag flag-<?=strtolower($pais_afiliado[0]->codigo)?>">
+														<abbr title="Phone">Dirección:</abbr> <?php echo $pais_afiliado[0]->direccion;?>
+														<br>
+														<abbr title="Phone">País:</abbr> <?php echo $pais_afiliado[0]->nombrePais;?> <img class="flag flag-<?=strtolower($pais_afiliado[0]->codigo)?>">
 														<br>
 														<abbr title="Phone">Email:</abbr> <?php echo $datos_afiliado[0]->email;?>
 													</address>
 												</div>
 												<div class="col-sm-3">
-													<div>
-														<div>
-															<strong>FACTURA NO :</strong>
-															<span class="pull-right"> #AA-454-4113-00 </span>
-														</div>
-				
-													</div>
+
 													<div>
 														<div class="font-md">
-															<strong>FECHA :</strong>
-															<span class="pull-right"> <i class="fa fa-calendar"></i> <?php echo date("Y-m-d");?> </span>
+
+															<abbr title="Phone"><strong>Fecha de expedición:</strong></abbr><span class="pull-right"> <i></i> <?php echo date("Y-m-d");?> </span>
+															<br>
+															<br>
+															<abbr title="Phone"><strong>Fecha de vencimiento:</strong></abbr><span class="pull-right"> <i></i> <?php echo date("Y-m-d");?> </span>
 														</div>
 				
 													</div>
-													<br>
-													<div class="well well-sm  bg-color-darken txt-color-white no-border">
+													<hr class="col-md-12" />
+													<div class="col-md-12 well well-sm  bg-color-darken txt-color-white no-border">
 														<div class="fa-lg">
-															Total :
-															<span class="pull-right">$ <?php echo $this->cart->total(); ?> USD** </span>
+															Precio :
+															<span class="pull-right">$ <?php echo $this->cart->total(); ?> ** </span>
 														</div>
-				
+													</div>
+													<div class="col-md-12 well well-sm  bg-color-green txt-color-white no-border">
+														<div class="fa-lg">
+															Puntos :
+															<span class="pull-right">** <?php echo $puntos; ?> ** </span>
+														</div>
 													</div>
 												</div>
 											</div>
+																							<div class="panel panel-default">
+  													<div class="panel-body">
+														<span class="center"> <?php echo $empresa[0]->resolucion;?> </span>
+  													</div>
+												</div>
 											<table class="table table-hover">
 												<thead>
 													<tr>
 														<th class="text-center">Cantidad</th>
 														<th>ITEM</th>
 														<th>DESCRIPCION</th>
+														<th>PUNTOS</th>
 														<th>PRECIO</th>
 														<th>IMPUESTO</th>
 														<th>SUBTOTAL</th>
@@ -133,12 +147,26 @@
 															if($compras[$contador]['costos'][0]->iva!='MAS'){
 																$precioUnidad-=$costoImpuesto;
 															}
+
+															$img_item = $compras[$contador]['imagen'];
+															
+															if(!file_exists(getcwd().$img_item))
+																$img_item = "/template/img/favicon/favicon.png";
+															
+															$descripcion_item = $compras[$contador]['descripcion'];
+															
+															if(strlen($descripcion_item)>125) 
+																$descripcion_item = substr($descripcion_item, 0,125)."...";
 															
 															echo '<tr> 
 																	<td class="text-center"><strong>'.$items['qty'].'</strong></td>
-																	<td class="miniCartProductThumb"><img style="width: 8rem;" src="'.$compras[$contador]['imagen'].'" alt="img">'.$compras[$contador]['nombre'].'</td>
-																	<td style="max-width: 25rem;"><a href="javascript:void(0);">'.$compras[$contador]['descripcion'].'</a></td>
+																	<td class="miniCartProductThumb"><img style="width: 8rem;" src="'.$img_item.'" alt="img"><br/>'
+																			.$compras[$contador]['nombre'].'</td>
+																	<td style="max-width: 25rem;"><a  title="'.$compras[$contador]['descripcion'].'");">'.$descripcion_item.'</a></td>
 																	<td>
+												                        <span> '.($compras[$contador]['puntos']*$cantidad).' </span>
+																	</td>
+      																<td>
 												                        <span>$ '.($precioUnidad*$cantidad).' </span>
 																	</td>
 																	<td>
@@ -146,10 +174,10 @@
         															<br>'.$nombreImpuestos.'
       																<br>
 																	</td>
-																	<td><strong>$ '.(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad)).'</strong></td>
+																	<td><strong>$ '.number_format(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad),2).'</strong></td>
 												                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> <i class="txt-color-red fa fa-trash-o fa-3x "></i> </a></td>
 																</tr>'; 
-														$total+=(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad));
+														$total+=round(($precioUnidad*$cantidad)+($costoImpuesto*$cantidad),2);
 														$contador++;
 														} 
 														
@@ -172,12 +200,16 @@
 													</tr>   -->
 												</tbody>
 											</table>
-				
+															<div class="panel panel-default">
+  												<div class="panel-body">
+													<abbr title="Phone">Observaciones:</abbr><span class="center"> <?php echo $empresa[0]->comentarios;?> </span>
+  												</div>
+											</div>
 											<div class="invoice-footer">
 				
 												<div class="row">
 				
-													<div class="col-sm-7">
+													<div class="col-sm-8">
 														<div class="payment-methods">
 															<h1 class="font-300">Metodos de Pago</h1>
 															<a onclick="consignacion()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
@@ -187,17 +219,27 @@
 															<a onclick="payuLatam()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/payu.jpg" alt="american express" height="60" width="100">
 															</a>
-															<?php }?>
-															<?php if($paypal[0]->estatus=='ACT') {?>
+															<?php } if($paypal[0]->estatus=='ACT') {?>
 															<a onclick="payPal()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
 																<img src="/template/img/payment/paypal.png" alt="paypal" height="60" width="80">
+															</a>
+															<?php } if($tucompra[0]->estatus=='ACT') {?>
+															<a onclick="tucompra()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
+																<img src="/template/img/payment/tucompra.png" alt="tucompra" style="background: #fff" height="60" width="160">
+															</a>
+															<?php } if($compropago[0]->estatus=='ACT') {?>
+															<a onclick="compropago()" style="margin-left: 1rem;" class="btn btn-success txt-color-blueLight">
+																<img src="/template/img/payment/compropago.png" alt="compropago" style="background: #fff" height="60" width="160">
 															</a>
 															<?php }?>
 														</div>
 													</div>
+													
 													<div class="col-sm-4">
 														<div class="invoice-sum-total pull-right">
-															<h3><strong>Total a Pagar: <span class="text-success">$ <?php echo $total;?> USD</span></strong></h3>
+															<h4><strong>Subtotal: <span class="text-default pull-right">$ <?php echo $total;?> </span></strong></h4>
+															<h4><strong>Gastos Envio: <span class="text-danger pull-right">$ <?php echo $envio;?> </span></strong></h4>															
+															<h3><strong>Total a Pagar: <span class="text-success pull-right">&nbsp;&nbsp;$ <?php echo $total+$envio;?> </span></strong></h3>
 														</div>
 													</div>
 				
@@ -210,6 +252,7 @@
 												</div>
 				
 											</div>
+
 										</div>
 </div>
 
@@ -290,6 +333,57 @@
 						}
 					});
 					
+	}
+
+	function compropago(){
+		//alert('Medio de Pago en Desarrollo');
+		iniciarSpinner();
+		$.ajax({
+			type:"post",
+			url:"Compropago",
+			success: function(msg){
+				FinalizarSpinner();
+				bootbox.dialog({
+					message: msg,
+					title: "Pago Via Compropago",
+					className: "",
+					buttons: {
+						success: {
+						label: "Cancelar",
+						className: "btn-danger",
+						callback: function() {
+							}
+						}
+					}
+				})
+			}
+		});	
+	}
+
+
+	function tucompra(){
+		//alert('Medio de Pago en Desarrollo');
+		iniciarSpinner();
+		$.ajax({
+			type:"post",
+			url:"pagarVentaTucompra",
+			success: function(msg){
+				FinalizarSpinner();
+				bootbox.dialog({
+					message: msg,
+					title: "Pago Tu Compra",
+					className: "",
+					buttons: {
+						success: {
+						label: "Cancelar",
+						className: "btn-danger",
+						callback: function() {
+							}
+						}
+					}
+				})
+			}
+		});	
 	}
 
 	function payuLatam(){

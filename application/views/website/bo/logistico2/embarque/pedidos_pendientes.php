@@ -6,17 +6,23 @@
 						
 						<?php  if($type=='5'){?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>
-						
-								> <a href="/bo/logistico2/pedidos">Surtidos / Embarques</a>
-								> Pedidos Pendientes
+							<span>						
+								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
+								> Pedidos a Embarcar
+							</span>
+							<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';?>
+								<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span>							
+								> <a href="<?=$index?>/embarques">Pedidos / Embarques</a>
+								> Pedidos a Embarcar
 							</span>
 							<?php }else{?>
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
-								> <a href="/bol/dashboard/">Log&iacute;stico</a> 
-								> <a href="/bo/logistico2/pedidos">Surtidos / Embarques</a>
-								> Pedidos Pendientes
+								> <a href="/bol/dashboard/">Logístico</a> 
+								> <a href="/bo/logistico2/pedidos">Pedidos / Embarques</a>
+								> Pedidos a Embarcar
 							</span>
 							
 							
@@ -133,7 +139,8 @@
 																							<td><?php echo $surtido->correo; ?></td>
 																							<td><?php echo $surtido->fecha; ?></td>
 																							<td class='text-center'>
-																								<a class='txt-color-green' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-eye fa-3x'></i></a>
+																								<a class='txt-color-green' style='cursor: pointer;' onclick='factura(<?php echo $surtido->id_venta; ?>)' title='Factura'><i class='fa fa-eye fa-3x'></i></a>
+																								<a class='txt-color-orange' style='cursor: pointer;' onclick='detalles(<?php echo $surtido->id; ?>)' title='Detalles'><i class='fa fa-cube fa-3x'></i></a>
 																								<a class='txt-color-blue' style='cursor: pointer;' onclick='surtir(<?php echo $surtido->id; ?>,<?php echo $surtido->id_venta; ?>)' title='Surtir'><i class='fa fa-truck fa-3x'></i></a>
 																							</td>
 																						</tr>
@@ -187,135 +194,33 @@
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 <script>
+
+
+				
 	function surtir(id_surtido,id_venta)
 	{
-		var darfecha='<div class="row">'
-			+'<form class="smart-form" novalidate="novalidate">'
-				+'<section class="col col-12">'
-					+'<label class="input"> <i class="icon-append fa fa-calendar"></i>'
-						+'<input required class ="col col-12" id="datepicker" type="text" name="nacimiento" placeholder="Fecha de entrega">'
-					+'</label> '
-				+'</section>'
-				+'<section class="col col-12">'
-				+'<label class="input"> '
-					+'<input required class ="col col-12" id="n_guia" type="text" name="n_guia" placeholder="número de guia">'
-				+'</label> '
-			+'</section>'
-			+'</form>'
-		+'</div>';
-		bootbox.dialog({
-			message: darfecha,
-			title: "Embarcar",
-			className: "",
-			buttons: {
-				success: {
-					label: "Aceptar",
-					className: "btn-success",
-					callback: function(){
-						var fecha=$("#datepicker").val();
-						var n_guia=$("#n_guia").val();
-						
-						if(fecha=="")
-						{
-							alert("Especifique una fecha de entrega");
-						}
-						else if(n_guia=="")
-						{
-							alert("Especifique un número de guia");
-						}
-						else
-						{
-							if(id_venta==0)
-							{
-								$.ajax({
-									type: "post",
-									data: {surtido:id_surtido, venta:id_venta, fecha:fecha, n_guia:n_guia,unico:1},
-									url: "surtir"
-								})
-								.done(function(msg){
-									bootbox.dialog({
-										message: "Se ha enviado este producto a embarques exitosamente.",
-										title: "Exito",
-										className: "",
-										buttons: {
-											success: {
-												label: "Aceptar",
-												className: "btn-success",
-												callback: function(){
-													window.location.href="pedidos_pendientes";
-												}
-											}
-										}
-									})
-								});
-							}
-							else
-							{
-								bootbox.dialog({
-									message: "¿Desea surtir toda la venta ahora?",
-									title: "Surtir",
-									className: "",
-									buttons: {
-										success: {
-										label: "Aceptar",
-										className: "btn-success",
-										callback: function() {
-											$.ajax({
-												type: "post",
-												data: {surtido:id_surtido, venta:id_venta, fecha:fecha, n_guia:n_guia,unico:0},
-												url: "surtir"
-											})
-											.done(function(msg){
-												bootbox.dialog({
-													message: "Se ha enviado este producto a embarques exitosamente.",
-													title: "Exito",
-													className: "",
-													buttons: {
-														success: {
-															label: "Aceptar",
-															className: "btn-success",
-															callback: function(){
-																window.location.href="pedidos_pendientes";
-															}
-														}
-													}
-												})
-											});
-											}
-										},
-										danger:{
-											label: "Cancelar",
-											className: "btn-danger",
-											callback: function(){
-												
-											}
-										}
-									}
-								});
-							}
+
+		$.ajax({
+			type: "post",
+			data: {surtido:id_surtido, venta:id_venta},
+			url: "nuevo_surtido"
+		}).done(function(msg){
+			bootbox.dialog({
+				message: msg,
+				title: "Embarcar",
+				className: "",
+				buttons: {
+					danger: {
+						label: "Cancelar",
+						className : "btn-danger",
+						callback: function(){
+							
 						}
 					}
-				},
-				danger: {
-					label: "Cancelar",
-					className : "btn-danger",
-					callback: function(){
-						
-					}
-				}
-			}
+				}				
+			})
 			
-		});
-				var fecha = new Date();
-				
-				$( "#datepicker" ).datepicker({
-				changeMonth: true,
-				numberOfMonths: 2,
-				dateFormat:"yy-mm-dd",
-				//defaultDate: "1970-01-01",
-				minDate: fecha.getFullYear() + "-" + (fecha.getMonth() +1) + "-" + fecha.getDate() ,
-				changeYear: true
-				});
+		});	
 		
 	}
 	function embarcar(id)
@@ -364,6 +269,36 @@
 				
 	}
 
+
+	function factura(id) {
+		iniciarSpinner();
+		$.ajax({
+			data:{
+				id : id
+			},
+				type:"post",
+				url:"/bo/ventas/factura",
+				success: function(msg){
+						FinalizarSpinner();
+						bootbox.dialog({
+							message: msg,
+							title: "Factura",
+							className: "",
+							buttons: {
+								success: {
+								label: "Aceptar",
+								className: "hide",
+								callback: function() {
+									}
+								}
+							}
+						})
+					}
+				});
+
+}
+
+	
 	function detalles(id){
 		$.ajax({
 			data:{
@@ -374,7 +309,7 @@
 			success: function(msg){
 				bootbox.dialog({
 					message: msg,
-					title: "Detalles de la venta",
+					title: "Detalles del Pedido",
 					className: "",
 					buttons: {
 						success: {

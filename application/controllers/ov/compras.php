@@ -21,6 +21,7 @@ class compras extends CI_Controller
 		$this->load->model('bo/modelo_historial_consignacion');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('model_user_webs_personales');
 		$this->load->model('model_comprador');
 		$this->load->model('model_carrito_temporal');
@@ -123,6 +124,9 @@ function index()
 		$grupos = $this->model_mercancia->CategoriasMercancia();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
+		$style=$this->general->get_style(1);
+		$this->template->set("style",$style);
+
 		$this->template->set("usuario",$usuario);
 		$this->template->set("grupos",$grupos);
 		
@@ -213,11 +217,15 @@ function index()
 		
 		$costosImpuestos=$this->modelo_compras->getCostosImpuestos($pais[0]->pais,$items['id']);
 		
+		$cantidad=$items['qty'];
+
 		$info_compras[$contador]=Array(
 				"imagen" => $imagenes[0]->url,
 				"nombre" => $detalles[0]->nombre,
+				"puntos" => $detalles[0]->puntos_comisionables,
 				"descripcion" => $detalles[0]->descripcion,
-				"costos" => $costosImpuestos
+				"costos" => $costosImpuestos,
+				"cantidad" => $cantidad
 		);
 		$contador++;
 		
@@ -322,16 +330,37 @@ function index()
 		$empresa  = $this->model_admin->val_empresa_multinivel();
 		$this->template->set("empresa",$empresa);
 		
+		$canal = $this->model_admin->getCanalesWHERE('id = 1');
+		$this->template->set("envio",$canal[0]->gastos);
+		
 		$contenidoCarrito=$this->get_content_carrito ();
 
 		if(!$contenidoCarrito['compras'])
 			redirect('/ov/compras/carrito');
 		
+		$cartItem = array(); 
+		
+		foreach ($this->cart->contents() as $item){
+			array_push($cartItem, $item);
+		}
+		
+		$puntos = 0;	
+		$i=0;
+		foreach ($contenidoCarrito['compras'] as $item){
+			$puntos += $item['puntos']*$cartItem[$i]['qty'] ;
+			$i++;
+		}
+		
 		$paypal  = $this->modelo_pagosonline->val_paypal();
 		$payulatam  = $this->modelo_pagosonline->val_payulatam();
-		
+		$tucompra  = $this->modelo_pagosonline->val_tucompra();
+		$compropago  = $this->modelo_pagosonline->val_compropago();
+
+		$this->template->set('puntos',$puntos);
 		$this->template->set('paypal',$paypal);
 		$this->template->set('payulatam',$payulatam);
+		$this->template->set('tucompra',$tucompra);
+		$this->template->set('compropago',$compropago);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -394,7 +423,7 @@ function index()
 			}
 			if($banco[0]->otro){
 				echo '
-				<p><b>ABA/IBAN/OTRO</b> :'.$banco[0]->otro.'</p>
+				<p><b>Titular</b> :'.$banco[0]->otro.'</p>
 				';
 			}
 			if($banco[0]->dir_postal){
@@ -411,6 +440,49 @@ function index()
 				</p>
 				</div>';
 		}	
+	}
+	
+	function RegistrarVentaTucompra(){ //WOWCONEXION
+	
+		$id = $_POST['campoExtra1'];
+		$id_pago = $_POST['campoExtra2'];
+		$identificado_transacion = $_POST['firmaTuCompra'];
+		$fecha=date("Y-m-d");
+		$referencia = $_POST['codigoFactura'];
+		$metodo_pago = $_POST['metodoPago'];
+		$estado = $_POST['transaccionAprobada'];
+		$respuesta = $_POST['numeroTransaccion'];
+		$moneda = "COP";
+		$medio_pago = $_POST['metodoPago'];
+	
+		if(!$id){
+			return false;
+			exit();
+		}
+	
+		if($estado=="1"){				
+	
+			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'TUCOMPRA',$fecha);
+				
+			$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+			
+			$this->modelo_compras->registrar_pago_online
+			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
+					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
+				
+				
+			$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProceso($id_pago);
+				
+			$contenidoCarrito=json_decode($contenido_carrito_proceso[0]->contenido,true);
+			$carrito=json_decode($contenido_carrito_proceso[0]->carrito,true);
+				
+			$this->registrarFacturaDatosDefaultAfiliado($id,$id_venta);
+			$this->registrarFacturaMercanciaPagoOnline ( $contenidoCarrito,$carrito ,$id_venta);
+			$this->pagarComisionVenta($id_venta,$id);
+			
+			return "OK";
+		}
+	
 	}
 	
 	function RegistrarVentaPayuLatam(){
@@ -431,6 +503,8 @@ function index()
 			
 
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYULATAM',$fecha);
+			
+			$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
 			
 			$this->modelo_compras->registrar_pago_online
 			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
@@ -467,7 +541,9 @@ function index()
 				
 			$fecha = date("Y-m-d");
 			$id_venta = $this->modelo_compras->registrar_venta_pago_online($id,'PAYPAL',$fecha);
-				
+			
+			$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+			
 			$this->modelo_compras->registrar_pago_online
 			($id_venta,$id,$identificado_transacion,$fecha,$referencia,
 					$metodo_pago,$estado,$respuesta,$moneda,$medio_pago);
@@ -483,6 +559,56 @@ function index()
 			$this->pagarComisionVenta($id_venta,$id);
 		}
 	
+	}
+	
+	function RespuestaTucompra(){ //WOWCONEXION
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$a = array(
+			$_POST['campoExtra1'],
+			$_POST['campoExtra2'],
+			$_POST['firmaTuCompra'],
+			date("Y-m-d"),
+			$_POST['codigoFactura'],
+			$_POST['metodoPago'],
+			$_POST['transaccionAprobada'],
+			$_POST['numeroTransaccion'], 
+			"COP",
+			$_POST['metodoPago']				
+		);		
+		
+		if(!$a){
+			return false;
+			exit();
+		}
+		
+		if($a[6]=="1"){
+			
+			//var_dump($a);exit();	
+			$this->cart->destroy();
+			$id=$this->tank_auth->get_user_id();
+			$usuario=$this->general->get_username($id);
+			$style=$this->general->get_style($id);
+				
+			$this->template->set("style",$style);
+			$this->template->set("usuario",$usuario);
+				
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/ov/header');
+			$this->template->set_partial('footer', 'website/ov/footer');
+			$this->template->build('website/ov/compra_reporte/transaccionExitosa');
+			
+			//return "OK";
+			
+			return true;
+		}
+	
+		redirect('/');
 	}
 	
 	function RespuestaPayuLatam(){
@@ -539,6 +665,291 @@ function index()
 			return true;
 		}
 			redirect('/');
+	}
+	
+
+	function Compropago(){ //EVOLUCIONINTELIGENTE
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$key = $this->modelo_pagosonline->cliente_compropago();
+		
+		$v1=$key[0];
+		$v2=$key[1];
+		$v3=$key[2];
+
+		$link = getcwd()."/CompropagoSdk/exec/listProviders.php";
+
+		require_once $link;
+
+		$passProviders = $providers;
+ 		
+ 		$this->template->set("providers",$passProviders);
+ 		$this->template->build('website/ov/compra_reporte/compropago/proveedores');
+	
+	}
+
+	function CompropagoRegistrar(){ //EVOLUCIONINTELIGENTE
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$email = $this->general->get_email($id);
+
+		$contenidoCarrito=$this->get_content_carrito ();
+		$carritoCompras=$this->cart->contents();
+		
+		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
+
+		$fecha = date("Y-m-d");
+
+		$customer = $usuario[0]->nombre." ".$usuario[0]->apellido;
+
+		$id_venta = $this->modelo_compras->registrar_venta_pago_online_des($id,'COMPROPAGO',$fecha);
+			
+		$orders = array();
+
+		foreach ($contenidoCarrito["compras"] as $value) {
+			$texto = "(".$value['cantidad'].") ".$value['nombre'];			
+
+			$costo = " = $ ".$value['costos'][0]->costo;
+			$impuesto = intval($value['costos'][0]->costoImpuesto > 0) ? 
+							" ".$value['costos'][0]->iva." ".$value['costos'][0]->tipoImpuesto : "";
+
+			$valor = intval($costo>=0) ? $costo.$impuesto : "";
+
+			$texto.=$valor;
+
+			array_push($orders, $texto);
+		} 
+
+		$orders = implode(" + ", $orders); 
+			
+		$key = $this->modelo_pagosonline->cliente_compropago();
+		$compropago = $this->modelo_pagosonline->val_compropago();		
+
+		$payment_type = $_POST["prov"];
+
+		$v1=$key[0];
+		$v2=$key[1];
+		$v3=$key[2]; 		
+
+		$order_info = [
+		    'order_id' => $id_venta,
+		    'order_name' => $orders,
+		    'order_price' => $totalCarrito,
+		    'customer_name' => $customer,
+		    'customer_email' => $email[0]->email,
+		    'payment_type' => $payment_type,
+		    'currency' => $compropago[0]->moneda,
+		    'expiration_time' => null
+		];
+ 
+
+		$link = getcwd()."/CompropagoSdk/exec/newCharge.php";
+
+		require_once $link;
+
+		$Registro = $neworder;
+		
+		if(!$Registro||$Registro->status != "pending"){
+			echo "FAIL";
+			$this->db->query("delete from venta where id_venta = ".$id_venta);
+			exit();
+		}
+		//else{ 
+			$id_registro = $Registro->id;
+			$url_recibo = "https://www.compropago.com/comprobante/?confirmation_id=".$id_registro;
+		//	$this->template->set("url_recibo",$url_recibo);
+ 		//	$this->template->build('website/ov/compra_reporte/compropago/Recibo');
+		//}
+		
+		$contenidoCarrito["id"] = $id_registro;
+
+		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
+		
+		$this->cart->destroy();
+		
+		echo "
+		<legend>Por Favor, Espere a que cargue el Recibo</legend>
+		<div class='compropagoDivFrame' id='compropagodContainer' style='width: 100%;'>
+				    <iframe style='width: 100%;'
+				        id='compropagodFrame'
+				        src='".$url_recibo."'
+				        frameborder='0'
+				        scrolling='yes'></iframe>
+				</div>
+				<script type='text/javascript'>
+				    function resizeIframe() {
+				        var container=document.getElementById('compropagodContainer');
+				        var iframe=document.getElementById('compropagodFrame');
+				        if(iframe && container){
+				            var ratio=585/811;
+				            var width=container.offsetWidth;
+				            var height=(width/ratio);
+				            if(height>937){ height=937;}
+				            iframe.style.width=width + 'px';
+				            iframe.style.height=height + 'px';
+				        }
+				    }
+				    window.onload = function(event) {
+				        resizeIframe();
+				    };
+				    window.onresize = function(event) {
+				        resizeIframe();
+				    };
+				</script>";
+
+		//exit();
+
+		//} ESTE ES EL IF (ELSE)
+	}
+
+	function CompropagoRespuesta(){ //EVOLUCIONINTELIGENTE
+	
+		$in = "SELECT id_venta FROM venta WHERE id_metodo_pago = 'COMPROPAGO' and id_estatus = 'DES'";
+		$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProcesoIN($in);
+		$key = $this->modelo_pagosonline->cliente_compropago();	
+
+		$preorders = array();
+
+		foreach ($contenido_carrito_proceso as  $value) {
+			$contenidoCarrito=json_decode($value->contenido,true);
+			$datos = array($value->id,$contenidoCarrito['id']);
+			array_push($preorders, $datos);
+		} 
+
+		$id_venta= 0;
+
+		$v1=$key[0];
+		$v2=$key[1];
+		$v3=$key[2]; 
+
+		$link = getcwd()."/CompropagoSdk/exec/Response.php";
+
+		require_once $link;
+ 
+		$fp2 = fopen(getcwd()."/CompropagoSdk/exec/log.log", "a"); 
+		fputs($fp2, ":".$estatus."]");
+		fclose($fp2);
+
+ 		switch ($estatus) {
+ 			case 'ACT':
+ 				$contenido_carrito_proceso=$this->modelo_compras->getContenidoCarritoPagoOnlineProceso($id_venta);
+ 				$contenidoCarrito=json_decode($contenido_carrito_proceso[0]->contenido,true);
+				$carrito=json_decode($contenido_carrito_proceso[0]->carrito,true);
+					
+				$this->registrarFacturaDatosDefaultAfiliado($contenido_carrito_proceso[0]->id_usuario,$id_venta);
+				$this->registrarFacturaMercanciaPagoOnline ($contenidoCarrito,$carrito ,$id_venta);
+				$this->db->query("UPDATE venta SET id_estatus = 'ACT' WHERE id_venta = ".$id_venta);
+				$embarque = $this->modelo_logistico->setPedidoOnline($id_venta);
+				$this->pagarComisionVenta($id_venta,$contenido_carrito_proceso[0]->id_usuario);
+ 				break;
+
+ 			case 'DES':
+ 				$this->db->query("UPDATE venta SET id_estatus = 'DES' WHERE id_venta = ".$id_venta);
+ 				break;
+
+ 			case 'DELETE':
+ 				$this->db->query("delete from venta where id_venta = ".$id_venta);
+ 				break;
+ 			
+ 			default:
+ 				# code...
+ 				break;
+ 		}
+		//redirect('/');
+	}
+
+	function pagarVentaTucompra(){ //WOWCONEXION
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		if(!$this->cart->contents()){
+			echo "<script>window.location='/ov/dashboard';</script>";
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+	
+		$actual_link = "http://$_SERVER[HTTP_HOST]";
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$email = $this->general->get_email($id);
+	
+	
+		$contenidoCarrito=$this->get_content_carrito ();
+		$carritoCompras=$this->cart->contents();
+	
+		$id_pago_proceso = $this->modelo_compras->registrar_pago_online_proceso($id,json_encode($contenidoCarrito),json_encode($carritoCompras));
+	
+		$descripcion="";
+		foreach ($contenidoCarrito["compras"] as $mercancia){
+			$descripcion.=" ".$mercancia["nombre"];
+		}
+	
+		$totalCarrito=$this->get_valor_total_contenido_carrito($contenidoCarrito);
+	
+	
+		$tucompra  = $this->modelo_pagosonline->val_tucompra();
+	
+		$time = time();
+		$codigoFactura = $id_pago_proceso;
+		$codigoAutorizacion = md5("NetSoft".$time.$id_pago_proceso);
+		
+		//$firma = md5($tucompra[0]->apykey."~".$tucompra[0]->id_comercio."~NetSoft".$time."~".$totalCarrito."~".$tucompra[0]->moneda);
+		
+		$firma = md5($tucompra[0]->llave.";".$codigoFactura.";".$totalCarrito."".$tucompra[0]->moneda.";".$codigoAutorizacion);
+		$id_transacion = $firma;
+	
+		$link="https://demo2.tucompra.net/tc/app/inputs/compra.jsp";
+	
+		if($tucompra[0]->test!=1)
+			$link="https://gateway.tucompra.com.co/tc/app/inputs/compra.jsp";
+	
+			echo'
+			<h2 class="semi-bold">¿ Esta seguro de realizar el pago ?</h2>
+			<form method="post" action="'.$link.'">'
+	//		  .'<input name="merchantId"    type="hidden"  value="'.$tucompra[0]->id_comercio.'">'
+			  .'<input name="usuario"     type="hidden"  value="'.$tucompra[0]->cuenta.'" >'
+			  .'<input name="descripcionFactura"   type="hidden"  value="'.$descripcion.'"  >'
+			  .'<input name="factura" type="hidden"  value="NetSoft'.$time.$id_pago_proceso.'" >'
+			  .'<input name="valor"         type="hidden"  value="'.$totalCarrito.'"   >'
+			  .'<input name="nombreComprador"  type="hidden"  value="'.$usuario[0]->nombre." ".$usuario[0]->apellido.'"  >'
+			  .'<input name="documentoComprador" type="hidden"  value="'.$id.'" >'
+			  .'<input name="tipoMoneda"      type="hidden"  value="'.$tucompra[0]->moneda.'" >'
+			  .'<input name="signature"     type="hidden"  value="'.$id_transacion.'"  >'
+	//		  .'<input name="test"          type="hidden"  value="'.$tucompra[0]->test.'" >'
+			  .'<input name="campoExtra1" type="hidden" value="'.$id.'" >'
+			  .'<input name="campoExtra2" type="hidden" value="'.$id_pago_proceso.'" >'
+			  .'<input name="correoComprador" type="hidden"  value="'.$email[0]->email.'" >'
+			  .'<input name="responseUrl"    type="hidden"  value="'.$actual_link.'/ov/compras/RespuestaTucompra" >'
+			  .'<input name="confirmationUrl"  type="hidden"  value="'.$actual_link.'/ov/compras/RegistrarVentaTucompra" >'
+			  .'<input name="Submit" type="submit"  value="Pagar" class="btn btn-success">
+			</form>';
+	
 	}
 	
 	function pagarVentaPayuLatam(){
@@ -867,8 +1278,12 @@ function index()
 			else $cantidad_mujeres = $cantidad_mujeres + 1;
 		}
 		$cantidad_total_sexo = $cantidad_hombres+$cantidad_mujeres;
+
+		if($cantidad_total_sexo==0)
+			$porcentaje_total=0;
+		else
+			$porcentaje_total = 100/$cantidad_total_sexo;
 		
-		$porcentaje_total = 100/$cantidad_total_sexo;
 		$porcentaje_de_hombres = round($porcentaje_total*$cantidad_hombres,1, PHP_ROUND_HALF_UP);
 		$porcentaje_de_mujeres = round($porcentaje_total*$cantidad_mujeres,1, PHP_ROUND_HALF_UP);
 		
@@ -981,7 +1396,11 @@ function index()
 		}
 		$cantidad_total_estado_civil = $cantidad_solteros +	$cantidad_casados + $cantidad_union_libre + $cantidad_divorciados + $cantidad_viudos;
 		
-		$porcentaje_total_estado_civil = 100/$cantidad_total_estado_civil;
+		if($cantidad_total_estado_civil==0)
+			$porcentaje_total=0;
+		else
+			$porcentaje_total_estado_civil = 100/$cantidad_total_estado_civil;
+		
 		$porcentaje_solteros = round($porcentaje_total_estado_civil*$cantidad_solteros,1, PHP_ROUND_HALF_UP);
 		$porcentaje_casados = round($porcentaje_total_estado_civil*$cantidad_casados,1, PHP_ROUND_HALF_UP);
 		$porcentaje_union_libre = round($porcentaje_total_estado_civil*$cantidad_union_libre,1, PHP_ROUND_HALF_UP);
@@ -1035,20 +1454,156 @@ function index()
 			}
 		}
 		$cantidad_total_tiempo_dedicado = $cantidad_tiempo_completo + $cantidad_medio_tiempo;
+
+		if($porcentaje_total_tiempo_dedicado==0)
+			$porcentaje_total_tiempo_dedicado=0;
+		else
+			$porcentaje_total_tiempo_dedicado = 100/$cantidad_total_sexo;
+
 		
-		$porcentaje_total_tiempo_dedicado = 100/$cantidad_total_sexo;
 		$porcentaje_tiempo_completo = round($porcentaje_total_tiempo_dedicado*$cantidad_tiempo_completo,1, PHP_ROUND_HALF_UP);
 		$porcentaje_medio_tiempo = round($porcentaje_total_tiempo_dedicado*$cantidad_medio_tiempo,1, PHP_ROUND_HALF_UP);
 		
 		$this->template->set("porcentaje_tiempo_completo",$porcentaje_tiempo_completo);
 		$this->template->set("porcentaje_medio_tiempo",$porcentaje_medio_tiempo);
 		
+		
+		$q=$this->db->query("SELECT id, frontal ,profundidad ,nombre FROM tipo_red");
+		$redes=$q->result();
+		
+		$patas=array();
+		
+		foreach ($redes as $red){
+
+			$patas=$this->getCantidadDeAfiliadosPorPatas($patas,$id, $red);
+		}
+
+		$this->template->set("patas",$patas);
+		
+		$total_puntos_red=0;$total_puntos_red_mes=0;$total_ventas_red=0;$total_ventas_red_mes=0;
+		foreach ($patas as $pata){
+			$total_puntos_red=$total_puntos_red+$pata["total_puntos"];
+			$total_puntos_red_mes=$total_puntos_red_mes+$pata["total_puntos_mes"];
+			
+			$total_ventas_red=$total_ventas_red+$pata["total_ventas_red"];
+			$total_ventas_red_mes=$total_ventas_red_mes+$pata["total_ventas_mes"];
+		}
+		
+		$remanentes=array();
+		
+		foreach ($redes as $red){
+			
+			for($i=1; $i<=$red->frontal ;$i++){
+				$q=$this->db->query("SELECT total FROM comisionPuntosRemanentes where id_usuario=".$id." and id_pata=".$i." order by id desc limit 0,1");
+				$totalPata=$q->result();
+				$totalRemanente=0;
+
+				if($totalPata!=NULL)
+					$totalRemanente=$totalPata[0]->total;
+				 
+				$remanente = array(
+						'id_red' => $red->id,
+						'nombre_red' => $red->nombre,
+						'id_pata' => $i,
+						'total'   => $totalRemanente
+				
+				);
+				
+				array_push($remanentes, $remanente);
+
+			}
+		}
+
+		$this->template->set("remanentes",$remanentes);
+		
+		$this->template->set("total_puntos_red",$total_puntos_red);
+		$this->template->set("total_puntos_red_mes",$total_puntos_red_mes);
+		$this->template->set("total_ventas_red",$total_ventas_red);
+		$this->template->set("total_ventas_red_mes",$total_ventas_red_mes);
+
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/compra_reporte/estadisticas');	}
+		$this->template->build('website/ov/compra_reporte/estadisticas');	
+	}
 	
+	
+	private function getCantidadDeAfiliadosPorPatas($patas,$id_afiliado,$red){
+		$frontalidad=$red->frontal;
+		if($red->profundidad==0)
+			$profundidad=0;
+		else
+			$profundidad=($red->profundidad-1);
+		
+		for ($i=1;$i<=$frontalidad;$i++){
+		
+			// Afiliados Totales
+			$posicionEnRed=$i-1;
+			$usuario=new $this->afiliado;
+			$usuario->setIdAfiliadosRed(array());
+			$id_hijo=$usuario->getAfiliadoDirectoPorPosicion($id_afiliado,$red->id,$posicionEnRed);
+			
+			if($id_hijo==null)
+				$total_afiliados=0;
+			else{
+				$usuario->getAfiliadosDebajoDe($id_hijo,$red->id,"RED",$profundidad,$profundidad);
+				$total_afiliados=(count($usuario->getIdAfiliadosRed())+1);
+			}
+			
+			//Puntos Totales
+			$usuario=new $this->afiliado;
+			$puntosHijo=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
+			$puntosRedHijo=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,"2016-01-01","2026-01-01",$profundidad,"0","0","PUNTOS");
+			$puntosTotales=$puntosHijo[0]->total+$puntosRedHijo;
+				
+			$calculador=new $this->calculador_bono;
+		
+				
+			$inicioMes=$calculador->getInicioMes(date('Y-m-d'));
+			$finMes=$calculador->getFinMes(date('Y-m-d'));
+			//Puntos Mes
+			$usuario=new $this->afiliado;
+			$puntosHijoMes=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0",$inicioMes,$finMes);
+			$puntosRedHijoMes=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,$inicioMes,$finMes,$profundidad,"0","0","PUNTOS");
+			$puntosTotalesMes=$puntosHijoMes[0]->total+$puntosRedHijoMes;
+		
+			//ventas Totales
+			$usuario=new $this->afiliado;
+			$ventasHijo=$usuario->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
+			$ventasRedHijo=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,"2016-01-01","2026-01-01",$profundidad,"0","0","COSTO");
+			$ventasTotales=$ventasHijo[0]->total+$ventasRedHijo;
+				
+			$calculador=new $this->calculador_bono;
+		
+				
+			$inicioMes=$calculador->getInicioMes(date('Y-m-d'));
+			$finMes=$calculador->getFinMes(date('Y-m-d'));
+			//ventas Mes
+			$usuario=new $this->afiliado;
+			$ventasHijoMes=$usuario->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0",$inicioMes,$finMes);
+				
+			$ventasRedHijoMes=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,$inicioMes,$finMes,$profundidad,"0","0","COSTO");
+			$ventasTotalesMes=$ventasHijoMes[0]->total+$ventasRedHijoMes;
+		
+			$pata = array(
+					'id_red' => $red->id,
+					'nombre_red' => $red->nombre,
+					'id_pata' => $i,
+					'total_afiliados'   => $total_afiliados,
+					'total_puntos'   => $puntosTotales ,
+					'total_puntos_mes'   => $puntosTotalesMes,
+					'total_ventas_red'   => $ventasTotales ,
+					'total_ventas_mes'   => $ventasTotalesMes
+						
+			);
+		
+			array_push($patas, $pata);
+		}
+
+		return $patas;
+	}
+		
 	function reportes()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -1182,16 +1737,19 @@ function index()
 		
 		switch ($_POST['tipo']){
 			case 1 	: $this->reporte_afiliados(); break;
-			case 2 	: $this->reporte_compras_usr(); 
+			case 2 	: $this->reporte_compras_usr();  
 						$this->reporte_compras_usr_well(); break;
 			case 3 	: $this->reporte_compras(); 
 						$this->reporte_compras_red_well();break;
-			case 4	: ''; break;
+			case 4	: $this->reporte_compras_personales_cedi(); break;
 			case 5	: $this->ReportePagosBanco(); break;
 			case 6	: $this->reporte_afiliados_todos(); break;
 			case 7 	: $this->reporte_compras_afiliados_todos(); break;
 			case 8 	: $this->reporte_compras_personales(); break;
 			case 9 	: $this->reporte_directos(); break;
+			case 10 	: $this->reporte_afiliados_activos(); break;
+			case 11 	: $this->reporte_afiliados_inactivos(); break;
+			case 12 	: $this->reporte_bonos_afiliados_todos(); break;
 		}
 		
 	}
@@ -1376,17 +1934,24 @@ function index()
 			$total_impuesto = 0;
 			
 			$ventas = $this->model_servicio->listar_todos_por_venta_y_fecha_usuario($inicio,$fin,$afiliado->id_afiliado);
-		
+                        $cedi = $this->model_servicio->listar_cedi_personales($inicio,$fin,$afiliado->id_afiliado);
+                        
 			foreach($ventas as $venta)
 			{
 					
 				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
 				$total_impuesto = $total_impuesto + $venta->impuestos;
-				$total_venta = $total_venta  + $venta->costo;
-			
-
+				$total_venta = $total_venta  + $venta->costo;	
 			}
 			
+                         foreach ($cedi as $venta ){
+                
+                                $total_costo +=$venta->costo ;
+                                $total_impuesto += $venta->impuestos;
+                                $total_venta += ($venta->costo + $venta->impuestos);               
+
+                            }
+                        
 			echo "<tr>
 					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
 					<td>".$afiliado->nombre."</td>
@@ -1520,7 +2085,11 @@ function index()
 			<td> $	".number_format($venta->costo, 2, '.', '')."</td>
 			<td>				<a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura(".$venta->id_venta.");'>
 				<i class='fa fa-eye fa-3x'></i>
-				</a></td>
+				</a>
+					<a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir(".$venta->id_venta.");'>
+				<i class='fa fa-file-pdf-o fa-3x'></i>
+				</a>
+				</td>
 			</tr>";
 					
 				$total_costo = $total_costo + ($venta->costo-$venta->impuestos);
@@ -1622,6 +2191,93 @@ function index()
 			</table><tr class='odd' role='row'>";
 	
 	*/
+	}
+        
+        function reporte_compras_personales_cedi()
+	{
+		$total_venta = 0;
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		$inicio = $_POST['inicio'] ? $_POST['inicio'] : date('Y-m').'-01';
+		$fin = $_POST['fin'] ? $_POST['fin'] : date('Y-m-d');
+		
+		$ventas = $this->model_servicio->listar_cedi_personales($inicio,$fin,$id);
+		
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Venta</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone,tablet'>Usuario</th>
+					<th data-hide='phone,tablet'>Nombre Completo</th>
+					<th data-hide='phone,tablet'>Subtotal</th>
+					<th data-hide='phone,tablet'>Impuestos</th>
+					<th data-hide='phone,tablet'>Total Venta</th>
+					<th data-hide='phone,tablet'>Puntos</th>
+                                        <th >Acciones</th>
+				</thead>
+				<tbody>";
+		
+			foreach($ventas as $venta)
+			{
+			echo "<tr>
+                                    <td class='sorting_1'>".$venta->id_venta."</td>
+                                    <td>".$venta->fecha."</td>
+                                    <td>".$venta->username."</td>
+                                    <td>".$venta->name." ".$venta->lastname."</td>
+                                    <td> $ ".number_format(($venta->costo), 2)."</td>
+                                    <td> $ ".number_format($venta->impuestos, 2)."</td>
+                                    <td> $ ".number_format($venta->costo+$venta->impuestos, 2)."</td>
+                                    <td>".$venta->puntos."</td>
+                                    <td>	
+                                        <a title='Factura' style='cursor: pointer;' class='txt-color-blue' onclick='factura_cedi(".$venta->id_venta.");'>
+                                            <i class='fa fa-eye fa-3x'></i>
+                                        </a>
+                                        <a title='Imprimir' style='cursor: pointer;' class='txt-color-green' onclick='imprimir_cedi(".$venta->id_venta.");'>
+                                            <i class='fa fa-file-pdf-o fa-3x'></i>
+                                        </a>
+                                    </td>
+                                </tr>";
+					
+				$total_costo += $venta->costo;
+				$total_impuesto += $venta->impuestos;
+				$total_venta += ($venta->costo+$venta->impuestos);
+				$total_comision += $venta->puntos;
+					
+			}
+		
+			echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+                        </tr>";
+				
+			echo "<tr>
+			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><b> $ ".number_format($total_costo, 2)."</b></td>
+			<td><b> $ ".number_format($total_impuesto, 2)."</b></td>
+			<td><b> $ ".number_format($total_venta, 2)."</b></td>
+                        <td><b> ".$total_comision."</b></td>
+			<td></td>
+			</tr>";
+		
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+                
 	}
 	
 	function reporte_compras_personales_excel()
@@ -1731,6 +2387,96 @@ function index()
 	
 	
 	}
+	
+	function reporte_afiliados_activos()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+		if (!$this->tank_auth->is_logged_in())
+		{												
+		redirect('/auth');
+		}
+
+		$afiliados=$this->modelo_compras->reporte_afiliados_activos($id,date('Y-m-d'));
+		
+		echo 
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Actividad</th>
+				</thead>
+				<tbody>";
+			foreach($afiliados as $afiliado)
+			{
+					echo "<tr>
+					<td class='sorting_1'>".$afiliado[0]->id."</td>
+					<td>".$afiliado[0]->usuario."</td>
+					<td>".$afiliado[0]->nombre."</td>
+					<td>".$afiliado[0]->apellido."</td>
+					<td>".$afiliado[0]->email."</td>
+					<td><div class='widget-body'>
+						<h2 class='alert alert-success'><i class='fa fa-thumbs-o-up'></i></h2>
+						</div></td>
+				</tr>";
+			}
+				
+			
+			echo "</tbody>
+			</table><tr class='odd' role='row'>";
+		
+		
+		
+	}
+	
+	function reporte_afiliados_inactivos()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+		if (!$this->tank_auth->is_logged_in())
+		{												
+		redirect('/auth');
+		}
+
+		$afiliados=$this->modelo_compras->reporte_afiliados_inactivos($id,date('Y-m-d'));
+		
+		echo 
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Actividad</th>
+				</thead>
+				<tbody>";
+			foreach($afiliados as $afiliado)
+			{
+					echo "<tr>
+					<td class='sorting_1'>".$afiliado[0]->id."</td>
+					<td>".$afiliado[0]->usuario."</td>
+					<td>".$afiliado[0]->nombre."</td>
+					<td>".$afiliado[0]->apellido."</td>
+					<td>".$afiliado[0]->email."</td>
+					<td><div class='widget-body'>
+						<h2 class='alert alert-danger'><i class='fa fa-thumbs-o-down'></i></h2>
+						</div></td>
+				</tr>";
+			}
+				
+			
+			echo "</tbody>
+			</table><tr class='odd' role='row'>";
+		
+		
+		
+		
+	}
+	
 	function reporte_afiliados_excel()
 	{
 		//load our new PHPExcel library
@@ -2070,6 +2816,84 @@ function index()
 		$objWriter->save('php://output');
 	}
 	
+	function reporte_bonos_afiliados_todos()
+	{
+		$id=$this->tank_auth->get_user_id();
+	
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
+	
+		$redesUsuario=$this->model_tipo_red->cantidadRedesUsuario($id);
+			
+		foreach ($redesUsuario as $redUsuario){
+			$red = $this->model_tipo_red->ObtenerFrontalesRed($redUsuario->id );
+		
+			if($red){
+					
+				if($red[0]->profundidad==0)
+					$this->preOrdenRedProfundidadInfinita($id,$redUsuario->id,$red[0]->frontal);
+					else
+						$this->preOrdenRed($id,$redUsuario->id,$red[0]->frontal,$red[0]->profundidad);
+			}
+		}
+		
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>"
+					."<th>ID historial</th>"
+					."<th>Usuario</th>"
+					."<th data-hide='phone'>Nombre Completo</th>"
+					."<th data-hide='phone,tablet'>Fecha</th>"
+					."<th data-hide='phone,tablet'>Bono</th>"
+					."<th data-hide='phone,tablet'>Valor</th>"
+				."</thead>
+				<tbody>";
+		
+		$total = 0;				
+		
+		foreach ($this->afiliados as $afiliado){
+		
+			$bonos = $this->model_bonos->getBonosPagadosRed($afiliado->id_afiliado,$inicio,$fin);
+						
+			foreach ($bonos as $bono)
+			{					
+					$total += $bono->valor;	
+					
+				echo "<tr>"
+						."<td class='sorting_1'>".$bono->id."</td>"
+						."<td>".$bono->usuario."</td>"
+						."<td>".$bono->afiliado."</td>"
+						."<td> ".$bono->fecha."</td>"
+						."<td> ".$bono->bono."</td>"
+						."<td>$ ".$bono->valor
+						//."|".$total
+						."</td>"
+					."</tr>";
+			}
+		}
+	
+		/*	<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";*/
+		
+		echo "<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class='sorting_1'><b>TOTAL:</b></td>
+			<td><b> $	".number_format($total, 2)."</b></td>
+			</tr>";
+		
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	
+	}
+	
 	function muestra_mercancia()
 	{
 		$data=$_GET["info"];
@@ -2211,14 +3035,17 @@ function index()
 		else if($id_tipo_mercancia==5)
 			$detalles=$this->modelo_compras->detalles_membresia($id_mercancia);
 		
-		
+		$img_item = $imagenes[0]->url;
+			
+			if(!file_exists(getcwd().$img_item))
+				$img_item = "/template/img/favicon/favicon.png";
 		
 		echo '<div class="product">
           <a data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
           <i class="glyphicon glyphicon-heart"></i>
           </a>
             <div class="image"> <a href="product-details.html">
-				<img class="img-responsive" alt="img" src="'.$imagenes[0]->url.'" style="width: 15rem ! important; height: 10rem ! important;">
+				<img class="img-responsive" alt="img" src="'.$img_item.'" style="width: 15rem ! important; height: 10rem ! important;">
 				</a>
             </div>
             <div class="description">
@@ -2247,12 +3074,12 @@ function index()
 		echo "<form id='comprar'  method='post' action=''>";
 		if($id_tipo_mercancia==1){
 			$limites=$this->modelo_compras->get_limite_compras($id_tipo_mercancia,$id_mercancia);
-			$min=$limites[0]->min_venta;
-			$max=$limites[0]->max_venta;
+			$min=($limites[0]->min_venta>$limites[0]->existencia) ? $limites[0]->existencia :$limites[0]->min_venta;
+			$max=($limites[0]->max_venta>$limites[0]->existencia) ? $limites[0]->existencia :$limites[0]->max_venta;
 			echo "	<div class='row'>
 						<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-							<p class='font-md'><strong>Cantidad</strong></p><br>
-							<input type='number' id='cantidad' name='cantidad' min='".$min."' max='".$max."' value='".$min."' onkeydown='return false'><br><br>
+							<p class='font-md'><strong>Unidades</strong></p><br>
+							<input type='number' id='cantidad' name='cantidad' min='".$min."' max='".$max."' value='".$min."' ><br><br>
 						</div>
 					</div>";
 		}
@@ -2287,7 +3114,7 @@ function index()
 			$detalles=$this->modelo_compras->detalles_membresia($id_mercancia);
 	
 		
-		if(!$data['qty'])
+		if(!isset($data['qty']))
 			$cantidad=1;
 		else 
 			$cantidad=$data['qty'];
@@ -2824,12 +3651,15 @@ function index()
 		$productos=1;
 		$servicios=2;
 		$combinados=3;
+		$paquete=4;
+		$membresia=5;
 
-		$this->showMercanciaPorCategoria($productos, $idCategoriaRed, $paisUsuario);
+		$tipoItems = array($productos,$servicios,$combinados,$paquete,$membresia);
+			
+		for($i=0;$i<sizeof($tipoItems);$i++){
+			$this->showMercanciaPorCategoria($tipoItems[$i], $idCategoriaRed, $paisUsuario);
+		}
 		
-		$this->showMercanciaPorCategoria($servicios, $idCategoriaRed, $paisUsuario);
-		
-		$this->showMercanciaPorCategoria($combinados, $idCategoriaRed, $paisUsuario);
 	}
 	
 	function getMercanciaPorTipoDeRed($id_tipo_mercancia,$id_tipo_red,$paisUsuario){
@@ -2866,34 +3696,68 @@ function index()
 		
 		for($i=0;$i<sizeof($mercancia);$i++)
 		{
-		echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+			$id_tipo_mercancia = isset($mercancia[$i]->id_tipo_mercancia) ? $mercancia[$i]->id_tipo_mercancia : 0;
+			$boton = 'compra_prev('.$mercancia[$i]->id.','.$tipoMercancia.',0)' ;
+			$btn = 'success';
+			$rows = ($mercancia[$i]->descripcion!='') ? 9.8 : 1;
+			$inventario =  '';
+			
+			if($id_tipo_mercancia == 1){
+				$existencia = intval($mercancia[$i]->existencia);			
+				$minimo = intval($mercancia[$i]->inventario);
+				$agotado = (($existencia-$minimo)>0) ? false : true;
+				$color = ($existencia < $mercancia[$i]->max_venta) ? 'orange' : 'green';
+				$inventario = 'Existencias: <b style="color: '.$color.'">'.$existencia.'</b>' ;
+				if($agotado){ 
+						$inventario = '<b style="color: red">Producto Agotado</b>';
+						$boton = 'javascript:void(0)' ;
+						$btn = 'default' ;	
+				}
+			}				
+			
+			$puntos_comisionables = ($mercancia[$i]->puntos_comisionables!='0') 
+				? '<span style="font-size: 1.5rem;">(Puntos  '.$mercancia[$i]->puntos_comisionables.')</span>' : '';
+				
+			$img_item = $mercancia[$i]->img;
+			
+			if(!file_exists(getcwd().$img_item))
+				$img_item = "/template/img/favicon/favicon.png";
+
+		$imprimir ='	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 					<div class="producto">
 					<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
 						<i class=""></i>
 					</a>
 					<div class="image"> <a onclick="detalles('.$mercancia[$i]->id.','.$tipoMercancia.')">
-							<img src="'.$mercancia[$i]->img.'" alt="img" class="img-responsive"></a>
+							<img src="'.$img_item.'" alt="img" class="img-responsive"></a>
 					<div class="promotion">   </div>
 					</div>
-					<div class="description">
+					<div class="description" style="overflow-y: scroll;height: 10em">
 					<h4><a  onclick="detalles('.$mercancia[$i]->id.','.$tipoMercancia.')">'.$mercancia[$i]->nombre.'</a></h4>
      				<section style="margin-bottom: 1rem;" class="smart-form">
 					<label class="textarea textarea state-disabled"> 										
-						<textarea rows="4" class="custom-scroll" disabled="disabled" style="color: rgb(0, 0, 0); border: medium none; overflow: hidden; height: 9.8rem;">'.$mercancia[$i]->descripcion.'
+						<textarea rows="4" class="custom-scroll" disabled="disabled" style="color: rgb(0, 0, 0); border: medium none; overflow: hidden; height: '.$rows.'rem;">'.$mercancia[$i]->descripcion.'
 						</textarea> 
 					</label>
 					</section>
 					</div>
-					<div class="price"> <span>$ '.$mercancia[$i]->costo.'</span></div>
+					<div class="price">
+					<span>'.$inventario.'</span>
+					</div>
+					<hr/>
+					<div class="price">'.$puntos_comisionables.'<br>
+					<span>$ '.$mercancia[$i]->costo.'</span>
+					</div>
 					<br>
 					<div class=""> 
-						<a style="font-size: 1.7rem;" class="btn btn-success" onclick="compra_prev('.$mercancia[$i]->id.','.$tipoMercancia.',0)"> 
+						<a style="font-size: 1.7rem;" class="btn btn-'.$btn.'" onclick="'.$boton.'"> 
 						<span class="add2cart">
 						<i class="glyphicon glyphicon-shopping-cart"> 
 						</i> Agregar al carrito </span> </a> </div>
 				 	</div>
 				</div>
 				';
+				echo $imprimir;
 
 		}
 	}
@@ -2909,8 +3773,14 @@ function index()
 			foreach ($this->cart->contents() as $items)
 			{
 				$total=$items['qty']*$items['price'];
+
+				$img_item = $compras['compras'][$cantidad]['imagen'];
+				
+				if(!file_exists(getcwd().$img_item))
+					$img_item = "/template/img/favicon/favicon.png";
+
 				echo '<tr class="miniCartProduct">
-									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$compras['compras'][$cantidad]['imagen'].'" alt="img"> </a> </div></td>
+									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$img_item.'" alt="img"> </a> </div></td>
 									<td style="width:40%"><div class="miniCartDescription">
 				                        <h4> <a href=""> '.$compras['compras'][$cantidad]['nombre'].'</a> </h4>
 				                        <span> '.$items['price'].' </span>
@@ -2965,7 +3835,7 @@ function index()
 						codigo_seguridad,estatus) values (".$data['tipo'].",".$id_user.",".$data['banco'].",'".$data['numero']."',
 						'".$fecha."','".$data['titular']."','".$data['codigo']."','".$status."')");
 				$this->db->query("insert into venta (id_user,id_estatus,costo,id_metodo_pago) values (".$id_user.",2,".$this->cart->total().",1)");
-				$venta=mysql_insert_id();
+				$venta=$this->db->insert_id();
 				$puntos=0;
 				foreach ($this->cart->contents() as $items) 
 				{
@@ -2997,7 +3867,7 @@ function index()
 						codigo_seguridad,estatus) values (".$data['tipo'].",".$id_user.",".$data['banco'].",'".$data['numero']."',
 						'".$fecha."','".$data['titular']."','".$data['codigo']."','".$status."')");
 				$this->db->query("insert into autocompra (fecha,id_usuario) values ('".$data['fecha']."',".$id_user.")");
-				$autocompra=mysql_insert_id();
+				$autocompra=$this->db->insert_id();
 				foreach ($this->cart->contents() as $items) 
 				{
 					$this->db->query("insert into cross_autocompra_mercancia values (".$autocompra.",".$items['id'].",".$items['qty'].")");
@@ -3750,9 +4620,13 @@ function index()
 				$this->calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado_comprador);
 				
 			}
-
+			
+			
 		}
 	}
+	
+	
+	
 	
 	public function calcularComisionAfiliado($id_venta,$id_red_mercancia,$costoVenta,$id_afiliado){
 	
@@ -3770,7 +4644,8 @@ function index()
 				
 			$id_afiliado_padre=$afiliado_padre[0]->debajo_de;
 				
-			$valor_comision=(($valor_comision_por_nivel[$i]->valor*$costoVenta)/100);
+			$valorComision = isset($valor_comision_por_nivel[$i]) ? $valor_comision_por_nivel[$i]->valor : 0;
+			$valor_comision=(($valorComision*$costoVenta)/100);
 				
 			$this->modelo_compras->set_comision_afiliado($id_venta,$id_red_mercancia,$id_afiliado_padre,$valor_comision);
 				

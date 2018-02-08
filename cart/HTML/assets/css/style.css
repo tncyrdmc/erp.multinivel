@@ -1024,6 +1024,7 @@ legend {
 	max-height: 300px;
 	width: 100%;
 	display: block;
+	overflow-y: scroll;
 }
 .miniCartProductThumb {
 	text-align: center;
@@ -2235,7 +2236,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 	width: auto;
 	z-index: 2;
 }
- .style2 .section-title span, .section-title.style2 span, {
+ .style2 .section-title span, .section-title.style2 span {
    color: #2c3e50;
    display: table;
    position: relative;
@@ -4060,7 +4061,7 @@ h1.xlarge {
 @media (max-width: 580px) {
 /* phones (portrait and landscape) ----------- */
 	
-.xs3Response . {
+.xs3Response {
  width: 50% !important;
 }
 .sliderTextFull {

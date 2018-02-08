@@ -12,23 +12,38 @@ class model_perfil_red extends CI_Model
 	
 	function datos_perfil($id)
 	{
-		$q=$this->db->query('
-			SELECT profile.keyword keyword, (select email from users where id=profile.user_id) email, profile.id_edo_civil, profile.user_id, profile.nombre nombre, profile.apellido apellido,
-			profile.fecha_nacimiento nacimiento, profile.id_estudio id_estudio,
-			profile.id_ocupacion id_ocupacion,
-			profile.id_tiempo_dedicado id_tiempo_dedicado,
-			profile.id_fiscal id_fiscal,
-			sexo.descripcion sexo,
-			edo_civil.descripcion edo_civil,
-			estilos.bg_color, estilos.btn_1_color, estilos.btn_2_color
-			from user_profiles profile
-			left join cat_sexo sexo
-			on profile.id_sexo=sexo.id_sexo
-			left join estilo_usuario estilos on
-			profile.user_id=estilos.id_usuario
-			left join cat_edo_civil edo_civil on
-			profile.id_edo_civil=edo_civil.id_edo_civil
-			where profile.user_id='.$id);
+		$q=$this->db->query('SELECT 
+							    `profile`.keyword keyword,
+							    (select 
+							            email
+							        from
+							            users
+							        where
+							            id = `profile`.user_id) email,
+							    `profile`.id_edo_civil,
+							    `profile`.user_id,
+							    `profile`.nombre nombre,
+							    `profile`.apellido apellido,
+							    `profile`.fecha_nacimiento nacimiento,
+							    `profile`.id_estudio id_estudio,
+							    `profile`.id_ocupacion id_ocupacion,
+							    `profile`.id_tiempo_dedicado id_tiempo_dedicado,
+							    `profile`.id_fiscal id_fiscal,
+							    sexo.descripcion sexo,
+							    edo_civil.descripcion edo_civil,
+							    estilos.bg_color,
+							    estilos.btn_1_color,
+							    estilos.btn_2_color
+							from
+							    user_profiles `profile`
+							        left join
+							    cat_sexo sexo ON `profile`.id_sexo = sexo.id_sexo
+							        left join
+							    estilo_usuario estilos ON `profile`.user_id = estilos.id_usuario
+							        left join
+							    cat_edo_civil edo_civil ON `profile`.id_edo_civil = edo_civil.id_edo_civil
+							where
+							    `profile`.user_id = '.$id);
 		return $q->result();
 	}
 	function tipo_fiscal()
@@ -78,12 +93,27 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
 		return $q->result();
 	}
+	
+	function get_sponsor_id($id,$id_red)
+	{
+		$q=$this->db->query('SELECT directo FROM afiliar where id_afiliado='.$id.' and id_red='.$id_red);
+		return $q->result();
+	}
+	
 	function get_email($id)
 	{
 		$q=$this->db->query('select email from users where id='.$id);
 		$q2 = $q->result();
 		return $q2[0]->email;
 	}
+	
+	function get_username($id)
+	{
+		$q=$this->db->query('select username from users where id='.$id);
+		$q2 = $q->result();
+		return $q2[0]->username;
+	}
+	
 	function get_nombres($id)
 	{
 		$q=$this->db->query('select nombre, apellido from user_profiles where user_id='.$id);
@@ -389,7 +419,7 @@ class model_perfil_red extends CI_Model
 	
 	function get_cantidad_de_frontales($id_afiliado,$id_red)
 	{
-	
+		
 		$q=$this->db->query("SELECT count(*) as frontales FROM afiliar where debajo_de=".$id_afiliado." and id_red=".$id_red." order by lado");
 		return $q->result();
 	}
@@ -410,9 +440,25 @@ class model_perfil_red extends CI_Model
 		return  $q->result();
 	}
 	
+	function get_directos_by_id_ultimos_cinco($id)
+	{
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , AF.directo ,
+	
+			(select distinct  group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_red=  AF.id_red)) as redes
+	
+				from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA ,afiliar AF
+	
+				where U.id = UP.user_id and UP.user_id = AF.id_afiliado and AF.directo = ".$id."
+	
+				and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2
+	
+				order by   U.id , AF.lado asc,(U.id) limit 5");
+		return  $q->result();
+	}
+	
 	function get_tabla()
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+		$q=$this->db->query("select U.id, U.username, U.email,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
 				
 			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
@@ -424,12 +470,13 @@ where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id
 		
 	function get_tabla_por_id_buscado($id_buscado, $id_red)
 	{
-			$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
+			$q=$this->db->query("select U.id, U.username,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
 
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R 
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
 
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus 
-= UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." 
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 and U.id like ".$id_buscado." 
 
 group by (U.id) 
 order by (U.id);");
@@ -438,12 +485,13 @@ order by (U.id);");
 	
 	function get_tabla_por_nombre_buscado($nombre_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus, R.id_red
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
+		$q=$this->db->query("select U.id, U.username,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2  and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
 
 group by (U.id) 
 order by (U.id);");
@@ -452,12 +500,13 @@ order by (U.id);");
 	
 	function get_tabla_por_apellido_buscado($apellido_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
+		$q=$this->db->query("select U.id, U.username,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
 
 group by (U.id) 
 order by (U.id);");
@@ -466,12 +515,13 @@ order by (U.id);");
 	
 	function get_tabla_por_username_buscado($username_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(U.username) like upper('".$username_buscado.'%'."') 
+		$q=$this->db->query("select U.id, U.username,U.recovery, (select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2  and upper(U.username) like upper('".$username_buscado.'%'."') 
 group by (U.id) 
 order by (U.id);");
 		return  $q->result();
@@ -479,12 +529,13 @@ order by (U.id);");
 	
 	function get_tabla_por_email_buscado($email_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
-	
-from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
-	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and upper(U.email) like upper('".$email_buscado.'%'."') 
+		$q=$this->db->query("select U.id, U.username, U.email,U.recovery,(select group_concat(distinct directo) from afiliar where id_afiliado = U.id) sponsor,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus , 
+				
+			(select distinct group_concat(tr.nombre) from tipo_red tr where tr.id in (select af.id_red from afiliar af where af.id_afiliado = U.id)) redes
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id  and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus and UP.id_tipo_usuario = 2 and upper(U.email) like upper('".$email_buscado.'%'."') 
 
 group by (U.id) 
 order by (U.id);");
@@ -493,32 +544,32 @@ order by (U.id);");
 	
 	function use_mail()
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."'");
 		return $q->result();
 	}
 	
 	function exist_mail($mail)
 	{
-		$q=$this->db->query("select * from users where email like '".$mail."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($mail)."'");
 		return $q->result();
 	}
 	
 	function use_mail_modificar_perfil($id)
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id!= '".$id."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."' and id!= '".$id."'");
 		return $q->result();
 	}
 	
 	function use_mail_modificar()
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id != '".$_POST['id']."'");
+		$q=$this->db->query("select * from users where lower(email) like '".strtolower($_POST['mail'])."' and id != '".$_POST['id']."'");
 		
 		return $q->result();
 	}
 	
 	function use_username()
 	{
-		$q=$this->db->query("select * from users where username = '".$_POST['username']."'");
+		$q=$this->db->query("select * from users where lower(username) = '".strtolower($_POST['username'])."'");
 		return $q->result();
 	}
 	
@@ -530,7 +581,7 @@ order by (U.id);");
 	
 	function use_username_modificar()
 	{
-		$q=$this->db->query("select * from users where username like '".$_POST['username']."' and id!= '".$_POST['id']."'");
+		$q=$this->db->query("select * from users where lower(username) like '".strtolower($_POST['username'])."' and id!= '".$_POST['id']."'");
 		return $q->result();
 	}
 	
@@ -541,7 +592,7 @@ order by (U.id);");
 	
 	function use_keyword()
 	{
-		$q=$this->db->query("select * from user_profiles where keyword like '".$_POST['keyword']."'");
+		$q=$this->db->query("select * from user_profiles where keyword = '".$_POST['keyword']."'");
 		return $q->result();
 	}
 	function telefonos($id)
@@ -575,7 +626,7 @@ order by (U.id);");
 		$this->db->query("delete from cross_tel_user where id_user=".$id);
 		$this->db->query("delete from cross_dir_user where id_user=".$id);
 
-		if($_POST["fijo"])
+		if(isset($_POST["fijo"]))
 		{
 			foreach ($_POST["fijo"] as $fijo)
 			{
@@ -588,7 +639,7 @@ order by (U.id);");
 	            $this->db->insert("cross_tel_user",$dato_tel);
 			}
 		}
-		if($_POST["movil"])
+		if(isset($_POST["movil"]))
 		{
 			foreach ($_POST["movil"] as $movil)
 			{
@@ -612,9 +663,25 @@ order by (U.id);");
             );
             $this->db->insert("cross_dir_user",$dato_dir);
 
-        $this->db->query('update users set email="'.$_POST['email'].'" where id='.$id);
-		$this->db->query("update user_profiles set id_sexo=".$_POST['sexo'].", id_fiscal='".$_POST['tipo_fiscal']."', keyword='".$_POST['rfc']."' ,id_edo_civil='".$_POST['civil']."', id_estudio=".$_POST['estudios'].", id_ocupacion=".$_POST['ocupacion']." , id_tiempo_dedicado=".$_POST['tiempo_dedicado']." ,nombre='".$_POST['nombre']."',apellido='".$_POST['apellido']."',fecha_nacimiento='".$_POST['nacimiento']."' where user_id=".$id);
-		$this->db->query("update estilo_usuario set bg_color='".$_POST['bg_color']."', btn_1_color='".$_POST['color_1']."', btn_2_color='".$_POST['color_2']."' where id_usuario=".$id);
+        $this->db->query ( 'update users set email="' . $_POST ['email'] . '" where id=' . $id );
+		$this->db->query ( "update user_profiles 
+										set id_sexo=" . $_POST ['sexo'] 
+										. ", id_fiscal='" . $_POST ['tipo_fiscal'] 
+										. "', keyword='" . $_POST ['rfc'] 
+										. "' ,id_edo_civil='" . $_POST ['civil'] 
+										. "', id_estudio=" . $_POST ['estudios'] 
+										. ", id_ocupacion=" . $_POST ['ocupacion'] 
+										. " , id_tiempo_dedicado=" . $_POST ['tiempo_dedicado'] 
+										. " ,nombre='" . $_POST ['nombre'] 
+										. "',apellido='" . $_POST ['apellido'] 
+										. "',fecha_nacimiento='" . $_POST ['nacimiento']. "' 
+										where user_id=" . $id );
+		$this->db->query ( "update estilo_usuario 
+								set bg_color='" . $_POST ['bg_color'] 
+								. "', btn_1_color='" . $_POST ['color_1'] 
+								. "', btn_2_color='" . $_POST ['color_2'] . "' 
+								where id_usuario=" . $id );
+		$this->actualizar_cuenta_banco($id);
 	}
 	function cp()
 	{
@@ -692,6 +759,44 @@ order by (U.id);");
 		return $q->result();
 	}
 	
+	function val_cuenta_banco($id)
+	{
+		$val=$this->get_cuenta_banco($id);
+		if(!$val){
+			$dato=array(
+					"id_user" =>	$id
+			);
+			$this->db->insert("cross_user_banco",$dato);
+			$val=$this->get_cuenta_banco($id);
+		}
+		return $val;
+	}
+	
+	function get_cuenta_banco($id)
+	{
+		$q=$this->db->query("select * from cross_user_banco where id_user=".$id." and estatus ='ACT'");
+		return $q->result();
+	}
+	
+	function actualizar_cuenta_banco($id)
+	{
+		$dato=array(
+				"cuenta"     => $_POST['c_cuenta'] ? $_POST['c_cuenta'] : "Your account",
+				"titular"     		=> $_POST['c_titular'] ? $_POST['c_titular'] : "You",
+				"banco"       		=> $_POST['c_banco'] ? $_POST['c_banco'] : "Your bank",
+				"pais"         		=> $_POST['c_pais'] ? $_POST['c_pais'] : "COL",
+				"swift"      		=> $_POST['c_swift'],
+				"otro"         		=> $_POST['c_otro'] ,
+				"clabe"       		=> $_POST['c_clabe'] ,
+				"dir_postal"        => $_POST['c_postal']
+		);
+	
+		$this->db->where('id_user', $id);
+		$this->db->update('cross_user_banco', $dato);
+	
+		return true;
+	}
+	
 	function ConsultarIdPadre($id , $id_red_padre){
 		$q = $this->db->query("select debajo_de,lado from afiliar where id_afiliado=".$id." and id_red = ".$id_red_padre." group by debajo_de");
 		$id_padre = $q->result();
@@ -704,6 +809,11 @@ order by (U.id);");
 		return $id_padre[0]->debajo_de;
 	}
 	
+	function ConsultarPadres($id ){
+		$q = $this->db->query("select debajo_de from afiliar where id_afiliado=".$id);
+		$id_padre = $q->result();
+		return $id_padre[0]->debajo_de;
+	}
 
 	function Consultar_nivel_red($id_user){
 		$q = $this->db->query("select u.user_id,u.nivel_en_red from user_profiles u
@@ -777,14 +887,24 @@ order by (U.id);");
 	}
 	
 	function kill_afiliado($id){
-		$this->db->query("delete from afiliar where id_afiliado = ".$id);
-		$this->db->query("delete from user_profiles where user_id = ".$id);
 		$this->db->query("delete from users where id = ".$id);
-		$this->db->query("delete from red where id_usuario = ".$id);
+		$this->db->query("delete from user_profiles where user_id not in (select id from users)");
+		$this->db->query("delete from afiliar where id_afiliado not in (select id from users)");
+		$this->db->query("delete from cross_perfil_usuario where id_user not in (select id from users)");
+		$this->db->query("delete from estilo_usuario where id_usuario not in (select id from users)");
+		$this->db->query("delete from coaplicante where id_user not in (select id from users)");
+		$this->db->query("delete from cross_tel_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_dir_user where id_user not in (select id from users)");
+		$this->db->query("delete from billetera where id_user not in (select id from users)");
+		$this->db->query("delete from cross_rango_user where id_user not in (select id from users)");
+		$this->db->query("delete from cross_img_user where id_user not in (select id from users)");
+		$this->db->query("delete from cat_img where id_img not in (select id_img from cross_img_user union select id_cat_imagen from cross_merc_img)");
+		//$this->db->query("delete from red where id_usuario = ".$id);
+		return true;
 	}
 	function kill_afiliadonred($id,$red){
 		$this->db->query("delete from afiliar where id_afiliado = ".$id." and id_red = ".$red);
-		$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
+		//$this->db->query("delete from red where id_usuario = ".$id." and id_red = ".$red);
 	}
 	
 	function ocupado($temp){
@@ -794,8 +914,7 @@ order by (U.id);");
 								and directo = ".$temp[0]->sponsor.*/" 
 								and lado = ".$temp[0]->lado);
 		$q2=$q->result();
-		$q3=$this->get_email($q2[0]->id_afiliado);
-		return $q3;
+		return $q2 ? true: false;
 	}
 	
 	function trash_token($token)

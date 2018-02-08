@@ -60,14 +60,14 @@ $porcentajeContador=0;
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Marca
-														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca" required>
+														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca">
 													</label>
 												</section>
 												
 												<section class="col col-12" style="width: 50%;">
 													<label class="input">
 														Código de barras
-														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras" required>
+														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras">
 													</label>
 												</section>
 												
@@ -100,7 +100,7 @@ $porcentajeContador=0;
 													<section style="padding-left: 15px; width: 100%;" class="col col-12">
 														Descripcion
 														<label class="textarea"> 										
-															<textarea name="descripcion" rows="3" class="custom-scroll" required><?php echo $data_merc[0]->descripcion?></textarea> 
+															<textarea name="descripcion" rows="3" class="custom-scroll"><?php echo $data_merc[0]->descripcion?></textarea> 
 														</label>
 													</section>
 													
@@ -133,7 +133,7 @@ $porcentajeContador=0;
 														<label class="label">Imágen</label>
 														<div class="input input-file">
 															<span class="button">
-																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
+																<input id="img" name="img" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" type="text">
 															</div>
 															<small><cite title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite></small>
 														</section>
@@ -148,35 +148,35 @@ $porcentajeContador=0;
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Peso
-															<input required type="number" value='<?php echo $data_merc[0]->peso?>' min="0" name="peso">
+															<input Required  type="number" value='<?php echo $data_merc[0]->peso?>' min="0" name="peso">
 														</label>
 													</section>
 													
 													<section id="colonia" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Alto
-															<input required type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
+															<input type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Ancho
-															<input  required type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
+															<input  type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Profundidad
-															<input required type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
+															<input type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
 														</label>
 													</section>
 													
 													<section id="municipio" class="col col-12" style="width: 50%;">
 														<label class="input">
 															Diametro
-															<input required type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
+															<input type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
 														</label>
 													</section>
 											</fieldset>
@@ -188,42 +188,42 @@ $porcentajeContador=0;
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Cantidad mínima de venta
-															<input required type="number" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
+															<input type="number" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
 														</label>
 													</section>
 													
 													<section  class="col col-12" style="width: 50%;">
 														<label  class="input">
 															Cantidad máxima de venta
-															 <input required type="number" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
+															 <input type="number" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo real
-															<input required type="number" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
+															<input required type="number" step="0.0001" value='<?php echo $mercancia[0]->real?>' onchange="calcular_precio_total()" name="real" id="real">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo distribuidores
-															<input required type="number" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
+															<input required type="number" step="0.0001" value='<?php echo $mercancia[0]->costo?>' name="costo" id="costo" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo publico
-															<input required type="number" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
+															<input required type="number" step="0.0001" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Tiempo mínimo de entrega
-															<input required placeholder="En días" type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
+															<input placeholder="En días" type="number" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
 														</label>
 													</section>
 													
@@ -250,7 +250,7 @@ $porcentajeContador=0;
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Puntos comisionables
-															<input type="number" min="1" max="" value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
+															<input type="number" min="0" max=""  step="0.01"  value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
 													</fieldset>

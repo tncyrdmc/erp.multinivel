@@ -48,12 +48,10 @@
 							
 											-->
 																							<!-- widget content -->
-												<div class="widget-body">
-													<div id="myTabContent1" class="tab-content padding-10">
-													<h1 class="text-center"></h1>
+												<div class="widget-body" style="padding : 0;">
+													<div id="myTabContent1" class="col-md-6 tab-content ">
 													
 													<div class="table-responsive">
-													<table class="table">
 													<table class="table">
 													<thead>
 														<tr>
@@ -65,43 +63,112 @@
 												<?php 
 													$total = 0; 
 													$i = 0;
-													foreach ($ganancias as $gred){
-														if($gred[0]->valor!=0){
-														echo '<tr class="success" >
-																<td colspan="2">'.$gred[0]->nombre.'</td>
-															</tr>'; 
-
-														echo '<tr class="success">
-															<td>Comisiones Directas</td>
-																<td>$ '.number_format($comisiones_directos[$i][0]->valor,2).'</td>
-															</tr>'; 
+													$total_transact = 0;
+//var_dump($comision_todo);
+													
+													for ($i = 0 ; $i<sizeof($comision_todo["redes"]);$i++){
 														
-														echo '<tr class="success">
-															<td>Comisiones Indirectas</td>
-																<td>$ '.number_format($gred[0]->valor - $comisiones_directos[$i][0]->valor,2).'</td>
-															</tr>'; 
-
-														if($gred[0]->valor){
-														echo '<tr class="warning">
-																<td>Total</td>
-																<td>$ '.number_format($gred[0]->valor,2).'</td>
-															</tr>';
-														$total += $gred[0]->valor;
-														}else {
-															echo '<tr class="warning">
-																<td> Total </td>
-																<td>$ 0</td>
+														$totales = (intval($comision_todo["ganancias"][$i][0]->valor)<>0||sizeof($comision_todo["bonos"][$i])<>0) ? 0 : 'FAIL';													
+														
+														//echo $totales."|";
+														
+														if($totales!=='FAIL'){
+															echo '<tr class="success" >
+																<td colspan="2"><b>'.$comision_todo["redes"][$i]->nombre.'</b></td>
 															</tr>';
 														}
-														$i++;
-													}
+														
+														
+														if($comision_todo["ganancias"][$i][0]->valor<>0){
+															echo '<tr class="success" >
+																<td colspan="2"><i class="fa fa-money"></i>Comisiones</td>
+															</tr>';
+														
+															echo '<tr class="success">
+															<td>&nbsp;&nbsp;Comisiones Directas</td>
+																<td>$ '.number_format($comision_todo["directos"][$i][0]->valor,2).'</td>
+															</tr>';
+														
+															echo '<tr class="success">
+															<td>&nbsp;&nbsp;Comisiones Indirectas</td>
+																<td>$ '.number_format($comision_todo["ganancias"][$i][0]->valor - $comision_todo["directos"][$i][0]->valor,2).'</td>
+															</tr>';
+														
+															if($comision_todo["ganancias"][$i][0]->valor){
+																$totales += ($comision_todo["ganancias"][$i][0]->valor);
+															}
+														
+															
+														}
+														
+														if($comision_todo["bonos"][$i]){
+															echo '<tr class="success" >
+																<td colspan="2"><i class="fa fa-gift"></i>Bonos</td>
+															</tr>';
+															for ($k=0;$k<sizeof($comision_todo["bonos"][$i]);$k++){
+																if($comision_todo["bonos"][$i][$k]->valor<>0){
+																	$totales += ($comision_todo["bonos"][$i][$k]->valor);
+																	echo '<tr class="success">
+																<td>&nbsp;&nbsp;'.$comision_todo["bonos"][$i][$k]->nombre.'</td>
+																	<td>$ '.number_format($comision_todo["bonos"][$i][$k]->valor,2).'</td>
+																</tr>';
+																}
+															}
+														}
+														
+														if($totales<>0){
+															echo '<tr class="warning">
+																<td>&nbsp; Total </td>
+																<td>$ '.number_format($totales,2).'</td>
+															</tr>';
+															$total += ($totales);
+														}
+														
 													}
 
 													?>  
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
-														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
+														<td>
+														<div class="col-md-4">
+															<h4><b>$ <?php echo number_format($total,2);?></b></h4>
+														</div>
+														<?php if($total !== 0){?>
+														<div class="col-md-1">
+															<a title='Ver detalles' style='cursor: pointer;' class='txt-color-green' onclick='ventas(<?=$id?>);'>
+																<i class='fa fa-eye fa-3x'></i>
+															</a>
+														</div>		
+														<?php }?>																										
+														</td>
 													</tr>
+													
+													<?php if ($transaction) { ?>	
+														<tr class="warning">
+															<td colspan="2"><b>TRANSACCIONES EMPRESA</b></td>
+														</tr>
+													<?php if ($transaction['add']) {
+															$total_transact+=$transaction['add'];
+														?>
+														<tr class="warning">
+															<td ><b>Total Agregado</b></td>
+															<td ><b style="color: green">$ <?php echo number_format($transaction['add'],2);?></b></td>
+														</tr>
+													<?php } 
+													if ($transaction['sub']) {
+														$total_transact-=$transaction['sub'];
+														?>
+														<tr class="warning" >
+															<td ><b>Total Quitado</b></td>
+															<td ><b style="color: red">$ <?php echo number_format($transaction['sub'],2);?></b></td>
+														</tr>
+													<?php } ?>
+														<tr class="warning">
+															<td ><b>TOTAL:</b></td>
+															<td ><h4><b >$ <?php echo number_format($total_transact,2);?></b></h4></td>
+														</tr>
+													<?php	} ?>
+													
 													</tbody>
 													</table>
 														
@@ -156,29 +223,43 @@
 																	<tr class="info">
 																		<td><h4><b>Saldo Neto</b></h4>
 																		<td></td>
-																		<td><h4><b>$ <?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)),2); ?></b></h4></td>
+																		<td><h4><b>
+																		$ 
+																		<?php 
+																		$saldo_neto=($total-($cobro+$retenciones_total+$cobroPendientes)+($total_transact));
+																		if($saldo_neto<0)
+																			echo 0;
+																		else
+																			echo number_format($saldo_neto,2)
+																		?></b></h4></td>
 																	</tr>
 																</table>
 														
 													</div>
 													
 													
-														<form action="send_mail" method="post" id="contact-form1"  class="smart-form col-xs-12 col-sm-8 col-md-6 col-lg-4">
+														<form action="send_mail" method="post" id="contact-form1"  class="smart-form col-xs-12 col-sm-8 col-md-6 col-lg-6">
 																<fieldset>
-																	<section class="col col-10">
+																	<section class="col col-4">
 																		<label class="label "><b>Saldo Disponible</b></label>
 																		<label class="input input state-success">
-																			<input type="text" name="saldo"  class="from-control" id="saldo" value="<?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)), 2, '.', ''); ?>" readonly />
+																			<input type="text" name="saldo"  class="from-control" id="saldo" 
+																			value="<?php 																		
+																			//$saldo_neto=number_format(($total-($cobro+$retenciones_total+$cobroPendientes)),2);
+																		if($saldo_neto<0)
+																			echo 0;
+																		else
+																			echo number_format($saldo_neto,2) ?>" readonly />
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-4">
 																		<label class="label"><b>Pedir Dinero</b></label>
 																		<label class="input">
 																			<i class="icon-prepend fa fa-money"></i>
-																			<input name="cobro" type="number" class="from-control" id="cobro"/>
+																			<input name="cobro" type="number" min="0.01" step="0.01" class="from-control" id="cobro"/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-4">
 																		<label class="label"><b>Saldo Final</b></label>
 																		<label class="input state-disabled state-error">
 																			<input value="" type="number" disabled="disabled" name="neto" id="neto" class="from-control" readonly />
@@ -186,32 +267,77 @@
 																	</section>
 																</fieldset>	
 																<fieldset>
-																	<section class="col col-10">
+																<header >
+																	<h2><span class="widget-icon"> <i class="fa fa-bank"></i> </span>
+																	Datos Bancarios</h2>
+											
+																</header>
+																<br>
+																	<section class="col col-6">
 																		<label class="label"><b>Titular Cuenta</b></label>
 																		<label class="input">
 																		<i class="icon-prepend fa fa-user"></i>
-																			<input name="ctitular" type="text" class="from-control" id="ctitular"/>
+																			<input required name="ctitular" type="text" value="<?=$cuenta[0]->titular?>" class="from-control" id="ctitular"/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-6">
+																		<label class="label"><b>País</b></label>
+																		<label class="select">
+																			<select id="cpais" required name="cpais">
+																			<?php foreach ($pais as $key){																				
+																				if($cuenta[0]->pais==$key->Code){?>
+							
+																				  <option selected value="<?=$key->Code?>">
+																					<?=$key->Name?>
+																				</option>
+																				<?php }else{?>
+																				<option value="<?=$key->Code?>">
+																					<?=$key->Name?>
+																				</option>
+																			<?php }}?>
+																			</select>
+																		</label>
+																	</section>	
+																	<section class="col col-6">
 																		<label class="label "><b>Numero de la cuenta</b></label>
 																		<label class="input input">
 																		<i class="icon-prepend fa fa-credit-card"></i>
-																			<input type="number" name="ncuenta" class="from-control" id="ncuenta" value="" required/>
+																			<input type="number" name="ncuenta" value="<?=$cuenta[0]->cuenta?>" class="from-control" id="ncuenta" value="" required/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
+																	<section class="col col-6">
 																		<label class="label"><b>Banco</b></label>
 																		<label class="input">
 																			<i class="icon-prepend fa fa-bank"></i>
-																			<input name="cbanco" type="text" class="from-control" id="cbanco"/>
+																			<input name="cbanco" type="text" value="<?=$cuenta[0]->banco?>" class="from-control" id="cbanco" required/>
+																		</label>
+																	</section>	
+																	<section class="col col-6">
+																		<label class="label"><b>Codigo Swift</b></label>
+																		<label class="input">
+																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
+																			<input name="cswift" type="text" class="from-control" value="<?=$cuenta[0]->swift?>" id="cswift"/>
 																		</label>
 																	</section>
-																	<section class="col col-10">
-																		<label class="label"><b>CLABE (Solo en Mexico)</b></label>
+																	<section class="col col-6">
+																		<label class="label "><b>Otro</b></label>
 																		<label class="input input">
 																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
-																			<input value="" type="number" name="cclabe" id="cclabe" class="from-control" />
+																			<input type="number" name="cotro" class="from-control" id="cotro" value="<?=$cuenta[0]->otro?>" />
+																		</label>
+																	</section>
+																	<section class="col col-6">
+																		<label class="label"><b>CLABE (Solo en Mexico)</b></label>
+																		<label class="input">
+																			<i class="icon-prepend fa fa-sort-numeric-desc"></i>
+																			<input name="cclabe" type="text" class="from-control" value="<?=$cuenta[0]->clabe?>" id="cclabe"/>
+																		</label>
+																	</section>
+																	<section class="col col-6">
+																		<label class="label"><b>Dirección Postal</b></label>
+																		<label class="input input">
+																		<i class="icon-prepend fa fa-sort-numeric-desc"></i>
+																			<input value="" type="number" name="cpostal" value="<?=$cuenta[0]->dir_postal?>" id="cpostal" class="from-control" />
 																		</label>
 																	</section>
 																</fieldset>	
@@ -272,7 +398,7 @@
 				// DO NOT REMOVE : GLOBAL FUNCTIONS!
 				pageSetUp();
 
-				$("#cobro").keypress(CalcularSaldo);
+				$("#cobro").keyup(CalcularSaldo);
 				$('#enviar').attr("disabled", true);
 					});
 
@@ -281,8 +407,8 @@
 			
 function CalcularSaldo(evt){
 				
-				var saldo = $("#saldo").val();
-				var pago = $("#cobro").val() + String.fromCharCode(evt.charCode);
+				var saldo = <?=$saldo_neto?> /*$("#saldo").val()+ (String.fromCharCode(evt.charCode)*/;
+				var pago = $("#cobro").val() ;
 				var neto = saldo-pago;
 				$("#neto").val(neto);
 				if(neto > 0){
@@ -291,6 +417,29 @@ function CalcularSaldo(evt){
 						$('#enviar').attr("disabled", true);
 					}
 			}
+
+function ventas(id){
+	$.ajax({
+		type: "POST",
+		url: "/ov/billetera2/ventas_comision",
+		data: {id: id}
+	})
+	.done(function( msg )
+	{					
+		bootbox.dialog({
+			message: msg,
+			title: 'Detalles de la Comisiones',
+			buttons: {
+				danger: {
+					label: "Cerrar",
+					className: "btn-danger",
+					callback: function() {
+
+						}
+			}
+		}})//fin done ajax
+	});//Fin callback bootbox
+}
 
 function cobrar() {
 
@@ -353,7 +502,7 @@ function cobrar() {
 }
 function validarCampos(){
 
-	if(parseInt($('#cobro').val())<=0)
+	if($('#cobro').val()<=0)
 		return false;
 	
 	if($('#ctitular').val()=="")

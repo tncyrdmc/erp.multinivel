@@ -7,12 +7,13 @@ class Modelo_historial_consignacion extends CI_Model{
 	}
 	
 	function ListarHistorialPendiente(){
-		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.clave, cb.swift,cb.otro, cb.dir_postal, cb.cuenta, cpb.valor, cpb.id_venta,'Pendiente' as estado, cpb.id_usuario
-								FROM cuenta_pagar_banco_historial cpb, user_profiles up, users u, cat_banco cb
+		$q = $this->db->query("SELECT cpb.id, cpb.fecha, concat(u.id,'. ', up.nombre,' ',up.apellido) as usuario, u.email, cb.descripcion as banco, cb.clave, cb.swift,cb.otro, cb.dir_postal, cb.cuenta, (cpb.valor+c.gastos) valor, cpb.id_venta,'Pendiente' as estado, cpb.id_usuario
+								FROM cuenta_pagar_banco_historial cpb, user_profiles up, users u, cat_banco cb, canal c
 								where cpb.id_banco = cb.id_banco 
 								and cpb.id_usuario = u.id 
 								and up.user_id = u.id 
-								and cpb.estatus = 'DES'");
+								and cpb.estatus = 'DES'
+								and c.id = 1");
 		$historial = $q->result();
 		return $historial;
 	}

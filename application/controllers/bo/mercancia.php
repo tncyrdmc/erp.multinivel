@@ -14,8 +14,7 @@ class mercancia extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/general');
 		$this->load->model('bo/model_mercancia');
-		$this->load->model('bo/model_admin');
-		
+		$this->load->model('bo/model_admin');		
 		$this->load->model('bo/modelo_comercial');
 		$this->load->model('ov/model_perfil_red');
 		$this->load->model('model_users');
@@ -32,9 +31,10 @@ class mercancia extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = '';//$this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistica){
 			redirect('/auth/logout');
 		}
 
@@ -61,11 +61,17 @@ class mercancia extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$tipoID = $_GET['id'];
+		
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = ($tipoID==1) ? $this->general->isAValidUser($id,"logistica") : '';
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 
 		$usuario=$this->general->get_username($id);
 		
@@ -74,16 +80,19 @@ class mercancia extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$proveedores = array();
-		if($_GET['id'] == 3 || $_GET['id'] == 4){
+		
+		if($tipoID == 3 || $tipoID == 4){
 			$proveedores	 = $this->model_mercancia->get_proveedor(2);
 		}else{
-			$proveedores	 = $this->model_mercancia->get_proveedor($_GET['id']);
+			$proveedores	 = $this->model_mercancia->get_proveedor($tipoID);
 		}
 		
+		$canales = $this->model_admin->getCanalesDefault($tipoID);
 		$productos       = $this->model_admin->get_mercancia();
 		
 		$promo			 = $this->model_admin->get_promo();
@@ -99,14 +108,14 @@ class mercancia extends CI_Controller
 		$zona	         = $this->model_admin->get_zona();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
 		$pais            = $this->model_admin->get_pais_activo();
-		$paquetes_actuales= $this->model_admin->get_paquetes_actuales();
+		//$paquetes_actuales= $this->model_admin->get_paquetes_actuales();
 		$redes           = $this->model_tipo_red->listarTodos();
 		
-		
+		$this->template->set("canales",$canales);
 		$this->template->set("pais",$pais);
 		$this->template->set("redes",$redes);
 		$this->template->set("productos",$productos);
-		$this->template->set("paquetes_actuales",$paquetes_actuales);
+		//$this->template->set("paquetes_actuales",$paquetes_actuales);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("proveedores",$proveedores);
@@ -125,15 +134,21 @@ class mercancia extends CI_Controller
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
+		if($type==8||$type==9){
+			$data2 = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
 		$this->template->set_partial('footer', 'website/bo/footer');
-		if($_GET['id'] == 1){
+		if($tipoID == 1){
 			$this->template->build('website/bo/comercial/altas/mercancias/producto');
-		}elseif ($_GET['id'] == 2){
+		}elseif ($tipoID == 2){
 			$this->template->build('website/bo/comercial/altas/mercancias/servicio');
-		}elseif($_GET['id'] == 3){
+		}elseif($tipoID == 3){
 			$this->template->build('website/bo/comercial/altas/mercancias/combinado');
-		}elseif($_GET['id'] == 4){
+		}elseif($tipoID == 4){
 			
 			$this->template->build('website/bo/comercial/altas/mercancias/paquete');
 		}else{
@@ -243,7 +258,7 @@ if($datos['pais'] == "-"){
 			$sku = $this->model_mercancia->nuevo_servicio();
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
-			redirect('/bo/comercial/carrito');
+			redirect('/bo/comercial/listarMercancia');
 			
 		}
 		
@@ -287,7 +302,7 @@ if($datos['pais'] == "-"){
 		
 		if (!$this->upload->do_upload('img'))
 		{
-			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para la membresia.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/mercancia/nueva_mercancia?id=5');
 		}
@@ -296,7 +311,7 @@ if($datos['pais'] == "-"){
 			$sku = $this->model_mercancia->nueva_membresia();
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
-			redirect('/bo/comercial/carrito');
+			redirect('/bo/comercial/listarMercancia');
 			
 		}
 	}
@@ -309,6 +324,8 @@ if($datos['pais'] == "-"){
 		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		$canales = $_POST['canal'];
 		
 	  if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
 		{
@@ -351,9 +368,10 @@ if($datos['pais'] == "-"){
 		else
 		{
 			$sku = $this->model_mercancia->nuevo_producto();
+			$this->model_admin->setComercializacion($sku,$canales);
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
-			redirect('/bo/comercial/carrito');
+			redirect('/bo/comercial/listarMercancia');
 		}
 		
 	}
@@ -414,7 +432,7 @@ if($datos['pais'] == "-"){
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 		}
-		redirect('/bo/comercial/carrito');
+		redirect('/bo/comercial/listarMercancia');
 	}
 
 	
@@ -473,7 +491,7 @@ if($datos['pais'] == "-"){
 			$data = array('upload_data' => $this->upload->data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]["file_name"]);
 		}
-		redirect('/bo/comercial/carrito');
+		redirect('/bo/comercial/listarMercancia');
 	}
 	
 	function ImpuestaPais(){
@@ -610,4 +628,61 @@ if($datos['pais'] == "-"){
 		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/comercial/altas/mercancias/form_proveedor');
 	}
+	
+	function configurar()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = '';//$this->general->isAValidUser($id,"logistica");
+	
+		if(!$Comercial&&!$Logistica){
+			redirect('/auth/logout');
+		}
+	
+		$canales = $this->model_admin->getCanalesWHERE("estatus = 'ACT'");
+		$distribucion = $this->model_admin->getDistribucion();
+		$style = $this->general->get_style(1);
+		$tipos = $this->model_mercancia->TiposMercancia();
+		
+		$this->template->set("distribucion",$distribucion);
+		$this->template->set("canales",$canales);
+		$this->template->set("tipos",$tipos);
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/carrito/configuracion');
+	}
+	
+	function distribuir()
+	{
+		$canales = $this->model_admin->getCanalesWHERE("estatus = 'ACT'");
+		
+		foreach ($canales as $canal){
+			$setCanal = isset($_POST[$canal->alias]) ? $_POST[$canal->alias] : false;
+			
+			if($setCanal){
+				$this->model_admin->limpiarDistribucion($canal->id);
+				$this->model_admin->setDistribucion($canal->id,$setCanal);
+			}			
+		}
+		$gastos = $_POST['gastos'];
+		for ($i=0;$i<sizeof($gastos);$i++){
+			$this->model_admin->setGastosCanal($i+1,$gastos[$i]);
+		}
+		
+		echo "Actualizado";
+	
+	}
+	
 }

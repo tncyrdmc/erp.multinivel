@@ -22,8 +22,8 @@ class Key extends CI_Controller
 		$token = $this->general->get_temp_invitacion_ACT($key);
 	
 		if (!$token){
-			echo $token[0]->id;
-			//redirect("/auth/login");
+			//echo $token[0]->id;
+			redirect("/auth/login");
 		}
 	
 		//echo "hola";
@@ -46,21 +46,8 @@ class Key extends CI_Controller
 		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
 
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
-		//$planes 		 = $this->model_planes->Planes();
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontalesRed($id_red);
-		
-	
-		/**if($id>2){
-			$estaEnRed 	 = $this->model_tipo_red->validarUsuarioRed($id,$id_red);
-			
-			if(!$estaEnRed)
-				redirect('/');
-			
-			if(count($afiliados)>=$red_forntales[0]->frontal&&$red_forntales[0]->frontal>0)
-				redirect('/ov/perfil_red/afiliar_red?id='.$id_red);
-			
-		}*/
 
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
@@ -92,14 +79,14 @@ class Key extends CI_Controller
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		//$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('header', 'website/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/afiliar_invitado');
 	}
 	
 	function check_espacio_invite(){
 		$token = $this->general->get_temp_invitacion_ACT_id($_POST['token']);
-		echo $this->general->checkespacio($token);
+		echo ($this->general->checkespacio($token)) ? "FAIL" : "OK";
 	}
 	
 	function done_invitacion(){

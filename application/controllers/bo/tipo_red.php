@@ -73,7 +73,7 @@ class tipo_red extends CI_Controller{
 		$descripcion_red = $_POST['descripcion'];
 		//$capacidadRed = $this->model_tipo_red->getCapacidadRed($id_red);
 
-		echo ($this->model_tipo_red->actualizar($_POST['id'],$_POST['nombre'],$_POST['descripcion'],$_POST['frontal'],$_POST['profundidad'],$_POST['tipo_plan']))
+		echo ($this->model_tipo_red->actualizar($_POST['id'],$_POST['nombre'],$_POST['descripcion'],$_POST['frontal'],$_POST['profundidad'],$_POST['tipo_plan'],$_POST['valor_punto']))
 		 ? "Se han Actualizado los datos" : "No se pudo Actualizar los datos";
 		//$this->session->set_flashdata('exito', 'Se han Actualizado los datos');
 		//redirect("/bo/tipo_red/mostrar_redes");
@@ -104,7 +104,7 @@ class tipo_red extends CI_Controller{
 	public function guardar_red(){
 			//$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
 			
-			echo ($this->model_tipo_red->insertar($_POST['nombre'],$_POST['descripcion'],$_POST['frontal'],$_POST['profundidad'],$_POST['tipo_plan']))
+			echo ($this->model_tipo_red->insertar($_POST['nombre'],$_POST['descripcion'],$_POST['frontal'],$_POST['profundidad'],$_POST['tipo_plan'],$_POST['valor_punto']))
 			? "La red se ha creado correctamente" : "No se pudo crear la red" ;
 			
 			

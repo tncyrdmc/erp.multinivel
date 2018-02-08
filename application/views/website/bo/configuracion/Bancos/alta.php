@@ -5,7 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
-								> <a href="/bo/configuracion/"> Configuracion</a> 
+								> <a href="/bo/configuracion/"> Configuración</a> 
 								> <a href="/bo/configuracion/formaspago"> Formas de Pago</a> 
 								> <a href="/bo/bancos/index"> Bancos </a>
 								> Alta
@@ -61,13 +61,13 @@
 															<input class="form-control"  id="cuenta" name="cuenta"  type="number" placeholder="Numero de cuenta" onChange="validarSiNumero(this.value);">
 														</div><br>
 														<div class="form-group">
-															Código SWIFT
-															<input class="form-control"  id="swift" name="swift" type="text">
-														</div><br>
-														<div class="form-group">
-															ABA/IBAN/OTRO
+															Titular
 															<input class="form-control"  id="otro" name="otro" type="text">
 														</div><br>
+														<div class="form-group">
+															Código SWIFT
+															<input class="form-control"  id="swift" name="swift" type="text">
+														</div><br>														
 														<div class="form-group">
 															CLABE
 															<input class="form-control"  id="clabe" name="clabe" type="number" onChange="validarSiNumero(this.value);">

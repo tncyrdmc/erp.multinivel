@@ -34,18 +34,16 @@
 													<div class="row">
 
 														<div class="col-sm-3 profile-pic">
-															<img src="<?=$user?>" alt="demo user">
+															<img class="<?php if($actividad) echo "online";?>" src="<?=$user?>" alt="demo user">
 															<div class="padding-10">
-															<!--	<h4 class="font-md"><strong>1,543</strong>
+															<a style="padding: 6px 2rem 6px 6px;" href="/ov/perfil_red/foto"><i class="fa fa-camera fa-2x fa-fw fa-lg"></i></a>
+																<br><br>
+																<h4 class="font-md"><strong><?=$id?></strong>
 																<br>
-																<small>Followers</small></h4>
-																<br>
-																<h4 class="font-md"><strong>419</strong>
-																<br>
-																<small>Connections</small></h4> -->
+																<small>ID</small></h4>
 															</div>
 														</div>
-														<div class="col-sm-6">
+														<div class="col-sm-4">
 															<h1><?=$usuario[0]->nombre?> <span class="semi-bold"><?=$usuario[0]->apellido?></span>
 															<br>
 															<small> <?php //echo $nivel_actual_red?></small></h1>
@@ -76,21 +74,70 @@
 																		<i class="fa fa-calendar"></i>&nbsp;&nbsp;<span class="txt-color-darken">Ultima sesión: <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment"><?=$ultima?></a></span>
 																	</p>
 																</li>
-                                <li>
-                                <?php if($id_sponsor&&$name_sponsor){
-                                if(($id_sponsor[0]->id_usuario!=1)){
-                                ?>
-                               <b>Patrocinador:</b>
-                              <?=$name_sponsor[0]->nombre?> <?=$name_sponsor[0]->apellido?> con id <?=$id_sponsor[0]->id_usuario?><br/>
-
-                              <?php }else{?>
-                              Eres un nodo raíz, fuiste patrocinado por la empresa<br />
-                              <?php }}?>
-                                </li>
+									                                <li>
+									                                <?php if($id_sponsor&&$name_sponsor){
+									                                if(($id_sponsor[0]->id_usuario!=1)){
+									                                ?>
+									                               <b>Patrocinador:</b>
+									                              <?=$name_sponsor[0]->nombre?> <?=$name_sponsor[0]->apellido?> con id <?=$id_sponsor[0]->id_usuario?><br/>
+									
+									                              <?php }else{?>
+									                              Eres un nodo raíz, fuiste patrocinado por la empresa<br />
+									                              <?php }}?>
+									                                </li>
+                                									<div class="row">
+																	<br>
+																	<div class="col-xs-2 col-sm-1">
+																			<strong class="<?php if($actividad) echo "label label-success";else echo "label label-default";?>" style="font-size: 2rem;"> <?php if($actividad) echo "<i class='fa fa-smile-o'></i> Activo";else echo "<i class='fa fa-frown-o'></i> Inactivo";?></strong>
+																	</div>
+																	<div class="col-sm-12">
+																		<br>
+																		<?php if($titulo!=NULL) 
+																			echo '<ul id="sparks" class="">
+																				<li class="sparks-info">
+																				<h5>RANGO<span class="txt-color-yellow"><i class="fa fa-trophy fa-2x"></i>'.$titulo.'</span></h5>
+																				<div class="sparkline txt-color-yellow hidden-mobile hidden-md hidden-sm"></div>
+																				</li>
+																			</ul>'
+																			 ?>
+																	</div>
+																	<div class="col-sm-12">
+				
+																		<br>
+				
+																	</div>
+				
+																</div>
 															</ul>
 															<br>
 														</div>
-														<div class="col-sm-3">
+														<div class="col-sm-4">
+														<h1><small>Puntos Comisionables Personales</small>  <i class='fa fa-user'></i></h1>
+															<ul class="list-inline friends-list">
+																<li><span class="font-md"><i>Semana :</i></span> <?=intval($puntos_semana)?>
+																</li>
+																<li><span class="font-md"><i>Mes :</i></span> <?=intval($puntos_mes)?>
+																</li>
+																<li><span class="font-md"><i>Total :</i></span> <?=intval($puntos_total)?>
+																</li>
+															</ul>
+														<h1><small>Puntos Comisionables Red </small>  <i class='fa fa-sitemap'></i></h1>
+															<ul class="list-inline friends-list">
+																<li><span class="font-md"><i>Semana :</i></span> <?=$puntos_red_semana?>
+																</li>
+																<li><span class="font-md"><i>Mes :</i></span> <?=$puntos_red_mes?>
+																</li>
+																<li><span class="font-md"><i>Total :</i></span> <?=$puntos_red_total?>
+																</li>
+															</ul>
+														<h1><small>Últimos Auspiciados</small></h1>
+															<ul class="list-inline friends-list">
+																<?php 
+																foreach ($ultimos_auspiciados as $afiliado) {
+																	echo '<li><a onclick="detalles('.$afiliado["id"].')"><img src="'.$afiliado["foto"].'"></a>
+																		  </li>';
+																}?>
+															</ul>
 														</div>
 													</div>
 												</div>
@@ -158,7 +205,7 @@
 															</div>
 															<!-- CHAT BODY -->
 															<div id="chat-body" class="chat-body custom-scroll">
-																<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados En Mi Red 
+																<span id="" class="activity-dropdown"> <i class="fa fa-user"></i> Afiliados En Mi Red 
 																<b class="badge bg-color-red bounceIn animated"> <?php echo $numeroAfiliadosRed;?> </b> </span>
 																<ul>
 																    <?php 
@@ -195,15 +242,15 @@
 																				<span>Banco  : <b>'.$cuenta->nombreBanco.'</b>,</span><br> 
 																				<span>Cuenta : <b>'.$cuenta->cuenta.'</b>,</span><br>
 																		';
-																		if($cuenta->clabe)
-																		   echo'<span>Clabe  :<b>'.$cuenta->clabe.'</b>,</span><br>';
-																		if($cuenta->swift)
-																			echo'<span>SWIFT  :<b>'.$cuenta->swift.'</b>,</span><br>';
 																		if($cuenta->otro)
-																			echo'<span>ABA/IBAN/OTRO  :<b>'.$cuenta->otro.'</b>,</span><br>';
+																			echo'<span>Titular:	<b>'.$cuenta->otro.'</b>,</span><br>';
+																		if($cuenta->clabe)
+																		   echo'<span>Clabe:	<b>'.$cuenta->clabe.'</b>,</span><br>';
+																		if($cuenta->swift)
+																			echo'<span>SWIFT:	<b>'.$cuenta->swift.'</b>,</span><br>';																		
 																		if($cuenta->dir_postal)
 																			echo'<span>Dirección postal  :<b>'.$cuenta->dir_postal.'</b>,</span><br>';
-																		   echo'<span>Valor  :<b> $ '.$cuenta->valor.'</b>,</span>
+																		   echo'<span>Valor:	<b> $ '.$cuenta->valor.'</b>,</span>
 																		</div>
 																	</li>';
 																		}
@@ -230,8 +277,8 @@
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<div class="row">
 							   <div class="col-sm-12 col-md-12 col-lg-4">
-									<!--Inica la secciion de la perfil y red-->
-									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
+									<!--Inica la seccion de la perfil y red-->
+									<div class="well" style=""> <!-- box-shadow: 0px 0px 0px !important;border-color: transparent; -->
 										<fieldset>
 											<legend><b>Perfil y red</b></legend>
 											<div class="row">
@@ -247,28 +294,28 @@
 													</a>
 												</div>
 
-												<?php }$permiso=$ci->model_permissions->check($id,'foto');
+												<?php }$permiso=$ci->model_permissions->check($id,'afiliar'); //foto
 												if($permiso){
 												?>
-												<div class="col-sm-6">
-													<a href="perfil_red/foto">
+											  	<div class="col-sm-6">
+													<a href="/ov/perfil_red/afiliar?tipo=1"> <!-- perfil_red/foto -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-camera fa-3x"></i>
-															<h5>Foto</h5>
+															<i class="fa fa-edit fa-3x"></i> <!-- fa-camera -->
+															<h5>Afiliar</h5> <!-- Foto -->
 														</div>
 													</a>
-												</div>
+												</div> 
 												<?php }?>
 											</div>
 											<div class="row">
-												<?php $permiso= $ci->model_permissions->check($id,'afiliar');
+												<?php $permiso= $ci->model_permissions->check($id,'reportes'); //afiliar
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="/ov/perfil_red/afiliar?tipo=1">
+													<a href="compras/reportes"> <!-- /ov/perfil_red/afiliar?tipo=1 -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-edit fa-3x"></i>
-															<h5>Afiliar</h5>
+															<i class="fa fa-table fa-3x"></i> <!-- fa-edit -->
+															<h5>Reportes</h5> <!-- Afiliar -->
 														</div>
 													</a>
 												</div>
@@ -288,10 +335,10 @@
 											</div>
 										</div>
 									</fieldset>
-									<!--Termina la secciion de perfil y red-->
+									<!--Termina la seccion de perfil y red-->
 								</div>
 								<div class="col-sm-12 col-md-12 col-lg-4">
-									<!--Inica la secciion de compras y reportes-->
+									<!--Inica la seccion de compras y reportes-->
 									<div class="well">
 										<fieldset>
 											<legend><b>Compras y comisiones</b></legend>
@@ -322,14 +369,14 @@
 												<?php }?>
 											</div>
 											<div class="row">
-                        <?php $permiso=$ci->model_permissions->check($id,'reportes');
+                        <?php $permiso=$ci->model_permissions->check($id,'afiliar'); //reportes
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="compras/reportes"> 
+													<a href="javascript:void(0);"> <!-- compras/reportes -->
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-table fa-3x"></i>
-															<h5>Reportes</h5>
+															<i class="fa fa-ticket fa-3x"></i><!-- fa-table -->
+															<h5>Boletos/Tickets</h5> <!-- Reportes -->
 														</div>
 													</a>
 												</div>
@@ -349,12 +396,12 @@
 											</div>
 										</fieldset>
 									</div>
-								  <!--Termina la secciion de compras y reportes-->
+								  <!--Termina la seccion de compras y reportes-->
 								</div>
                 				<div class="col-sm-12 col-md-12 col-lg-4">
-									<!--Inica la secciion de compras y reportes-->
+									<!--Inica la seccion general-->
 									<div class="well">
-															<fieldset>
+										<fieldset>
 											<legend><b>General</b></legend>
 											<div class="row">
 												<?php $permiso=$ci->model_permissions->check($id,'encuestas');
@@ -408,18 +455,19 @@
 											</div>
 										</fieldset>
 									</div>
-								  <!--Termina la secciion de compras y reportes-->
+								  <!--Termina la seccion general-->
 								</div>
 							</div>
-														<div class="row">
+							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
-									<!--Inicia la secciion de escuela y negocios-->
+									<!--Inicia la seccion de comunicacion-->
 									<div class="well">
 										<div class="row">
 											<fieldset>
 												<legend><b>Comunicación</b></legend>
 												<div class="col-sm-3">
 												</div>
+												
 												<div class="col-sm-2">
 													<a href="cgeneral/autoresponder">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
@@ -428,30 +476,15 @@
 														</div>
 													</a>
 												</div>	
-												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
-												if($permiso){
-												?>
-											<!--  	<div class="col-sm-2">
-													<a href="cgeneral/web_personal">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-globe fa-3x"></i>
-															<h5>Web Personal</h5>
-														</div>
-													</a>
-												</div>	-->
-												<?php }?>
-												<?php $permiso=$ci->model_permissions->check($id,'chat');
-												if($permiso){
-												?>
 												<div class="col-sm-2">
-													<a href="cgeneral/chat">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-weixin fa-3x"></i>
-															<h5>Chat Mi Red</h5>
+													<a href="cgeneral/invitacion_afiliar">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-envelope fa-2x"></i>&nbsp;&nbsp;<i class="fa fa-sitemap fa-3x"></i>
+															<h5>Invitacion Afiliar</h5>
 														</div>
 													</a>
 												</div>
-												<?php }?>
+												
 												<?php $permiso=$ci->model_permissions->check($id,'e_mail');
 												if($permiso){
 												?>
@@ -463,82 +496,24 @@
 														</div>
 													</a>
 												</div>
-												<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
-												if($permiso){
-												?>
-											<!--	<div class="col-sm-2">
-													<a href="cgeneral/soporte_tecnico_ver_redes">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-support fa-3x"></i>
-															<h5>Soporte Técnico</h5>
-														</div>
-													</a>
-												</div>-->
-												<?php }?>
-												</fieldset>
-								<!---<div class="row">
-											<div class="col-sm-1">
-												</div>
-												<div class="col-sm-2">
-													<a href="cabecera/sugerencia">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-send fa-3x"></i>
-															<h5>Sugerencias</h5>
-														</div>
-													</a>
-												</div>
-								</div>-->
-												<?php }?>
-											<div class="row">
-                      <?php $permiso=$ci->model_permissions->check($id,'videollamadas');
-											if($permiso){
-											?>
-											<!-- cgeneral/videollamada -->
-											<!-- <div class="col-sm-12">
-												<a href="#">
-													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-video-camera fa-3x"></i>
-														<h5>Vídeollamadas</h5>
-													</div>
-												</a>
-											</div> -->
-											
-											<?php }?>
-											<?php $permiso=$ci->model_permissions->check($id,'social_network');
-												if($permiso){
-												?>
-											<!--		<div class="col-sm-12">
-													<a href="cgeneral/social_network">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<div class="row">
-																<i class="fa fa-facebook fa-1x"></i>
-																<i class="fa fa-twitter fa-1x"></i>
-															</div>
-															<div class="row">
-																<i class="fa fa-skype fa-1x"></i>
-																<i class="fa fa-youtube fa-1x"></i>
-															</div>
-															<h5>Social network</h5>
-														</div>
-													</a>
-												</div>-->
+												
 												<?php }?>	 
 											</div>
 
 											
 										</div>
-										</div>
-									<!--Termina la secciion de escuela y negocios-->
+									</div>
+									<!--Termina la seccion de comunicacion-->
 								</div>
-							</div>
+							
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
-									<!--Inicia la secciion de escuela y negocios-->
+									<!--Inicia la seccion de escuela y negocios-->
 									<div class="well">
 										<div class="row">
 											<fieldset>
 												<legend><b>Información y capacitación</b></legend>
-												<div class="col-sm-1">
+												<div class="col-sm-2">
 												</div>
 												<?php $permiso=$ci->model_permissions->check($id,'informacion');
 												if($permiso){
@@ -584,22 +559,12 @@
 														</div>
 													</a>
 												</div>
-												<?php }$permiso=$ci->model_permissions->check($id,'promociones');
-												if($permiso){
-												?>
-												<div class="col-sm-2">
-													<a href="escuela_negocios/bonos"><!-- escuela_negocios/promociones -->
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-gift  fa-3x"></i>
-															<h5>Bonos</h5>
-														</div>
-													</a>
-												</div>
+												
 												<?php }?>
 											</fieldset>
 										</div>
 										<div class="row">
-											<div class="col-sm-1">
+											<div class="col-sm-2">
 											</div>
 											<?php $permiso=$ci->model_permissions->check($id,'eventos');
 											if($permiso){
@@ -634,24 +599,14 @@
 														</div>
 													</a>
 												</div>
-											<?php }$permiso=$ci->model_permissions->check($id,'reconocimientos');
-											if($permiso){
-											?>
-											<div class="col-sm-2">
-												<a href="escuela_negocios/reconocimientos">
-													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-														<i class="fa fa-star fa-3x"></i>
-														<h5>Reconocimientos</h5>
-													</div>
-												</a>
-											</div>
+											
                       <?php } ?>
                     	<?php $permiso=$ci->model_permissions->check($id,'estadisticas');
 												if($permiso){
 												?>
 												<div class="col-sm-2">
 													<a href="compras/estadistica">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-bar-chart-o fa-3x"></i>
 															<h5>Estadisticas</h5>
 														</div>
@@ -660,9 +615,214 @@
 												<?php } ?>
 										</div>
 									</div>
-									<!--Termina la secciion de escuela y negocios-->
+									<!--Termina la seccion de escuela y negocios-->
 								</div>
 							</div>
+							
+						<?php if($id==2){  ?>
+							<div class="row hide">
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<!-- FUNCIONALIDADES SIN HACER O POR TERMINAR -->
+									<div class="well">
+										<div class="row">
+											<fieldset>
+												<legend><b>Premium</b></legend>
+												<div class="col-sm-1">
+												</div>
+												<?php $permiso=$ci->model_permissions->check($id,'promociones');
+												if($permiso){
+												?>
+											  	<div class="col-sm-2">
+													<a href="escuela_negocios/bonos"><!--   escuela_negocios/promociones -->
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-gift  fa-3x"></i>
+															<h5>Bonos</h5>
+														</div>
+													</a>
+												</div>  
+												<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'reconocimientos');
+											if($permiso){
+											?>
+										  	<div class="col-sm-2">
+												<a href="escuela_negocios/reconocimientos">
+													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-star fa-3x"></i>
+														<h5>Reconocimientos</h5>
+													</div>
+												</a>
+											</div> 
+                      						<?php } ?>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<div class="row">
+																<i class="fa fa-facebook fa-1x"></i>
+																<i class="fa fa-twitter fa-1x"></i>
+															</div>
+															<div class="row">
+																<i class="fa fa-skype fa-1x"></i>
+																<i class="fa fa-youtube fa-1x"></i>
+															</div>
+															<h5>Redes Sociales</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-gift fa-3x"></i>
+															<h5>Promociones</h5>
+														</div>
+													</a>
+												</div>
+												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
+												if($permiso){
+												?>
+											  	<div class="col-sm-2">
+													<a href="cgeneral/web_personal">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-globe fa-3x"></i>
+															<h5>Web Personal</h5>
+														</div>
+													</a>
+												</div>	
+												<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'chat');
+												if($permiso){
+												?>
+											  	<div class="col-sm-2">
+													<a href="cgeneral/chat">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-weixin fa-3x"></i>
+															<h5>Chat Mi Red</h5>
+														</div>
+													</a>
+												</div> 
+												<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
+												if($permiso){
+												?>
+												<div class="col-sm-2">
+													<a href="cgeneral/soporte_tecnico_ver_redes">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-support fa-3x"></i>
+															<h5>Soporte Técnico</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+												
+												<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
+												if($permiso){
+												?>
+								
+											<div class="col-sm-1">
+												</div>
+												<div class="col-sm-2">
+													<a href="cabecera/sugerencia">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-send fa-3x"></i>
+															<h5>Sugerencias</h5>
+														</div>
+													</a>
+												</div>
+								</div>
+												<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'videollamadas'); // [comunicacion]
+											if($permiso){
+											?>
+											<!-- cgeneral/videollamada -->
+											 <div class="col-sm-12">
+												<a href="#">
+													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-video-camera fa-3x"></i>
+														<h5>Vídeollamadas</h5>
+													</div>
+												</a>
+											</div> 
+											
+											<?php }?>
+												<?php $permiso=$ci->model_permissions->check($id,'social_network'); // [comunicacion] 
+												if($permiso){
+												?>
+													<div class="col-sm-12">
+													<a href="cgeneral/social_network">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<div class="row">
+																<i class="fa fa-facebook fa-1x"></i>
+																<i class="fa fa-twitter fa-1x"></i>
+															</div>
+															<div class="row">
+																<i class="fa fa-skype fa-1x"></i>
+																<i class="fa fa-youtube fa-1x"></i>
+															</div>
+															<h5>Social network</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+												
+												<?php $permiso=$ci->model_permissions->check($id,'tickets'); //reportes [compras]
+												if($permiso){
+												?>
+												<div class="col-sm-6">
+													<a href="javascript:void(0);"> <!-- compras/reportes -->
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#c0c0c0;<?//=$style[0]->btn_1_color?>;">
+															<i class="fa fa-ticket fa-3x"></i><!-- fa-table -->
+															<h5>Tickets</h5> <!-- Reportes -->
+														</div>
+													</a>
+												</div>
+												<?php }?>
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-globe fa-3x"></i>
+															<h5>Web Personal</h5>
+														</div>
+													</a>
+												</div>	
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-stack-overflow  fa-3x"></i>
+															<h5>Revista Digital</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2">
+													<a href="cgeneral/redes_afiliado_chat?id=red_personal">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-weixin fa-3x"></i>
+															<h5>Chat</h5>
+														</div>
+													</a>
+												</div> 
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-mortar-board fa-3x"></i>
+															<h5>Aula Virtual</h5>
+														</div>
+													</a>
+												</div>	
+												<div class="col-sm-2">
+													<a href="javascript:void(0);">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-support fa-3x"></i>
+															<h5>Soporte Técnico</h5>
+														</div>
+													</a>
+												</div>
+											
+											</div>
+										</div>
+									<!--ESTE LIMITE NO ES FIJO-->
+								</div>
+							</div>
+							
+							<?php }?>
 						</div>
 
 					</div>
@@ -676,3 +836,29 @@
         </div>
 			</div>
 			<!-- END MAIN CONTENT -->
+<script>
+function detalles(id)
+{
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/detalle_usuario",
+		data: {id: id},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+			message: msg,
+			title: "Información Personal",
+			buttons: {
+				success: {
+					label: "Cerrar!",
+					className: "btn-success",
+					callback: function() {
+					//location.href="";
+				}
+			}
+		}
+	});
+	});
+}
+</script>

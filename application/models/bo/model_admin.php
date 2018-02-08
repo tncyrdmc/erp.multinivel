@@ -424,32 +424,96 @@ class model_admin extends CI_Model
 		return $q->result();
 	}
 	function get_productos(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, P.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2, C.Code
-							
-							 from mercancia M, producto P, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, 
-								  cat_grupo_producto CGP, tipo_red TR, Country C
-							
-							where M.sku = P.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=1 and 
-							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and 
-							P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id and C.Code = M.pais");
+		$q=$this->db->query("SELECT 
+								    M.id,
+								    M.sku,
+								    M.fecha_alta,
+								    M.real,
+								    M.costo,
+								    M.costo_publico,
+								    M.estatus,
+								    M.puntos_comisionables,
+								    P.nombre,
+								    P.id_grupo,
+								    CI.url,
+								    CTM.descripcion,
+								    TR.nombre red,
+								    M.pais,
+								    C.Name,
+								    C.Code2,
+								    C.Code
+								FROM
+								    mercancia M,
+								    producto P,
+								    cat_tipo_mercancia CTM,
+								    cat_img CI,
+								    cross_merc_img CMI,
+								    cat_grupo_producto CGP,
+								    tipo_red TR,
+								    Country C
+								WHERE
+								    M.sku = P.id
+								        AND CTM.id = M.id_tipo_mercancia
+								        AND M.id_tipo_mercancia = 1
+								        AND CI.id_img = CMI.id_cat_imagen
+								        AND M.id = CMI.id_mercancia
+								        AND P.id_grupo = CGP.id_grupo
+								        AND CGP.id_red = TR.id
+								        AND C.Code = M.pais
+								GROUP BY M.id
+								ORDER BY nombre");
 		return $q->result();
 	}
 	
 	function get_servicios(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2, C.Code
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus ,M.puntos_comisionables, S.nombre,S.id_red, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2, C.Code
 							from mercancia M, servicio S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
 							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=2 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id and C.Code = M.pais");
 		return $q->result();
 	}
 	function get_membresias(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , MEM.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2, C.Code
-							from mercancia M, membresia MEM, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
-							where M.sku = MEM.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=5 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = MEM.id_red and CGP.id_red = TR.id and C.Code = M.pais");
+		$q=$this->db->query("SELECT 
+								    M.id,
+								    M.sku,
+								    M.fecha_alta,
+								    M.real,
+								    M.costo,
+								    M.costo_publico,
+								    M.estatus,
+								    M.puntos_comisionables,
+								    MEM.nombre,
+								    MEM.id_red,
+								    CI.url,
+								    CTM.descripcion,
+								    TR.nombre red,
+								    M.pais,
+								    C.Name,
+								    C.Code2,
+								    C.Code
+								FROM
+								    mercancia M,
+								    membresia MEM,
+								    cat_tipo_mercancia CTM,
+								    cat_img CI,
+								    cross_merc_img CMI,
+								    tipo_red TR,
+								    cat_grupo_producto CGP,
+								    Country C
+								WHERE
+								    M.sku = MEM.id
+								        AND CTM.id = M.id_tipo_mercancia
+								        AND M.id_tipo_mercancia = 5
+								        AND CI.id_img = CMI.id_cat_imagen
+								        AND M.id = CMI.id_mercancia
+								        AND CGP.id_grupo = MEM.id_red
+								        AND CGP.id_red = TR.id
+								        AND C.Code = M.pais
+								GROUP BY M.id");
 		return $q->result();
 	}
 	
 	function get_combinados(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, C.nombre, M.pais,
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus,  M.puntos_comisionables, C.nombre, C.id_red,M.pais,
 							 CI.url, CTM.descripcion, TR.nombre red, CO.Name, CO.Code2, CO.Code
 							
 							 from mercancia M, combinado C, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, 
@@ -462,7 +526,7 @@ class model_admin extends CI_Model
 	}
 	
 	function get_paquetes(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, P.nombre, M.pais,
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus,  M.puntos_comisionables, P.nombre, P.id_red,M.pais,
 						CI.url, CTM.descripcion, TR.nombre red, CO.Name, CO.Code2, CO.Code
 						from mercancia M, paquete_inscripcion P, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country CO
 						where M.sku = P.id_paquete and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia= 4 
@@ -550,7 +614,7 @@ where(a.id_pais=b.Code)");
 				"site"       => $_POST['site']
             );
         $this->db->insert("empresa",$dato_empresa);
-        $id_nuevo=mysql_insert_id();
+        $id_nuevo=$this->db->insert_id();
 		$dato_dir=array(
 				"id_empresa"      => $id_nuevo,
 				"cp"              =>$_POST['cp'],
@@ -579,7 +643,9 @@ where(a.id_pais=b.Code)");
 				"provincia"       	=> $_POST['provincia'] ? $_POST['provincia'] : "No define",
 				"pais"          	=> $_POST['pais'],
 				"fijo" 				=> $_POST['fijo'],
-				"movil" 			=> $_POST['movil']
+				"movil" 			=> $_POST['movil'],
+				"resolucion" 		=> $_POST['resolucion'],
+				"comentarios" 		=> $_POST['comentarios']
 		);
 	
 		$this->db->where('id_tributaria', $_POST['id']);
@@ -593,7 +659,9 @@ where(a.id_pais=b.Code)");
 		$dato=array(
 				"membresia"     => isset($_POST['membresia']) ? "ACT" : "DES",
 				"paquete"   	=> isset($_POST['paquete']) ? "ACT" : "DES",
-				"item"     		=> isset($_POST['item']) ? "ACT" : "DES"
+				"item"     		=> isset($_POST['item']) ? "ACT" : "DES",
+				"afiliados_directos"     		=> $_POST['afiliados_directos'] ,
+				"puntos_personales"     		=> $_POST['puntos_personales']
 		);
 	
 		$this->db->where('id_tributaria', $_POST['id']);
@@ -634,7 +702,8 @@ where(a.id_pais=b.Code)");
 	
 	function update_mercancia()
 	{
-		if($_POST['tipo_merc']==1)
+	    $id_impuesto = isset($_POST['id_impuesto']) ? $_POST['id_impuesto'] : array();
+        if($_POST['tipo_merc']==1)
 		{
 			$sku_q=$this->db->query("SELECT sku from mercancia where id=".$_POST['id_merc']);
 			$sku_res=$sku_q->result();
@@ -679,7 +748,7 @@ where(a.id_pais=b.Code)");
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
 			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
-			foreach($_POST['id_impuesto'] as $impuesto)
+			foreach($id_impuesto as $impuesto)
 			{
 				$dato_impuesto=array(
 					"id_mercancia"	=> $_POST['id_merc'],
@@ -726,8 +795,8 @@ where(a.id_pais=b.Code)");
 			$this->db->update('mercancia', $dato_mercancia); 
 			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
 			
-			if (isset($_POST['id_impuesto'])){
-				foreach($_POST['id_impuesto'] as $impuesto)
+			if (isset($id_impuesto)){
+				foreach($id_impuesto as $impuesto)
 				{
 					$dato_impuesto=array(
 						"id_mercancia"	=> $_POST['id_merc'],
@@ -920,8 +989,8 @@ where(a.id_pais=b.Code)");
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
 			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
-			if (isset($_POST['id_impuesto'])){
-			foreach($_POST['id_impuesto'] as $impuesto)
+			if (isset($id_impuesto)){
+			foreach($id_impuesto as $impuesto)
 			{
 				$dato_impuesto=array(
 					"id_mercancia"	=> $_POST['id_merc'],
@@ -1115,8 +1184,8 @@ where(a.id_pais=b.Code)");
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia);
 			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
-			if (isset($_POST['id_impuesto'])){
-			foreach($_POST['id_impuesto'] as $impuesto)
+			if (isset($id_impuesto)){
+			foreach($id_impuesto as $impuesto)
 			{
 				$dato_impuesto=array(
 					"id_mercancia"	=> $_POST['id_merc'],
@@ -1156,8 +1225,8 @@ where(a.id_pais=b.Code)");
 			$this->db->update('mercancia', $dato_mercancia); 
 			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
 			
-			if (isset($_POST['id_impuesto'])){
-				foreach($_POST['id_impuesto'] as $impuesto)
+			if (isset($id_impuesto)){
+				foreach($id_impuesto as $impuesto)
 				{
 					$dato_impuesto=array(
 						"id_mercancia"	=> $_POST['id_merc'],
@@ -1219,7 +1288,7 @@ where(a.id_pais=b.Code)");
 					"estatus"     => 'ACT'
 	            );
 			$this->db->insert("combinado",$dato_combinado);
-			$combinado=mysql_insert_id();
+			$combinado=$this->db->insert_id();
 			$n=0;
 			if(!isset($_POST['n_productos']))$_POST['n_productos']=0;
 			if(!isset($_POST['n_servicios']))$_POST['n_servicios']=0;
@@ -1330,11 +1399,11 @@ where(a.id_pais=b.Code)");
 						"estatus"            => 'ACT'
 		            );
 					$this->db->insert("promocion",$dato_promo);
-					$mercancia=mysql_insert_id();;
+					$mercancia=$this->db->insert_id();;
 		}
 		else
 		{
-			$sku=mysql_insert_id();
+			$sku=$this->db->insert_id();
 			if ($_POST['tipo_mercancia']==3&&$_POST['tipo']==1)
 			$sku=$combinado;
 			$nombre_ini=substr($_POST['nombre'],0,3);
@@ -1353,7 +1422,7 @@ where(a.id_pais=b.Code)");
 					"puntos_comisionables"	=> $_POST['puntos_com']
 	            );
 			$this->db->insert("mercancia",$dato_mercancia);
-			$mercancia=mysql_insert_id();
+			$mercancia=$this->db->insert_id();
 			foreach($_POST['id_impuesto'] as $impuesto)
 			{
 				$dato_impuesto=array(
@@ -1391,7 +1460,7 @@ where(a.id_pais=b.Code)");
 	            );
 			$this->db->insert("cat_img",$dato_img);
 			
-			$id_foto = mysql_insert_id();
+			$id_foto = $this->db->insert_id();
 			
 			
 			$dato_cross_img=array(
@@ -1416,7 +1485,7 @@ where(a.id_pais=b.Code)");
 	                "estatus"			=>	"ACT"
 	            );
 			$this->db->insert("cat_img",$dato_img);
-			$id_foto=mysql_insert_id();
+			$id_foto=$this->db->insert_id();
 			$dato_cross_img=array(
 	                "id_promo"		=>	$id,
 	                "id_img"	=>	$id_foto
@@ -1993,7 +2062,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 					"comision"   => $_POST['comision']
 	            );
 	    $this->db->insert("cat_proveedor",$dato_cat_proveedor);
-	    $id_proveedor=mysql_insert_id();
+	    $id_proveedor=$this->db->insert_id();
 	    $dato_proveedor=array(
 					"id_proveedor"                   => $id_proveedor,
 					"id_empresa"                     => $_POST['empresa'],
@@ -2113,7 +2182,7 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 			);
 			$this->db->insert("valor_comisiones",$dato_profundidad[$contador]);
 	
-			$id_nuevo=mysql_insert_id();
+			$id_nuevo=$this->db->insert_id();
 			$contador++;
 		}
 		
@@ -2151,10 +2220,122 @@ from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM
 		$this->db->query("delete from factura where id_venta=".$id);
 		$this->db->query("delete from venta where id_venta=".$id);
 	}
-	
+	    
+        function kill_venta_cedi($id){
+		$this->db->query("delete from pos_venta_historial where id_venta=".$id);
+		$this->db->query("delete from pos_venta_item where id_venta=".$id);
+		$this->db->query("delete from pos_venta where id_venta=".$id);
+		$this->db->query("delete from venta where id_venta=".$id);
+	}
+        
 	function kill_cobro($id){
 		$this->db->query("DELETE FROM cobro WHERE id_cobro=".$id);
 	
+	}
+	
+	function getDistribucion(){
+	
+		$q=$this->db->query("select 
+									d.canal,
+								    c.alias,
+									group_concat(d.tipo_mercancia) mercancia,
+									group_concat(t.descripcion) tipo
+								from
+								    canal c,
+								    cat_tipo_mercancia t,
+								    distribucion d
+								where 
+									c.id = d.canal
+									and t.id = d.tipo_mercancia 
+									and c.estatus = 'ACT'
+									and t.estatus = 'ACT'
+								group by
+									c.id");
+		return $q->result();
+	}
+	
+	function limpiarDistribucion($id){
+		$this->db->query("DELETE FROM distribucion WHERE canal=".$id);
+		return true;
+	}
+	
+	function setDistribucion($id,$mercancias){
+		
+		$dato = array(
+			'canal' => $id,
+			'tipo_mercancia' => 0
+		);
+
+		foreach ($mercancias as $item){
+			if(intval($item)>0){
+				$dato['tipo_mercancia']=$item;
+				$this->db->insert("distribucion",$dato);
+			}									
+		}
+		
+	}
+	
+	function getCanales(){
+	
+		$q=$this->db->query("SELECT *  FROM canal");
+		return $q->result();
+	}
+	
+	function getCanalesDefault($id){
+	
+		$q=$this->db->query("select 
+									d.canal,
+								    c.alias,
+									c.nombre,
+									group_concat(d.tipo_mercancia) mercancia,
+									group_concat(t.descripcion) tipo
+								from
+								    canal c,
+								    cat_tipo_mercancia t,
+								    distribucion d
+								where 
+									c.id = d.canal
+									and t.id = d.tipo_mercancia 
+									and c.estatus = 'ACT'
+									and t.estatus = 'ACT'
+									and d.tipo_mercancia = ".$id."
+								group by
+									c.id");
+		return $q->result();
+	}
+	
+	function getCanalesWHERE($where){
+		
+		$where = ($where) ? 'where '.$where : '';
+	
+		$q=$this->db->query("SELECT *  FROM canal ".$where);
+		return $q->result();
+	}
+	
+	function limpiarComercializacion($id){
+		$this->db->query("DELETE FROM comercializacion WHERE mercancia=".$id);
+		return true;
+	}
+	
+	function setComercializacion($id,$canales){
+		
+		$dato = array(
+			'mercancia' => $id,
+			'canal' => 0
+		);
+
+		foreach ($canales as $item){
+			if(intval($item)>0){
+				$dato['canal']=$item;
+				$this->db->insert("comercializacion",$dato);
+			}									
+		}
+		
+	}
+	
+	function setGastosCanal($canal,$valor){
+		$this->db->query("update canal set gastos = ".$valor." where id=".$canal);
+		return true;
 	}
 	
 }

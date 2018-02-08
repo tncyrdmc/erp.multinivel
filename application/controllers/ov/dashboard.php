@@ -5,7 +5,7 @@ class dashboard extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-
+		$this->isViewBonos();
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		$this->load->library('security');
@@ -17,6 +17,9 @@ class dashboard extends CI_Controller
 		$this->load->model('modelo_premios');
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/bonos/titulo');
+		
+		
 	}
 
 	private $afiliados = array();
@@ -109,7 +112,7 @@ class dashboard extends CI_Controller
 	}
 	
 	function index()
-	{
+	{	
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -118,7 +121,7 @@ class dashboard extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-	
+		
 		$this->getAfiliadosRed($id);
 		$numeroAfiliadosRed=count($this->afiliados);
 		
@@ -139,22 +142,31 @@ class dashboard extends CI_Controller
 
 		$image=$this->modelo_dashboard->get_images($id);
 		$fondo="/template/img/portada.jpg";
-		$user="/template/img/empresario.jpg";
+		$user="/template/img/avatars/male.png";
 		
 		foreach ($image as $img) {
-			$cadena=explode(".", $img->img);
-			if($cadena[0]=="user")
-			{
+			$url=getcwd().$img->url;
+			if(file_exists($url)){
 				$user=$img->url;
-			}
-			if($cadena[0]=="fondo")
-			{
-				$fondo=$img->url;
 			}
 		}
 		
 		$style=$this->modelo_dashboard->get_style($id);
+		
+		$actividad=$this->modelo_compras->is_afiliado_activo($id,date('Y-m-d'));
 
+		$puntos_semana=$this->modelo_dashboard->get_puntos_personales_semana($id);
+		$puntos_mes=$this->modelo_dashboard->get_puntos_personales_mes($id);
+		$puntos_total=$this->modelo_dashboard->get_puntos_personales_total($id);
+		
+		$puntos_red_semana=$this->modelo_dashboard->get_puntos_red_semana($id);
+		$puntos_red_mes=$this->modelo_dashboard->get_puntos_red_mes($id);
+		$puntos_red_total=$this->modelo_dashboard->get_puntos_red_total($id);
+		
+		$ultimos_auspiciados=$this->modelo_dashboard->get_ultimos_auspiciados($id);
+		
+		$titulo=$this->titulo->getNombreTituloAlcanzadoAfiliado($id,date('Y-m-d'));
+		
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
 	    $this->template->set("telefono",$telefono);
@@ -169,6 +181,18 @@ class dashboard extends CI_Controller
 		$this->template->set("ultima",$ultima);
 		$this->template->set("cuentasPorPagar",$cuentasPorPagar);
 		$this->template->set("notifies",$notifies);
+		$this->template->set("actividad",$actividad);
+		
+		$this->template->set("puntos_semana",$puntos_semana);
+		$this->template->set("puntos_mes",$puntos_mes);
+		$this->template->set("puntos_total",$puntos_total);
+		$this->template->set("puntos_red_semana",$puntos_red_semana);
+		$this->template->set("puntos_red_mes",$puntos_red_mes);
+		$this->template->set("puntos_red_total",$puntos_red_total);
+		
+		$this->template->set("titulo",$titulo);
+		
+		$this->template->set("ultimos_auspiciados",$ultimos_auspiciados);
 		
 		$this->template->set("numeroAfiliadosRed",$numeroAfiliadosRed);
 		
@@ -235,4 +259,21 @@ class dashboard extends CI_Controller
 			}
 		}
 	}
+
+	private function isViewBonos() {
+		$query = "SELECT * FROM information_schema.TABLES
+					WHERE table_name like 'vb_%'";
+		
+		$q=$this->db->query($query);
+		$q= $q->result();
+		
+		if($q){
+			echo "Se estan calculando los Bonos, Puedes Ingresar despues de unos minutos ...";
+			sleep(3); 
+			echo "<script>window.location.href='/auth/logout';</script>";		
+			exit();
+		}
+		
+	}	
+
 }

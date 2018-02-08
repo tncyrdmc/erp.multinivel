@@ -4,7 +4,7 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bo/configuracion/"> Configuracion </a>
+				<span>> <a href="/bo/configuracion/"> Configuración </a>
 				> <a href="/bo/configuracion/tipoRed"> Tipo De Red </a>
 				>	Listar
 				</span>
@@ -51,7 +51,7 @@
 			<tr>
 				<th>ID</th>
 				<th>Nombre</th>
-				<th>Descripcion</th>
+				<th>Descripción</th>
 				<th>Opciones</th>
 			</tr>
 		</thead>
@@ -66,15 +66,15 @@
 					    <i class="txt-color-blue fa fa-pencil fa-3x fa-3x">
 					    </i>
 					</a>
-					<a onclick="eliminar(<?= $red->id;?>)" href="#" title="Modificar">
-						<i class="txt-color-red fa fa-trash-o fa-3x "></i>
-						</i>
-					</a>
+					
 					<?php if($red->estatus == 'ACT'){ ?>
 						<a style="cursor: pointer" title="Desactivar" onclick="estado('DES','<?php echo $red->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 					<?php } else {?>
 						<a style="cursor: pointer" title="Activar" onclick="estado('ACT','<?php echo $red->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 					<?php } ?>
+					<a onclick="eliminar(<?= $red->id;?>)" href="#" title="Modificar">
+						<i class="txt-color-red fa fa-trash-o fa-3x "></i>						
+					</a>
 					</td>
 				</tr>
 			<? } ?>

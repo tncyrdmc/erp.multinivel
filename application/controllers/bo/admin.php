@@ -549,53 +549,44 @@ class admin extends CI_Controller
 		
 		$dato_pais=$this->model_admin->get_dato_pais();
 		
+		if(!isset($dato_pais[0]->estado_pais)){
+			return 0;
+		}
+		
 		echo '<form id="'.$_POST['pais'].'"  class="smart-form"><div class="row">
 		<input name="pais" type="hidden" value="'.$_POST['pais'].'">
 		<section class="col col-6">
 			<label class="label">Idioma</label>';
-		if(!isset($dato_pais[0]->estado_pais)){
-			return 0;
-		}
+		
+		$activado = '';
+		
 		foreach ($dato_pais as $idioma)
 		{
-			echo '<label class="checkbox">';
-			if($idioma->estatus=='ACT')
-			{
-				echo '<input type="checkbox" value="'.$idioma->Language.'" checked="checked" name="idioma[]">
-				<i></i>'.$idioma->Language.'</label></li>';
-			}
-			else
-			{
-				echo '<input value="'.$idioma->Language.'" type="checkbox" name="idioma[]">
-				<i></i>'.$idioma->Language.'</label></li>';
-			}
+			
+			$activado = ($idioma->estatus=='ACT') ? 'checked="checked"' : '';
+			
+			echo '<label class="checkbox">
+					<input type="checkbox" value="'.$idioma->Language.'" '.$activado.' name="idioma[]">
+			<i></i>'.$idioma->Language.'
+					</label>';
+			
 		}
 		echo '</section><section class="col col-6">';
-		if($dato_pais[0]->estado_pais=="ACT")
-		{
-			echo '<label class="toggle">
-				<input type="checkbox" checked="checked" name="estado_pais">
+		
+		$activado = ($dato_pais[0]->estado_pais=="ACT") ? 'checked="checked"' : '';
+		
+		echo '<label class="toggle">
+				<input type="checkbox" '.$activado.' name="estado_pais">
 				<i data-swchoff-text="DES" data-swchon-text="ACT"></i>El país está</label>';
-		}
-		else
-		{
-			echo '<label class="toggle">
-			<input type="checkbox" name="estado_pais" >
-			<i data-swchoff-text="DES" data-swchon-text="ACT"></i>El país está</label>';
-		}
+		
 		echo '</section><section class="col col-6">';
-		if($dato_pais[0]->estatus_m=="ACT")
-		{
-			echo '<label class="toggle">
-			<input type="checkbox" checked="checked" name="estado_moneda">
+		
+		$activado = ($dato_pais[0]->estatus_m=="ACT") ? 'checked="checked"' : '';
+		
+		echo '<label class="toggle">
+			<input type="checkbox" '.$activado.' name="estado_moneda">
 			<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.$dato_pais[0]->moneda.'</label>';
-		}
-		else
-		{
-			echo '<label class="toggle">
-			<input type="checkbox" name="estado_moneda">
-			<i data-swchoff-text="DES" data-swchon-text="ACT"></i> Moneda: '.$dato_pais[0]->moneda.'</label>';
-		}
+		
 		echo '</section></div></form>';
 
 	}
@@ -813,10 +804,10 @@ class admin extends CI_Controller
 			
 			$datos = $this->model_admin->traer_foto($sku);
 			
-			if(unlink($_SERVER['DOCUMENT_ROOT'].$datos[0]->url)){
+		/*	if(unlink($_SERVER['DOCUMENT_ROOT'].$datos[0]->url)){
 				//echo "File Deleted.";
 			}
-			
+			*/
 			
 			$this->model_admin->del_imagen($id_img[0]->id_cat_imagen);
 			
@@ -827,7 +818,7 @@ class admin extends CI_Controller
 		}
 			$msj = "Se ha modificado la mercancia.";
 			$this->session->set_flashdata('msj', $msj);
-		redirect("/bo/comercial/carrito?co=c");
+		redirect("/bo/comercial/listarMercancia");
 	}
 	
 	function detalle_paquete()

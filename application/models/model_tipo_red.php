@@ -9,17 +9,17 @@ class Model_tipo_red extends CI_Model{
 	}
 	
 	
-	function insertar($nombre, $descripcion, $frontal, $profundidad, $plan){
+	function insertar($nombre, $descripcion, $frontal, $profundidad, $plan, $punto){
 		$datos = array('id' => 0,
 						'nombre' => $nombre,
 						'descripcion' => $descripcion,
 						'frontal' => $frontal,
 						'profundidad' => $profundidad,
 						'plan' => $plan,
-						'valor_punto' => 1
+						'valor_punto' => $punto
 		);
 		$this->db->insert("tipo_red",$datos);
-		$id_red = mysql_insert_id();
+		$id_red = $this->db->insert_id();
 		$datos = array('id_red' => $id_red,'id_afiliado' => 2,'debajo_de' => 1,'directo' => 1,'lado' => 0);
 		$this->db->insert("afiliar",$datos);
 		$datos = array('id_red' => $id_red,'id_usuario' => 2,'profundidad' => 0,'estatus' => 'ACT','premium' => 2);
@@ -50,6 +50,12 @@ class Model_tipo_red extends CI_Model{
 	{
 		$q=$this->db->query('select * from tipo_red where id = '.$idRed);
 		return $q->result();
+	}
+	
+	function traerValorPuntoComisionableRed($idRed)
+	{
+		$q=$this->db->query('select valor_punto from tipo_red where id = '.$idRed);
+		return $q->result()[0]->valor_punto;
 	}
 	
 	function traer_nombre_red($idRed)
@@ -90,13 +96,14 @@ class Model_tipo_red extends CI_Model{
 		$this->db->update('tipo_red', $datos, array('id' => $id_red));
 	}
 	
-	function actualizar($id, $nombre, $descripcion,  $frontal,$profundidad, $plan){
+	function actualizar($id, $nombre, $descripcion,  $frontal,$profundidad, $plan , $punto){
 		$datos = array(
 				'nombre' => $nombre,
 				'descripcion' => $descripcion,
 				'frontal' => $frontal,
 				'profundidad' => $profundidad,
-				'plan' => $plan
+				'plan' => $plan,
+				'valor_punto' => $punto
 		);
 		$this->db->update("tipo_red",$datos,"id = ".$id);
 		return true; 

@@ -3,13 +3,35 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								<a href="/bo/administracion">Administración </a>
-								<a href="/bo/usuarios"> > Usuarios </a>
-								<a href="/bo/usuarios/menuAltaUsuarioCedi"> > CEDI </a>
-								 > Alta
+						<?php  if($type=='5'){?>
+						<a class="backHome" href="/bol"><i class="fa fa-home"></i> Menu</a>
+						<span>
+								> <a href="/bo/logistico2/alta"> Alta</a>
+								> <a href="/bo/logistico2/usuarios">  Usuarios Logístico</a>
+								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> Alta
 							</span>
+							<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';?>
+							<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+							<span> 
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> <a href="/bo/logistico2/usuarios"> Usuarios Logístico</a>
+								> <a href="/bo/usuarios/CEDI"> CEDI </a>
+								> Alta
+							</span>
+							 <?php }else{?>
+						
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>
+								> <a href="/bo/administracion">Administración </a>
+								> <a href="/bo/usuarios">Usuarios </a>
+								> <a href="/bo/usuarios/CEDI">CEDI </a>
+								> Alta
+							</span>
+							
+							<?php }?>
+							
 						</h1>
 					</div>
 				</div>
@@ -39,109 +61,158 @@
 									<section>
 										<div>
 											<?php
-											if ($use_username) {
-												$username = array(
-													'name'	=> 'username',
-													'id'	=> 'username',
-													'value' => set_value('username'),
-													'maxlength'	=> $this->config->item('username_max_length', 'tank_auth'),
+											if(count($cedis)>0){
+												if ($use_username) {
+													$username = array(
+														'name'	=> 'username',
+														'id'	=> 'username',
+														'value' => set_value('username'),
+														'maxlength'	=> $this->config->item('username_max_length', 'tank_auth'),
+														'size'	=> 30,
+														'required' => 'required' 
+													);												
+												}
+												
+												$email = array(
+													'name'	=> 'email',
+													'id'	=> 'email',
+													'value'	=> set_value('email'),
+													'maxlength'	=> 80,
 													'size'	=> 30,
+													'required' => 'required',
+													'type' => 'email'
 												);
 												
-											}
-											$email = array(
-												'name'	=> 'email',
-												'id'	=> 'email',
-												'value'	=> set_value('email'),
-												'maxlength'	=> 80,
-												'size'	=> 30,
-											);
-											$password = array(
-												'name'	=> 'password',
-												'id'	=> 'password',
-												'value' => set_value('password'),
-												'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
-												'size'	=> 30,
-													
-											);
-											$confirm_password = array(
-												'name'	=> 'confirm_password',
-												'id'	=> 'confirm_password',
-												'value' => set_value('confirm_password'),
-												'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
-												'size'	=> 30,
-											);
-											?>
-											<?php echo form_open($this->uri->uri_string()); ?>
-											<label class="select">
-												<label class="label">Seleccione el CEDI al que pertenecerá</label>
-												<select name="id_cedi" id="id_cedi" required="">
-													<?foreach ($cedis as $cedi) {?>
-														<option value="<?php echo $cedi->id_cedi; ?>">
-															<?php echo $cedi->nombre; ?>
-														</option>
-													<?}?>
-												</select>
-											</label>
-											<br>
-											<table>
-												<?php if ($use_username) { ?>
-												<tr>
-													<td>Nombre de Usuario</td>
-													<td><?php echo form_input($username); ?></td>
-													<td style="color: red;"><?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?></td>
-												</tr>
-												<?php } ?>
-												<tr>
-													<td>DNI</td>
-													<td><input name="dni" value="" id="dni" maxlength="60" size="30" type="text" required></td>
-													<td style="color: red;"></td>
-												</tr>
-												<tr>
-													<td>Nombres</td>
-													<td><input name="nombre" value="" id="username" maxlength="60" size="30" type="text" required></td>
-													<td style="color: red;"></td>
-												</tr>
-												<tr>
-													<td>Apellidos</td>
-													<td><input name="apellido" value="" id="username" maxlength="60" size="30" type="text" required></td>
-													<td style="color: red;"></td>
-												</tr>
-												<tr>
-													<td>Telefono</td>
-													<td><input name="telefono" value="" id="telefono" maxlength="60" size="30" type="text" required></td>
-													<td style="color: red;"></td>
-												</tr>
-												<tr>
-													<td>Email</td>
-													<td><?php echo form_input($email); ?></td>
-													<td style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></td>
-												</tr>
-													<label class="select">
-												<label class="label">País</label>
-												<select name="id_pais" id="id_pais" required="">
-													<?foreach ($paises as $pais) {?>
-														<option value="<?php echo $pais->Code; ?>">
-															<?php echo $pais->Name; ?>
-														</option>
-													<?}?>
-												</select>
-											</label>
+												$password = array(
+													'name'	=> 'password',
+													'id'	=> 'password',
+													'value' => set_value('password'),
+													'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
+													'size'	=> 30,
+													'required' => 'required',
+													'type' => 'password'
+														
+												);
+												
+												$confirm_password = array(
+													'name'	=> 'confirm_password',
+													'id'	=> 'confirm_password',
+													'value' => set_value('confirm_password'),
+													'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
+													'size'	=> 30,
+													'required' => 'required',
+													'type' => 'password'
+												);
 											
-												<tr>
-													<td>Contraseña</td>
-													<td><?php echo form_password($password); ?></td>
-													<td style="color: red;"><?php echo form_error($password['name']); ?></td>
-												</tr>
-												<tr>
-													<td>Confirmar contraseña</td>
-													<td><?php echo form_password($confirm_password); ?></td>
-													<td style="color: red;"><?php echo form_error($confirm_password['name']); ?></td>
-												</tr>
-											</table>
+											echo form_open($this->uri->uri_string()); ?>
+											<legend>Nuevo Agente CEDI</legend>
+											<fieldset>
+												<label class="label">Seleccione el CEDI al que pertenecerá</label>
+												<label class="select">
+													<select name="id_cedi" id="id_cedi" required>
+														<?foreach ($cedis as $cedi) {?>
+															<option value="<?php echo $cedi->id_cedi; ?>">
+																<?php echo $cedi->nombre; ?>
+															</option>
+														<?}?>
+													</select>
+												</label>
+												<br>
+												<label class="label">País</label>
+												<label class="select">
+													<select name="id_pais" id="id_pais" required>
+														<?foreach ($paises as $pais) {
+															if($pais->Code!='AAA'){?>
+															<option value="<?php echo $pais->Code; ?>">
+																<?php echo $pais->Name; ?>
+															</option>
+														<?}}?>
+													</select>
+												</label>
+											</fieldset>
+											<fieldset>
+												<?php if ($use_username) { ?>
+												<label class="label">Nombre de Usuario</label>
+												<label class="input">
+													<?php echo form_input($username); ?>
+												</label>
+												<label class="txt-color-red">
+													<?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?>
+												</label>
+												<br/>
+												<?php } ?>
+												<label class="label">Dirección de Correo Electrónico</label>
+												<label class="input">
+													<?php echo form_input($email); ?>
+												</label>
+												<label class="txt-color-red">
+													<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
+												</label>
+											</fieldset>
+											<fieldset>
+												<label class="label">Número de Identificación</label>
+												<label class="input">
+													<input name="dni" value="" id="dni" maxlength="60" size="30" type="text" required /> 
+												</label>
+												<label class="txt-color-red"></label>
+												<br/>
+												<label class="label">Nombre(s)</label>
+												<label class="input">
+													<input name="nombre" value="" id="username" maxlength="60" size="30" type="text" required>
+												</label>
+												<label class="txt-color-red"></label>
+												<br/>
+												<label class="label">Apellido(s)</label>
+												<label class="input">
+													<input name="apellido" value="" id="username" maxlength="60" size="30" type="text" required> 
+												</label>
+												<label class="txt-color-red"></label>
+												<br/>
+												<label class="label">Teléfono (fijo o Movil)</label>
+												<label class="input">
+													<input name="telefono" value="" id="telefono" maxlength="60" size="30" type="tel" pattern="[0-9-(-)---+]+" required>
+												</label>
+												<label class="txt-color-red"></label>
+											</fieldset>
+											<fieldset>
+												<label class="label">Contraseña</label>
+												<label class="input">
+													<?php echo form_password($password); ?>
+												</label>
+												<label class="txt-color-red">
+													<?php echo form_error($password['name']); ?>
+												</label>
+												<br/>
+												<label class="label">Confirmar contraseña</label>
+												<label class="input">
+													<?php echo form_password($confirm_password); ?>
+												</label>
+												<label class="txt-color-red">
+													<?php echo form_error($confirm_password['name']); ?>
+												</label>
+											</fieldset>
 											<br>
 											<input name="register" value="Crear Usuario" type="submit" class="btn-success">
-											<?php echo form_close(); ?>
+											<?php echo form_close(); 
+											
+											}else{
+												
+												echo 
+												"
+													<div class='callout'>
+														Atención, No se ha hallado ningún CEDI disponible. 
+														<br/>
+														<hr/>
+														<br/>
+														<a class='btn btn-primary pull-right' href='/bo/cedis/altaCedis'>
+															<span><i class='fa fa-home'></i></span> Alta CEDI
+														</a>
+													</div>
+												";
+												
+											}
+											
+											?>
 										</div>
 									</section>
 							</div>

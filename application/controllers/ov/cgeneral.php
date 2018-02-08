@@ -455,7 +455,7 @@ class cgeneral extends CI_Controller
 		$data=json_decode($data,true);
 		$id=$this->tank_auth->get_user_id();
 		$this->db->query("insert into encuesta_contestada (id_encuesta,id_usuario) values (".$data['id'].",".$id.")");
-		$encuesta_contestada=mysql_insert_id();
+		$encuesta_contestada=$this->db->insert_id();
 		array_pop($data);
 		foreach($data as $respuesta)
 		{
@@ -722,7 +722,7 @@ class cgeneral extends CI_Controller
 	
 		}
 	
-		$premium         = $red[0]->premium;
+		//$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		$planes 		 = $this->model_planes->Planes();
 	
@@ -750,7 +750,7 @@ class cgeneral extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		//$this->template->set("premium",$premium);
 		$this->template->set("planes",$planes);
 		
 		$this->template->set_theme('desktop');

@@ -7,6 +7,9 @@ class cuentasporcobrar extends compras{
 		parent::__construct ();
 		
 		$this->load->model ( 'bo/modelo_dashboard' );
+		$this->load->model ( 'ov/model_perfil_red' );
+		$this->load->model ( 'bo/modelo_logistico' );
+		$this->load->model ( 'cemail' );
 	}
 	
 	function index() {
@@ -63,11 +66,40 @@ class cuentasporcobrar extends compras{
 				echo  "No se ha podido realizar el cambio de estado de la peticion.";
 			
 			$id_afiliado_comprador=$datosCuentaPagar[0]->id_usuario;
-
+			$id_historial=$datosCuentaPagar[0]->id;			
+			
+			$embarque = $this->modelo_logistico->setPedido($id_venta);
+			
+			if(!$embarque){
+				echo "No se puede cambiar el estado del pedido, Una de las Mercancias esta Agotada.";
+				exit();
+			}			
+			
 			$this->pagarComisionVenta($id_venta,$id_afiliado_comprador);
 			
 			$this->modelo_historial_consignacion->CambiarEstadoPago($id_venta, $datosCuentaPagar[0]->id);
+			
+			$datos = $this->modelo_historial_consignacion->Datos_Email($id_historial);
+			
+			$email = $datos[0]->email;
+			$username = $datos[0]->username;
+			$nombres = $this->model_perfil_red->get_nombres($id_afiliado_comprador);
+			
+			$cobro = array(
+				'id_venta' => $id_venta,	
+				'fecha' => $datos[0]->fecha,
+				'username' => $username,
+				'email' => $email,
+				'nombres' => $nombres,
+				'banco' => $datos[0]->banco,
+				'cuenta' => $datos[0]->cuenta,
+				'valor' => $datos[0]->valor
+			);
 		
+			$confirmacion = $this->cemail->send_email(5, $email, $cobro);
+			
+			echo  $confirmacion ? "...EMAIL ENVIADO..." : "...EMAIL NO ENVIADO...";
+			
 			echo  "La petición se ha cambiado de estado a pago y ha calculado las comisiones.";
 		
 		}else{

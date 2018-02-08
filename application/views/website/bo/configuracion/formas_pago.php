@@ -5,7 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > Formas de Pago
+								<a href="/bo/configuracion/">Configuración</a> > Formas de Pago
 							</span>
 						</h1>
 					</div>
@@ -59,6 +59,26 @@
 													</div>
 												</a>
 												</div>
+												<div class="col-sm-2 link">
+												<a href="/bo/configuracion/compropago"><!-- /bo/payulatam -->
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;padding: 50px 0;">
+														<i class="fa fa-globe fa-3x"></i>
+														<h1>ComproPago</h1>
+													</div>
+												</a>
+												</div>
+												<!-- ::: NO SE USA SINO EN COLOMBIA :::
+
+												<div class="col-sm-2 link">
+												<a href="/bo/configuracion/Tucompra"><! /bo/tucompra >
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<i class="fa fa-globe fa-3x"></i>
+														<h1>TuCompra</h1>
+													</div>
+												</a>
+												</div>
+											
+												-->
 											</div>
 										 </div>
 									</div>

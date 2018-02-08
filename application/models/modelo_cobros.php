@@ -21,9 +21,33 @@ where c.id_user = up.user_id and c.id_metodo = cm.id_metodo and c.id_estatus = c
 	}
 	
 	function ConsultarCobrosFecha($fecha_inicio, $fecha_final){
-		$cobros = $this->db->query('select c.id_cobro, CONCAT( c.id_user,". ",up.nombre," ", up.apellido) usuario, cm.descripcion metodo_pago, cs.descripcion estado, c.monto, c.fecha, c.cuenta, c.banco, c.titular, c. clabe
-from cobro c, user_profiles up, cat_metodo_cobro cm, cat_estatus cs
-where c.id_user = up.user_id and c.id_metodo = cm.id_metodo and c.id_estatus = cs.id_estatus and c.id_estatus = 3 and c.fecha BETWEEN "'.$fecha_inicio.' 00:00:00" AND "'.$fecha_final.' 23:59:59"');
+		$cobros = $this->db->query("select 
+									    c.id_cobro,
+									    CONCAT(c.id_user,'. ',up.nombre,' ',up.apellido) usuario,
+									    cm.descripcion metodo_pago,
+									    cs.descripcion estado,
+									    c.monto,
+									    c.fecha,
+										c.titular,
+										(select `Name` from Country where `Code` =  c.pais) pais,
+									    c.cuenta,
+									    c.banco,
+									    c.swift,
+										c.otro,
+									    c.clabe,
+										c.postal
+									from
+									    cobro c,
+									    user_profiles up,
+									    cat_metodo_cobro cm,
+									    cat_estatus cs
+									where
+									    c.id_user = up.user_id
+									        and c.id_metodo = cm.id_metodo
+									        and c.id_estatus = cs.id_estatus
+									        and c.id_estatus = 3
+									        and c.fecha BETWEEN '".$fecha_inicio." 00:00:00' 
+															AND '".$fecha_final." 23:59:59'");
 		return $cobros->result();
 	}
 	

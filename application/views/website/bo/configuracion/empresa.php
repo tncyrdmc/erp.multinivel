@@ -7,7 +7,7 @@
 							<!-- PAGE HEADER -->
 								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > Empresa
+								<a href="/bo/configuracion/">Configuración</a> > Empresa
 							</span>
 						</h1>
 					</div>
@@ -68,10 +68,11 @@
 												<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 link">
 													<a href="/bo/configuracion/entorno">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-wrench fa-3x"></i><i class="fa fa-cogs fa-2x"></i>
-															<p>Configurar</p>
-															<h1>Entorno</h1> 
-															<br>
+															<i class="fa fa-group fa-2x"></i><i class="fa fa-sitemap fa-2x"></i><i class="fa fa-shopping-cart fa-2x"></i>
+															<br/>
+															<br/>
+															<h1>Actividad</h1>
+															<h2>Usuario</h2> 
 														</div>
 													</a>
 												</div>

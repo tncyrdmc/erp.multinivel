@@ -29,7 +29,11 @@ class comercial extends CI_Controller
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('ov/modelo_compras');
+		$this->load->model('ov/modelo_billetera');
+		$this->load->model('bo/model_bonos');
 		$this->load->model('model_tipo_red');
+		$this->load->model('cemail');
+		
 	}
 
 	function index()
@@ -56,6 +60,183 @@ class comercial extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/index');
+	}
+	function billetera_afiliado(){
+
+		$style=$this->modelo_dashboard->get_style(1);
+		$usuario = $this->tank_auth->get_user_id();
+		$id=$_POST['id'];
+
+		$this->template->set("usuario",$usuario);
+		//$usuario=$this->general->get_username($id);
+		//$style=$this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		$redesUsuario = $this->model_tipo_red->RedesUsuario($id);
+		
+		$ganancias=array();
+		$comision_directos = array();
+		$bonos = array();		
+		
+		foreach ($redesUsuario as $red){
+			//$array_bono = $this->model_bonos->ver_total_bonos_id($id,$red->id,'');
+			//$array_ganancias = $this->modelo_billetera->get_comisiones($id,$red->id);
+			//$array_comision = $this->modelo_billetera->getComisionDirectos($id, $red->id);
+
+			array_push($bonos,$this->model_bonos->ver_total_bonos_id_red($id,$red->id));
+			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
+			array_push($comision_directos,$this->modelo_billetera->getComisionDirectos($id, $red->id));
+		}
+		
+		$comision_todo= array(
+				'directos' => $comision_directos,
+				'ganancias' => $ganancias,
+				'bonos' => $bonos,
+				'redes' => $redesUsuario
+		);
+		
+		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
+		$cobro=$this->modelo_billetera->get_cobros_total($id);
+		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
+		$total_bonos = $this->model_bonos->ver_total_bonos_id($id);
+		
+		$transaction = $this->modelo_billetera->get_total_transacciones_id($id);	
+		
+		
+		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("id",$id);
+		$this->template->set("redes",$redesUsuario);
+		$this->template->set("bonos",$bonos);
+		$this->template->set("total_bonos",$total_bonos);
+		$this->template->set("comisiones",$comisiones);
+		$this->template->set("comision_todo",$comision_todo);
+		$this->template->set("ganancias",$ganancias);
+		$this->template->set("transaction",$transaction);
+		$this->template->set("comisiones_directos",$comision_directos);
+		$this->template->set("cobro",$cobro);
+		$this->template->set("cobroPendientes",$cobroPendientes);
+		$this->template->set("retenciones",$retenciones);
+
+		$this->template->set_theme('desktop');
+        //$this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/billetera');
+	}
+	
+	function add_sub_billetera_afiliado(){
+		
+		$id = $_POST['id'];
+		$monto = $_POST['cobro'];
+		$descripcion = $_POST['descripcion'];
+		$tipo = $_POST['tipo'];
+		
+		$transact = $this->modelo_billetera->add_sub_billetera($tipo,$id,$monto,$descripcion);		
+		
+		$data = array(
+				'email' => $this->model_perfil_red->get_email($id),
+				'username' => $this->model_perfil_red->get_username($id),
+				'id_transaccion' => $transact,
+				'tipo_t' => ($tipo=="ADD") ? "Agregado" : "Descontado",
+				'descripcion_t' => $descripcion,
+				'monto_t' => $monto
+		);
+		
+		$email = $this->cemail->send_email(10, $data['email'], $data);
+		
+		echo $transact ? "Transacción Exitosa" : "Falló la Transacción";
+		//echo $email ? "Email Enviado" : "Falló envio de Email";
+		
+	}
+	
+	function transacciones_billetera(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style($id);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/transacciones');
+		
+	}
+	
+	function listar_transacciones(){
+	
+		$fecha_inicio = $_POST['startdate'];
+		$fecha_fin = $_POST['finishdate'];
+	
+		if($fecha_inicio&&$fecha_fin){
+			$transactions = $this->modelo_billetera->get_transacciones_fecha($fecha_inicio,$fecha_fin);	
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID Transacción</th>
+					<th data-hide='phone,tablet'>Username</th>
+					<th data-hide='phone,tablet'>Nombre Completo </th>
+					<th data-hide='phone,tablet'>Tipo de Transacción</th>
+					<th data-hide='phone,tablet'>Motivo</th>
+					<th data-hide='phone,tablet'>Valor</th>
+					<th data-hide='phone,tablet'>Accion</th>
+				</thead>
+				<tbody>";
+		
+		
+			foreach($transactions as $transaction)
+			{
+				$color = ($transaction->tipo=="plus") ? "green" : "red";
+				echo "<tr>
+			<td class='sorting_1'>".$transaction->id."</td>
+			<td>".$transaction->username."</td>
+			<td>".$transaction->nombres."</td>
+			<td style='color: ".$color.";'><i class='fa fa-".$transaction->tipo."-circle fa-3x'></i></td>
+			<td>".$transaction->descripcion."</td>
+			<td> $	".number_format($transaction->monto, 2)."</td>
+			<td>
+				
+				<a title='Eliminar' style='cursor: pointer;' class='txt-color-red' onclick='eliminar(".$transaction->id.");'>
+				<i class='fa fa-trash-o fa-3x'></i>
+				</a>
+			</td>
+			</tr>";
+					
+				
+			}		
+			
+		}
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function kill_transaccion()
+	{
+		//echo "dentro de kill controller ";
+		$q=$this->modelo_billetera->kill_transaccion($_POST['id']);
+		if($q){
+			echo "La transacción ha sido eliminado con exito";
+		}else{
+			echo "La transacción no pudo ser eliminado";
+		}
+	
 	}
 	
 	function red_genealogica()
@@ -146,6 +327,8 @@ class comercial extends CI_Controller
 		$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
 		
+		$afiliados = array();
+		
 		if(isset($_POST['nombre_buscado'])){
 			$longitud_nombre =	strlen($_POST['nombre_buscado']);
 			$id_red        = 0;
@@ -225,7 +408,7 @@ class comercial extends CI_Controller
 			}
 		}
 
-		if ( $afiliados[0]==NULL){
+		if (sizeof($afiliados)==0){
 			$error = "El afiliado que estas buscando no existe.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
@@ -1116,13 +1299,13 @@ class comercial extends CI_Controller
 				{
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
 					values ('.$id.','.$_POST['grupo_frm'].',2,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'")');
-					$video=mysql_insert_id();
+					$video=$this->db->insert_id();
 				}
 				else 
 				{
 					$this->db->query('insert into cat_img (url,nombre_completo,nombre,extencion,estatus) 
 					values ("'.$ruta.$key["file_name"].'","'.$key["file_name"].'","'.$nombre.'","'.$extencion.'","ACT")');
-					$imgn=mysql_insert_id();
+					$imgn=$this->db->insert_id();
 				}
 									
 			}
@@ -1181,11 +1364,11 @@ class comercial extends CI_Controller
 				//echo 'insert into noticia (id_usuario,nombre,contenido,imagen) values ('.$id.',"'.$_POST['nombre_frm'].'","'.$_POST['desc_frm'].'","'.$ruta.$_POST['file_nme'].'")';
 				$this->db->query('insert into cat_img (url,nombre_completo,nombre,extencion,estatus) 
 				values ("'.$ruta.$data["upload_data"]["file_name"].'","'.$data["upload_data"]["file_name"].'","'.$nombre.'","'.$extencion.'","ACT")');
-				$imgn=mysql_insert_id();
+				$imgn=$this->db->insert_id();
 				
 				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
 				values ('.$id.','.$_POST['grupo_frm'].',8,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'")');
-				$video=mysql_insert_id();
+				$video=$this->db->insert_id();
 				$this->db->query('insert into cross_img_archivo	values ('.$video.','.$imgn.')');
 			}
 		}
@@ -1307,13 +1490,13 @@ class comercial extends CI_Controller
 				{
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
 					values ('.$id.','.$_POST['grupo_frm'].',1,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'")');
-					$ebook=mysql_insert_id();
+					$ebook=$this->db->insert_id();
 				}
 				else 
 				{
 					$this->db->query('insert into cat_img (url,nombre_completo,nombre,extencion,estatus) 
 					values ("'.$ruta.$key["file_name"].'","'.$key["file_name"].'","'.$nombre.'","'.$extencion.'","ACT")');
-					$imgn=mysql_insert_id();
+					$imgn=$this->db->insert_id();
 				}
 				
 					
@@ -1479,7 +1662,7 @@ class comercial extends CI_Controller
 		$this->db->query('insert into evento (id_tipo,id_color,id_usuario,nombre,descripcion,inicio,fin,lugar,costo,direccion,latitud,longitud,observaciones) 
 						values('.$tipo.','.$color.','.$id.',"'.$nombre.'","'.$desc.'","'.$inicio.'","'.$fin.'","'.$data["lugar"].'",'.$data["costo"].'
 						,"'.$data["direccion"].'","0.00000","0.00000","'.$data["observacion"].'")');
-		$id_evento=mysql_insert_id();
+		$id_evento=$this->db->insert_id();
 		$descripcion=$desc.'&nbspc;<a class="ver-mas-calendario" href="#" onclick="ver_evento('.$id_evento.')">Ver más</a>';
 		$this->db->query("update evento set descripcion='".$descripcion."' where id=".$id_evento);
 	}
@@ -1866,11 +2049,11 @@ class comercial extends CI_Controller
 		$keys=array_keys($data);
 		//print_r($keys);
 		$this->db->query('insert into encuesta (nombre,descripcion,id_usuario,estatus) values ("'.$data['nombre'].'","'.$data['desc'].'",'.$id_usuario.',"DES")');
-		$enc_id=mysql_insert_id();
+		$enc_id=$this->db->insert_id();
 		for($i=0;$i<$data['qty'];$i++)
 		{
 			$this->db->query('insert into encuesta_pregunta (id_encuesta,pregunta) values ('.$enc_id.',"'.$data[$keys[$i]]["pregunta"].'")');
-			$preg_id=mysql_insert_id();
+			$preg_id=$this->db->insert_id();
 			//print_r($data[$keys[$i]]);
 			//echo $data[$keys[$i]]["pregunta"];
 			$resp_keys=array_keys($data[$keys[$i]]["respuestas"]);
@@ -1899,21 +2082,32 @@ class comercial extends CI_Controller
    	
    	$id=$this->tank_auth->get_user_id();
    	
-   	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-   	{
-   	}else{
-   		redirect('/auth/logout');
-   	}
+   		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
 
    	$usuario=$this->general->get_username($id);
-   	$this->template->set("type",$usuario[0]->id_tipo_usuario);
+   	$type = $usuario[0]->id_tipo_usuario;
+	$this->template->set("type",$type);
    	$style=$this->modelo_dashboard->get_style(1);
    	
    	$this->template->set("usuario",$usuario);
    	$this->template->set("style",$style);
    	$this->template->set_theme('desktop');
    	$this->template->set_layout('website/main');
-   	$this->template->set_partial('header', 'website/bo/header');
+   		if($type==8||$type==9){
+			$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
    	$this->template->set_partial('footer', 'website/bo/footer');
    	$this->template->build('website/bo/comercial/altas/proveedor');
    }
@@ -1927,14 +2121,19 @@ class comercial extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
 			redirect('/auth/logout');
 		}
+		
 
 		$usuario=$this->general->get_username($id);
-		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$type = $usuario[0]->id_tipo_usuario;
+		$this->template->set("type",$type);
 		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
@@ -1985,7 +2184,13 @@ class comercial extends CI_Controller
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/bo/header');
+        if($type==8||$type==9){
+			$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/altas/newproveedor');		
 	}
@@ -1997,14 +2202,19 @@ class comercial extends CI_Controller
   	
   	$id=$this->tank_auth->get_user_id();
   	
-  	if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-  	{
-  	}else{
-  		redirect('/auth/logout');
-  	}
+  		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$CEDI = $this->general->isAValidUser($id,"cedi");
+		$almacen = $this->general->isAValidUser($id,"almacen");
+		$Logistico = $this->general->isAValidUser($id,"logistica");
+		
+		if(!$CEDI&&!$almacen&&!$Logistico&&!$Comercial){
+			redirect('/auth/logout');
+		}
+		
   	
   	$usuario=$this->general->get_username($id);
-  	$this->template->set("type",$usuario[0]->id_tipo_usuario);
+  	$type = $usuario[0]->id_tipo_usuario;
+	$this->template->set("type",$type);
   	$style=$this->modelo_dashboard->get_style(1);
   	
   	$proveedor=$this->model_admin->get_all_proveedor();
@@ -2014,7 +2224,13 @@ class comercial extends CI_Controller
   	$this->template->set("style",$style);
   	$this->template->set_theme('desktop');
   	$this->template->set_layout('website/main');
-  	$this->template->set_partial('header', 'website/bo/header');
+  		if($type==8||$type==9){
+			$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+			$header = $type==8 ? 'CEDI' : 'Almacen';
+			$this->template->set_partial('header', 'website/'.$header.'/header2',$data);
+		}else{
+			$this->template->set_partial('header', 'website/bo/header');
+		}
   	$this->template->set_partial('footer', 'website/bo/footer');
   	$this->template->build('website/bo/comercial/altas/listarProveedor');
   }
@@ -2180,6 +2396,36 @@ class comercial extends CI_Controller
 		
 		
 	}
+	
+	function mercancia()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = '';//$this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistica){
+			redirect('/auth/logout');
+		}
+	
+		$style = $this->general->get_style(1);
+	
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("type",$usuario[0]->id_tipo_usuario);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/carrito/index');
+	}
+	
 	function carrito_de_compras()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -2233,7 +2479,7 @@ class comercial extends CI_Controller
 		$this->template->build('website/bo/comercial/categorias');
 	}
 	
-	function carrito(){
+	function listarMercancia(){
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
 			redirect('/auth');
@@ -2241,9 +2487,10 @@ class comercial extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		
-	    if($this->general->isAValidUser($id,"comercial")||$this->general->isAValidUser($id,"logistica"))
-		{
-		}else{
+		$Comercial = $this->general->isAValidUser($id,"comercial");
+		$Logistica = '';//$this->general->isAValidUser($id,"logistica");
+		
+		if(!$Comercial&&!$Logistica){
 			redirect('/auth/logout');
 		}
 
@@ -2256,7 +2503,7 @@ class comercial extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		
+		$grupos1         = $this->model_mercancia->todogrupos();
 		$proveedores	 = $this->model_admin->get_proveedor();
 		$grupo			 = $this->model_admin->get_grupo();
 		$impuesto		 = $this->model_admin->get_impuesto();
@@ -2270,7 +2517,7 @@ class comercial extends CI_Controller
 		
 		
 		$productos       = $this->model_admin->get_productos();
-		$servicios		 = $this->model_admin->get_servicios();
+		$servicios		 = $this->model_admin->get_servicios();//var_dump($servicios);exit();
 		//$promo			 = $this->model_admin->get_promo();
 		$combinados		 = $this->model_admin->get_combinados();
 		$paquete		 = $this->model_admin->get_paquetes();
@@ -2297,6 +2544,7 @@ class comercial extends CI_Controller
 		$this->template->set("tipo_paquete",$tipo_paquete);
 		$this->template->set("paquetes",$paquete);
 		$this->template->set("membresias",$membresias );
+		$this->template->set("grupos1",$grupos1 );
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

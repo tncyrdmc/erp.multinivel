@@ -12,7 +12,7 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>
-								> <a href="/bo/configuracion/"> Configuracion</a> 
+								> <a href="/bo/configuracion/"> Configuración</a> 
 								> <a href="/bo/configuracion/compensacion"> Plan de compensación</a> 
 								> <a href="/bo/bonos"> Bonos</a>
 								> Alta
@@ -53,7 +53,10 @@
 				<textarea id="mymarkdown" name="descripcion" class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required=""></textarea>
 	        </label>
 		<div style="margin: 1rem;">
-		<h4>Frecencia</h4>
+		<h4>Frecuencia</h4>
+			        <label class="radio">
+						<input value="SIN" name="frecuencia" placeholder="frecuencia" type="radio">
+					<i></i>Sin Fecuencia</label>
 	        		<label class="radio">
 						<input value="UNI" name="frecuencia" placeholder="frecuencia" type="radio">
 					<i></i>Unica</label>
@@ -72,15 +75,20 @@
 					<label class="radio">
 						<input value="DIA" name="frecuencia" placeholder="frecuencia" type="radio">
 					<i></i>Diario</label>
-		<br><br>
+		<br>
+		<p>Nota: Frecuencia con la que se cobra el bono.</p><br>
+		<br>
+		<b>Remanente</b>
 		<label class="toggle" style="width: 4rem;">
 			<input name="plan" type="checkbox">
-			<i data-swchon-text="SI" data-swchoff-text="NO"></i>Plan
+			<i data-swchon-text="SI" data-swchoff-text="NO"></i>
 		</label>
+		<br><br>
+		<p>Nota: El remanente guarda un historial de la resta de la pata mas debil con la pata mas fuerte y guarda el resultado para el proximo corte.</p>
 		</div>
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
-									<header>Rangos</header><br><br>
+									<header>Condiciones</header><br><br>
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>																	
@@ -91,7 +99,7 @@
 										<div class="col col-lg-3 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
-											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Rango <i class="fa fa-plus"></i></a>
+											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condicion <i class="fa fa-plus"></i></a>
 										</div>
 										
 									</div>
@@ -99,9 +107,9 @@
 										<div class="col col-lg-2">
 										</div>
 										<div class="col col-xs-12 col-sm-12 col-lg-10" id="tipo_condicion">
-											<label class="select">Nombre Rango
+											<label class="select">Nombre Condicion
 											<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),'rango0');" >
-											<option value='0'>--- Seleccione Rango ---</option>
+											<option value='0' selected>--- Seleccione Rango ---</option>
 													<?php	
 														foreach($rangosActivos as $categoria){
 															echo "<option value='".$categoria->id_rango."'>".$categoria->nombre_rango."</option>";
@@ -139,6 +147,8 @@
 									</div>
 								</fieldset>
 								<br>
+								<p>Nota: Intervalo de tiempo desde que el afiliado esta afiliado en la red.</p>
+								<br>
 								<label style="margin: 1rem;"><h2>Fecha de Activacion</h2></label>
 								<div style="margin: 1rem;">
 									<section class="col col-2">
@@ -161,7 +171,7 @@
 
 									<div class="row" id="niveles">
 									<div class="row">
-										<div class="col col-lg-3 col-xs-2">
+										<div class="col col-lg-2 col-xs-2">
 										</div>
 										<div class="col col-lg-2 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_nivel()"> Agregar Nivel <i class="fa fa-plus"></i></a>
@@ -170,7 +180,7 @@
 										
 									</div>
 									<div class="row">
-										<div class="col col-lg-2">
+										<div class="col col-lg-1">
 										</div>
 										
 										<div class="col col-lg-2">
@@ -181,9 +191,27 @@
 										</div>
 										<div class="col col-lg-1">
 										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">
+											<label class="select">Forma de Repartir
+											<select name="verticalidad_red[]">
+												<option value="ASC">$ Hacia Arriba</option>
+												<option value="DESC">$ Hacia Abajo</option>
+												<option value="PASC">%(Puntos) Hacia Arriba</option>
+												<option value="RDESC">%(Puntos)Residual Abajo</option>
+											</select>
+											</label>
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
+											<label class="select">Condición Red
+											<select name="condicion_red[]">
+												<option value="RED">Toda La red</option>
+												<option value="DIRECTOS">Directos Afiliado</option>
+											</select>
+											</label>
+										</div>
 										<div class="col col-lg-2">
 		        							<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>
-												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number">
+												<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required type="number" step="any">
 											</label>
 										</div>
 									</div>
@@ -193,7 +221,17 @@
 								</div>
 								<br>
 								<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Crear</button>
-			
+								<br>
+								<p style="margin: 1.5rem;">Nota:
+									<br><b>Forma de Repartir Comisión :</b> 
+										<br>&nbsp&nbsp-($ Hacia Arriba) Monto en $ que se reparte del afiliado hacia arriba de su red.
+										<br>&nbsp&nbsp-($ Hacia Abajo) Monto en $ que se reparte del afiliado hacia abajo de su red.
+										<br>&nbsp&nbsp-(% Puntos Hacia Arriba) Se toma el porcentaje de los puntos totales que se va a entragar.
+										<br>&nbsp&nbsp-(% Puntos Residual Abajo) Bono a la medida que reparte dividiendo el total de puntos comisionables dividiendo el numero de igualaciones de la red.
+									<br><b>Condición Red:</b> 
+										<br>&nbsp&nbsp-(Directos Afiliados) Selecciona solo los directos del afiliado.
+										<br>&nbsp&nbsp-(Toda la Red) Selecciona todos los afiliados de la red Directos e Indirectos.
+								</p>
 		
     	</div>
     </div>
@@ -340,7 +378,7 @@ function add_rango()
 	+'<div class="col col-lg-2">'
 	+'</div>'
 	+'<div class="col col-xs-12 col-sm-12 col-lg-10">'
-		+'<label class="select">Nombre Rango'
+		+'<label class="select">Nombre Condicion'
 		+'<select style="max-width: 20rem;" name="id_rango[]" onChange="set_rango($(this).val(),\'rango'+i+'\');">'
 		+'<option value="0">--- Seleccione Rango ---</option>'
 		+'<?php	echo $rangos; ?>'
@@ -358,19 +396,37 @@ function add_rango()
 function add_nivel()
 {
 	var code=	'<div id="nivel'+j+'" class="row"><br>'
-	+'<div class="col col-lg-2">'
+	+'<div class="col col-lg-1">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
-	+'<span style="margin: 2rem;">Nivel Padre</span>'
+	+'<span style="margin: 2rem;">Siguiente Nivel</span>'
 		+'<label style="margin: 0.2rem;" class="input"><i class="icon-prepend fa fa-sitemap"></i>'
-		+'<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" readonly>'
+		+'<input class="form-control" style="width:200px; height:30px;" name="id_niveles_bonos[]" size="20" value="'+j+'" required="" type="number" min="1" >'
 		+'</label>'
 	+' </div>'
 	+'<div class="col col-lg-1">'
 	+' </div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
+	+'<label class="select">Forma de Repartir'
+		+'<select name="verticalidad_red[]">'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición Red'
+		+'<select name="condicion_red[]">'
+			+'<option value="RED">Toda La red</option>'
+			+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'	<label class="input" style="margin: 2rem;"><i class="icon-prepend fa fa-money"></i>'
-	+'		<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number">'
+	+'		<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'	</label>'
 	+'<a style="cursor: pointer;color: red;" onclick="delete_nivel('+j+')">Eliminar Nivel <i class="fa fa-minus"></i></a>'
 	+'</div>'
@@ -392,7 +448,7 @@ function delete_nivel(id)
 
 function reload_niveles(){
 var code='<div class="row">'
-	+'<div class="col col-lg-3 col-xs-2">'
+	+'<div class="col col-lg-2 col-xs-2">'
 	+'</div>'
 	+'<div class="col col-lg-2 col-xs-2">'
 	+'<a style="cursor: pointer;" onclick="add_nivel()"> Agregar Nivel <i class="fa fa-plus"></i></a>'
@@ -400,7 +456,7 @@ var code='<div class="row">'
 	+'</div>'
 	+'</div>'
 	+'<div class="row">'
-	+'<div class="col col-lg-2">'
+	+'<div class="col col-lg-1">'
 	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<span style="margin: 2rem;">Afiliado</span>'
@@ -410,9 +466,27 @@ var code='<div class="row">'
 	+'</div>'
 	+'<div class="col col-lg-1">'
 	+' </div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="v_condicion">'
+	+'<label class="select">Forma de Repartir'
+		+'<select name="verticalidad_red[]">'
+			+'<option value="ASC">$ Hacia Arriba</option>'
+			+'<option value="DESC">$ Hacia Abajo</option>'
+			+'<option value="PASC">%(Puntos) Hacia Arriba</option>'
+			+'<option value="RDESC">%(Puntos)Residual Abajo</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">'
+	+'<label class="select">Condición Red'
+		+'<select name="condicion_red[]">'
+			+'<option value="RED">Toda La red</option>'
+			+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'</select>'
+	+'</label>'
+	+'</div>'
 	+'<div class="col col-lg-2">'
 	+'<label style="margin: 2rem;" class="input"><i class="icon-prepend fa fa-money"></i>'
-	+'<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number">'
+	+'<input class="form-control" style="width:200px; height:30px;" name="valor[]" size="20" placeholder="Valor del Bono" required="" type="number" step="any">'
 	+'</label>'
 	+'</div>'
 	+'</div>'

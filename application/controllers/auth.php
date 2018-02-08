@@ -2,6 +2,8 @@
 
 class Auth extends CI_Controller
 {
+	private $web;
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -13,6 +15,34 @@ class Auth extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('general');
 		$this->load->model('cemail');
+		$this->load->model('bo/model_admin');
+		
+		$this->setWeb ();  
+	}
+	
+	private function setWeb() {
+		
+		set_error_handler(
+				create_function(
+						'$severity, $message, $file, $line',
+						'throw new ErrorException($message, $severity, $severity, $file, $line);'
+				)
+		);
+		
+		$q=$this->model_admin->get_empresa_multinivel();
+		$web = $q[0]->web;
+		
+		try {
+			$s = file_get_contents($web);
+			#log_message('ERROR',strlen($s));
+			$this->web = $web;
+		}
+		catch (Exception $e) {
+			$this->web = 'auth/login/';
+			#log_message('ERROR','page not found : '.$web);
+		}
+		
+		restore_error_handler();
 	}
 
 	function index()
@@ -39,24 +69,9 @@ class Auth extends CI_Controller
 		{																		// logged in
 			$id   = $this->tank_auth->get_user_id();
 			$tipo = $this->general->get_tipo($id);
-			$tipo = $tipo[0]->id_tipo_usuario;
+			$tipo = (int)$tipo[0]->id_tipo_usuario;
 			
-			if($tipo==1){
-				$this->cobrarRetenciones();
-				redirect('/bo/dashboard');
-			}
-			elseif ($tipo==2)
-				redirect('/ov/dashboard');
-			elseif ($tipo==3)
-				redirect('/bos/dashboard');
-			elseif ($tipo==4)
-				redirect('/boc/dashboard');
-			elseif ($tipo==5)
-				redirect('/bol/dashboard');
-			elseif ($tipo==6)
-				redirect('/boo/dashboard');
-			elseif ($tipo==7)
-				redirect('/boa/dashboard');
+			$this->accesos ( $tipo );	
 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
 			redirect('/auth/send_again/');
@@ -98,6 +113,8 @@ class Auth extends CI_Controller
 					$this->template->set('data',$data);
 					$this->template->build('auth/login');
 				}else {
+					$recovery = $this->getRecovery ($login);
+					
 					if ($this->tank_auth->login(
 							$this->form_validation->set_value('login'),
 							$this->form_validation->set_value('password'),
@@ -107,7 +124,7 @@ class Auth extends CI_Controller
 					
 						$id   = $this->tank_auth->get_user_id();
 						$tipo = $this->general->get_tipo($id);
-						$tipo = $tipo[0]->id_tipo_usuario;
+						$tipo = (int)$tipo[0]->id_tipo_usuario;
 							
 						$estatus = $this->general->get_status($id);
 						$estatus = $estatus[0]->id_estatus;
@@ -115,28 +132,18 @@ class Auth extends CI_Controller
 						if($estatus == '1'){
 							$this->general->unlocked();
 							
-							if($tipo==1){
-								$this->cobrarRetenciones();
-								redirect('/bo/dashboard');
-							}
-							elseif ($tipo==2){
-								redirect('/ov/dashboard');
-							}elseif ($tipo==3)
-								redirect('/bos/dashboard');
-							elseif ($tipo==4)
-								redirect('/boc/dashboard');
-							elseif ($tipo==5)
-								redirect('/bol/dashboard');
-							elseif ($tipo==6)
-								redirect('/boo/dashboard');
-							elseif ($tipo==7)
-								redirect('/boa/dashboard');
+							$this->accesos ( $tipo );		
+							
 						}else{
 							$this->logout2();
 					
 						}
 					
-					} else {
+					} else if(!$recovery){
+						//echo $recovery;exit();
+						redirect('/auth/forgot_password');
+						
+					}else{
 						
 						$data['errors']['attempts']= $this->general->addAttempts();
 						
@@ -151,6 +158,7 @@ class Auth extends CI_Controller
 							foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 						}
 					}
+
 				}
 
 			}
@@ -158,6 +166,39 @@ class Auth extends CI_Controller
 			$this->template->build('auth/login');
 		}
 	}
+	
+	
+	private function accesos($tipo) {
+		if($tipo==2){
+			$this->cobrarRetenciones();
+		}
+		
+		$accesos = array(
+				1 => '/bo/dashboard',
+				2 => '/ov/dashboard',
+				3 => '/bos/dashboard',
+				4 => '/boc/dashboard',
+				5 => '/bol/dashboard',
+				6 => '/boo/dashboard',
+				7 => '/boa/dashboard',
+				8 => '/CEDI/home',
+				9 => '/Almacen/home',
+		);
+		
+		if($accesos[$tipo]){
+			redirect($accesos[$tipo]);
+		}
+	}
+
+	
+	private function getRecovery($login) {
+		$query = "select recovery from users where id = '".$login."' or username = '".$login."' or email = '".$login."'";
+		$q = $this->db->query($query);
+		$q=$q->result();
+		$recovery = $q ? $q[0]->recovery : false;
+		return $recovery ;
+	}
+
 
 	/**
 	 * Logout user
@@ -169,14 +210,15 @@ class Auth extends CI_Controller
 		
 		$id   = $this->tank_auth->get_user_id();
 		if($id==null){
-			redirect('/auth/login');
+			redirect($this->web);
 		}
 		$this->general->update_login($id);
 
 		$this->tank_auth->logout(); // Destroys session
 	    $this->session->sess_create();
 	    //$this->_show_message($this->lang->line('auth_message_logged_out'));
-		$this->load->view('auth/login');
+		//$this->load->view('auth/login');
+		redirect($this->web);
 	}
 
 	function logout2()
@@ -392,9 +434,9 @@ class Auth extends CI_Controller
 
 				// Send email with new password
 				//$this->_send_email('reset_password', $data['email'], $data);
-				$this->cemail->send_email(7, $data['email'], $data);
+				$this->cemail->send_email(7, $data['email'], $data); 
 				
-				$this->_show_message($this->lang->line('Has cambiado tu contraseña exitosamente').' '.anchor('/auth/login/', 'Login'));
+				$this->_show_message($this->lang->line('auth_message_password_changed').' '.anchor('/auth/login/', 'Login'));
 
 			} else {														// fail
 				$this->_show_message($this->lang->line('auth_message_new_password_failed'));

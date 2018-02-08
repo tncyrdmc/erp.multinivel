@@ -67,7 +67,7 @@
 									</legend>
 									<fieldset>
 													<section class="col col-xs-12 col-md-6 col-lg-3">
-																País del producto <label class="select"> <select
+																País del paquete <label class="select"> <select
 																	id="pais" required name="pais" id="pais"
 																	onChange="select_pais()">
 																		<option value="-" selected>-- Seleciona un pais --</option>
@@ -93,7 +93,7 @@
 
 																								<section class="col col-3">
 														<label class="input">Tiempo de caducidad
-															<input required placeholder="En días" type="text" id="caducidad" name="caducidad">
+															<input required placeholder="En días" type="number" min="0" id="caducidad" name="caducidad">
 														</label>
 														<p class="note">
 															<strong>Nota:</strong>
@@ -115,139 +115,13 @@
 													</section>
 											<section class="col col-3">
 											<label class="input"><span id="labelextra">Descuento del paquete</span>
-												<input required id="precio_promo" type="number" name="descuento">
+												<input required id="precio_promo" type="number" min="0" name="descuento">
 											</label>
 											</section>
 													
 														</fieldset>
-													<div id="moneda">
-														<fieldset id="moneda_field">
-															<legend>Moneda</legend>
-															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input"> Costo real <input type="number"
-																	required name="real" id="real" onchange="calcular_precio_total()">
-																</label>
-															</section>
-															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input">Costo distribuidores <input
-																	required type="number" name="costo" id="costo" onchange="calcular_precio_total()">
-																</label>
-															</section>
-															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input">Costo publico <input type="number"
-																	required name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
-																</label>
-															</section>
-															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input">Tiempo mínimo de entrega <input
-																	placeholder="En días" type="text" name="entrega"
-																	id="entrega">
-																</label>
-															</section>
-										
-
-															<section class="col col-xs-12 col-md-6 col-lg-3">
-																<label class="input">Puntos comisionables <input
-																	type="number" min="1" max="" name="puntos_com"
-																	id="puntos_com">
-																</label>
-															</section>
-														</fieldset>
-													</div>
-
-											<fieldset>
-											<legend>Impuestos</span></legend>
-											<fieldset>
-											<div class="row" id="impuesto_agregar">
-											
-																										<section class="col col-2">Requiere especificación
-																<div class="inline-group">
-																	<label class="radio">
-																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" >
-																		<i></i>con IVA</label>
-																		<label class="radio">
-																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva" checked="">
-																			<i></i>más IVA</label>
-																		</div>
-																	</section>
-														<!--<section class="col col-2" id="impuesto">Impuesto
-														<label class="select">
-															<select id="id_impuesto[]" name="id_impuesto[]" onclick="calcular_precio_total()">
-																
-															</select>
-														</label>-->
-														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													<!--</section>-->
-													
-
-																														</div>
-																														<div class="row">
-																										
-													<section class="col col-2">
-														<label class="input">
-															Costo real con IVA
-															<input type="text" min="1" max="" name="real_iva" id="real_iva" disabled value="">
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo distribuidores con IVA
-															<input type="text" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
-														</label>
-													</section>
-													<section class="col col-2">
-														<label class="input">
-															Costo público con IVA
-															<input type="text" min="1" max="" name="publico_iva" id="publico_iva" disabled>
-														</label>
-													</section>
-													
-													</div>
-													</fieldset>
-													</fieldset>
-													<fieldset>
-													<legend>Descripción e imagen</span></legend>
-													<div>
-														<section style="padding-left: 0px;" class="col col-xs-12 col-md-6 col-lg-6">
-															Descripcion
-															<textarea name="descripcion" style="max-width: 96%"
-																id="mymarkdown"></textarea>
-														</section>
-														<section id="imagenes" class="col col-xs-12 col-md-6 col-lg-6">
-															<label class="label">Imágen</label>
-															<div class="input input-file">
-																<span class="button"> <input id="img" name="img"
-																	onchange="this.parentNode.nextSibling.value = this.value"
-																	type="file" multiple>Buscar
-																</span><input id="imagen_mr"
-																	placeholder="Agregar alguna imágen" readonly=""
-																	type="text">
-															</div>
-															<small><cite
-																title="Source Title">Para ver los archivos que va a
-																	cargar, deje el puntero sobre el boton de "Buscar"</cite>
-															</small>
-														</section>
-													</div>
-													</fieldset>
-													<div>
-													<section class="col col-xs-12 col-md-6 col-lg-6">
-														Tipo Paquete <label class="select"> <select name="tipo">
-																<?foreach ($paquetes_actuales as $row){?>
-																	<option value="<?=$row->idnivel?>">
-																	<?= $row->nombre ?>
-																<?}?>
-																
-														</select>
-													</label>
-													</div>
-													
-											
-											</fieldset>
-
-											<fieldset>
-											<legend>Productos y servicios</span></legend>
-												<div class="row">
+														<fieldset>
+																										<!--<div class="row">-->
 												<? $i1=0; ?>
 														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
 															id="prods">
@@ -296,9 +170,9 @@
 															<div class=" text-center row"  ><a onclick="delete_service(<?=$i2?>)" class='txt-color-red' style='cursor: pointer;'>Suprimir servicio <i class="fa fa-minus"></i></a></div>
 														</div>
 														</div>
-													</div>
-													
-											</fieldset>
+													<!--</div>-->
+													</fieldset>
+											
 											<div id="agregar" class=" text-center row">
 												<a onclick="new_product()">Agregar producto <i
 													class="fa fa-plus"></i>
@@ -306,9 +180,134 @@
 													class="fa fa-plus"></i>
 												</a>
 											</div>
+											
 										</div>
-								
-								</fieldset>
+																							<fieldset><div>
+													<section class="col col-xs-12 col-md-6 col-lg-6">
+														Tipo Paquete <label class="select"> <select name="tipo">
+																<?foreach ($paquetes_actuales as $row){?>
+																	<option value="<?=$row->idnivel?>">
+																	<?= $row->nombre ?>
+																<?}?>
+																
+														</select>
+													</label>
+													</div></fieldset>
+													<div id="moneda">
+														<fieldset id="moneda_field">
+															<legend>Moneda</legend>
+															<section class="col col-xs-12 col-md-6 col-lg-3">
+																<label class="input"> Costo real <input type="number" min="1"
+																	required name="real" id="real" onchange="calcular_precio_total()">
+																</label>
+															</section>
+															<section class="col col-xs-12 col-md-6 col-lg-3">
+																<label class="input">Costo distribuidores <input
+																	required type="number" min="1" name="costo" id="costo" onchange="calcular_precio_total()">
+																</label>
+															</section>
+															<section class="col col-xs-12 col-md-6 col-lg-3">
+																<label class="input">Costo publico <input type="number" min="1"
+																	required name="costo_publico" id="costo_publico" onchange="calcular_precio_total()">
+																</label>
+															</section>
+															<section class="col col-xs-12 col-md-6 col-lg-3">
+																<label class="input">Tiempo mínimo de entrega <input
+																	placeholder="En días" type="number" min="1" name="entrega"
+																	id="entrega">
+																</label>
+															</section>
+										
+
+															<section class="col col-xs-12 col-md-6 col-lg-3">
+																<label class="input">Puntos comisionables <input
+																	type="number" min="0" max="" name="puntos_com"
+																	id="puntos_com" required>
+																</label>
+															</section>
+														</fieldset>
+													</div>
+
+											<fieldset>
+											<legend>Impuestos</span></legend>
+											<fieldset>
+											<div class="row" id="impuesto_agregar">
+											
+																										<section class="col col-2">Requiere especificación
+																<div class="inline-group">
+																	<label class="radio">
+																		<input type="radio" value="1" name="iva" onchange="calcular_precio_total()" >
+																		<i></i>con IVA</label>
+																		<label class="radio">
+																			<input type="radio" value="0" onchange="calcular_precio_total()" name="iva" checked="">
+																			<i></i>más IVA</label>
+																		</div>
+																	</section>
+														<!--<section class="col col-2" id="impuesto">Impuesto
+														<label class="select">
+															<select id="id_impuesto[]" name="id_impuesto[]" onclick="calcular_precio_total()">
+																
+															</select>
+														</label>-->
+														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+													<!--</section>-->
+													
+
+																														</div>
+																														<div class="row">
+																										
+													<section class="col col-2">
+														<label class="input">
+															Costo real con IVA
+															<input type="number" min="1" max="" name="real_iva" id="real_iva" disabled value="">
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="input">
+															Costo distribuidores con IVA
+															<input type="number" min="1" max="" name="distribuidores_iva" id="distribuidores_iva" disabled>
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="input">
+															Costo público con IVA
+															<input type="number" min="1" max="" name="publico_iva" id="publico_iva" disabled>
+														</label>
+													</section>
+													
+													</div>
+													</fieldset>
+													</fieldset>
+													<fieldset>
+													<legend>Descripción e imagen</span></legend>
+													<div>
+														<section style="padding-left: 0px;" class="col col-xs-12 col-md-6 col-lg-6">
+															Descripcion
+															<textarea name="descripcion" style="max-width: 96%"
+																id="mymarkdown"></textarea>
+														</section>
+														<section id="imagenes" class="col col-xs-12 col-md-6 col-lg-6">
+															<label class="label">Imágen</label>
+															<div class="input input-file">
+																<span class="button"> <input id="img" name="img"
+																	onchange="this.parentNode.nextSibling.value = this.value"
+																	type="file" multiple>Buscar
+																</span><input id="imagen_mr"
+																	placeholder="Agregar alguna imágen" 
+																	type="text" required>
+															</div>
+															<small><cite
+																title="Source Title">Para ver los archivos que va a
+																	cargar, deje el puntero sobre el boton de "Buscar"</cite>
+															</small>
+														</section>
+													</div>
+													</fieldset>
+
+													
+											
+											</fieldset>
+
 
 								<footer>
 									<button type="submit" class="btn btn-primary">Agregar</button>

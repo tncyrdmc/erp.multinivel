@@ -2,31 +2,15 @@
 			<div id="content" >
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<h1 class="page-title txt-color-blueDark">
-					
-					<?php  if($type=='5'){?>
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>&gt;
-								 <a href="/bo/comercial/carrito_de_compras">Mercancia</a>
-								> Alta
-							</span>
-					<?php }else if(isset($_GET['co'])){?>
+					<h1 class="page-title txt-color-blueDark">										
 							
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								<a href="/bo/comercial"> Comercial</a> >
-								<a href="/bo/comercial/carrito_de_compras?co=c">Carrito de Compras</a>
+							<span>
+								> <a href="/bo/comercial">Comercial</a> 
+								> <a href="/bo/comercial/mercancia">Mercancias</a>
 								> Alta
 							</span>
-				    <?php } else{?>	
 							
-							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>&gt;> <a href="/bol/dashboard">Logistico</a> >
-								<a href="/bo/logistico2/alta">Alta</a> >
-								 <a href="/bo/comercial/carrito_de_compras">Carrito de Compras</a>
-								> Alta
-							</span>
-					<?php }?>
 						</h1>
 					</div>
 				</div>
@@ -55,49 +39,24 @@
 								<div class="col-sm-11 link">
 									<div class="col-sm-1 link">
 									</div>
+									<?php 
+									for ($i=0;$i<sizeof($tipos);$i++){
+										$descripcion = $tipos[$i]->descripcion;
+										$saltos = 3 - str_word_count($descripcion, 0);
+										for ($s=1;$s<$saltos;$s++){
+											$descripcion.="<h1>.</h1>";
+										}
+									?>
 									<div class="col-sm-2 link">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[0]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[0]->descripcion;?><br>&nbsp</h1>
-											
-										</div>
-									</a>
-								</div>
-								<div class="col-sm-2 link">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[1]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[1]->descripcion;?><br>&nbsp</h1>											
-										</div>
-									</a>
-								</div>
-								<div class="col-sm-2 link">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[2]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[2]->descripcion;?><br>&nbsp</h1>
-											
-										</div>
-									</a>
-								</div>
-								<div class="col-sm-2 link">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[3]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h4><?php echo $tipos[3]->descripcion;?></h4>
-										</div>
-									</a>
-								</div>
-															<div class="col-sm-2 link">
-									<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[4]->id; ?>" style="height: 10rem;">
-										<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-											<i class="fa fa-tags fa-3x"></i>
-											<h1><?php echo $tipos[4]->descripcion;?><br>&nbsp</h1>
-											
-										</div>
-									</a>
-								</div>
+										<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipos[$i]->id; ?>" style="height: 10rem;">
+											<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;padding: 40px;">
+												<i class="fa fa-cube fa-3x"></i>
+												<h1><?php echo $descripcion;?></h1>												
+											</div>
+										</a>
+									</div>
+									<?php }?>								
+
 								</div>
 		
 							</div>

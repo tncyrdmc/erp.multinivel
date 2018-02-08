@@ -12,7 +12,7 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > 
+								<a href="/bo/configuracion/">Configuración</a> > 
 								<a href="/bo/configuracion/compensacion/">Plan de compensacion</a> >
 								<a href="/bo/rangos/">Rangos</a>
 								> Nuevo rango
@@ -50,10 +50,17 @@
 			<label style="margin: 1rem;">
 				<textarea id='desc' class="form-control" name="desc" size="20" cols="20" rows="10" placeholder="Descripción" type="text" required></textarea>
 	        </label>
-
 		<div class="form-group" style="width: 100rem;">
 	        <div class="row" id="cross_tipo_rango">
 									<header>Condiciones</header><br><br>
+									<label style="margin: 1rem;width: 50rem;" class="select">Condicion Red
+										<select id="condicion_red_afilacion" name="condicion_red_afilacion" style="margin: 1rem;width: 10rem;">
+											<option value='EQU'>Equilibrada</option>
+											<option value='DEB'>Pata Débil</option>
+										</select>
+									<p>Nota: Seleccionan todas las patas de la red (Equilibrada) o solo la pata mas débil (Débil) para cumplir la condición.</p><br>
+									</label>
+									
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>																	
@@ -63,15 +70,15 @@
 									<div class="row">
 										<div class="col col-lg-3 col-xs-2">
 										</div>
-										<div class="col col-lg-2 col-xs-2">
+									<!-- <div class="col col-lg-2 col-xs-2">
 											<a style="cursor: pointer;" onclick="add_rango()"> Agregar Condición <i class="fa fa-plus"></i></a>
 										</div>
-										
+										-->
 									</div>
 									<div class="row">
 										<div class="col col-lg-2">
 										</div>
-										<div class="col col-xs-12 col-sm-6 col-lg-3" id="tipo_condicion">
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
 											<label class="select">Tipo Condicion
 											<select name="id_tipo_condicion[]" >
 													<?php	
@@ -83,22 +90,58 @@
 											</label>
 										</div>
 										
-										<div class="col col-xs-12 col-sm-5 col-lg-3">
+										<div class="col col-xs-12 col-sm-5 col-lg-2">
 											Valor<label for="" class="input">
 												<i class="icon-prepend fa fa-sort"></i>
 												<input id="valor_rango[]" type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />
 											</label>		
 										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
+											<label class="select">Condición Red
+											<select name="condicion_red[]" >
+												<option value='DIRECTOS'>Directos Afiliado</option>
+												<option value='RED'>Toda La red</option>
+											</select>
+											</label>
+										</div>
+										<div class="col col-xs-12 col-sm-6 col-lg-2" id="tipo_condicion">
+											<label class="select">Niveles Red
+											<select name="nivel_red[]" >
+												<option value='0'>0</option>
+												<option value='1'>1</option>
+												<option value='2'>2</option>
+												<option value='3'>3</option>
+												<option value='4'>4</option>
+												<option value='5'>5</option>
+												<option value='6'>6</option>
+												<option value='7'>7</option>
+												<option value='8'>8</option>
+												<option value='9'>9</option>
+												<option value='10'>10</option>
+											</select>
+											</label>
+										</div>
+										
 									</div>
-									
+						
 								</div>
-								
 								<div id="rangos">
 								
 								</div>
 
 			<button style="margin: 1rem;margin-bottom: 4rem;" type="input" class="btn btn-success">Crear</button>
-			
+			<br>
+			<p style="margin: 1.5rem;">Nota:
+				<br><b>Tipo Condición :</b> 
+					<br>&nbsp&nbsp-(Afiliados en la red) Numero de Afiliados En toda la red del afiliado.
+					<br>&nbsp&nbsp-(Ventas en la red) Valor total en $ de las ventas de red del afiliado.
+					<br>&nbsp&nbsp-(Compras Personales) Valor total en $ de las compras personales del afiliado.
+					<br>&nbsp&nbsp-(Puntos Comisionables) Valor total de los puntos comisionables personales del afiliado.
+					<br>&nbsp&nbsp-(Puntos de la Red) Valor total de los puntos comisionables de la red del afiliado.
+				<br><b>Condición Red:</b> 
+					<br>&nbsp&nbsp-(Directos Afiliados) Selecciona solo los directos del afiliado.
+					<br>&nbsp&nbsp-(Toda la Red) Selecciona todos los afiliados de la red Directos e Indirectos.
+			</p>
 		</form>
     </fieldset>
 	</div>
@@ -185,19 +228,44 @@ function add_rango()
 	var code=	'<div id="'+i+'" class="row">'
 	+'<div class="col col-lg-2">'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-6 col-lg-3">'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
 		+'<label class="select">Tipo Condición'
 		+'<select name="id_tipo_condicion[]" >'
 		+'<?php	echo $rangos; ?>'
 	+'</select>'
 	+'</label>'
 	+'</div>'
-	+'<div class="col col-xs-12 col-sm-5 col-lg-3">'
-		+'Tarifa<label for="" class="input">'
+	+'<div class="col col-xs-12 col-sm-5 col-lg-2">'
+		+'Valor<label for="" class="input">'
 			+'<i class="icon-prepend fa fa-sort"></i>'
 			+'<input type="number" class="form-control" name="valor_rango[]" placeholder=""class="form-control" required />'
-			+'<a style="cursor: pointer;" onclick="delete_rango('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
+			+'<a style="color: red;cursor: pointer;" onclick="delete_rango('+i+')">Eliminar Rango <i class="fa fa-minus"></i></a>'
 		+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
+	+'<label class="select">Condición Red'
+	+'<select name="condicion_red[]" >'
+		+'<option value="DIRECTOS">Directos Afiliado</option>'
+		+'<option value="RED">Toda La red</option>'
+	+'</select>'
+	+'</label>'
+	+'</div>'
+	+'<div class="col col-xs-12 col-sm-6 col-lg-2">'
+	+'<label class="select">Niveles Red'
+	+'<select name="nivel_red[]" >'
+	+'<option value="0">0</option>'
+	+'<option value="1">1</option>'
+	+'<option value="2">2</option>'
+	+'	<option value="3">3</option>'
+	+'	<option value="4">4</option>'
+	+'	<option value="5">5</option>'
+	+'	<option value="6">6</option>'
+	+'	<option value="7">7</option>'
+	+'	<option value="8">8</option>'
+	+'	<option value="9">9</option>'
+	+'	<option value="10">10</option>'
+	+'</select>'
+	+'</label>'
 	+'</div>'
 	+'</div>';
 	$("#rango").append(code);

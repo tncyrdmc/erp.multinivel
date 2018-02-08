@@ -69,7 +69,7 @@ class Model_tipo_usuario extends CI_Model{
             );
 		
         $this->db->insert("user_profiles",$dato);
-        $id_nuevo=mysql_insert_id();
+        $id_nuevo=$this->db->insert_id();
 	}
 	
 	function get_all_users()

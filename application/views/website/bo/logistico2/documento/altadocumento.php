@@ -4,31 +4,37 @@
 	<div class="row">
 		
 			
-			
-				<?php  if($type=='5'){?>
-					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+			<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 					<h1 class="page-title txt-color-blueDark">
+				<?php  if($type=='5'){?>
+					
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>
 				> <a href="/bo/inventario/index"> Inventario </a>
 				> <a href="/bo/inventario/documento"> Documento</a>
-				>	Alta
+				> Alta
 				</span>
-				</h1>
-				</div>
+				<?php }else if($type=='8'||$type=='9'){
+						 	$index= ($type=='8') ? '/CEDI' : '/Almacen';
+						 	?>
+						<a class="backHome" href="<?=$index?>"><i class="fa fa-home"></i> Menu</a>
+						<span>
+								> <a href="<?=$index?>/altas"> Altas</a>
+								> <a href="/bo/inventario/documento"> Documento</a>
+								> Alta
+						</span>
 				 <?php }else{?>
-				 	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span>> <a href="/bol/dashboard/"> Logistico </a>
+				<span>
+				> <a href="/bol/dashboard/"> Logistico </a>
 				> <a href="/bo/inventario/index"> Inventario </a>
 				> <a href="/bo/inventario/documento"> Documento</a>
-				>	Alta
+				> Alta
 				</span>
-				</h1>
-				</div>
+				
 					<?php }?>
-			
+			</h1>
+				</div>
 		
 	</div>
 	<?php if($this->session->flashdata('error')) {
