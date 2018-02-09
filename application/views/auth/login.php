@@ -192,7 +192,7 @@
 				background-color: #005ef5;
 			}
 			#extr-page #main{
-				background-image: url('/template/img/login.jpg');
+				background-image: url('/template/img/Lighthouse.jpg');
 				padding: 2% 5% 10% 5%;
 				background-repeat: no-repeat;
 				background-size: cover;
