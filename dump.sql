@@ -1,11 +1,12 @@
 CREATE DATABASE  IF NOT EXISTS `erpmultinivel` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `erpmultinivel`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: erpmultinivel
+-- Host: localhost    Database: erpmultinivel
 -- ------------------------------------------------------
--- Server version	5.7.14
- 
+-- Server version	5.7.21-0ubuntu0.16.04.1
+
+
 
 --
 -- Table structure for table `afiliar`
@@ -143,14 +144,14 @@ CREATE TABLE `archivo` (
   PRIMARY KEY (`id_archivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
- 
+
 --
 -- Dumping data for table `archivo`
 --
 
 LOCK TABLES `archivo` WRITE;
 /*!40000 ALTER TABLE `archivo` DISABLE KEYS */;
-INSERT INTO `archivo` VALUES (7,1,7,1,'2015-10-13 03:38:35','Biografía Steve Jobs','/media/ebooks/Biografia_Steve_jobs_Walter_Isaacson1.pdf','ACT','Biografía Steve Jobs'),(8,1,7,1,'2015-10-13 03:39:48','Como superar el fracaso y obtener el exito','/media/ebooks/Como_superar_el_fracaso_y_obtener_el_exito_-_Aut_Napolion_Hill.pdf','ACT','Como superar el fracaso y obtener el exito'),(9,1,7,1,'2015-10-13 03:41:31','El cuadrante del flujo del dinero','/media/ebooks/El_Cuadrante_Del_Flujo_De_Dinero_-_Aut_Robert_Kiyosaki.pdf','ACT','El cuadrante del flujo del dinero'),(10,1,7,1,'2015-10-13 03:42:53','El negocio del siglo 21','/media/ebooks/El_negocio_del_siglo_21_-_Aut_Robert_Kiyosaki1.pdf','ACT','El negocio del siglo 21'),(11,1,7,1,'2015-10-13 03:44:19','La presentación de 45 segundos que cambiara su vida','/media/ebooks/La_presentacion_de_45_segundos_que_cambiara_su_vida_-_Aut_Don_Falia.pdf','ACT',' La presentación de 45 segundos que cambiara su vida'),(12,1,7,1,'2015-10-13 03:45:41','Marketing multinivel y directo de red','/media/ebooks/Marketing_Multinivel_y_Directo_de_Red_-_Aut_Allen_Carmichael.pdf','ACT','Marketing multinivel y directo de red'),(13,1,7,1,'2015-10-13 03:48:58','Robert T Kiyosaki','/media/ebooks/Padre_Rico,_Padre_Pobre_-_Robert_T_Kiyosaki_(El_bueno).pdf','ACT',' Padre rico, padre pobre'),(14,1,7,1,'2015-10-13 03:51:41','Como ganar amigos e influir sobre las personas. Carnegie Dale','/media/ebooks/CarnegieDale-CmoGanarAmigoseInfluirsobrelasPersonas.pdf','ACT','Como ganar amigos e influir'),(15,1,7,1,'2015-10-13 03:52:41','Robert Kiyosaki','/media/ebooks/El_Network_Marketing_como_activo_-_Aut_Robert_Kiyosaki1.pdf','ACT','El network marketing como activo'),(16,1,7,1,'2015-10-13 03:53:39','Napoleon Hill','/media/ebooks/Piense_y_hagase_rico_-_Aut_Napoleon_Hill.pdf','ACT','Piense y hagase rico'),(17,1,7,1,'2015-10-13 03:57:20','Robert Kiyosaki','/media/ebooks/Escuela_de_Negocios_-_Aut._Robert_Kiyosaki_(1)_.pdf','ACT','Escuela de Negocios'),(18,1,7,1,'2015-10-13 03:58:09','T harv Eker','/media/ebooks/Los_secretos_de_la_mente_millonaria_-_Aut_T._Harv_Eker_2_.pdf','ACT','Los secretos de la mente millonaria'),(19,1,7,1,'2015-10-13 03:59:21','Entrevista por Mike Dillard','/media/ebooks/Mike_Dillard_entrevista_a_Robert_Kiyosaki_-_Entrevista_de_Mike_Dillard._1_.pdf','ACT','Entrevista a Robert Kiyosaki'),(20,1,7,1,'2015-10-13 04:00:13','Despertando al Giagante Interior','/media/ebooks/Despertandoalgiganteinterior_Anthony_Robbins.pdf','ACT','Despertando al Giagante Interior'),(21,1,2,21,'2015-10-13 04:01:33','Libertad Financiera - Apalancamiento','https://www.youtube.com/watch?v=0P9GbFfTafQ','ACT','Libertad Financiera - Apalancamiento'),(22,1,7,1,'2015-10-13 04:01:46','Despertando al Giagante Interior','/media/ebooks/El_Monje_que_vendio_su_Ferrari.pdf','ACT','El Monje Que Vendio su Ferrari'),(23,1,7,1,'2015-10-13 04:02:42','La actitud mental positiva','/media/ebooks/La_actitud_mental_positiva.pdf','ACT','La Actitud Mental Positiva'),(24,1,7,1,'2015-10-13 04:03:44','Los 4 Acuerdos, Miguel Ruiz','/media/ebooks/Los_4_Acuerdos_Miguel_Ruiz.pdf','ACT','Los 4 Acuerdos'),(25,1,2,21,'2015-10-13 04:04:15','El Negocio que esta haciendo Mas Millonarios en el Mundo','https://www.youtube.com/watch?t=2&v=Ill05TVFABg','ACT','El Negocio que esta haciendo Mas Millona'),(26,1,7,1,'2015-10-13 04:04:36','Los 7 habitos de la gente altamente efectiva','/media/ebooks/los-7-habitos-de-la-gente-altamente-efectiva.pdf','ACT','Los 7 habitos de la gente altamente efectiva'),(27,1,7,1,'2015-10-13 04:05:19','Pasos de gigante, Anthony Robbins','/media/ebooks/Pasos_de_Gigante_-_Anthony_Robbins.pdf','ACT','Pasos de Gigante'),(28,1,2,21,'2015-10-13 04:05:25','Explicación que es el Network Marketing o Multinivel','https://www.youtube.com/watch?v=t7o9vIbooLo','ACT','Network Marketing o Multinivel'),(29,1,7,1,'2015-10-13 04:06:10','Poder sin limites, Anthony Robbins','/media/ebooks/Poder-sin-Limites.pdf-Anthony-Robbins__.pdf','ACT','Poder Sin Limites'),(30,1,7,1,'2015-10-13 04:06:59','Tus Zonas Erroneas','/media/ebooks/Tus_zonas_erroneas.pdf','ACT','Tus Zonas Erroneas'),(31,1,4,21,'2015-10-13 04:07:38','Randy Pausch – Su historia de vida y gran mensaje','https://www.youtube.com/watch?v=e0ZwxhFUAOo','ACT','Randy Pausch – Su historia de vida y gra'),(32,1,4,21,'2015-10-13 04:08:39','Steve Jobs Discurso en Stanford','https://www.youtube.com/watch?v=HHkJEz_HdTg','ACT','Steve Jobs Discurso en Stanford'),(33,1,4,21,'2015-10-13 04:10:16','1997 (narrado por Steve Jobs)','https://www.youtube.com/watch?v=H8D7PjA3S7E','ACT','Comercial Piensa Diferente de Apple'),(39,1,5,21,'2015-10-13 04:21:29','Las 7 leyes espiritualies del exito. Deepak Chopra','https://www.youtube.com/watch?v=uHQSioACws0','ACT','Las 7 leyes espiritualies del exito.'),(40,1,5,21,'2015-10-13 04:22:16','El Vendedor Mas Grande del Mundo','https://www.youtube.com/watch?v=I1KjYstLfYw','ACT','El Vendedor Mas Grande del Mundo'),(41,1,3,21,'2015-10-13 04:23:58','Sesenta Minutos Para Volverse Rico Robert Kiyosaki','https://www.youtube.com/watch?v=IhK6NB7l4gw','ACT','Sesenta Minutos Para Volverse Rico Robert Kiyosaki'),(42,1,3,21,'2015-10-13 04:25:01','Importancia de la EDUCACIÓN FINANCIERA R en Lima – Perú','https://www.youtube.com/watch?v=xvZkTkGzrWc','ACT','Importancia de la EDUCACIÓN FINANCIERA R'),(43,1,3,21,'2015-10-13 04:31:12','EL NEGOCIO PERFECTO','https://www.youtube.com/watch?v=oaMDj4w-ERI','ACT','EL NEGOCIO PERFECTO'),(44,1,3,21,'2015-10-13 04:27:01','Robert kiyosaki y Donald trump hablan de las redes de mercadeo','https://www.youtube.com/watch?t=7&v=bOMzX6KX2gw','ACT','Robert kiyosaki y Donald trump hablan de');
+INSERT INTO `archivo` VALUES (7,1,7,1,'2015-10-13 08:38:35','Biografía Steve Jobs','/media/ebooks/Biografia_Steve_jobs_Walter_Isaacson1.pdf','ACT','Biografía Steve Jobs'),(8,1,7,1,'2015-10-13 08:39:48','Como superar el fracaso y obtener el exito','/media/ebooks/Como_superar_el_fracaso_y_obtener_el_exito_-_Aut_Napolion_Hill.pdf','ACT','Como superar el fracaso y obtener el exito'),(9,1,7,1,'2015-10-13 08:41:31','El cuadrante del flujo del dinero','/media/ebooks/El_Cuadrante_Del_Flujo_De_Dinero_-_Aut_Robert_Kiyosaki.pdf','ACT','El cuadrante del flujo del dinero'),(10,1,7,1,'2015-10-13 08:42:53','El negocio del siglo 21','/media/ebooks/El_negocio_del_siglo_21_-_Aut_Robert_Kiyosaki1.pdf','ACT','El negocio del siglo 21'),(11,1,7,1,'2015-10-13 08:44:19','La presentación de 45 segundos que cambiara su vida','/media/ebooks/La_presentacion_de_45_segundos_que_cambiara_su_vida_-_Aut_Don_Falia.pdf','ACT',' La presentación de 45 segundos que cambiara su vida'),(12,1,7,1,'2015-10-13 08:45:41','Marketing multinivel y directo de red','/media/ebooks/Marketing_Multinivel_y_Directo_de_Red_-_Aut_Allen_Carmichael.pdf','ACT','Marketing multinivel y directo de red'),(13,1,7,1,'2015-10-13 08:48:58','Robert T Kiyosaki','/media/ebooks/Padre_Rico,_Padre_Pobre_-_Robert_T_Kiyosaki_(El_bueno).pdf','ACT',' Padre rico, padre pobre'),(14,1,7,1,'2015-10-13 08:51:41','Como ganar amigos e influir sobre las personas. Carnegie Dale','/media/ebooks/CarnegieDale-CmoGanarAmigoseInfluirsobrelasPersonas.pdf','ACT','Como ganar amigos e influir'),(15,1,7,1,'2015-10-13 08:52:41','Robert Kiyosaki','/media/ebooks/El_Network_Marketing_como_activo_-_Aut_Robert_Kiyosaki1.pdf','ACT','El network marketing como activo'),(16,1,7,1,'2015-10-13 08:53:39','Napoleon Hill','/media/ebooks/Piense_y_hagase_rico_-_Aut_Napoleon_Hill.pdf','ACT','Piense y hagase rico'),(17,1,7,1,'2015-10-13 08:57:20','Robert Kiyosaki','/media/ebooks/Escuela_de_Negocios_-_Aut._Robert_Kiyosaki_(1)_.pdf','ACT','Escuela de Negocios'),(18,1,7,1,'2015-10-13 08:58:09','T harv Eker','/media/ebooks/Los_secretos_de_la_mente_millonaria_-_Aut_T._Harv_Eker_2_.pdf','ACT','Los secretos de la mente millonaria'),(19,1,7,1,'2015-10-13 08:59:21','Entrevista por Mike Dillard','/media/ebooks/Mike_Dillard_entrevista_a_Robert_Kiyosaki_-_Entrevista_de_Mike_Dillard._1_.pdf','ACT','Entrevista a Robert Kiyosaki'),(20,1,7,1,'2015-10-13 09:00:13','Despertando al Giagante Interior','/media/ebooks/Despertandoalgiganteinterior_Anthony_Robbins.pdf','ACT','Despertando al Giagante Interior'),(21,1,2,21,'2015-10-13 09:01:33','Libertad Financiera - Apalancamiento','https://www.youtube.com/watch?v=0P9GbFfTafQ','ACT','Libertad Financiera - Apalancamiento'),(22,1,7,1,'2015-10-13 09:01:46','Despertando al Giagante Interior','/media/ebooks/El_Monje_que_vendio_su_Ferrari.pdf','ACT','El Monje Que Vendio su Ferrari'),(23,1,7,1,'2015-10-13 09:02:42','La actitud mental positiva','/media/ebooks/La_actitud_mental_positiva.pdf','ACT','La Actitud Mental Positiva'),(24,1,7,1,'2015-10-13 09:03:44','Los 4 Acuerdos, Miguel Ruiz','/media/ebooks/Los_4_Acuerdos_Miguel_Ruiz.pdf','ACT','Los 4 Acuerdos'),(25,1,2,21,'2015-10-13 09:04:15','El Negocio que esta haciendo Mas Millonarios en el Mundo','https://www.youtube.com/watch?t=2&v=Ill05TVFABg','ACT','El Negocio que esta haciendo Mas Millona'),(26,1,7,1,'2015-10-13 09:04:36','Los 7 habitos de la gente altamente efectiva','/media/ebooks/los-7-habitos-de-la-gente-altamente-efectiva.pdf','ACT','Los 7 habitos de la gente altamente efectiva'),(27,1,7,1,'2015-10-13 09:05:19','Pasos de gigante, Anthony Robbins','/media/ebooks/Pasos_de_Gigante_-_Anthony_Robbins.pdf','ACT','Pasos de Gigante'),(28,1,2,21,'2015-10-13 09:05:25','Explicación que es el Network Marketing o Multinivel','https://www.youtube.com/watch?v=t7o9vIbooLo','ACT','Network Marketing o Multinivel'),(29,1,7,1,'2015-10-13 09:06:10','Poder sin limites, Anthony Robbins','/media/ebooks/Poder-sin-Limites.pdf-Anthony-Robbins__.pdf','ACT','Poder Sin Limites'),(30,1,7,1,'2015-10-13 09:06:59','Tus Zonas Erroneas','/media/ebooks/Tus_zonas_erroneas.pdf','ACT','Tus Zonas Erroneas'),(31,1,4,21,'2015-10-13 09:07:38','Randy Pausch – Su historia de vida y gran mensaje','https://www.youtube.com/watch?v=e0ZwxhFUAOo','ACT','Randy Pausch – Su historia de vida y gra'),(32,1,4,21,'2015-10-13 09:08:39','Steve Jobs Discurso en Stanford','https://www.youtube.com/watch?v=HHkJEz_HdTg','ACT','Steve Jobs Discurso en Stanford'),(33,1,4,21,'2015-10-13 09:10:16','1997 (narrado por Steve Jobs)','https://www.youtube.com/watch?v=H8D7PjA3S7E','ACT','Comercial Piensa Diferente de Apple'),(39,1,5,21,'2015-10-13 09:21:29','Las 7 leyes espiritualies del exito. Deepak Chopra','https://www.youtube.com/watch?v=uHQSioACws0','ACT','Las 7 leyes espiritualies del exito.'),(40,1,5,21,'2015-10-13 09:22:16','El Vendedor Mas Grande del Mundo','https://www.youtube.com/watch?v=I1KjYstLfYw','ACT','El Vendedor Mas Grande del Mundo'),(41,1,3,21,'2015-10-13 09:23:58','Sesenta Minutos Para Volverse Rico Robert Kiyosaki','https://www.youtube.com/watch?v=IhK6NB7l4gw','ACT','Sesenta Minutos Para Volverse Rico Robert Kiyosaki'),(42,1,3,21,'2015-10-13 09:25:01','Importancia de la EDUCACIÓN FINANCIERA R en Lima – Perú','https://www.youtube.com/watch?v=xvZkTkGzrWc','ACT','Importancia de la EDUCACIÓN FINANCIERA R'),(43,1,3,21,'2015-10-13 09:31:12','EL NEGOCIO PERFECTO','https://www.youtube.com/watch?v=oaMDj4w-ERI','ACT','EL NEGOCIO PERFECTO'),(44,1,3,21,'2015-10-13 09:27:01','Robert kiyosaki y Donald trump hablan de las redes de mercadeo','https://www.youtube.com/watch?t=7&v=bOMzX6KX2gw','ACT','Robert kiyosaki y Donald trump hablan de');
 /*!40000 ALTER TABLE `archivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -804,7 +805,7 @@ CREATE TABLE `cat_grupo_producto` (
 
 LOCK TABLES `cat_grupo_producto` WRITE;
 /*!40000 ALTER TABLE `cat_grupo_producto` DISABLE KEYS */;
-INSERT INTO `cat_grupo_producto` VALUES (1,'publicidad','ACT',1);
+INSERT INTO `cat_grupo_producto` VALUES (1,'Tienda','ACT',1);
 /*!40000 ALTER TABLE `cat_grupo_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -858,7 +859,7 @@ CREATE TABLE `cat_img` (
 
 LOCK TABLES `cat_img` WRITE;
 /*!40000 ALTER TABLE `cat_img` DISABLE KEYS */;
-INSERT INTO `cat_img` VALUES (3,'/media/2/user.jpg','user.jpg','user','jpg','ACT'),(645,'/media/carrito/Membrete1.png','Membrete1.png','Membrete1','png','ACT'),(646,'/media/carrito/m3.jpg','m3.jpg','m3','jpg','ACT');
+INSERT INTO `cat_img` VALUES (3,'/media/2/user.jpg','user.jpg','user','jpg','ACT');
 /*!40000 ALTER TABLE `cat_img` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1726,7 +1727,7 @@ CREATE TABLE `cedi` (
 
 LOCK TABLES `cedi` WRITE;
 /*!40000 ALTER TABLE `cedi` DISABLE KEYS */;
-INSERT INTO `cedi` VALUES (1,'tierra santa','tierra santa','9076','ebenezer','8676533','2016-09-29 04:14:42','ACT','A','252211'),(2,'supercundi','supercundi','9076','av. panamericana','8463643','2016-09-29 04:14:57','ACT','A','252211'),(3,'mercatodos','mercatodos','9076','calle 6','8458677','2016-09-29 04:09:19','ACT','C','252211'),(4,'melaos','sport','9076','camellon 8','8465454','2016-09-29 04:11:10','ACT','C','252211');
+INSERT INTO `cedi` VALUES (1,'tierra santa','tierra santa','9076','ebenezer','8676533','2016-09-29 09:14:42','ACT','A','252211'),(2,'supercundi','supercundi','9076','av. panamericana','8463643','2016-09-29 09:14:57','ACT','A','252211'),(3,'mercatodos','mercatodos','9076','calle 6','8458677','2016-09-29 09:09:19','ACT','C','252211'),(4,'melaos','sport','9076','camellon 8','8465454','2016-09-29 09:11:10','ACT','C','252211');
 /*!40000 ALTER TABLE `cedi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1969,7 +1970,7 @@ CREATE TABLE `comercializacion` (
 --
 
 LOCK TABLES `comercializacion` WRITE;
-/*!40000 ALTER TABLE `comercializacion` DISABLE KEYS */; 
+/*!40000 ALTER TABLE `comercializacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `comercializacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2910,7 +2911,10 @@ CREATE TABLE `cross_merc_img` (
 -- Dumping data for table `cross_merc_img`
 --
 
-
+LOCK TABLES `cross_merc_img` WRITE;
+/*!40000 ALTER TABLE `cross_merc_img` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cross_merc_img` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `cross_merc_impuesto`
@@ -2930,7 +2934,7 @@ CREATE TABLE `cross_merc_impuesto` (
 --
 
 LOCK TABLES `cross_merc_impuesto` WRITE;
-/*!40000 ALTER TABLE `cross_merc_impuesto` DISABLE KEYS */; 
+/*!40000 ALTER TABLE `cross_merc_impuesto` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cross_merc_impuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3348,7 +3352,7 @@ CREATE TABLE `cuenta_pagar_banco_historial` (
 
 LOCK TABLES `cuenta_pagar_banco_historial` WRITE;
 /*!40000 ALTER TABLE `cuenta_pagar_banco_historial` DISABLE KEYS */;
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (1,'2016-09-29 11:03:04','1','2',1,'116','ACT');
+INSERT INTO `cuenta_pagar_banco_historial` VALUES (1,'2016-09-29 16:03:04','1','2',1,'116','ACT');
 /*!40000 ALTER TABLE `cuenta_pagar_banco_historial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3567,7 +3571,7 @@ CREATE TABLE `empresa_multinivel` (
 
 LOCK TABLES `empresa_multinivel` WRITE;
 /*!40000 ALTER TABLE `empresa_multinivel` DISABLE KEYS */;
-INSERT INTO `empresa_multinivel` VALUES ('9278986546','Mi empresa',1,'0','0','No define','http://miempresamultinivel.com','COL','No define','No define','No define','DES','DES','DES',0,'','',0,0);
+INSERT INTO `empresa_multinivel` VALUES ('98765432-1','DEMO',1,'0','0','No define','http://demo.networksoft.mx','MEX','No define','No define','No define','DES','DES','DES',0,' ',' ',0,0);
 /*!40000 ALTER TABLE `empresa_multinivel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3595,7 +3599,7 @@ CREATE TABLE `encuesta` (
 
 LOCK TABLES `encuesta` WRITE;
 /*!40000 ALTER TABLE `encuesta` DISABLE KEYS */;
-INSERT INTO `encuesta` VALUES (1,'Primera encuesta','Esta encuesta es para conocer su opinion por el diseño de su oficina virtual',1,'2015-01-23 23:45:54','ACT'),(2,'Segunda Encuesta','Esta encuesta es para conocer su opnion respecto al carrito',1,'2015-01-28 21:28:10','ACT'),(4,'Tercera Encuesta','Esta encuesta es para conocer su opinion respecto a lagunas secciones de la oficia virtual',1,'2015-01-28 21:48:31','ACT');
+INSERT INTO `encuesta` VALUES (1,'Primera encuesta','Esta encuesta es para conocer su opinion por el diseño de su oficina virtual',1,'2015-01-24 04:45:54','ACT'),(2,'Segunda Encuesta','Esta encuesta es para conocer su opnion respecto al carrito',1,'2015-01-29 02:28:10','ACT'),(4,'Tercera Encuesta','Esta encuesta es para conocer su opinion respecto a lagunas secciones de la oficia virtual',1,'2015-01-29 02:48:31','ACT');
 /*!40000 ALTER TABLE `encuesta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3621,7 +3625,7 @@ CREATE TABLE `encuesta_contestada` (
 
 LOCK TABLES `encuesta_contestada` WRITE;
 /*!40000 ALTER TABLE `encuesta_contestada` DISABLE KEYS */;
-INSERT INTO `encuesta_contestada` VALUES (1,1,2,'2015-01-23 23:47:13');
+INSERT INTO `encuesta_contestada` VALUES (1,1,2,'2015-01-24 04:47:13');
 /*!40000 ALTER TABLE `encuesta_contestada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3818,7 +3822,10 @@ CREATE TABLE `factura` (
 -- Dumping data for table `factura`
 --
 
-
+LOCK TABLES `factura` WRITE;
+/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `informacion`
@@ -3908,7 +3915,7 @@ LOCK TABLES `inventario_historial` WRITE;
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `items`
+-- Temporary table structure for view `items`
 --
 
 DROP TABLE IF EXISTS `items`;
@@ -4717,7 +4724,7 @@ CREATE TABLE `proveedor_datos` (
 
 LOCK TABLES `proveedor_datos` WRITE;
 /*!40000 ALTER TABLE `proveedor_datos` DISABLE KEYS */;
-INSERT INTO `proveedor_datos` VALUES (1,'Soy el','Fabricante','COL','cundinamarca','fusa','252211','0','proveedor@networksoft.mx',' - 3008797700 - 8748332','calle 22');
+INSERT INTO `proveedor_datos` VALUES (1,'Soy el','Fabricante','MEX','CDMX','CDMX','252211','0','proveedor@networksoft.mx',' - 3008797700 - 8748332','CDMX');
 /*!40000 ALTER TABLE `proveedor_datos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4752,7 +4759,7 @@ CREATE TABLE `proveedor_mensajeria` (
 
 LOCK TABLES `proveedor_mensajeria` WRITE;
 /*!40000 ALTER TABLE `proveedor_mensajeria` DISABLE KEYS */;
-INSERT INTO `proveedor_mensajeria` VALUES (34,'---------------','Ninguno','Español','ESP','------------------','-------------------','5270',78,'----------','-------------','2016-02-05 10:23:07','ACT');
+INSERT INTO `proveedor_mensajeria` VALUES (34,'---------------','Ninguno','Español','MEX','------------------','-------------------','5270',78,'----------','-------------','2018-02-14 00:25:14','ACT');
 /*!40000 ALTER TABLE `proveedor_mensajeria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4973,7 +4980,7 @@ CREATE TABLE `tipo_red` (
 
 LOCK TABLES `tipo_red` WRITE;
 /*!40000 ALTER TABLE `tipo_red` DISABLE KEYS */;
-INSERT INTO `tipo_red` VALUES (1,'publicistas','publicistas',0,0,1,'ACT','MAT');
+INSERT INTO `tipo_red` VALUES (1,'multinivel','red de multinivel',0,0,1,'ACT','MAT');
 /*!40000 ALTER TABLE `tipo_red` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5130,7 +5137,7 @@ CREATE TABLE `user_profiles` (
 
 LOCK TABLES `user_profiles` WRITE;
 /*!40000 ALTER TABLE `user_profiles` DISABLE KEYS */;
-INSERT INTO `user_profiles` VALUES (1,1,0,0,1,0,0,0,1,1,'1',1,'Admin','','0000-00-00','2016-10-18 10:07:52','ACT',3),(2,2,1,1,2,5,3,1,1,1,'1069740663',1,'Administrador','Oficina Virtual','1980-01-01','2016-10-18 10:10:49','ACT',1);
+INSERT INTO `user_profiles` VALUES (1,1,0,0,1,0,0,0,1,1,'1',1,'Admin','','1980-01-01','2016-10-18 15:07:52','ACT',0),(2,2,1,1,2,5,3,1,1,1,'987654321',1,'Administrador','Oficina Virtual','1980-01-01','2016-10-18 15:10:49','ACT',0);
 /*!40000 ALTER TABLE `user_profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5242,7 +5249,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'1','$2a$08$n7GIrO4xJmW30zmr8./Wd.dhT93nUZj5FG1ctu/weBF3qxYnGrj6a','admin@admin.com',1,0,NULL,NULL,NULL,NULL,NULL,'127.0.0.1','2016-10-17 17:07:52','2015-07-11 00:00:00','2016-10-18 05:07:52','admin1414'),(2,'admin','$2a$08$n7GIrO4xJmW30zmr8./Wd.dhT93nUZj5FG1ctu/weBF3qxYnGrj6a','admin@miempresa.com',1,0,NULL,NULL,NULL,NULL,NULL,'127.0.0.1','2016-10-17 17:23:03','2015-05-11 00:00:00','2016-10-18 05:23:03','admin1414');
+INSERT INTO `users` VALUES (1,'admin','$2a$08$n7GIrO4xJmW30zmr8./Wd.dhT93nUZj5FG1ctu/weBF3qxYnGrj6a','contacto@networksoft.com.mx',1,0,NULL,NULL,NULL,NULL,NULL,'127.0.0.1','2016-10-17 17:07:52','2015-07-11 00:00:00','2018-02-13 21:21:48','admin1414'),(2,'demo','$2a$08$n7GIrO4xJmW30zmr8./Wd.dhT93nUZj5FG1ctu/weBF3qxYnGrj6a','contacto@networksoft.com.mx',1,0,NULL,NULL,NULL,NULL,NULL,'127.0.0.1','2016-10-17 17:23:03','2015-05-11 00:00:00','2018-02-13 21:21:48','admin1414');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5275,7 +5282,7 @@ CREATE TABLE `users_almacen` (
 
 LOCK TABLES `users_almacen` WRITE;
 /*!40000 ALTER TABLE `users_almacen` DISABLE KEYS */;
-INSERT INTO `users_almacen` VALUES (1,1,2147483647,'modista','modista','santa','68574575','modista@gmail.com','COL','2016-09-29 10:38:16','ACT'),(2,2,2147483647,'contratista','contratista','cundi','5786586','contratista@gmail.com','COL','2016-09-29 10:41:41','ACT');
+INSERT INTO `users_almacen` VALUES (1,1,2147483647,'modista','modista','santa','68574575','modista@gmail.com','COL','2016-09-29 15:38:16','ACT'),(2,2,2147483647,'contratista','contratista','cundi','5786586','contratista@gmail.com','COL','2016-09-29 15:41:41','ACT');
 /*!40000 ALTER TABLE `users_almacen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5396,9 +5403,9 @@ UNLOCK TABLES;
 -- Dumping routines for database 'erpmultinivel'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `afiliar` */;
- 
+
 DELIMITER ;;
-CREATE  PROCEDURE `afiliar`(	
+CREATE PROCEDURE `afiliar`(	
 
 								ID_afiliar int
 
@@ -5637,7 +5644,7 @@ end if;
 
 END ;;
 DELIMITER ;
- 
+
 
 --
 -- Final view structure for view `items`
@@ -5647,6 +5654,6 @@ DELIMITER ;
 
 
 /*!50001 CREATE VIEW `items` AS select `m`.`id` AS `id`,`m`.`sku` AS `sku`,`m`.`puntos_comisionables` AS `puntos_comisionables`,(case when (`m`.`id_tipo_mercancia` = 1) then (select `producto`.`nombre` from `producto` where (`producto`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 2) then (select `servicio`.`nombre` from `servicio` where (`servicio`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 3) then (select `combinado`.`nombre` from `combinado` where (`combinado`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 4) then (select `paquete_inscripcion`.`nombre` from `paquete_inscripcion` where (`paquete_inscripcion`.`id_paquete` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 5) then (select `membresia`.`nombre` from `membresia` where (`membresia`.`id` = `m`.`sku`)) else 'No define' end) AS `item`,(case when (`m`.`id_tipo_mercancia` = 1) then (select `producto`.`id_grupo` from `producto` where (`producto`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 2) then (select `servicio`.`id_red` from `servicio` where (`servicio`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 3) then (select `combinado`.`id_red` from `combinado` where (`combinado`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 4) then (select `paquete_inscripcion`.`id_red` from `paquete_inscripcion` where (`paquete_inscripcion`.`id_paquete` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 5) then (select `membresia`.`id_red` from `membresia` where (`membresia`.`id` = `m`.`sku`)) else '' end) AS `categoria`,(case when (`m`.`id_tipo_mercancia` = 1) then (select `a`.`id_red` from (`producto` `p` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `p`.`id_grupo`) and (`p`.`id` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 2) then (select `a`.`id_red` from (`servicio` `s` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `s`.`id_red`) and (`s`.`id` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 3) then (select `a`.`id_red` from (`combinado` `o` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `o`.`id_red`) and (`o`.`id` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 4) then (select `a`.`id_red` from (`paquete_inscripcion` `q` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `q`.`id_red`) and (`q`.`id_paquete` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 5) then (select `a`.`id_red` from (`membresia` `b` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `b`.`id_red`) and (`b`.`id` = `m`.`sku`))) else '' end) AS `red`,`m`.`id_tipo_mercancia` AS `id_tipo_mercancia` from `mercancia` `m` */;
- 
 
--- Dump completed on 2017-08-19 22:43:55
+
+-- Dump completed on 2018-02-13 19:52:38
