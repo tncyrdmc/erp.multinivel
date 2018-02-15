@@ -28,8 +28,8 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="/template/css/demo.min.css">
 
 		<!-- #FAVICONS -->
-		<link rel="shortcut icon" href="/template/img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/template/img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/template/img/favicon/favicon.png" type="image/x-icon">
+		<link rel="icon" href="/template/img/favicon/favicon.png" type="image/x-icon">
 
 		<!-- #GOOGLE FONT -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
@@ -57,7 +57,7 @@
 
 		<header id="header" class="fade in">
 		<br />
-			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="margin-left:2em">
 				<img id="compania" src="/logo.png" alt="">
 			</div>
 			<div class="hidden-xs col-sm-6 col-md-6 col-lg-6">
@@ -71,9 +71,9 @@
 			<div id="content" class="container">
 
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 hidden-xs hidden-sm">
-					<!--  	<img src="/template/img/login.jpg" class="img2" alt="" >-->
-					</div>
+					<!--<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 hidden-xs hidden-sm">
+					  	<img src="/template/img/login.jpg" class="img2" alt="" >
+					</div>-->
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="hidden-xs header2">
 							<!-- <img id="compania" src="/logo.png" alt=""> -->
@@ -192,7 +192,7 @@
 				background-color: #005ef5;
 			}
 			#extr-page #main{
-				background-image: url('/template/img/Lighthouse.jpg');
+				background-image: url('/template/img/login.jpg');
 				padding: 2% 5% 10% 5%;
 				background-repeat: no-repeat;
 				background-size: cover;
