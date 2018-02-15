@@ -1,13 +1,3 @@
-create database  if not exists DemoSio;
-use DemoSio;
-
--- MySQL dump 10.13  Distrib 5.5.19, for Linux (x86_64)
---
--- Host: 68.178.143.65    Database: DemoSio
--- ------------------------------------------------------
--- Server version	5.5.43-37.2-log
-
- 
 
 --
 -- Table structure for table `City`
@@ -8756,7 +8746,7 @@ INSERT INTO `Country` VALUES ('DMA','Dominica','North America','Dominica',586,'D
 INSERT INTO `Country` VALUES ('DNK','Denmark','Europe','Danmark',3315,'DK','DES');
 INSERT INTO `Country` VALUES ('DOM','Dominican Republic','North America','RepÃºblica Dominicana',587,'DO','DES');
 INSERT INTO `Country` VALUES ('DZA','Algeria','Africa','Al-Jazaâ€™ir/AlgÃ©rie',35,'DZ','DES');
-INSERT INTO `Country` VALUES ('ECU','Ecuador','South America','Ecuador',594,'EC','ACT');
+INSERT INTO `Country` VALUES ('ECU','Ecuador','South America','Ecuador',594,'EC','DES');
 INSERT INTO `Country` VALUES ('EGY','Egypt','Africa','Misr',608,'EG','DES');
 INSERT INTO `Country` VALUES ('ERI','Eritrea','Africa','Ertra',652,'ER','DES');
 INSERT INTO `Country` VALUES ('ESH','Western Sahara','Africa','As-Sahrawiya',2453,'EH','DES');
@@ -8782,7 +8772,7 @@ INSERT INTO `Country` VALUES ('GNQ','Equatorial Guinea','Africa','Guinea Ecuator
 INSERT INTO `Country` VALUES ('GRC','Greece','Europe','EllÃ¡da',2401,'GR','DES');
 INSERT INTO `Country` VALUES ('GRD','Grenada','North America','Grenada',916,'GD','DES');
 INSERT INTO `Country` VALUES ('GRL','Greenland','North America','Kalaallit Nunaat/GrÃ¸nland',917,'GL','DES');
-INSERT INTO `Country` VALUES ('GTM','Guatemala','North America','Guatemala',922,'GT','DES');
+INSERT INTO `Country` VALUES ('GTM','Guatemala','North America','Guatemala',922,'GT','ACT');
 INSERT INTO `Country` VALUES ('GUF','French Guiana','South America','Guyane franÃ§aise',3014,'GF','DES');
 INSERT INTO `Country` VALUES ('GUM','Guam','Oceania','Guam',921,'GU','DES');
 INSERT INTO `Country` VALUES ('GUY','Guyana','South America','Guyana',928,'GY','DES');
@@ -8828,7 +8818,7 @@ INSERT INTO `Country` VALUES ('MCO','Monaco','Europe','Monaco',2695,'MC','DES');
 INSERT INTO `Country` VALUES ('MDA','Moldova','Europe','Moldova',2690,'MD','DES');
 INSERT INTO `Country` VALUES ('MDG','Madagascar','Africa','Madagasikara/Madagascar',2455,'MG','DES');
 INSERT INTO `Country` VALUES ('MDV','Maldives','Asia','Dhivehi Raajje/Maldives',2463,'MV','DES');
-INSERT INTO `Country` VALUES ('MEX','Mexico','North America','MÃ©xico',2515,'MX','ACT');
+INSERT INTO `Country` VALUES ('MEX','Mexico','North America','MÃ©xico',2515,'MX','DES');
 INSERT INTO `Country` VALUES ('MHL','Marshall Islands','Oceania','Marshall Islands/Majol',2507,'MH','DES');
 INSERT INTO `Country` VALUES ('MKD','Macedonia','Europe','Makedonija',2460,'MK','DES');
 INSERT INTO `Country` VALUES ('MLI','Mali','Africa','Mali',2482,'ML','DES');
@@ -9502,7 +9492,7 @@ INSERT INTO `CountryLanguage` VALUES ('MDV','English','ACT');
 INSERT INTO `CountryLanguage` VALUES ('MEX','Mixtec','ACT');
 INSERT INTO `CountryLanguage` VALUES ('MEX','NÃ¡huatl','ACT');
 INSERT INTO `CountryLanguage` VALUES ('MEX','OtomÃ­','ACT');
-INSERT INTO `CountryLanguage` VALUES ('MEX','Spanish','ACT');
+INSERT INTO `CountryLanguage` VALUES ('MEX','Spanish','DES');
 INSERT INTO `CountryLanguage` VALUES ('MEX','Yucatec','ACT');
 INSERT INTO `CountryLanguage` VALUES ('MEX','Zapotec','ACT');
 INSERT INTO `CountryLanguage` VALUES ('MHL','English','ACT');
@@ -9956,7 +9946,7 @@ CREATE TABLE `afiliar` (
   `directo` int(11) NOT NULL,
   `lado` varchar(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20095 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -9965,32 +9955,9 @@ CREATE TABLE `afiliar` (
 
 LOCK TABLES `afiliar` WRITE;
 /*!40000 ALTER TABLE `afiliar` DISABLE KEYS */;
-INSERT INTO `afiliar` VALUES (2,1,2,1,1,'0');
-INSERT INTO `afiliar` VALUES (3,1,1000,2,2,'0');
-INSERT INTO `afiliar` VALUES (4,1,1001,2,2,'1');
-INSERT INTO `afiliar` VALUES (5,1,1002,2,2,'2');
-INSERT INTO `afiliar` VALUES (6,1,1003,1000,1000,'0');
-INSERT INTO `afiliar` VALUES (7,1,1004,1000,1000,'1');
-INSERT INTO `afiliar` VALUES (8,1,1005,1004,1004,'1');
-INSERT INTO `afiliar` VALUES (9,1,1006,1005,1005,'0');
-INSERT INTO `afiliar` VALUES (10,1,1007,1005,1005,'2');
-INSERT INTO `afiliar` VALUES (11,1,1008,1006,1006,'0');
-INSERT INTO `afiliar` VALUES (12,1,1009,1008,1008,'0');
-INSERT INTO `afiliar` VALUES (13,1,1010,1009,1009,'0');
-INSERT INTO `afiliar` VALUES (14,1,1011,1003,2,'0');
-INSERT INTO `afiliar` VALUES (15,1,1012,1003,2,'1');
-INSERT INTO `afiliar` VALUES (16,1,1013,1003,2,'2');
-INSERT INTO `afiliar` VALUES (17,1,1014,1011,2,'0');
-INSERT INTO `afiliar` VALUES (18,1,1015,1011,2,'1');
-INSERT INTO `afiliar` VALUES (19,1,1016,1014,2,'0');
-INSERT INTO `afiliar` VALUES (20,1,1017,1000,2,'2');
-INSERT INTO `afiliar` VALUES (21,1,1018,2,2,'3');
-INSERT INTO `afiliar` VALUES (22,1,1020,1017,1000,'2');
-INSERT INTO `afiliar` VALUES (23,1,1021,1017,1000,'1');
-INSERT INTO `afiliar` VALUES (24,1,1022,1017,1000,'0');
-INSERT INTO `afiliar` VALUES (25,1,1023,1022,1000,'1');
-INSERT INTO `afiliar` VALUES (26,1,1024,2,2,'4');
-INSERT INTO `afiliar` VALUES (27,1,1025,2,2,'5');
+INSERT INTO `afiliar` VALUES (1,300,2,1,1,'0');
+INSERT INTO `afiliar` VALUES (20086,306,2,1,1,'0');
+INSERT INTO `afiliar` VALUES (20094,307,2,1,1,'0');
 /*!40000 ALTER TABLE `afiliar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10041,7 +10008,7 @@ CREATE TABLE `archivero` (
   `url` varchar(255) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_archivero`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10050,8 +10017,10 @@ CREATE TABLE `archivero` (
 
 LOCK TABLES `archivero` WRITE;
 /*!40000 ALTER TABLE `archivero` DISABLE KEYS */;
-INSERT INTO `archivero` VALUES (1,2,'banner1','png','banner1.png','38.32','/media/2/banner1.png','2016-04-14 16:42:25');
-INSERT INTO `archivero` VALUES (2,2,'2016-05-05_17','46','2016-05-05_17.46.04.jpg','3294.02','/media/2/2016-05-05_17.46.04.jpg','2016-05-05 22:46:26');
+INSERT INTO `archivero` VALUES (1,2,'Maps','pdf','Maps.pdf','298.72','/media/2/Maps.pdf','2016-01-29 22:15:13');
+INSERT INTO `archivero` VALUES (2,2,'Maps1','pdf','Maps1.pdf','298.72','/media/2/Maps1.pdf','2016-01-29 22:15:43');
+INSERT INTO `archivero` VALUES (3,2,'bandera-original-panama','png','bandera-original-panama.png','8.75','/media/2/bandera-original-panama.png','2016-02-18 11:50:32');
+INSERT INTO `archivero` VALUES (4,202,'CV','pdf','CV.pdf','533.86','/media/202/CV.pdf','2016-02-22 21:34:53');
 /*!40000 ALTER TABLE `archivero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10102,7 +10071,7 @@ CREATE TABLE `archivo` (
   `status` varchar(3) NOT NULL,
   `nombre_publico` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_archivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10144,23 +10113,8 @@ INSERT INTO `archivo` VALUES (41,1,3,21,'2015-10-12 16:23:58','Sesenta Minutos P
 INSERT INTO `archivo` VALUES (42,1,3,21,'2015-10-12 16:25:01','Importancia de la EDUCACIÓN FINANCIERA R en Lima – Perú','https://www.youtube.com/watch?v=xvZkTkGzrWc','ACT','Importancia de la EDUCACIÓN FINANCIERA R');
 INSERT INTO `archivo` VALUES (43,1,3,21,'2015-10-12 16:31:12','EL NEGOCIO PERFECTO','https://www.youtube.com/watch?v=oaMDj4w-ERI','ACT','EL NEGOCIO PERFECTO');
 INSERT INTO `archivo` VALUES (44,1,3,21,'2015-10-12 16:27:01','Robert kiyosaki y Donald trump hablan de las redes de mercadeo','https://www.youtube.com/watch?t=7&v=bOMzX6KX2gw','ACT','Robert kiyosaki y Donald trump hablan de');
-INSERT INTO `archivo` VALUES (45,1,6,4,'2016-03-31 14:43:40','Plan de Negocio','/media/1/4_Paquetes_de_Inscripcion_ATTITUDE.pptx','ACT','Plan de Negocio');
-INSERT INTO `archivo` VALUES (46,1,6,4,'2016-03-31 14:44:20','Paquete de Inscripcion','/media/1/bonoswl.pptx','ACT','Paquete de Inscripcion');
-INSERT INTO `archivo` VALUES (47,1,6,4,'2016-03-31 14:44:45','La importancia del cuidado de la piel','/media/1/5_La_Importancia_del_Cuidado_de_la_Piel.pptx','ACT','La importancia del cuidado de la piel');
-INSERT INTO `archivo` VALUES (48,1,10,4,'2016-03-31 14:46:03','Manual de asesoria de belleza ATTITUDE','/media/archivos/2_Manual_Asesora_de_Belleza_ATTITUDE.pptx','ACT','Manual de asesoria de belleza ATTITUDE');
-INSERT INTO `archivo` VALUES (49,1,10,5,'2016-03-31 14:47:27','Logo Empresa','/media/archivos/Logo.png','ACT','Logo Empresa');
-INSERT INTO `archivo` VALUES (50,1,10,5,'2016-03-31 14:48:04','Banner Empresa','/media/archivos/sdas.png','ACT','Banner Empresa');
-INSERT INTO `archivo` VALUES (51,1,10,6,'2016-03-31 14:48:36','Publicidad Evento','/media/archivos/12031566_692224444213665_8674941688698130718_o.jpg','ACT','Publicidad Evento');
-INSERT INTO `archivo` VALUES (52,1,2,21,'2016-03-31 14:58:23','Libertad Financiera - Apalancamiento','https://www.youtube.com/watch?v=0P9GbFfTafQ','ACT','Libertad Financiera - Apalancamiento');
-INSERT INTO `archivo` VALUES (53,1,2,21,'2016-03-31 14:59:33','El Negocio que esta haciendo Mas Millonarios en el mundo','https://www.youtube.com/watch?v=Ill05TVFABg','ACT','El Negocio que esta haciendo Mas Millonarios en el mundo');
-INSERT INTO `archivo` VALUES (54,1,3,21,'2016-03-31 15:01:23','Sesenta Minutos Para Volverse Rico Robert Kiyosaki','https://www.youtube.com/watch?v=IhK6NB7l4gw','ACT','Sesenta Minutos Para Volverse Rico Robert Kiyosaki');
-INSERT INTO `archivo` VALUES (55,1,5,21,'2016-03-31 15:05:37','El Vendedor Mas Grande del Mundo','https://www.youtube.com/watch?v=I1KjYstLfYw','ACT','El Vendedor Mas Grande del Mundo');
-INSERT INTO `archivo` VALUES (56,1,7,1,'2016-03-31 15:23:49','Biografía Steve Jobs','/media/ebooks/Biografia_Steve_jobs_Walter_Isaacson11.pdf','ACT','Biografía Steve Jobs');
-INSERT INTO `archivo` VALUES (57,1,7,1,'2016-03-31 15:24:43','Como superar el fracaso y obtener el exito','/media/ebooks/Como_superar_el_fracaso_y_obtener_el_exito_-_Aut_Napolion_Hill1.pdf','ACT','Como superar el fracaso y obtener el exito');
-INSERT INTO `archivo` VALUES (58,1,7,1,'2016-03-31 15:26:07','El cuadrante del flujo del dinero','/media/ebooks/El_Cuadrante_Del_Flujo_De_Dinero_-_Aut_Robert_Kiyosaki1.pdf','ACT','El cuadrante del flujo del dinero');
-INSERT INTO `archivo` VALUES (59,1,7,1,'2016-03-31 15:26:57','El negocio del siglo 21','/media/ebooks/El_negocio_del_siglo_21_-_Aut_Robert_Kiyosaki11.pdf','ACT','El negocio del siglo 21');
-INSERT INTO `archivo` VALUES (60,1,7,1,'2016-03-31 15:27:59','La presentación de 45 segundos que cambiara su vida','/media/ebooks/La_presentacion_de_45_segundos_que_cambiara_su_vida_-_Aut_Don_Falia1.pdf','ACT','La presentación de 45 segundos que cambiara su vida');
-INSERT INTO `archivo` VALUES (61,1,7,1,'2016-03-31 15:29:15','Padre rico, padre pobre','/media/ebooks/Padre_Rico,_Padre_Pobre_-_Robert_T_Kiyosaki_(El_bueno)1.pdf','ACT','Padre rico, padre pobre');
+INSERT INTO `archivo` VALUES (45,1,11,3,'2016-03-12 16:06:05','Plan de compensacion','/media/1/Estructura-de-las-compensaciones.ppt','ACT','Plan de compensacion');
+INSERT INTO `archivo` VALUES (46,1,10,5,'2016-03-12 16:06:57','Logo de la empresa','/media/archivos/empresa.png','ACT','Logo de la empresa');
 /*!40000 ALTER TABLE `archivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10241,7 +10195,7 @@ CREATE TABLE `banner` (
 
 LOCK TABLES `banner` WRITE;
 /*!40000 ALTER TABLE `banner` DISABLE KEYS */;
-INSERT INTO `banner` VALUES (1,'Mi Empresa multinivel','La mejor empresa multinivel, lo acompañamos a que sea un comerciante exitoso.','empresa.png');
+INSERT INTO `banner` VALUES (1,'Mi Empresa multinivel','Invitación a mi multinivel.','empresa.png');
 /*!40000 ALTER TABLE `banner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10266,31 +10220,7 @@ CREATE TABLE `billetera` (
 
 LOCK TABLES `billetera` WRITE;
 /*!40000 ALTER TABLE `billetera` DISABLE KEYS */;
-INSERT INTO `billetera` VALUES (1000,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1001,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1002,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1003,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1004,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1005,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1006,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1007,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1008,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1009,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1010,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1011,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1012,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1013,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1014,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1015,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1016,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1017,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1018,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1020,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1021,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1022,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1023,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1024,NULL,'DES','No');
-INSERT INTO `billetera` VALUES (1025,NULL,'DES','No');
+INSERT INTO `billetera` VALUES (2,NULL,'ACT','Si');
 /*!40000 ALTER TABLE `billetera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10313,7 +10243,7 @@ CREATE TABLE `bono` (
   `plan` varchar(2) NOT NULL DEFAULT 'NO',
   `estatus` varchar(3) NOT NULL DEFAULT 'ACT',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10006 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10322,6 +10252,9 @@ CREATE TABLE `bono` (
 
 LOCK TABLES `bono` WRITE;
 /*!40000 ALTER TABLE `bono` DISABLE KEYS */;
+INSERT INTO `bono` VALUES (56,'Bono Binario','Bono Binario','2016-03-01','2026-03-25',0,0,'SEM','SI','ACT');
+INSERT INTO `bono` VALUES (57,'Bono Actividad','Bono Actividad','2016-03-01','2026-03-25',0,0,'MES','NO','ACT');
+INSERT INTO `bono` VALUES (58,'Bono Igualacion','Bono Igualacion','2016-03-01','2026-03-25',0,0,'MES','NO','ACT');
 /*!40000 ALTER TABLE `bono` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10365,7 +10298,7 @@ CREATE TABLE `carrito_temporal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_venta` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10395,7 +10328,7 @@ CREATE TABLE `cat_banco` (
   `dir_postal` varchar(100) DEFAULT NULL,
   `estatus` varchar(3) NOT NULL,
   PRIMARY KEY (`id_banco`,`id_pais`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10404,8 +10337,12 @@ CREATE TABLE `cat_banco` (
 
 LOCK TABLES `cat_banco` WRITE;
 /*!40000 ALTER TABLE `cat_banco` DISABLE KEYS */;
-INSERT INTO `cat_banco` VALUES (1,'COL','7869545123','Banco BBVA','','','','','ACT');
-INSERT INTO `cat_banco` VALUES (2,'ESP','918765456','Banco Santander','','','','','ACT');
+INSERT INTO `cat_banco` VALUES (22,'COL','7869545123','Banco BBVA','',NULL,NULL,NULL,'ACT');
+INSERT INTO `cat_banco` VALUES (29,'AAA','1069740663','Banco Davivienda','','BOFAUS3N','IT70EO303211801010100001948','calle 1 Nº 6-19, valle del cauca, colombia','ACT');
+INSERT INTO `cat_banco` VALUES (30,'COL','1234567890','Davivienda','12345','123456','1234567','1234','ACT');
+INSERT INTO `cat_banco` VALUES (31,'COL','1234567890','Banco de america','12345678','1234567','123456','12345','ACT');
+INSERT INTO `cat_banco` VALUES (32,'COL','1234567890','Banco BAVARIA','1234567','123456789','12345678','123456','ACT');
+INSERT INTO `cat_banco` VALUES (33,'ESP','918765456','Santander','1234567','12345','123456','1234','ACT');
 /*!40000 ALTER TABLE `cat_banco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10427,7 +10364,7 @@ CREATE TABLE `cat_bono_condicion` (
   `condicion2` int(11) NOT NULL DEFAULT '0',
   `calificado` varchar(3) NOT NULL DEFAULT 'DOS',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=635 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10436,6 +10373,14 @@ CREATE TABLE `cat_bono_condicion` (
 
 LOCK TABLES `cat_bono_condicion` WRITE;
 /*!40000 ALTER TABLE `cat_bono_condicion` DISABLE KEYS */;
+INSERT INTO `cat_bono_condicion` VALUES (8,58,73,4,10,300,4,504,'REC');
+INSERT INTO `cat_bono_condicion` VALUES (7,58,72,4,10,300,4,502,'REC');
+INSERT INTO `cat_bono_condicion` VALUES (6,58,71,5,0,300,0,0,'DAR');
+INSERT INTO `cat_bono_condicion` VALUES (5,58,70,1,1,300,300,0,'DOS');
+INSERT INTO `cat_bono_condicion` VALUES (4,57,69,3,50,300,4,0,'DOS');
+INSERT INTO `cat_bono_condicion` VALUES (3,57,68,1,1,300,300,0,'REC');
+INSERT INTO `cat_bono_condicion` VALUES (2,56,67,5,0,300,0,0,'DOS');
+INSERT INTO `cat_bono_condicion` VALUES (1,56,66,1,1,300,300,0,'REC');
 /*!40000 ALTER TABLE `cat_bono_condicion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10454,7 +10399,7 @@ CREATE TABLE `cat_bono_valor_nivel` (
   `condicion_red` varchar(8) NOT NULL DEFAULT 'DIRECTOS',
   `verticalidad` varchar(4) DEFAULT 'ASC',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=255 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10463,6 +10408,18 @@ CREATE TABLE `cat_bono_valor_nivel` (
 
 LOCK TABLES `cat_bono_valor_nivel` WRITE;
 /*!40000 ALTER TABLE `cat_bono_valor_nivel` DISABLE KEYS */;
+INSERT INTO `cat_bono_valor_nivel` VALUES (19,58,3,0.5,'RED','PASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (18,58,2,1,'RED','PASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (17,58,1,1.5,'RED','PASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (16,58,0,0,'RED','PASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (15,57,6,1,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (14,57,5,1,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (13,57,4,1,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (12,57,3,1,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (10,57,2,1,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (9,57,1,1,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (8,57,0,0,'RED','ASC');
+INSERT INTO `cat_bono_valor_nivel` VALUES (7,56,0,10,'RED','PASC');
 /*!40000 ALTER TABLE `cat_bono_valor_nivel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10509,7 +10466,7 @@ CREATE TABLE `cat_cuenta` (
   `banco` varchar(100) DEFAULT NULL,
   `estatus` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10518,8 +10475,10 @@ CREATE TABLE `cat_cuenta` (
 
 LOCK TABLES `cat_cuenta` WRITE;
 /*!40000 ALTER TABLE `cat_cuenta` DISABLE KEYS */;
-INSERT INTO `cat_cuenta` VALUES (1,1,'3161416819','2','ACT');
-INSERT INTO `cat_cuenta` VALUES (2,1,'8401114155','1','ACT');
+INSERT INTO `cat_cuenta` VALUES (35,1,'352473737373','22','ACT');
+INSERT INTO `cat_cuenta` VALUES (33,21,'12321312','20','ACT');
+INSERT INTO `cat_cuenta` VALUES (34,22,'---------------','22','ACT');
+INSERT INTO `cat_cuenta` VALUES (32,20,'---------------','20','ACT');
 /*!40000 ALTER TABLE `cat_cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10842,7 +10801,7 @@ CREATE TABLE `cat_grupo` (
   `estatus` varchar(3) NOT NULL DEFAULT 'ACT',
   `tipo` varchar(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10855,11 +10814,12 @@ INSERT INTO `cat_grupo` VALUES (2,'Multinivel','ACT','VID');
 INSERT INTO `cat_grupo` VALUES (3,'Robert Kiyosaki','ACT','VID');
 INSERT INTO `cat_grupo` VALUES (4,'Motivacionales','ACT','VID');
 INSERT INTO `cat_grupo` VALUES (5,'Audio Libros','ACT','VID');
-INSERT INTO `cat_grupo` VALUES (6,'Negocio','ACT','PRE');
+INSERT INTO `cat_grupo` VALUES (6,'Motivacion','ACT','PRE');
 INSERT INTO `cat_grupo` VALUES (7,'Inspiración','ACT','EBO');
 INSERT INTO `cat_grupo` VALUES (9,'Vídeos de interes','ACT','VID');
 INSERT INTO `cat_grupo` VALUES (10,'Descarga activas','ACT','DES');
-INSERT INTO `cat_grupo` VALUES (11,'Network Marketing Multinivel','ACT','NOT');
+INSERT INTO `cat_grupo` VALUES (11,'Plan de Compensacion','ACT','PRE');
+INSERT INTO `cat_grupo` VALUES (12,'Multinivel','ACT','NOT');
 /*!40000 ALTER TABLE `cat_grupo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10902,7 +10862,7 @@ CREATE TABLE `cat_grupo_producto` (
   `estatus` varchar(3) NOT NULL,
   `id_red` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_grupo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10911,9 +10871,7 @@ CREATE TABLE `cat_grupo_producto` (
 
 LOCK TABLES `cat_grupo_producto` WRITE;
 /*!40000 ALTER TABLE `cat_grupo_producto` DISABLE KEYS */;
-INSERT INTO `cat_grupo_producto` VALUES (1,'Belleza Corporal','ACT',1);
-INSERT INTO `cat_grupo_producto` VALUES (2,'Educación','ACT',1);
-INSERT INTO `cat_grupo_producto` VALUES (3,'Cuidado Personal','ACT',1);
+INSERT INTO `cat_grupo_producto` VALUES (250,'Categoria Mercancias','ACT',300);
 /*!40000 ALTER TABLE `cat_grupo_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10958,7 +10916,7 @@ CREATE TABLE `cat_img` (
   `extencion` varchar(6) NOT NULL,
   `estatus` varchar(3) NOT NULL,
   PRIMARY KEY (`id_img`)
-) ENGINE=InnoDB AUTO_INCREMENT=689 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10035 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10967,458 +10925,9 @@ CREATE TABLE `cat_img` (
 
 LOCK TABLES `cat_img` WRITE;
 /*!40000 ALTER TABLE `cat_img` DISABLE KEYS */;
-INSERT INTO `cat_img` VALUES (1,'/media/carrito/vps.png','vps.png','vps','png','ACT');
-INSERT INTO `cat_img` VALUES (2,'/media/carrito/GK1.png','GK1.png','GK1','png','ACT');
-INSERT INTO `cat_img` VALUES (3,'/media/6/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (4,'/media/5/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (5,'/media/carrito/escoba2.jpeg','escoba2.jpeg','escoba2','jpeg','ACT');
-INSERT INTO `cat_img` VALUES (6,'/media/carrito/pinkost1.png','pinkost1.png','pinkost1','png','ACT');
-INSERT INTO `cat_img` VALUES (7,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (8,'/media/8/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (9,'/media/9/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (10,'/media/10/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (11,'/media/11/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (14,'/media/12/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (15,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (16,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (17,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (18,'/media/16/user.jpeg','user.jpeg','user','jpeg','ACT');
-INSERT INTO `cat_img` VALUES (19,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (23,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (24,'/media/19/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (25,'/media/20/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (26,'/media/21/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (27,'/media/22/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (28,'/media/23/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (29,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (35,'/media/1/download3.jpg','download3.jpg','download3','jpg','ACT');
-INSERT INTO `cat_img` VALUES (36,'/media/25/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (37,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (38,'/media/carrito/megadeth.png','megadeth.png','megadeth','png','ACT');
-INSERT INTO `cat_img` VALUES (43,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (44,'/media/1/download4.jpg','download4.jpg','download4','jpg','ACT');
 INSERT INTO `cat_img` VALUES (50,'/media/2/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (54,'/media/ebooks/steve-jobs-la-biografia1.jpg','steve-jobs-la-biografia1.jpg','steve-jobs-la-biografia1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (55,'/media/ebooks/superar_fracaso.jpg','superar_fracaso.jpg','superar_fracaso','jpg','ACT');
-INSERT INTO `cat_img` VALUES (56,'/media/ebooks/portada-cuadrante-flujo-dinero.jpg','portada-cuadrante-flujo-dinero.jpg','portada-cuadrante-flujo-dinero','jpg','ACT');
-INSERT INTO `cat_img` VALUES (57,'/media/ebooks/portada-negocio-siglo-211.jpg','portada-negocio-siglo-211.jpg','portada-negocio-siglo-211','jpg','ACT');
-INSERT INTO `cat_img` VALUES (58,'/media/ebooks/45-segundos.jpg','45-segundos.jpg','45-segundos','jpg','ACT');
-INSERT INTO `cat_img` VALUES (59,'/media/ebooks/PortadaLlibre_696.jpg','PortadaLlibre_696.jpg','PortadaLlibre_696','jpg','ACT');
-INSERT INTO `cat_img` VALUES (60,'/media/ebooks/Padre_Rico2.jpg','Padre_Rico2.jpg','Padre_Rico2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (61,'/media/ebooks/como-ganar-amigos-e-influir-sobre-las-personas-dale-carnegie.jpg','como-ganar-amigos-e-influir-sobre-las-personas-dal','como-ganar-amigos-e-influir-sobre-las-personas-dal','jpg','ACT');
-INSERT INTO `cat_img` VALUES (62,'/media/ebooks/que-es-el-multinivel-network-marketing-21.jpg','que-es-el-multinivel-network-marketing-21.jpg','que-es-el-multinivel-network-marketing-21','jpg','ACT');
-INSERT INTO `cat_img` VALUES (63,'/media/ebooks/piense-y-hagase-rico2.jpg','piense-y-hagase-rico2.jpg','piense-y-hagase-rico2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (64,'/media/ebooks/laescueladenegocios[1].jpg','laescueladenegocios[1].jpg','laescueladenegocios[1]','jpg','ACT');
-INSERT INTO `cat_img` VALUES (65,'/media/ebooks/los-secretos-de-la-mente-millonaria2.jpg','los-secretos-de-la-mente-millonaria2.jpg','los-secretos-de-la-mente-millonaria2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (66,'/media/ebooks/hqdefault.jpg','hqdefault.jpg','hqdefault','jpg','ACT');
-INSERT INTO `cat_img` VALUES (67,'/media/ebooks/despertando.jpg','despertando.jpg','despertando','jpg','ACT');
-INSERT INTO `cat_img` VALUES (68,'/media/1/Libertad_Financiera.PNG','Libertad_Financiera.PNG','Libertad_Financiera','PNG','ACT');
-INSERT INTO `cat_img` VALUES (69,'/media/ebooks/el_monje.jpg','el_monje.jpg','el_monje','jpg','ACT');
-INSERT INTO `cat_img` VALUES (70,'/media/ebooks/la_actitud.jpg','la_actitud.jpg','la_actitud','jpg','ACT');
-INSERT INTO `cat_img` VALUES (71,'/media/ebooks/los_4_Ac.jpg','los_4_Ac.jpg','los_4_Ac','jpg','ACT');
-INSERT INTO `cat_img` VALUES (72,'/media/1/Millonarios.PNG','Millonarios.PNG','Millonarios','PNG','ACT');
-INSERT INTO `cat_img` VALUES (73,'/media/ebooks/los-7-habitos.jpg','los-7-habitos.jpg','los-7-habitos','jpg','ACT');
-INSERT INTO `cat_img` VALUES (74,'/media/ebooks/Pasos_de_Gigante.jpg','Pasos_de_Gigante.jpg','Pasos_de_Gigante','jpg','ACT');
-INSERT INTO `cat_img` VALUES (75,'/media/1/Multinivel.PNG','Multinivel.PNG','Multinivel','PNG','ACT');
-INSERT INTO `cat_img` VALUES (76,'/media/ebooks/Poder-sin-Limites.jpg','Poder-sin-Limites.jpg','Poder-sin-Limites','jpg','ACT');
-INSERT INTO `cat_img` VALUES (77,'/media/ebooks/Tus_zonas_erroneas.jpg','Tus_zonas_erroneas.jpg','Tus_zonas_erroneas','jpg','ACT');
-INSERT INTO `cat_img` VALUES (78,'/media/1/motivacionales2.PNG','motivacionales2.PNG','motivacionales2','PNG','ACT');
-INSERT INTO `cat_img` VALUES (79,'/media/1/motivacionales3.PNG','motivacionales3.PNG','motivacionales3','PNG','ACT');
-INSERT INTO `cat_img` VALUES (80,'/media/1/motivacionales41.PNG','motivacionales41.PNG','motivacionales41','PNG','ACT');
-INSERT INTO `cat_img` VALUES (81,'/media/1/productos1.PNG','productos1.PNG','productos1','PNG','ACT');
-INSERT INTO `cat_img` VALUES (82,'/media/1/productos2.PNG','productos2.PNG','productos2','PNG','ACT');
-INSERT INTO `cat_img` VALUES (83,'/media/1/videoprod3.PNG','videoprod3.PNG','videoprod3','PNG','ACT');
-INSERT INTO `cat_img` VALUES (84,'/media/1/el-alquimista.jpg','el-alquimista.jpg','el-alquimista','jpg','ACT');
-INSERT INTO `cat_img` VALUES (85,'/media/1/tuszonaerroneas.PNG','tuszonaerroneas.PNG','tuszonaerroneas','PNG','ACT');
-INSERT INTO `cat_img` VALUES (86,'/media/1/download5.jpg','download5.jpg','download5','jpg','ACT');
-INSERT INTO `cat_img` VALUES (87,'/media/1/elvendedor_(1).PNG','elvendedor_(1).PNG','elvendedor_(1)','PNG','ACT');
-INSERT INTO `cat_img` VALUES (88,'/media/1/kiyosaki1.PNG','kiyosaki1.PNG','kiyosaki1','PNG','ACT');
-INSERT INTO `cat_img` VALUES (89,'/media/1/kiyosaki2.PNG','kiyosaki2.PNG','kiyosaki2','PNG','ACT');
-INSERT INTO `cat_img` VALUES (90,'/media/1/kiyosaki3.PNG','kiyosaki3.PNG','kiyosaki3','PNG','ACT');
-INSERT INTO `cat_img` VALUES (91,'/media/1/kiyosaki4.PNG','kiyosaki4.PNG','kiyosaki4','PNG','ACT');
-INSERT INTO `cat_img` VALUES (92,'/media/1/m3.jpg','m3.jpg','m3','jpg','ACT');
-INSERT INTO `cat_img` VALUES (96,'/media/carrito/index.jpeg','index.jpeg','index','jpeg','ACT');
-INSERT INTO `cat_img` VALUES (97,'/media/carrito/steve-jobs-la-biografia1.jpg','steve-jobs-la-biografia1.jpg','steve-jobs-la-biografia1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (98,'/media/carrito/portada-cuadrante-flujo-dinero.jpg','portada-cuadrante-flujo-dinero.jpg','portada-cuadrante-flujo-dinero','jpg','ACT');
-INSERT INTO `cat_img` VALUES (99,'/media/carrito/steve-jobs-la-biografia15.jpg','steve-jobs-la-biografia15.jpg','steve-jobs-la-biografia15','jpg','ACT');
-INSERT INTO `cat_img` VALUES (103,'/media/carrito/Pasos_de_Gigante1.jpg','Pasos_de_Gigante1.jpg','Pasos_de_Gigante1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (104,'/media/carrito/Pasos_de_Gigante2.jpg','Pasos_de_Gigante2.jpg','Pasos_de_Gigante2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (105,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (107,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (108,'/media/carrito/photo_2015-10-21_09-20-16.jpg','photo_2015-10-21_09-20-16.jpg','photo_2015-10-21_09-20-16','jpg','ACT');
-INSERT INTO `cat_img` VALUES (109,'/media/carrito/photo_2015-10-21_09-20-161.jpg','photo_2015-10-21_09-20-161.jpg','photo_2015-10-21_09-20-161','jpg','ACT');
-INSERT INTO `cat_img` VALUES (110,'/media/carrito/Captura_de_pantalla_de_2015-10-18_19:54:14.png','Captura_de_pantalla_de_2015-10-18_19:54:14.png','Captura_de_pantalla_de_2015-10-18_19:54:14','png','ACT');
-INSERT INTO `cat_img` VALUES (111,'/media/carrito/natural-world-hero.jpg','natural-world-hero.jpg','natural-world-hero','jpg','ACT');
-INSERT INTO `cat_img` VALUES (112,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (113,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (114,'/media/carrito/download.jpg','download.jpg','download','jpg','ACT');
-INSERT INTO `cat_img` VALUES (115,'/media/carrito/download1.jpg','download1.jpg','download1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (116,'/media/carrito/download2.jpg','download2.jpg','download2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (117,'/media/carrito/download3.jpg','download3.jpg','download3','jpg','ACT');
-INSERT INTO `cat_img` VALUES (118,'/media/carrito/download4.jpg','download4.jpg','download4','jpg','ACT');
-INSERT INTO `cat_img` VALUES (119,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (120,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (121,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (122,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (127,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (128,'/media/carrito/download5.jpg','download5.jpg','download5','jpg','ACT');
-INSERT INTO `cat_img` VALUES (129,'/media/carrito/download6.jpg','download6.jpg','download6','jpg','ACT');
-INSERT INTO `cat_img` VALUES (130,'/media/carrito/download7.jpg','download7.jpg','download7','jpg','ACT');
-INSERT INTO `cat_img` VALUES (131,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (132,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (133,'/media/carrito/limp.jpeg','limp.jpeg','limp','jpeg','ACT');
-INSERT INTO `cat_img` VALUES (134,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (135,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (136,'/media/carrito/download8.jpg','download8.jpg','download8','jpg','ACT');
-INSERT INTO `cat_img` VALUES (137,'/media/carrito/download9.jpg','download9.jpg','download9','jpg','ACT');
-INSERT INTO `cat_img` VALUES (138,'/media/carrito/download10.jpg','download10.jpg','download10','jpg','ACT');
-INSERT INTO `cat_img` VALUES (139,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (140,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (141,'/media/carrito/paquete.jpg','paquete.jpg','paquete','jpg','ACT');
-INSERT INTO `cat_img` VALUES (142,'/media/carrito/banner2.jpg','banner2.jpg','banner2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (143,'/media/carrito/banner2.png','banner2.png','banner2','png','ACT');
-INSERT INTO `cat_img` VALUES (144,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (145,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (161,'/media/carrito/kit_Belleza_21.png','kit_Belleza_21.png','kit_Belleza_21','png','ACT');
-INSERT INTO `cat_img` VALUES (168,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (169,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (170,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (171,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (172,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (173,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (174,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (175,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (176,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (177,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (178,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (203,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (205,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (206,'/media/102/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (207,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (208,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (215,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (216,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (217,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (220,'/media/carrito/stockvault-banco-imagenes-gratis19.jpg','stockvault-banco-imagenes-gratis19.jpg','stockvault-banco-imagenes-gratis19','jpg','ACT');
-INSERT INTO `cat_img` VALUES (221,'/media/carrito/stockvault-banco-imagenes-gratis20.jpg','stockvault-banco-imagenes-gratis20.jpg','stockvault-banco-imagenes-gratis20','jpg','ACT');
-INSERT INTO `cat_img` VALUES (223,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (224,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (225,'/media/carrito/Screenshot_at_2015-12-29_16:57:24.png','Screenshot_at_2015-12-29_16:57:24.png','Screenshot_at_2015-12-29_16:57:24','png','ACT');
-INSERT INTO `cat_img` VALUES (227,'/media/carrito/stockvault-banco-imagenes-gratis22.jpg','stockvault-banco-imagenes-gratis22.jpg','stockvault-banco-imagenes-gratis22','jpg','ACT');
-INSERT INTO `cat_img` VALUES (228,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (229,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (230,'/media/carrito/stockvault-banco-imagenes-gratis23.jpg','stockvault-banco-imagenes-gratis23.jpg','stockvault-banco-imagenes-gratis23','jpg','ACT');
-INSERT INTO `cat_img` VALUES (232,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (256,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (258,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (259,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (260,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (261,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (275,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (276,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (278,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (279,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (280,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (285,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (286,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (287,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (288,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (289,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (290,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (291,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (292,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (293,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (294,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (298,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (299,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (300,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (301,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (302,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (303,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (304,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (305,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (306,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (307,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (308,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (309,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (310,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (311,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (312,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (313,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (314,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (315,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (316,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (317,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (318,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (319,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (320,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (321,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (322,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (323,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (324,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (325,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (326,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (327,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (328,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (331,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (332,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (333,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (335,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (340,'/media/carrito/Curso_Maquillaje_Profesional.jpg','Curso_Maquillaje_Profesional.jpg','Curso_Maquillaje_Profesional','jpg','ACT');
-INSERT INTO `cat_img` VALUES (341,'/media/carrito/Curso_Maquillaje_Profesional1.jpg','Curso_Maquillaje_Profesional1.jpg','Curso_Maquillaje_Profesional1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (342,'/media/carrito/Curso_Maquillaje_Profesional2.jpg','Curso_Maquillaje_Profesional2.jpg','Curso_Maquillaje_Profesional2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (349,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (350,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (351,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (352,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (353,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (356,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (357,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (358,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (359,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (367,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (370,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (371,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (373,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (375,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (377,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (380,'/media/carrito/stockvault-banco-imagenes-gratis1.jpg','stockvault-banco-imagenes-gratis1.jpg','stockvault-banco-imagenes-gratis1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (384,'/media/carrito/servicio-nino10.png','servicio-nino10.png','servicio-nino10','png','ACT');
-INSERT INTO `cat_img` VALUES (393,'/media/carrito/servicio-nino12.png','servicio-nino12.png','servicio-nino12','png','ACT');
-INSERT INTO `cat_img` VALUES (396,'/media/carrito/stockvault-banco-imagenes-gratis2.jpg','stockvault-banco-imagenes-gratis2.jpg','stockvault-banco-imagenes-gratis2','jpg','ACT');
-INSERT INTO `cat_img` VALUES (397,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (398,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (399,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (400,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (401,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (402,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (403,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (404,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (405,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (408,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (409,'/media/carrito/stockvault-banco-imagenes-gratis33.jpg','stockvault-banco-imagenes-gratis33.jpg','stockvault-banco-imagenes-gratis33','jpg','ACT');
-INSERT INTO `cat_img` VALUES (410,'/media/carrito/stockvault-banco-imagenes-gratis34.jpg','stockvault-banco-imagenes-gratis34.jpg','stockvault-banco-imagenes-gratis34','jpg','ACT');
-INSERT INTO `cat_img` VALUES (411,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (412,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (413,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (415,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (437,'/media/carrito/Archaea_Active1.png','Archaea_Active1.png','Archaea_Active1','png','ACT');
-INSERT INTO `cat_img` VALUES (439,'/media/carrito/Water_Active2.png','Water_Active2.png','Water_Active2','png','ACT');
-INSERT INTO `cat_img` VALUES (441,'/media/carrito/Curso_Maquillaje_Profesional3.jpg','Curso_Maquillaje_Profesional3.jpg','Curso_Maquillaje_Profesional3','jpg','ACT');
-INSERT INTO `cat_img` VALUES (442,'/media/carrito/curso_estilista_profesional.jpg','curso_estilista_profesional.jpg','curso_estilista_profesional','jpg','ACT');
-INSERT INTO `cat_img` VALUES (443,'/media/carrito/kit_belleza11.png','kit_belleza11.png','kit_belleza11','png','ACT');
-INSERT INTO `cat_img` VALUES (444,'/media/carrito/kit_belleza12.png','kit_belleza12.png','kit_belleza12','png','ACT');
-INSERT INTO `cat_img` VALUES (448,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (449,'/media/199/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (450,'/media/200/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (451,'/media/201/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (452,'/media/202/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (453,'/media/203/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (454,'/media/204/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (455,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (456,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (457,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (458,'/media/208/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (463,'/media/carrito/stockvault-banco-imagenes-gratis40.jpg','stockvault-banco-imagenes-gratis40.jpg','stockvault-banco-imagenes-gratis40','jpg','ACT');
-INSERT INTO `cat_img` VALUES (466,'/media/carrito/stockvault-banco-imagenes-gratis41.jpg','stockvault-banco-imagenes-gratis41.jpg','stockvault-banco-imagenes-gratis41','jpg','ACT');
-INSERT INTO `cat_img` VALUES (471,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (472,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (477,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (478,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (479,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (480,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (482,'/media/carrito/ActivateATP1.png','ActivateATP1.png','ActivateATP1','png','ACT');
-INSERT INTO `cat_img` VALUES (483,'/media/carrito/cPRIME1.png','cPRIME1.png','cPRIME1','png','ACT');
-INSERT INTO `cat_img` VALUES (484,'/media/carrito/kit_belleza14.png','kit_belleza14.png','kit_belleza14','png','ACT');
-INSERT INTO `cat_img` VALUES (495,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (496,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (497,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (498,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (499,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (503,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (504,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (505,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (506,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (507,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (508,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (509,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (510,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (511,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (512,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (513,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (514,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (515,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (516,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (517,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (518,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (519,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (520,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (521,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (522,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (523,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (524,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (525,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (526,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (527,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (528,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (529,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (530,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (531,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (532,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (533,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (534,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (535,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (536,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (537,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (538,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (541,'/media/carrito/Curso_Maquillaje_Profesional.jpg','Curso_Maquillaje_Profesional.jpg','Curso_Maquillaje_Profesional','jpg','ACT');
-INSERT INTO `cat_img` VALUES (542,'/media/carrito/kit_belleza15.png','kit_belleza15.png','kit_belleza15','png','ACT');
-INSERT INTO `cat_img` VALUES (543,'/media/carrito/paquete_belleza.png','paquete_belleza.png','paquete_belleza','png','ACT');
-INSERT INTO `cat_img` VALUES (544,'/media/carrito/membresia1.png','membresia1.png','membresia1','png','ACT');
-INSERT INTO `cat_img` VALUES (545,'/media/carrito/Archaea_Active2.png','Archaea_Active2.png','Archaea_Active2','png','ACT');
-INSERT INTO `cat_img` VALUES (546,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (547,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (548,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (549,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (550,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (551,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (552,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (553,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (554,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (555,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (556,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (557,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (558,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (559,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (560,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (561,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (562,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (563,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (564,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (565,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (566,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (567,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (568,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (569,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (570,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (571,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (572,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (573,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (574,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (575,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (576,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (577,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (578,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (579,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (580,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (581,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (582,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (583,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (584,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (585,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (586,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (587,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (588,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (589,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (590,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (591,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (592,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (593,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (594,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (595,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (596,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (597,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (598,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (599,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (600,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (601,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (602,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (603,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (604,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (605,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (606,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (607,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (608,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (609,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (610,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (611,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (612,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (613,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (614,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (615,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (616,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (617,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (618,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (619,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (620,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (621,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (622,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (623,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (624,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (625,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (626,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (627,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (628,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (629,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (630,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (631,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (632,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (633,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (634,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (635,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (636,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (637,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (638,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (639,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (640,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (641,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (642,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (643,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (644,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (645,'/media/carrito/tmp_20077-Curso_Maquillaje_Profesional-1662470859.jpg','tmp_20077-Curso_Maquillaje_Profesional-1662470859.','tmp_20077-Curso_Maquillaje_Profesional-1662470859','jpg','ACT');
-INSERT INTO `cat_img` VALUES (646,'/media/carrito/ActivateATP5.png','ActivateATP5.png','ActivateATP5','png','ACT');
-INSERT INTO `cat_img` VALUES (647,'/media/carrito/tmp_20077-curso_estilista_profesional-513848368.jpg','tmp_20077-curso_estilista_profesional-513848368.jp','tmp_20077-curso_estilista_profesional-513848368','jpg','ACT');
-INSERT INTO `cat_img` VALUES (648,'/media/carrito/Archaea_Active4.png','Archaea_Active4.png','Archaea_Active4','png','ACT');
-INSERT INTO `cat_img` VALUES (649,'/media/carrito/tmp_20077-paquete_belleza-854452848.png','tmp_20077-paquete_belleza-854452848.png','tmp_20077-paquete_belleza-854452848','png','ACT');
-INSERT INTO `cat_img` VALUES (650,'/media/carrito/Water_Active4.png','Water_Active4.png','Water_Active4','png','ACT');
-INSERT INTO `cat_img` VALUES (651,'/media/carrito/tmp_20077-membresia130089655.png','tmp_20077-membresia130089655.png','tmp_20077-membresia130089655','png','ACT');
-INSERT INTO `cat_img` VALUES (652,'/media/carrito/cPRIME4.png','cPRIME4.png','cPRIME4','png','ACT');
-INSERT INTO `cat_img` VALUES (653,'/media/carrito/kit_belleza18.png','kit_belleza18.png','kit_belleza18','png','ACT');
-INSERT INTO `cat_img` VALUES (654,'/media/1000/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (655,'/media/1001/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (656,'/media/1002/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (657,'/media/1003/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (658,'/media/1004/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (659,'/media/1005/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (660,'/media/1006/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (661,'/media/1007/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (662,'/media/1008/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (663,'/media/1009/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (664,'/media/1010/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (665,'/media/1011/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (666,'/media/1012/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (667,'/media/1013/user.jpg','user.jpg','user','jpg','ACT');
-INSERT INTO `cat_img` VALUES (668,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (669,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (670,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (671,'/media/1/Libertad_Financiera1.PNG','Libertad_Financiera1.PNG','Libertad_Financiera1','PNG','ACT');
-INSERT INTO `cat_img` VALUES (672,'/media/1/Millonarios1.PNG','Millonarios1.PNG','Millonarios1','PNG','ACT');
-INSERT INTO `cat_img` VALUES (673,'/media/1/kiyosaki11.PNG','kiyosaki11.PNG','kiyosaki11','PNG','ACT');
-INSERT INTO `cat_img` VALUES (674,'/media/1/elvendedor.PNG','elvendedor.PNG','elvendedor','PNG','ACT');
-INSERT INTO `cat_img` VALUES (675,'/media/ebooks/steve-jobs-la-biografia11.jpg','steve-jobs-la-biografia11.jpg','steve-jobs-la-biografia11','jpg','ACT');
-INSERT INTO `cat_img` VALUES (676,'/media/ebooks/superar_fracaso1.jpg','superar_fracaso1.jpg','superar_fracaso1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (677,'/media/ebooks/portada-cuadrante-flujo-dinero1.jpg','portada-cuadrante-flujo-dinero1.jpg','portada-cuadrante-flujo-dinero1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (678,'/media/ebooks/portada-negocio-siglo-2111.jpg','portada-negocio-siglo-2111.jpg','portada-negocio-siglo-2111','jpg','ACT');
-INSERT INTO `cat_img` VALUES (679,'/media/ebooks/45-segundos1.jpg','45-segundos1.jpg','45-segundos1','jpg','ACT');
-INSERT INTO `cat_img` VALUES (680,'/media/ebooks/Padre_Rico21.jpg','Padre_Rico21.jpg','Padre_Rico21','jpg','ACT');
-INSERT INTO `cat_img` VALUES (681,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (682,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (683,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (684,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (685,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (686,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (687,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
-INSERT INTO `cat_img` VALUES (688,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
+INSERT INTO `cat_img` VALUES (10000,'/template/img/empresario.jpg','empresario.jpg','empresario','jpg','ACT');
+INSERT INTO `cat_img` VALUES (10034,'/media/carrito/diagrama1.png','diagrama1.png','diagrama1','png','ACT');
 /*!40000 ALTER TABLE `cat_img` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11446,7 +10955,7 @@ CREATE TABLE `cat_impuesto` (
 LOCK TABLES `cat_impuesto` WRITE;
 /*!40000 ALTER TABLE `cat_impuesto` DISABLE KEYS */;
 INSERT INTO `cat_impuesto` VALUES (1,'IVA',0,'ACT','AAA');
-INSERT INTO `cat_impuesto` VALUES (2,'IVA',19,'ACT','COL');
+INSERT INTO `cat_impuesto` VALUES (2,'IVA',16,'ACT','COL');
 INSERT INTO `cat_impuesto` VALUES (3,'IVA',21,'ACT','ESP');
 INSERT INTO `cat_impuesto` VALUES (4,'IVA',21,'ACT','ARG');
 INSERT INTO `cat_impuesto` VALUES (5,'IVA',19,'ACT','CHL');
@@ -11608,7 +11117,7 @@ INSERT INTO `cat_moneda` VALUES ('DK','DKK','Corona danesa','ACT');
 INSERT INTO `cat_moneda` VALUES ('DM','XCD','Dólar del Caribe Oriental','ACT');
 INSERT INTO `cat_moneda` VALUES ('DO','DOP','Peso dominicano','DES');
 INSERT INTO `cat_moneda` VALUES ('DZ','DZD','Dinar argelino','ACT');
-INSERT INTO `cat_moneda` VALUES ('EC','USD','Dólar estadounidense','ACT');
+INSERT INTO `cat_moneda` VALUES ('EC','USD','Dólar estadounidense','DES');
 INSERT INTO `cat_moneda` VALUES ('EE','EUR','euro','ACT');
 INSERT INTO `cat_moneda` VALUES ('EE','USD','Dólar estadounidense','ACT');
 INSERT INTO `cat_moneda` VALUES ('EG','EGP','Libra egipcia','ACT');
@@ -14368,9 +13877,9 @@ CREATE TABLE `cat_rango` (
   `nombre` varchar(45) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
   `estatus` varchar(3) NOT NULL DEFAULT 'ACT',
-  `condicion_red_afilacion` varchar(4) NOT NULL,
+  `condicion_red_afilacion` varchar(4) NOT NULL DEFAULT 'DEB',
   PRIMARY KEY (`id_rango`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -14379,6 +13888,14 @@ CREATE TABLE `cat_rango` (
 
 LOCK TABLES `cat_rango` WRITE;
 /*!40000 ALTER TABLE `cat_rango` DISABLE KEYS */;
+INSERT INTO `cat_rango` VALUES (66,'Afiliaciones','Afiliaciones','ACT','DEB');
+INSERT INTO `cat_rango` VALUES (67,'Puntos Red','Puntos Red','ACT','DEB');
+INSERT INTO `cat_rango` VALUES (68,'Afiliaciones','Afiliaciones','ACT','DEB');
+INSERT INTO `cat_rango` VALUES (69,'Compra de Paquete','Compra de Paquete','ACT','EQU');
+INSERT INTO `cat_rango` VALUES (70,'Afiliaciones','Afiliaciones','ACT','DEB');
+INSERT INTO `cat_rango` VALUES (71,'puntosRed','puntosRed','ACT','DEB');
+INSERT INTO `cat_rango` VALUES (72,'puntosPersonales','puntosPersonales','ACT','DEB');
+INSERT INTO `cat_rango` VALUES (73,'puntosPersonales','puntosPersonales','ACT','DEB');
 /*!40000 ALTER TABLE `cat_rango` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14423,7 +13940,7 @@ CREATE TABLE `cat_retencion` (
   `estatus` varchar(3) NOT NULL,
   `duracion` varchar(3) NOT NULL,
   PRIMARY KEY (`id_retencion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -14432,7 +13949,7 @@ CREATE TABLE `cat_retencion` (
 
 LOCK TABLES `cat_retencion` WRITE;
 /*!40000 ALTER TABLE `cat_retencion` DISABLE KEYS */;
-INSERT INTO `cat_retencion` VALUES (1,'oficina virtual',5,'DES','MES');
+INSERT INTO `cat_retencion` VALUES (4,'Uso de la oficina virtual',5,'ACT','MES');
 /*!40000 ALTER TABLE `cat_retencion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14451,7 +13968,7 @@ CREATE TABLE `cat_retenciones_historial` (
   `ano` int(11) NOT NULL,
   `id_afiliado` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -14460,15 +13977,13 @@ CREATE TABLE `cat_retenciones_historial` (
 
 LOCK TABLES `cat_retenciones_historial` WRITE;
 /*!40000 ALTER TABLE `cat_retenciones_historial` DISABLE KEYS */;
-INSERT INTO `cat_retenciones_historial` VALUES (1,'oficina virtual',5,3,2016,0);
-INSERT INTO `cat_retenciones_historial` VALUES (2,'oficina virtual',5,4,2016,0);
-INSERT INTO `cat_retenciones_historial` VALUES (3,'oficina virtual',5,5,2016,0);
-INSERT INTO `cat_retenciones_historial` VALUES (4,'oficina virtual',5,7,2016,0);
-INSERT INTO `cat_retenciones_historial` VALUES (5,'oficina virtual',5,9,2016,0);
-INSERT INTO `cat_retenciones_historial` VALUES (6,'oficina virtual',5,1,2017,0);
-INSERT INTO `cat_retenciones_historial` VALUES (7,'oficina virtual',5,2,2017,0);
-INSERT INTO `cat_retenciones_historial` VALUES (8,'oficina virtual',5,3,2017,0);
-INSERT INTO `cat_retenciones_historial` VALUES (9,'oficina virtual',5,4,2017,0);
+INSERT INTO `cat_retenciones_historial` VALUES (1,'Uso Oficina virtual',5,2,2016,0);
+INSERT INTO `cat_retenciones_historial` VALUES (2,'Uso Oficina Virtual',5,1,2016,0);
+INSERT INTO `cat_retenciones_historial` VALUES (6,'Uso Oficina Virtual',5,3,2016,0);
+INSERT INTO `cat_retenciones_historial` VALUES (7,'Uso Oficina Virtual',5,4,2016,0);
+INSERT INTO `cat_retenciones_historial` VALUES (8,'Uso de la oficina virtual',5,5,2016,0);
+INSERT INTO `cat_retenciones_historial` VALUES (9,'Uso de la oficina virtual',5,6,2016,0);
+INSERT INTO `cat_retenciones_historial` VALUES (10,'Uso de la oficina virtual',5,9,2016,0);
 /*!40000 ALTER TABLE `cat_retenciones_historial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14925,7 +14440,7 @@ CREATE TABLE `cat_titulo` (
 
 LOCK TABLES `cat_titulo` WRITE;
 /*!40000 ALTER TABLE `cat_titulo` DISABLE KEYS */;
-INSERT INTO `cat_titulo` VALUES (1,1,'ninguno','ninguno','MES','PUNTOSP','EQU',0,0,0);
+INSERT INTO `cat_titulo` VALUES (1,1,'Inicio','inicio','MES','PUNTOSP','EQU',100,10,0);
 /*!40000 ALTER TABLE `cat_titulo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15002,7 +14517,7 @@ CREATE TABLE `cedi` (
   `tipo` varchar(45) DEFAULT NULL,
   `codigo_postal` char(10) DEFAULT NULL,
   PRIMARY KEY (`id_cedi`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15011,9 +14526,8 @@ CREATE TABLE `cedi` (
 
 LOCK TABLES `cedi` WRITE;
 /*!40000 ALTER TABLE `cedi` DISABLE KEYS */;
-INSERT INTO `cedi` VALUES (1,'ALMACEN CENTRAL','ALMACEN CENTRAL','7230','CLL','1606500445','2017-03-13 21:21:05','ACT','A','06110');
-INSERT INTO `cedi` VALUES (2,'DISTRIBUIDORA CENTRAL','DISTRIBUIDORA CENTRAL','7230','CLL','55060600101','2017-03-13 21:22:04','ACT','C','06110');
-INSERT INTO `cedi` VALUES (3,'Guadalajara','Guadalajara','7242','Panama 518','6865666565','2017-03-15 18:39:43','ACT','A','21200');
+INSERT INTO `cedi` VALUES (30,'supercundi','supercundi','9076','cra 7','8864324','2016-10-03 17:02:44','ACT','C','252211');
+INSERT INTO `cedi` VALUES (29,'tierra santa','tierra santa','9076','cll 12','8768364','2016-10-03 16:59:52','ACT','A','252211');
 /*!40000 ALTER TABLE `cedi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15040,6 +14554,14 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
+INSERT INTO `ci_sessions` VALUES ('1a0983176beeee799821e1a66e0b4a69','186.101.117.174','Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421713624,'a:4:{s:9:\"user_data\";s:0:\"\";s:7:\"user_id\";s:1:\"1\";s:8:\"username\";s:13:\"administrador\";s:6:\"status\";s:1:\"1\";}');
+INSERT INTO `ci_sessions` VALUES ('5b956b6324b224926b66125c3737637e','181.198.53.84','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421792126,'');
+INSERT INTO `ci_sessions` VALUES ('7d03e35e1e902e45576fb15d62d35792','186.101.117.174','Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.16',1421713603,'a:4:{s:9:\"user_data\";s:0:\"\";s:7:\"user_id\";s:1:\"8\";s:8:\"username\";s:14:\"dariosangurima\";s:6:\"status\";s:1:\"1\";}');
+INSERT INTO `ci_sessions` VALUES ('83d4fa3f37b7675c82c8882610944c7c','181.198.53.84','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421792126,'');
+INSERT INTO `ci_sessions` VALUES ('a352acc82e69340f3b138b33c46f3fa1','186.3.98.108','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421855128,'');
+INSERT INTO `ci_sessions` VALUES ('d39bd1f34927324d2773b6983abbd7b9','181.198.53.84','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421792126,'');
+INSERT INTO `ci_sessions` VALUES ('df3486b776d8fd2012126cba1502da7b','186.101.117.174','Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421777961,'');
+INSERT INTO `ci_sessions` VALUES ('e6cac9aeb8822b3c24968abfc93147f1','186.101.117.174','Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36',1421848647,'');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15057,7 +14579,7 @@ CREATE TABLE `coaplicante` (
   `apellido` varchar(60) NOT NULL,
   `keyword` varchar(20) NOT NULL,
   PRIMARY KEY (`id_coaplicante`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50295 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15066,31 +14588,7 @@ CREATE TABLE `coaplicante` (
 
 LOCK TABLES `coaplicante` WRITE;
 /*!40000 ALTER TABLE `coaplicante` DISABLE KEYS */;
-INSERT INTO `coaplicante` VALUES (1,1000,'','','');
-INSERT INTO `coaplicante` VALUES (2,1001,'','','');
-INSERT INTO `coaplicante` VALUES (3,1002,'','','');
-INSERT INTO `coaplicante` VALUES (4,1003,'','','');
-INSERT INTO `coaplicante` VALUES (5,1004,'','','');
-INSERT INTO `coaplicante` VALUES (6,1005,'','','');
-INSERT INTO `coaplicante` VALUES (7,1006,'','','');
-INSERT INTO `coaplicante` VALUES (8,1007,'','','');
-INSERT INTO `coaplicante` VALUES (9,1008,'','','');
-INSERT INTO `coaplicante` VALUES (10,1009,'','','');
-INSERT INTO `coaplicante` VALUES (11,1010,'','','');
-INSERT INTO `coaplicante` VALUES (12,1011,'','','');
-INSERT INTO `coaplicante` VALUES (13,1012,'','','');
-INSERT INTO `coaplicante` VALUES (14,1013,'','','');
-INSERT INTO `coaplicante` VALUES (15,1014,'','','');
-INSERT INTO `coaplicante` VALUES (16,1015,'','','');
-INSERT INTO `coaplicante` VALUES (17,1016,'','','');
-INSERT INTO `coaplicante` VALUES (18,1017,'','','');
-INSERT INTO `coaplicante` VALUES (19,1018,'','','');
-INSERT INTO `coaplicante` VALUES (20,1020,'','','');
-INSERT INTO `coaplicante` VALUES (21,1021,'','','');
-INSERT INTO `coaplicante` VALUES (22,1022,'','','');
-INSERT INTO `coaplicante` VALUES (23,1023,'','','');
-INSERT INTO `coaplicante` VALUES (24,1024,'','','');
-INSERT INTO `coaplicante` VALUES (25,1025,'juigf','fkjvhowuierg','kjhug');
+INSERT INTO `coaplicante` VALUES (1,2,'','','');
 /*!40000 ALTER TABLE `coaplicante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15118,7 +14616,7 @@ CREATE TABLE `cobro` (
   `otro` varchar(35) DEFAULT NULL,
   `postal` int(11) DEFAULT '0',
   PRIMARY KEY (`id_cobro`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15127,15 +14625,6 @@ CREATE TABLE `cobro` (
 
 LOCK TABLES `cobro` WRITE;
 /*!40000 ALTER TABLE `cobro` DISABLE KEYS */;
-INSERT INTO `cobro` VALUES (1,1009,1,2,10,'2016-03-31 21:05:41','2016-03-31',1234578,'maria','santander',12345,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (2,1008,1,2,20,'2016-03-31 21:12:23','2016-03-31',17092312,'german','BBVA',12345,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (3,1006,1,2,35,'2016-03-31 21:18:15','2016-03-31',12132002,'Fernando','caja social',12345,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (4,1005,1,2,125,'2016-03-31 21:25:10','2016-03-31',1312156576,'juan','DAVIVIENDA',12345,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (5,1004,1,2,60,'2016-03-31 21:38:33','2016-03-31',14343564,'ricardo','santander',12345,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (6,1000,1,2,100,'2016-03-31 21:41:52','2016-03-31',134578945,'giovanny','DAVIVIENDA',12345,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (7,2,1,2,150,'2016-04-12 22:39:19','2016-04-12',1069740663,'Giovanny Cifuentes','Banco BBVA',0,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (8,2,1,2,10,'2016-04-21 17:05:34','2016-04-21',106974066,'Giopvanny','Banco Caja social',0,NULL,'COL',NULL,0);
-INSERT INTO `cobro` VALUES (9,2,1,2,15,'2016-04-29 19:13:10','2016-04-29',1069740663,'Giovanny Cifuentes','Banco Caja Social',0,'','COL','',0);
 /*!40000 ALTER TABLE `cobro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15154,7 +14643,7 @@ CREATE TABLE `combinado` (
   `estatus` varchar(3) NOT NULL,
   `id_red` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15163,7 +14652,6 @@ CREATE TABLE `combinado` (
 
 LOCK TABLES `combinado` WRITE;
 /*!40000 ALTER TABLE `combinado` DISABLE KEYS */;
-INSERT INTO `combinado` VALUES (1,'Kit  Belleza','Contiene un activador de energía celular que trabaja cuidadosamente para darte un aumento de energía ahí donde todo comienza: a nivel celular.\n-Creado mediante un proceso patentado que utiliza hojas orgánicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active™ es un poderoso complemento para tu programa de salud sin sabor ni olor.',0.00,'ACT',1);
 /*!40000 ALTER TABLE `combinado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15238,6 +14726,10 @@ CREATE TABLE `comercializacion` (
 
 LOCK TABLES `comercializacion` WRITE;
 /*!40000 ALTER TABLE `comercializacion` DISABLE KEYS */;
+INSERT INTO `comercializacion` VALUES (505,1);
+INSERT INTO `comercializacion` VALUES (505,2);
+INSERT INTO `comercializacion` VALUES (505,4);
+INSERT INTO `comercializacion` VALUES (505,5);
 /*!40000 ALTER TABLE `comercializacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15385,7 +14877,7 @@ CREATE TABLE `cometchat_chatroommessages` (
   KEY `userid` (`userid`),
   KEY `chatroomid` (`chatroomid`),
   KEY `sent` (`sent`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15417,8 +14909,6 @@ INSERT INTO `cometchat_chatroommessages` VALUES (20,2,3,'hkho',1445702593);
 INSERT INTO `cometchat_chatroommessages` VALUES (21,101,3,'123123',1452210735);
 INSERT INTO `cometchat_chatroommessages` VALUES (22,101,3,'ha iniciado una conversación en video. <a token =\'\' href=\'javascript:void(0);\' onclick=\"javascript:jqcc.ccavchat.join(\'3\');\">Clic aquí para unirte a la conversación.</a> ',1452210788);
 INSERT INTO `cometchat_chatroommessages` VALUES (23,2,3,'adjadj',1455767143);
-INSERT INTO `cometchat_chatroommessages` VALUES (24,2,3,'ksdfsb',1508179792);
-INSERT INTO `cometchat_chatroommessages` VALUES (25,2,3,'kslsls',1508179793);
 /*!40000 ALTER TABLE `cometchat_chatroommessages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15452,7 +14942,7 @@ LOCK TABLES `cometchat_chatrooms` WRITE;
 /*!40000 ALTER TABLE `cometchat_chatrooms` DISABLE KEYS */;
 INSERT INTO `cometchat_chatrooms` VALUES (1,'Soporte Tecnico',1436562458,57,'',0,NULL);
 INSERT INTO `cometchat_chatrooms` VALUES (2,'diego',1443623773,19,'',0,NULL);
-INSERT INTO `cometchat_chatrooms` VALUES (3,'hh',1508179794,2,'',0,NULL);
+INSERT INTO `cometchat_chatrooms` VALUES (3,'hh',1455767144,2,'',0,NULL);
 /*!40000 ALTER TABLE `cometchat_chatrooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15482,7 +14972,7 @@ CREATE TABLE `cometchat_chatrooms_users` (
 
 LOCK TABLES `cometchat_chatrooms_users` WRITE;
 /*!40000 ALTER TABLE `cometchat_chatrooms_users` DISABLE KEYS */;
-INSERT INTO `cometchat_chatrooms_users` VALUES (2,3,1508179804,0);
+INSERT INTO `cometchat_chatrooms_users` VALUES (2,3,1460999905,0);
 INSERT INTO `cometchat_chatrooms_users` VALUES (18,2,1443623853,0);
 INSERT INTO `cometchat_chatrooms_users` VALUES (19,2,1443623854,0);
 INSERT INTO `cometchat_chatrooms_users` VALUES (21,3,1445702584,0);
@@ -15610,7 +15100,7 @@ CREATE TABLE `cometchat_status` (
 
 LOCK TABLES `cometchat_status` WRITE;
 /*!40000 ALTER TABLE `cometchat_status` DISABLE KEYS */;
-INSERT INTO `cometchat_status` VALUES (2,NULL,'available',NULL,NULL,1,1508179789);
+INSERT INTO `cometchat_status` VALUES (2,NULL,'available',NULL,NULL,1,1460999900);
 INSERT INTO `cometchat_status` VALUES (3,NULL,'away',NULL,NULL,0,1438445135);
 INSERT INTO `cometchat_status` VALUES (4,NULL,'away',NULL,NULL,0,1438445096);
 INSERT INTO `cometchat_status` VALUES (7,NULL,'available',NULL,NULL,1,1422044968);
@@ -15648,7 +15138,7 @@ CREATE TABLE `comision` (
   `puntos` varchar(45) NOT NULL,
   `valor` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15657,50 +15147,6 @@ CREATE TABLE `comision` (
 
 LOCK TABLES `comision` WRITE;
 /*!40000 ALTER TABLE `comision` DISABLE KEYS */;
-INSERT INTO `comision` VALUES (1,1,'2',1,'2016-03-31 16:21:38','0',50);
-INSERT INTO `comision` VALUES (2,2,'2',1,'2016-03-31 16:30:32','0',50);
-INSERT INTO `comision` VALUES (3,3,'2',1,'2016-03-31 16:39:28','0',50);
-INSERT INTO `comision` VALUES (4,4,'1000',1,'2016-03-31 16:52:40','0',50);
-INSERT INTO `comision` VALUES (5,4,'2',1,'2016-03-31 16:52:40','0',10);
-INSERT INTO `comision` VALUES (6,5,'1000',1,'2016-03-31 17:00:06','0',50);
-INSERT INTO `comision` VALUES (7,5,'2',1,'2016-03-31 17:00:06','0',10);
-INSERT INTO `comision` VALUES (8,6,'2',1,'2016-03-31 19:30:42','0',5.25);
-INSERT INTO `comision` VALUES (9,7,'1000',1,'2016-03-31 19:42:27','0',8.4);
-INSERT INTO `comision` VALUES (10,7,'2',1,'2016-03-31 19:42:27','0',1.68);
-INSERT INTO `comision` VALUES (11,8,'1005',1,'2016-03-31 20:01:16','0',50);
-INSERT INTO `comision` VALUES (12,8,'1004',1,'2016-03-31 20:01:16','0',10);
-INSERT INTO `comision` VALUES (13,8,'1000',1,'2016-03-31 20:01:16','0',6);
-INSERT INTO `comision` VALUES (14,8,'2',1,'2016-03-31 20:01:16','0',4);
-INSERT INTO `comision` VALUES (15,9,'1005',1,'2016-03-31 20:17:48','0',50);
-INSERT INTO `comision` VALUES (16,9,'1004',1,'2016-03-31 20:17:48','0',10);
-INSERT INTO `comision` VALUES (17,9,'1000',1,'2016-03-31 20:17:48','0',6);
-INSERT INTO `comision` VALUES (18,9,'2',1,'2016-03-31 20:17:48','0',4);
-INSERT INTO `comision` VALUES (19,10,'1004',1,'2016-03-31 20:20:34','0',50);
-INSERT INTO `comision` VALUES (20,10,'1000',1,'2016-03-31 20:20:34','0',10);
-INSERT INTO `comision` VALUES (21,10,'2',1,'2016-03-31 20:20:34','0',6);
-INSERT INTO `comision` VALUES (22,11,'1004',1,'2016-03-31 20:27:50','0',24.6875);
-INSERT INTO `comision` VALUES (23,11,'1000',1,'2016-03-31 20:27:50','0',4.9375);
-INSERT INTO `comision` VALUES (24,11,'2',1,'2016-03-31 20:27:50','0',2.9625);
-INSERT INTO `comision` VALUES (25,12,'1006',1,'2016-03-31 20:33:02','0',50);
-INSERT INTO `comision` VALUES (26,12,'1005',1,'2016-03-31 20:33:02','0',10);
-INSERT INTO `comision` VALUES (27,12,'1004',1,'2016-03-31 20:33:02','0',6);
-INSERT INTO `comision` VALUES (28,12,'1000',1,'2016-03-31 20:33:02','0',4);
-INSERT INTO `comision` VALUES (29,13,'1005',1,'2016-03-31 20:42:54','0',10.5);
-INSERT INTO `comision` VALUES (30,13,'1004',1,'2016-03-31 20:42:54','0',2.1);
-INSERT INTO `comision` VALUES (31,13,'1000',1,'2016-03-31 20:42:54','0',1.26);
-INSERT INTO `comision` VALUES (32,13,'2',1,'2016-03-31 20:42:54','0',0.84);
-INSERT INTO `comision` VALUES (33,14,'1008',1,'2016-03-31 20:54:05','0',50);
-INSERT INTO `comision` VALUES (34,14,'1006',1,'2016-03-31 20:54:05','0',10);
-INSERT INTO `comision` VALUES (35,14,'1005',1,'2016-03-31 20:54:05','0',6);
-INSERT INTO `comision` VALUES (36,14,'1004',1,'2016-03-31 20:54:05','0',4);
-INSERT INTO `comision` VALUES (37,15,'1008',1,'2016-03-31 20:58:27','0',20);
-INSERT INTO `comision` VALUES (38,15,'1006',1,'2016-03-31 20:58:27','0',4);
-INSERT INTO `comision` VALUES (39,15,'1005',1,'2016-03-31 20:58:27','0',2.4);
-INSERT INTO `comision` VALUES (40,15,'1004',1,'2016-03-31 20:58:27','0',1.6);
-INSERT INTO `comision` VALUES (41,16,'1009',1,'2016-03-31 21:02:10','0',50);
-INSERT INTO `comision` VALUES (42,16,'1008',1,'2016-03-31 21:02:10','0',10);
-INSERT INTO `comision` VALUES (43,16,'1006',1,'2016-03-31 21:02:10','0',6);
-INSERT INTO `comision` VALUES (44,16,'1005',1,'2016-03-31 21:02:10','0',4);
 /*!40000 ALTER TABLE `comision` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15715,12 +15161,12 @@ CREATE TABLE `comisionPuntosRemanentes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_bono` int(11) NOT NULL,
-  `id_bono_historial` int(11) NOT NULL,
+  `id_bono_historial` int(11) NOT NULL DEFAULT '0',
   `total` int(11) NOT NULL DEFAULT '0',
   `id_pata` int(11) NOT NULL,
   `fecha` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=239 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15729,6 +15175,40 @@ CREATE TABLE `comisionPuntosRemanentes` (
 
 LOCK TABLES `comisionPuntosRemanentes` WRITE;
 /*!40000 ALTER TABLE `comisionPuntosRemanentes` DISABLE KEYS */;
+INSERT INTO `comisionPuntosRemanentes` VALUES (238,10033,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (237,10032,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (236,10031,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (235,10030,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (234,10029,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (233,10028,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (232,10027,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (231,10026,56,1,5,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (230,10025,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (229,10024,56,1,5,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (228,10023,56,1,5,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (227,10022,56,1,10,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (226,10021,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (225,10020,56,1,20,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (224,10019,56,1,15,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (223,10018,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (222,10017,56,1,50,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (221,10016,56,1,5,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (220,10015,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (219,10014,56,1,65,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (218,10013,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (217,10012,56,1,100,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (216,10011,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (215,10010,56,1,75,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (214,10009,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (213,10008,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (212,10007,56,1,120,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (211,10006,56,1,70,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (210,10005,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (209,10004,56,1,0,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (208,10003,56,1,125,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (207,10002,56,1,110,2,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (206,10001,56,1,145,1,'2016-05-24');
+INSERT INTO `comisionPuntosRemanentes` VALUES (205,10000,56,1,20,1,'2016-05-24');
 /*!40000 ALTER TABLE `comisionPuntosRemanentes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15746,7 +15226,7 @@ CREATE TABLE `comision_bono` (
   `id_bono_historial` int(11) NOT NULL,
   `valor` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15755,6 +15235,17 @@ CREATE TABLE `comision_bono` (
 
 LOCK TABLES `comision_bono` WRITE;
 /*!40000 ALTER TABLE `comision_bono` DISABLE KEYS */;
+INSERT INTO `comision_bono` VALUES (1,10000,56,1,15);
+INSERT INTO `comision_bono` VALUES (2,10001,56,1,0.5);
+INSERT INTO `comision_bono` VALUES (3,10007,56,1,0.5);
+INSERT INTO `comision_bono` VALUES (4,10010,56,1,0.5);
+INSERT INTO `comision_bono` VALUES (5,10012,56,1,1);
+INSERT INTO `comision_bono` VALUES (6,10014,56,1,0.5);
+INSERT INTO `comision_bono` VALUES (7,10016,56,1,3.5);
+INSERT INTO `comision_bono` VALUES (8,10017,56,1,0.5);
+INSERT INTO `comision_bono` VALUES (9,10019,56,1,1);
+INSERT INTO `comision_bono` VALUES (10,10022,56,1,2);
+INSERT INTO `comision_bono` VALUES (11,10027,56,1,0.5);
 /*!40000 ALTER TABLE `comision_bono` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15773,7 +15264,7 @@ CREATE TABLE `comision_bono_historial` (
   `ano` int(11) NOT NULL,
   `fecha` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15782,6 +15273,7 @@ CREATE TABLE `comision_bono_historial` (
 
 LOCK TABLES `comision_bono_historial` WRITE;
 /*!40000 ALTER TABLE `comision_bono_historial` DISABLE KEYS */;
+INSERT INTO `comision_bono_historial` VALUES (1,56,23,5,2016,'2016-05-24');
 /*!40000 ALTER TABLE `comision_bono_historial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15832,6 +15324,11 @@ CREATE TABLE `compartir` (
 
 LOCK TABLES `compartir` WRITE;
 /*!40000 ALTER TABLE `compartir` DISABLE KEYS */;
+INSERT INTO `compartir` VALUES (1,'2015-06-27 01:02:20','ACT');
+INSERT INTO `compartir` VALUES (1,'2015-09-30 17:03:56','ACT');
+INSERT INTO `compartir` VALUES (2,'2015-09-30 17:21:36','ACT');
+INSERT INTO `compartir` VALUES (11,'2015-10-01 05:13:11','ACT');
+INSERT INTO `compartir` VALUES (1,'2016-02-18 11:50:09','ACT');
 /*!40000 ALTER TABLE `compartir` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15939,9 +15436,26 @@ CREATE TABLE `cross_combinado` (
 
 LOCK TABLES `cross_combinado` WRITE;
 /*!40000 ALTER TABLE `cross_combinado` DISABLE KEYS */;
-INSERT INTO `cross_combinado` VALUES (1,2,'1',1,'1');
-INSERT INTO `cross_combinado` VALUES (1,4,'1',1,'1');
-INSERT INTO `cross_combinado` VALUES (1,1,'1',1,'2');
+INSERT INTO `cross_combinado` VALUES (8,99,'1',15,'1');
+INSERT INTO `cross_combinado` VALUES (8,99,'1',15,'1');
+INSERT INTO `cross_combinado` VALUES (12,131,'1',15,'1');
+INSERT INTO `cross_combinado` VALUES (12,132,'1',15,'2');
+INSERT INTO `cross_combinado` VALUES (13,131,'2',15,'1');
+INSERT INTO `cross_combinado` VALUES (13,131,'2',15,'1');
+INSERT INTO `cross_combinado` VALUES (16,502,'2',15,'1');
+INSERT INTO `cross_combinado` VALUES (16,503,'2',15,'2');
+INSERT INTO `cross_combinado` VALUES (14,131,'1',16,'1');
+INSERT INTO `cross_combinado` VALUES (14,131,'2',16,'1');
+INSERT INTO `cross_combinado` VALUES (14,132,'2',16,'2');
+INSERT INTO `cross_combinado` VALUES (17,140,'2',16,'1');
+INSERT INTO `cross_combinado` VALUES (17,141,'2',16,'2');
+INSERT INTO `cross_combinado` VALUES (18,507,'2',15,'1');
+INSERT INTO `cross_combinado` VALUES (18,503,'1',15,'2');
+INSERT INTO `cross_combinado` VALUES (19,507,'1',15,'1');
+INSERT INTO `cross_combinado` VALUES (19,508,'2',15,'2');
+INSERT INTO `cross_combinado` VALUES (501,521,'5',252,'2');
+INSERT INTO `cross_combinado` VALUES (502,528,'1',253,'1');
+INSERT INTO `cross_combinado` VALUES (502,529,'1',253,'1');
 /*!40000 ALTER TABLE `cross_combinado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16023,7 +15537,7 @@ CREATE TABLE `cross_dir_emp` (
 
 LOCK TABLES `cross_dir_emp` WRITE;
 /*!40000 ALTER TABLE `cross_dir_emp` DISABLE KEYS */;
-INSERT INTO `cross_dir_emp` VALUES (1,'','','','','AAA','','');
+INSERT INTO `cross_dir_emp` VALUES (1,'252211','cll 22','fusa','cundinamarca','COL','14','121');
 /*!40000 ALTER TABLE `cross_dir_emp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16052,32 +15566,7 @@ CREATE TABLE `cross_dir_user` (
 
 LOCK TABLES `cross_dir_user` WRITE;
 /*!40000 ALTER TABLE `cross_dir_user` DISABLE KEYS */;
-INSERT INTO `cross_dir_user` VALUES (2,'214561','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1000,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1001,'','','','','','ESP');
-INSERT INTO `cross_dir_user` VALUES (1002,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1003,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1004,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1005,'','','','','','ESP');
-INSERT INTO `cross_dir_user` VALUES (1006,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1007,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1008,'','','','','','ESP');
-INSERT INTO `cross_dir_user` VALUES (1009,'','','','','','COL');
-INSERT INTO `cross_dir_user` VALUES (1010,'','','','','','ESP');
-INSERT INTO `cross_dir_user` VALUES (1011,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1012,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1013,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1014,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1015,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1016,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1017,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1018,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1020,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1021,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1022,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1023,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1024,'','','','','','ABW');
-INSERT INTO `cross_dir_user` VALUES (1025,'22110','MISION DE SAN JAVIER 10643','rio','Tijuana','bc','MEX');
+INSERT INTO `cross_dir_user` VALUES (2,'','MZ C Casa 52','Ebenezer','Fusagasuga','Cundinamarca','COL');
 /*!40000 ALTER TABLE `cross_dir_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16122,16 +15611,47 @@ CREATE TABLE `cross_img_archivo` (
 
 LOCK TABLES `cross_img_archivo` WRITE;
 /*!40000 ALTER TABLE `cross_img_archivo` DISABLE KEYS */;
-INSERT INTO `cross_img_archivo` VALUES (52,671);
-INSERT INTO `cross_img_archivo` VALUES (53,672);
-INSERT INTO `cross_img_archivo` VALUES (54,673);
-INSERT INTO `cross_img_archivo` VALUES (55,674);
-INSERT INTO `cross_img_archivo` VALUES (56,675);
-INSERT INTO `cross_img_archivo` VALUES (57,676);
-INSERT INTO `cross_img_archivo` VALUES (58,677);
-INSERT INTO `cross_img_archivo` VALUES (59,678);
-INSERT INTO `cross_img_archivo` VALUES (60,679);
-INSERT INTO `cross_img_archivo` VALUES (61,680);
+INSERT INTO `cross_img_archivo` VALUES (5,35);
+INSERT INTO `cross_img_archivo` VALUES (6,44);
+INSERT INTO `cross_img_archivo` VALUES (7,54);
+INSERT INTO `cross_img_archivo` VALUES (8,55);
+INSERT INTO `cross_img_archivo` VALUES (9,56);
+INSERT INTO `cross_img_archivo` VALUES (10,57);
+INSERT INTO `cross_img_archivo` VALUES (11,58);
+INSERT INTO `cross_img_archivo` VALUES (12,59);
+INSERT INTO `cross_img_archivo` VALUES (13,60);
+INSERT INTO `cross_img_archivo` VALUES (14,61);
+INSERT INTO `cross_img_archivo` VALUES (15,62);
+INSERT INTO `cross_img_archivo` VALUES (16,63);
+INSERT INTO `cross_img_archivo` VALUES (17,64);
+INSERT INTO `cross_img_archivo` VALUES (18,65);
+INSERT INTO `cross_img_archivo` VALUES (19,66);
+INSERT INTO `cross_img_archivo` VALUES (20,67);
+INSERT INTO `cross_img_archivo` VALUES (21,68);
+INSERT INTO `cross_img_archivo` VALUES (22,69);
+INSERT INTO `cross_img_archivo` VALUES (23,70);
+INSERT INTO `cross_img_archivo` VALUES (24,71);
+INSERT INTO `cross_img_archivo` VALUES (25,72);
+INSERT INTO `cross_img_archivo` VALUES (26,73);
+INSERT INTO `cross_img_archivo` VALUES (27,74);
+INSERT INTO `cross_img_archivo` VALUES (28,75);
+INSERT INTO `cross_img_archivo` VALUES (29,76);
+INSERT INTO `cross_img_archivo` VALUES (30,77);
+INSERT INTO `cross_img_archivo` VALUES (31,78);
+INSERT INTO `cross_img_archivo` VALUES (32,79);
+INSERT INTO `cross_img_archivo` VALUES (33,80);
+INSERT INTO `cross_img_archivo` VALUES (34,81);
+INSERT INTO `cross_img_archivo` VALUES (35,82);
+INSERT INTO `cross_img_archivo` VALUES (36,83);
+INSERT INTO `cross_img_archivo` VALUES (37,84);
+INSERT INTO `cross_img_archivo` VALUES (38,85);
+INSERT INTO `cross_img_archivo` VALUES (39,86);
+INSERT INTO `cross_img_archivo` VALUES (40,87);
+INSERT INTO `cross_img_archivo` VALUES (41,88);
+INSERT INTO `cross_img_archivo` VALUES (42,89);
+INSERT INTO `cross_img_archivo` VALUES (43,90);
+INSERT INTO `cross_img_archivo` VALUES (44,91);
+INSERT INTO `cross_img_archivo` VALUES (45,92);
 /*!40000 ALTER TABLE `cross_img_archivo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16198,31 +15718,7 @@ CREATE TABLE `cross_img_user` (
 
 LOCK TABLES `cross_img_user` WRITE;
 /*!40000 ALTER TABLE `cross_img_user` DISABLE KEYS */;
-INSERT INTO `cross_img_user` VALUES (1000,654);
-INSERT INTO `cross_img_user` VALUES (1001,655);
-INSERT INTO `cross_img_user` VALUES (1002,656);
-INSERT INTO `cross_img_user` VALUES (1003,657);
-INSERT INTO `cross_img_user` VALUES (1004,658);
-INSERT INTO `cross_img_user` VALUES (1005,659);
-INSERT INTO `cross_img_user` VALUES (1006,660);
-INSERT INTO `cross_img_user` VALUES (1007,661);
-INSERT INTO `cross_img_user` VALUES (1008,662);
-INSERT INTO `cross_img_user` VALUES (1009,663);
-INSERT INTO `cross_img_user` VALUES (1010,664);
-INSERT INTO `cross_img_user` VALUES (1011,665);
-INSERT INTO `cross_img_user` VALUES (1012,666);
-INSERT INTO `cross_img_user` VALUES (1013,667);
-INSERT INTO `cross_img_user` VALUES (1014,668);
-INSERT INTO `cross_img_user` VALUES (1015,669);
-INSERT INTO `cross_img_user` VALUES (1016,670);
-INSERT INTO `cross_img_user` VALUES (1017,681);
-INSERT INTO `cross_img_user` VALUES (1018,682);
-INSERT INTO `cross_img_user` VALUES (1020,683);
-INSERT INTO `cross_img_user` VALUES (1021,684);
-INSERT INTO `cross_img_user` VALUES (1022,685);
-INSERT INTO `cross_img_user` VALUES (1023,686);
-INSERT INTO `cross_img_user` VALUES (1024,687);
-INSERT INTO `cross_img_user` VALUES (1025,688);
+INSERT INTO `cross_img_user` VALUES (2,50);
 /*!40000 ALTER TABLE `cross_img_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16284,7 +15780,7 @@ CREATE TABLE `cross_merc_img` (
   `id_mercancia` int(11) NOT NULL,
   `id_cat_imagen` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -16293,15 +15789,14 @@ CREATE TABLE `cross_merc_img` (
 
 LOCK TABLES `cross_merc_img` WRITE;
 /*!40000 ALTER TABLE `cross_merc_img` DISABLE KEYS */;
-INSERT INTO `cross_merc_img` VALUES (1,1,645);
-INSERT INTO `cross_merc_img` VALUES (2,2,646);
-INSERT INTO `cross_merc_img` VALUES (3,3,647);
-INSERT INTO `cross_merc_img` VALUES (4,4,648);
-INSERT INTO `cross_merc_img` VALUES (5,5,649);
-INSERT INTO `cross_merc_img` VALUES (6,6,650);
-INSERT INTO `cross_merc_img` VALUES (7,7,651);
-INSERT INTO `cross_merc_img` VALUES (8,8,652);
-INSERT INTO `cross_merc_img` VALUES (9,9,653);
+INSERT INTO `cross_merc_img` VALUES (165,0,805);
+INSERT INTO `cross_merc_img` VALUES (166,0,0);
+INSERT INTO `cross_merc_img` VALUES (224,500,10000);
+INSERT INTO `cross_merc_img` VALUES (225,501,10000);
+INSERT INTO `cross_merc_img` VALUES (226,502,10000);
+INSERT INTO `cross_merc_img` VALUES (227,503,10000);
+INSERT INTO `cross_merc_img` VALUES (228,504,10000);
+INSERT INTO `cross_merc_img` VALUES (229,505,10034);
 /*!40000 ALTER TABLE `cross_merc_img` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16324,15 +15819,40 @@ CREATE TABLE `cross_merc_impuesto` (
 
 LOCK TABLES `cross_merc_impuesto` WRITE;
 /*!40000 ALTER TABLE `cross_merc_impuesto` DISABLE KEYS */;
-INSERT INTO `cross_merc_impuesto` VALUES (1,1);
-INSERT INTO `cross_merc_impuesto` VALUES (3,2);
-INSERT INTO `cross_merc_impuesto` VALUES (5,1);
-INSERT INTO `cross_merc_impuesto` VALUES (7,1);
-INSERT INTO `cross_merc_impuesto` VALUES (9,1);
-INSERT INTO `cross_merc_impuesto` VALUES (2,1);
-INSERT INTO `cross_merc_impuesto` VALUES (6,2);
-INSERT INTO `cross_merc_impuesto` VALUES (8,3);
-INSERT INTO `cross_merc_impuesto` VALUES (4,9);
+INSERT INTO `cross_merc_impuesto` VALUES (99,1);
+INSERT INTO `cross_merc_impuesto` VALUES (100,1);
+INSERT INTO `cross_merc_impuesto` VALUES (102,1);
+INSERT INTO `cross_merc_impuesto` VALUES (103,3);
+INSERT INTO `cross_merc_impuesto` VALUES (109,6);
+INSERT INTO `cross_merc_impuesto` VALUES (110,3);
+INSERT INTO `cross_merc_impuesto` VALUES (107,1);
+INSERT INTO `cross_merc_impuesto` VALUES (98,6);
+INSERT INTO `cross_merc_impuesto` VALUES (101,4);
+INSERT INTO `cross_merc_impuesto` VALUES (106,1);
+INSERT INTO `cross_merc_impuesto` VALUES (133,6);
+INSERT INTO `cross_merc_impuesto` VALUES (504,2);
+INSERT INTO `cross_merc_impuesto` VALUES (507,2);
+INSERT INTO `cross_merc_impuesto` VALUES (135,2);
+INSERT INTO `cross_merc_impuesto` VALUES (135,2);
+INSERT INTO `cross_merc_impuesto` VALUES (510,1);
+INSERT INTO `cross_merc_impuesto` VALUES (511,1);
+INSERT INTO `cross_merc_impuesto` VALUES (512,2);
+INSERT INTO `cross_merc_impuesto` VALUES (513,3);
+INSERT INTO `cross_merc_impuesto` VALUES (134,1);
+INSERT INTO `cross_merc_impuesto` VALUES (134,1);
+INSERT INTO `cross_merc_impuesto` VALUES (0,1);
+INSERT INTO `cross_merc_impuesto` VALUES (503,1);
+INSERT INTO `cross_merc_impuesto` VALUES (522,2);
+INSERT INTO `cross_merc_impuesto` VALUES (523,2);
+INSERT INTO `cross_merc_impuesto` VALUES (524,2);
+INSERT INTO `cross_merc_impuesto` VALUES (525,2);
+INSERT INTO `cross_merc_impuesto` VALUES (526,2);
+INSERT INTO `cross_merc_impuesto` VALUES (521,2);
+INSERT INTO `cross_merc_impuesto` VALUES (527,2);
+INSERT INTO `cross_merc_impuesto` VALUES (530,2);
+INSERT INTO `cross_merc_impuesto` VALUES (531,3);
+INSERT INTO `cross_merc_impuesto` VALUES (533,2);
+INSERT INTO `cross_merc_impuesto` VALUES (505,2);
 /*!40000 ALTER TABLE `cross_merc_impuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16383,7 +15903,6 @@ CREATE TABLE `cross_paquete` (
 
 LOCK TABLES `cross_paquete` WRITE;
 /*!40000 ALTER TABLE `cross_paquete` DISABLE KEYS */;
-INSERT INTO `cross_paquete` VALUES (1,2,'2',1,'1');
 /*!40000 ALTER TABLE `cross_paquete` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16396,8 +15915,7 @@ DROP TABLE IF EXISTS `cross_perfil_usuario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cross_perfil_usuario` (
   `id_user` int(11) NOT NULL,
-  `id_perfil` int(11) NOT NULL,
-  PRIMARY KEY (`id_user`)
+  `id_perfil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -16409,31 +15927,6 @@ LOCK TABLES `cross_perfil_usuario` WRITE;
 /*!40000 ALTER TABLE `cross_perfil_usuario` DISABLE KEYS */;
 INSERT INTO `cross_perfil_usuario` VALUES (1,1);
 INSERT INTO `cross_perfil_usuario` VALUES (2,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1000,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1001,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1002,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1003,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1004,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1005,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1006,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1007,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1008,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1009,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1010,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1011,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1012,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1013,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1014,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1015,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1016,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1017,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1018,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1020,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1021,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1022,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1023,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1024,2);
-INSERT INTO `cross_perfil_usuario` VALUES (1025,2);
 /*!40000 ALTER TABLE `cross_perfil_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16446,8 +15939,7 @@ DROP TABLE IF EXISTS `cross_permiso_perfil`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cross_permiso_perfil` (
   `id_permiso` int(11) NOT NULL,
-  `id_perfil` int(11) NOT NULL,
-  PRIMARY KEY (`id_permiso`)
+  `id_perfil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -16491,6 +15983,8 @@ INSERT INTO `cross_permiso_perfil` VALUES (31,2);
 INSERT INTO `cross_permiso_perfil` VALUES (32,2);
 INSERT INTO `cross_permiso_perfil` VALUES (33,2);
 INSERT INTO `cross_permiso_perfil` VALUES (34,2);
+INSERT INTO `cross_permiso_perfil` VALUES (14,3);
+INSERT INTO `cross_permiso_perfil` VALUES (8,1);
 /*!40000 ALTER TABLE `cross_permiso_perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16533,7 +16027,7 @@ CREATE TABLE `cross_premio_usuario` (
   `estado` varchar(20) DEFAULT 'Pendiente',
   `fecha_entrega` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -16542,6 +16036,10 @@ CREATE TABLE `cross_premio_usuario` (
 
 LOCK TABLES `cross_premio_usuario` WRITE;
 /*!40000 ALTER TABLE `cross_premio_usuario` DISABLE KEYS */;
+INSERT INTO `cross_premio_usuario` VALUES (9,6,2,'2015-09-30 14:57:05','Embarcado','2015-10-15 00:00:00');
+INSERT INTO `cross_premio_usuario` VALUES (10,7,2,'2015-09-30 14:58:11','Embarcado','2015-10-15 00:00:00');
+INSERT INTO `cross_premio_usuario` VALUES (11,6,20,'2015-09-30 14:59:06','Embarcado','2015-10-14 00:00:00');
+INSERT INTO `cross_premio_usuario` VALUES (12,7,20,'2015-09-30 14:59:57','Embarcado','2015-09-30 00:00:00');
 /*!40000 ALTER TABLE `cross_premio_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16568,6 +16066,14 @@ CREATE TABLE `cross_rango_tipos` (
 
 LOCK TABLES `cross_rango_tipos` WRITE;
 /*!40000 ALTER TABLE `cross_rango_tipos` DISABLE KEYS */;
+INSERT INTO `cross_rango_tipos` VALUES (73,4,10,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (72,4,10,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (71,5,0,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (70,1,1,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (69,3,50,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (68,1,1,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (67,5,0,'RED',0);
+INSERT INTO `cross_rango_tipos` VALUES (66,1,1,'RED',0);
 /*!40000 ALTER TABLE `cross_rango_tipos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16593,31 +16099,7 @@ CREATE TABLE `cross_rango_user` (
 
 LOCK TABLES `cross_rango_user` WRITE;
 /*!40000 ALTER TABLE `cross_rango_user` DISABLE KEYS */;
-INSERT INTO `cross_rango_user` VALUES (1000,1,'2016-03-31 13:56:06',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1001,1,'2016-03-31 13:57:13',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1002,1,'2016-03-31 13:57:54',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1003,1,'2016-03-31 13:58:43',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1004,1,'2016-03-31 14:00:15',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1005,1,'2016-03-31 14:00:55',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1006,1,'2016-03-31 14:01:26',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1007,1,'2016-03-31 14:02:07',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1008,1,'2016-03-31 14:03:45',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1009,1,'2016-03-31 14:04:23',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1010,1,'2016-03-31 14:05:07',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1011,1,'2016-03-31 14:19:36',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1012,1,'2016-03-31 14:20:16',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1013,1,'2016-03-31 14:20:48',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1014,1,'2016-03-31 14:21:25',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1015,1,'2016-03-31 14:22:05',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1016,1,'2016-03-31 14:22:32',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1017,1,'2016-03-31 16:02:28',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1018,1,'2016-04-12 22:27:53',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1020,1,'2016-07-21 04:11:58',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1021,1,'2016-07-23 04:13:06',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1022,1,'2016-07-23 04:13:56',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1023,1,'2016-07-24 00:36:58',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1024,1,'2017-04-11 23:14:59',1,'ACT');
-INSERT INTO `cross_rango_user` VALUES (1025,1,'2017-05-05 20:55:29',1,'ACT');
+INSERT INTO `cross_rango_user` VALUES (2,1,'2014-12-16 03:04:03',1,'ACT');
 /*!40000 ALTER TABLE `cross_rango_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16665,58 +16147,10 @@ CREATE TABLE `cross_tel_user` (
 
 LOCK TABLES `cross_tel_user` WRITE;
 /*!40000 ALTER TABLE `cross_tel_user` DISABLE KEYS */;
-INSERT INTO `cross_tel_user` VALUES (1001,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1001,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1002,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1002,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1003,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1003,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1004,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1004,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1005,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1005,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1006,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1006,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1007,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1007,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1008,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1008,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1009,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1009,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1010,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1010,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1011,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1011,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1012,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1012,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1013,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1013,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1014,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1014,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1015,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1015,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1016,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1016,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1017,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1017,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1018,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1018,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1020,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1020,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1021,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1021,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1022,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1022,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1000,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1000,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1023,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1023,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1024,1,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1024,2,'','ACT');
-INSERT INTO `cross_tel_user` VALUES (1025,1,'6644382930','ACT');
-INSERT INTO `cross_tel_user` VALUES (1025,2,'6641915783','ACT');
-INSERT INTO `cross_tel_user` VALUES (2,1,'57 3008423480','ACT');
-INSERT INTO `cross_tel_user` VALUES (2,2,'','ACT');
+INSERT INTO `cross_tel_user` VALUES (1,1,'','ACT');
+INSERT INTO `cross_tel_user` VALUES (1,2,'','ACT');
+INSERT INTO `cross_tel_user` VALUES (2,1,'8780801','ACT');
+INSERT INTO `cross_tel_user` VALUES (2,2,'3115654368','ACT');
 /*!40000 ALTER TABLE `cross_tel_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16740,7 +16174,7 @@ CREATE TABLE `cross_user_banco` (
   `dir_postal` int(35) DEFAULT NULL,
   `estatus` varchar(3) NOT NULL DEFAULT 'ACT',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -16749,9 +16183,7 @@ CREATE TABLE `cross_user_banco` (
 
 LOCK TABLES `cross_user_banco` WRITE;
 /*!40000 ALTER TABLE `cross_user_banco` DISABLE KEYS */;
-INSERT INTO `cross_user_banco` VALUES (28,2,'Your Card','You','Your Bank','COL','','',0,0,'ACT');
-INSERT INTO `cross_user_banco` VALUES (29,1000,'Your Card','You','Your Bank','COL','','',0,0,'ACT');
-INSERT INTO `cross_user_banco` VALUES (30,1018,'Your Card','You','Your Bank','COL',NULL,NULL,NULL,NULL,'ACT');
+INSERT INTO `cross_user_banco` VALUES (28,2,'Your Card','You','Your Bank','COL',NULL,NULL,NULL,NULL,'ACT');
 /*!40000 ALTER TABLE `cross_user_banco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16808,6 +16240,22 @@ CREATE TABLE `cross_venta_envio` (
 
 LOCK TABLES `cross_venta_envio` WRITE;
 /*!40000 ALTER TABLE `cross_venta_envio` DISABLE KEYS */;
+INSERT INTO `cross_venta_envio` VALUES (182,'Giovanny ','Cifuentes','25141','COL','0','0','','','hardcorgian@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (183,'Ricardo','Martinez','21345','COL','0','0','','','ricardo@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (184,'Juan','Perez Rodriguez','21345','COL','0','0','','','juan@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (185,'Fernando','Fernandoes','12345','COL','0','0','','','fernando@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (186,'german','castro','2345','COL','0','0','','','german@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (187,'Maria','Castro','12345','COL','0','0','','','maria@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (188,'Maria','Castro','12345','COL','0','0','','','maria@gmail.com','','0','');
+INSERT INTO `cross_venta_envio` VALUES (189,'Giovanny ','Cifuentes','25141','ESP','773','5267','Americas','asdfg','hardcorgian@gmail.com','3215465456','34','');
+INSERT INTO `cross_venta_envio` VALUES (190,'Administrador','Oficina Virtual','21532','ESP','0','0','Ebenezer','22','admin@oficina.com','8780803','0','');
+INSERT INTO `cross_venta_envio` VALUES (193,'Administrador','Oficina Virtual','21532','ESP','0','0','Ebenezer','22','admin@oficina.com','8780803','0','');
+INSERT INTO `cross_venta_envio` VALUES (194,'Administrador','Oficina Virtual','21532','ESP','0','0','Ebenezer','22','admin@oficina.com','8780803','0','');
+INSERT INTO `cross_venta_envio` VALUES (195,'Yoda','jedi','cac','COL','0','0','ca','sdasc','maestroyod@jedi.com','12345678','0','');
+INSERT INTO `cross_venta_envio` VALUES (196,'Administrador','Oficina Virtual','21532','ESP','0','0','Ebenezer','22','admin@oficina.com','8780803','0','');
+INSERT INTO `cross_venta_envio` VALUES (197,'Administrador','Oficina Virtual','21532','ESP','0','0','Ebenezer','22','admin@oficina.com','8780803','0','');
+INSERT INTO `cross_venta_envio` VALUES (198,'Administrador','Oficina Virtual','21532','ESP','0','0','Ebenezer','22','admin@oficina.com','8780803','0','');
+INSERT INTO `cross_venta_envio` VALUES (199,'Gustavo','Serpa','2134','COL','0','0','','','gustavo@gmail.com','','0','');
 /*!40000 ALTER TABLE `cross_venta_envio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16828,7 +16276,7 @@ CREATE TABLE `cross_venta_mercancia` (
   `nombreImpuesto` varchar(100) NOT NULL DEFAULT '',
   `id_` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2699 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -16837,42 +16285,53 @@ CREATE TABLE `cross_venta_mercancia` (
 
 LOCK TABLES `cross_venta_mercancia` WRITE;
 /*!40000 ALTER TABLE `cross_venta_mercancia` DISABLE KEYS */;
-INSERT INTO `cross_venta_mercancia` VALUES (1,5,1,200,32,232,'16% de IVA\n',1);
-INSERT INTO `cross_venta_mercancia` VALUES (2,5,1,200,42,242,'21% de IVA\n',2);
-INSERT INTO `cross_venta_mercancia` VALUES (3,5,1,200,32,232,'16% de IVA\n',3);
-INSERT INTO `cross_venta_mercancia` VALUES (4,5,1,200,32,232,'16% de IVA\n',4);
-INSERT INTO `cross_venta_mercancia` VALUES (5,5,1,200,32,232,'16% de IVA\n',5);
-INSERT INTO `cross_venta_mercancia` VALUES (6,4,1,21,4,25,'16% de IVA\n',6);
-INSERT INTO `cross_venta_mercancia` VALUES (7,9,1,33.6,6.4,40,'16% de IVA\n',7);
-INSERT INTO `cross_venta_mercancia` VALUES (8,5,1,200,32,232,'16% de IVA\n',8);
-INSERT INTO `cross_venta_mercancia` VALUES (9,5,1,200,32,232,'16% de IVA\n',9);
-INSERT INTO `cross_venta_mercancia` VALUES (10,5,1,200,42,242,'21% de IVA\n',10);
-INSERT INTO `cross_venta_mercancia` VALUES (11,8,1,98.75,26.25,125,'21% de IVA\n',11);
-INSERT INTO `cross_venta_mercancia` VALUES (12,5,1,200,42,242,'21% de IVA\n',12);
-INSERT INTO `cross_venta_mercancia` VALUES (13,4,2,21,4,50,'16% de IVA\n',13);
-INSERT INTO `cross_venta_mercancia` VALUES (14,5,1,200,32,232,'16% de IVA\n',14);
-INSERT INTO `cross_venta_mercancia` VALUES (15,1,1,80,12.8,92.8,'16% de IVA\n',15);
-INSERT INTO `cross_venta_mercancia` VALUES (16,5,1,200,42,242,'21% de IVA\n',16);
-INSERT INTO `cross_venta_mercancia` VALUES (17,2,1,20,3.2,23.2,'16% de IVA\n',17);
-INSERT INTO `cross_venta_mercancia` VALUES (18,2,1,20,3.2,23.2,'16% de IVA\n',18);
-INSERT INTO `cross_venta_mercancia` VALUES (19,3,1,120,19.2,139.2,'16% de IVA\n',19);
-INSERT INTO `cross_venta_mercancia` VALUES (20,6,1,8.4,1.6,10,'16% de IVA\n',20);
-INSERT INTO `cross_venta_mercancia` VALUES (21,2,1,20,3.2,23.2,'16% de IVA\n',21);
-INSERT INTO `cross_venta_mercancia` VALUES (22,6,1,8.4,1.6,10,'16% de IVA\n',22);
-INSERT INTO `cross_venta_mercancia` VALUES (23,6,1,8.4,1.6,10,'16% de IVA\n',23);
-INSERT INTO `cross_venta_mercancia` VALUES (24,6,1,8.4,1.6,10,'16% de IVA\n',24);
-INSERT INTO `cross_venta_mercancia` VALUES (25,6,1,8.4,1.6,10,'16% de IVA\n',25);
-INSERT INTO `cross_venta_mercancia` VALUES (26,9,1,33.6,6.4,40,'16% de IVA\n',26);
-INSERT INTO `cross_venta_mercancia` VALUES (27,2,1,20,3.2,23.2,'16% de IVA\n',27);
-INSERT INTO `cross_venta_mercancia` VALUES (28,1,1,80,12.8,92.8,'16% de IVA\n',28);
-INSERT INTO `cross_venta_mercancia` VALUES (29,1,1,80,12.8,92.8,'16% de IVA\n',29);
-INSERT INTO `cross_venta_mercancia` VALUES (29,3,1,120,19.2,139.2,'16% de IVA\n',30);
-INSERT INTO `cross_venta_mercancia` VALUES (30,1,1,80,12.8,92.8,'16% de IVA\n',31);
-INSERT INTO `cross_venta_mercancia` VALUES (32,2,1,20,3.2,23.2,'16% de IVA\n',34);
-INSERT INTO `cross_venta_mercancia` VALUES (33,9,1,33.6,6.4,40,'16% de IVA\n',35);
-INSERT INTO `cross_venta_mercancia` VALUES (33,7,1,50,8,58,'16% de IVA\n',36);
-INSERT INTO `cross_venta_mercancia` VALUES (34,3,1,120,19.2,139.2,'16% de IVA\n',37);
-INSERT INTO `cross_venta_mercancia` VALUES (35,9,1,33.6,6.4,40,'16% de IVA\n',38);
+INSERT INTO `cross_venta_mercancia` VALUES (1,503,1,5,0,5,' \n',2519);
+INSERT INTO `cross_venta_mercancia` VALUES (2,503,1,5,0,5,' \n',2520);
+INSERT INTO `cross_venta_mercancia` VALUES (3,503,1,5,0,5,' \n',2521);
+INSERT INTO `cross_venta_mercancia` VALUES (3,503,1,5,0,5,' \n',2522);
+INSERT INTO `cross_venta_mercancia` VALUES (4,503,1,5,0,5,' \n',2523);
+INSERT INTO `cross_venta_mercancia` VALUES (700,500,0,0,0,35,'',2657);
+INSERT INTO `cross_venta_mercancia` VALUES (700,501,0,0,0,80,'',2658);
+INSERT INTO `cross_venta_mercancia` VALUES (700,502,0,0,0,50,'',2659);
+INSERT INTO `cross_venta_mercancia` VALUES (700,503,0,0,0,5,'',2660);
+INSERT INTO `cross_venta_mercancia` VALUES (701,500,0,0,0,35,'',2661);
+INSERT INTO `cross_venta_mercancia` VALUES (701,503,0,0,0,5,'',2662);
+INSERT INTO `cross_venta_mercancia` VALUES (702,501,0,0,0,80,'',2663);
+INSERT INTO `cross_venta_mercancia` VALUES (702,503,0,0,0,5,'',2664);
+INSERT INTO `cross_venta_mercancia` VALUES (703,500,0,0,0,35,'',2665);
+INSERT INTO `cross_venta_mercancia` VALUES (704,500,0,0,0,35,'',2666);
+INSERT INTO `cross_venta_mercancia` VALUES (705,500,0,0,0,35,'',2667);
+INSERT INTO `cross_venta_mercancia` VALUES (706,500,0,0,0,35,'',2668);
+INSERT INTO `cross_venta_mercancia` VALUES (707,500,0,0,0,35,'',2669);
+INSERT INTO `cross_venta_mercancia` VALUES (708,502,0,0,0,50,'',2670);
+INSERT INTO `cross_venta_mercancia` VALUES (709,501,0,0,0,80,'',2671);
+INSERT INTO `cross_venta_mercancia` VALUES (710,500,0,0,0,35,'',2672);
+INSERT INTO `cross_venta_mercancia` VALUES (711,500,0,0,0,35,'',2673);
+INSERT INTO `cross_venta_mercancia` VALUES (712,500,0,0,0,35,'',2674);
+INSERT INTO `cross_venta_mercancia` VALUES (713,500,0,0,0,35,'',2675);
+INSERT INTO `cross_venta_mercancia` VALUES (714,500,0,0,0,35,'',2676);
+INSERT INTO `cross_venta_mercancia` VALUES (715,502,0,0,0,50,'',2677);
+INSERT INTO `cross_venta_mercancia` VALUES (716,500,0,0,0,35,'',2678);
+INSERT INTO `cross_venta_mercancia` VALUES (716,501,0,0,0,80,'',2679);
+INSERT INTO `cross_venta_mercancia` VALUES (716,504,0,0,0,50,'',2680);
+INSERT INTO `cross_venta_mercancia` VALUES (717,500,0,0,0,35,'',2681);
+INSERT INTO `cross_venta_mercancia` VALUES (717,500,0,0,0,35,'',2682);
+INSERT INTO `cross_venta_mercancia` VALUES (718,500,0,0,0,35,'',2683);
+INSERT INTO `cross_venta_mercancia` VALUES (719,500,0,0,0,35,'',2684);
+INSERT INTO `cross_venta_mercancia` VALUES (720,500,0,0,0,35,'',2685);
+INSERT INTO `cross_venta_mercancia` VALUES (721,500,0,0,0,35,'',2686);
+INSERT INTO `cross_venta_mercancia` VALUES (722,500,0,0,0,35,'',2687);
+INSERT INTO `cross_venta_mercancia` VALUES (723,501,0,0,0,80,'',2688);
+INSERT INTO `cross_venta_mercancia` VALUES (724,500,0,0,0,35,'',2689);
+INSERT INTO `cross_venta_mercancia` VALUES (725,500,0,0,0,35,'',2690);
+INSERT INTO `cross_venta_mercancia` VALUES (726,501,0,0,0,80,'',2691);
+INSERT INTO `cross_venta_mercancia` VALUES (727,501,0,0,0,80,'',2692);
+INSERT INTO `cross_venta_mercancia` VALUES (728,501,0,0,0,80,'',2693);
+INSERT INTO `cross_venta_mercancia` VALUES (729,500,0,0,0,35,'',2694);
+INSERT INTO `cross_venta_mercancia` VALUES (730,500,0,0,0,35,'',2695);
+INSERT INTO `cross_venta_mercancia` VALUES (731,500,0,0,0,35,'',2696);
+INSERT INTO `cross_venta_mercancia` VALUES (732,500,0,0,0,35,'',2697);
+INSERT INTO `cross_venta_mercancia` VALUES (733,500,0,0,0,35,'',2698);
 /*!40000 ALTER TABLE `cross_venta_mercancia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16915,7 +16374,7 @@ CREATE TABLE `cuenta_pagar_banco_historial` (
   `valor` varchar(45) DEFAULT NULL,
   `estatus` varchar(3) NOT NULL DEFAULT 'DES',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -16924,29 +16383,6 @@ CREATE TABLE `cuenta_pagar_banco_historial` (
 
 LOCK TABLES `cuenta_pagar_banco_historial` WRITE;
 /*!40000 ALTER TABLE `cuenta_pagar_banco_historial` DISABLE KEYS */;
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (1,'2016-03-31 16:21:38','1','1000',1,'232','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (2,'2016-03-31 16:39:28','1','1002',3,'232','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (3,'2016-03-31 20:33:02','2','1008',12,'242','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (4,'2016-03-31 20:58:27','1','1009',15,'92.8','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (5,'2016-03-31 21:02:10','2','1010',16,'242','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (6,'2016-04-01 17:20:39','1','2',17,'23.2','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (7,'2016-04-16 18:24:46','1','2',18,'23.2','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (8,'2016-04-24 21:56:12','1','2',19,'139.2','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (9,'2016-04-18 22:07:54','1','2',20,'10','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (10,'2016-04-24 16:21:43','1','2',21,'23.2','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (11,'2016-05-12 20:40:50','1','2',22,'10','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (12,'2016-05-04 21:57:01','1','2',23,'10','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (13,'2016-05-11 21:44:16','1','2',24,'10','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (14,'2016-05-12 20:38:36','1','2',25,'10','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (15,'2017-03-13 23:46:28','1','2',26,'40','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (16,'2017-03-15 19:20:10','1','2',27,'23.2','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (17,'2017-04-11 23:59:31','1','2',28,'92.8','ACT');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (18,'2017-04-11 23:21:46','1','2',29,'232','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (19,'2017-04-24 22:54:01','1','2',30,'92.8','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (21,'2017-06-26 14:29:39','1','2',32,'23.2','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (22,'2017-09-12 16:01:40','1','2',33,'98','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (23,'2017-09-12 16:40:18','1','2',34,'139.2','DES');
-INSERT INTO `cuenta_pagar_banco_historial` VALUES (24,'2017-10-09 20:55:17','1','2',35,'40','DES');
 /*!40000 ALTER TABLE `cuenta_pagar_banco_historial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17022,6 +16458,9 @@ CREATE TABLE `distribucion` (
 LOCK TABLES `distribucion` WRITE;
 /*!40000 ALTER TABLE `distribucion` DISABLE KEYS */;
 INSERT INTO `distribucion` VALUES (1,1);
+INSERT INTO `distribucion` VALUES (2,1);
+INSERT INTO `distribucion` VALUES (4,1);
+INSERT INTO `distribucion` VALUES (5,1);
 /*!40000 ALTER TABLE `distribucion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17037,7 +16476,7 @@ CREATE TABLE `documento_inventario` (
   `nombre` varchar(45) DEFAULT NULL,
   `estatus` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id_doc`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -17054,7 +16493,6 @@ INSERT INTO `documento_inventario` VALUES (6,'Devoluvion','ACT');
 INSERT INTO `documento_inventario` VALUES (7,'Donacion','ACT');
 INSERT INTO `documento_inventario` VALUES (8,'Destruccion','ACT');
 INSERT INTO `documento_inventario` VALUES (9,'Traspaso externo','ACT');
-INSERT INTO `documento_inventario` VALUES (12,'Servilleta','ACT');
 /*!40000 ALTER TABLE `documento_inventario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17070,7 +16508,7 @@ CREATE TABLE `emails_departamentos` (
   `email` text,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -17079,16 +16517,16 @@ CREATE TABLE `emails_departamentos` (
 
 LOCK TABLES `emails_departamentos` WRITE;
 /*!40000 ALTER TABLE `emails_departamentos` DISABLE KEYS */;
-INSERT INTO `emails_departamentos` VALUES ('Pagos','pagos@established.com',41);
-INSERT INTO `emails_departamentos` VALUES ('Contacto','contacto@established.com',42);
-INSERT INTO `emails_departamentos` VALUES ('','',43);
-INSERT INTO `emails_departamentos` VALUES ('','',44);
-INSERT INTO `emails_departamentos` VALUES ('','',45);
-INSERT INTO `emails_departamentos` VALUES ('','',46);
-INSERT INTO `emails_departamentos` VALUES ('','',47);
-INSERT INTO `emails_departamentos` VALUES ('','',48);
-INSERT INTO `emails_departamentos` VALUES ('','',49);
-INSERT INTO `emails_departamentos` VALUES ('','',50);
+INSERT INTO `emails_departamentos` VALUES ('Pagos','dev@networksoft.mx',51);
+INSERT INTO `emails_departamentos` VALUES ('Contacto','contact@networksoft.mx',52);
+INSERT INTO `emails_departamentos` VALUES ('Ventas','ventas@established.com',53);
+INSERT INTO `emails_departamentos` VALUES ('','',54);
+INSERT INTO `emails_departamentos` VALUES ('','',55);
+INSERT INTO `emails_departamentos` VALUES ('','',56);
+INSERT INTO `emails_departamentos` VALUES ('','',57);
+INSERT INTO `emails_departamentos` VALUES ('','',58);
+INSERT INTO `emails_departamentos` VALUES ('','',59);
+INSERT INTO `emails_departamentos` VALUES ('','',60);
 /*!40000 ALTER TABLE `emails_departamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17141,7 +16579,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (1,'Mi Fabrica','1','fabric@esatablished.com','http://established.com');
+INSERT INTO `empresa` VALUES (1,'dev networksoft','1','dev@networksoft.com.mx','http://networksoft.mx');
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17182,7 +16620,7 @@ CREATE TABLE `empresa_multinivel` (
 
 LOCK TABLES `empresa_multinivel` WRITE;
 /*!40000 ALTER TABLE `empresa_multinivel` DISABLE KEYS */;
-INSERT INTO `empresa_multinivel` VALUES ('9278986546-8','Established',1,'8787164','3115654368','Calle 22 N° 90-70','http://Established.com.co','COL','21456879','Fusagasuga','Ebenezer','DES','DES','DES',0,'Sin Resolucion\n','Sin comentarios',0,0);
+INSERT INTO `empresa_multinivel` VALUES ('9278986546','Established S.A.S',1,'8787164','3115654368','No define','http://Established.com.co','COL','No define','Fusagasuga','Ebenezer','DES','ACT','DES',0,'IVA regimen comun, actividad economica 5820, Agente retenedor, REsolucion de facturacion Numero 8000000028630 del 10 de septiembre de 2015 Facturacion de computador.','La presente factura de venta es un titulo valor (Art 772 codigo de comercio modificado junto  ley 1231 de 2008). La empresa no se hace responsable de dinero entegados a terceros para lo cual se deben consignar en bancos.',2,5);
 /*!40000 ALTER TABLE `empresa_multinivel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18862,7 +18300,7 @@ CREATE TABLE `estilo_usuario` (
   `btn_1_color` varchar(30) NOT NULL,
   `btn_2_color` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=341 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=837 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -18871,33 +18309,8 @@ CREATE TABLE `estilo_usuario` (
 
 LOCK TABLES `estilo_usuario` WRITE;
 /*!40000 ALTER TABLE `estilo_usuario` DISABLE KEYS */;
-INSERT INTO `estilo_usuario` VALUES (1,1,'#004080','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (2,2,'#808080','#0080ff','#0000ff');
-INSERT INTO `estilo_usuario` VALUES (316,1000,'#000000','#102457','#54c9a8');
-INSERT INTO `estilo_usuario` VALUES (317,1001,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (318,1002,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (319,1003,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (320,1004,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (321,1005,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (322,1006,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (323,1007,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (324,1008,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (325,1009,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (326,1010,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (327,1011,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (328,1012,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (329,1013,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (330,1014,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (331,1015,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (332,1016,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (333,1017,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (334,1018,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (335,1020,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (336,1021,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (337,1022,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (338,1023,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (339,1024,'#03b4db','#7e7e7e','#2c3640');
-INSERT INTO `estilo_usuario` VALUES (340,1025,'#03b4db','#7e7e7e','#2c3640');
+INSERT INTO `estilo_usuario` VALUES (1,1,'#d2e4e7','#0d4e5d','#00b4dc');
+INSERT INTO `estilo_usuario` VALUES (2,2,'#d5d8d9','#00b4dc','#0c414c');
 /*!40000 ALTER TABLE `estilo_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18927,7 +18340,7 @@ CREATE TABLE `evento` (
   `estatus` varchar(3) NOT NULL DEFAULT 'ACT',
   `url` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -18936,16 +18349,6 @@ CREATE TABLE `evento` (
 
 LOCK TABLES `evento` WRITE;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
-INSERT INTO `evento` VALUES (1,1,4,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2017-02-01 04:19:30','2017-02-01 14:00:00','2017-02-01 19:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (2,1,4,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2016-03-31 15:14:22','2016-04-15 08:00:00','2016-04-16 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (3,1,5,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2017-02-01 04:22:30','2017-02-01 08:00:00','2017-02-12 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (4,1,6,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2016-03-31 15:14:51','2016-06-15 08:00:00','2016-06-16 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (5,1,6,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2016-03-31 15:15:02','2016-07-15 08:00:00','2016-07-16 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (6,1,6,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2017-02-01 04:19:01','2017-02-03 08:00:00','2017-02-03 11:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (7,1,6,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2016-03-31 15:15:25','2016-09-15 08:00:00','2016-09-16 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (8,1,6,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2016-03-31 15:15:41','2016-10-15 08:00:00','2016-10-16 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (9,5,2,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2017-02-01 04:20:44','2017-02-21 08:00:00','2017-02-21 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
-INSERT INTO `evento` VALUES (10,1,3,1,'Convencion','Te invita a ser parte de  la segunda Convencion Coorporativa Internacional en la historia de nuestra compania','2017-02-01 04:18:23','2017-05-09 08:00:00','2017-05-09 17:00:00','JW Marriott Hotel',0,'615 Malecón de la Reserva\nMiraflore','0.00000','0.00000','','ACT','<iframe src=\"https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d3900.7151160578696!2d-77.03155428592738!3d-12.131634191410836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x9105b7e1ca513091%3A0x974f225c6f1c22e!2sJW+Marriott+Hotel+Lima%2C+Malec%C3%B3n+de+la+Reserva+615%2C+Lima+15074!3m2!1d-12.131634199999999!2d-77.02936559999999!5e0!3m2!1ses-419!2ses!4v1459437229156\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>');
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18971,7 +18374,7 @@ CREATE TABLE `factura` (
   `compania` varchar(50) DEFAULT NULL,
   `celular` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_venta`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -18980,15 +18383,6 @@ CREATE TABLE `factura` (
 
 LOCK TABLES `factura` WRITE;
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (26,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3115654368]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (27,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3115654368]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (28,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3115654368]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (29,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3115654368]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (30,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3115654368]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (32,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3115654368]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (33,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3008423480]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (34,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3008423480]\n-Numero Móvil[]\n');
-INSERT INTO `factura` VALUES (35,'COL','21456','','','','','Administrador','Oficina Virtual','admin@miempresa.com','1069740663','','-Numero Fijo[57 3008423480]\n-Numero Móvil[]\n');
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19017,7 +18411,7 @@ CREATE TABLE `informacion` (
 
 LOCK TABLES `informacion` WRITE;
 /*!40000 ALTER TABLE `informacion` DISABLE KEYS */;
-INSERT INTO `informacion` VALUES (1,1,'Bienvenido','Sea usted bienvenido a su oficina virtual, analice los colores en en boton de tablero, y sientace en la libertad de cambiar su foto ','2016-03-31 14:49:15','/media/1/20101113044552-gente.png','ACT');
+INSERT INTO `informacion` VALUES (1,1,'Como personalizar su Oficina Virtual','Para personalizar su oficina virtual busca en la secci&oacute;n de la cabecera, en el menu general el boton tablero, al dar click aqui se abrir&aacute; una ventana con tres selectores de color, el primero para el fondo del sistema y los otros dos para los botones de su pantalla principal; ya que haya seleccionado los colores que desea pulse en actualizar y podra ver su oficina virtual con los colores que ha seleccionado. ','2016-03-12 16:09:09','/media/1/Selección_084.png','ACT');
 /*!40000 ALTER TABLE `informacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19045,7 +18439,7 @@ CREATE TABLE `inventario` (
 
 LOCK TABLES `inventario` WRITE;
 /*!40000 ALTER TABLE `inventario` DISABLE KEYS */;
-INSERT INTO `inventario` VALUES (1,3,1,1000,0,'ACT');
+INSERT INTO `inventario` VALUES (1,30,505,96,0,'ACT');
 /*!40000 ALTER TABLE `inventario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19078,7 +18472,7 @@ CREATE TABLE `inventario_historial` (
 
 LOCK TABLES `inventario_historial` WRITE;
 /*!40000 ALTER TABLE `inventario_historial` DISABLE KEYS */;
-INSERT INTO `inventario_historial` VALUES (1,'2017-03-15 18:47:43',1,'0',3,2,'1000','1',1,'E','4545g4');
+INSERT INTO `inventario_historial` VALUES (1,'2016-10-03 17:04:05',1,'0',30,3,'100','1',1,'E','786867543');
 /*!40000 ALTER TABLE `inventario_historial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19114,7 +18508,7 @@ CREATE TABLE `login_attempts` (
   `login` varchar(50) COLLATE utf8_bin NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=193 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19123,6 +18517,7 @@ CREATE TABLE `login_attempts` (
 
 LOCK TABLES `login_attempts` WRITE;
 /*!40000 ALTER TABLE `login_attempts` DISABLE KEYS */;
+INSERT INTO `login_attempts` VALUES (192,'177.240.60.227','laura','2016-11-08 20:46:23');
 /*!40000 ALTER TABLE `login_attempts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19138,7 +18533,7 @@ CREATE TABLE `mails` (
   `id_emails` int(11) DEFAULT '1',
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19151,12 +18546,13 @@ INSERT INTO `mails` VALUES (1,2,'AFILIACION');
 INSERT INTO `mails` VALUES (2,2,'ACTIVACION');
 INSERT INTO `mails` VALUES (3,2,'CAMBIO EMAIL');
 INSERT INTO `mails` VALUES (4,1,'COBROS');
-INSERT INTO `mails` VALUES (5,1,'CUENTAS COBRAR');
-INSERT INTO `mails` VALUES (6,2,'RECUPERA CONTRASENA');
-INSERT INTO `mails` VALUES (7,2,'NUEVA CONTRASENA');
-INSERT INTO `mails` VALUES (8,2,'INVITACION');
+INSERT INTO `mails` VALUES (5,1,'PAGOS BANCO');
+INSERT INTO `mails` VALUES (6,2,'FORGOT PASSWORD');
+INSERT INTO `mails` VALUES (7,2,'RESET PASSWORD');
+INSERT INTO `mails` VALUES (8,2,'INVITACION AFILIAR');
 INSERT INTO `mails` VALUES (9,2,'AUTORESPONDER');
 INSERT INTO `mails` VALUES (10,1,'TRANSACCION EMPRESA');
+INSERT INTO `mails` VALUES (11,1,'COMPRA DESDE CEDI');
 /*!40000 ALTER TABLE `mails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19174,7 +18570,7 @@ CREATE TABLE `membresia` (
   `descripcion` text NOT NULL,
   `id_red` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=507 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19183,7 +18579,8 @@ CREATE TABLE `membresia` (
 
 LOCK TABLES `membresia` WRITE;
 /*!40000 ALTER TABLE `membresia` DISABLE KEYS */;
-INSERT INTO `membresia` VALUES (1,'Pertenencia al Multinivel','60','Inicio en este Magnífico Multinivel',1);
+INSERT INTO `membresia` VALUES (501,'Membresia Infrarojo','','',250);
+INSERT INTO `membresia` VALUES (500,'Membresia Asociado','','',250);
 /*!40000 ALTER TABLE `membresia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19240,7 +18637,7 @@ CREATE TABLE `mercancia` (
   `iva` varchar(3) NOT NULL DEFAULT 'CON',
   `descuento` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=506 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19249,15 +18646,7 @@ CREATE TABLE `mercancia` (
 
 LOCK TABLES `mercancia` WRITE;
 /*!40000 ALTER TABLE `mercancia` DISABLE KEYS */;
-INSERT INTO `mercancia` VALUES (1,1,'Cur12',2,'AAA','2016-03-31 02:55:10','ACT',22,80.00,80.00,100.00,'7',1.00,'MAS',0.00);
-INSERT INTO `mercancia` VALUES (2,1,'Act11',1,'AAA','2016-03-31 03:04:56','ACT',20,20.00,20.00,22.00,'4',1.00,'MAS',0.00);
-INSERT INTO `mercancia` VALUES (3,2,'Cur22',2,'COL','2016-03-31 03:09:22','ACT',22,120.00,120.00,140.00,'7',1.00,'MAS',0.00);
-INSERT INTO `mercancia` VALUES (4,2,'Arc21',1,'MEX','2017-03-13 21:23:36','ACT',1,25.00,25.00,35.00,'5',0.00,'CON',0.00);
-INSERT INTO `mercancia` VALUES (5,1,'Paq14',4,'AAA','2016-03-31 03:16:46','ACT',0,200.00,200.00,220.00,'7',1.00,'MAS',0.00);
-INSERT INTO `mercancia` VALUES (6,3,'Wat31',1,'COL','2016-03-31 17:03:45','ACT',20,10.00,10.00,15.00,'4',1.00,'CON',0.00);
-INSERT INTO `mercancia` VALUES (7,1,'Per15',5,'AAA','2016-03-31 03:22:51','ACT',0,0.00,50.00,0.00,'0',1.00,'MAS',0.00);
-INSERT INTO `mercancia` VALUES (8,4,'cPR41',1,'ESP','2016-03-31 17:04:23','ACT',20,125.00,125.00,135.00,'',1.00,'CON',0.00);
-INSERT INTO `mercancia` VALUES (9,1,'Kit13',3,'AAA','2016-03-31 03:36:32','ACT',0,40.00,40.00,50.00,'',0.00,'CON',0.00);
+INSERT INTO `mercancia` VALUES (505,1,'pla11',1,'COL','2016-10-03 16:58:43','ACT',1,100.00,100.00,150.00,'3',10.00,'MAS',0.00);
 /*!40000 ALTER TABLE `mercancia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19342,7 +18731,7 @@ CREATE TABLE `noticia` (
   `status` varchar(3) NOT NULL,
   `id_grupo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19351,13 +18740,9 @@ CREATE TABLE `noticia` (
 
 LOCK TABLES `noticia` WRITE;
 /*!40000 ALTER TABLE `noticia` DISABLE KEYS */;
-INSERT INTO `noticia` VALUES (1,1,'QUE ES NETWORK MARKETING Y COMO PUEDE PROPORCIONAR','    Descubre en este art&iacute;culo Que Es Network Marketing y c&oacute;mo est&aacute; tomando cada vez m&aacute;s fuerza en el mundo, convirti&eacute;ndose en un excelente veh&iacute;culo para que cualquier persona que se lo proponga pueda liberarse de la crisis econ&oacute;mica y alcanzar la libertad financiera.\n\n    QUE ES NETWORK MARKETING &ndash; ANTECEDENTES\n\n    El Network Marketing, tambi&eacute;n conocido como &ldquo;Marketing Multinivel&rdquo;, &ldquo;Redes de Mercadeo&rdquo;, &ldquo;Mercadeo En Red&rdquo;, &oacute; MLM (Multi Level Marketing), es un modelo de negocios que ha existido desde mediados del siglo pasado y que se basa en un concepto muy simple y brillante:\n\n    Las Empresas de &ldquo;Network Marketing&rdquo; en lugar de gastar grandes cantidades de dinero en publicidad y canales de distribuci&oacute;n para promover sus productos y/o servicios, le pagan mejor a las personas que los usan y que est&aacute;n entusiasmados con los resultados obtenidos para que le hablen a m&aacute;s personas sobre los beneficios de los mismos.\n\n    El Network Marketing es un negocio dise&ntilde;ado para que puedas trabajarlo ya sea a medio tiempo &oacute; a tiempo completo. Esto lo hace muy atractivo para todas aquellas personas que tengan un empleo y/o autoempleo y que est&eacute;n buscando una fuente adicional de ingresos.\n\n    Otro gran atractivo que tiene el &ldquo;Network Marketing&rdquo; es que su modelo de negocios que le proporciona a cualquier persona que se lo proponga, la oportunidad de alcanzar la Libertad Financiera y lograr sus sue&ntilde;os en la vida.\n\n    El Network Marketing se ha convertido sin dudas en una excelente alternativa para todas aquellas personas a las que ya les peg&oacute; la crisis econ&oacute;mica del Siglo XXI, enfermedad a la cual defino personalmente como &ldquo;C&aacute;ncer de Bolsillo&ldquo;.\n\n    Cada d&iacute;a hay m&aacute;s personas desempleadas en el mundo y sin ahorro alguno que los proteja por los despidos masivos que est&aacute;n haciendo las empresas, para mantenerse a flote y con un buen margen de utilidad y competividad en el mercado.\n\n    As&iacute; mismo, los que tienen la suerte de tener todav&iacute;a un empleo, lo defienden a capa y espada rog&aacute;ndole a Dios no cruzar la barrera de los 40 a&ntilde;os para que no los despidan, y c&oacute;mo no les alcanza lo que ganan tienen que vivir de prestado y cada d&iacute;a est&aacute;n m&aacute;s endeudados y quebrados.\n\n    &iquest;Que Es Network Marketing? Es un modelo de Negocios dise&ntilde;ado para cualquier persona que quiera &ldquo;Cambiar su Vida&rdquo; y alcanzar la Libertad Financiera.\n\n    Y al hablar de &ldquo;Cambiar de Vida&rdquo; me refiero con llegar a tener un mejor estilo de vida que con el que cuentas actualmente y que nunca te hubieras imaginado lograr alg&uacute;n d&iacute;a con un empleo y/o autoempleo convencional.\n\n    Lo &uacute;nico a lo que debes estar dispuesto es a atreverte a so&ntilde;ar de nuevo, a dejarte ense&ntilde;ar de nueva cuenta y a transformar tu mente de empleado y/o autoempleado a Empresario Independiente De Redes &oacute; Profesional del Networking. &iexcl;ES TU DECISI&Oacute;N!\n\n    Robert Kiyosaki en su libro titulado &ldquo;El Negocio Del Siglo XXI&rdquo;, habla desde su punto de vista &ldquo;que es Network Marketing&rdquo; y lo define como una franquicia de muy baja inversi&oacute;n, la cual te permite salir de la crisis econ&oacute;mica actual en la que probablemente vives y alcanzar la Libertad Financiera.\n\n    En el cap&iacute;tulo siete de su libro menciona que el verdadero poder del Network Marketing est&aacute; en el apalancamiento, tema del cual tambi&eacute;n hablo a detalle en el art&iacute;culo &ldquo;Marketing Multinivel &ndash; Introducci&oacute;n Para Principiantes&rdquo;.\n\n    Gracias este poder de apalancamiento, como &ldquo;Empresario Independiente de Redes&rdquo; no s&oacute;lo recibes comisiones por los productos que usen las personas que asocies a la empresa, sino tambi&eacute;n por los productos adquiridos por las personas asociadas por tus referidos, y de los referidos de tus referidos hasta cierto n&uacute;mero de niveles de profundidad.\n\n    Gracias a los grandes beneficios del Network Marketing tu puedes llegar a construir una red de gran tama&ntilde;o de &ldquo;Empresarios Independientes de Redes&rdquo;, la cual te puede proporcionar un Ingreso Residual &oacute; Pasivo considerable de por vida.\n\n    &iexcl;Descubre Por que Es Network Marketing Una Excelente Alternativa Para Liberarse De La Crisis Econ&oacute;mica Y Alcanzar La Libertad Financiera!\n','/media/1/noticia1.jpg','2016-03-31 14:50:53','ACT',11);
-INSERT INTO `noticia` VALUES (2,1,'¿Por Qué El Crecimiento Vertiginoso Del Network Marketing','\n\n    Una de las razones por las que las ventas totales a trav&eacute;s del sistema de Venta Directa y del Network Marketing contin&uacute;en creciendo a&ntilde;o tras a&ntilde;o es porque operan con un modelo de negocios dise&ntilde;ado para que todos ganen.\n\n    Seg&uacute;n datos proporcionados por la consultora global Euromonitor Internacional y publicados por America Econom&iacute;a en su edici&oacute;n del 18 de Julio del 2013, entre las compa&ntilde;&iacute;as que usan el sistema de &ldquo;Venta Directa&rdquo; como primera v&iacute;a de mercadeo y distribuci&oacute;n, Avon encabeza en 2013 la lista de las que alcanzaron los mejores resultados en el mundo, seguida por Amway a nivel global y por la brasile&ntilde;a Natura en Am&eacute;rica Latina.\n\n    Aunque Amway, Natura y Avon se apoyan en el sistema de &ldquo;Venta Directa&rdquo;, el modelo de Amway es distinto al de las otras dos, dado que su inversi&oacute;n en publicidad es m&iacute;nima y no tiene presencia en super-mercados &oacute; en el menudeo tradicional.\n\n    Amway se apoya en una estructura de mercadeo y distribuci&oacute;n exitosa denominada Network Marketing, &oacute; Redes de Mercadeo del cual ya hablamos anteriormente. Al igual que Amway, Avon y Natura, Vorwerk de Alemania, Oriflame de Luxemburgo, Belcorp de Per&uacute; y Herbalife de EE.UU., han creado un mercado global de Ventas Directas que alcanza un estimado de US$ 166,876 millones, seg&uacute;n informes recientes de la Federaci&oacute;n Mundial de Asociaciones de Venta Directa (WFDSA).','/media/1/noticia2.jpg','2016-03-31 14:51:32','ACT',11);
-INSERT INTO `noticia` VALUES (3,1,'Que Es Network Marketing','\n\n    El explosivo crecimiento de la Industria del Network Marketing, gracias a su revolucionario modelo de negocios, ha provocado que a lo largo de los a&ntilde;os muchas personas tendenciosas y sin argumentos de peso traten de desprestigiarla a como de lugar y en base a falsos conceptos.\n\n    Y esto es porque no conciben c&oacute;mo es que gente sin estudios y de escasos recursos puedan alcanzar la Libertad Financiera en 3 a 5 a&ntilde;os y trabajando a medio tiempo. Esto suena a burla para los que toda su vida se han sobado el lomo trabajado de sol a sol como empleados y/o autoempleados y viven toda la vida quebrados, endeudados y a expensas de los gobiernos.\n\n    Piensa esto&hellip;\n\n    Si grandes personajes como Warren Buffett y Donald Trump han centrado toda su atenci&oacute;n en la Industria del Network Marketing y la recomiendan ampliamente es porque algo vieron en ella que vale mucho la pena.\n\n    Si Robert Kiyosaki, autor de varios bestsellers famosos como &ldquo;Padre Rico, Padre Pobre&rdquo;, entre otros, dedic&oacute; todo un libro llamado &ldquo;El Negocio del Siglo 21? al Network Marketing, es porque tambi&eacute;n encontr&oacute; algo bastante atractivo en este modelo de negocios.\n\n    &iquest;Y que es lo que todos ellos han visto?\n','/media/1/noticia3.jpg','2016-03-31 14:52:15','ACT',11);
-INSERT INTO `noticia` VALUES (4,1,'MARKETING MULTINIVEL – INTRODUCCION PARA PRINCIPIANTES','\n\n    El Marketing Multinivel, tambi&eacute;n conocido como &ldquo;Network Marketing&rdquo;, &ldquo;Redes de Mercadeo&rdquo;, &ldquo;Mercadeo en Red&rdquo; &oacute; &ldquo;MLM (Multi Level Marketing)&rdquo;, es una Estrategia de Venta en la cual diferentes Productos o Servicios son comercializados directamente del Fabricante &oacute; Productor hasta al Consumidor Final a trav&eacute;s de una Red de Empresarios Independientes, tambien llamados Distribuidores Independientes, usando el sistema de Recomendaci&oacute;n Boca en Boca.\n\n    MARKETING MULTINIVEL SISTEMA DE RECOMENDACION BOCA EN BOCA\n\n    El Marketing Multinivel ha ido cobrando relevancia durante los &uacute;ltimos a&ntilde;os debido a la creciente dificultad que tienen los Fabricantes o Productores para vender sus Productos o Servicios a los consumidores, quienes cada vez estamos m&aacute;s cerrados al bombardeo de publicidad al que nos vemos sometidos diariamente a trav&eacute;s de todos los medios de comunicaci&oacute;n existentes.\n\n    Aqu&iacute; es donde entra en juego el Marketing Multinivel y que lo hace muy atractivo con su sistema de Recomendaci&oacute;n Boca en Boca dado que su grado de penetraci&oacute;n en el mercado es muy superior al sistema de venta tradicional, ya que el consumidor prefiere probar un Producto o Servicio recomendado por un conocido, antes que el ofrecido en un anuncio publicitario.\n\n    MARKETING MULTINIVEL RED DE EMPRESARIOS INDEPENDIENTES\n\n    En una organizaci&oacute;n de MLM, un Empresario Independiente puede asociar a personas que a su vez auspicien a otras personas, quienes a su vez asocien a m&aacute;s personas, y as&iacute; sucesivamente generando de esta forma una Red de Empresarios Independientes.\n\n    El gran atractivo de este Modelo de Negocio es que cualquier Empresario Independiente puede obtener un Ingreso Residual por el movimiento de todos los Productos o Servicios que se den dentro de su Red.\n\n    De esta manera, todos los Empresarios Independientes tienen la oportunidad de construir una organizaci&oacute;n lucrativa de muchos niveles de profundidad, que puede llegar a tener cientos o incluso miles de integrantes.\n\n    En el siguiente Post hablaremos a detalle acerca de este apasionante tema, m&aacute;s sin embargo perm&iacute;teme mostrarte un ejemplo:\n\n    Supongamos que tu asocias a 5 personas en tu primer mes. Ahora supongamos que cada uno de tus 5 asociados auspicia a otras 5 personas en el segundo mes. Te&oacute;ricamente, si el proceso continuara mes con mes, con precisi&oacute;n exacta (cada asociado auspiciando a 5 personas m&aacute;s), luego de 5 meses tu tendr&iacute;as 3,905 Empresarios Independientes en tu Red.\n','/media/1/noticia4.jpg','2016-03-31 14:53:04','ACT',11);
-INSERT INTO `noticia` VALUES (5,1,'MARKETING MULTINIVEL – LA CLAVE ESTA EN EL APALANCAMIENTO','\n\n    Al multimillonario Magnate Petrolero Paul Getty se le atribuye el haber dicho: &ldquo;Prefiero tener el 1% de los esfuerzos de 100 personas, antes que el 100% de mis propios esfuerzos.&rdquo; Getty ten&iacute;a raz&oacute;n, dado que ninguna persona tiene todo el tiempo o la energ&iacute;a necesarias para construir un negocio exitoso por su cuenta.\n\n    El &eacute;xito de un empresario est&aacute; directamente relacionado con la cantidad de Apalancamiento que pueda lograr. All&iacute; es donde entra en escena el Marketing Multinivel debido a que es un sistema espec&iacute;ficamente dise&ntilde;ado para darle a gente com&uacute;n acceso a un apalancamiento extraordinario.\n\n    Esta poderosa Estrategia de Negocios fu&eacute; inventada hace m&aacute;s de sesenta a&ntilde;os pero en los &uacute;ltimos veinte, los Desarrollos Tecnol&oacute;gicos de &uacute;ltima generaci&oacute;n lograron que sus grandes bondades se dieran a conocer y despertaran el inter&eacute;s de grandes Corporativos como MATTEL, CITIGROUP e IBM por ennumerar tan solo a algunos que ya est&aacute;n usando este Modelo de Negocio en algunas &aacute;reas.\n\n    El Marketing Multinivel ha crecido hasta convertirse en una de las fuerzas impulsoras de la econom&iacute;a del Siglo Veintiuno.\n\n    Es dif&iacute;cil asegurar estad&iacute;sticas confiables sobre el crecimiento global del MLM, ya que muchas empresas no dan a conocer sus cifras de su facturaci&oacute;n &oacute; su n&uacute;mero de miembros a ninguna Organizaci&oacute;n de Comercio. Sin embargo, basado en datos disponibles de la Asociaci&oacute;n de Venta Directa (DSA), en Washington D.C., as&iacute; como en otras fuentes de la industria, Duncan Maxwell Anderson, Director Editorial de la revista Network Marketing Lifestyles, estima que las Ventas Anuales realizadas a trav&eacute;s de las organizaciones de MLM, han alcanzado los $30 mil millones de D&oacute;lares en los Estados Unidos, y $100 mil millones de D&oacute;lares en todo el mundo.\n','/media/1/noticia_1.jpeg','2016-03-31 14:53:38','ACT',11);
-INSERT INTO `noticia` VALUES (6,1,'El MLM hará 10 millones de nuevos millonarios en la próxima década, según Paul Zane Pielser','\n\n    Seg&uacute;n Paul Zane Pilzer, economista Estadounidense famoso por sus predicciones sobre el futuro de la econom&iacute;a, la incidencia de la econom&iacute;a, no solo en Estados Unidos, sino a nivel mundial, abre el comienzo de un futuro prometedor, con estimaciones tales que para el 2016 los ingresos en los hogares aumenten hasta un total de 100 billones de d&oacute;lares, dentro del cual la industria de venta directa llegar&aacute; a nuevos alcances de crecimiento en ventas.\n\n    Las fluctuaciones que ha tenido la econom&iacute;a en Estados Unidos, han dado de que hablar a expertos en el tema, empresarios y dem&aacute;s interesados. Tras una ca&iacute;da en la bolsa, registrada en 2008, el pa&iacute;s se recupera satisfactoriamente seis a&ntilde;os m&aacute;s tarde, hasta llegar a un incremento que asciende a 48 billones de d&oacute;lares.\n\n    Si bien es cierto, la industria dedicada al Network Marketing ha evolucionado de forma positiva en los &uacute;ltimos 13 a&ntilde;os, este fen&oacute;meno abre el panorama hacia un camino con crecientes oportunidades en el cual los empresarios se ven beneficiados de forma directa, gracias al avance de tecnolog&iacute;a y cambios tributarios.\n\n    Seg&uacute;n Paul Zane Pilzer, personas dedicadas a este sistema de negocio se convertir&aacute;n en los nuevos 10 millones de millonarios, en la pr&oacute;xima d&eacute;cada; entendi&eacute;ndose por millonarios aquellas personas cuyo patrimonio neto o riqueza sea igual o exceda un mill&oacute;n de d&oacute;lares.\n\n    Esta explosi&oacute;n demogr&aacute;fica, proyecta las nuevas corrientes de ingresos, promoviendo una industria que alcance metas significativas y extendiendo el nivel de oportunidades a m&aacute;s personas en el mundo.\n','/media/1/noticia_3.jpeg','2016-03-31 14:54:16','ACT',11);
-INSERT INTO `noticia` VALUES (7,1,'El MLM una verdadera fuente de ingresos para la jubilación, según la Revista Forbes','\n\n    MLM (Multi-level Marketing) dedicada a la venta directa, Network Marketing, es considerado por Robet Laura, miembro de Forbes.com; como una industria preparada para un crecimiento expansivo que da salida a la problem&aacute;tica respecto a la crisis de ahorros para la jubilaci&oacute;n en los Estados Unidos, se desenvuelve en un entron de oportunidades, como deshacerse de su habitual horario de trabajo, para llegar a ser su propio jefe y as&iacute; ganar considerables sumas de dinero y ampliar su c&iacute;rculo de amigos en el proceso.\n\n    Atado a esto se integra el concepto psicol&oacute;gico que fomenta entre otras cosas el ser empresa independiente, concepto inherente a las estad&iacute;sticas reveladoras con la estimaci&oacute;n de AARP que la mitad de todos los Baby Boomers (76&rsquo;000.000) est&aacute;n interesados en iniciar un negocio.\n\n    El crecimiento de los llamados Baby Boomers refleja el desencanto de sus empleos actuales, la cero conexi&oacute;n con su trabajo y el deseo profundo de impactar fuera de las paredes de una oficina o terrenos de la empresa, queriendo ser parte de algo m&aacute;s grande y mejor.\n\n    Las personas cada vez son m&aacute;s consientes del sentido impl&iacute;cito de la crisis de ahorro, esto es el hecho de saber que seguramente no van a ser capaces de ahorrar suficiente dinero para el momento de su jubilaci&oacute;n y lo que haya quedado posteriormente gastarlo lentamente de los 62 a los 100 a&ntilde;os. Frente a esto se desatan nuevas alternativas para ahorrar y generar ingresos suplementarios, es decir el fomento del MLM.\n\n    Robert Laura, tras hacer un an&aacute;lisis exhaustivo se encontr&oacute; entre otras cosas que la creaci&oacute;n de empresas Marketing promueve el medio para conocer gente nueva, desarrollar alternativas de innovaci&oacute;n y ser m&aacute;s competentes d&iacute;a a d&iacute;a; entrevistas realizadas, entre estas a uno de sus amigos, quien destaca el hecho de haberse unido a una empresa de salud y belleza de venta directa logrando expandir su red de amigos.\n\n    El dise&ntilde;o de este esquema no es el de hacer una pir&aacute;mide de dinero, m&aacute;s bien deber ser visto como una oportunidad mejorar muchos de los aspectos personales de jubilaci&oacute;n y el beneficio a&ntilde;adido de complementar otras fuentes de ingresos.\n\n    Daria M. Brezinski Ph. D director de Marketing, Psic&oacute;logo, dice que las empresas Multi-level Marketing son exitosas ya que puede satisfacer una serie de necesidades humanas como la de sentirse importante, tener conexiones, aprender algo nuevo y hacer una diferencia, logrando as&iacute; no centrar su expectativas &uacute;nicamente en aspectos financieros.\n\n    Robert continu&oacute; sus entrevistas y encontr&oacute; que aquellos que ya hacen parte de este c&iacute;rculo del Marketing tienen un desarrollo empresarial coherente aplicable a cualquier negocio nuevo.\n\n    Lorene Hochstetler, de Ohio explica que esto no se logra de la noche a la ma&ntilde;ana, es necesario tener disciplina, trabajo arduo y expectativas transables hacia el futuro.\n\n    Las entrevistas realizadas concluyen que las empresas MLM y NM junto con otras oportunidades de negocios son consideradas importantes para cualquier persona que entra en jubilaci&oacute;n, pero sin duda partiendo de la iniciativa empresarial y llevarlo como estilo de vida a la jubilaci&oacute;n, esto implica ayudar a las personas a encontrar la manera de convertir una pasi&oacute;n o deseo personal en dinero extra para su bolsillo.\n','/media/1/noticia_4.jpeg','2016-03-31 14:54:54','ACT',11);
+INSERT INTO `noticia` VALUES (1,1,'Las 7 leyes de liderazgo en Network Marketing por Randy Gage','El Network Marketing es esencial para el desarrollo del liderazgo. Para alcanzar un nivel de &eacute;xito alto, debes tener la capacidad de identificar los lideres existentes a tu alrededor, luego de identificarlos debes ayudarlos en su camino hacia la grandeza. Es necesario comprender que no solo debes encaminar tu equipo de trabajo, hay que dejar espacio para los nuevos l&iacute;deres que llegaran con el pasar del tiempo y permitir que desempe&ntilde;en diferentes funciones, entre esas la tuya, pues tu trabajo consiste en lograr que estos l&iacute;deres potenciales trabajen eficientemente aun si tu no estas. Despu&eacute;s de la experiencia que he adquirido en 25 a&ntilde;os de trabajo y la tesis que alg&uacute;n d&iacute;a lleve a cabo, he cuantificado este proceso en Las Siete Leyes de Liderazgo. Para llegar a ser un verdadero l&iacute;der en la profesi&oacute;n del Network Marketing (redes de mercadeo) tienes que estar de acuerdo con todas estas leyes. Echemos un vistazo a las leyes con las que debes estar en pleno acuerdo no solo t&uacute; sino todo tu equipo de trabajo&hellip; Ley de liderazgo #1: El liderazgo empieza por dirigirte a ti mismo Cuando yo ten&iacute;a uno o dos a&ntilde;os en el negocio de network marketing, a menudo me quejaba con mi patrocinador por el equipo de trabajo que ten&iacute;a; la mayor&iacute;a de ellos eran perezosos y solo quer&iacute;an que yo estuviera ah&iacute; para hacerlos ricos; me preguntaba porque ellos no pod&iacute;an ser m&aacute;s como yo. Desafortunadamente, ese era el problema. Yo hab&iacute;a cometido el cl&aacute;sico error de los principiantes en Network Marketing: llegue a pensar que se puede manejar a las personas a mi acomodo con tal de llevarlos por la ruta de la riqueza. Lo siento, ese pez no muerde as&iacute; el anzuelo. Como lo dije en mi primer libro &ldquo;Making the First circle Work&rdquo;, realmente se trata de la responsabilidad personal, se trata de moldear nuestro comportamiento entorno a nuestros negocios; no importa lo que diga tu equipo, en realidad ellos te observan y posteriormente te imitan. Tu equipo de trabajo, a quien diriges, es decir tus seguidores a menudo se detallan si t&uacute; llevas nuevos clientes al negocio, si patrocinas a nuevas personas, si asistes a eventos relacionados con la industria y si t&uacute; sigues el conducto regular dentro del sistema acogido por la compa&ntilde;&iacute;a. Ellos estudian c&oacute;mo eres, tu respeto hacia los dem&aacute;s, observan como manejas los problemas, como interact&uacute;as con la compa&ntilde;&iacute;a y como hablas de los dem&aacute;s cuando no est&aacute;n a tu alrededor. Eres el responsable de ir primero, de probar el camino, de encontrar aquello que funciona y luego compartir esa informaci&oacute;n con tu grupo. (Aunque esperamos que puedas contar con patrocinadores, se trata m&aacute;s de la responsabilidad que evocas y la ense&ntilde;anza que transmites en el sistema actual) El &eacute;xito requiere una funci&oacute;n &uacute;nica donde el l&iacute;der es el mentor, entrenador, maestro, oficial de mando y el socio. Las personas no trabajan para ti, trabajan para s&iacute; mismos, pero lo que a ellos les transmite su l&iacute;der afecta sus resultados individuales y con ellos sus ingresos. Esto requiere un delicado acercamiento, donde el acompa&ntilde;amiento, la formaci&oacute;n y liderara con el ejemplo demuestran la persona que en realidad tu eres; eso no es algo que tu empacas en un kit para distribuidores. De hecho el mejor entrenamiento que he recibido de network marketing vino del network marketing. Lo que a mi profesi&oacute;n trajo &eacute;xito fueron las campa&ntilde;as pol&iacute;ticas, mi servicio en la junta del cond&oacute;mino, m&iacute; postulado a la c&aacute;mara de comercio, mi asociaci&oacute;n con oradores y mi servicio a la iglesia, todo esto debido a que en cada caso yo trabajaba con un ej&eacute;rcito de voluntarios. Cuando do se puede contratar y despedir personas, te ves obligado a aprender como inspirar a los dem&aacute;s para alcanzar un objetivo com&uacute;n. Y todo liderazgo empieza con el ejemplo&hellip; Tienes que demostrarles a los dem&aacute;s que eres capaz de dirigirte a ti primero, antes que esperes que alguien m&aacute;s se decida a seguirte. Lo parad&oacute;jico en esto es que cuando t&uacute; controlas tus propias acciones, esto realmente influye en todo el equipo de trabajo. T&uacute; formas ciertos patrones de comportamiento y formas una cultura dentro de tu equipo de trabajo, pero lo haces mediante la modelizaci&oacute;n de tu propio comportamiento y ese es el ejemplo que las personas deciden duplicar. Lecci&oacute;n de liderazgo: Estas listo para liderar, cuando comienzas por la persona que ves frente al espejo. Ley de liderazgo #2: El crecimiento individual determina el crecimiento de la red En realidad t&uacute; no puedes hacer crecer tu red, de hecho nadie puede; los Net Works son constantemente transformados por diversos factores, como la cultura, h&aacute;bitos, sistema de trabajo, las personas de alrededor y la filosof&iacute;a. Las acciones individuales se convierten en el factor determinante de lo que hace la red de trabajo. Y eso comienza con el crecimiento personal&hellip; Una de las cosas que con frecuencia afirmo es &ldquo;tu negocio crecer&aacute; tan r&aacute;pido como lo haces t&uacute;&rdquo;. Todo lo que haces de alguna manera incide en el crecimiento de tu negocio. El aprendizaje de una lengua extranjera, tomar clases de filosof&iacute;a o incluso hacer yoga, har&aacute; que se transfiera aunque sea un poco a los dem&aacute;s. Hay una osmosis que tiene lugar a medida que crece en cualquier &aacute;rea que te desarrolles. Desarrolla la confianza, equilibrio, sabidur&iacute;a, conocimiento y habilidades. Todas estas cosas te hacen m&aacute;s atractivo y aumenta el respeto que recibes de tu equipo. La clave est&aacute; en la recreaci&oacute;n de una cultura de crecimiento personal dentro de tu equipo&hellip; No basta con decirles a las personas que lean un libro o que escuchen audios de positividad; la verdad es que la mayor&iacute;a de las personas ni siquiera saben lo que eso significa. Si tienes un programa de auto-desarrollo estructurado para tu equipo, veras dr&aacute;sticamente mejores resultados. Cosas como la lectura de un libro y su debate o la suscripci&oacute;n a programas funcionan incre&iacute;blemente bien. Lecci&oacute;n de liderazgo: Al ritmo en que creces como persona, crece t&uacute; negocio. El crecimiento individual en tu equipo es lo que hace que tu red crezca. Ley de liderazgo #3: T&uacute; no manejas personas, t&uacute; lideras personas y manejas las cosas Uno de los grandes problemas en el network marketing es que las compa&ntilde;&iacute;as adoptan r&oacute;tulos para las personas; les encanta dar t&iacute;tulos a la gente de administradores, directores y supervisores, por lo general estos son los rangos de jerarquizaci&oacute;n en una compa&ntilde;&iacute;a. Y luego, &iquest;Qu&eacute; sucede? Alguien patrocina a cuatro personas y ya se convierte en &ldquo;administrador&rdquo;; ahora ellos quieren dejar de buscar personas y manejar a las personas de su equipo. O tiene diez miembros en el equipo y eso lo convierte en &ldquo;supervisor&rdquo;, entonces quiere supervisar el trabajo de los dem&aacute;s y deja de lado el trabajo de ayudar a expandir su negocio. El network marketing no se trata de la gesti&oacute;n de personas, se trata de conducirlos, eso supone establecer un comportamiento, el cual los conduzca al proceso de formaci&oacute;n. Hace uno diez a&ntilde;os me pidieron contribuir con un cap&iacute;tulo de un libro sobre liderazgo, exactamente me pidieron definir lo que era liderazgo y esto fue lo que dije&hellip; El liderazgo es la capacidad de hacer que las personas hagan de buen agrado las cosas que normalmente no quisieran hacer. Eso es el liderazgo en pocas palabras, no se trata de obligar a las personas a hacer lo que queramos que ellos hagan, sobre todo aquellas cosas que normalmente no quieren hacer. A menudo tomo el ejemplo de los militares para describir de mejor maneja lo que es el liderazgo. Alguien que decide tomar una ametralladora, lanzar una granada o tomar otra acci&oacute;n heroica para salvar a su unidad o a un grupo de civiles inocentes, no lo har&iacute;a si no tuviera un fuerte y poderoso liderazgo, del que previamente ha aprendido a desarrollar. Por supuesto, ahora no necesitamos este tipo de acciones dram&aacute;ticas en nuestro negocio, pero cuando tu llevas el equipo con habilidad, haciendo que los integrantes no hagan algo que t&uacute; no quieres que ellos hagan, sin necesidad de presionarlos, entonces te encaminas a la fase del &eacute;xito. Lecci&oacute;n de liderazgo: Administrar las cosas: asistencia, eventos, volumen, etc. Pero cuando se trata de tu equipo, cond&uacute;celos. Ley de liderazgo #4: La credibilidad en el l&iacute;der, desarrolla la credibilidad en los seguidores Muchas personas piensan que el liderazgo se trata de crear confianza en s&iacute; mismo, sin importar el resto. Los demagogos pueden hacer esto, pero en realidad esto no produce buenos resultados. Los l&iacute;deres son aquellos que marcan en su entorno una diferencia positiva, que construyen una creencia mancomunada con su equipo y que desarrollan la confianza en las personas que los siguen. Lecci&oacute;n de liderazgo: No trates de vender a tu equipo el gran l&iacute;der que eres, la capacidad que tienes y lo mucho que puedes hacer, m&aacute;s bien construye una base de creencias &uacute;nicas para alcanzar el &eacute;xito y que sea eso lo que realmente se evidencie en toda tu forma de ser. Ley de liderazgo #5: Si le preguntas a todos, nadie lo har&aacute; Una historia muy frecuente, que quiz&aacute; usted ha escuchado acerca del comportamiento humano fue aquella cuando una gran multitud fue testigo de un atraco, nadie llamo a la polic&iacute;a, porque hab&iacute;a muchas personas presentes, todo el mundo asumi&oacute; que alguien m&aacute;s lo estaba haciendo. Hay una din&aacute;mica similar del liderazgo en el network marketing, lo que probablemente nos lleva al error m&aacute;s grande dentro del negocio&hellip; Por lo general las personas asumen que todo aquel que se une al negocio es un l&iacute;der, o quiere convertirse en l&iacute;der. Gran error, nada mata m&aacute;s el crecimiento de una compa&ntilde;&iacute;a. He aqu&iacute; porque: Cuando se recogen 100 personas de cualquier calle, tal vez solo cinco de ellos tienen el deseo y el potencial de liderazgo, el otro 95% desempe&ntilde;an el rol de seguidores y as&iacute; est&aacute;n m&aacute;s felices. Ahora en nuestro negocio, cunado los n&uacute;meros aumentan, quiere decir que est&aacute;s haciendo un buen trabajo de marketing, lo cual evidencia que atraes a empresarios y personas con aspiraciones empresariales, lo que pude ser un 10 o 15% de tu equipo con potencial de liderazgo, eso todav&iacute;a deja un 85% por fuera&hellip; Ellos no quieren conducir, tienen miedo de hacerlo y por ende no quieren asumir la responsabilidad que el liderazgo conlleva; ellos prefieren los productos y servicios y lo que pueden ganar con ellos, son felices con los pocos o muchos d&oacute;lares que obtienen de ingresos al mes. Ellos pueden obtener estos beneficios con una cantidad m&iacute;nima de esfuerzo, por lo que son felices con esta situaci&oacute;n. No cometas el error de entregar el liderazgo a todas las personas de tu equipo, porque si lo hace, har&aacute; que sucedan las siguientes coas: &bull; Quitaras a muchos el poder de ser l&iacute;deres potenciales, porque piensan que todos los dem&aacute;s pueden desarrollar estas funciones. &bull; Puedes espantar al 85% restante de las personas, porque en realidad ellos no quieren ser l&iacute;deres. &bull; No instale el sistema de formaci&oacute;n, esperando que cada persona que se adhiera a al negocio, se convierta en l&iacute;der. Debes saber que muchas personas van a unirse a la compa&ntilde;&iacute;a simplemente porque les gusta los productos y los quieren conseguir al por mayor, otros se unen con la mentalidad de convertirse en grandes constructores, otros simplemente se acercaran porque les gusta estar cerca de personas positivas en los eventos. &bull; Algunas personas escoger&aacute;n tu negocio porque les gusta el reconocimiento que reciben, otros se quedaran porque tienes un concurso de talentos anualmente y eso les da la oportunidad de mostrar sus habilidades en karaoke, sin embrago otros lo har&aacute;n porque ofreces nachos o galletas en tus eventos. &bull; Si reprendes, menosprecias o humillas a aquellas personas que no est&aacute;n dispuestos a desarrollar las actividades de liderazgo y las hechas fuera, entonces tu red nunca se expandir&aacute; y t&uacute; trabajo de l&iacute;der tampoco. &bull; Cuando te alejas de los prejuicios y dejas que las personas participen en el nivel que se sienten m&aacute;s c&oacute;modos, hay una buena probabilidad de que en un lugar del camino ellos decidan estar listos para ser l&iacute;deres. Lecci&oacute;n de liderazgo: T&uacute; necesitas todo un espectro: l&iacute;deres, pero tambi&eacute;n seguidores y usuarios de tus productos, deja la autoselecci&oacute;n que categoriza seg&uacute;n tu parecer a las personas. Ley de liderazgo #6: Los l&iacute;deres cultivan y celebran el &eacute;xito de sus seguidores Estas en el negocio por ti mismo y llevas la responsabilidad por ello. Tienes metas establecidas, puntos de referencia que te indican cuando estas dentro fuera de la pista de juego, pero esto tambi&eacute;n puede convertirte en una persona egoc&eacute;ntrica y quiz&aacute; resultas por el camino equivocado. Una de las cosas que los l&iacute;deres eficaces hacen es monitorear, modular su progreso mediante puntos de referencia de la personas de su equipo. En lugar de conc&eacute;ntrate solo en tu avance, puedes pensar en el avance de por lo menos cinco de las personas de tu equipo; hacer esto sin duda ayudara no solo tu progreso sino el de todo tu equipo, porque habr&aacute; una base m&aacute;s s&oacute;lida que subyace su progreso. Zig Ziglar ha estado diciendo durante 40 a&ntilde;os: si ayudas a conseguir a los dem&aacute;s lo que quieren, t&uacute; obtendr&aacute;s lo que deseas. La frase de Zig Ziglar parece algo evidente, pero no, algunos l&iacute;deres no lo hacen porque temen sentir celos del progreso de los dem&aacute;s. Durante cinco a&ntilde;os consecutivos, yo era la fuente superior de ingresos en mi compa&ntilde;&iacute;a. En el tercer a&ntilde;o de mi discurso de agradecimiento, dije que quer&iacute;a capacitar a uno de los miembros de mi equipo, para formarlo a mi nivel. Luego a principios del 2011 durante un mes, uno de mis directores personales de Diamond, fue la fuente superior de ingresos a superar y yo no pod&iacute;a estar m&aacute;s feliz. Mi meta fue tener por lo menos cinco personas de mi equipo, que ascendieran a un nivel m&aacute;s alto que el m&iacute;o, despu&eacute;s de eso mi objetivo fue trabajar por conseguir otras cinco personas que tuvieran m&aacute;s ingresos que yo y as&iacute; continuar con el c&iacute;rculo vicioso de la abundancia. Lecci&oacute;n de liderazgo: Reconocer y celebrar los logros de tu equipo, una vez hechos siempre habr&aacute; m&aacute;s para reconocer y celebrar. Ley de liderazgo #7: La verdadera prueba de un l&iacute;der no son los muchos seguidores que tenga, sino los l&iacute;deres que desarrolle Esto est&aacute; muy relacionado con la ley n&uacute;mero cuatro. Para obtener una duplicaci&oacute;n de tu equipo de trabajo es necesario la generaci&oacute;n de l&iacute;deres. El n&uacute;mero total de personas en l&iacute;nea o el n&uacute;mero total de personas en tu equipo, no son estad&iacute;sticas con mucho valor, pero son casi tan importantes como la cantidad de l&iacute;deres con que trabajas en equipo. Eso significa renunciar al control de todas las actividades de formaci&oacute;n que lleves a cabo. Significa que permites a estos l&iacute;deres cometer errores&hellip; Y van a cometer errores, que van a hacer que las cosas tal vez hubieran sido mejores si t&uacute; las hubieras hecho; pero si tu no dejas que las personas no intenten cosas nuevas y aprendan a crecer a trav&eacute;s de sus errores, siempre tendr&aacute;s que hacerlo todo tu. Si ayudas a tus seguidores a desarrollar confianza en s&iacute; mismos, el n&uacute;mero de l&iacute;deres se graduara y as&iacute; es como vienen los avances reales. Lecci&oacute;n de liderazgo: Tus criterios nunca deben de hacer algo por un miembro, porque crees que no lo podr&aacute;n hacer, recuerda que ellos son capaces de lograrlo, aunque en un principio se cometan errores. ','/media/1/noticia_62.jpeg','2016-03-12 16:11:10','ACT',12);
+INSERT INTO `noticia` VALUES (2,1,'¿Por Qué El Crecimiento Vertiginoso Del Network Marketing','Una de las razones por las que las ventas totales a trav&eacute;s del sistema de Venta Directa y del Network Marketing contin&uacute;en creciendo a&ntilde;o tras a&ntilde;o es porque operan con un modelo de negocios dise&ntilde;ado para que todos ganen. Seg&uacute;n datos proporcionados por la consultora global Euromonitor Internacional y publicados por America Econom&iacute;a en su edici&oacute;n del 18 de Julio del 2013, entre las compa&ntilde;&iacute;as que usan el sistema de &ldquo;Venta Directa&rdquo; como primera v&iacute;a de mercadeo y distribuci&oacute;n, Avon encabeza en 2013 la lista de las que alcanzaron los mejores resultados en el mundo, seguida por Amway a nivel global y por la brasile&ntilde;a Natura en Am&eacute;rica Latina. Aunque Amway, Natura y Avon se apoyan en el sistema de &ldquo;Venta Directa&rdquo;, el modelo de Amway es distinto al de las otras dos, dado que su inversi&oacute;n en publicidad es m&iacute;nima y no tiene presencia en super-mercados &oacute; en el menudeo tradicional. Amway se apoya en una estructura de mercadeo y distribuci&oacute;n exitosa denominada Network Marketing, &oacute; Redes de Mercadeo del cual ya hablamos anteriormente. Al igual que Amway, Avon y Natura, Vorwerk de Alemania, Oriflame de Luxemburgo, Belcorp de Per&uacute; y Herbalife de EE.UU., han creado un mercado global de Ventas Directas que alcanza un estimado de US$ 166,876 millones, seg&uacute;n informes recientes de la Federaci&oacute;n Mundial de Asociaciones de Venta Directa (WFDSA). ','/media/1/noticia21.jpg','2016-03-12 16:11:54','ACT',12);
+INSERT INTO `noticia` VALUES (3,1,'QUE ES NETWORK MARKETING Y COMO PUEDE PROPORCIONAR','Descubre en este art&iacute;culo Que Es Network Marketing y c&oacute;mo est&aacute; tomando cada vez m&aacute;s fuerza en el mundo, convirti&eacute;ndose en un excelente veh&iacute;culo para que cualquier persona que se lo proponga pueda liberarse de la crisis econ&oacute;mica y alcanzar la libertad financiera. QUE ES NETWORK MARKETING &ndash; ANTECEDENTES El Network Marketing, tambi&eacute;n conocido como &ldquo;Marketing Multinivel&rdquo;, &ldquo;Redes de Mercadeo&rdquo;, &ldquo;Mercadeo En Red&rdquo;, &oacute; MLM (Multi Level Marketing), es un modelo de negocios que ha existido desde mediados del siglo pasado y que se basa en un concepto muy simple y brillante: Las Empresas de &ldquo;Network Marketing&rdquo; en lugar de gastar grandes cantidades de dinero en publicidad y canales de distribuci&oacute;n para promover sus productos y/o servicios, le pagan mejor a las personas que los usan y que est&aacute;n entusiasmados con los resultados obtenidos para que le hablen a m&aacute;s personas sobre los beneficios de los mismos. El Network Marketing es un negocio dise&ntilde;ado para que puedas trabajarlo ya sea a medio tiempo &oacute; a tiempo completo. Esto lo hace muy atractivo para todas aquellas personas que tengan un empleo y/o autoempleo y que est&eacute;n buscando una fuente adicional de ingresos. Otro gran atractivo que tiene el &ldquo;Network Marketing&rdquo; es que su modelo de negocios que le proporciona a cualquier persona que se lo proponga, la oportunidad de alcanzar la Libertad Financiera y lograr sus sue&ntilde;os en la vida. El Network Marketing se ha convertido sin dudas en una excelente alternativa para todas aquellas personas a las que ya les peg&oacute; la crisis econ&oacute;mica del Siglo XXI, enfermedad a la cual defino personalmente como &ldquo;C&aacute;ncer de Bolsillo&ldquo;. Cada d&iacute;a hay m&aacute;s personas desempleadas en el mundo y sin ahorro alguno que los proteja por los despidos masivos que est&aacute;n haciendo las empresas, para mantenerse a flote y con un buen margen de utilidad y competividad en el mercado. As&iacute; mismo, los que tienen la suerte de tener todav&iacute;a un empleo, lo defienden a capa y espada rog&aacute;ndole a Dios no cruzar la barrera de los 40 a&ntilde;os para que no los despidan, y c&oacute;mo no les alcanza lo que ganan tienen que vivir de prestado y cada d&iacute;a est&aacute;n m&aacute;s endeudados y quebrados. &iquest;Que Es Network Marketing? Es un modelo de Negocios dise&ntilde;ado para cualquier persona que quiera &ldquo;Cambiar su Vida&rdquo; y alcanzar la Libertad Financiera. Y al hablar de &ldquo;Cambiar de Vida&rdquo; me refiero con llegar a tener un mejor estilo de vida que con el que cuentas actualmente y que nunca te hubieras imaginado lograr alg&uacute;n d&iacute;a con un empleo y/o autoempleo convencional. Lo &uacute;nico a lo que debes estar dispuesto es a atreverte a so&ntilde;ar de nuevo, a dejarte ense&ntilde;ar de nueva cuenta y a transformar tu mente de empleado y/o autoempleado a Empresario Independiente De Redes &oacute; Profesional del Networking. &iexcl;ES TU DECISI&Oacute;N! Robert Kiyosaki en su libro titulado &ldquo;El Negocio Del Siglo XXI&rdquo;, habla desde su punto de vista &ldquo;que es Network Marketing&rdquo; y lo define como una franquicia de muy baja inversi&oacute;n, la cual te permite salir de la crisis econ&oacute;mica actual en la que probablemente vives y alcanzar la Libertad Financiera. En el cap&iacute;tulo siete de su libro menciona que el verdadero poder del Network Marketing est&aacute; en el apalancamiento, tema del cual tambi&eacute;n hablo a detalle en el art&iacute;culo &ldquo;Marketing Multinivel &ndash; Introducci&oacute;n Para Principiantes&rdquo;. Gracias este poder de apalancamiento, como &ldquo;Empresario Independiente de Redes&rdquo; no s&oacute;lo recibes comisiones por los productos que usen las personas que asocies a la empresa, sino tambi&eacute;n por los productos adquiridos por las personas asociadas por tus referidos, y de los referidos de tus referidos hasta cierto n&uacute;mero de niveles de profundidad. Gracias a los grandes beneficios del Network Marketing tu puedes llegar a construir una red de gran tama&ntilde;o de &ldquo;Empresarios Independientes de Redes&rdquo;, la cual te puede proporcionar un Ingreso Residual &oacute; Pasivo considerable de por vida. &iexcl;Descubre Por que Es Network Marketing Una Excelente Alternativa Para Liberarse De La Crisis Econ&oacute;mica Y Alcanzar La Libertad Financiera! ','/media/1/noticia12.jpg','2016-03-12 16:12:36','ACT',12);
 /*!40000 ALTER TABLE `noticia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19386,10 +18771,8 @@ CREATE TABLE `notificacion` (
 
 LOCK TABLES `notificacion` WRITE;
 /*!40000 ALTER TABLE `notificacion` DISABLE KEYS */;
-INSERT INTO `notificacion` VALUES (1,'2016-03-01 07:00:00','2028-03-31 07:00:00','Bienvenido','Te damos la bienvenida a nuestra empresa para que conozcas nuestra oficina virtual. ','/','ACT');
-INSERT INTO `notificacion` VALUES (3,'2016-05-05 07:00:00','2016-06-10 07:00:00','Promoción páginas web','No pierdas la promoción !','/','ACT');
-INSERT INTO `notificacion` VALUES (4,'2016-05-30 07:00:00','2016-05-30 07:00:00','Cuerso ','Compra oro','/','ACT');
-INSERT INTO `notificacion` VALUES (5,'2016-05-31 07:00:00','2016-05-31 07:00:00','Compramos petroleo en 49.50','Estock 49.40 target 50-10\n\nhttp://prntscr.com/bao75y','/','ACT');
+INSERT INTO `notificacion` VALUES (3,'2016-01-30 07:00:00','2017-01-30 07:00:00','Bienvenido','Te damos la bienvenida a nuestra empresa para que conozcas nuestra oficina virtual.','/','ACT');
+INSERT INTO `notificacion` VALUES (4,'2016-01-31 07:00:00','2016-02-09 07:00:00','Dato Curioso','Acuérdate de pasar por la Sección de Informacion y capacitación, para más información.','/','DES');
 /*!40000 ALTER TABLE `notificacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19406,7 +18789,7 @@ CREATE TABLE `pago_online_proceso` (
   `contenido_carrito` text NOT NULL,
   `carrito` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19415,36 +18798,20 @@ CREATE TABLE `pago_online_proceso` (
 
 LOCK TABLES `pago_online_proceso` WRITE;
 /*!40000 ALTER TABLE `pago_online_proceso` DISABLE KEYS */;
-INSERT INTO `pago_online_proceso` VALUES (1,1001,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"21% de IVA\",\"costoImpuesto\":\"42.000000\",\"id_pais\":\"ESP\",\"id_impuesto\":\"3\"}]}]}','{\"dd6b7e764a6ad7223cc7563593da914a\":{\"rowid\":\"dd6b7e764a6ad7223cc7563593da914a\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459441393},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (2,1002,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"87e75792b22059177e7980b345511d59\":{\"rowid\":\"87e75792b22059177e7980b345511d59\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459441991},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (3,1002,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"87e75792b22059177e7980b345511d59\":{\"rowid\":\"87e75792b22059177e7980b345511d59\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459441991},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (4,1002,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"a199338bcd0a9393021fd1a7bdfd6c36\":{\"rowid\":\"a199338bcd0a9393021fd1a7bdfd6c36\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459442195},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (5,1003,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"7eb1e164166acc15a28dcd5bdc6f5020\":{\"rowid\":\"7eb1e164166acc15a28dcd5bdc6f5020\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459443077},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (6,1004,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"789cc06312b6ed286a5dcbfaaab4f0a2\":{\"rowid\":\"789cc06312b6ed286a5dcbfaaab4f0a2\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459443378},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (7,1002,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/Archaea_Active4.png\",\"nombre\":\"Archaea Active\",\"descripcion\":\"Creado mediante un proceso patentado que utiliza hojas org\\u00e1nicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active\\u2122 es un poderoso complemento para tu programa de salud sin sabor ni olor.\",\"costos\":[{\"id\":\"4\",\"costo\":\"25.00\",\"costo_publico\":\"35.00\",\"iva\":\"CON\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"4.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"6fea2c86b5e75b349138aad22ff227bb\":{\"rowid\":\"6fea2c86b5e75b349138aad22ff227bb\",\"id\":4,\"qty\":\"1\",\"price\":\"25.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1459451610},\"subtotal\":25}}');
-INSERT INTO `pago_online_proceso` VALUES (8,1002,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/Archaea_Active4.png\",\"nombre\":\"Archaea Active\",\"descripcion\":\"Creado mediante un proceso patentado que utiliza hojas org\\u00e1nicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active\\u2122 es un poderoso complemento para tu programa de salud sin sabor ni olor.\",\"costos\":[{\"id\":\"4\",\"costo\":\"25.00\",\"costo_publico\":\"35.00\",\"iva\":\"CON\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"4.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"6fea2c86b5e75b349138aad22ff227bb\":{\"rowid\":\"6fea2c86b5e75b349138aad22ff227bb\",\"id\":4,\"qty\":\"1\",\"price\":\"25.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1459451610},\"subtotal\":25}}');
-INSERT INTO `pago_online_proceso` VALUES (9,1004,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/kit_belleza18.png\",\"nombre\":\"Kit  Belleza\",\"descripcion\":\"(\\u2713 1 ActivateATP\\u2713 1 Archaea Active \\u2713 1 Curso Maquillaje Profesional)<\\/p><p>Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\\n-Creado mediante un proceso patentado que utiliza hojas org\\u00e1nicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active\\u2122 es un poderoso complemento para tu programa de salud sin sabor ni olor.\",\"costos\":[{\"id\":\"9\",\"costo\":\"40.00\",\"costo_publico\":\"50.00\",\"iva\":\"CON\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"6.400000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"5124a61755d8d3c7170ce2dea9bf8c6a\":{\"rowid\":\"5124a61755d8d3c7170ce2dea9bf8c6a\",\"id\":9,\"qty\":\"1\",\"price\":\"40.00\",\"name\":3,\"options\":{\"prom_id\":0,\"time\":1459453178},\"subtotal\":40}}');
-INSERT INTO `pago_online_proceso` VALUES (10,1005,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"21% de IVA\",\"costoImpuesto\":\"42.000000\",\"id_pais\":\"ESP\",\"id_impuesto\":\"3\"}]}]}','{\"5c62f024daecc41e1a208207d12d81ff\":{\"rowid\":\"5c62f024daecc41e1a208207d12d81ff\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459453536},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (11,1006,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"4789ab6a7db6e81f0b00802f0f49e6fe\":{\"rowid\":\"4789ab6a7db6e81f0b00802f0f49e6fe\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459454359},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (12,1006,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"4789ab6a7db6e81f0b00802f0f49e6fe\":{\"rowid\":\"4789ab6a7db6e81f0b00802f0f49e6fe\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459454359},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (13,1007,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"c12fd79a20f722fe49e51d4c9207aa64\":{\"rowid\":\"c12fd79a20f722fe49e51d4c9207aa64\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459454913},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (14,1005,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"21% de IVA\",\"costoImpuesto\":\"42.000000\",\"id_pais\":\"ESP\",\"id_impuesto\":\"3\"}]}]}','{\"b966b21801c360b8c9f5a3a4bf7bcbc2\":{\"rowid\":\"b966b21801c360b8c9f5a3a4bf7bcbc2\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459455541},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (15,1005,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"21% de IVA\",\"costoImpuesto\":\"42.000000\",\"id_pais\":\"ESP\",\"id_impuesto\":\"3\"}]}]}','{\"b966b21801c360b8c9f5a3a4bf7bcbc2\":{\"rowid\":\"b966b21801c360b8c9f5a3a4bf7bcbc2\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459455541},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (16,1005,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/cPRIME4.png\",\"nombre\":\"cPRIME\",\"descripcion\":\"cPRIME\\u2122, Inspirada por Evolv\\u2122, es un producto de vanguardia, dise\\u00f1ado para animarte a llevar un estilo de vida activo, independientemente de tu condici\\u00f3n f\\u00edsica actual. Disponibles en gran variedad de dise\\u00f1os y colores. Puedes utilizarla cualquier d\\u00eda, todos los d\\u00edas, mientras descansas o en plena actividad deportiva. Act\\u00edvate, insp\\u00edrate\\u2026 \\u00a1disfruta cPRIME!\",\"costos\":[{\"id\":\"8\",\"costo\":\"125.00\",\"costo_publico\":\"135.00\",\"iva\":\"CON\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"26.250000\",\"pais\":\"ESP\",\"nombreImpuesto\":\"21% de IVA\"}]}]}','{\"952d332c46cc438b7b9267e3a4a4cbac\":{\"rowid\":\"952d332c46cc438b7b9267e3a4a4cbac\",\"id\":8,\"qty\":\"1\",\"price\":\"125.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1459455808},\"subtotal\":125}}');
-INSERT INTO `pago_online_proceso` VALUES (17,1008,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"21% de IVA\",\"costoImpuesto\":\"42.000000\",\"id_pais\":\"ESP\",\"id_impuesto\":\"3\"}]}]}','{\"ac25cc7b209016171c5a34ae2eb13fde\":{\"rowid\":\"ac25cc7b209016171c5a34ae2eb13fde\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459456168},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (18,1007,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/Archaea_Active4.png\",\"nombre\":\"Archaea Active\",\"descripcion\":\"Creado mediante un proceso patentado que utiliza hojas org\\u00e1nicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active\\u2122 es un poderoso complemento para tu programa de salud sin sabor ni olor.\",\"costos\":[{\"id\":\"4\",\"costo\":\"25.00\",\"costo_publico\":\"35.00\",\"iva\":\"CON\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"4.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"0fe4ce2504fb70c7c7c80ed4d567b2f4\":{\"rowid\":\"0fe4ce2504fb70c7c7c80ed4d567b2f4\",\"id\":4,\"qty\":\"2\",\"price\":\"25.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1459456553},\"subtotal\":50}}');
-INSERT INTO `pago_online_proceso` VALUES (19,1009,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"a509b47deb414c86924e2999ccf65151\":{\"rowid\":\"a509b47deb414c86924e2999ccf65151\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459457128},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (20,1009,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"a509b47deb414c86924e2999ccf65151\":{\"rowid\":\"a509b47deb414c86924e2999ccf65151\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1459457128},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (21,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/ActivateATP5.png\",\"nombre\":\"ActivateATP\",\"descripcion\":\"Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\",\"costos\":[{\"id\":\"2\",\"costo\":\"20.00\",\"costo_publico\":\"22.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"3.200000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"c25418d3360d33119a797a5eeb6136e4\":{\"rowid\":\"c25418d3360d33119a797a5eeb6136e4\",\"id\":2,\"qty\":\"1\",\"price\":\"20.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1460500518},\"subtotal\":20}}');
-INSERT INTO `pago_online_proceso` VALUES (22,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/ActivateATP5.png\",\"nombre\":\"ActivateATP\",\"descripcion\":\"Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\",\"costos\":[{\"id\":\"2\",\"costo\":\"20.00\",\"costo_publico\":\"22.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"3.200000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"95373be09826266455a6ffad64cc27ca\":{\"rowid\":\"95373be09826266455a6ffad64cc27ca\",\"id\":2,\"qty\":\"1\",\"price\":\"20.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1460651884},\"subtotal\":20}}');
-INSERT INTO `pago_online_proceso` VALUES (23,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"a5818693095641edf45ce537912a8659\":{\"rowid\":\"a5818693095641edf45ce537912a8659\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1461956938},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (24,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-paquete_belleza-854452848.png\",\"nombre\":\"Paquete de Inicio R\\u00e1pido\",\"descripcion\":\"( \\u2713 2 ActivateATP)<\\/p><p>Inicio en este magn\\u00edfico multinivel.\",\"costos\":[{\"id\":\"5\",\"costo\":\"200.00\",\"costo_publico\":\"220.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"32.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"a5818693095641edf45ce537912a8659\":{\"rowid\":\"a5818693095641edf45ce537912a8659\",\"id\":5,\"qty\":\"1\",\"price\":\"200.00\",\"name\":4,\"options\":{\"prom_id\":0,\"time\":1461956938},\"subtotal\":200}}');
-INSERT INTO `pago_online_proceso` VALUES (25,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/ActivateATP5.png\",\"nombre\":\"ActivateATP\",\"descripcion\":\"Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\",\"costos\":[{\"id\":\"2\",\"costo\":\"20.00\",\"costo_publico\":\"22.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"3.200000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"92e255e017754816a426c2f4ef4ded1c\":{\"rowid\":\"92e255e017754816a426c2f4ef4ded1c\",\"id\":2,\"qty\":\"1\",\"price\":\"20.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1462319145},\"subtotal\":20}}');
-INSERT INTO `pago_online_proceso` VALUES (26,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/ActivateATP5.png\",\"nombre\":\"ActivateATP\",\"descripcion\":\"Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\",\"costos\":[{\"id\":\"2\",\"costo\":\"20.00\",\"costo_publico\":\"22.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"3.200000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"6fc418a5a6395bc15bce43a27b0fb1bf\":{\"rowid\":\"6fc418a5a6395bc15bce43a27b0fb1bf\",\"id\":2,\"qty\":\"1\",\"price\":\"20.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1462488593},\"subtotal\":20}}');
-INSERT INTO `pago_online_proceso` VALUES (27,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/Water_Active4.png\",\"nombre\":\"Water Active\",\"descripcion\":\"Creado mediante un proceso patentado que utiliza agua cristal pura , para mejorar la circulaci\\u00f3n en las articulaciones.\",\"costos\":[{\"id\":\"6\",\"costo\":\"10.00\",\"costo_publico\":\"15.00\",\"iva\":\"CON\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"1.600000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"434e528136049d6536476a9739996ef4\":{\"rowid\":\"434e528136049d6536476a9739996ef4\",\"id\":6,\"qty\":\"1\",\"price\":\"10.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1464711997},\"subtotal\":10}}');
-INSERT INTO `pago_online_proceso` VALUES (28,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/kit_belleza18.png\",\"nombre\":\"Kit  Belleza\",\"puntos\":\"0.00\",\"descripcion\":\"(\\u2713 1 ActivateATP\\u2713 1 Archaea Active \\u2713 1 Curso Maquillaje Profesional)<\\/p><p>Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\\n-Creado mediante un proceso patentado que utiliza hojas org\\u00e1nicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active\\u2122 es un poderoso complemento para tu programa de salud sin sabor ni olor.\",\"costos\":[{\"id\":\"9\",\"costo\":\"40.00\",\"costo_publico\":\"50.00\",\"iva\":\"CON\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"6.400000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]},{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-membresia130089655.png\",\"nombre\":\"Pertenencia al Multinivel\",\"puntos\":\"1.00\",\"descripcion\":\"Inicio en este Magn\\u00edfico Multinivel\",\"costos\":[{\"id\":\"7\",\"costo\":\"50.00\",\"costo_publico\":\"0.00\",\"iva\":\"MAS\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"8.000000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"f194c738496b99336a38743c480e52e9\":{\"rowid\":\"f194c738496b99336a38743c480e52e9\",\"id\":9,\"qty\":\"1\",\"price\":\"40.00\",\"name\":3,\"options\":{\"prom_id\":0,\"time\":1505232067},\"subtotal\":40},\"62ca18c77eea8c5baa388dbf3a15a0e9\":{\"rowid\":\"62ca18c77eea8c5baa388dbf3a15a0e9\",\"id\":7,\"qty\":\"1\",\"price\":\"50.00\",\"name\":5,\"options\":{\"prom_id\":0,\"time\":1505232071},\"subtotal\":50}}');
-INSERT INTO `pago_online_proceso` VALUES (29,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/tmp_20077-curso_estilista_profesional-513848368.jpg\",\"nombre\":\"Curso Estilista Profesional\",\"puntos\":\"1.00\",\"descripcion\":\"El trabajo en una peluquer\\u00eda puede ir desde un sencillo lavado de cabeza a un corte de Cabello moderno no exento de dificultad.\\nEntre estos dos extremos, todo un abanico de t\\u00e9cnicas, nuevas o tradicionales, exigen del profesional de peluquer\\u00eda un aprendizaje te\\u00f3rico-tecnol\\u00f3gico y pr\\u00e1ctico que le permita acomodarse continuamente a las nuevas tendencias que marca la moda.El curso est\\u00e1 indicado para aquellas personas que quieran tener una profesi\\u00f3n estable, trabajando en su propio negocio o en salones de belleza, estudios fotogr\\u00e1ficos, cine, TV, etc.\",\"costos\":[{\"id\":\"3\",\"costo\":\"120.00\",\"costo_publico\":\"140.00\",\"iva\":\"MAS\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"19.200000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"f9e6f6b7f2c487c3af3ff511606d9236\":{\"rowid\":\"f9e6f6b7f2c487c3af3ff511606d9236\",\"id\":3,\"qty\":\"1\",\"price\":\"120.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1505234360},\"subtotal\":120}}');
-INSERT INTO `pago_online_proceso` VALUES (30,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/kit_belleza18.png\",\"nombre\":\"Kit  Belleza\",\"puntos\":\"0.00\",\"descripcion\":\"(\\u2713 1 ActivateATP\\u2713 1 Archaea Active \\u2713 1 Curso Maquillaje Profesional)<\\/p><p>Contiene un activador de energ\\u00eda celular que trabaja cuidadosamente para darte un aumento de energ\\u00eda ah\\u00ed donde todo comienza: a nivel celular.\\n-Creado mediante un proceso patentado que utiliza hojas org\\u00e1nicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active\\u2122 es un poderoso complemento para tu programa de salud sin sabor ni olor.\",\"costos\":[{\"id\":\"9\",\"costo\":\"40.00\",\"costo_publico\":\"50.00\",\"iva\":\"CON\",\"nombreImpuesto\":\"16% de IVA\",\"costoImpuesto\":\"6.400000\",\"id_pais\":\"COL\",\"id_impuesto\":\"2\"}]}]}','{\"4ee7a765e31c40990ff546aa8ab7685c\":{\"rowid\":\"4ee7a765e31c40990ff546aa8ab7685c\",\"id\":9,\"qty\":\"1\",\"price\":\"40.00\",\"name\":3,\"options\":{\"prom_id\":0,\"time\":1507582472},\"subtotal\":40}}');
+INSERT INTO `pago_online_proceso` VALUES (1,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"b63705c7517f913329b30278f8c07a69\":{\"rowid\":\"b63705c7517f913329b30278f8c07a69\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461775266},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (2,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"bccee9f5ab07f4ea19d429dc47f27727\":{\"rowid\":\"bccee9f5ab07f4ea19d429dc47f27727\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461778458},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (3,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"e05fe30411a1ca5f7be7730b9a99fa4c\":{\"rowid\":\"e05fe30411a1ca5f7be7730b9a99fa4c\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461779106},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (4,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"bc69bf6e5e981353841a62222c9667c0\":{\"rowid\":\"bc69bf6e5e981353841a62222c9667c0\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461780233},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (5,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"5931b99209fcb7299863e96f6b0e5326\":{\"rowid\":\"5931b99209fcb7299863e96f6b0e5326\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461782837},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (6,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"53dc4d5c9d5cbdd4035f0c3731b90df7\":{\"rowid\":\"53dc4d5c9d5cbdd4035f0c3731b90df7\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461784046},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (7,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"481217269f1c062c263b8c3f5956cc69\":{\"rowid\":\"481217269f1c062c263b8c3f5956cc69\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461784513},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (8,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]},{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"3a96bccea61da335d249b4161ed596af\":{\"rowid\":\"3a96bccea61da335d249b4161ed596af\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461784792},\"subtotal\":5},\"09baefc2f8d4ae93bcaa05a753406229\":{\"rowid\":\"09baefc2f8d4ae93bcaa05a753406229\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461784796},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (9,2,'{\"compras\":[{\"imagen\":\"\\/template\\/img\\/empresario.jpg\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"503\",\"costo\":\"5.00\",\"costo_publico\":\"5.00\",\"iva\":\"MAS\",\"costoImpuesto\":\"0\",\"nombreImpuesto\":\" \",\"pais\":\"AAA\",\"nombreIMpuesto\":\"\",\"id_impuesto\":\"\"}]}]}','{\"9eb0985b4752da75a8636012cd431f57\":{\"rowid\":\"9eb0985b4752da75a8636012cd431f57\",\"id\":503,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461785241},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (10,10103,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/76031_ScarletWitch_full_body_pose_360w_2x.png\",\"nombre\":\"escarlata\",\"descripcion\":\"\",\"costos\":[{\"id\":\"522\",\"costo\":\"20.00\",\"costo_publico\":\"30.00\",\"iva\":\"MAS\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"3.200000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"74ba27dad909000a41c5a722f3a48332\":{\"rowid\":\"74ba27dad909000a41c5a722f3a48332\",\"id\":522,\"qty\":\"1\",\"price\":\"20.00\",\"name\":1,\"options\":{\"prom_id\":0,\"time\":1461791624},\"subtotal\":20}}');
+INSERT INTO `pago_online_proceso` VALUES (11,2,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/76038_IronLegionnaire_full_body_pose_360w_2x.png\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"521\",\"costo\":\"5.00\",\"costo_publico\":\"10.00\",\"iva\":\"CON\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"0.800000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"4158e2044f8542e756526f6fc841b034\":{\"rowid\":\"4158e2044f8542e756526f6fc841b034\",\"id\":521,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461792939},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (12,10100,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/76031_ScarletWitch_full_body_pose_360w_2x.png\",\"nombre\":\"Recarga\",\"descripcion\":\"\",\"costos\":[{\"id\":\"521\",\"costo\":\"5.00\",\"costo_publico\":\"10.00\",\"iva\":\"CON\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"0.800000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"e21e93123ac78708b3c645f2864d8165\":{\"rowid\":\"e21e93123ac78708b3c645f2864d8165\",\"id\":521,\"qty\":\"1\",\"price\":\"5.00\",\"name\":2,\"options\":{\"prom_id\":0,\"time\":1461795722},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (13,10098,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/maxresdefault.jpg\",\"nombre\":\"spidey\",\"descripcion\":\"\",\"costos\":[{\"id\":\"526\",\"costo\":\"5.00\",\"costo_publico\":\"0.00\",\"iva\":\"MAS\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"0.800000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"80d2c63471f6a5211206de1d8fb3cd16\":{\"rowid\":\"80d2c63471f6a5211206de1d8fb3cd16\",\"id\":526,\"qty\":\"1\",\"price\":\"5.00\",\"name\":5,\"options\":{\"prom_id\":0,\"time\":1461796361},\"subtotal\":5}}');
+INSERT INTO `pago_online_proceso` VALUES (14,10098,'{\"compras\":[{\"imagen\":\"\\/media\\/carrito\\/maxresdefault.jpg\",\"nombre\":\"spidey\",\"descripcion\":\"\",\"costos\":[{\"id\":\"526\",\"costo\":\"5.00\",\"costo_publico\":\"0.00\",\"iva\":\"MAS\",\"tipoImpuesto\":\"IVA\",\"costoImpuesto\":\"0.800000\",\"pais\":\"COL\",\"nombreImpuesto\":\"16% de IVA\"}]}]}','{\"db80ffc26a8acd83cd308b0d6d772e4f\":{\"rowid\":\"db80ffc26a8acd83cd308b0d6d772e4f\",\"id\":526,\"qty\":\"1\",\"price\":\"5.00\",\"name\":5,\"options\":{\"prom_id\":0,\"time\":1461798242},\"subtotal\":5}}');
 /*!40000 ALTER TABLE `pago_online_proceso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19467,7 +18834,7 @@ CREATE TABLE `pago_online_transaccion` (
   `response_code_pol` varchar(45) NOT NULL,
   `currency` varchar(45) NOT NULL,
   PRIMARY KEY (`id_venta`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19476,17 +18843,14 @@ CREATE TABLE `pago_online_transaccion` (
 
 LOCK TABLES `pago_online_transaccion` WRITE;
 /*!40000 ALTER TABLE `pago_online_transaccion` DISABLE KEYS */;
-INSERT INTO `pago_online_transaccion` VALUES (2,1001,'783ef149-d3c8-4539-8b39-7349cec87080','2016-03-31','NetSoft1459441401','2','VISA','4','1','USD');
-INSERT INTO `pago_online_transaccion` VALUES (4,1003,'9H444629WE524824B','2016-03-31','YL9LFS5BJ6QWE','instant','instant','Completed','web_accept','USD');
-INSERT INTO `pago_online_transaccion` VALUES (5,1004,'edcc7deb-becc-44b1-8f79-b29c5fe10529','2016-03-31','NetSoft1459443390','2','VISA','4','1','USD');
-INSERT INTO `pago_online_transaccion` VALUES (6,1002,'e9dda4af-72d2-4345-abe9-47caaca95cbb','2016-03-31','NetSoft1459452107','2','VISA','4','1','USD');
-INSERT INTO `pago_online_transaccion` VALUES (7,1004,'1DJ89791Y4143745G','2016-03-31','YL9LFS5BJ6QWE','instant','instant','Completed','web_accept','USD');
-INSERT INTO `pago_online_transaccion` VALUES (8,1006,'5WA08622AH078800J','2016-03-31','YL9LFS5BJ6QWE','instant','instant','Completed','web_accept','USD');
-INSERT INTO `pago_online_transaccion` VALUES (9,1007,'4385bc81-212d-4201-833d-f64f8f6824d2','2016-03-31','NetSoft1459454940','2','VISA','4','1','USD');
-INSERT INTO `pago_online_transaccion` VALUES (10,1005,'33H47307J5040264B','2016-03-31','YL9LFS5BJ6QWE','instant','instant','Completed','web_accept','USD');
-INSERT INTO `pago_online_transaccion` VALUES (11,1005,'6a617d43-7fca-48b4-b43d-abd406eb2557','2016-03-31','NetSoft1459455826','2','VISA','4','1','USD');
-INSERT INTO `pago_online_transaccion` VALUES (13,1007,'5a880c69-26c3-40cd-8749-7c5eb15c2831','2016-03-31','NetSoft1459456577','2','VISA','4','1','USD');
-INSERT INTO `pago_online_transaccion` VALUES (14,1009,'d3cfcc39-04d1-485f-926a-d04cbc6b84cb','2016-03-31','NetSoft1459457499','2','VISA','4','1','USD');
+INSERT INTO `pago_online_transaccion` VALUES (1,2,'2672fc9160c93febba60280de286adab','2016-04-27','NetSoft14617840926','1','1','1','1','COP');
+INSERT INTO `pago_online_transaccion` VALUES (2,2,'4440caf4424f4b696e0516565925cda8','0000-00-00','NetSoft14617845287','10','10','1','2973181','COP');
+INSERT INTO `pago_online_transaccion` VALUES (3,2,'140c47530729d4ca4b016dce955d7d81','2016-04-27','NetSoft14617848028','10','10','1','9856673','COP');
+INSERT INTO `pago_online_transaccion` VALUES (4,2,'bce3ada9131a921d7c4b3cc1972281f0','2016-04-27','NetSoft14617852489','10','10','1','6412732','COP');
+INSERT INTO `pago_online_transaccion` VALUES (5,10103,'c44d341aec2d365883328c11e1eb7a0c','2016-04-27','NetSoft146179163110','10','10','1','1464867','COP');
+INSERT INTO `pago_online_transaccion` VALUES (6,10100,'3e7fd392de960bbc45fe2c0f4af11b44','2016-04-27','NetSoft146179573012','10','10','1','8018775','COP');
+INSERT INTO `pago_online_transaccion` VALUES (7,10098,'3fe5d171bc7b8286b0fd1553a46be753','2016-04-27','NetSoft146179636913','10','10','1','4703011','COP');
+INSERT INTO `pago_online_transaccion` VALUES (10,10098,'e8ccb7576ceb1841aeaa34dc38600fc4','2016-04-27','NetSoft146179824914','10','10','1','9307857','COP');
 /*!40000 ALTER TABLE `pago_online_transaccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19509,7 +18873,7 @@ CREATE TABLE `paquete_inscripcion` (
   `tipo` char(2) DEFAULT NULL,
   `caducidad` varchar(3) DEFAULT '0',
   PRIMARY KEY (`id_paquete`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=505 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19518,7 +18882,8 @@ CREATE TABLE `paquete_inscripcion` (
 
 LOCK TABLES `paquete_inscripcion` WRITE;
 /*!40000 ALTER TABLE `paquete_inscripcion` DISABLE KEYS */;
-INSERT INTO `paquete_inscripcion` VALUES (1,0,'Paquete de Inicio Rápido','Inicio en este magnífico multinivel.',200.00,1.00,'ACT',1,'1','60');
+INSERT INTO `paquete_inscripcion` VALUES (502,0,'Paquete Streaming',NULL,0.00,0.00,'',250,NULL,'0');
+INSERT INTO `paquete_inscripcion` VALUES (504,0,'Paquete router',NULL,0.00,0.00,'',250,NULL,'0');
 /*!40000 ALTER TABLE `paquete_inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19589,7 +18954,7 @@ CREATE TABLE `plan` (
   `descripcion` varchar(255) NOT NULL DEFAULT 'ejemplo',
   `estatus` varchar(3) DEFAULT 'ACT',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19611,10 +18976,10 @@ DROP TABLE IF EXISTS `pos_venta`;
 CREATE TABLE `pos_venta` (
   `id_venta` int(11) NOT NULL DEFAULT '1',
   `id_user` int(11) NOT NULL DEFAULT '2',
-  `costo` float NOT NULL DEFAULT '0',
   `descuento` float DEFAULT '0',
   `iva` float DEFAULT '0',
   `puntos` float DEFAULT '0',
+  `costo` float NOT NULL DEFAULT '0',
   `estatus` varchar(3) DEFAULT 'ACT'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -19625,6 +18990,10 @@ CREATE TABLE `pos_venta` (
 
 LOCK TABLES `pos_venta` WRITE;
 /*!40000 ALTER TABLE `pos_venta` DISABLE KEYS */;
+INSERT INTO `pos_venta` VALUES (1,10034,0,24,10,174,'ACT');
+INSERT INTO `pos_venta` VALUES (2,10034,0,24,10,174,'ACT');
+INSERT INTO `pos_venta` VALUES (3,10034,0,24,10,174,'ACT');
+INSERT INTO `pos_venta` VALUES (4,10034,0,24,10,174,'ACT');
 /*!40000 ALTER TABLE `pos_venta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19643,10 +19012,10 @@ CREATE TABLE `pos_venta_historial` (
   `item` int(11) NOT NULL DEFAULT '1',
   `cantidad` int(11) NOT NULL DEFAULT '1',
   `costo` varchar(5) NOT NULL DEFAULT 'DETAL',
-  `puntos` float DEFAULT '0',
   `descuento` float NOT NULL DEFAULT '0',
   `tipo_descuento` varchar(1) NOT NULL DEFAULT '$',
-  `total` float NOT NULL DEFAULT '0'
+  `total` float NOT NULL DEFAULT '0',
+  `puntos` float DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -19656,6 +19025,10 @@ CREATE TABLE `pos_venta_historial` (
 
 LOCK TABLES `pos_venta_historial` WRITE;
 /*!40000 ALTER TABLE `pos_venta_historial` DISABLE KEYS */;
+INSERT INTO `pos_venta_historial` VALUES (1,10034,2,'2016-10-03 07:00:00',505,1,'DETAL',0,'$',150,10);
+INSERT INTO `pos_venta_historial` VALUES (2,10034,2,'2016-10-03 07:00:00',505,1,'DETAL',0,'$',150,10);
+INSERT INTO `pos_venta_historial` VALUES (3,10034,2,'2016-10-03 07:00:00',505,1,'DETAL',0,'$',150,10);
+INSERT INTO `pos_venta_historial` VALUES (4,10034,2,'2016-10-03 07:00:00',505,1,'DETAL',0,'$',150,10);
 /*!40000 ALTER TABLE `pos_venta_historial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19681,6 +19054,10 @@ CREATE TABLE `pos_venta_item` (
 
 LOCK TABLES `pos_venta_item` WRITE;
 /*!40000 ALTER TABLE `pos_venta_item` DISABLE KEYS */;
+INSERT INTO `pos_venta_item` VALUES (1,505,1,150,10);
+INSERT INTO `pos_venta_item` VALUES (2,505,1,150,10);
+INSERT INTO `pos_venta_item` VALUES (3,505,1,150,10);
+INSERT INTO `pos_venta_item` VALUES (4,505,1,150,10);
 /*!40000 ALTER TABLE `pos_venta_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19697,12 +19074,11 @@ CREATE TABLE `pos_venta_temporal` (
   `fecha` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `item` int(11) NOT NULL DEFAULT '1',
   `cantidad` int(11) NOT NULL DEFAULT '1',
-  `costo` varchar(5) NOT NULL DEFAULT 'DETAL',
   `puntos` float DEFAULT '0',
+  `costo` varchar(5) NOT NULL DEFAULT 'DETAL',
   `descuento` float NOT NULL DEFAULT '0',
   `tipo_descuento` varchar(1) NOT NULL DEFAULT '$',
-  `estatus` varchar(3) DEFAULT 'ACT',
-  `cliente` int(11) NOT NULL DEFAULT '2'
+  `estatus` varchar(3) DEFAULT 'ACT'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -19733,7 +19109,7 @@ CREATE TABLE `premios` (
   `frecuencia` text NOT NULL,
   `estatus` varchar(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19742,6 +19118,7 @@ CREATE TABLE `premios` (
 
 LOCK TABLES `premios` WRITE;
 /*!40000 ALTER TABLE `premios` DISABLE KEYS */;
+INSERT INTO `premios` VALUES (7,'Celular Huawei Mate S','El cristal liso del P7 fue creado con 7 capas de material, utilizando un dise&ntilde;o de micro-patr&oacute;n nunca antes visto en un smartphone','/media/premios/celular.jpg','3','3',7,'Anual','ACT');
 /*!40000 ALTER TABLE `premios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19762,7 +19139,7 @@ CREATE TABLE `preregistro` (
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estatus` varchar(3) NOT NULL,
   PRIMARY KEY (`id_preregistro`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19771,6 +19148,210 @@ CREATE TABLE `preregistro` (
 
 LOCK TABLES `preregistro` WRITE;
 /*!40000 ALTER TABLE `preregistro` DISABLE KEYS */;
+INSERT INTO `preregistro` VALUES (3,'dariosangurima','dario@hotmail.com','0982637465','henrry manzo','0923765438','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (4,'Camilo Josue Ortiz Vasquez','camilojosue1@gmail.com','0992744903','Henry Manzo','0926797713','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (5,'ERASMO EFRAIN MARCILLO SUAREZ','ms.erasmo@gmail.com','0997989616','Henrry Manzo','0920938529','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (6,'Jaime Carlos Jame Rosado','jcjame@hotmail.es','0989498833','Bartholo Merchan','1202080766','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (7,'Tello tubay Miguel Rafael','rafaeltello7429@hotmail.com','0992160107','Erasmo Marcillo','0916410426','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (8,'lady yadira avilla tello','lady_a-t@hotmail.com','0982532927','Miguel tello','0941085375','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (9,'Teodoro carmelo pacheco castro ','teodoro.pc@hotmail.com','0993416463','Miguel tello','1301499966','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (10,'bozada ponce eva maria ','teodoro.pc@hotmail.com','0985795533','Miguel tello','1302516990','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (11,'arevalo muñoz christian eduardo ','christian_edu_arevalo@hotmail.com','0986670896','Miguel tello','0926527789','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (12,'Tito Rigoberto Loor Cedeno','wingstito@gmail.com','0995969783','henrry manzo','1304306523','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (13,'Clarita Redroban Burgos','c_lavic@hotmail.com','0992395455','Miguel tello','0908066202','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (14,'Gabriel Alejandro Velez España','velez2293@gmail.com','0969773606','Henrry Manzo','0923374243','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (15,'Bartolo Seferino Merchán Santistevan','bartolomerchan5@gmail.com','0990789943','Tito Loor','0914731013','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (16,'Leonardo David Giron Robles','leonardo.d.giron@gmail.com','0983316010','Gabriel Velez','0924108327','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (17,'castro redroban sixto javier','sixtocastro_1993@hotmail.es','0991216662','Clarita redroban','0950280081','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (18,'Luis Arturo Sancán Ponce','arturo-sancan@hotmail.com','0989821525','Bartolo Merchan','0911612885','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (19,'calderon mero isidro oscar','iocm1976@hotmail.com','0981345031','miguel tello','0915524276','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (20,'Carlos Julio Vera Veas','cva_veas@hotmail.com','0967599080','Bartolo Merchan','1203165566','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (21,'Aguilar briones carlos ivan ','prueba@prueba.com','0994795754','Miguel tello','0931011316','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (22,'Joffre Antonio Garcia Espinoza','elchino_garcia1992@hotmail.com','0982861974','henrry manzo','0927862086','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (23,'Joseph Alvaro Chevez Yepez','joseph.lili@hotmail.com','0996159397','Joffre Garcia','0922905112','2014-11-19 12:00:00','');
+INSERT INTO `preregistro` VALUES (24,'Charles Jean Pierre Chevez Yepez','jean_pierre93_@hotmail.com','0991947474','Joffre Garcia','0926097254','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (25,'Kleber Fabian Silva Yepez','silva_kleber28@hotmail.com','0989630320','Joffre Garcia','1313206110','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (26,'manrique serrano doris  maru','dorismanriqueserrano@hotmail.com','0994646055','cristhian arevalo','0916434251','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (27,'victoria nataly limones moran ','limonesvictoria@gmail.com','0968154994','doris manrique','0925653420','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (28,'Fabricio Fernando Cifuentes Borja','facibor@gmail.com','0959236895','Carlos Vera Veas','0919445981','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (29,'David Michell Bravo Cedeno','david16-12@hotmail.com','0993846226','Camilo Ortiz','0919722934','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (30,'Pablo daniel del hierro villacres','pablito_12dfe@hotmail.com','0999310127','david bravo','0928957422','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (31,'Rudy Gregorio Castro Barzola','rgcastro1994@hotmail.com','0989544251','David Bravo Cedeno','0929053106','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (32,'Ivan Andres Canar Murillo','ivancamu23@gmail.com','0994135549','David Bravo Cedeno','0922509005','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (33,'samuel botta cedeño','samuel_botta@yahoo.com','0995131771','Julio zeller','0911990364','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (34,'Josue luis caicedo amalla ','josuecaicedo05@hotmail.com','0959111326','david bravo','0927581173','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (35,'Diego Ulpiano Bejarano Loaiza','diegobejarano1@gmail.com','0984169943','Julio Zoller','0916912405','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (36,'XAVIER REINALDO PLAZA CASTRO','xplazac@hotmail.es','0990112793','ANDRES VELEZ','0913056917','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (37,'Fabiola Mariana Moran Valarezo','faby22_moran@hotmail.com','0983371403','ANDRES VELEZ','0925663767','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (38,'juan carlos Fernández vega','juan_k_fb@hotmail.com','0992366572','rudy castro barzola','0926373622','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (39,'Esteban Abel Cisneros Dominguez ','abelcisnerod@outlook.com','0968556284','Bartolo Merchan Santistevan','0903771571','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (40,'Estefania Duran Ordoñez','estefiduor89@gmail.com','0993858531','Xavier Plaza','0915794986','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (41,'roberto carlos solis mejia','rokasolis_06@hotmail.com','0994310750','rudy castro barzola ','0992815999','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (42,'Julio Zöller','julio.zoller@hotmail.com','0998809786','Andres Velez Valarezo','0916463060','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (43,'Jorge Daniel Lucas Martinez','daniel.lucas@soynetworkerlatino.com','984674341','Julio Zoller','0909702805','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (44,'lexi Alexandra Zamora Muñoz ','terapiastiens@hotmail.com','0968400786','Bartolo Merchan Santistevan','1717203465','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (45,'Ney Marcelo Bazantes Figueroa','bazante@gmail.com','0988790925','Carlos Vera veas ','0914935382','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (46,'Milton Omar Gaibor Erazo','ntagaiborleon@yahoo.com','0985367621','Henrry Manzo Contreras','1716099293','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (47,'Jairo Fabricio Cañadas Valencia','fabi_m-1988@hotmail.com','0979545687','   Luis Arturo Sancan ','0979545686','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (48,'Johnny  Rafael Mera','jonnymavoo@gamil.com','0996543048','Ney  Marcelo Bazantes ','0911564755','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (49,'Sonia Bayona Cotallat','soniamerica@hotmail.es','0999556880','Julio Zooler','0905467734','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (50,'Sara de Jesus Monserrate Suarez','guaguitocheito@hotmail.com','0985626142','Sonia Bayona Cotallat','0910752609','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (51,'DANIEL GUILLERMO ARAGONES COELLO','danielaragones@hotmail.com','0990859972','Sonia Bayona Cotallat','0903983971','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (52,'Ruben Tumbaco Baque','rubenstb@outlook.com','0999330896','Erasmo Marcillo','0915605232','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (53,'Jessica Adriana Villon Quimi ','Jessica-91vq@live.com','0967396596','Erasmo Marcillo','0940792716','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (54,'XAVIER REINALDO PLAZA CASTRO','xplazac@hotmail.es','0990112793','JULIO ZOLLER','0913056917','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (55,'Hugo Bolivar Espin ','hugo21espin@gmail.com','0997917993','BartoloMerchan santistevan','1708329923','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (56,'viviana barrera','vivianbarrera@hotmail.com','0979056817','Julio Zoller','0918875832','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (57,'Hugo Bolivar Espin','hugo21espin@gmail.com','0997917993','Bartolo Merchan Santistevan ','1708329923','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (58,'Verónica Elizabeth Viveros Espinoza ','verito-9003@hotmail.com','0967424443','Hugo Bolivar  Espin ','1724960719','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (59,'Guido Humberto Leon','billonariomil@gmail.com','0991236956','Hugo Bolivar Espin','0801515966','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (60,'julissa avila','julissa1989@gmail.com','0997378299','prueba','0930044490','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (61,'ivan omar sauhing aspiazu','ivanildo93@hotmail.es','0989469822','rudy castro barzola','1207706142','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (62,'Julio San Lucas','oscarpozo45@gmail.com','0000000000','Oscar Pozo','0921271052','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (63,'luis fernando López cuesta','luifelop@espol.edu.ec','0939344331','rudy castro barzola','0950723023','2014-11-19 12:00:00','ACT');
+INSERT INTO `preregistro` VALUES (64,'DANIEL VASCONEZ','dvascones@gmail.com','0994123930','andres velez valarezo','0911727949','2014-11-20 23:17:21','ACT');
+INSERT INTO `preregistro` VALUES (65,'jorge mauricio gonzalez ramirez','gonzaespol_40@yahoo.com','0939472095','Rudy  Castro Barzola ','0927362830','2014-11-21 00:51:17','ACT');
+INSERT INTO `preregistro` VALUES (66,'LAVAYEN MORAN LESLYE KATHERINE ','leslye-0905@hotmail.com','0981925549','RUDY CASTRO BARZOLA ','0927975698','2014-11-21 01:56:39','ACT');
+INSERT INTO `preregistro` VALUES (67,'carolina murillo mena','gata203_geminis@hotmail.com','0999923875','xavier plaza castro','1724241904','2014-11-21 02:12:40','ACT');
+INSERT INTO `preregistro` VALUES (68,'lady yadira avila tello','lady_a-t@hotmail.com','0982532927','miguel tello','0941085375','2014-11-21 02:48:18','ACT');
+INSERT INTO `preregistro` VALUES (69,'adan lazaro','adan-2014-pascali@hotmail.com','0519962772','00','4245187','2014-11-21 04:06:57','ACT');
+INSERT INTO `preregistro` VALUES (70,'Teresa Muñoz Olmedo','tmotere@hotmail.com','0993118310','anuncio on line','1204225237','2014-11-21 04:13:07','ACT');
+INSERT INTO `preregistro` VALUES (71,'Cristina Mireya Alvaro Arias','prof.cristh.alvaro@gmail.com','0980258847','Julio Zoller','0915772610','2014-11-21 05:11:39','ACT');
+INSERT INTO `preregistro` VALUES (72,'Kleber Rafael Verá Sanchez ','rafael0328@hotmail.com','0994522425','Henrry Manzo Contreras','0912106077','2014-11-21 05:44:08','ACT');
+INSERT INTO `preregistro` VALUES (73,'Maria Isabel Naranjo','poderenred@yahoo.com','0959090917','Julio Zoller','1709580755','2014-11-21 05:52:32','ACT');
+INSERT INTO `preregistro` VALUES (74,'Luis Fernando Mesias Briones ','luis_ash002@hotmail.com','0959886419','Xavier Plaza','0930008255','2014-11-21 08:57:24','ACT');
+INSERT INTO `preregistro` VALUES (75,'XAVIER LUNA','xaviluna92@hotmail.com','0968704300','Julio Zeller','0909729444','2014-11-21 09:44:52','ACT');
+INSERT INTO `preregistro` VALUES (76,'Jacinto Gonzabay Cruz ','JacintoGonzabay@gmail.com','0990563517','Alexandra Zamora Muñoz','009811309','2014-11-21 21:53:06','ACT');
+INSERT INTO `preregistro` VALUES (77,'Jose Alejandro ','alejandroadum@yahoo.com','0909244958','Andres Velez','0909244956','2014-11-21 22:48:16','ACT');
+INSERT INTO `preregistro` VALUES (78,'Bolivar Salazar Valarezo','bolivarsalazar28@gmail.com','0991917590','Andrés\n Velez','0915670277','2014-11-21 22:49:21','ACT');
+INSERT INTO `preregistro` VALUES (79,'Ricardo Fabrizzio Corral ','Ricardo_fabrizzio@hotmail.com','0998419842','Bolivar Salazar','0915673156','2014-11-21 23:03:55','ACT');
+INSERT INTO `preregistro` VALUES (80,'Jorge Oswaldo Coloma del Pozo','colomajorge@yahoo.com','0993323316','Ing. Andres Velez','0914298245','2014-11-22 01:19:03','ACT');
+INSERT INTO `preregistro` VALUES (81,'Alan Kramer','kramer.alan@gmail.com','0994735200','julio zoller','0908030604','2014-11-22 02:45:19','ACT');
+INSERT INTO `preregistro` VALUES (82,'Guillermo Timm','wtimmcolageno_5@msn.com','0981175362','Alan Kramer','0905666061','2014-11-22 02:47:36','ACT');
+INSERT INTO `preregistro` VALUES (83,'Jenny Mendoza','jmmendozag3@hotmail.com','0999358077','Alan Kramer','1202974950','2014-11-22 02:50:11','ACT');
+INSERT INTO `preregistro` VALUES (84,'Malena Puga','mpuga1@hotmail.com','0994354087','Guillermo Timm','1200941806','2014-11-22 02:52:06','ACT');
+INSERT INTO `preregistro` VALUES (85,'Fernando Duque Sacoto','fedusa36@hotmail.com','0994415304','Guillermo Timm','0905681813','2014-11-22 03:17:55','ACT');
+INSERT INTO `preregistro` VALUES (86,'Miriam Ramirez','miriamramirezel@hotmail.com','0992287789','Guillermo Timm','0909227613','2014-11-22 03:20:05','ACT');
+INSERT INTO `preregistro` VALUES (87,'Karen Martínez ','Karenmartinezpuga@gmail.com','0999360895','Malean Puga ','0916162704','2014-11-22 03:27:55','ACT');
+INSERT INTO `preregistro` VALUES (88,'Piedad conforme ','Piedad_conforme@hotmail.com','0997041754','Guillermo Timm ','1303490260','2014-11-22 03:33:45','ACT');
+INSERT INTO `preregistro` VALUES (89,'Patricia Zambrano','Pattyzam1974@hotmail.com','0993576741','Guillermo Timm ','0301310926','2014-11-22 03:35:41','ACT');
+INSERT INTO `preregistro` VALUES (90,'Guillermo Timm freire ','Sweetbear57@yahoo.com','0994491225','Guillermo Timm ','0902001890','2014-11-22 03:36:55','ACT');
+INSERT INTO `preregistro` VALUES (91,'SUSANA ELIZABETH ALONSO BENAVIDES','susan_alonso@hotmail.com','0992448126','JULIO ZOLLER','0912892312','2014-11-23 22:24:31','ACT');
+INSERT INTO `preregistro` VALUES (92,'SUSANA ELIZABETH ALONSO BENAVIDES','susan_alonso@hotmail.com','0992448126','JULIO ZOLLER','0912892312','2014-11-23 22:28:00','ACT');
+INSERT INTO `preregistro` VALUES (93,'Carlos Valverde','carlosvalverde@outlook.com','0939159026','Dario Sangurima','0912272903','2014-11-24 00:59:13','ACT');
+INSERT INTO `preregistro` VALUES (94,'Ana Patricia Meneses Beltran','patymencev@hotmail.com','0993165888','Sonia Bayona','1718907536','2014-11-24 22:06:02','ACT');
+INSERT INTO `preregistro` VALUES (95,'Paula Maria Navas Tinoco','soniamerica@hotmail.es','0985208030','Sonia Bayona','1304139254','2014-11-24 22:09:06','ACT');
+INSERT INTO `preregistro` VALUES (96,'CARLOS MALLARINO','xplazac@hotmail.es','0991644563','XAVIER PLAZA CASTRO','0923387815','2014-11-25 00:48:46','ACT');
+INSERT INTO `preregistro` VALUES (97,'john henry gonzalez vera','johnhgv1970@gmail.com','0989008545','facebook','0103455721','2014-11-25 04:41:27','ACT');
+INSERT INTO `preregistro` VALUES (98,'alfredo jamil cordova sanchez','jamilcordova_231292@hotmail.com','0982440198','Rudy  Castro Barzola ','0940683360','2014-11-25 07:07:03','ACT');
+INSERT INTO `preregistro` VALUES (99,'jorge francisco cortez pinela','kolly_cortez1993@hotmail.com','0959915813','Rudy  Castro Barzola ','0949964857','2014-11-25 07:10:47','ACT');
+INSERT INTO `preregistro` VALUES (100,'JOHANNA STEFANIA LOZANO JURADO','mamiagresiva18@gmail.com','0982861974','JOFFRE GARCIA','0926514613','2014-11-25 08:14:43','ACT');
+INSERT INTO `preregistro` VALUES (101,'lenin Alberto Quintero Sánchez','drcuantico@gmail.com','0959653818','Andres Velez valarezo','0917236499','2014-11-25 12:12:35','ACT');
+INSERT INTO `preregistro` VALUES (102,'Lilyan Yepez','lilyan.yepez@dinamica.ec','0996785491','na','17052','2014-11-25 17:30:27','ACT');
+INSERT INTO `preregistro` VALUES (103,'Edgar Oswaldo Paute Zhungata','edgospazhu@gmail.com','0997826818','world live ecuador','0701905945','2014-11-25 20:15:46','ACT');
+INSERT INTO `preregistro` VALUES (104,'Servio Maldonado','serviomaldonado@yahoo.com','0989711144','Yo mismo','1101426466','2014-11-25 20:20:07','ACT');
+INSERT INTO `preregistro` VALUES (105,'Servio Maldonado','serviomaldonado@yahoo.com','0989711144','Yo mismo','1101426466','2014-11-25 20:20:07','ACT');
+INSERT INTO `preregistro` VALUES (106,'Erika Jennifer moncayo Piazza','erika-cero@hotmail.com','0983907868','nadie','0101660371','2014-11-25 20:30:04','ACT');
+INSERT INTO `preregistro` VALUES (107,'xavier fernando icaza gonzalez','xicazag94@gmail.com','0985982241','camilo ortiz','0924077142','2014-11-25 22:16:29','ACT');
+INSERT INTO `preregistro` VALUES (108,'jose cáceres','roxadi2014@gmail.com','0969095412','luis','1711736124','2014-11-26 02:12:18','ACT');
+INSERT INTO `preregistro` VALUES (109,'Francisco Ayala ','fayala_vasquez@hotmail.com','0999669972','facebook','170827382','2014-11-26 03:41:29','ACT');
+INSERT INTO `preregistro` VALUES (110,'edwin fabian risco vera','edwin_12_risco@hotmail.com','0969658173','wor livw','1722471479','2014-11-26 03:57:30','ACT');
+INSERT INTO `preregistro` VALUES (111,'edwin fabian risco vera','edwin_12_risco@hotmail.com','0969658173','wor livw','1722471479','2014-11-26 03:58:09','ACT');
+INSERT INTO `preregistro` VALUES (112,'edwin fabian risco vera','edwin_12_risco@hotmail.com','0969658173','edwin','1722471479','2014-11-26 04:04:01','ACT');
+INSERT INTO `preregistro` VALUES (113,'oswlado caraguay ','mauri_bsc_93@hotmail.com','0999876521','andie ','0999876521','2014-11-26 07:06:59','ACT');
+INSERT INTO `preregistro` VALUES (114,'jipson lorenzo arciniega mosquera ','jipsonarciniega7@hotmail.com','0991153426','world live ','0804643518','2014-11-26 08:01:07','ACT');
+INSERT INTO `preregistro` VALUES (115,'ERIK ROLANDO JARAMILLO MUÑOZ','erikjaramillo@hotmail.com','0979844164','facebook','6136941','2014-11-26 16:26:52','ACT');
+INSERT INTO `preregistro` VALUES (116,'LAURA MAGDALENA AGURTO PITA','magda_agurto@hotmail.com','0991290202','SaritaMonserrate Suarez','0905989620','2014-11-26 21:46:41','ACT');
+INSERT INTO `preregistro` VALUES (117,'Diego Asdrubal Rodriguez Alarcón','dicode_sta@hotmail.com','0992111579','Leonardo Girón','0920202108','2014-11-27 02:45:10','ACT');
+INSERT INTO `preregistro` VALUES (118,'GLADYS DEL ROCIO CORREA VERA','rociocorreavera@mail.com','0979715853','XAVIER PLAZA','0912385481','2014-11-27 04:42:47','ACT');
+INSERT INTO `preregistro` VALUES (119,'Carlos Mallarino Franco','carmallarino@gmail.com','0991644563','Xavier Plaza','0923387815','2014-11-27 22:39:47','ACT');
+INSERT INTO `preregistro` VALUES (120,'Roberto Mora Delgado','rmoradelgado@gmail.com','0939319649','Carlos Mallarino Franco','0919433276','2014-11-27 22:43:21','ACT');
+INSERT INTO `preregistro` VALUES (121,'Ernesto daniel bonilla gonzalez','danny_fear@yahoo.com','0992836330','Julio zeller','0922352588','2014-11-28 04:17:56','ACT');
+INSERT INTO `preregistro` VALUES (122,'alejandro cesar benites cottallat','a.benites@live.com','0968814792','sonia bayona','0903531044','2014-11-28 04:47:14','ACT');
+INSERT INTO `preregistro` VALUES (123,'Economista carlos rojas armas ','prueba@hotmail.com','0992104826','carlos valarezo ','0906397666','2014-11-28 04:47:28','ACT');
+INSERT INTO `preregistro` VALUES (124,'Cralos tapia ','carlostapiarizzo@gmail.com','0988461416','Andres Velez','0917334310','2014-11-28 04:48:08','ACT');
+INSERT INTO `preregistro` VALUES (125,'Orlando leonel reyes rodriguez','orlandoreyes1403@gmail.com','0982257475','Roberto Mora','0919431213','2014-11-28 04:49:06','ACT');
+INSERT INTO `preregistro` VALUES (126,'ivonne angela baquerizo plaza','ivonnebaquerizo@hotmail.com','0995034095','zonia bayona de aragonea','0906274097','2014-11-28 04:49:20','ACT');
+INSERT INTO `preregistro` VALUES (127,'Franklin ricardo castro ramirez','black_ricardo@hotmail.com','0958777668','David Bravo','0923236699','2014-11-28 04:50:13','ACT');
+INSERT INTO `preregistro` VALUES (128,'reyna gardenia martillo martillo','reynamartillo@hotmail.com','0997778437','zonia bayona de aragones','0913547162','2014-11-28 04:50:34','ACT');
+INSERT INTO `preregistro` VALUES (129,'christian manuel yepez monserrate','christian@hotmail.com','0994398225','sara monserrate suarez','1205876228','2014-11-28 04:52:14','ACT');
+INSERT INTO `preregistro` VALUES (130,'Carlos Max Heymann Zambrano','carlosmaxhz@yahoo.com','0991231074','ALAN KRAMER','0904339942','2014-11-28 04:53:07','ACT');
+INSERT INTO `preregistro` VALUES (131,'francia elizabeth molina cantos','francia-molina@hotmail.com','0997110565','christian yepez monserrate','1306469345','2014-11-28 04:53:39','ACT');
+INSERT INTO `preregistro` VALUES (132,'Carmen osses Gonzalez','ceosses@hotmail.com','0999429563','alan kramer ','1705525911','2014-11-28 04:54:34','ACT');
+INSERT INTO `preregistro` VALUES (133,'Maria lourdes cuesta villota ','carlosmaxhz@yahoo.com','0993800272','Carlos Max','0908449051','2014-11-28 04:55:48','ACT');
+INSERT INTO `preregistro` VALUES (134,'Henrry Xavier Mando Contreras','hxmc_9@hotmail.com','0959213632','Andrés Vélez ','1202708481','2014-11-28 08:01:59','ACT');
+INSERT INTO `preregistro` VALUES (135,'Catalina Ordoñez ','Cattyduran@gmail.com','0993858395','Estefania Duran ','0909430761','2014-11-29 00:24:16','ACT');
+INSERT INTO `preregistro` VALUES (136,'Luisa Avila ','luisafernandaavilasantos@gmail.com','0997696892','Estefania Duran ','0926441155','2014-11-29 00:26:43','ACT');
+INSERT INTO `preregistro` VALUES (137,'Kelly Robles ','kellygraciela@hotmail.com','0981092677','Estefi Duran','0906829551','2014-11-29 00:37:56','ACT');
+INSERT INTO `preregistro` VALUES (138,'Gina Quinapayo','gileel_qn@hotmail.com','0995354348','Maria de Lourdes Cuesta','0908356751','2014-11-29 02:42:19','ACT');
+INSERT INTO `preregistro` VALUES (139,'Jose Gomez','jgaecuador@hotmail.com','0999480096','Maria de Lourdes Cuesta','0904099348','2014-11-29 02:54:39','ACT');
+INSERT INTO `preregistro` VALUES (140,'Paola Gamarra','Paolagamarrap@gmail.com','0997210104','Estefania Duran ','0917981466','2014-11-29 06:18:45','ACT');
+INSERT INTO `preregistro` VALUES (141,'Sebastián Davalos','Sebastian_davalos@hotmail.com','0999435645','Estefania Duran','0924555485','2014-11-29 22:37:08','ACT');
+INSERT INTO `preregistro` VALUES (142,'Pedro Manuel Guaicha Rodríguez','pedroguaicha096@gmail.com','0981268334','Daniel Lucas','1720489838','2014-11-30 09:56:37','ACT');
+INSERT INTO `preregistro` VALUES (143,'Aida Inca','Marianelainca@hotmail.com','0993010551','Estefania Duran','0915872477','2014-12-01 05:02:50','ACT');
+INSERT INTO `preregistro` VALUES (144,'Yohanna Paute Vargas','edgospazhu@gmail.com','0997826818','worldlive','0704511476','2014-12-01 20:17:50','ACT');
+INSERT INTO `preregistro` VALUES (145,'Jhon Ordóñez Vargas','jordonezva@hotmail.com','0988289075','Erasmo Marcillo','0909990244','2014-12-02 01:26:22','ACT');
+INSERT INTO `preregistro` VALUES (146,'Priscilla Isabel Perez Pazmiño','priscypp@hotmail.com','0990269722','Jose Gomez','0909158321','2014-12-02 03:32:21','ACT');
+INSERT INTO `preregistro` VALUES (147,'Carmen Elizabeth Moncayo Manzano','carmenmoncayo@hotmail.com','0988929858','Maria de Lourdes Cuesta','0910142355','2014-12-03 04:47:05','ACT');
+INSERT INTO `preregistro` VALUES (148,'Aurelio Garcia','aurumagg@gmail.com','0989864799','Alan Kramer','0905410049','2014-12-03 05:50:35','ACT');
+INSERT INTO `preregistro` VALUES (149,'Vanessa López','V_lopezp@hotmail.com','0993948141','Estefania Duran','0917068629','2014-12-03 08:28:48','ACT');
+INSERT INTO `preregistro` VALUES (150,'Xavier Icaza ','Xavier_icaza@hotmail.com','0999062626','Estefania Duran','0914744917','2014-12-03 08:30:23','ACT');
+INSERT INTO `preregistro` VALUES (151,'Rafael Martillo','rafaelmartillo75@hotmail.com','0986674138','Alan Kramer','1203277080','2014-12-03 21:15:49','ACT');
+INSERT INTO `preregistro` VALUES (152,'Jimmy Vallejo','Jimmyjoev@gmail.com','0982952792','Estefania Duran ','0915807994','2014-12-03 22:20:24','ACT');
+INSERT INTO `preregistro` VALUES (153,'María Fernanda Galarza Villacis ','nandita_galarza@hotmail.com','0983313963','andres Vélez ','0912780228','2014-12-04 02:28:19','ACT');
+INSERT INTO `preregistro` VALUES (154,'Erick Jose Gomez Manosalvas','pochitogm@hotmail.com','0992366209','Jose Vicente Gomez','0922521067','2014-12-04 02:32:38','ACT');
+INSERT INTO `preregistro` VALUES (155,'Susan Sofía Gómez Pozo','Susangomez29@hotmail.com','0986947535','Jose Vicente Gomez','0917822637','2014-12-04 03:09:19','ACT');
+INSERT INTO `preregistro` VALUES (156,'Galo\n Genaro Guevara Tello','guevaragalo@hotmail.com','0997728974','Jose Vicente Gomez','0905331138','2014-12-04 06:14:05','ACT');
+INSERT INTO `preregistro` VALUES (157,'Iván Andrade Lazo','ivan_andrade_bce@hotmail.com','0959064899','Jose Vicente Gomez','0904242781','2014-12-04 06:16:36','ACT');
+INSERT INTO `preregistro` VALUES (158,'HERBERT VICUÑA FAGGIONI','herbert_vf@yahoo.es','0999259775','GINA QUINAPAYO NEACATO','0907013411','2014-12-04 18:51:20','ACT');
+INSERT INTO `preregistro` VALUES (159,'LORENA CASTRO BAQUE','lorena-baque56@hotmail.com','0985580693','GINA QUINAPAYO NEACATO','0904881950','2014-12-04 19:39:23','ACT');
+INSERT INTO `preregistro` VALUES (160,'Mike Espinoza','mikeespinoza99@gmail.com','0989388909','henrry manzo','0927402826','2014-12-04 22:50:20','ACT');
+INSERT INTO `preregistro` VALUES (161,'Zonia Santos','ecuadorwarehouse.og@gmail.com','0995565432','Mike Espinoza','0923640258','2014-12-04 22:53:18','ACT');
+INSERT INTO `preregistro` VALUES (162,'samantha de lourdes heymann cuesta','carlosmaxhz@yahoo.com','0991231074','lourdes cuesta villota','0914086913','2014-12-05 01:21:36','ACT');
+INSERT INTO `preregistro` VALUES (163,'ricardo cevallos ponce','riccevallos@yahoo.com','0999767861','carlos max heymann z','0915141600','2014-12-05 01:30:26','ACT');
+INSERT INTO `preregistro` VALUES (164,'maria esther palacios chavarria','mariaestherpacha@hotmail.com','0989483591','carlos max heymann z','1704564085','2014-12-05 01:34:38','ACT');
+INSERT INTO `preregistro` VALUES (165,'maria auxiliadora aviles torres','alegriabejar@hotmail.com','0999311288','carlos max heymann z','0901544601','2014-12-05 02:25:09','ACT');
+INSERT INTO `preregistro` VALUES (166,'Carlos francisco bermeo torres','juano_87_b.t@hotmail.com','0985226863','John Ordoñez','0924881246','2014-12-05 04:21:28','ACT');
+INSERT INTO `preregistro` VALUES (167,'sandra mayra muñoz oyola','sandraoyola58@gmail.com','0980083983','christian yepez monserrate','0907938617','2014-12-05 05:56:00','ACT');
+INSERT INTO `preregistro` VALUES (168,'martha peralta borbor suarez','marthaborbor@hotmail.com','0991302178','laura agurto pita','0906654306','2014-12-05 05:57:40','ACT');
+INSERT INTO `preregistro` VALUES (169,'juan alberto corozo quiñonez','juancorozo64@hotmail.com','0994588805','sara monserrate suarez','0910401355','2014-12-05 05:59:18','ACT');
+INSERT INTO `preregistro` VALUES (170,'AGAPITO FLORO','laoportunidadfinanciera@gmail.com','0999407641','GINA QUINAPAYO NEACATO','0911015162','2014-12-06 06:08:30','ACT');
+INSERT INTO `preregistro` VALUES (171,'Igor Iván Gómez Altamirano','igoraltamirano@hotmail.es','0979385038','Jose Vicente Gomez','0905616603','2014-12-06 06:34:25','ACT');
+INSERT INTO `preregistro` VALUES (172,'Betty Germania Manosalvas Del Pezo','betty.manosalvas.d@gmail.com','0999519419','Jose Vicente Gomez','0919726463','2014-12-06 06:38:54','ACT');
+INSERT INTO `preregistro` VALUES (173,'Norma Elisabet Avila Veintimilla','nea-v@hotmail.com','0980891297','Jose Vicente Gomez','0914711833','2014-12-06 06:45:39','ACT');
+INSERT INTO `preregistro` VALUES (174,'Juan José de la Cuadra Velarde','juandelacuadra@hotmail.com','0999366993','Jose Vicente Gomez','0911721330','2014-12-06 06:48:42','ACT');
+INSERT INTO `preregistro` VALUES (175,'Diana Patricia Moncada Díaz','diana.moncadad@hotmail.com','0982636163','Jose Vicente Gomez','0922428123','2014-12-06 06:52:03','ACT');
+INSERT INTO `preregistro` VALUES (176,'John Lincoln Fonseca Torres','john.fonseca1969@hotmail.com','0991201219','Jose Vicente Gomez','0912375136','2014-12-06 23:02:16','ACT');
+INSERT INTO `preregistro` VALUES (177,'vanesa herlinda anchundia vasquez','thelovegod-1993@hotmail.com','0986517965','gregory castro barzola','0929081586','2014-12-08 06:40:35','ACT');
+INSERT INTO `preregistro` VALUES (178,'vanesa herlinda anchundia vasquez','thelovegod-1993@hotmail.com','0986517965','gregory castro barzola','0929081586','2014-12-08 06:41:26','ACT');
+INSERT INTO `preregistro` VALUES (179,'vicente edilberto tigua victore','Vicentetigua19915@gmail.com','0991575785','roberto mora','1314612563','2014-12-08 19:21:57','ACT');
+INSERT INTO `preregistro` VALUES (180,'Arturo Marcelo Vallejo Mero','arturovallejomero@gmail.com','0999321157','Julio Zoller','1311430795','2014-12-08 19:52:37','ACT');
+INSERT INTO `preregistro` VALUES (181,'Patricio Steve Reese Vélez','patricioreese@hotmail.com','0984574442','Jose Vicente Gomez','0911026714','2014-12-09 02:32:58','ACT');
+INSERT INTO `preregistro` VALUES (182,'Maria Fernanda López Alarcón','patricioreese@hotmail.com','0984574442','Jose Vicente Gomez','0924537905','2014-12-09 02:34:43','ACT');
+INSERT INTO `preregistro` VALUES (183,'Frank Luetticke','Frank@global-networker.net','0998386586','Julio Zöller','1754289021','2014-12-09 07:59:10','ACT');
+INSERT INTO `preregistro` VALUES (184,'Juan Carlos Crimella Callejas','jccrimella@hotmail.com','0986463398','Samuel Botta Cedeño','0914418405','2014-12-11 02:53:06','ACT');
+INSERT INTO `preregistro` VALUES (185,'Josselyn Stefania Cedeño Loor','servicios.ambientalesjc@gmail.com','0989576973','Samuel Botta Cedeño','0929113140','2014-12-11 02:57:27','ACT');
+INSERT INTO `preregistro` VALUES (186,'SANDRA ANTIMIA CHAVEZ ALVAREZ','bienestarempresarialecuador@gmail.com','0987671992','SONIA AMERICA BAYONA COTALLAT','0102255965','2014-12-11 07:10:08','ACT');
+INSERT INTO `preregistro` VALUES (187,'sara ninibeth yepez monserrate','amatzu_@hotmail.com','0992137986','christian yepez monserrate ','0931047419','2014-12-11 07:39:37','ACT');
+INSERT INTO `preregistro` VALUES (188,'juan manuel peralta garcia','juanperaltagarcia@outlook.com','0992137986','sara  yepez  monserrate','0921345450','2014-12-11 08:01:12','ACT');
+INSERT INTO `preregistro` VALUES (189,'juan manuel peralta garcia','juanperaltagarcia@outlook.com','0994699660','sara  yepez  monserrate','0921345450','2014-12-11 08:27:53','ACT');
+INSERT INTO `preregistro` VALUES (190,'jovanny gregorio  chiriguay sanchez','jiovannys@hotmail.com.','0959934271','sara monserrate suarez','0911822135','2014-12-11 08:36:54','ACT');
+INSERT INTO `preregistro` VALUES (191,'Margarita Baquero','Margabaquero@gmail.com','0994341903','Estefania Duran ','1706522107','2014-12-12 04:34:54','ACT');
+INSERT INTO `preregistro` VALUES (192,'Rocio Flores','patricioleon2@hotmail.com','0997618052','Alan Kramer','0704119106','2014-12-12 06:30:54','ACT');
+INSERT INTO `preregistro` VALUES (193,'Marianela Inca ','Marianelainca@hotmail.com','0994333895','Estefania Duran','0905882486','2014-12-12 19:48:10','ACT');
+INSERT INTO `preregistro` VALUES (194,'Debbie Aguilar','Daguilera@metropolitan-touring.com','0994333895','Estefania Duran','0905882486','2014-12-12 19:49:43','ACT');
+INSERT INTO `preregistro` VALUES (195,'Adriana Umpierrez Riccardi','adri_umpierrez@hotmail.com','0998961659','Stefania Duran','0921958237','2014-12-13 00:29:35','ACT');
+INSERT INTO `preregistro` VALUES (196,'Patricio Cambizaca','semillasdiferentes@hotmail.com','0998400195','Rocio Flores','0704041268','2014-12-14 08:50:58','ACT');
+INSERT INTO `preregistro` VALUES (197,'ELIEZER ELIAS CORALES AGUILAR','eecorales@hotmail.com','0998791047','SANDRA CHAVEZ','0930731732','2014-12-14 21:13:34','ACT');
+INSERT INTO `preregistro` VALUES (198,'KLEBER RODRIGO MIRANDA ANDRANGO','kleber01miranda@outlook.es','0982240688','SANDRA CHAVEZ','1714185590','2014-12-14 21:16:28','ACT');
+INSERT INTO `preregistro` VALUES (199,'CARLOS JAVIER DELGADO EREZO','champi.zeta@hotmail.com','0982219184','ELIAS CORALES','1715019004','2014-12-14 21:18:06','ACT');
+INSERT INTO `preregistro` VALUES (200,'Rodrigo Giovanny Lagos Carrasco','yogolc@gmail.com','0984877982','SANDRA CHAVEZ','1711985935','2014-12-14 21:20:21','ACT');
+INSERT INTO `preregistro` VALUES (201,'Mario Lizardo Cobos Gomezcoello','cobitosmario@hotmail.com','0982368374',' William Patricio Cambizaca Leon',' 090483580','2015-01-17 01:01:50','ACT');
+INSERT INTO `preregistro` VALUES (202,'Franklin Jovany Soto Garcia ','franklinsg71@hotmail.com','0988966745','Mario Lizardo Cobos Gomezcoello','1103095038','2015-01-17 01:35:32','ACT');
+INSERT INTO `preregistro` VALUES (203,'luis ulloa','lulloa67@hotmail.com','0997649715','Ing Andres Velez','0909558645','2015-01-21 03:15:26','ACT');
+INSERT INTO `preregistro` VALUES (204,'luis ulloa','lulloa67@hotmail.com','0997649715','Ing Andres Velez','0909558645','2015-01-21 03:15:26','ACT');
+INSERT INTO `preregistro` VALUES (205,'luis ulloa','lulloa67@hotmail.com','0997649715','Ing Andres Velez','0909558645','2015-01-21 03:15:26','ACT');
+INSERT INTO `preregistro` VALUES (206,'jose mauricio zambrando','tucoman1976@gmail.com','0802938894','world live','0802938894','2015-01-21 20:45:28','ACT');
 /*!40000 ALTER TABLE `preregistro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19803,7 +19384,7 @@ CREATE TABLE `producto` (
   `sobrepedido` tinyint(1) NOT NULL,
   `inventario` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -19812,10 +19393,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,1,'ActivateATP','Rejuvenece','Contiene un activador de energía celular que trabaja cuidadosamente para darte un aumento de energía ahí donde todo comienza: a nivel celular.',280.00,7.00,5.00,7.00,6.00,'activate','54221325','1','20',1,1,1,1,1,1);
-INSERT INTO `producto` VALUES (2,1,'Archaea Active','salud','Creado mediante un proceso patentado que utiliza hojas orgánicas y tallos de alfalfa, suero de leche y 7 enzimas, Archaea Active™ es un poderoso complemento para tu programa de salud sin sabor ni olor.',220.00,0.00,0.00,0.00,0.00,'active','4562315','1','',1,1,1,1,1,1);
-INSERT INTO `producto` VALUES (3,3,'Water Active','salud','Creado mediante un proceso patentado que utiliza agua cristal pura , para mejorar la circulación en las articulaciones.',250.00,0.00,0.00,0.00,0.00,'active','456454654','1','10',1,1,1,1,1,1);
-INSERT INTO `producto` VALUES (4,3,'cPRIME','salud','cPRIME™, Inspirada por Evolv™, es un producto de vanguardia, diseñado para animarte a llevar un estilo de vida activo, independientemente de tu condición física actual. Disponibles en gran variedad de diseños y colores. Puedes utilizarla cualquier día, todos los días, mientras descansas o en plena actividad deportiva. Actívate, inspírate… ¡disfruta cPRIME!',220.00,0.00,0.00,0.00,0.00,'Evol','324879456','1','10',1,1,1,1,1,1);
+INSERT INTO `producto` VALUES (1,250,'plantilla','plantilla','',10.00,0.00,0.00,0.00,0.00,'networksoft','54767547547','1','10',1,1,1,1,1,50);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19888,7 +19466,7 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES (1,1,1,1,1,'Fabrica Established','5c65g165xdfg65x165d','g45dh65df65g45gd',1,'ninguna','7','7','7','7','7','0','3','3',1,0,'ACT');
+INSERT INTO `proveedor` VALUES (1,1,1,1,1,'dev networksoft','6875646575','754757547457',2,'ninguna','3','3','3','3','3','0','3','3',1,0,'ACT');
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19951,7 +19529,7 @@ CREATE TABLE `proveedor_datos` (
 
 LOCK TABLES `proveedor_datos` WRITE;
 /*!40000 ALTER TABLE `proveedor_datos` DISABLE KEYS */;
-INSERT INTO `proveedor_datos` VALUES (1,'Soy El',' Fabricante','AAA','CDMX','CDMx','06100','1','fabric@established.com',' - 123046301 - 1303131334','CLL');
+INSERT INTO `proveedor_datos` VALUES (1,'soy el','fabricante','COL','cundinamarca','fusa','252211','0','dev@networksoft.mx',' - 4365474 - 6373377','calle 22');
 /*!40000 ALTER TABLE `proveedor_datos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -19986,7 +19564,7 @@ CREATE TABLE `proveedor_mensajeria` (
 
 LOCK TABLES `proveedor_mensajeria` WRITE;
 /*!40000 ALTER TABLE `proveedor_mensajeria` DISABLE KEYS */;
-INSERT INTO `proveedor_mensajeria` VALUES (34,'---------------','Ninguno','Español','AAA','------------------','-------------------','5270',1426,'----------','-------------','2017-03-13 21:22:23','ACT');
+INSERT INTO `proveedor_mensajeria` VALUES (34,'---------------','Ninguno','Español','ESP','------------------','-------------------','5270',78,'----------','-------------','2016-02-04 22:23:07','ACT');
 /*!40000 ALTER TABLE `proveedor_mensajeria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20002,7 +19580,7 @@ CREATE TABLE `puntos_padre` (
   `id_user` int(11) DEFAULT NULL,
   `puntos` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20011,6 +19589,13 @@ CREATE TABLE `puntos_padre` (
 
 LOCK TABLES `puntos_padre` WRITE;
 /*!40000 ALTER TABLE `puntos_padre` DISABLE KEYS */;
+INSERT INTO `puntos_padre` VALUES (21,1,'2');
+INSERT INTO `puntos_padre` VALUES (20,97,'1.00');
+INSERT INTO `puntos_padre` VALUES (19,95,'1.00');
+INSERT INTO `puntos_padre` VALUES (18,94,'3');
+INSERT INTO `puntos_padre` VALUES (17,93,'1.00');
+INSERT INTO `puntos_padre` VALUES (16,89,'1.00');
+INSERT INTO `puntos_padre` VALUES (15,2,'3');
 /*!40000 ALTER TABLE `puntos_padre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20028,7 +19613,7 @@ CREATE TABLE `red` (
   `estatus` varchar(3) NOT NULL,
   `premium` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`id_red`,`id_usuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20037,26 +19622,166 @@ CREATE TABLE `red` (
 
 LOCK TABLES `red` WRITE;
 /*!40000 ALTER TABLE `red` DISABLE KEYS */;
-INSERT INTO `red` VALUES (1,2,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1000,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1001,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1002,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1003,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1004,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1005,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1006,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1007,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1008,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1009,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1010,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1011,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1012,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1013,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1014,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1015,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1016,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1017,'0','ACT','2');
-INSERT INTO `red` VALUES (1,1018,'0','ACT','2');
+INSERT INTO `red` VALUES (13,167,'0','ACT','2');
+INSERT INTO `red` VALUES (7,167,'0','ACT','2');
+INSERT INTO `red` VALUES (6,167,'0','ACT','2');
+INSERT INTO `red` VALUES (13,166,'0','ACT','2');
+INSERT INTO `red` VALUES (7,166,'0','ACT','2');
+INSERT INTO `red` VALUES (6,166,'0','ACT','2');
+INSERT INTO `red` VALUES (13,165,'0','ACT','2');
+INSERT INTO `red` VALUES (7,165,'0','ACT','2');
+INSERT INTO `red` VALUES (6,165,'0','ACT','2');
+INSERT INTO `red` VALUES (13,164,'0','ACT','2');
+INSERT INTO `red` VALUES (7,164,'0','ACT','2');
+INSERT INTO `red` VALUES (6,164,'0','ACT','2');
+INSERT INTO `red` VALUES (13,163,'0','ACT','2');
+INSERT INTO `red` VALUES (7,163,'0','ACT','2');
+INSERT INTO `red` VALUES (6,163,'0','ACT','2');
+INSERT INTO `red` VALUES (13,162,'0','ACT','2');
+INSERT INTO `red` VALUES (7,162,'0','ACT','2');
+INSERT INTO `red` VALUES (6,162,'0','ACT','2');
+INSERT INTO `red` VALUES (13,161,'0','ACT','2');
+INSERT INTO `red` VALUES (7,161,'0','ACT','2');
+INSERT INTO `red` VALUES (6,161,'0','ACT','2');
+INSERT INTO `red` VALUES (13,160,'0','ACT','2');
+INSERT INTO `red` VALUES (7,160,'0','ACT','2');
+INSERT INTO `red` VALUES (6,160,'0','ACT','2');
+INSERT INTO `red` VALUES (13,158,'0','ACT','2');
+INSERT INTO `red` VALUES (7,158,'0','ACT','2');
+INSERT INTO `red` VALUES (6,158,'0','ACT','2');
+INSERT INTO `red` VALUES (13,157,'0','ACT','2');
+INSERT INTO `red` VALUES (7,157,'0','ACT','2');
+INSERT INTO `red` VALUES (6,157,'0','ACT','2');
+INSERT INTO `red` VALUES (13,156,'0','ACT','2');
+INSERT INTO `red` VALUES (7,156,'0','ACT','2');
+INSERT INTO `red` VALUES (6,156,'0','ACT','2');
+INSERT INTO `red` VALUES (13,155,'0','ACT','2');
+INSERT INTO `red` VALUES (7,155,'0','ACT','2');
+INSERT INTO `red` VALUES (6,155,'0','ACT','2');
+INSERT INTO `red` VALUES (13,154,'0','ACT','2');
+INSERT INTO `red` VALUES (7,154,'0','ACT','2');
+INSERT INTO `red` VALUES (6,154,'0','ACT','2');
+INSERT INTO `red` VALUES (13,153,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10037,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10038,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10037,'0','ACT','2');
+INSERT INTO `red` VALUES (27,435,'0','ACT','2');
+INSERT INTO `red` VALUES (26,435,'0','ACT','2');
+INSERT INTO `red` VALUES (13,150,'0','ACT','2');
+INSERT INTO `red` VALUES (7,150,'0','ACT','2');
+INSERT INTO `red` VALUES (13,148,'0','ACT','2');
+INSERT INTO `red` VALUES (7,148,'0','ACT','2');
+INSERT INTO `red` VALUES (6,148,'0','ACT','2');
+INSERT INTO `red` VALUES (6,146,'0','ACT','2');
+INSERT INTO `red` VALUES (13,145,'0','ACT','2');
+INSERT INTO `red` VALUES (12,2,'0','ACT','2');
+INSERT INTO `red` VALUES (11,2,'0','ACT','2');
+INSERT INTO `red` VALUES (10,2,'0','ACT','2');
+INSERT INTO `red` VALUES (9,2,'0','ACT','2');
+INSERT INTO `red` VALUES (8,2,'0','ACT','2');
+INSERT INTO `red` VALUES (7,152,'0','ACT','2');
+INSERT INTO `red` VALUES (6,152,'0','ACT','2');
+INSERT INTO `red` VALUES (13,151,'0','ACT','2');
+INSERT INTO `red` VALUES (7,151,'0','ACT','2');
+INSERT INTO `red` VALUES (6,149,'0','ACT','2');
+INSERT INTO `red` VALUES (6,144,'0','ACT','2');
+INSERT INTO `red` VALUES (13,143,'0','ACT','2');
+INSERT INTO `red` VALUES (26,2,'0','ACT','2');
+INSERT INTO `red` VALUES (6,150,'0','ACT','2');
+INSERT INTO `red` VALUES (6,151,'0','ACT','2');
+INSERT INTO `red` VALUES (7,145,'0','ACT','2');
+INSERT INTO `red` VALUES (6,145,'0','ACT','2');
+INSERT INTO `red` VALUES (13,152,'0','ACT','2');
+INSERT INTO `red` VALUES (13,149,'0','ACT','2');
+INSERT INTO `red` VALUES (7,149,'0','ACT','2');
+INSERT INTO `red` VALUES (7,147,'0','ACT','2');
+INSERT INTO `red` VALUES (6,147,'0','ACT','2');
+INSERT INTO `red` VALUES (13,146,'0','ACT','2');
+INSERT INTO `red` VALUES (7,146,'0','ACT','2');
+INSERT INTO `red` VALUES (7,153,'0','ACT','2');
+INSERT INTO `red` VALUES (6,153,'0','ACT','2');
+INSERT INTO `red` VALUES (6,143,'0','ACT','2');
+INSERT INTO `red` VALUES (13,140,'0','ACT','2');
+INSERT INTO `red` VALUES (6,141,'0','ACT','2');
+INSERT INTO `red` VALUES (7,141,'0','ACT','2');
+INSERT INTO `red` VALUES (13,141,'0','ACT','2');
+INSERT INTO `red` VALUES (7,143,'0','ACT','2');
+INSERT INTO `red` VALUES (6,140,'0','ACT','2');
+INSERT INTO `red` VALUES (7,140,'0','ACT','2');
+INSERT INTO `red` VALUES (13,147,'0','ACT','2');
+INSERT INTO `red` VALUES (13,144,'0','ACT','2');
+INSERT INTO `red` VALUES (7,144,'0','ACT','2');
+INSERT INTO `red` VALUES (16,2,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10038,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10046,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10046,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10046,'0','ACT','2');
+INSERT INTO `red` VALUES (306,2,'0','ACT','2');
+INSERT INTO `red` VALUES (307,2,'0','ACT','2');
+INSERT INTO `red` VALUES (16,346,'0','ACT','2');
+INSERT INTO `red` VALUES (26,346,'0','ACT','2');
+INSERT INTO `red` VALUES (27,346,'0','ACT','2');
+INSERT INTO `red` VALUES (16,356,'0','ACT','2');
+INSERT INTO `red` VALUES (26,356,'0','ACT','2');
+INSERT INTO `red` VALUES (27,356,'0','ACT','2');
+INSERT INTO `red` VALUES (16,357,'0','ACT','2');
+INSERT INTO `red` VALUES (26,357,'0','ACT','2');
+INSERT INTO `red` VALUES (27,357,'0','ACT','2');
+INSERT INTO `red` VALUES (24,270,'0','ACT','2');
+INSERT INTO `red` VALUES (25,270,'0','ACT','2');
+INSERT INTO `red` VALUES (27,2,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10038,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10037,'0','ACT','2');
+INSERT INTO `red` VALUES (16,435,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10036,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10036,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10010,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10010,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10010,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10011,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10011,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10011,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10012,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10012,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10012,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10013,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10013,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10013,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10014,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10014,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10014,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10015,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10015,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10015,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10016,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10016,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10016,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10017,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10017,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10017,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10017,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10018,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10018,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10018,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10018,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10019,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10019,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10019,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10019,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10020,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10020,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10020,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10020,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10034,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10034,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10034,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10034,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10035,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10035,'0','ACT','2');
+INSERT INTO `red` VALUES (27,10035,'0','ACT','2');
+INSERT INTO `red` VALUES (300,10035,'0','ACT','2');
+INSERT INTO `red` VALUES (16,10036,'0','ACT','2');
+INSERT INTO `red` VALUES (26,10036,'0','ACT','2');
 /*!40000 ALTER TABLE `red` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20102,7 +19827,7 @@ CREATE TABLE `servicio` (
   `descripcion` text NOT NULL,
   `id_red` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=504 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20111,8 +19836,7 @@ CREATE TABLE `servicio` (
 
 LOCK TABLES `servicio` WRITE;
 /*!40000 ALTER TABLE `servicio` DISABLE KEYS */;
-INSERT INTO `servicio` VALUES (1,'Curso Maquillaje Profesional','Curso Maquillaje Profesional','2016-03-01','2016-04-30','El Maquillaje Profesional es una de las áreas de la belleza en las que se podrán ampliar los\nsentidos y desarrollar su creatividad, por medio del conocimiento y aprendizaje de diversas\nformas y técnicas que le llevarán a la aplicación del maquillaje de una forma profesional y\nética.',2);
-INSERT INTO `servicio` VALUES (2,'Curso Estilista Profesional','Curso Estilista Profesional','2016-03-01','2016-04-30','El trabajo en una peluquería puede ir desde un sencillo lavado de cabeza a un corte de Cabello moderno no exento de dificultad.\nEntre estos dos extremos, todo un abanico de técnicas, nuevas o tradicionales, exigen del profesional de peluquería un aprendizaje teórico-tecnológico y práctico que le permita acomodarse continuamente a las nuevas tendencias que marca la moda.El curso está indicado para aquellas personas que quieran tener una profesión estable, trabajando en su propio negocio o en salones de belleza, estudios fotográficos, cine, TV, etc.',2);
+INSERT INTO `servicio` VALUES (503,'Recarga','','0000-00-00','0000-00-00','',250);
 /*!40000 ALTER TABLE `servicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20190,7 +19914,7 @@ CREATE TABLE `temp_invitacion` (
   `estatus` varchar(3) DEFAULT 'ACT',
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20199,8 +19923,6 @@ CREATE TABLE `temp_invitacion` (
 
 LOCK TABLES `temp_invitacion` WRITE;
 /*!40000 ALTER TABLE `temp_invitacion` DISABLE KEYS */;
-INSERT INTO `temp_invitacion` VALUES ('a98c473763cdf3e3c2ccf51da0dd35b4','cjsanchez7247@gmail.com',1,2,1024,0,'ACT',1);
-INSERT INTO `temp_invitacion` VALUES ('8bfd715c615b1d3b6a05aac43a8f91a4','arturolopezmz@gmail.com',1,2,2,6,'ACT',2);
 /*!40000 ALTER TABLE `temp_invitacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20221,7 +19943,7 @@ CREATE TABLE `tipo_red` (
   `estatus` varchar(3) DEFAULT 'ACT',
   `plan` varchar(3) DEFAULT 'MAT',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20230,7 +19952,7 @@ CREATE TABLE `tipo_red` (
 
 LOCK TABLES `tipo_red` WRITE;
 /*!40000 ALTER TABLE `tipo_red` DISABLE KEYS */;
-INSERT INTO `tipo_red` VALUES (1,'Belleza','La belleza está asociada a la hermosura. Se trata de una apreciación subjetiva: lo que es bello para una persona, puede no serlo para otra. Sin embargo, se conoce como canon de belleza a ciertas características que la sociedad en general considera como at',3,4,1,'ACT','MAT');
+INSERT INTO `tipo_red` VALUES (300,'Binario','Test de Red Binaria',2,0,1,'ACT','BIN');
 /*!40000 ALTER TABLE `tipo_red` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20249,7 +19971,7 @@ CREATE TABLE `transaccion_billetera` (
   `descripcion` varchar(225) NOT NULL DEFAULT 'Checkout',
   `monto` decimal(30,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20258,7 +19980,27 @@ CREATE TABLE `transaccion_billetera` (
 
 LOCK TABLES `transaccion_billetera` WRITE;
 /*!40000 ALTER TABLE `transaccion_billetera` DISABLE KEYS */;
-INSERT INTO `transaccion_billetera` VALUES (1,'2016-03-31 16:43:06',1000,'ADD','prueba',250.00);
+INSERT INTO `transaccion_billetera` VALUES (17,'2016-03-23 15:07:27',10018,'SUB','ASASA',20.00);
+INSERT INTO `transaccion_billetera` VALUES (11,'2016-02-23 14:55:29',10018,'ADD','Prueba',100.00);
+INSERT INTO `transaccion_billetera` VALUES (12,'2016-02-23 14:55:48',10019,'ADD','Prueba2',200.00);
+INSERT INTO `transaccion_billetera` VALUES (13,'2016-04-23 14:57:11',10018,'SUB','Otra Prueba',20.00);
+INSERT INTO `transaccion_billetera` VALUES (16,'2016-03-23 15:07:27',10018,'ADD','asdas',10.00);
+INSERT INTO `transaccion_billetera` VALUES (15,'2016-03-23 15:07:48',10018,'SUB','Finalizacion',20.00);
+INSERT INTO `transaccion_billetera` VALUES (14,'2016-03-23 15:07:27',10018,'ADD','Prueba final',250.00);
+INSERT INTO `transaccion_billetera` VALUES (18,'2016-03-23 15:10:15',10018,'ADD','21312312',2.00);
+INSERT INTO `transaccion_billetera` VALUES (19,'2016-03-23 15:10:32',10018,'SUB','12321',12.00);
+INSERT INTO `transaccion_billetera` VALUES (20,'2016-03-23 15:11:11',10018,'SUB','2312',12.00);
+INSERT INTO `transaccion_billetera` VALUES (21,'2016-03-23 15:13:55',10018,'SUB','12312',232.00);
+INSERT INTO `transaccion_billetera` VALUES (22,'2016-03-23 15:14:24',10018,'ADD','43',43.00);
+INSERT INTO `transaccion_billetera` VALUES (23,'2016-03-23 15:15:29',10018,'ADD','prueba',1545.00);
+INSERT INTO `transaccion_billetera` VALUES (24,'2016-03-23 15:17:06',10018,'SUB','123123',1234.00);
+INSERT INTO `transaccion_billetera` VALUES (25,'2016-03-23 15:18:17',10018,'ADD','prueba',1000000.00);
+INSERT INTO `transaccion_billetera` VALUES (30,'2016-03-23 16:31:18',10018,'ADD','Prueba',1000000.00);
+INSERT INTO `transaccion_billetera` VALUES (29,'2016-03-23 15:46:39',10018,'ADD','1234',1234.00);
+INSERT INTO `transaccion_billetera` VALUES (31,'2016-03-23 16:31:37',10018,'SUB','prueba',10000.00);
+INSERT INTO `transaccion_billetera` VALUES (32,'2016-03-28 19:29:28',10020,'ADD','bono',100.00);
+INSERT INTO `transaccion_billetera` VALUES (33,'2016-03-28 19:46:57',435,'ADD','al dia',5.00);
+INSERT INTO `transaccion_billetera` VALUES (34,'2016-03-28 19:47:35',435,'ADD','taza',10.00);
 /*!40000 ALTER TABLE `transaccion_billetera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20286,7 +20028,6 @@ CREATE TABLE `tucompra` (
 
 LOCK TABLES `tucompra` WRITE;
 /*!40000 ALTER TABLE `tucompra` DISABLE KEYS */;
-INSERT INTO `tucompra` VALUES ('you@domain.com','you','your~key','COP',1,'DES');
 /*!40000 ALTER TABLE `tucompra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20339,7 +20080,7 @@ CREATE TABLE `user_envio` (
   `email` varchar(50) DEFAULT NULL,
   `telefono` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=170 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20348,7 +20089,8 @@ CREATE TABLE `user_envio` (
 
 LOCK TABLES `user_envio` WRITE;
 /*!40000 ALTER TABLE `user_envio` DISABLE KEYS */;
-INSERT INTO `user_envio` VALUES (1,2,1,'0','soy el','Fabricante','COL','cundinamarca','fusagasuga','centro','22','252211','dev@networksoft.mx','8730705');
+INSERT INTO `user_envio` VALUES (168,2,1,'0','soy el','Fabricante','COL','0','0','centro','22','252211','dev@networksoft.mx','8730705');
+INSERT INTO `user_envio` VALUES (169,2,1,'0','soy el','Fabricante','COL','cundinamarca','fusagasuga','centro','22','252211','dev@networksoft.mx','8730705');
 /*!40000 ALTER TABLE `user_envio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20379,7 +20121,7 @@ CREATE TABLE `user_profiles` (
   `estatus` varchar(3) COLLATE utf8_bin DEFAULT 'DES',
   `nivel_en_red` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=878 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20388,33 +20130,9 @@ CREATE TABLE `user_profiles` (
 
 LOCK TABLES `user_profiles` WRITE;
 /*!40000 ALTER TABLE `user_profiles` DISABLE KEYS */;
-INSERT INTO `user_profiles` VALUES (1,1,0,0,1,0,0,0,1,1,'1',1,'Admin','','0000-00-00','2018-02-12 02:50:56','ACT',3);
-INSERT INTO `user_profiles` VALUES (2,2,1,1,2,5,3,1,1,1,'1069740663',1,'Administrador','Oficina Virtual','1980-01-01','2018-02-14 12:14:55','ACT',1);
-INSERT INTO `user_profiles` VALUES (3,1000,1,1,2,1,1,1,1,1,'1069740663',0,'Giovanny','Cifuentes','1998-12-31','2016-07-24 00:33:26','DES',NULL);
-INSERT INTO `user_profiles` VALUES (4,1001,1,1,2,1,1,1,1,1,'1069784563',0,'Andrea','Bonilla','1998-12-31','2016-03-31 16:23:01','DES',NULL);
-INSERT INTO `user_profiles` VALUES (5,1002,1,1,2,1,1,1,1,1,'123465789',0,'esperanza','fernandez','1998-12-31','2016-03-31 19:10:42','DES',NULL);
-INSERT INTO `user_profiles` VALUES (6,1003,1,1,2,1,1,1,1,1,'1069740663',0,'carlos','castro','1997-12-31','2016-03-31 16:50:55','DES',NULL);
-INSERT INTO `user_profiles` VALUES (7,1004,1,1,2,1,1,1,1,1,'10697406663',0,'Ricardo','Padilla','1997-12-31','2016-03-31 21:53:24','DES',NULL);
-INSERT INTO `user_profiles` VALUES (8,1005,1,1,2,1,1,1,1,1,'10697861256',0,'Juan','Daza','1997-12-31','2016-03-31 21:49:48','DES',NULL);
-INSERT INTO `user_profiles` VALUES (9,1006,1,1,2,1,1,1,1,1,'456798',0,'fernando','gracia','1997-12-31','2016-03-31 21:47:37','DES',NULL);
-INSERT INTO `user_profiles` VALUES (10,1007,1,1,2,1,1,1,1,1,'1069740663',0,'gustavo','castillo','1997-12-31','2016-03-31 20:35:04','DES',NULL);
-INSERT INTO `user_profiles` VALUES (11,1008,1,1,2,1,1,1,1,1,'1069740663',0,'German','Diaz','1997-12-31','2016-03-31 21:46:01','DES',NULL);
-INSERT INTO `user_profiles` VALUES (12,1009,1,1,2,1,1,1,1,1,'65498723156',0,'Maria','Gomez','1997-12-31','2016-03-31 21:44:20','DES',NULL);
-INSERT INTO `user_profiles` VALUES (13,1010,1,1,2,1,1,1,1,1,'1069740663',0,'Nicolas','Martinez','1997-12-31','2016-03-31 20:59:57','DES',NULL);
-INSERT INTO `user_profiles` VALUES (14,1011,1,1,2,1,1,1,1,1,'1069740663',0,'Pedro','Cardenas','1997-12-31','2016-03-31 14:23:23','DES',NULL);
-INSERT INTO `user_profiles` VALUES (15,1012,1,1,2,1,1,1,1,1,'10697985642',0,'camilo','lopez','1997-12-31','2016-03-31 14:24:48','DES',NULL);
-INSERT INTO `user_profiles` VALUES (16,1013,1,1,2,1,1,1,1,1,'1234569879',0,'Monica','Torres','1997-12-31','2016-03-31 14:25:18','DES',NULL);
-INSERT INTO `user_profiles` VALUES (17,1014,1,1,2,1,1,1,1,1,'1069789456',0,'Marcel','Herrera','1997-12-31','2016-03-31 14:21:25','DES',NULL);
-INSERT INTO `user_profiles` VALUES (18,1015,1,1,2,1,1,1,1,1,'654235689',0,'Julian','Lopez','1997-12-31','2016-03-31 14:22:05','DES',NULL);
-INSERT INTO `user_profiles` VALUES (19,1016,1,1,2,1,1,1,1,1,'10645879561',0,'Danel','Ramirez','1997-12-31','2016-03-31 14:22:32','DES',NULL);
-INSERT INTO `user_profiles` VALUES (20,1017,1,1,2,1,1,1,1,1,'487261837352',0,'mario','gomez','1998-12-31','2016-03-31 16:04:22','DES',NULL);
-INSERT INTO `user_profiles` VALUES (21,1018,1,1,2,1,1,1,1,1,'1069740663',0,'Demo','Demo','1998-12-31','2016-04-12 22:27:53','DES',NULL);
-INSERT INTO `user_profiles` VALUES (22,1020,1,1,2,1,1,1,1,1,'213123',0,'213123','213123','1997-12-31','2016-07-21 04:11:58','DES',NULL);
-INSERT INTO `user_profiles` VALUES (23,1021,1,1,2,1,1,1,1,1,'321321',0,'pepe','perez','1997-12-26','2016-07-23 04:13:06','DES',NULL);
-INSERT INTO `user_profiles` VALUES (24,1022,1,1,2,1,1,1,1,1,'1232132',0,'felipe','perez','1997-12-31','2016-07-23 04:13:56','DES',NULL);
-INSERT INTO `user_profiles` VALUES (25,1023,1,1,2,1,1,1,1,1,'231231',0,'pepe','sanchez','1997-12-11','2016-07-24 00:36:58','DES',NULL);
-INSERT INTO `user_profiles` VALUES (26,1024,1,1,2,1,1,1,1,1,'morl691114',0,'sdfghjklsdfghjk','sdfghdfghjk','1999-12-16','2017-04-11 23:14:59','DES',NULL);
-INSERT INTO `user_profiles` VALUES (27,1025,1,1,2,1,4,1,1,1,'memi7909154l0',0,'ivan','mendiola','1979-09-15','2017-05-05 20:55:29','DES',NULL);
+INSERT INTO `user_profiles` VALUES (1,1,0,0,1,0,0,0,1,1,'1',1,'Admin','','0000-00-00','2016-10-03 16:51:07','ACT',3);
+INSERT INTO `user_profiles` VALUES (2,2,1,1,2,5,3,1,1,2,'900879757-4',1,'Administrador','Oficina Virtual','0000-00-00','2016-05-24 21:38:37','ACT',1);
+INSERT INTO `user_profiles` VALUES (877,10034,1,1,8,1,1,1,1,1,'1',NULL,'admin','cedi','0000-00-00','2016-10-03 17:03:32','DES',NULL);
 /*!40000 ALTER TABLE `user_profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20431,7 +20149,7 @@ CREATE TABLE `user_red_temporal` (
   `id_red_temporal` varchar(10) DEFAULT NULL,
   `id_red_a_red` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20440,7 +20158,10 @@ CREATE TABLE `user_red_temporal` (
 
 LOCK TABLES `user_red_temporal` WRITE;
 /*!40000 ALTER TABLE `user_red_temporal` DISABLE KEYS */;
-INSERT INTO `user_red_temporal` VALUES (1,'2','1','0');
+INSERT INTO `user_red_temporal` VALUES (14,'89','0',NULL);
+INSERT INTO `user_red_temporal` VALUES (15,'2','16','6');
+INSERT INTO `user_red_temporal` VALUES (16,'100','0','6');
+INSERT INTO `user_red_temporal` VALUES (17,'90','0','6');
 /*!40000 ALTER TABLE `user_red_temporal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20480,7 +20201,7 @@ CREATE TABLE `user_webs_personales` (
   `username` varchar(30) DEFAULT NULL,
   `clave` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20489,6 +20210,7 @@ CREATE TABLE `user_webs_personales` (
 
 LOCK TABLES `user_webs_personales` WRITE;
 /*!40000 ALTER TABLE `user_webs_personales` DISABLE KEYS */;
+INSERT INTO `user_webs_personales` VALUES (7,'giovanny','1069740663');
 /*!40000 ALTER TABLE `user_webs_personales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20518,7 +20240,7 @@ CREATE TABLE `users` (
   `recovery` varchar(65) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created` (`created`)
-) ENGINE=InnoDB AUTO_INCREMENT=1026 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10035 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20527,34 +20249,9 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'1','$2a$08$gO5bZbbId4oAmpGDkibDY.MgQlGBBA7Af914wjkhtjC1aSwGnubaG','admin@admin.com',1,0,NULL,NULL,NULL,NULL,NULL,'191.89.16.23','2018-02-11 19:50:56','2015-07-11 00:00:00','2018-02-12 02:50:56',NULL);
-INSERT INTO `users` VALUES (2,'gianci15','$2a$08$gO5bZbbId4oAmpGDkibDY.MgQlGBBA7Af914wjkhtjC1aSwGnubaG','admin@miempresa.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.67.232.117','2018-02-14 05:14:55','2015-05-11 00:00:00','2018-02-14 12:14:55',NULL);
-INSERT INTO `users` VALUES (1000,'giovanny','$2a$08$ZI6uxbVnTuOwwvv9WHtEu.5gLbbPxI8LXDPA.X9mKdHV.JWxpk2r2','gianci15@ingenieros.com',1,0,NULL,NULL,NULL,NULL,NULL,'181.49.93.40','2016-07-23 17:36:12','2016-03-31 06:56:06','2016-07-24 00:36:12',NULL);
-INSERT INTO `users` VALUES (1001,'andrea','$2a$08$MYjBiRyV01lYvDTE23F1oewmIbkQvYJTSX1VgdwPpQYjlYFDmeN/i','andrea@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 10:01:14','2016-03-31 06:57:12','2016-03-31 17:01:14',NULL);
-INSERT INTO `users` VALUES (1002,'esperanza','$2a$08$iC6hBbHpU63XZYHoO7vGw.k7v9ax1W1qj3FHYqWg3.AMYE.dPEocG','esperanza@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 12:10:42','2016-03-31 06:57:54','2016-03-31 19:10:42',NULL);
-INSERT INTO `users` VALUES (1003,'carlos','$2a$08$iu23vdgz32.fZ6A.ldbe7u.JJKASgGBa96U03E8DkDDIaONEttfxK','carlos@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 09:50:55','2016-03-31 06:58:43','2016-03-31 16:50:55',NULL);
-INSERT INTO `users` VALUES (1004,'ricardo','$2a$08$fvKf9r5QoQsKdiBISTe4luqpq5vVMrd9A1lMPtwbfVUU33yvw/RNW','ricardo@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 14:53:24','2016-03-31 07:00:14','2016-03-31 21:53:24',NULL);
-INSERT INTO `users` VALUES (1005,'juan','$2a$08$P9twxRnEfwV6tgS8FF8CVe./rZ4WOZPpso3586dC39vGX8xES9ija','juan@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 14:49:48','2016-03-31 07:00:55','2016-03-31 21:49:48',NULL);
-INSERT INTO `users` VALUES (1006,'fernando','$2a$08$5y3LUJnq7.TcOrzKLoFq/OHgDlWA9NIUHeX56t39WUg7TxSwbMjuu','fernando@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 14:47:37','2016-03-31 07:01:26','2016-03-31 21:47:37',NULL);
-INSERT INTO `users` VALUES (1007,'gustavo','$2a$08$yrh6if1B.zRSNiS1dUhx5edH7Q8YbOLL1YLucMDY8F67XcBhwLili','gustavo@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 13:35:04','2016-03-31 07:02:07','2016-03-31 20:35:04',NULL);
-INSERT INTO `users` VALUES (1008,'german','$2a$08$AWyyW0euhkShAFqE27ZRZ.I/C1M8ITBAFAyrqy5gXeO5dnoIAlwfS','german@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 14:46:01','2016-03-31 07:03:45','2016-03-31 21:46:01',NULL);
-INSERT INTO `users` VALUES (1009,'maria','$2a$08$Ygjsk5fGURPRS0tgY4eSHeQPFj4bIRUSqYsCJ02vH/iUmDkqLKWFu','maria@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 14:44:20','2016-03-31 07:04:23','2016-03-31 21:44:20',NULL);
-INSERT INTO `users` VALUES (1010,'nicolas','$2a$08$qFGabbpvElMPTQFY5Xx59uXrar0HSXZi5xvSfmXNdJVb0bEMKt9xm','nicolas@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 13:59:57','2016-03-31 07:05:07','2016-03-31 20:59:57',NULL);
-INSERT INTO `users` VALUES (1011,'pedro','$2a$08$iTgtjSUABDdvoYEtZKk/0OSRboezVkHEabgbKvEoRDdPqMfHKloM6','pedro@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 07:23:23','2016-03-31 07:19:35','2016-03-31 14:23:23',NULL);
-INSERT INTO `users` VALUES (1012,'camilo','$2a$08$R4LoIGvWxuhKqrkvv9jjHOdQdzLgX7/GT91vq1kGXAGJRtaGLvLyq','camilo@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 07:24:48','2016-03-31 07:20:15','2016-03-31 14:24:48',NULL);
-INSERT INTO `users` VALUES (1013,'monica','$2a$08$CdRtuTqeO3mjRnQ8pl2Hfu5DU56iewf0KkDQcoMVzxwptAllwR2cS','monica@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 07:25:18','2016-03-31 07:20:48','2016-03-31 14:25:18',NULL);
-INSERT INTO `users` VALUES (1014,'marcel','$2a$08$i0UjmFsw./AK/JkT4rXlVuuRsm9kAvzXu8YGCzPNz22lsoj3hCh1S','marcel@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','0000-00-00 00:00:00','2016-03-31 07:21:24','2016-03-31 14:21:24',NULL);
-INSERT INTO `users` VALUES (1015,'julian','$2a$08$8nz98Jt3QuSrnevpGROR9O44UCxdxAgzGTq4l6Vt4BtmOprpNGPc6','julian@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','0000-00-00 00:00:00','2016-03-31 07:22:04','2016-03-31 14:22:04',NULL);
-INSERT INTO `users` VALUES (1016,'daniel','$2a$08$opCeP55t.EiKHbeQ..tr8e307GnJVFK8u6io8ORtbIeehJQz9GGSe','daniel@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','0000-00-00 00:00:00','2016-03-31 07:22:32','2016-03-31 14:22:32',NULL);
-INSERT INTO `users` VALUES (1017,'mario','$2a$08$zDZAhsJrBfIljdY4G5FpC.522DKFciMdZJwZF93B2dHnz9dzq31ZS','mario@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'190.147.214.83','2016-03-31 09:04:22','2016-03-31 09:02:27','2016-03-31 16:04:22',NULL);
-INSERT INTO `users` VALUES (1018,'demo','$2a$08$nRL3jekVXJP4BUv4RBdSSu/vnV8DRj96HZFOfTts7J/50N9xRDB3i','demo@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'147.75.121.162','2017-09-27 05:41:10','2016-04-12 15:27:52','2017-09-27 12:41:10',NULL);
-INSERT INTO `users` VALUES (1019,'123','$2a$08$XJYb8gmUPIBeZy9xinZREu8IOuJ7L0swgVJ7wZkJ9lhruaBzaOpye','123@gmail.com',1,0,NULL,NULL,NULL,NULL,NULL,'181.49.90.40','0000-00-00 00:00:00','2016-07-20 21:10:11','2016-07-21 04:10:11',NULL);
-INSERT INTO `users` VALUES (1020,'1231','$2a$08$DZY9Q1K4v55uau.evBR4Neo1aBtemO9hmcDFhD4CEIrlLBl6hClvW','1234@gmail.com',1,0,NULL,NULL,NULL,NULL,NULL,'181.49.90.40','0000-00-00 00:00:00','2016-07-20 21:11:57','2016-07-21 04:11:57',NULL);
-INSERT INTO `users` VALUES (1021,'pepe','$2a$08$95f3edWjh/5hzdJ989OhHuFqNGVT2owSqljM5L.lr2a6cXNKQYdiC','pepe@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'181.49.93.40','0000-00-00 00:00:00','2016-07-22 21:13:05','2016-07-23 04:13:05',NULL);
-INSERT INTO `users` VALUES (1022,'felipe2','$2a$08$iO7DJtXFYOjdY2nUoXnxiOGf17/.qZH1a5Qv2bwJNMEjIaP06xqI6','felipee@g.com',1,0,NULL,NULL,NULL,NULL,NULL,'181.49.93.40','0000-00-00 00:00:00','2016-07-22 21:13:56','2016-07-23 04:13:56',NULL);
-INSERT INTO `users` VALUES (1023,'hardcorgian','$2a$08$zTZ6MC3/KiOLsONic679NeSQZXljL5TvMVlZOn6cUD0Rc5KkoZzfy','hardcorgian@hotmail.com',1,0,NULL,NULL,NULL,NULL,NULL,'181.49.93.40','0000-00-00 00:00:00','2016-07-23 17:36:57','2016-07-24 00:36:57',NULL);
-INSERT INTO `users` VALUES (1024,'joiseluis','$2a$08$Vev.ndJNRhDFkql8JuYLiuAZAjvVtm/jByU5PmPbTS8hsH5s1DtU.','cjsanchez7247@gmail.com',1,0,NULL,NULL,NULL,NULL,NULL,'189.216.207.50','0000-00-00 00:00:00','2017-04-11 16:14:58','2017-04-11 23:14:58','123456');
-INSERT INTO `users` VALUES (1025,'IVAN','$2a$08$RNXY2jg8DKF7Cp3AN2Coz.gsiRda.6HChoRvLrTt5tMsFDnz12BJO','ivan_mendiola@hotmail.com',1,0,NULL,NULL,NULL,NULL,NULL,'201.151.255.126','0000-00-00 00:00:00','2017-05-05 13:55:28','2017-05-05 20:55:28','ivanna');
+INSERT INTO `users` VALUES (1,'1','$2a$08$n7GIrO4xJmW30zmr8./Wd.dhT93nUZj5FG1ctu/weBF3qxYnGrj6a','dev@networksoft.mx',1,0,'NULL',NULL,NULL,'NULL','NULL','161.10.98.81','2016-10-04 11:12:42','2015-05-11 00:00:00','2016-10-04 18:12:42',NULL);
+INSERT INTO `users` VALUES (2,'admin','$2a$08$HH9tngDRWYCS/zbIloCQZO2MoHkEGDNmpPdCALI3pZgDBntqBvXVG','qc.marcel@gmail.com',1,0,'NULL',NULL,NULL,'NULL','NULL','127.0.0.1','2016-09-13 09:47:36','2015-05-11 00:00:00','2016-09-13 14:47:36',NULL);
+INSERT INTO `users` VALUES (10034,'cedi','$2a$08$NkaORq5xDUQLqSyFEJm7tOnoAtrmwdl.iGo0jqcPxcGtbtYOI5AZK','cedi@networksoft.mx',1,0,NULL,NULL,NULL,NULL,NULL,'190.69.60.4','2016-10-03 10:04:22','2016-10-03 10:03:32','2016-10-03 17:04:22','toor');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20612,25 +20309,50 @@ CREATE TABLE `users_attempts` (
 
 LOCK TABLES `users_attempts` WRITE;
 /*!40000 ALTER TABLE `users_attempts` DISABLE KEYS */;
-INSERT INTO `users_attempts` VALUES ('161.10.142.10','2016-04-24 11:13:53',1,0);
-INSERT INTO `users_attempts` VALUES ('161.18.137.198','2017-01-31 21:16:23',1,0);
-INSERT INTO `users_attempts` VALUES ('177.230.109.109','2017-02-07 13:44:47',1,0);
-INSERT INTO `users_attempts` VALUES ('177.252.136.231','2016-05-05 16:00:40',1,0);
-INSERT INTO `users_attempts` VALUES ('181.49.90.40','2016-07-20 21:05:44',1,0);
-INSERT INTO `users_attempts` VALUES ('181.49.93.40','2016-07-22 21:12:23',1,0);
-INSERT INTO `users_attempts` VALUES ('186.119.193.47','2017-03-13 11:23:55',1,0);
-INSERT INTO `users_attempts` VALUES ('187.190.146.227','2017-02-23 10:21:24',1,0);
-INSERT INTO `users_attempts` VALUES ('189.202.124.54','2016-04-01 10:27:01',1,0);
-INSERT INTO `users_attempts` VALUES ('189.207.191.6','2016-05-31 09:45:24',1,0);
-INSERT INTO `users_attempts` VALUES ('190.147.214.83','2016-05-05 16:05:30',1,0);
-INSERT INTO `users_attempts` VALUES ('190.186.200.5','2016-11-09 13:16:41',2,0);
-INSERT INTO `users_attempts` VALUES ('190.248.32.75','2016-07-15 09:30:31',4,0);
-INSERT INTO `users_attempts` VALUES ('191.110.132.191','2016-09-19 23:05:10',1,0);
-INSERT INTO `users_attempts` VALUES ('200.76.83.162','2017-02-03 13:10:08',1,0);
-INSERT INTO `users_attempts` VALUES ('200.76.83.238','2017-02-03 13:10:41',1,0);
-INSERT INTO `users_attempts` VALUES ('200.76.91.75','2017-02-01 10:52:27',1,0);
-INSERT INTO `users_attempts` VALUES ('201.148.155.210','2017-02-03 13:12:39',1,0);
-INSERT INTO `users_attempts` VALUES ('201.221.124.8','2016-11-01 06:34:11',1,0);
+INSERT INTO `users_attempts` VALUES ('127.0.0.1','2016-04-30 10:41:50',1,0);
+INSERT INTO `users_attempts` VALUES ('161.10.140.238','2016-02-18 07:43:00',1,0);
+INSERT INTO `users_attempts` VALUES ('177.240.60.227','2016-11-08 13:46:23',1,0);
+INSERT INTO `users_attempts` VALUES ('179.33.116.93','2016-02-22 12:41:46',1,0);
+INSERT INTO `users_attempts` VALUES ('179.7.5.5','2016-07-07 21:30:49',3,0);
+INSERT INTO `users_attempts` VALUES ('181.113.164.233','2016-06-22 12:11:53',1,0);
+INSERT INTO `users_attempts` VALUES ('181.224.242.165','2016-07-03 00:33:12',1,0);
+INSERT INTO `users_attempts` VALUES ('181.49.90.104','2016-06-15 23:27:16',1,0);
+INSERT INTO `users_attempts` VALUES ('181.49.90.40','2016-07-20 16:10:33',1,0);
+INSERT INTO `users_attempts` VALUES ('186.188.141.80','2016-03-04 11:01:07',1,0);
+INSERT INTO `users_attempts` VALUES ('186.87.102.249','2016-02-16 18:10:35',2,0);
+INSERT INTO `users_attempts` VALUES ('187.153.222.173','2016-03-08 08:42:56',1,0);
+INSERT INTO `users_attempts` VALUES ('187.154.207.71','2016-04-06 10:23:05',3,0);
+INSERT INTO `users_attempts` VALUES ('187.178.188.71','2016-05-13 11:14:57',1,0);
+INSERT INTO `users_attempts` VALUES ('187.188.9.181','2016-06-14 15:44:58',1,0);
+INSERT INTO `users_attempts` VALUES ('187.190.39.100','2016-04-04 19:40:20',4,0);
+INSERT INTO `users_attempts` VALUES ('187.210.189.214','2016-04-06 10:04:56',5,1);
+INSERT INTO `users_attempts` VALUES ('187.237.14.214','2016-04-01 16:11:01',1,0);
+INSERT INTO `users_attempts` VALUES ('187.237.231.30','2016-03-31 18:50:38',5,0);
+INSERT INTO `users_attempts` VALUES ('189.139.23.2','2016-07-13 17:02:37',1,0);
+INSERT INTO `users_attempts` VALUES ('189.146.159.153','2016-05-02 11:35:05',3,0);
+INSERT INTO `users_attempts` VALUES ('189.146.232.230','2016-07-02 08:37:50',4,0);
+INSERT INTO `users_attempts` VALUES ('189.162.152.190','2016-04-19 21:57:59',2,0);
+INSERT INTO `users_attempts` VALUES ('189.179.255.123','2016-04-05 07:21:24',4,0);
+INSERT INTO `users_attempts` VALUES ('189.207.152.100','2016-06-14 18:47:59',1,0);
+INSERT INTO `users_attempts` VALUES ('189.207.181.15','2016-04-13 08:20:44',1,0);
+INSERT INTO `users_attempts` VALUES ('189.207.191.6','2016-05-04 11:13:47',1,0);
+INSERT INTO `users_attempts` VALUES ('189.211.180.232','2016-02-04 09:45:44',1,0);
+INSERT INTO `users_attempts` VALUES ('189.217.204.213','2016-03-15 10:17:42',1,0);
+INSERT INTO `users_attempts` VALUES ('189.217.215.85','2016-04-29 22:29:22',3,0);
+INSERT INTO `users_attempts` VALUES ('189.221.129.19','2016-02-22 10:38:45',1,0);
+INSERT INTO `users_attempts` VALUES ('189.225.134.216','2016-04-08 11:56:05',1,0);
+INSERT INTO `users_attempts` VALUES ('189.225.65.55','2016-04-06 14:34:09',5,1);
+INSERT INTO `users_attempts` VALUES ('189.225.79.5','2016-05-18 15:25:00',5,0);
+INSERT INTO `users_attempts` VALUES ('189.225.80.185','2016-04-24 13:33:46',3,0);
+INSERT INTO `users_attempts` VALUES ('189.225.80.215','2016-04-01 07:29:49',2,0);
+INSERT INTO `users_attempts` VALUES ('190.141.231.11','2016-05-13 09:11:17',3,0);
+INSERT INTO `users_attempts` VALUES ('190.147.214.83','2016-05-02 15:44:24',3,0);
+INSERT INTO `users_attempts` VALUES ('190.239.59.207','2016-07-05 13:51:20',1,0);
+INSERT INTO `users_attempts` VALUES ('190.249.49.237','2016-07-05 22:22:39',1,0);
+INSERT INTO `users_attempts` VALUES ('191.102.196.36','2016-07-01 16:06:13',1,0);
+INSERT INTO `users_attempts` VALUES ('200.53.254.91','2016-03-21 15:50:39',4,0);
+INSERT INTO `users_attempts` VALUES ('201.141.53.1','2016-06-12 16:36:24',5,0);
+INSERT INTO `users_attempts` VALUES ('91.236.74.165','2016-07-14 19:58:42',3,0);
 /*!40000 ALTER TABLE `users_attempts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20658,7 +20380,7 @@ CREATE TABLE `users_cedi` (
   `fecha_alta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` varchar(3) NOT NULL,
   PRIMARY KEY (`id_users_cedi`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20667,6 +20389,7 @@ CREATE TABLE `users_cedi` (
 
 LOCK TABLES `users_cedi` WRITE;
 /*!40000 ALTER TABLE `users_cedi` DISABLE KEYS */;
+INSERT INTO `users_cedi` VALUES (19,30,2147483647,'cedi','admin','cedi','','326436346','','cedi@networksoft.mx','','COL','COL','0000-00-00 00:00:00','ACT');
 /*!40000 ALTER TABLE `users_cedi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20683,7 +20406,7 @@ CREATE TABLE `valor_comisiones` (
   `id_red` int(11) NOT NULL,
   `valor` varchar(45) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20692,10 +20415,20 @@ CREATE TABLE `valor_comisiones` (
 
 LOCK TABLES `valor_comisiones` WRITE;
 /*!40000 ALTER TABLE `valor_comisiones` DISABLE KEYS */;
-INSERT INTO `valor_comisiones` VALUES (5,1,1,'25');
-INSERT INTO `valor_comisiones` VALUES (6,2,1,'5');
-INSERT INTO `valor_comisiones` VALUES (7,3,1,'3');
-INSERT INTO `valor_comisiones` VALUES (8,4,1,'2');
+INSERT INTO `valor_comisiones` VALUES (29,1,16,'25');
+INSERT INTO `valor_comisiones` VALUES (30,2,16,'5');
+INSERT INTO `valor_comisiones` VALUES (31,3,16,'3');
+INSERT INTO `valor_comisiones` VALUES (32,4,16,'2');
+INSERT INTO `valor_comisiones` VALUES (33,1,27,'10');
+INSERT INTO `valor_comisiones` VALUES (35,1,26,'20');
+INSERT INTO `valor_comisiones` VALUES (36,1,306,'10');
+INSERT INTO `valor_comisiones` VALUES (37,2,306,'5');
+INSERT INTO `valor_comisiones` VALUES (38,3,306,'2.5');
+INSERT INTO `valor_comisiones` VALUES (39,4,306,'1');
+INSERT INTO `valor_comisiones` VALUES (40,1,307,'25');
+INSERT INTO `valor_comisiones` VALUES (41,2,307,'5');
+INSERT INTO `valor_comisiones` VALUES (42,3,307,'3');
+INSERT INTO `valor_comisiones` VALUES (43,4,307,'2');
 /*!40000 ALTER TABLE `valor_comisiones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20713,7 +20446,7 @@ CREATE TABLE `venta` (
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_metodo_pago` varchar(10) NOT NULL,
   PRIMARY KEY (`id_venta`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -20722,40 +20455,10 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
-INSERT INTO `venta` VALUES (1,1000,'ACT','2016-03-31 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (2,1001,'ACT','2016-03-31 18:30:30','PAYULATAM');
-INSERT INTO `venta` VALUES (3,1002,'ACT','2016-03-31 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (4,1003,'ACT','2016-03-31 07:00:00','PAYPAL');
-INSERT INTO `venta` VALUES (5,1004,'ACT','2016-03-31 18:59:43','PAYULATAM');
-INSERT INTO `venta` VALUES (6,1002,'ACT','2016-03-31 21:30:38','PAYULATAM');
-INSERT INTO `venta` VALUES (7,1004,'ACT','2016-03-31 07:00:00','PAYPAL');
-INSERT INTO `venta` VALUES (8,1006,'ACT','2016-03-31 07:00:00','PAYPAL');
-INSERT INTO `venta` VALUES (9,1007,'ACT','2016-03-31 22:17:11','PAYULATAM');
-INSERT INTO `venta` VALUES (10,1005,'ACT','2016-03-31 07:00:00','PAYPAL');
-INSERT INTO `venta` VALUES (11,1005,'ACT','2016-03-31 22:27:32','PAYULATAM');
-INSERT INTO `venta` VALUES (12,1008,'ACT','2016-03-31 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (13,1007,'ACT','2016-03-31 22:42:47','PAYULATAM');
-INSERT INTO `venta` VALUES (14,1009,'ACT','2016-03-31 22:53:58','PAYULATAM');
-INSERT INTO `venta` VALUES (15,1009,'ACT','2016-03-31 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (16,1010,'ACT','2016-03-31 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (17,2,'ACT','2016-04-01 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (18,2,'ACT','2016-04-12 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (19,2,'ACT','2016-04-16 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (20,2,'ACT','2016-04-18 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (21,2,'ACT','2016-04-21 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (22,2,'ACT','2016-04-24 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (23,2,'DES','2016-05-04 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (24,2,'DES','2016-05-11 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (25,2,'DES','2016-05-12 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (26,2,'DES','2017-03-13 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (27,2,'DES','2017-03-15 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (28,2,'ACT','2017-04-08 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (29,2,'DES','2017-04-11 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (30,2,'DES','2017-04-24 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (32,2,'DES','2017-06-26 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (33,2,'DES','2017-09-12 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (34,2,'DES','2017-09-12 07:00:00','BANCO');
-INSERT INTO `venta` VALUES (35,2,'DES','2017-10-09 07:00:00','BANCO');
+INSERT INTO `venta` VALUES (1,2,'ACT','2016-10-03 17:38:25','CEDI');
+INSERT INTO `venta` VALUES (2,2,'ACT','2016-10-03 17:40:42','CEDI');
+INSERT INTO `venta` VALUES (3,2,'ACT','2016-10-03 17:54:02','CEDI');
+INSERT INTO `venta` VALUES (4,2,'ACT','2016-10-03 18:00:57','CEDI');
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -20769,4 +20472,4 @@ UNLOCK TABLES;
 /*!50001 CREATE VIEW `items` AS select `m`.`id` AS `id`,`m`.`sku` AS `sku`,`m`.`puntos_comisionables` AS `puntos_comisionables`,(case when (`m`.`id_tipo_mercancia` = 1) then (select `producto`.`nombre` from `producto` where (`producto`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 2) then (select `servicio`.`nombre` from `servicio` where (`servicio`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 3) then (select `combinado`.`nombre` from `combinado` where (`combinado`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 4) then (select `paquete_inscripcion`.`nombre` from `paquete_inscripcion` where (`paquete_inscripcion`.`id_paquete` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 5) then (select `membresia`.`nombre` from `membresia` where (`membresia`.`id` = `m`.`sku`)) else 'No define' end) AS `item`,(case when (`m`.`id_tipo_mercancia` = 1) then (select `producto`.`id_grupo` from `producto` where (`producto`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 2) then (select `servicio`.`id_red` from `servicio` where (`servicio`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 3) then (select `combinado`.`id_red` from `combinado` where (`combinado`.`id` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 4) then (select `paquete_inscripcion`.`id_red` from `paquete_inscripcion` where (`paquete_inscripcion`.`id_paquete` = `m`.`sku`)) when (`m`.`id_tipo_mercancia` = 5) then (select `membresia`.`id_red` from `membresia` where (`membresia`.`id` = `m`.`sku`)) else '' end) AS `categoria`,(case when (`m`.`id_tipo_mercancia` = 1) then (select `a`.`id_red` from (`producto` `p` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `p`.`id_grupo`) and (`p`.`id` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 2) then (select `a`.`id_red` from (`servicio` `s` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `s`.`id_red`) and (`s`.`id` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 3) then (select `a`.`id_red` from (`combinado` `o` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `o`.`id_red`) and (`o`.`id` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 4) then (select `a`.`id_red` from (`paquete_inscripcion` `q` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `q`.`id_red`) and (`q`.`id_paquete` = `m`.`sku`))) when (`m`.`id_tipo_mercancia` = 5) then (select `a`.`id_red` from (`membresia` `b` join `cat_grupo_producto` `a`) where ((`a`.`id_grupo` = `b`.`id_red`) and (`b`.`id` = `m`.`sku`))) else '' end) AS `red`,`m`.`id_tipo_mercancia` AS `id_tipo_mercancia` from `mercancia` `m` */;
  
 
--- Dump completed on 2018-02-14  5:27:04
+-- Dump completed on 2016-11-08 21:34:52

@@ -1,6 +1,3 @@
-create database  if not exists DemoSio;
-use DemoSio;
-
 -- MySQL dump 10.13  Distrib 5.5.19, for Linux (x86_64)
 --
 -- Host: 68.178.143.65    Database: DemoSio
