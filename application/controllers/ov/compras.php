@@ -1531,10 +1531,15 @@ function index()
 	
 	private function getCantidadDeAfiliadosPorPatas($patas,$id_afiliado,$red){
 		$frontalidad=$red->frontal;
+		$usuario=new $this->afiliado;
+		
 		if($red->profundidad==0)
 			$profundidad=0;
 		else
 			$profundidad=($red->profundidad-1);
+		 $usuario->getAfiliadosDebajoDe($id_afiliado,1,"RED",1,1);
+		if($frontalidad==0)
+			$frontalidad =  sizeof($usuario->getIdAfiliadosRed());
 		
 		for ($i=1;$i<=$frontalidad;$i++){
 		
@@ -1555,7 +1560,7 @@ function index()
 			$usuario=new $this->afiliado;
 			$puntosHijo=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
 			$puntosRedHijo=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,"2016-01-01","2026-01-01",$profundidad,"0","0","PUNTOS");
-			$puntosTotales=$puntosHijo[0]->total+$puntosRedHijo;
+			$puntosTotales=$puntosHijo+$puntosRedHijo;
 				
 			$calculador=new $this->calculador_bono;
 		
@@ -1566,13 +1571,13 @@ function index()
 			$usuario=new $this->afiliado;
 			$puntosHijoMes=$usuario->getPuntosTotalesPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0",$inicioMes,$finMes);
 			$puntosRedHijoMes=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,$inicioMes,$finMes,$profundidad,"0","0","PUNTOS");
-			$puntosTotalesMes=$puntosHijoMes[0]->total+$puntosRedHijoMes;
+			$puntosTotalesMes=$puntosHijoMes+$puntosRedHijoMes;
 		
 			//ventas Totales
 			$usuario=new $this->afiliado;
 			$ventasHijo=$usuario->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0","2016-01-01","2026-01-01");
 			$ventasRedHijo=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,"2016-01-01","2026-01-01",$profundidad,"0","0","COSTO");
-			$ventasTotales=$ventasHijo[0]->total+$ventasRedHijo;
+			$ventasTotales=$ventasHijo+$ventasRedHijo;
 				
 			$calculador=new $this->calculador_bono;
 		
@@ -1584,7 +1589,7 @@ function index()
 			$ventasHijoMes=$usuario->getValorTotalDelasComprasPersonalesIntervalosDeTiempo($id_hijo,$red->id,"0","0",$inicioMes,$finMes);
 				
 			$ventasRedHijoMes=$usuario->getVentasTodaLaRedEquilibrada($id_hijo,$red->id,0,$profundidad,$inicioMes,$finMes,$profundidad,"0","0","COSTO");
-			$ventasTotalesMes=$ventasHijoMes[0]->total+$ventasRedHijoMes;
+			$ventasTotalesMes=$ventasHijoMes+$ventasRedHijoMes;
 		
 			$pata = array(
 					'id_red' => $red->id,
