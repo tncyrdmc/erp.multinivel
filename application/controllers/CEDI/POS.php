@@ -33,7 +33,7 @@ class POS extends CI_Controller
 		
 		$style=$this->modelo_dashboard->get_style($id);
 		$this->template->set("cajero",$usuario[0]->nombre." ".$usuario[0]->apellido);
-		$data = array("user2" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
+		$data = array("user" => $usuario[0]->nombre."<br/>".$usuario[0]->apellido);
 		$this->template->set("style",$style);
 
 		$this->template->set_theme('desktop');

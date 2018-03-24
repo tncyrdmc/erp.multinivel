@@ -201,7 +201,7 @@
 									{
 										FinalizarSpinner();
 										$("#reporte_div").html(msg);
-							    
+							    		setTableFix();
 									}
 								});
 								
@@ -312,6 +312,42 @@
 						});
 
 		}
+
+
+		function setTableFix(){
+			/* BASIC ;*/
+				var responsiveHelper_dt_basic = undefined;
+				var responsiveHelper_datatable_fixed_column = undefined;
+				var responsiveHelper_datatable_col_reorder = undefined;
+				var responsiveHelper_datatable_tabletools = undefined;
+				
+				var breakpointDefinition = {
+					tablet : 1024,
+					phone : 480
+				};
+
+				$('#datatable_fixed_column1').dataTable({
+					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+						"t"+
+						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+					"autoWidth" : true,
+					"preDrawCallback" : function() {
+						// Initialize the responsive datatables helper once.
+						if (!responsiveHelper_dt_basic) {
+							responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+						}
+					},
+					"rowCallback" : function(nRow) {
+						responsiveHelper_dt_basic.createExpandIcon(nRow);
+					},
+					"drawCallback" : function(oSettings) {
+						responsiveHelper_dt_basic.respond();
+					}
+				});
+	
+			/* END BASIC */
+		}
+
 		</script>
 		<script type="text/javascript">
 		
@@ -337,37 +373,7 @@
 			Also see: http://legacy.datatables.net/usage/features
 			*/	
 
-			/* BASIC ;*/
-				var responsiveHelper_dt_basic = undefined;
-				var responsiveHelper_datatable_fixed_column = undefined;
-				var responsiveHelper_datatable_col_reorder = undefined;
-				var responsiveHelper_datatable_tabletools = undefined;
-				
-				var breakpointDefinition = {
-					tablet : 1024,
-					phone : 480
-				};
-
-				$('#dt_basic').dataTable({
-					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-						"t"+
-						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-					"autoWidth" : true,
-					"preDrawCallback" : function() {
-						// Initialize the responsive datatables helper once.
-						if (!responsiveHelper_dt_basic) {
-							responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-						}
-					},
-					"rowCallback" : function(nRow) {
-						responsiveHelper_dt_basic.createExpandIcon(nRow);
-					},
-					"drawCallback" : function(oSettings) {
-						responsiveHelper_dt_basic.respond();
-					}
-				});
-	
-			/* END BASIC */
+			
 			
 			/* COLUMN FILTER  */
 		    var otable = $('#datatable_fixed_column').DataTable({

@@ -207,30 +207,7 @@
 						else
 						{
 								$("#nuevos_afiliados").show();
-								var opts = {
-										  lines: 12 // The number of lines to draw
-										, length: 28 // The length of each line
-										, width: 14 // The line thickness
-										, radius: 42 // The radius of the inner circle
-										, scale: 1 // Scales overall size of the spinner
-										, corners: 1 // Corner roundness (0..1)
-										, color: '#000' // #rgb or #rrggbb or array of colors
-										, opacity: 0.25 // Opacity of the lines
-										, rotate: 0 // The rotation offset
-										, direction: 1 // 1: clockwise, -1: counterclockwise
-										, speed: 1 // Rounds per second
-										, trail: 60 // Afterglow percentage
-										, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-										, zIndex: 2e9 // The z-index (defaults to 2000000000)
-										, className: 'spinner' // The CSS class to assign to the spinner
-										, top: '50%' // Top position relative to parent
-										, left: '50%' // Left position relative to parent
-										, shadow: false // Whether to render a shadow
-										, hwaccel: false // Whether to use hardware acceleration
-										, position: 'absolute' // Element positioning
-										}
-										var target = document.getElementById('nuevos_afiliados')
-										var spinner = new Spinner(opts).spin(target);
+								iniciarSpinner();
 								$.ajax({
 									type: "POST",
 									url: "reporte_cobros",
@@ -241,63 +218,9 @@
 									success: function( msg )
 									{
 
-										$(".spinner").addClass('hide');
-										$(".spinner").html('');
+										FinalizarSpinner();
 										$("#reporte_div").html(msg);
-										var responsiveHelper_dt_basic = undefined;
-										var responsiveHelper_datatable_fixed_column = undefined;
-										var responsiveHelper_datatable_col_reorder = undefined;
-										var responsiveHelper_datatable_tabletools = undefined;
-										
-										var breakpointDefinition = {
-											tablet : 1024,
-											phone : 480
-										};
-													var otable = $('#datatable_fixed_column2').DataTable({
-								    	//"bFilter": false,
-								    	//"bInfo": false,
-								    	//"bLengthChange": false
-								    	//"bAutoWidth": false,
-								    	//"bPaginate": false,
-								    	//"bStateSave": true // saves sort state using localStorage
-										"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-												"t"+
-												"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-										"autoWidth" : true,
-										"preDrawCallback" : function() {
-											// Initialize the responsive datatables helper once.
-											if (!responsiveHelper_datatable_fixed_column) {
-												responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column2'), breakpointDefinition);
-											}
-										},
-										"rowCallback" : function(nRow) {
-											responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-										},
-										"drawCallback" : function(oSettings) {
-											responsiveHelper_datatable_fixed_column.respond();
-										}		
-										
-									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-								    	   
-									    // Apply the filter
-									    $("#datatable_fixed_column2 thead th input[type=text]").on( 'keyup change', function () {
-									    	
-									        otable
-									            .column( $(this).parent().index()+':visible' )
-									            .search( this.value )
-									            .draw();
-									            
-									    } );
-									    $("#well-print-red").hide();
-										$("#row-print-red").hide();
-										$("#well-print-af").hide();
-										$("#row-print-af").hide();
-										$("#well-print-web").hide();
-										$("#row-print-web").hide();
-									    $("#well-print-usr").show();
-										$("#row-print-usr").show();
-								    // custom toolbar
+										setTableFix();
 								    
 									}
 								});
@@ -362,32 +285,9 @@
 				
 						
 			}
-		</script>
-		<script type="text/javascript">
-		
-		// DO NOT REMOVE : GLOBAL FUNCTIONS!
-		
-		$(document).ready(function() {
-			
-			pageSetUp();
-			
-			/* // DOM Position key index //
-		
-			l - Length changing (dropdown)
-			f - Filtering input (search)
-			t - The Table! (datatable)
-			i - Information (records)
-			p - Pagination (paging)
-			r - pRocessing 
-			< and > - div elements
-			<"#id" and > - div with an id
-			<"class" and > - div with a class
-			<"#id.class" and > - div with an id and class
-			
-			Also see: http://legacy.datatables.net/usage/features
-			*/	
 
-			/* BASIC ;*/
+			function setTableFix(){
+					/* BASIC ;*/
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
 				var responsiveHelper_datatable_col_reorder = undefined;
@@ -418,6 +318,34 @@
 				});
 	
 			/* END BASIC */
+			}
+
+		</script>
+		<script type="text/javascript">
+		
+		// DO NOT REMOVE : GLOBAL FUNCTIONS!
+		
+		$(document).ready(function() {
+			
+			pageSetUp();
+			
+			/* // DOM Position key index //
+		
+			l - Length changing (dropdown)
+			f - Filtering input (search)
+			t - The Table! (datatable)
+			i - Information (records)
+			p - Pagination (paging)
+			r - pRocessing 
+			< and > - div elements
+			<"#id" and > - div with an id
+			<"class" and > - div with a class
+			<"#id.class" and > - div with an id and class
+			
+			Also see: http://legacy.datatables.net/usage/features
+			*/	
+
+		
 			
 			/* COLUMN FILTER  */
 		    var otable = $('#datatable_fixed_column').DataTable({
